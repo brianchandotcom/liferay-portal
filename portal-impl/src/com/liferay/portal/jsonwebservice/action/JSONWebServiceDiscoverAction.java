@@ -14,7 +14,10 @@
 
 package com.liferay.portal.jsonwebservice.action;
 
+import com.liferay.portal.json.transformer.FlexjsonBeanAnalyzerTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
+import com.liferay.portal.kernel.javadoc.JavadocMethod;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -27,20 +30,29 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import flexjson.JSONContext;
+import flexjson.PathExpression;
+
+import java.io.File;
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jodd.util.ReflectUtil;
 import jodd.util.Wildcard;
 
 /**
@@ -68,11 +80,16 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
 			_buildJsonWebServiceActionMappingMaps();
 
-		resultsMap.put("actions", jsonWebServiceActionMappingMaps);
+		resultsMap.put("services", jsonWebServiceActionMappingMaps);
+
+		List<Map> types = _buildTypesList(_types);
+
+		resultsMap.put("types", types);
 
 		resultsMap.put("context", _contextPath);
 		resultsMap.put("basePath", _basePath);
 		resultsMap.put("baseURL", _baseURL);
+		resultsMap.put("version", "7.0");	// todo add portal version
 
 		if (_discover.length > 0) {
 			resultsMap.put("discover", _discover);
@@ -91,6 +108,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		public String toJSONString() {
 			JSONSerializer jsonSerializer =
 				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.include("types");
 
 			return jsonSerializer.serializeDeep(_resultsMap);
 		}
@@ -125,6 +144,19 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			jsonWebServiceActionMappingMap.put(
 				"method", jsonWebServiceActionMapping.getMethod());
 
+			JavadocMethod javadocMethod =
+				JavadocManagerUtil.lookupJavadocMethod(
+					jsonWebServiceActionMapping.getRealActionMethod());
+
+			if (javadocMethod != null) {
+				String methodComment = javadocMethod.getComment();
+
+				if (methodComment != null) {
+					jsonWebServiceActionMappingMap.put(
+						"description", javadocMethod.getComment());
+				}
+			}
+
 			MethodParameter[] methodParameters =
 				jsonWebServiceActionMapping.getMethodParameters();
 
@@ -145,9 +177,10 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 					new HashMap<String, String>();
 
 				parameterMap.put("name", methodParameter.getName());
+
 				parameterMap.put(
-					"type",
-					_formatType(methodParameter.getType(), genericTypes));
+						"type", _formatType(
+							methodParameter.getType(), genericTypes));
 
 				parametersList.add(parameterMap);
 			}
@@ -158,13 +191,121 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			Method actionMethod = jsonWebServiceActionMapping.getActionMethod();
 
-			jsonWebServiceActionMappingMap.put(
-				"response", _formatType(actionMethod.getReturnType(), null));
+			Map<String, String> returnsMap =
+				new LinkedHashMap<String, String>();
+
+			Class<?> realActionClass =
+				jsonWebServiceActionMapping.getActionClass();
+
+			Method realActionMethod =
+				jsonWebServiceActionMapping.getRealActionMethod();
+
+			Class[] genericReturnTypes = null;
+
+			Type genericReturnType = realActionMethod.getGenericReturnType();
+
+			if (genericReturnType instanceof ParameterizedType) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericReturnType;
+
+				Type[] generics = parameterizedType.getActualTypeArguments();
+
+				genericReturnTypes = new Class[generics.length];
+
+				for (int i = 0; i < generics.length; i++) {
+					Type generic = generics[i];
+
+					genericReturnTypes[i] = ReflectUtil.getRawType(
+						generic, realActionClass);
+				}
+			}
+
+			returnsMap.put(
+				"type", _formatType(
+					actionMethod.getReturnType(), genericReturnTypes));
+
+			jsonWebServiceActionMappingMap.put("returns", returnsMap);
 
 			jsonWebServiceActionMappingMaps.add(jsonWebServiceActionMappingMap);
 		}
 
 		return jsonWebServiceActionMappingMaps;
+	}
+
+	private Map<String, Map> _buildPropertiesMap(Class type) {
+		if (type.getPackage().getName().startsWith("java.")) {
+			return null;
+		}
+
+		if (type.isInterface()) {
+			try {
+				String modelImplClassName = type.getName();
+
+				modelImplClassName =
+						StringUtil.replace(
+							modelImplClassName, ".model.", ".model.impl.");
+
+				modelImplClassName += "ModelImpl";
+
+				ClassLoader classLoader = this.getClass().getClassLoader();
+
+				type = classLoader.loadClass(modelImplClassName);
+			}
+			catch (ClassNotFoundException e) {
+			}
+		}
+
+		// scan properties
+
+		try {
+			final JSONContext context = JSONContext.get();
+
+			final List<PathExpression> pathExpressions =
+				new ArrayList<PathExpression>();
+
+			context.setPathExpressions(pathExpressions);
+
+			FlexjsonBeanAnalyzerTransformer flexjsonBeanAnalyzerTransformer =
+					new FlexjsonBeanAnalyzerTransformer(pathExpressions) {
+						@Override
+						protected String getTypeName(Class<?> type) {
+							return _formatType(type, null);
+						}
+					};
+
+			flexjsonBeanAnalyzerTransformer.transform(type);
+
+			Map<String, Map> propertiesMap =
+				flexjsonBeanAnalyzerTransformer.getPropertiesMap();
+
+			return propertiesMap;
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	private List<Map> _buildTypesList(List<Class<?>> allTypes) {
+		List<Map> types = new ArrayList<Map>();
+
+		for (int i = 0; i < allTypes.size(); i++) {
+			Class<?> type = allTypes.get(i);
+
+			Map<String, Object> map = new LinkedHashMap<String, Object>();
+			types.add(map);
+
+			map.put("type", type.getName());
+
+			// properties
+
+			Map<String, Map> properties = _buildPropertiesMap(type);
+
+			if (properties != null) {
+				map.put("properties", properties);
+			}
+		}
+
+		return types;
 	}
 
 	private String _formatType(Class<?> type, Class<?>[] genericTypes) {
@@ -177,30 +318,65 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		if (type.isPrimitive()) {
 			return type.getSimpleName();
 		}
+
+		if (type.equals(File.class)) {
+			return "file";
+		}
+		else if (type.equals(Boolean.class)) {
+			return "boolean";
+		}
 		else if (type.equals(Date.class)) {
 			return "long";
 		}
-		else if (type.equals(Locale.class) || type.equals(String.class)) {
+		else if (type.equals(Locale.class)) {
+			return "string";
+		}
+		else if (type.equals(TimeZone.class)) {
+			return "string";
+		}
+		else if (type.equals(String.class)) {
 			return "string";
 		}
 		else if (type.equals(Object.class) || type.equals(Serializable.class)) {
-			return "object";
+			return "map";
+		}
+		else if (ReflectUtil.isSubclass(type, Number.class)) {
+			String typeName = null;
+
+			if (type == Integer.class) {
+				typeName = "int";
+			}
+			else if (type == Character.class) {
+				typeName = "char";
+			}
+			else {
+				typeName = StringUtil.toLowerCase(type.getSimpleName());
+			}
+
+			return typeName;
 		}
 
 		String typeName = type.getName();
 
-		if (type.equals(List.class)) {
+		if ((type == List.class) || ReflectUtil.isSubclass(type, List.class)) {
 			typeName = "list";
 		}
-		else if (type.equals(Map.class)) {
+		else if ((type == Map.class) ||
+				 ReflectUtil.isSubclass(type, Map.class)) {
+
 			typeName = "map";
 		}
+		else if (type == Collection.class) {
+			typeName = "list";
+		}
 		else {
-			_types.add(type);
+			if (!_types.contains(type)) {
+				_types.add(type);
+			}
 		}
 
 		if (genericTypes == null) {
-			return "object<" + typeName + ">";
+			return typeName;
 		}
 
 		StringBundler sb = new StringBundler(genericTypes.length * 2 + 1);

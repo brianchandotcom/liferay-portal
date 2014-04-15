@@ -75,12 +75,12 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 		url="javascript:;"
 	/>
 
-	<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="struts_action" value="/user_groups_admin/select_user_group" />
-		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-	</portlet:renderURL>
-
 	<aui:script use="aui-base,escape">
+		<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/user_groups_admin/select_user_group" />
+			<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+		</portlet:renderURL>
+
 		A.one('#<portlet:namespace />openUserGroupsLink').on(
 			'click',
 			function(event) {

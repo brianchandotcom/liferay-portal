@@ -776,7 +776,7 @@ public class HookHotDeployListener
 				"model-listener-class");
 
 			ModelListener<BaseModel<?>> modelListener = initModelListener(
-				modelName, modelListenerClassName, servletContextName,
+				servletContextName, modelName, modelListenerClassName,
 				portletClassLoader);
 
 			if (modelListener != null) {
@@ -994,7 +994,7 @@ public class HookHotDeployListener
 	}
 
 	protected BasePersistence<?> getPersistence(
-		String modelName, String servletContextName) {
+		String servletContextName, String modelName) {
 
 		int pos = modelName.lastIndexOf(CharPool.PERIOD);
 
@@ -1007,16 +1007,13 @@ public class HookHotDeployListener
 		String beanName =
 			packagePath + ".service.persistence." + entityName + "Persistence";
 
-		if (servletContextName != null) {
-			try {
-				return (BasePersistence<?>)PortletBeanLocatorUtil.locate(
-					servletContextName, beanName);
-			}
-			catch (BeanLocatorException e) {
-			}
+		try {
+			return (BasePersistence<?>)PortalBeanLocatorUtil.locate(beanName);
 		}
-
-		return (BasePersistence<?>)PortalBeanLocatorUtil.locate(beanName);
+		catch (BeanLocatorException ble) {
+			return (BasePersistence<?>)PortletBeanLocatorUtil.locate(
+				servletContextName, beanName);
+		}
 	}
 
 	protected File getPortalJspBackupFile(File portalJspFile) {
@@ -1582,8 +1579,8 @@ public class HookHotDeployListener
 
 	@SuppressWarnings("rawtypes")
 	protected ModelListener<BaseModel<?>> initModelListener(
-			String modelName, String modelListenerClassName,
-			String servletContextName, ClassLoader portletClassLoader)
+			String servletContextName, String modelName,
+			String modelListenerClassName, ClassLoader portletClassLoader)
 		throws Exception {
 
 		ModelListener<BaseModel<?>> modelListener =
@@ -1592,7 +1589,7 @@ public class HookHotDeployListener
 				modelListenerClassName);
 
 		BasePersistence persistence = getPersistence(
-			modelName, servletContextName);
+			servletContextName, modelName);
 
 		persistence.registerListener(modelListener);
 
@@ -1624,7 +1621,7 @@ public class HookHotDeployListener
 
 			for (String modelListenerClassName : modelListenerClassNames) {
 				ModelListener<BaseModel<?>> modelListener = initModelListener(
-					modelName, modelListenerClassName, servletContextName,
+					servletContextName, modelName, modelListenerClassName,
 					portletClassLoader);
 
 				if (modelListener != null) {
@@ -3368,7 +3365,7 @@ public class HookHotDeployListener
 					entry.getValue();
 
 				BasePersistence persistence = getPersistence(
-					modelName, servletContextName);
+					servletContextName, modelName);
 
 				for (ModelListener<BaseModel<?>> modelListener :
 						modelListeners) {

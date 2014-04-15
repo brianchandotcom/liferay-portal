@@ -1647,7 +1647,7 @@ public class JournalArticleLocalServiceImpl
 	 *         related to a DDM structure, the template's structure must match
 	 *         it.
 	 * @param  languageId the primary key of the language translation to get
-	 * @param  portletRequestModel the portlet request model object
+	 * @param  portletRequestModel the portlet request model
 	 * @param  themeDisplay the theme display
 	 * @return the matching web content
 	 * @throws PortalException if a matching web content article or DDM template
@@ -1740,7 +1740,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest web content matching the group and article ID, and
-	 * associated with DDM template key.
+	 * associated with the DDM template.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1750,7 +1750,7 @@ public class JournalArticleLocalServiceImpl
 	 *         related to a DDM structure, the template's structure must match
 	 *         it.
 	 * @param  languageId the primary key of the language translation to get
-	 * @param  portletRequestModel the portlet request model object
+	 * @param  portletRequestModel the portlet request model
 	 * @param  themeDisplay the theme display
 	 * @return the matching web content
 	 * @throws PortalException if a matching web content article or DDM template

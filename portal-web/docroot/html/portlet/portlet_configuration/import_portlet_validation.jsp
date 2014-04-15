@@ -106,18 +106,18 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 <aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated">
 	var form = A.one('#<portlet:namespace />fm1');
 
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
+		<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="portletResource" value="<%= portletResource %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+		<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+	</liferay-portlet:resourceURL>
+
 	form.on(
 		'submit',
 		function(event) {
 			event.halt();
-
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="portletResource" value="<%= portletResource %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-			</liferay-portlet:resourceURL>
 
 			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
 

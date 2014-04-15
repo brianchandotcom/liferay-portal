@@ -139,15 +139,15 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
+				<%
+				Date completionDate = backgroundTask.getCompletionDate();
+				%>
+
 				<portlet:actionURL var="deleteBackgroundTaskURL">
 					<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 				</portlet:actionURL>
-
-				<%
-				Date completionDate = backgroundTask.getCompletionDate();
-				%>
 
 				<liferay-ui:icon-delete
 					label="true"

@@ -24,7 +24,15 @@
 
 		<execute action="SOMessages#selectFrame" value1="relative=top" />
 
-		<var name="key_messageBody" value="${messageBody}" />
+		<if>
+			<isset var="partialMessageBody" />
+			<then>
+				<var name="key_messageBody" value="${partialMessageBody}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageBody}" />
+			</else>
+		</if>
 
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_SENDER" />
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_SUBJECT" />
@@ -70,7 +78,15 @@
 	<command name="viewMessage">
 		<execute macro="SOMessages#viewMessageList" />
 
-		<var name="key_messageBody" value="${messageBody}" />
+		<if>
+			<isset var="partialMessageBody" />
+			<then>
+				<var name="key_messageBody" value="${partialMessageBody}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageBody}" />
+			</else>
+		</if>
 
 		<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT" />
 
@@ -89,7 +105,15 @@
 	</command>
 
 	<command name="viewMessageList">
-		<var name="key_messageBody" value="${messageBody}" />
+		<if>
+			<isset var="partialMessageBody" />
+			<then>
+				<var name="key_messageBody" value="${partialMessageBody}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageBody}" />
+			</else>
+		</if>
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />

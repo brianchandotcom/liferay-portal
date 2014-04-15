@@ -338,9 +338,9 @@ public abstract class BaseIndexer implements Indexer {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws SearchException {
 
-		try {
-			Locale locale = getLocale(portletRequest);
+		Locale locale = getLocale(portletRequest);
 
+		try {
 			Summary summary = doGetSummary(
 				document, locale, snippet, portletURL, portletRequest,
 				portletResponse);

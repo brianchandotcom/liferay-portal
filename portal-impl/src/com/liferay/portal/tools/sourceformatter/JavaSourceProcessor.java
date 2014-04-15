@@ -839,6 +839,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
+		_hibernateSQLQueryExclusions = getExclusionsProperties(
+			"source_formatter_hibernate_sql_query_exclusions.properties");
 		_javaTermSortExclusions = getExclusionsProperties(
 			"source_formatter_javaterm_sort_exclusions.properties");
 		_lineLengthExclusions = getExclusionsProperties(
@@ -1257,7 +1259,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (line.contains("= session.createSQLQuery(") &&
+			if (!isExcluded(_hibernateSQLQueryExclusions, fileName) &&
+				line.contains("= session.createSQLQuery(") &&
 				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
 				line = StringUtil.replace(
@@ -2851,6 +2854,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
+	private Properties _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(

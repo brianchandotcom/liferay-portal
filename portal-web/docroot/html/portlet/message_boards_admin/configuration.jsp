@@ -20,8 +20,6 @@
 mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 %>
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL" />
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<portlet:param name="serviceName" value="<%= MBConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />

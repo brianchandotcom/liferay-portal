@@ -100,7 +100,7 @@ Summary summary = null;
 if (indexer != null) {
 	String snippet = document.get(Field.SNIPPET);
 
-	summary = indexer.getSummary(document, locale, snippet, viewFullContentURL, renderRequest, renderResponse);
+	summary = indexer.getSummary(document, snippet, viewFullContentURL, renderRequest, renderResponse);
 }
 else if (assetRenderer != null) {
 	summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale), viewFullContentURL);

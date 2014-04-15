@@ -26,7 +26,7 @@ JournalArticle latestApprovedArticleVersion = null;
 Date createDate = article.getCreateDate();
 
 if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
-	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getArticle(article.getGroupId(), article.getArticleId(), JournalArticleConstants.VERSION_DEFAULT);
+	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getEarliestArticle(article.getGroupId(), article.getArticleId());
 
 	createDate = firstArticleVersion.getCreateDate();
 

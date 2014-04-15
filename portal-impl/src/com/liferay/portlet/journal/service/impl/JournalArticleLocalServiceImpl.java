@@ -2626,6 +2626,23 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
+	public JournalArticle getEarliestArticle(long groupId, String articleId)
+		throws PortalException, SystemException {
+
+		return getEarliestArticle(
+			groupId, articleId, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public JournalArticle getEarliestArticle(
+			long groupId, String articleId, int status)
+		throws PortalException, SystemException {
+
+		return getFirstArticle(
+			groupId, articleId, status, new ArticleVersionComparator(false));
+	}
+
+	@Override
 	public List<JournalArticle> getIndexableArticlesByResourcePrimKey(
 			long resourcePrimKey)
 		throws SystemException {
@@ -2765,27 +2782,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String articleId, int status)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> articles = null;
-
-		OrderByComparator orderByComparator = new ArticleVersionComparator();
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			articles = journalArticlePersistence.findByG_A_NotST(
-				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH, 0, 1,
-				orderByComparator);
-		}
-		else {
-			articles = journalArticlePersistence.findByG_A_ST(
-				groupId, articleId, status, 0, 1, orderByComparator);
-		}
-
-		if (articles.isEmpty()) {
-			throw new NoSuchArticleException(
-				"No JournalArticle exists with the key {groupId=" + groupId +
-					", articleId=" + articleId + ", status=" + status + "}");
-		}
-
-		return articles.get(0);
+		return getFirstArticle(
+			groupId, articleId, status, new ArticleVersionComparator());
 	}
 
 	/**
@@ -6254,6 +6252,22 @@ public class JournalArticleLocalServiceImpl
 		dateInterval[1] = latestExpirationDate;
 
 		return dateInterval;
+	}
+
+	protected JournalArticle getFirstArticle(
+			long groupId, String articleId, int status,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return journalArticlePersistence.findByG_A_NotST_First(
+				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH,
+				orderByComparator);
+		}
+		else {
+			return journalArticlePersistence.findByG_A_ST_First(
+				groupId, articleId, status, orderByComparator);
+		}
 	}
 
 	protected String getUniqueUrlTitle(

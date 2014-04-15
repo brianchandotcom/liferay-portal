@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -32,12 +30,9 @@ import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
-import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryFinder;
-import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,20 +51,11 @@ public class AssetCategoryFinderImpl
 	public static final String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
 
-	public static final String FIND_BY_G_L =
-		AssetCategoryFinder.class.getName() + ".findByG_L";
-
 	public static final String FIND_BY_G_N =
 		AssetCategoryFinder.class.getName() + ".findByG_N";
 
 	public static final String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
-
-	public static final FinderPath FINDER_PATH_FIND_BY_G_L = new FinderPath(
-		AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-		AssetCategoryModelImpl.FINDER_CACHE_ENABLED, List.class,
-		AssetCategoryPersistenceImpl.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-		"findByG_L", new String[] {Long.class.getName()});
 
 	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name)
@@ -155,62 +141,6 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public List<Long> findByG_L(Long parentCategoryId) throws SystemException {
-		Object[] finderArgs = new Object[] {parentCategoryId};
-
-		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
-			FINDER_PATH_FIND_BY_G_L, finderArgs, this);
-
-		if (list != null) {
-			return list;
-		}
-
-		AssetCategory parentAssetCategory = AssetCategoryUtil.fetchByPrimaryKey(
-			parentCategoryId);
-
-		if (parentAssetCategory == null) {
-			return Collections.emptyList();
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_G_L);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar("categoryId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(parentAssetCategory.getGroupId());
-			qPos.add(parentAssetCategory.getLeftCategoryId());
-			qPos.add(parentAssetCategory.getRightCategoryId());
-
-			list = q.list();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			if (list == null) {
-				FinderCacheUtil.removeResult(
-					FINDER_PATH_FIND_BY_G_L, finderArgs);
-			}
-			else {
-				FinderCacheUtil.putResult(
-					FINDER_PATH_FIND_BY_G_L, finderArgs, list);
-			}
-
-			closeSession(session);
-		}
-
-		return list;
 	}
 
 	@Override

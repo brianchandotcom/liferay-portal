@@ -494,13 +494,13 @@ if (Validator.isNull(redirect)) {
 		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />editor.getHTML();
 	}
 
-	function <portlet:namespace />moveToTrashPage() {
-		<portlet:renderURL var="nodeURL">
-			<portlet:param name="struts_action" value="/wiki/view" />
-			<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
-			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
-		</portlet:renderURL>
+	<portlet:renderURL var="nodeURL">
+		<portlet:param name="struts_action" value="/wiki/view" />
+		<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
+		<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
+	</portlet:renderURL>
 
+	function <portlet:namespace />moveToTrashPage() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.MOVE_TO_TRASH %>";
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= nodeURL.toString() %>";
 

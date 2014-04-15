@@ -778,8 +778,6 @@ public class PropsValues {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = PropsUtil.get(PropsKeys.HTTP_HEADER_VERSION_VERBOSITY);
 
-	public static final int ICON_MENU_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ICON_MENU_MAX_DISPLAY_ITEMS));
-
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = PropsUtil.get(PropsKeys.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE);
 
 	public static final boolean IMAGE_AUTO_SCALE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_AUTO_SCALE));
@@ -1167,6 +1165,8 @@ public class PropsValues {
 	public static final String MEMBERSHIP_POLICY_SITES = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_SITES);
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS);
+
+	public static final int MENU_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	public static final boolean MESSAGE_BOARDS_EMAIL_BULK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_BULK));
 

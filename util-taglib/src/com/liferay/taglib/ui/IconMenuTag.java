@@ -432,7 +432,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private static final String _AUI_PATH = "../aui/";
 
 	private static final int _DEFAULT_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.ICON_MENU_MAX_DISPLAY_ITEMS));
+		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	private static final String _END_PAGE = "/html/taglib/ui/icon_menu/end.jsp";
 

@@ -285,7 +285,7 @@ AUI.add(
 				AUGMENTS: A.AutoCompleteBase,
 
 				prototype: {
-					initializer: function () {
+					initializer: function() {
 						var instance = this;
 
 						instance._bindUIACBase();

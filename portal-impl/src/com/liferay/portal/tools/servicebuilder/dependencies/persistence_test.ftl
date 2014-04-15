@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -55,6 +56,7 @@ import java.sql.SQLException;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -213,7 +215,11 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Blob">
 					 new${column.methodName}Blob
 				<#elseif column.type == "String">
-					ServiceTestUtil.randomString()
+					<#if entity.name == "BackgroundTask" && column.name == "taskContext">
+						JSONFactoryUtil.serialize(new HashMap<String, String>())
+					<#else>
+						ServiceTestUtil.randomString()
+					</#if>
 				</#if>
 
 				);
@@ -781,7 +787,11 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Date">
 					ServiceTestUtil.nextDate()
 				<#elseif column.type == "String">
-					ServiceTestUtil.randomString()
+					<#if entity.name == "BackgroundTask" && column.name == "taskContext">
+						JSONFactoryUtil.serialize(new HashMap<String, String>())
+					<#else>
+						ServiceTestUtil.randomString()
+					</#if>
 				</#if>
 
 				);

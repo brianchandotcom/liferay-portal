@@ -63,9 +63,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	protected void validate(ActionRequest actionRequest) throws Exception {
 		validateDisplayStyleViews(actionRequest);
-		validateEmail(actionRequest, "emailFileEntryAdded");
-		validateEmail(actionRequest, "emailFileEntryUpdated");
-		validateEmailFrom(actionRequest);
 		validateRootFolder(actionRequest);
 	}
 

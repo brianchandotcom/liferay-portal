@@ -688,6 +688,30 @@ public class LayoutImporter {
 			}
 		}
 
+		// Import services
+
+		if (_log.isDebugEnabled()) {
+			if (!portletElements.isEmpty()) {
+				_log.debug("Importing services");
+			}
+		}
+
+		Element servicesElement = _rootElement.element("services");
+
+		List<Element> serviceElements = servicesElement.elements("service");
+
+		for (Element serviceElement : serviceElements) {
+			String servicePath = serviceElement.attributeValue("path");
+
+			Document serviceDocument = SAXReaderUtil.read(
+				portletDataContext.getZipEntryAsString(servicePath));
+
+			serviceElement = serviceDocument.getRootElement();
+
+			_portletImporter.importServicePortletPreferences(
+				companyId, serviceElement);
+		}
+
 		// Asset links
 
 		_portletImporter.readAssetLinks(portletDataContext);

@@ -22,11 +22,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "assigned-to-me
 
 <aui:nav-bar>
 	<aui:nav>
-		<portlet:renderURL var="assignedToMeURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/view" />
-			<portlet:param name="toolbarItem" value="assigned-to-me" />
-		</portlet:renderURL>
-
 		<portlet:renderURL var="completedURL">
 			<portlet:param name="struts_action" value="/workflow_tasks/view" />
 			<portlet:param name="toolbarItem" value="my-completed-tasks" />

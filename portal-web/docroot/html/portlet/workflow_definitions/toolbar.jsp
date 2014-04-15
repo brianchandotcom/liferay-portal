@@ -22,6 +22,15 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 <aui:nav-bar>
 	<aui:nav>
+		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+
+			<%
+			String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
+			%>
+
+			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' />
+		</c:if>
+
 		<portlet:renderURL var="viewDefinitionsURL">
 			<portlet:param name="struts_action" value="/workflow_definitions/view" />
 			<portlet:param name="tabs1" value="workflow-definitions" />
@@ -34,14 +43,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 			<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
 		</portlet:renderURL>
 
-		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
-
-			<%
-			String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
-			%>
-
-			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' />
-		</c:if>
 		<aui:nav-item href="<%= addWorkflowDefinitionURL %>" iconCssClass="icon-upload" label="upload-definition" selected='<%= toolbarItem.equals("add") %>' />
 	</aui:nav>
 </aui:nav-bar>

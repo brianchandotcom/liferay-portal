@@ -44,6 +44,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -61,7 +62,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, long parentDDMStructureId, long classNameId,
 			String ddmStructureKey, String name, String description, String xsd,
-			String storageType, int type)
+			Locale defaultLocale, String storageType, int type)
 		throws Exception {
 
 		Connection con = null;
@@ -96,7 +97,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(11, ddmStructureKey);
 			ps.setString(12, name);
 			ps.setString(13, description);
-			ps.setString(14, JournalConverterUtil.getDDMXSD(xsd));
+			ps.setString(
+				14, JournalConverterUtil.getDDMXSD(xsd, defaultLocale));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
@@ -127,6 +129,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			parentDDMStructureId = updateStructure(parentStructureId);
 		}
 
+		Locale defaultLocale =
+			JournalConverterUtil.getStructureNameDefaultLocale(name);
+
 		long insertedDDMStructureId = getDDMStructureId(
 			groupId, ddmStructureKey, false);
 
@@ -135,7 +140,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				uuid_, ddmStructureId, groupId, companyId, userId, userName,
 				createDate, modifiedDate, parentDDMStructureId,
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				ddmStructureKey, name, description, xsd,
+				ddmStructureKey, name, description, xsd, defaultLocale,
 				PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE,
 				DDMStructureConstants.TYPE_DEFAULT);
 		}

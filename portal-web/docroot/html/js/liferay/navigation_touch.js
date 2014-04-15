@@ -25,7 +25,7 @@ AUI.add(
 
 					instance._createDragHandles(navItems);
 
-					afterMakeSortable(sortable);
+					afterMakeSortable.call(instance, sortable);
 
 					sortableDD.plug(A.Plugin.DDConstrained);
 
@@ -44,11 +44,7 @@ AUI.add(
 				_createDragHandles: function(items) {
 					var instance = this;
 
-					items.each(
-						function(item, index, collection) {
-							item.append(TPL_DRAG_HANDLE);
-						}
-					);
+					items.append(TPL_DRAG_HANDLE);
 				},
 
 				_onWindowResize: function() {

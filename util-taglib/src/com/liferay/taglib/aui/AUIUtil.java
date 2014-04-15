@@ -57,9 +57,10 @@ public class AUIUtil {
 	public static final String LABEL_FIELD_PREFIX = "field-label";
 
 	public static String buildControlGroupCss(
-		boolean inlineField, String inlineLabel, String wrapperCssClass) {
+		boolean inlineField, String inlineLabel, String wrapperCssClass,
+		String baseType) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("control-group");
 
@@ -76,6 +77,13 @@ public class AUIUtil {
 		if (Validator.isNotNull(wrapperCssClass)) {
 			sb.append(StringPool.SPACE);
 			sb.append(wrapperCssClass);
+		}
+
+		if (Validator.isNotNull(baseType)) {
+			sb.append(StringPool.SPACE);
+			sb.append("input-");
+			sb.append(baseType);
+			sb.append("-wrapper");
 		}
 
 		return sb.toString();

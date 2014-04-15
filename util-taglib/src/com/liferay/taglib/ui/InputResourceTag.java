@@ -14,9 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.aui.FieldWrapperTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,26 +54,6 @@ public class InputResourceTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		if ((_id != null) && Validator.isNull(_title)) {
-			_title = TextFormatter.format(_id, TextFormatter.K);
-		}
-
-		if (Validator.isNull(_title)) {
-			FieldWrapperTag parentFieldWrapperTag =
-				(FieldWrapperTag)findAncestorWithClass(
-					this, FieldWrapperTag.class);
-
-			if (parentFieldWrapperTag != null) {
-				_title = parentFieldWrapperTag.getLabel();
-
-				if ((_title != null) &&
-					_title.equals(parentFieldWrapperTag.getName())) {
-
-					_title = null;
-				}
-			}
-		}
-
 		request.setAttribute("liferay-ui:input-resource:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-resource:id", _id);
 		request.setAttribute("liferay-ui:input-resource:title", _title);

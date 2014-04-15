@@ -17,10 +17,12 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,80 @@ public class DLActionsDisplayContext {
 		}
 
 		return _ieOnWin32;
+	}
+
+	public boolean isShowActions() throws PortalException, SystemException {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			new DLPortletInstanceSettings(
+				_portletDisplay.getPortletInstanceSettings());
+
+		return dlPortletInstanceSettings.getShowActions();
+	}
+
+	public boolean isShowMinimalActionsButton() {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		return ParamUtil.getBoolean(_request, "showMinimalActionButtons");
+	}
+
+	public boolean isAddFolderButtonVisible() {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isFolderMenuVisible()
+		throws PortalException, SystemException {
+
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			new DLPortletInstanceSettings(
+				_portletDisplay.getPortletInstanceSettings());
+
+		return dlPortletInstanceSettings.getShowFolderMenu();
+	}
+
+	public boolean isShowTabs() throws PortalException, SystemException {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return true;
+		}
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			new DLPortletInstanceSettings(
+				_portletDisplay.getPortletInstanceSettings());
+
+		return dlPortletInstanceSettings.getShowTabs();
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {

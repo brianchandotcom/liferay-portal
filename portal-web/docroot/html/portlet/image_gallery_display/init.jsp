@@ -28,6 +28,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
@@ -71,9 +72,11 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-boolean showActions = dlPortletInstanceSettings.getShowActions();
-boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
-boolean showTabs = dlPortletInstanceSettings.getShowTabs();
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
+
+boolean showActions = dlActionsDisplayContext.isShowActions();
+boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
+boolean showTabs = dlActionsDisplayContext.isShowTabs();
 
 boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
 boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();

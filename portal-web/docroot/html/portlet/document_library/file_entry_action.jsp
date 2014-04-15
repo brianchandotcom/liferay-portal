@@ -104,7 +104,6 @@ if (fileShortcut != null) {
 	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
 DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEntryActionsDisplayContext(request, fileEntry);
 %>
 

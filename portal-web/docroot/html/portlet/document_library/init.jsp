@@ -126,25 +126,14 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletName = portletResource;
 }
 
-boolean showActions = dlPortletInstanceSettings.getShowActions();
-boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
-boolean showAddFolderButton = false;
-boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
-boolean showTabs = dlPortletInstanceSettings.getShowTabs();
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
 
-if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	showActions = true;
-	showAssetMetadata = true;
-	showAddFolderButton = true;
-	showFolderMenu = true;
-	showTabs = true;
-	showMinimalActionButtons = true;
-}
-else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.TRASH)) {
-	showAssetMetadata = true;
-}
+boolean showActions = dlActionsDisplayContext.isShowActions();
+boolean showAddFolderButton = dlActionsDisplayContext.isAddFolderButtonVisible();
+boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+boolean showMinimalActionButtons = dlActionsDisplayContext.isShowMinimalActionsButton();
+boolean showTabs = dlActionsDisplayContext.isShowTabs();
 
 boolean enableRelatedAssets = dlPortletInstanceSettings.getEnableRelatedAssets();
 

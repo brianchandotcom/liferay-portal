@@ -31,6 +31,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalSer
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearchTerms" %>
@@ -75,17 +76,12 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-boolean showActions = dlPortletInstanceSettings.getShowActions();
-boolean showAddFolderButton = false;
-boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
-boolean showTabs = dlPortletInstanceSettings.getShowTabs();
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
 
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	showActions = true;
-	showAddFolderButton = true;
-	showFolderMenu = true;
-	showTabs = true;
-}
+boolean showActions = dlActionsDisplayContext.isShowActions();
+boolean showAddFolderButton = dlActionsDisplayContext.isAddFolderButtonVisible();
+boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
+boolean showTabs = dlActionsDisplayContext.isShowTabs();
 
 if (showActions) {
 	allFolderColumns += ",action";

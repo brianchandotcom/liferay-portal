@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -44,9 +46,12 @@ public class DLFileEntryActionsDisplayContext {
 		HttpServletRequest request, FileEntry fileEntry,
 		FileVersion fileVersion) {
 
+		_request = request;
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		_portletDisplay = themeDisplay.getPortletDisplay();
 		_companyId = themeDisplay.getCompanyId();
 
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
@@ -98,6 +103,21 @@ public class DLFileEntryActionsDisplayContext {
 		}
 
 		return saveButtonLabel;
+	}
+
+	public boolean isAssetMetadataVisible() {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+			portletId.equals(PortletKeys.TRASH)) {
+
+			return true;
+		}
+
+		return ParamUtil.getBoolean(_request, "showAssetMetadata");
 	}
 
 	public boolean isCancelCheckoutDocumentButtonDisabled() {
@@ -333,6 +353,8 @@ public class DLFileEntryActionsDisplayContext {
 	private long _fileEntryTypeId;
 	private long _folderId;
 	private PermissionChecker _permissionChecker;
+	private PortletDisplay _portletDisplay;
+	private HttpServletRequest _request;
 	private long _scopeGroupId;
 
 }

@@ -39,6 +39,16 @@ public interface Layout extends LayoutModel, PersistedModel {
 			public Long get(Layout layout) {
 				return layout.getLayoutId();
 			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Layout> getTypeClass() {
+				return Layout.class;
+			}
 		};
 
 	public java.util.List<com.liferay.portal.model.Layout> getAllChildren()

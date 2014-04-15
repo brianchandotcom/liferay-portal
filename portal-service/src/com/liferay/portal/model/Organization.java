@@ -40,6 +40,16 @@ public interface Organization extends OrganizationModel, PersistedModel,
 			public String get(Organization organization) {
 				return organization.getName();
 			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<Organization> getTypeClass() {
+				return Organization.class;
+			}
 		};
 
 	public com.liferay.portal.model.Address getAddress();

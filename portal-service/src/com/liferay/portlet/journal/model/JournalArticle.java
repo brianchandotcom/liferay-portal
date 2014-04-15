@@ -42,6 +42,16 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 			public String get(JournalArticle journalArticle) {
 				return journalArticle.getArticleId();
 			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<JournalArticle> getTypeClass() {
+				return JournalArticle.class;
+			}
 		};
 
 	@Override

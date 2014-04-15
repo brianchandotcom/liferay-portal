@@ -723,9 +723,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	%portlet-action-bar-custom {
-		@include respond-to(phone, tablet) {
-			@include border-radius(3px);
-		}
+		@include border-radius(3px);
 
 		@include respond-to(desktop) {
 			@include border-radius(20px);

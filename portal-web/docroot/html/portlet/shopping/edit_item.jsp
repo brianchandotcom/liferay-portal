@@ -122,11 +122,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				}
 				%>
 
-				<portlet:renderURL var="viewCategoryURL">
-					<portlet:param name="struts_action" value="/shopping/view" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-				</portlet:renderURL>
-
 				<div class="input-append">
 					<liferay-ui:input-resource id="categoryName" url="<%= categoryName %>" />
 

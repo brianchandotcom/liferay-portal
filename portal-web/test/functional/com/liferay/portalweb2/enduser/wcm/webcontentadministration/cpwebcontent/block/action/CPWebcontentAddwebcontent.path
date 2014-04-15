@@ -39,8 +39,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_STRUCTURE</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_STRUCTURE</td>
 	<td>//a[contains(.,'Select')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_TEMPLATE</td>
+	<td>//span[@id='_15_templateNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TEMPLATE</td>
+	<td>xpath=(//a[contains(.,'Select')]/span)[2]</td>
 	<td></td>
 </tr>
 <tr>

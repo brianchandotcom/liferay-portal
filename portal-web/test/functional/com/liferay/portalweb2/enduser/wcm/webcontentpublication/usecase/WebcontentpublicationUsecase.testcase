@@ -472,7 +472,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent1 Content" />
@@ -483,7 +483,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent2 Content" />
@@ -494,7 +494,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent3 Content" />
@@ -505,7 +505,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent4 Content" />
@@ -516,7 +516,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategory">
+		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="webContentContent" value="WC WebContent5 Content" />
@@ -645,7 +645,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="webContentInteger" value="4" />
@@ -667,7 +667,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="webContentInteger" value="5" />
@@ -689,7 +689,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="webContentInteger" value="1" />
@@ -1265,5 +1265,76 @@
 		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_IMAGE_2" />
 		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_2" />
 		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_EDIT_2" />
+	</command>
+
+	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="portletName" value="Web Content Display" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewNoContentPGViaWCD" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewNoContentAsGuestPGViaWCD">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="User#loginPG" />
 	</command>
 </definition>

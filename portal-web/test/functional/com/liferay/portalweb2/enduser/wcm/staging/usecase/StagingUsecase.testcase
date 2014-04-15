@@ -2710,7 +2710,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="Structure Name" />
 			<var name="webContentText" value="Staging Web Content Text" />
 			<var name="webContentTextBox" value="Staging Web Content Body" />

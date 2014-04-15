@@ -23,6 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Category;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggingEvent;
 
@@ -33,6 +34,8 @@ public class CaptureAppender extends AppenderSkeleton {
 
 	public CaptureAppender(Logger logger) {
 		_logger = logger;
+
+		_level = _logger.getLevel();
 
 		_parentCategory = logger.getParent();
 
@@ -54,6 +57,8 @@ public class CaptureAppender extends AppenderSkeleton {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+		_logger.setLevel(_level);
 	}
 
 	public List<LoggingEvent> getLoggingEvents() {
@@ -82,6 +87,7 @@ public class CaptureAppender extends AppenderSkeleton {
 		}
 	}
 
+	private Level _level;
 	private Logger _logger;
 	private List<LoggingEvent> _loggingEvents =
 		new CopyOnWriteArrayList<LoggingEvent>();

@@ -108,42 +108,40 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 	<aui:fieldset>
 		<c:if test="<%= item != null %>">
-			<aui:field-wrapper label="category">
 
-				<%
-				String categoryName = "";
+			<%
+			String categoryName = "";
 
-				if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-					ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
+			if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+				ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
 
-					category = category.toEscapedModel();
+				category = category.toEscapedModel();
 
-					categoryName = category.getName();
-				}
-				%>
+				categoryName = category.getName();
+			}
+			%>
 
-				<portlet:renderURL var="viewCategoryURL">
-					<portlet:param name="struts_action" value="/shopping/view" />
+			<portlet:renderURL var="viewCategoryURL">
+				<portlet:param name="struts_action" value="/shopping/view" />
+				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+			</portlet:renderURL>
+
+			<div class="control-group">
+				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
+
+				<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/shopping/select_category" />
 					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 				</portlet:renderURL>
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="categoryName" url="<%= categoryName %>" />
+				<%
+				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
+				%>
 
-					<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/shopping/select_category" />
-						<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-					</portlet:renderURL>
+				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
 
-					<%
-					String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-					%>
-
-					<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
-
-					<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
-				</div>
-			</aui:field-wrapper>
+				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+			</div>
 		</c:if>
 
 		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />

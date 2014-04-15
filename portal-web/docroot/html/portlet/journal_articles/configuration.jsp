@@ -73,33 +73,30 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 				</aui:select>
 
-				<aui:field-wrapper label="structure">
+				<%
+				String ddmStructureName = StringPool.BLANK;
+				String ddmStructureDescription = StringPool.BLANK;
 
-					<%
-					String ddmStructureName = StringPool.BLANK;
-					String ddmStructureDescription = StringPool.BLANK;
+				if (ddmStructure != null) {
+					ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
+					ddmStructureDescription = HtmlUtil.escape(ddmStructure.getDescription(locale));
+				}
+				else {
+					ddmStructureName = LanguageUtil.get(pageContext, "any");
+				}
 
-					if (ddmStructure != null) {
-						ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
-						ddmStructureDescription = HtmlUtil.escape(ddmStructure.getDescription(locale));
-					}
-					else {
-						ddmStructureName = LanguageUtil.get(pageContext, "any");
-					}
+				if (Validator.isNotNull(ddmStructureDescription)) {
+					ddmStructureName = ddmStructureName + " (" + ddmStructureDescription+ ")";
+				}
+				%>
 
-					if (Validator.isNotNull(ddmStructureDescription)) {
-						ddmStructureName = ddmStructureName + " (" + ddmStructureDescription+ ")";
-					}
-					%>
+				<div class="control-group">
+					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />
 
-					<div class="input-append">
-						<liferay-ui:input-resource id="structure" url="<%= ddmStructureName %>" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 
-						<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
-
-						<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
-					</div>
-				</aui:field-wrapper>
+					<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>
 

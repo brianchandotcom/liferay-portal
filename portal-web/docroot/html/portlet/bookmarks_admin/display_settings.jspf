@@ -21,20 +21,17 @@
 <liferay-ui:panel-container extended="<%= true %>" id="bookmarksSettingsPanelContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 		<aui:fieldset>
-			<aui:field-wrapper label="root-folder">
+			<div class="control-group">
+				<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
+				<aui:button name="selectFolderButton" value="select" />
 
-					<aui:button name="selectFolderButton" value="select" />
+				<%
+				String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+				%>
 
-					<%
-					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
-					%>
-
-					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-				</div>
-			</aui:field-wrapper>
+				<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+			</div>
 
 			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksSettings.getShowFoldersSearch() %>" />
 

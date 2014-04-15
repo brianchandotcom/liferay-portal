@@ -137,16 +137,12 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	</aui:fieldset>
 </aui:form>
 
-<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/document_library/select_group" />
-</portlet:renderURL>
-
-<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/document_library/select_file_entry" />
-</portlet:renderURL>
-
 <aui:script use="aui-base,escape">
 	var selectToFileEntryButton = A.one('#<portlet:namespace />selectToFileEntryButton');
+
+	<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/document_library/select_group" />
+	</portlet:renderURL>
 
 	A.one('#<portlet:namespace />selectGroupButton').on(
 		'click',
@@ -179,6 +175,10 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			);
 		}
 	);
+
+	<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/document_library/select_file_entry" />
+	</portlet:renderURL>
 
 	selectToFileEntryButton.on(
 		'click',

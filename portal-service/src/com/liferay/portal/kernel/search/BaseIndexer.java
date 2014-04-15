@@ -1597,6 +1597,14 @@ public abstract class BaseIndexer implements Indexer {
 		return _defaultSelectedLocalizedFieldNames;
 	}
 
+	protected Locale getLocale(PortletRequest portletRequest) {
+		if (portletRequest != null) {
+			return portletRequest.getLocale();
+		}
+
+		return LocaleUtil.getMostRelevantLocale();
+	}
+
 	protected Set<String> getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<String>();
 

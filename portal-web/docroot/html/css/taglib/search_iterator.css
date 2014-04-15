@@ -5,7 +5,7 @@
 	margin-top: 1.5em;
 	overflow: auto;
 
-	@include respond-to(phone, tablet) {
+	@media (max-width: 1024px) {
 		@include experimental(overflow-scrolling, touch);
 
 		.searchcontainer-content .table {

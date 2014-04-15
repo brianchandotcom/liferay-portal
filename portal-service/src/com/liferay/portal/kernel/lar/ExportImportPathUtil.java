@@ -57,6 +57,11 @@ public class ExportImportPathUtil {
 	public static final String PATH_PREFIX_PORTLET = "portlet";
 
 	/**
+	 * The service prefix used in generating paths.
+	 */
+	public static final String PATH_PREFIX_SERVICE = "service";
+
+	/**
 	 * Returns the expando-specific path for the entity path. The entity path
 	 * must include an XML file.
 	 *
@@ -333,6 +338,20 @@ public class ExportImportPathUtil {
 	public static String getRootPath(PortletDataContext portletDataContext) {
 		return getRootPath(
 			PATH_PREFIX_GROUP, portletDataContext.getScopeGroupId());
+	}
+
+	public static String getServicePath(
+		PortletDataContext portletDataContext, String serviceName) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getRootPath(portletDataContext));
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(PATH_PREFIX_SERVICE);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(serviceName);
+
+		return sb.toString();
 	}
 
 	/**

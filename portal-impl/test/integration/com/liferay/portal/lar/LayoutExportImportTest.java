@@ -395,7 +395,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		layouts.add(stagingLayout);
 
 		List<Portlet> portlets = LayoutExporter.getPortletDataHandlerPortlets(
-			layouts);
+			group.getGroupId(), layouts);
 
 		Assert.assertEquals(2, portlets.size());
 

@@ -377,6 +377,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public String getServiceName() {
+		return null;
+	}
+
+	@Override
 	public PortletPreferences importData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)

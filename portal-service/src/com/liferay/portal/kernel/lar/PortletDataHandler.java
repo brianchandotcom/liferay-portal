@@ -172,6 +172,8 @@ public interface PortletDataHandler {
 
 	public String getPortletId();
 
+	public String getServiceName();
+
 	/**
 	 * Handles any special processing of the data when the portlet is imported
 	 * into a new layout. Can optionally return a modified version of

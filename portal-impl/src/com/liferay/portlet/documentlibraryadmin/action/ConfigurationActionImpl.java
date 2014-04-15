@@ -14,20 +14,14 @@
 
 package com.liferay.portlet.documentlibraryadmin.action;
 
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.documentlibrary.DLSettings;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,43 +56,9 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 	}
 
 	protected void validate(ActionRequest actionRequest) throws Exception {
-		validateDisplayStyleViews(actionRequest);
 		validateEmail(actionRequest, "emailFileEntryAdded");
 		validateEmail(actionRequest, "emailFileEntryUpdated");
 		validateEmailFrom(actionRequest);
-		validateRootFolder(actionRequest);
-	}
-
-	protected void validateDisplayStyleViews(ActionRequest actionRequest) {
-		String displayViews = GetterUtil.getString(
-			getParameter(actionRequest, "displayViews"));
-
-		if (Validator.isNull(displayViews)) {
-			SessionErrors.add(actionRequest, "displayViewsInvalid");
-		}
-	}
-
-	protected void validateRootFolder(ActionRequest actionRequest)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			getParameter(actionRequest, "rootFolderId"));
-
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				DLAppLocalServiceUtil.getFolder(rootFolderId);
-			}
-			catch (Exception e) {
-				if (e instanceof NoSuchFolderException ||
-					e instanceof NoSuchRepositoryEntryException) {
-
-					SessionErrors.add(actionRequest, "rootFolderIdInvalid");
-				}
-				else {
-					throw e;
-				}
-			}
-		}
 	}
 
 }

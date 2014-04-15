@@ -35,6 +35,10 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 <aui:button href="<%= addPublishConfigurationURL %>" value="new" />
 
+<%
+int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
+%>
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
@@ -45,10 +49,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </liferay-portlet:renderURL>
-
-<%
-int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-%>
 
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-saved-publish-templates"

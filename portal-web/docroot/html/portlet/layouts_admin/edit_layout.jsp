@@ -190,14 +190,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</div>
 				</c:if>
 
-				<liferay-security:permissionsURL
-					modelResource="<%= Layout.class.getName() %>"
-					modelResourceDescription="<%= selLayout.getName(locale) %>"
-					resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
-					var="permissionURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
 				<%
 				Group selLayoutGroup = selLayout.getGroup();
 				%>

@@ -77,11 +77,20 @@ public class UserDisplayTag extends TagSupport {
 			request.setAttribute(
 				"liferay-ui:user-display:displayStyle",
 				String.valueOf(_displayStyle));
+
+			if (Validator.isNull(_imageCssClass)) {
+				_imageCssClass = "img-circle";
+			}
+
 			request.setAttribute(
-				"liferay-ui:user-display:height", String.valueOf(_height));
+				"liferay-ui:user-display:imageCssClass", _imageCssClass);
+			request.setAttribute(
+				"liferay-ui:user-display:showUserDetails",
+				String.valueOf(_showUserDetails));
+			request.setAttribute(
+				"liferay-ui:user-display:showUserName",
+				String.valueOf(_showUserName));
 			request.setAttribute("liferay-ui:user-display:url", _url);
-			request.setAttribute(
-				"liferay-ui:user-display:width", String.valueOf(_width));
 
 			PortalIncludeUtil.include(pageContext, getStartPage());
 
@@ -105,8 +114,16 @@ public class UserDisplayTag extends TagSupport {
 		_endPage = endPage;
 	}
 
-	public void setHeight(Object height) {
-		_height = GetterUtil.getInteger(height);
+	public void setImageCssClass(String imageCssClass) {
+		_imageCssClass = imageCssClass;
+	}
+
+	public void setShowUserDetails(boolean showUserDetails) {
+		_showUserDetails = showUserDetails;
+	}
+
+	public void setShowUserName(boolean showUserName) {
+		_showUserName = showUserName;
 	}
 
 	public void setStartPage(String startPage) {
@@ -123,10 +140,6 @@ public class UserDisplayTag extends TagSupport {
 
 	public void setUserName(String userName) {
 		_userName = userName;
-	}
-
-	public void setWidth(Object width) {
-		_width = GetterUtil.getInteger(width);
 	}
 
 	protected String getEndPage() {
@@ -155,11 +168,12 @@ public class UserDisplayTag extends TagSupport {
 
 	private int _displayStyle = 1;
 	private String _endPage;
-	private int _height;
+	private String _imageCssClass;
+	private boolean _showUserDetails = true;
+	private boolean _showUserName = true;
 	private String _startPage;
 	private String _url;
 	private long _userId;
 	private String _userName;
-	private int _width;
 
 }

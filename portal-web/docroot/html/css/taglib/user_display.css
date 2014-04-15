@@ -26,13 +26,13 @@
 
 		.user-profile-image {
 			display: inline-block;
-			margin-top: -2px;
 			vertical-align: middle;
 		}
+	}
 
-		.user-name, .user-details{
-			display: none;
-		}
+	.avatar {
+		height: auto;
+		width: 65px;
 	}
 
 	.user-details {
@@ -50,11 +50,5 @@
 	.user-name {
 		font-size: 1.1em;
 		font-weight: bold;
-	}
-
-	&.display-style-3 {
-		.user-profile-image {
-			background: #333 no-repeat center;
-		}
 	}
 }

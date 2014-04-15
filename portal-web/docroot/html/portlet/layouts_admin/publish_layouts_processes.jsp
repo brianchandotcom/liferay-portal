@@ -90,9 +90,9 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		>
 			<liferay-ui:user-display
 				displayStyle="3"
-				height="30"
+				showUserDetails="<%= false %>"
+				showUserName="<%= false %>"
 				userId="<%= backgroundTask.getUserId() %>"
-				width="30"
 			/>
 		</liferay-ui:search-container-column-text>
 

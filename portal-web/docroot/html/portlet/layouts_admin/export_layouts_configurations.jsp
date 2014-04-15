@@ -65,9 +65,9 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 		>
 			<liferay-ui:user-display
 				displayStyle="3"
-				height="30"
+				showUserDetails="<%= false %>"
+				showUserName="<%= false %>"
 				userId="<%= exportImportConfiguration.getUserId() %>"
-				width="30"
 			/>
 		</liferay-ui:search-container-column-text>
 

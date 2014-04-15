@@ -4204,7 +4204,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>height</name>
+			<name>imageCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showUserDetails</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showUserName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -4220,11 +4230,6 @@
 		</attribute>
 		<attribute>
 			<name>userName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>width</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

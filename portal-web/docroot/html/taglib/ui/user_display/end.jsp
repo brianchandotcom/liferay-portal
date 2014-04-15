@@ -16,5 +16,7 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-	</div>
+	<c:if test="<%= showUserDetails %>">
+		</div>
+	</c:if>
 </div>

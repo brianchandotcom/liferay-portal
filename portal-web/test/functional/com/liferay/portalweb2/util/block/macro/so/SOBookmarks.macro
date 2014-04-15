@@ -91,9 +91,9 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_BING" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_BING" />
-				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_BING" />
+				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_MSN" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_MSN" />
+				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_MSN" />
 			</else>
 		</if>
 	</command>

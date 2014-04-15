@@ -381,13 +381,25 @@ body:first-of-type {
 		}
 	}
 
-	.portlet-borderless-container:hover {
-		.portlet-borderless-bar {
-			@extend %portlet-action-bar-fx-hover;
+	.portlet-borderless-container {
+		&:hover {
+			.portlet-borderless-bar {
+				@extend %portlet-action-bar-fx-hover;
+
+				.portlet-actions {
+					max-width: 500px;
+				}
+			}
 		}
 
-		.portlet-borderless-bar .portlet-actions {
-			max-width: 500px;
+		@include respond-to(phone, tablet) {
+			.portlet-borderless-bar {
+				@include single-transition(opacity, 0.5s, ease, 0s);
+
+				.portlet-actions {
+					max-width: 500px;
+				}
+			}
 		}
 	}
 

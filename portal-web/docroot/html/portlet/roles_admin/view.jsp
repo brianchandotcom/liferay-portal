@@ -43,11 +43,11 @@ String portletURLString = portletURL.toString();
 
 	<aui:nav-bar>
 		<aui:nav>
-			<portlet:renderURL var="viewRolesURL">
-				<portlet:param name="struts_action" value="/roles_admin/view" />
-			</portlet:renderURL>
-
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
+				<portlet:renderURL var="viewRolesURL">
+					<portlet:param name="struts_action" value="/roles_admin/view" />
+				</portlet:renderURL>
+
 				<liferay-portlet:renderURL varImpl="addRoleURL">
 					<portlet:param name="struts_action" value="/roles_admin/edit_role" />
 					<portlet:param name="redirect" value="<%= viewRolesURL %>" />

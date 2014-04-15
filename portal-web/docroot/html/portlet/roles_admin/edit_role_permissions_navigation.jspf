@@ -21,15 +21,6 @@
 
 	<div class="lfr-permission-navigation" id="<portlet:namespace />permissionNavigationDataContainer">
 		<div id="<portlet:namespace />permissionNavigationData">
-
-			<liferay-portlet:renderURL varImpl="viewPermissionsURL">
-				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
-				<portlet:param name="tabs1" value="roles" />
-				<portlet:param name="backURL" value="<%= backURL %>" />
-				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-			</liferay-portlet:renderURL>
-
 			<liferay-portlet:resourceURL varImpl="viewPermissionsResourceURL">
 				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
@@ -43,6 +34,14 @@
 
 			data.put("resource-href", viewPermissionsResourceURL.toString());
 			%>
+
+			<liferay-portlet:renderURL varImpl="viewPermissionsURL">
+				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
+				<portlet:param name="tabs1" value="roles" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
+				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			</liferay-portlet:renderURL>
 
 			<div class='permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>'>
 				<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= viewPermissionsURL.toString() %>">

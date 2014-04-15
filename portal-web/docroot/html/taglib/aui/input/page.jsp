@@ -36,7 +36,7 @@
 	<div class="<%= controlGroupCssClass %>">
 </c:if>
 
-<c:if test='<%= Validator.isNotNull(label) && !type.equals("assetCategories") && !type.equals("hidden") %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<label <%= labelTag %>>
 		<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
 				<%= labelContent %>
@@ -236,7 +236,7 @@
 	</div>
 </c:if>
 
-<c:if test='<%= !hideLabel && !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
 		</label>

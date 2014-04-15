@@ -59,8 +59,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 			PortletURL portletURL)
 		throws SearchException {
 
-		return indexer.getSummary(
-			document, locale, snippet, portletURL, null, null);
+		return indexer.getSummary(document, snippet, portletURL, null, null);
 	}
 
 	public abstract String getTitle(String keywords);

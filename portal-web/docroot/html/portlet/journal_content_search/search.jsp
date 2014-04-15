@@ -87,7 +87,7 @@
 
 					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					Summary summary = indexer.getSummary(doc, locale, StringPool.BLANK, summaryURL, renderRequest, renderResponse);
+					Summary summary = indexer.getSummary(doc, StringPool.BLANK, summaryURL, renderRequest, renderResponse);
 
 					summary.setHighlight(PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 					summary.setQueryTerms(queryTerms);

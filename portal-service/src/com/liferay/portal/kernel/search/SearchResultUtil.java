@@ -168,8 +168,7 @@ public class SearchResultUtil {
 			String snippet = document.get(Field.SNIPPET);
 
 			return indexer.getSummary(
-				document, locale, snippet, portletURL, portletRequest,
-				portletResponse);
+				document, snippet, portletURL, portletRequest, portletResponse);
 		}
 
 		return getSummary(className, classPK, locale, portletURL);

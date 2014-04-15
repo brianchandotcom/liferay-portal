@@ -27,6 +27,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
+import com.liferay.portlet.blogs.util.BlogsConstants;
 
 import java.util.List;
 
@@ -54,6 +55,11 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				},
 				BlogsEntry.class.getName()));
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
+	}
+
+	@Override
+	public String getServiceName() {
+		return BlogsConstants.SERVICE_NAME;
 	}
 
 	@Override

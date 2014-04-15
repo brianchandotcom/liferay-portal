@@ -34,6 +34,7 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.portlet.messageboards.util.MBConstants;
 
 import java.util.List;
 
@@ -67,6 +68,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
+	}
+
+	@Override
+	public String getServiceName() {
+		return MBConstants.SERVICE_NAME;
 	}
 
 	@Override

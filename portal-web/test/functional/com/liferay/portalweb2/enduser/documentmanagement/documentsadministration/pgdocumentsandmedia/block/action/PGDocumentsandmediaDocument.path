@@ -288,6 +288,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_COMMENT_EDIT_FIELD</td>
+	<td>//textarea[contains(@id,'editReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_DELETE</td>
+	<td>//span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_DELETE_LINK</td>
+	<td>//span[contains(.,'Delete')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_EDIT</td>
+	<td>//span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_EDIT_LINK</td>
+	<td>//span[contains(.,'Edit')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
 	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Reply')]</td>
 	<td></td>
@@ -295,6 +320,11 @@
 <tr>
 	<td>COMMENTS_CANCEL_BUTTON</td>
 	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_PUBLISH_BUTTON</td>
+	<td>//div[@class='taglib-discussion']//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

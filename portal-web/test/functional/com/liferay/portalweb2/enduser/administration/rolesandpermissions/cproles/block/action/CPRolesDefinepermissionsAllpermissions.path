@@ -345,6 +345,11 @@
 </tr>
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS-->
 <tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT</td>
 	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
 	<td></td>

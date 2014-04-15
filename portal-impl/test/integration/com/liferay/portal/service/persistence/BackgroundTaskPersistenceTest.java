@@ -134,10 +134,8 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setTaskExecutorClassName(ServiceTestUtil.randomString());
 
-		Map taskContextMap = new HashMap();
-
 		newBackgroundTask.setTaskContext(JSONFactoryUtil.serialize(
-				taskContextMap));
+				new HashMap<String, String>()));
 
 		newBackgroundTask.setCompleted(ServiceTestUtil.randomBoolean());
 
@@ -566,9 +564,8 @@ public class BackgroundTaskPersistenceTest {
 
 		backgroundTask.setTaskExecutorClassName(ServiceTestUtil.randomString());
 
-		Map taskContextMap = new HashMap();
-
-		backgroundTask.setTaskContext(JSONFactoryUtil.serialize(taskContextMap));
+		backgroundTask.setTaskContext(JSONFactoryUtil.serialize(
+				new HashMap<String, String>()));
 
 		backgroundTask.setCompleted(ServiceTestUtil.randomBoolean());
 

@@ -31,7 +31,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 %>
 
 <div class="field-row query-row">
-	<aui:select hideLabel="<%= true %>" inlineField="<%= true %>" label="display-activity-counter-name" name='<%= "preferences--displayActivityCounterName" + index + "--" %>'>
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {

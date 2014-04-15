@@ -53,50 +53,48 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 	<aui:fieldset>
 		<c:if test="<%= category != null %>">
-			<aui:field-wrapper label="parent-category">
 
-				<%
-				String parentCategoryName = "";
+			<%
+			String parentCategoryName = "";
 
-				try {
-					ShoppingCategory parentCategory = ShoppingCategoryServiceUtil.getCategory(parentCategoryId);
+			try {
+				ShoppingCategory parentCategory = ShoppingCategoryServiceUtil.getCategory(parentCategoryId);
 
-					parentCategoryName = parentCategory.getName();
-				}
-				catch (NoSuchCategoryException nsce) {
-				}
-				%>
+				parentCategoryName = parentCategory.getName();
+			}
+			catch (NoSuchCategoryException nsce) {
+			}
+			%>
 
-				<portlet:renderURL var="viewCategoryURL">
-					<portlet:param name="struts_action" value="/shopping/view" />
+			<portlet:renderURL var="viewCategoryURL">
+				<portlet:param name="struts_action" value="/shopping/view" />
+				<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+			</portlet:renderURL>
+
+			<div class="control-group">
+				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+
+				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/shopping/select_category" />
 					<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 				</portlet:renderURL>
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
+				<%
+				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void('');categoryWindow.focus();";
+				%>
 
-					<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/shopping/select_category" />
-						<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-					</portlet:renderURL>
+				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
 
-					<%
-					String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void('');categoryWindow.focus();";
-					%>
+				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+			</div>
 
-					<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
-
-					<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
-				</div>
-
-				<div id="<portlet:namespace />merge-with-parent-checkbox-div"
-					<c:if test="<%= category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
-						style="display: none;"
-					</c:if>
-				>
-					<aui:input name="mergeWithParentCategory" type="checkbox" />
-				</div>
-			</aui:field-wrapper>
+			<div id="<portlet:namespace />merge-with-parent-checkbox-div"
+				<c:if test="<%= category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+					style="display: none;"
+				</c:if>
+			>
+				<aui:input name="mergeWithParentCategory" type="checkbox" />
+			</div>
 		</c:if>
 
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" name="name" />

@@ -190,10 +190,10 @@ if (Validator.isNotNull(script)) {
 									<portlet:param name="classPK" value="<%= String.valueOf(parentStructureId) %>" />
 								</portlet:renderURL>
 
-								<liferay-ui:input-resource id="parentStructureName" url="<%= HtmlUtil.escape(parentStructureName) %>" />
+								<aui:input name="parentStructureName" type="resource" value="<%= parentStructureName %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:input-resource id="parentStructureName" url="" />
+								<aui:input name="parentStructureName" type="resource" />
 							</c:otherwise>
 						</c:choose>
 
@@ -204,14 +204,10 @@ if (Validator.isNotNull(script)) {
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
-					<aui:field-wrapper label="url">
-						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
-					</aui:field-wrapper>
+					<aui:input name="url" type="resource" value='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-						<aui:field-wrapper label="webdav-url">
-							<liferay-ui:input-resource url="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-						</aui:field-wrapper>
+						<aui:input name="webdavUrl" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 					</c:if>
 				</c:if>
 			</liferay-ui:panel>

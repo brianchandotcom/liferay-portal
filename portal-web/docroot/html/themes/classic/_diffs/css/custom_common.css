@@ -143,6 +143,10 @@
 
 	.control-group {
 		margin-bottom: 30px;
+
+		.input-resource-wrapper {
+			margin-bottom: 0;
+		}
 	}
 
 	.lfr-ddm-container, .portlet-staging-bar {

@@ -75,17 +75,13 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		<aui:row>
 			<aui:col width="<%= 60 %>">
 				<div class="lfr-asset-status">
-					<aui:field-wrapper label="state">
-						<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, workflowInstance.getState()) %>" />
-					</aui:field-wrapper>
+					<aui:input name="state" type="resource" value="<%= LanguageUtil.get(pageContext, workflowInstance.getState()) %>" />
 				</div>
 			</aui:col>
 
 			<aui:col width="<%= 33 %>">
 				<div class="lfr-asset-date">
-					<aui:field-wrapper label="end-date">
-						<liferay-ui:input-resource url='<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>' />
-					</aui:field-wrapper>
+					<aui:input name="endDate" type="resource" value='<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>' />
 				</div>
 			</aui:col>
 		</aui:row>

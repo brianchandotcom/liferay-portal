@@ -73,33 +73,30 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 				</aui:select>
 
-				<aui:field-wrapper label="structure">
+				<%
+				String ddmStructureName = StringPool.BLANK;
+				String ddmStructureDescription = StringPool.BLANK;
 
-					<%
-					String ddmStructureName = StringPool.BLANK;
-					String ddmStructureDescription = StringPool.BLANK;
+				if (ddmStructure != null) {
+					ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
+					ddmStructureDescription = HtmlUtil.escape(ddmStructure.getDescription(locale));
+				}
+				else {
+					ddmStructureName = LanguageUtil.get(pageContext, "any");
+				}
 
-					if (ddmStructure != null) {
-						ddmStructureName = HtmlUtil.escape(ddmStructure.getName(locale));
-						ddmStructureDescription = HtmlUtil.escape(ddmStructure.getDescription(locale));
-					}
-					else {
-						ddmStructureName = LanguageUtil.get(pageContext, "any");
-					}
+				if (Validator.isNotNull(ddmStructureDescription)) {
+					ddmStructureName = ddmStructureName + " (" + ddmStructureDescription+ ")";
+				}
+				%>
 
-					if (Validator.isNotNull(ddmStructureDescription)) {
-						ddmStructureName = ddmStructureName + " (" + ddmStructureDescription+ ")";
-					}
-					%>
+				<div class="control-group">
+					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />
 
-					<div class="input-append">
-						<liferay-ui:input-resource id="structure" url="<%= ddmStructureName %>" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 
-						<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
-
-						<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
-					</div>
-				</aui:field-wrapper>
+					<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>
 
@@ -127,7 +124,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				</aui:select>
 
 				<aui:field-wrapper label="order-by-column">
-					<aui:select hideLabel="<%= true %>" inlineField="<%= true %>" label="order-by-column" name="preferences--orderByCol--" value="<%= orderByCol %>">
+					<aui:select inlineField="<%= true %>" label="" name="preferences--orderByCol--" title="order-by-column" value="<%= orderByCol %>">
 						<aui:option label="display-date" />
 						<aui:option label="create-date" />
 						<aui:option label="modified-date" />
@@ -135,7 +132,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 						<aui:option label="id" />
 					</aui:select>
 
-					<aui:select hideLabel="<%= true %>" label="order-by-type" name="preferences--orderByType--" value="<%= orderByType %>">
+					<aui:select label="" name="preferences--orderByType--" title="order-by-type" value="<%= orderByType %>">
 						<aui:option label="ascending" value="asc" />
 						<aui:option label="descending" value="desc" />
 					</aui:select>

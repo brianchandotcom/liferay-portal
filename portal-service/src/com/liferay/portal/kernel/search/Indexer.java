@@ -73,9 +73,8 @@ public interface Indexer {
 		throws SearchException;
 
 	public Summary getSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			Document document, String snippet, PortletURL portletURL,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws SearchException;
 
 	public boolean hasPermission(

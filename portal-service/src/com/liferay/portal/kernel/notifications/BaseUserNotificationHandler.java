@@ -89,6 +89,10 @@ public abstract class BaseUserNotificationHandler
 			userNotificationDefinition.getUserNotificationDeliveryType(
 				deliveryType);
 
+		if (userNotificationDeliveryType == null) {
+			return false;
+		}
+
 		UserNotificationDelivery userNotificationDelivery =
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(

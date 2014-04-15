@@ -200,10 +200,6 @@ public class ${entity.name}PersistenceTest {
 					Blob new${column.methodName}Blob = new OutputBlob(new UnsyncByteArrayInputStream(new${column.methodName}Bytes), new${column.methodName}Bytes.length);
 				</#if>
 
-				<#if column.type == "String" && column.name == "taskContext">
-					Map taskContextMap = new HashMap();
-				</#if>
-
 				new${entity.name}.set${column.methodName}(
 
 				<#if column.type == "boolean">
@@ -218,10 +214,12 @@ public class ${entity.name}PersistenceTest {
 					ServiceTestUtil.nextDate()
 				<#elseif column.type == "Blob">
 					 new${column.methodName}Blob
-				<#elseif column.type == "String" && column.name == "taskContext">
-					JSONFactoryUtil.serialize(taskContextMap)
 				<#elseif column.type == "String">
-					ServiceTestUtil.randomString()
+					<#if entity.name == "BackgroundTask" && column.name == "taskContext">
+						JSONFactoryUtil.serialize(new HashMap<String, String>())
+					<#else>
+						ServiceTestUtil.randomString()
+					</#if>
 				</#if>
 
 				);
@@ -774,10 +772,6 @@ public class ${entity.name}PersistenceTest {
 					Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
 				</#if>
 
-				<#if column.type == "String" && column.name == "taskContext">
-					Map taskContextMap = new HashMap();
-				</#if>
-
 				${entity.varName}.set${column.methodName}(
 
 				<#if column.type == "boolean">
@@ -792,10 +786,12 @@ public class ${entity.name}PersistenceTest {
 					${column.name}Blob
 				<#elseif column.type == "Date">
 					ServiceTestUtil.nextDate()
-				<#elseif column.type == "String" && column.name == "taskContext">
-					JSONFactoryUtil.serialize(taskContextMap)
 				<#elseif column.type == "String">
-					ServiceTestUtil.randomString()
+					<#if entity.name == "BackgroundTask" && column.name == "taskContext">
+						JSONFactoryUtil.serialize(new HashMap<String, String>())
+					<#else>
+						ServiceTestUtil.randomString()
+					</#if>
 				</#if>
 
 				);
@@ -1039,8 +1035,6 @@ public class ${entity.name}PersistenceTest {
 							${column.name}Blob
 						<#elseif column.type == "Date">
 							ServiceTestUtil.nextDate()
-						<#elseif column.type == "String" && column.name == "taskContext">
-							JSONFactoryUtil.serialize(taskContextMap)
 						<#elseif column.type == "String">
 							ServiceTestUtil.randomString()
 						</#if>

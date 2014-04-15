@@ -534,8 +534,8 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param templateKey the unique string identifying the template
-	* @param includeGlobalTemplates whether to include the global scope in the
-	search
+	* @param includeAncestorTemplates whether to include the global scope in
+	the search
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
 	* @throws PortalException if a portal exception occurred
@@ -544,7 +544,7 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
-		boolean includeGlobalTemplates)
+		boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

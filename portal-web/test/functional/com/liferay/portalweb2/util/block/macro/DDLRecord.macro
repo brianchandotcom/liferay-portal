@@ -73,7 +73,8 @@
 		<if>
 			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertElementNotPresent" locator-key1="FIELD_LABEL" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertElementPresent" locator-key1="FIELD_LABEL_HIDDEN" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextNotEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<else>
 				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />

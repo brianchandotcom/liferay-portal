@@ -182,15 +182,15 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			<portlet:renderURL var="compareVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/journal/compare_versions" />
-				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			</portlet:renderURL>
-
 			var compareButton = A.one('#<portlet:namespace />compare');
 
 			if (compareButton) {
+				<portlet:renderURL var="compareVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/journal/compare_versions" />
+					<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+					<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+				</portlet:renderURL>
+
 				compareButton.on(
 					'click',
 					function(event) {

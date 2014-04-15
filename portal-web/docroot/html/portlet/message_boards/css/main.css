@@ -127,8 +127,6 @@
 		}
 	}
 
-
-
 	.thread-body {
 		overflow: hidden;
 		padding: 15px;
@@ -140,7 +138,6 @@
 
 	.message-container .user-info {
 		border-right: 1px solid #CCC;
-
 		padding: 5px;
 
 		.user-name {
@@ -232,13 +229,11 @@
 		width: 100%;
 	}
 
-
 	.thread-controls {
 		border: 1px solid #CCC;
 		margin-bottom: 5px;
 		padding: 3px 5px;
 	}
-
 
 	.thread-navigation, .thread-priority {
 		float: left;
@@ -258,8 +253,8 @@
 
 	.message-container .thread-message-view, .thread-view {
 		border-collapse: collapse;
-		padding: 0;
 		min-width: 400px;
+		padding: 0;
 		width: 100%;
 	}
 

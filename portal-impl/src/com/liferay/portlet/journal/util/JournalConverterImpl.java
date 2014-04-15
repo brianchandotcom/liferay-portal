@@ -420,8 +420,14 @@ public class JournalConverterImpl implements JournalConverter {
 			"dynamic-content");
 
 		for (Element dynamicContentElement : dynamicContentElements) {
-			Locale locale = LocaleUtil.fromLanguageId(
-				dynamicContentElement.attributeValue("language-id"));
+			Locale locale = LocaleUtil.fromLanguageId(defaultLocale);
+
+			String languageId = dynamicContentElement.attributeValue(
+				"language-id");
+
+			if (Validator.isNotNull(languageId)) {
+				locale = LocaleUtil.fromLanguageId(languageId);
+			}
 
 			Serializable serializable = getFieldValue(
 				dataType, type, dynamicContentElement);

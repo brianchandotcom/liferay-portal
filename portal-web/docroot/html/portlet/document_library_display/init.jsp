@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
 page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
+page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
@@ -31,7 +31,6 @@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalSer
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearchTerms" %>
@@ -43,9 +42,9 @@ if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
+DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 
-long rootFolderId = dlSettings.getRootFolderId();
+long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -64,9 +63,9 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
-boolean showSubfolders = dlSettings.getShowSubfolders();
-int foldersPerPage = dlSettings.getFoldersPerPage();
+boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
+boolean showSubfolders = dlPortletInstanceSettings.getShowSubfolders();
+int foldersPerPage = dlPortletInstanceSettings.getFoldersPerPage();
 
 String allFolderColumns = "name,num-of-folders,num-of-documents";
 
@@ -92,13 +91,13 @@ if (showActions) {
 	allFolderColumns += ",action";
 }
 
-String[] folderColumns = StringUtil.split(dlSettings.getFolderColumns());
+String[] folderColumns = StringUtil.split(dlPortletInstanceSettings.getFolderColumns());
 
 if (!showActions) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
-int fileEntriesPerPage = dlSettings.getFileEntriesPerPage();
+int fileEntriesPerPage = dlPortletInstanceSettings.getFileEntriesPerPage();
 
 String allFileEntryColumns = "name,size";
 
@@ -112,14 +111,14 @@ if (showActions) {
 	allFileEntryColumns += ",action";
 }
 
-String[] fileEntryColumns = StringUtil.split(dlSettings.getFileEntryColumns());
+String[] fileEntryColumns = StringUtil.split(dlPortletInstanceSettings.getFileEntryColumns());
 
 if (!showActions) {
 	fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
 }
 
-boolean enableRatings = dlSettings.getEnableRatings();
-boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
+boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
+boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 boolean mergedView = false;
 

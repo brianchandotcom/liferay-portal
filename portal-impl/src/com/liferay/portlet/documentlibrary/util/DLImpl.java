@@ -62,6 +62,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -180,10 +181,13 @@ public class DLImpl implements DL {
 
 		data.put("direction-right", Boolean.TRUE.toString());
 
-		DLSettings dlSettings = getDLSettings(
-			themeDisplay.getScopeGroupId(), request);
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		data.put("folder-id", dlSettings.getDefaultFolderId());
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			new DLPortletInstanceSettings(
+				portletDisplay.getPortletInstanceSettings());
+
+		data.put("folder-id", dlPortletInstanceSettings.getDefaultFolderId());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -200,10 +204,13 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DLSettings dlSettings = getDLSettings(
-			themeDisplay.getScopeGroupId(), request);
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		long defaultFolderId = dlSettings.getDefaultFolderId();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			new DLPortletInstanceSettings(
+				portletDisplay.getPortletInstanceSettings());
+
+		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 

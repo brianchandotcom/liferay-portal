@@ -25,6 +25,7 @@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.SearchResult" %><%@
 page import="com.liferay.portal.repository.util.RepositoryFactoryUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
@@ -90,12 +91,13 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
+DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 
-int entriesPerPage = dlSettings.getEntriesPerPage();
+int entriesPerPage = dlPortletInstanceSettings.getEntriesPerPage();
 
-String[] displayViews = StringUtil.split(dlSettings.getDisplayViews());
+String[] displayViews = StringUtil.split(dlPortletInstanceSettings.getDisplayViews());
 
-long rootFolderId = dlSettings.getRootFolderId();
+long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -114,7 +116,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
+boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
 
 String portletId = portletDisplay.getId();
 
@@ -123,13 +125,13 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletName = portletResource;
 }
 
-boolean showActions = dlSettings.getShowActions();
+boolean showActions = dlPortletInstanceSettings.getShowActions();
 boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
 boolean showAddFolderButton = false;
-boolean showFolderMenu = dlSettings.getShowFolderMenu();
+boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
-boolean showTabs = dlSettings.getShowTabs();
+boolean showTabs = dlPortletInstanceSettings.getShowTabs();
 
 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	showActions = true;
@@ -143,7 +145,7 @@ else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.eq
 	showAssetMetadata = true;
 }
 
-boolean enableRelatedAssets = dlSettings.getEnableRelatedAssets();
+boolean enableRelatedAssets = dlPortletInstanceSettings.getEnableRelatedAssets();
 
 String allEntryColumns = "name,size,status";
 
@@ -157,7 +159,7 @@ if (showActions) {
 
 allEntryColumns += ",modified-date,create-date";
 
-String[] entryColumns = StringUtil.split(dlSettings.getEntryColumns());
+String[] entryColumns = StringUtil.split(dlPortletInstanceSettings.getEntryColumns());
 
 if (!showActions) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
@@ -166,8 +168,8 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !portletId.equals(Po
 	entryColumns = ArrayUtil.append(entryColumns, "action");
 }
 
-boolean enableRatings = dlSettings.getEnableRatings();
-boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
+boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
+boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

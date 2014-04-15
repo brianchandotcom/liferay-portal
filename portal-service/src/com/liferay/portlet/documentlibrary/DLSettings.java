@@ -19,7 +19,6 @@ import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Set;
@@ -31,15 +30,6 @@ public class DLSettings extends BaseServiceSettings {
 
 	public DLSettings(Settings settings) {
 		super(settings, _fallbackKeys);
-	}
-
-	public long getDefaultFolderId() {
-		return typedSettings.getLongValue(
-			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
-	public String getDisplayViews() {
-		return typedSettings.getValue("displayViews");
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedBody() {
@@ -104,77 +94,15 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
-	public boolean getEnableCommentRatings() {
-		return typedSettings.getBooleanValue("enableCommentRatings");
-	}
-
-	public boolean getEnableRatings() {
-		return typedSettings.getBooleanValue("enableRatings");
-	}
-
-	public boolean getEnableRelatedAssets() {
-		return typedSettings.getBooleanValue("enableRelatedAssets");
-	}
-
-	public int getEntriesPerPage() {
-		return typedSettings.getIntegerValue("entriesPerPage");
-	}
-
-	public String getEntryColumns() {
-		return typedSettings.getValue("entryColumns");
-	}
-
-	public int getFileEntriesPerPage() {
-		return typedSettings.getIntegerValue("fileEntriesPerPage");
-	}
-
-	public String getFileEntryColumns() {
-		return typedSettings.getValue("fileEntryColumns");
-	}
-
-	public String getFolderColumns() {
-		return typedSettings.getValue("folderColumns");
-	}
-
-	public int getFoldersPerPage() {
-		return typedSettings.getIntegerValue("foldersPerPage");
-	}
-
 	public String[] getMediaGalleryMimeTypes() {
 		return typedSettings.getValues(
 			"mimeTypes", _defaultMediaGalleryMimeTypes);
-	}
-
-	public long getRootFolderId() {
-		return typedSettings.getLongValue(
-			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
-	public boolean getShowActions() {
-		return typedSettings.getBooleanValue("showActions");
-	}
-
-	public boolean getShowFolderMenu() {
-		return typedSettings.getBooleanValue("showFolderMenu");
-	}
-
-	public boolean getShowFoldersSearch() {
-		return typedSettings.getBooleanValue("showFoldersSearch");
-	}
-
-	public boolean getShowSubfolders() {
-		return typedSettings.getBooleanValue("showSubfolders");
-	}
-
-	public boolean getShowTabs() {
-		return typedSettings.getBooleanValue("showTabs");
 	}
 
 	private static String[] _defaultMediaGalleryMimeTypes;
 	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 
 	static {
-		_fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
 		_fallbackKeys.add(
 			"emailFileEntryAddedBody",
 			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY);

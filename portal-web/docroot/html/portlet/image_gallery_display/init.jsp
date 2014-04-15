@@ -18,6 +18,7 @@
 
 <%@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
@@ -28,7 +29,6 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryP
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
@@ -42,8 +42,9 @@ if (layout.isTypeControlPanel()) {
 }
 
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
+DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 
-long rootFolderId = dlSettings.getRootFolderId();
+long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -62,7 +63,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
+boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
 
 String portletId = portletDisplay.getId();
 
@@ -70,12 +71,12 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-boolean showActions = dlSettings.getShowActions();
-boolean showFolderMenu = dlSettings.getShowFolderMenu();
-boolean showTabs = dlSettings.getShowTabs();
+boolean showActions = dlPortletInstanceSettings.getShowActions();
+boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
+boolean showTabs = dlPortletInstanceSettings.getShowTabs();
 
-boolean enableRatings = dlSettings.getEnableRatings();
-boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
+boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
+boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());

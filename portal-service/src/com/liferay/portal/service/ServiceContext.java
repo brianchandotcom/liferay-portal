@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -65,6 +66,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
+@JSON
 public class ServiceContext implements Cloneable, Serializable {
 
 	/**
@@ -460,6 +462,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _layoutURL;
 	}
 
+	@JSON(include = false)
 	public LiferayPortletRequest getLiferayPortletRequest() {
 		if (_request == null) {
 			return null;
@@ -472,6 +475,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		return liferayPortletRequest;
 	}
 
+	@JSON(include = false)
 	public LiferayPortletResponse getLiferayPortletResponse() {
 		if (_request == null) {
 			return null;
@@ -618,10 +622,12 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _remoteHost;
 	}
 
+	@JSON(include = false)
 	public HttpServletRequest getRequest() {
 		return _request;
 	}
 
+	@JSON(include = false)
 	public HttpServletResponse getResponse() {
 		LiferayPortletResponse liferayPortletResponse =
 			getLiferayPortletResponse();

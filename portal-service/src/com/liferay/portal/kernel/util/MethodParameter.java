@@ -107,6 +107,12 @@ public class MethodParameter {
 			}
 		}
 
+		if (sb.length() > 0) {
+			list.add(sb.toString());
+
+			sb.setLength(0);
+		}
+
 		return list.toArray(new String[list.size()]);
 	}
 
@@ -122,57 +128,41 @@ public class MethodParameter {
 		for (int i = 0; i < signatures.length; i++) {
 			String className = signatures[i];
 
-			char c = className.charAt(0);
+			className = _signatureToClassName(className);
 
-			if (c == 'B') {
-				types[i] = byte.class;
-			}
-			else if (c == 'C') {
-				types[i] = char.class;
-			}
-			else if (c == 'D') {
-				types[i] = double.class;
-			}
-			else if (c == 'F') {
-				types[i] = float.class;
-			}
-			else if (c == 'I') {
-				types[i] = int.class;
-			}
-			else if (c == 'J') {
-				types[i] = long.class;
-			}
-			else if (c == 'L') {
-				className = className.substring(1, className.length() - 1);
-				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
-
-				types[i] = contextClassLoader.loadClass(className);
-			}
-			else if (c == 'S') {
-				types[i] = short.class;
-			}
-			else if (c == 'Z') {
-				types[i] = boolean.class;
-			}
-			else if (c == 'V') {
-				types[i] = void.class;
-			}
-			else if (c == CharPool.OPEN_BRACKET) {
-				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
-
-				try {
-					types[i] = contextClassLoader.loadClass(className);
-				}
-				catch (ClassNotFoundException cnfe) {
-					types[i] = Class.forName(className);
-				}
-			}
-			else {
-				throw new ClassNotFoundException(className);
-			}
+			types[i] = contextClassLoader.loadClass(className);
 		}
 
 		return types;
+	}
+
+	private static String _signatureToClassName(String desc) {
+		String className = desc;
+		switch (desc.charAt(0)) {
+			case 'B':
+			case 'C':
+			case 'D':
+			case 'F':
+			case 'I':
+			case 'J':
+			case 'S':
+			case 'Z':
+			case 'V':
+				if (desc.length() != 1) {
+					throw new IllegalArgumentException("Invalid: " + desc);
+				}
+
+				break;
+			case 'L':
+				className = className.substring(1, className.length() - 1);
+			case '[':
+				className = className.replace('/', '.');
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid: " + desc);
+		}
+
+		return className;
 	}
 
 	private Class<?>[] _genericTypes;

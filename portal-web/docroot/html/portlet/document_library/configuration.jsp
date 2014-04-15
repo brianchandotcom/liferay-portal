@@ -17,15 +17,6 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = "/document_library_display";
-
-if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
-	strutsAction = "/document_library";
-}
-else if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	strutsAction = "/document_library_admin";
-}
-
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
@@ -190,7 +181,7 @@ catch (NoSuchFolderException nsfe) {
 			</liferay-ui:panel-container>
 
 			<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
+				<portlet:param name="struts_action" value="/document_library/select_folder" />
 			</liferay-portlet:renderURL>
 
 			<aui:script use="aui-base">

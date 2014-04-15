@@ -92,9 +92,7 @@ if (workflowEnabled) {
 			%>
 
 			<c:if test="<%= folder != null %>">
-				<aui:field-wrapper label="parent-folder">
-					<liferay-ui:input-resource url="<%= parentFolderName %>" />
-				</aui:field-wrapper>
+				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
 			</c:if>
 
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />

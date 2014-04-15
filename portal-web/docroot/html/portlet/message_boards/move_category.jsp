@@ -44,7 +44,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="parent-category[message-board]">
+		<aui:field-wrapper >
 
 			<%
 			String parentCategoryName = StringPool.BLANK;
@@ -58,8 +58,8 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 			%>
 
-			<div class="input-append">
-				<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
+			<div class="control-group">
+				<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
 				<aui:button name="selectCategoryButton" value="select" />
 

@@ -157,9 +157,7 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 			<table class="lfr-table">
 			<tr>
 				<td>
-					<aui:field-wrapper label="default-language">
-						<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-					</aui:field-wrapper>
+					<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 				</td>
 				<td>
 					<aui:select label="localized-language" name="prioritiesLanguageId" onClick='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
@@ -414,9 +412,7 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 				<table class="lfr-table">
 				<tr>
 					<td class="lfr-label">
-						<aui:field-wrapper label="default-language">
-							<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-						</aui:field-wrapper>
+						<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 					</td>
 					<td class="lfr-label">
 						<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= renderResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">

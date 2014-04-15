@@ -67,19 +67,17 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
-				<aui:field-wrapper label="root-folder">
-					<div class="input-append">
-						<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
+				<div class="control-group">
+					<aui:input name="rootFolder" type="resource" value="<%= rootFolderName %>" />
 
-						<aui:button name="openFolderSelectorButton" value="select" />
+					<aui:button name="openFolderSelectorButton" value="select" />
 
-						<%
-						String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
-						%>
+					<%
+					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+					%>
 
-						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-					</div>
-				</aui:field-wrapper>
+					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
 
 				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
 

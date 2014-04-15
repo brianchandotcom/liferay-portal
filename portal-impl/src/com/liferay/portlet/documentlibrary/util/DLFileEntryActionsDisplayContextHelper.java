@@ -26,9 +26,9 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 /**
  * @author Iván Zaera
  */
-public class DLActionsDisplayContextHelper {
+public class DLFileEntryActionsDisplayContextHelper {
 
-	public DLActionsDisplayContextHelper(
+	public DLFileEntryActionsDisplayContextHelper(
 		PermissionChecker permissionChecker, FileEntry fileEntry,
 		FileVersion fileVersion) {
 

@@ -82,9 +82,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  layoutUuid the unique string identifying the web content
 	 *         article's display page
 	 * @param  displayDateMonth the month the web content article is set to
@@ -198,9 +196,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  layoutUuid the unique string identifying the web content
 	 *         article's display page
 	 * @param  displayDateMonth the month the web content article is set to
@@ -575,7 +571,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version.
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -603,7 +600,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the latest web content matching the group and article ID.
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1419,9 +1417,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -1497,9 +1493,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -1656,9 +1650,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -1717,9 +1709,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -1912,9 +1902,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
+	 *         template
 	 * @param  layoutUuid the unique string identifying the web content
 	 *         article's display page
 	 * @param  displayDateMonth the month the web content article is set to

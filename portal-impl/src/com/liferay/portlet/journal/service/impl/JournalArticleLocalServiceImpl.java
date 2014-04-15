@@ -1580,6 +1580,22 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the web content associated with the web content article and DDM
+	 * template.
+	 *
+	 * @param  article the web content article
+	 * @param  ddmTemplateKey the primary key of the web content article's DDM
+	 *         template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the language translation to get
+	 * @param  portletRequestModel the portlet request model
+	 * @param  themeDisplay the theme display
+	 * @return the web content associated with the DDM template
+	 * @throws PortalException if a matching DDM template could not be found, or
+	 *         if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getArticleContent(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
@@ -1605,15 +1621,13 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param      article the web content article
 	 * @param      ddmTemplateKey the primary key of the web content article's
-	 *             DDM template (optionally <code>null</code>). If the article
-	 *             is related to a DDM structure, the template's structure must
-	 *             match it.
+	 *             DDM template
 	 * @param      viewMode the mode in which the web content is being viewed
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
 	 * @return     the web content associated with the DDM template
-	 * @throws     PortalException if a matching DDM template could not be found
-	 *             or if a portal exception occurred
+	 * @throws     PortalException if a matching DDM template could not be
+	 *             found, or if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getArticleContent(JournalArticle, String, String, String,
@@ -1765,15 +1779,13 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest web content matching the group and article ID, and
-	 * associated with DDM template key.
+	 * associated with the DDM template.
 	 *
 	 * @param      groupId the primary key of the web content article's group
 	 * @param      articleId the primary key of the web content article
 	 * @param      viewMode the mode in which the web content is being viewed
 	 * @param      ddmTemplateKey the primary key of the web content article's
-	 *             DDM template (optionally <code>null</code>). If the article
-	 *             is related to a DDM structure, the template's structure must
-	 *             match it.
+	 *             DDM template
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
 	 * @return     the matching web content

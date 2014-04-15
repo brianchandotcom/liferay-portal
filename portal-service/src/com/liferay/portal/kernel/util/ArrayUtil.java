@@ -1808,21 +1808,21 @@ public class ArrayUtil {
 	/**
 	 * @see ListUtil#toString(List, Accessor)
 	 */
-	public static <T, V> String toString(T[] list, Accessor<T, V> accessor) {
+	public static <T, A> String toString(T[] list, Accessor<T, A> accessor) {
 		return toString(list, accessor, StringPool.COMMA);
 	}
 
 	/**
 	 * @see ListUtil#toString(List, Accessor, String)
 	 */
-	public static <T, V> String toString(
-		T[] list, Accessor<T, V> accessor, String delimiter) {
+	public static <T, A> String toString(
+		T[] list, Accessor<T, A> accessor, String delimiter) {
 
 		return toString(list, accessor, delimiter, null);
 	}
 
-	public static <T, V> String toString(
-		T[] list, Accessor<T, V> accessor, String delimiter, Locale locale) {
+	public static <T, A> String toString(
+		T[] list, Accessor<T, A> accessor, String delimiter, Locale locale) {
 
 		if (isEmpty(list)) {
 			return StringPool.BLANK;
@@ -1833,14 +1833,14 @@ public class ArrayUtil {
 		for (int i = 0; i < list.length; i++) {
 			T bean = list[i];
 
-			V value = accessor.get(bean);
+			A attribute = accessor.get(bean);
 
-			if (value != null) {
+			if (attribute != null) {
 				if (locale != null) {
-					sb.append(LanguageUtil.get(locale, value.toString()));
+					sb.append(LanguageUtil.get(locale, attribute.toString()));
 				}
 				else {
-					sb.append(value);
+					sb.append(attribute);
 				}
 			}
 

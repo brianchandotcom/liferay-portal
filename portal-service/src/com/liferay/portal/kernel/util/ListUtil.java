@@ -366,6 +366,16 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <T, A> List<A> toList(List<T> list, Accessor<T, A> accessor) {
+		List<A> aList = new ArrayList<A>(list.size());
+
+		for (T t : list) {
+			aList.add(accessor.get(t));
+		}
+
+		return aList;
+	}
+
 	public static List<Long> toList(long[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Long>();
@@ -397,8 +407,8 @@ public class ListUtil {
 	/**
 	 * @see ArrayUtil#toString(Object[], Accessor)
 	 */
-	public static <T, V> String toString(
-		List<? extends T> list, Accessor<T, V> accessor) {
+	public static <T, A> String toString(
+		List<? extends T> list, Accessor<T, A> accessor) {
 
 		return toString(list, accessor, StringPool.COMMA);
 	}
@@ -406,8 +416,8 @@ public class ListUtil {
 	/**
 	 * @see ArrayUtil#toString(Object[], Accessor, String)
 	 */
-	public static <T, V> String toString(
-		List<? extends T> list, Accessor<T, V> accessor, String delimiter) {
+	public static <T, A> String toString(
+		List<? extends T> list, Accessor<T, A> accessor, String delimiter) {
 
 		if (isEmpty(list)) {
 			return StringPool.BLANK;
@@ -418,10 +428,10 @@ public class ListUtil {
 		for (int i = 0; i < list.size(); i++) {
 			T bean = list.get(i);
 
-			V value = accessor.get(bean);
+			A attribute = accessor.get(bean);
 
-			if (value != null) {
-				sb.append(value);
+			if (attribute != null) {
+				sb.append(attribute);
 			}
 
 			if ((i + 1) != list.size()) {

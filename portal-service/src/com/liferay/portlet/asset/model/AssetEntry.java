@@ -40,6 +40,16 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 			public Long get(AssetEntry assetEntry) {
 				return assetEntry.getEntryId();
 			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AssetEntry> getTypeClass() {
+				return AssetEntry.class;
+			}
 		};
 
 	public com.liferay.portlet.asset.model.AssetRenderer getAssetRenderer();

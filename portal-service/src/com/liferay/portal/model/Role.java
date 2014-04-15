@@ -39,12 +39,32 @@ public interface Role extends RoleModel, PersistedModel {
 			public Long get(Role role) {
 				return role.getRoleId();
 			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Role> getTypeClass() {
+				return Role.class;
+			}
 		};
 
 	public static final Accessor<Role, String> NAME_ACCESSOR = new Accessor<Role, String>() {
 			@Override
 			public String get(Role role) {
 				return role.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<Role> getTypeClass() {
+				return Role.class;
 			}
 		};
 

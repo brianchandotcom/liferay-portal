@@ -42,6 +42,16 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 				return fileEntry.getFileEntryId();
 			}
 
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<FileEntry> getTypeClass() {
+				return FileEntry.class;
+			}
+
 		};
 
 	public boolean containsPermission(

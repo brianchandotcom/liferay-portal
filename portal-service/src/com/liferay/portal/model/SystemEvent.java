@@ -39,6 +39,16 @@ public interface SystemEvent extends SystemEventModel, PersistedModel {
 			public Long get(SystemEvent systemEvent) {
 				return systemEvent.getSystemEventId();
 			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SystemEvent> getTypeClass() {
+				return SystemEvent.class;
+			}
 		};
 
 	public java.lang.String getReferrerClassName();

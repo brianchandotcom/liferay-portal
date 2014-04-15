@@ -56,6 +56,16 @@ public interface ${entity.name} extends
 				return ${entity.varName}.getUuid();
 			}
 
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<${entity.name}> getTypeClass() {
+				return ${entity.name}.class;
+			}
+
 		};
 	</#if>
 
@@ -66,6 +76,16 @@ public interface ${entity.name} extends
 				@Override
 				public ${serviceBuilder.getPrimitiveObj(column.type)} get(${entity.name} ${entity.varName}) {
 					return ${entity.varName}.get${column.methodName}();
+				}
+
+				@Override
+				public Class<${serviceBuilder.getPrimitiveObj(column.type)}> getAttributeClass() {
+					return ${serviceBuilder.getPrimitiveObj(column.type)}.class;
+				}
+
+				@Override
+				public Class<${entity.name}> getTypeClass() {
+					return ${entity.name}.class;
 				}
 
 			};

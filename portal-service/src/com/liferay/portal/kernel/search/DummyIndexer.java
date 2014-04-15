@@ -108,7 +108,7 @@ public class DummyIndexer implements Indexer {
 
 	@Override
 	public Summary getSummary(
-		Document document, Locale locale, String snippet, PortletURL portletURL,
+		Document document, String snippet, PortletURL portletURL,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return null;

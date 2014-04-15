@@ -329,17 +329,18 @@ public abstract class BaseIndexer implements Indexer {
 			PortletURL portletURL)
 		throws SearchException {
 
-		return getSummary(document, locale, snippet, portletURL, null, null);
+		return getSummary(document, snippet, portletURL, null, null);
 	}
 
 	@Override
 	public Summary getSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			Document document, String snippet, PortletURL portletURL,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws SearchException {
 
 		try {
+			Locale locale = getLocale(portletRequest);
+
 			Summary summary = doGetSummary(
 				document, locale, snippet, portletURL, portletRequest,
 				portletResponse);

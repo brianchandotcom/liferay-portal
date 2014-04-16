@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.service.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
@@ -45,7 +46,7 @@ public class BookmarksEntryPermissionTest extends BasePermissionTestCase {
 			BookmarksEntryPermission.contains(
 				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 
-		removePortletModelViewPermission();
+		removePortletModelViewPermission(ResourceConstants.SCOPE_GROUP);
 
 		Assert.assertFalse(
 			BookmarksEntryPermission.contains(

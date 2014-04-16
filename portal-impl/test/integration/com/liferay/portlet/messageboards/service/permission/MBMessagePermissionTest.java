@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -44,7 +45,7 @@ public class MBMessagePermissionTest extends BasePermissionTestCase {
 			MBMessagePermission.contains(
 				permissionChecker, _submessage, ActionKeys.VIEW));
 
-		removePortletModelViewPermission();
+		removePortletModelViewPermission(ResourceConstants.SCOPE_GROUP);
 
 		Assert.assertFalse(
 			MBMessagePermission.contains(

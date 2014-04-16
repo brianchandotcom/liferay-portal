@@ -17,11 +17,14 @@ package com.liferay.portlet.documentlibrary.service.permission;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
@@ -46,7 +49,11 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 			DLFileEntryPermission.contains(
 				permissionChecker, _subfileEntry, ActionKeys.VIEW));
 
-		removePortletModelViewPermission();
+		removePortletModelViewPermission(ResourceConstants.SCOPE_GROUP);
+
+		// See LPS-44724
+
+		removePortletModelViewPermission(ResourceConstants.SCOPE_INDIVIDUAL);
 
 		Assert.assertFalse(
 			DLFileEntryPermission.contains(

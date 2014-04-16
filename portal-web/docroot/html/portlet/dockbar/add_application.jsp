@@ -210,5 +210,5 @@ refererURL.setParameter("updateLayout", "true");
 		}
 	);
 
-	Liferay.component('addApplication', addApplication);
+	Liferay.component('<portlet:namespace />addApplication', addApplication);
 </aui:script>

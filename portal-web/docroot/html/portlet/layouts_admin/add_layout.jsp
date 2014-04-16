@@ -255,5 +255,5 @@ else {
 		}
 	);
 
-	Liferay.component('addPage', addPage);
+	Liferay.component('<portlet:namespace />addPage', addPage);
 </aui:script>

@@ -7,6 +7,8 @@ AUI.add(
 
 		var Util = Liferay.Util;
 
+		var ADD_PANEL_COMPONENTS = ['addApplication', 'addContent', 'addPage'];
+
 		var BODY = A.getBody();
 
 		var CSS_ADD_CONTENT = 'lfr-has-add-content';
@@ -293,9 +295,17 @@ AUI.add(
 						BODY.detach('layoutControlsEsc|key');
 
 						if (panelId === STR_ADD_PANEL) {
-							Liferay.component('addApplication').destroy();
-							Liferay.component('addContent').destroy();
-							Liferay.component('addPage').destroy();
+							A.Array.each(
+								ADD_PANEL_COMPONENTS,
+								function(item, index, collection) {
+									var componentName = Liferay.Util.ns(instance._namespace, item);
+									var component = Liferay.component(componentName);
+
+									if (component) {
+										component.destroy();
+									}
+								}
+							);
 						}
 					}
 

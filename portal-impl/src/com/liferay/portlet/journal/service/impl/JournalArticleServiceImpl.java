@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -570,6 +571,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return article;
 	}
 
+	public String getArticleContent(
+			long groupId, String articleId, double version, String languageId,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, version,
+			ActionKeys.VIEW);
+
+		return journalArticleLocalService.getArticleContent(
+			groupId, articleId, version, null, null, languageId,
+			portletRequestModel, themeDisplay);
+	}
+
 	/**
 	 * Returns the web content from the web content article matching the group,
 	 * article ID, and version.
@@ -597,6 +612,19 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		return journalArticleLocalService.getArticleContent(
 			groupId, articleId, version, null, languageId, themeDisplay);
+	}
+
+	public String getArticleContent(
+			long groupId, String articleId, String languageId,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, ActionKeys.VIEW);
+
+		return journalArticleLocalService.getArticleContent(
+			groupId, articleId, null, null, languageId, portletRequestModel,
+			themeDisplay);
 	}
 
 	/**

@@ -74,7 +74,7 @@ public class PortalServicePermission extends BasicPermission {
 		return _shortName;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkService(
 			Object object, Method method, Object[] arguments);

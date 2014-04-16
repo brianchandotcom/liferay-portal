@@ -181,7 +181,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		}
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public InvocationHandler getInvocationHandler(
 			InvocationHandler invocationHandler, AdvisedSupport advisedSupport);

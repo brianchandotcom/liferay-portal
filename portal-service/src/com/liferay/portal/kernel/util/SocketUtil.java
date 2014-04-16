@@ -111,7 +111,7 @@ public class SocketUtil {
 
 	}
 
-	public static interface ServerSocketConfigurator {
+	public interface ServerSocketConfigurator {
 
 		public void configure(ServerSocket serverSocket) throws SocketException;
 

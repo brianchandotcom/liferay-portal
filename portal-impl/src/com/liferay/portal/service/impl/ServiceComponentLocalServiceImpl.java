@@ -221,7 +221,7 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void doUpgradeDB(
 				DoUpgradeDBPrivilegedExceptionAction

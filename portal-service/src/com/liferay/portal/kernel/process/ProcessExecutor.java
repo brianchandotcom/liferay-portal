@@ -310,7 +310,7 @@ public class ProcessExecutor {
 
 	}
 
-	public static interface ShutdownHook {
+	public interface ShutdownHook {
 
 		public static final int BROKEN_PIPE_CODE = 1;
 

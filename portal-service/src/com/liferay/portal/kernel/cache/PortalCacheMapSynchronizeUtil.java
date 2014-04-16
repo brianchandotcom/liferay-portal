@@ -31,7 +31,7 @@ public class PortalCacheMapSynchronizeUtil {
 			new SynchronizeCacheListener<K, V>(map, synchronizer));
 	}
 
-	public static interface Synchronizer<K extends Serializable, V> {
+	public interface Synchronizer<K extends Serializable, V> {
 
 		public void onSynchronize(
 			Map<? extends K, ? extends V> map, K key, V value);

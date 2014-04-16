@@ -352,7 +352,7 @@ public class DistributedRegistryTest {
 		public static String name9 = "name9";
 	}
 
-	private static interface ParentInterface {
+	private interface ParentInterface {
 
 		@Distributed(direction = Direction.REQUEST, matchType = MatchType.EXACT)
 		public static final String name1 = "name1";

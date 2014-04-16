@@ -175,7 +175,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		return initDataSource(properties);
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public DataSource getDataSource(DataSource dataSource);
 

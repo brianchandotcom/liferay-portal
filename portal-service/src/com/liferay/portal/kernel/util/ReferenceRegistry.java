@@ -77,7 +77,7 @@ public class ReferenceRegistry {
 		_referenceEntries.clear();
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public ReferenceEntry getReferenceEntry(
 				Class<?> clazz, Object object, String fieldName)

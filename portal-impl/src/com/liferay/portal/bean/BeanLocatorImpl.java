@@ -140,7 +140,7 @@ public class BeanLocatorImpl implements BeanLocator {
 		_paclServletContextName = paclServletContextName;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public Object getBean(Object bean, ClassLoader classLoader);
 

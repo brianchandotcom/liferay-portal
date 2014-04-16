@@ -173,7 +173,7 @@ public class RestrictedByteArrayCacheOutputStream extends OutputStream {
 		index = newIndex;
 	}
 
-	public static interface FlushPreAction {
+	public interface FlushPreAction {
 
 		public void beforeFlush() throws IOException;
 

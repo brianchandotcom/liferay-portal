@@ -62,7 +62,7 @@ public class PortalSocketPermission {
 		checkConnect(domain, port, protocol);
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkPermission(String host, String action);
 

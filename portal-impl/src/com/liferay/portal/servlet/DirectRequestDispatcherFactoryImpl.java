@@ -62,7 +62,7 @@ public class DirectRequestDispatcherFactoryImpl
 		return getRequestDispatcher(servletContext, path);
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public RequestDispatcher getRequestDispatcher(
 			ServletContext servletContext, RequestDispatcher requestDispatcher);

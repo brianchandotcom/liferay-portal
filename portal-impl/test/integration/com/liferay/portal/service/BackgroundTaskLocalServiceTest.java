@@ -13,6 +13,7 @@
  */
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -180,6 +181,133 @@ public class BackgroundTaskLocalServiceTest {
 			backgroundTask.getTaskExecutorClassName());
 
 		assertMapEquals(taskContextMap, backgroundTask.getTaskContextMap());
+	}
+
+	@Test
+	public void testAmendBackgroundTaskFailedStatus() throws Exception {
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
+
+		BackgroundTask ammendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+			backgroundTask.getBackgroundTaskId(),
+			backgroundTask.getTaskContextMap(),
+			BackgroundTaskConstants.STATUS_FAILED, serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_FAILED,
+			ammendBackgroundTask.getStatus());
+
+		Assert.assertTrue(ammendBackgroundTask.isCompleted());
+	}
+
+	@Test
+	public void testAmendBackgroundTaskNotFailedNotSuccessful()
+		throws Exception {
+
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
+
+		BackgroundTask ammendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				backgroundTask.getBackgroundTaskId(),
+				backgroundTask.getTaskContextMap(),
+				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_IN_PROGRESS,
+			ammendBackgroundTask.getStatus());
+
+		Assert.assertFalse(ammendBackgroundTask.isCompleted());
+	}
+
+	@Test
+	public void testAmendBackgroundTaskSuccessfulStatus() throws Exception {
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
+
+		BackgroundTask ammendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				backgroundTask.getBackgroundTaskId(),
+				backgroundTask.getTaskContextMap(),
+				BackgroundTaskConstants.STATUS_SUCCESSFUL, serviceContext);
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_SUCCESSFUL,
+			ammendBackgroundTask.getStatus());
+
+		Assert.assertTrue(ammendBackgroundTask.isCompleted());
+	}
+
+	@Test
+	public void testAmendBackgroundTaskTaskContextMap() throws Exception {
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				serviceContext);
+
+		Map map = getRandomTaskContextMap();
+
+		BackgroundTask ammendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				backgroundTask.getBackgroundTaskId(), map,
+				backgroundTask.getStatus(), serviceContext);
+
+		assertMapEquals(ammendBackgroundTask.getTaskContextMap(), map);
+	}
+
+	@Test
+	public void testAmendBackgroundTaskNullBackgroundTaskId() throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask amendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				33L, null, 0, serviceContext);
+
+		Assert.assertNull(amendBackgroundTask);
 	}
 
 	protected void assertMapEquals(Map map1, Map map2) {

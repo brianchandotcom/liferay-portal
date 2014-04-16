@@ -76,7 +76,7 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 		DummyAsyncDatagramReceiveHandler dummyAsyncDatagramReceiveHandler =
 			new DummyAsyncDatagramReceiveHandler();
 
-		dummyAsyncDatagramReceiveHandler.doReceive(null, null);
+		dummyAsyncDatagramReceiveHandler.receive(null, null);
 
 		Assert.assertTrue(dummyAsyncDatagramReceiveHandler._received);
 	}

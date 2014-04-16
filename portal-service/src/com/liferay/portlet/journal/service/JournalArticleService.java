@@ -475,6 +475,22 @@ public interface JournalArticleService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the web content from the web content article matching the group,
+	* article ID, and version.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param version the web content article's version
+	* @param languageId the primary key of the language translation to get
+	* @param portletRequestModel the portlet request model
+	* @param themeDisplay the theme display
+	* @return the matching web content
+	* @throws PortalException if the user did not have permission to view the
+	web content article, if a matching web content article or DDM
+	template could not be found, or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, double version,
@@ -494,11 +510,15 @@ public interface JournalArticleService extends BaseService {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view the
-	web content article, if a matching web content article or DDM
-	template could not be found, or if a portal exception occurred
+	* @throws PortalException if the user did not have permission to view
+	the web content article, if a matching web content article or
+	DDM template could not be found, or if a portal exception
+	occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
+	String, double, String, PortletRequestModel, ThemeDisplay)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, double version,
@@ -507,6 +527,21 @@ public interface JournalArticleService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the latest web content from the web content article matching the
+	* group and article ID.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param languageId the primary key of the language translation to get
+	* @param portletRequestModel the portlet request model
+	* @param themeDisplay the theme display
+	* @return the matching web content
+	* @throws PortalException if the user did not have permission to view the
+	web content article, if a matching web content article or DDM
+	template could not be found, or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
@@ -524,11 +559,15 @@ public interface JournalArticleService extends BaseService {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view the
-	web content article, if a matching web content article or DDM
-	template could not be found, or if a portal exception occurred
+	* @throws PortalException if the user did not have permission to view
+	the web content article, if a matching web content article or
+	DDM template could not be found, or if a portal exception
+	occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
+	String, String, PortletRequestModel, ThemeDisplay)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,

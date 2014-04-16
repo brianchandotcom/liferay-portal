@@ -112,7 +112,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
-						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
 
 						if (assetAvailableClassTypes.isEmpty()) {
 							continue;
@@ -576,7 +576,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 
 		<%
-		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

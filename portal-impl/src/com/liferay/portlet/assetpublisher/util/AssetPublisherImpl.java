@@ -87,11 +87,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletException;
@@ -604,9 +606,25 @@ public class AssetPublisherImpl implements AssetPublisher {
 			deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherImpl#getAssetEntryQuery(PortletPreferences,
+	 *             long[], long[], String[])}
+	 */
 	@Override
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
+		throws PortalException, SystemException {
+
+		return getAssetEntryQuery(
+			portletPreferences, scopeGroupIds, null, null);
+	}
+
+	@Override
+	public AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long[] scopeGroupIds,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
 		throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -670,11 +688,21 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 		}
 
+		if (overrideAllAssetCategoryIds != null) {
+			allAssetCategoryIds = overrideAllAssetCategoryIds;
+		}
+
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
+
+		if (overrideAllAssetCategoryIds != null) {
+			allAssetTagNames = overrideAllAssetTagNames;
+		}
+
+		long[] siteGroupIds = getSiteGroupIds(scopeGroupIds);
 
 		for (String assetTagName : allAssetTagNames) {
 			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-				scopeGroupIds, assetTagName);
+				siteGroupIds, assetTagName);
 
 			assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
 		}
@@ -682,7 +710,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 
 		long[] anyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, anyAssetTagNames);
+			siteGroupIds, anyAssetTagNames);
 
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
 
@@ -690,7 +718,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		for (String assetTagName : notAllAssetTagNames) {
 			long[] notAllAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-				scopeGroupIds, assetTagName);
+				siteGroupIds, assetTagName);
 
 			assetEntryQuery.addNotAllTagIdsArray(notAllAssetTagIds);
 		}
@@ -698,7 +726,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
 
 		long[] notAnyAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
-			scopeGroupIds, notAnyAssetTagNames);
+			siteGroupIds, notAnyAssetTagNames);
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
 
@@ -706,8 +734,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
-	public String[] getAssetTagNames(
-			PortletPreferences portletPreferences, long scopeGroupId)
+	public String[] getAssetTagNames(PortletPreferences portletPreferences)
 		throws Exception {
 
 		String[] allAssetTagNames = new String[0];
@@ -737,6 +764,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 
 		return allAssetTagNames;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherImpl#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
+	@Override
+	public String[] getAssetTagNames(
+			PortletPreferences portletPreferences, long scopeGroupId)
+		throws Exception {
+
+		return getAssetTagNames(portletPreferences);
 	}
 
 	@Override
@@ -1329,6 +1369,18 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
+	}
+
+	protected long[] getSiteGroupIds(long[] scopeGroupIds)
+		throws PortalException, SystemException {
+
+		Set<Long> siteIds = new HashSet<Long>();
+
+		for (long groupId : scopeGroupIds) {
+			siteIds.add(PortalUtil.getSiteGroupId(groupId));
+		}
+
+		return ArrayUtil.toLongArray(siteIds);
 	}
 
 	private void _checkAssetEntries(

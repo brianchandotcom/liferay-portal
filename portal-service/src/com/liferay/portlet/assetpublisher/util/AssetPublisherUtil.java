@@ -174,12 +174,29 @@ public class AssetPublisherUtil {
 			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherUtil#getAssetEntryQuery(PortletPreferences,
+	 *             long[], long[], String[])}
+	 */
+	@Deprecated
 	public static AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
+			PortletPreferences portletPreferences, long[] siteGroupIds)
 		throws PortalException, SystemException {
 
 		return getAssetPublisher().getAssetEntryQuery(
-			portletPreferences, scopeGroupIds);
+			portletPreferences, siteGroupIds);
+	}
+
+	public static AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long[] scopeGroupIds,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
+		throws PortalException, SystemException {
+
+		return getAssetPublisher().getAssetEntryQuery(
+			portletPreferences, scopeGroupIds, overrideAllAssetCategoryIds,
+			overrideAllAssetTagNames);
 	}
 
 	public static AssetPublisher getAssetPublisher() {
@@ -188,6 +205,18 @@ public class AssetPublisherUtil {
 		return _assetPublisher;
 	}
 
+	public static String[] getAssetTagNames(
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return getAssetPublisher().getAssetTagNames(portletPreferences);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherUtil#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
 	public static String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception {

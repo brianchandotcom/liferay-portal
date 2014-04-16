@@ -130,10 +130,30 @@ public interface AssetPublisher {
 			boolean checkPermission)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisher#getAssetEntryQuery(PortletPreferences,
+	 *             long[], long[], String[])}
+	 */
+	@Deprecated
 	public AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
+			PortletPreferences portletPreferences, long[] siteGroupIds)
 		throws PortalException, SystemException;
 
+	public AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long[] scopeGroupIds,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
+		throws PortalException, SystemException;
+
+	public String[] getAssetTagNames(
+		PortletPreferences portletPreferences) throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
 	public String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception;

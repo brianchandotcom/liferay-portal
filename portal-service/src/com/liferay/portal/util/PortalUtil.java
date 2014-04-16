@@ -2268,6 +2268,10 @@ public class PortalUtil {
 			resetPortletAddDefaultResourceCheckWhitelistActions();
 	}
 
+	public static String resetPortletParams(String url, String portletId) {
+		return getPortal().resetPortletParams(url, portletId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link DB#runSQL(String)}
 	 */

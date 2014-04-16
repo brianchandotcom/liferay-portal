@@ -1388,6 +1388,8 @@ public interface Portal {
 	@Deprecated
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
+	public String resetPortletParams(String url, String portletId);
+
 	public void sendError(
 			Exception e, ActionRequest actionRequest,
 			ActionResponse actionResponse)

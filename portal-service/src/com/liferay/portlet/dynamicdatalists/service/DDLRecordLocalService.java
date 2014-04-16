@@ -325,7 +325,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteRecord(
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecord(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord record)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

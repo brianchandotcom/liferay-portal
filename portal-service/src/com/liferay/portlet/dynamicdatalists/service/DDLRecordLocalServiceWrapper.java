@@ -384,11 +384,11 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	@Override
-	public void deleteRecord(
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecord(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord record)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ddlRecordLocalService.deleteRecord(record);
+		return _ddlRecordLocalService.deleteRecord(record);
 	}
 
 	@Override

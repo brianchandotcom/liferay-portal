@@ -187,7 +187,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<a name="<%= randomNamespace %>messages_top"></a>
 
 				<c:if test="<%= treeWalker != null %>">
-				<table class="table table-bordered table-hover table-striped tree-walker">
+				<table class="tree-walker table table-bordered table-hover table-striped">
 					<thead class="table-columns">
 					<tr>
 						<th class="table-header" colspan="2">
@@ -417,7 +417,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										userName="<%= HtmlUtil.escape(PortalUtil.getUserName(user.getUserId(), StringPool.BLANK)) %>"
 									/>
 
-									<aui:input hideLabel="<%= true %>" id='<%= randomNamespace + "postReplyBody" + i %>' label="reply-body" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" wrap="soft" />
+									<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" wrap="soft" />
 
 									<aui:button-row>
 										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
@@ -432,7 +432,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 									<div class="lfr-discussion-form lfr-discussion-form-edit span12" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-										<aui:input hideLabel="<%= true %>" id='<%= randomNamespace + "editReplyBody" + i %>' label="reply-body" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" value="<%= message.getBody() %>" wrap="soft" />
+										<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" value="<%= message.getBody() %>" wrap="soft" />
 
 										<%
 										boolean pending = message.isPending();

@@ -227,13 +227,13 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 
 						<tr>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-name" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" value="<%= name %>" />
+								<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" value="<%= name %>" />
 							</td>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-image" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" value="<%= image %>" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" value="<%= image %>" />
 							</td>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-value" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" value="<%= value %>" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" value="<%= value %>" />
 							</td>
 						</tr>
 
@@ -263,13 +263,13 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 
 						<tr>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-name" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" />
+								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" />
 							</td>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-image" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" />
 							</td>
 							<td>
-								<aui:input hideLabel="<%= true %>" label="priority-value" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" />
 							</td>
 						</tr>
 
@@ -439,7 +439,7 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 				</tr>
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-textarea-container" hideLabel="<%= true %>" label="ranks" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value="<%= StringUtil.merge(mbSettings.getRanks(defaultLanguageId), StringPool.NEW_LINE) %>" />
+						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value="<%= StringUtil.merge(mbSettings.getRanks(defaultLanguageId), StringPool.NEW_LINE) %>" />
 					</td>
 					<td>
 
@@ -456,7 +456,7 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 						}
 						%>
 
-						<aui:input cssClass="lfr-textarea-container" hideLabel="<%= true %>" label="ranks" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' type="textarea" />
+						<aui:input cssClass="lfr-textarea-container" label="" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' type="textarea" />
 					</td>
 				</tr>
 				</table>

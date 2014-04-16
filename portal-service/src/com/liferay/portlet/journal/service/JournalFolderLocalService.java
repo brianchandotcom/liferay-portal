@@ -624,4 +624,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void validateFolderDDMStructures(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

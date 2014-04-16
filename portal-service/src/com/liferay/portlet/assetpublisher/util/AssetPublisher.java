@@ -135,6 +135,14 @@ public interface AssetPublisher {
 		throws PortalException, SystemException;
 
 	public String[] getAssetTagNames(
+		PortletPreferences portletPreferences) throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
+	public String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception;
 

@@ -99,16 +99,13 @@ public class AssetPublisherDisplayContext {
 
 	public String[] getAllAssetTagNames() throws Exception {
 		if (_allAssetTagNames == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			_allAssetTagNames = new String[0];
 
 			String selectionStyle = getSelectionStyle();
 
 			if (selectionStyle.equals("dynamic")) {
 				_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
-					_portletPreferences, themeDisplay.getScopeGroupId());
+					_portletPreferences);
 			}
 
 			String assetTagName = ParamUtil.getString(_request, "tag");

@@ -189,6 +189,18 @@ public class AssetPublisherUtil {
 	}
 
 	public static String[] getAssetTagNames(
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return getAssetPublisher().getAssetTagNames(portletPreferences);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
+	public static String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception {
 

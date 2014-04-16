@@ -706,8 +706,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
-	public String[] getAssetTagNames(
-			PortletPreferences portletPreferences, long scopeGroupId)
+	public String[] getAssetTagNames(PortletPreferences portletPreferences)
 		throws Exception {
 
 		String[] allAssetTagNames = new String[0];
@@ -737,6 +736,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 
 		return allAssetTagNames;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 */
+	@Deprecated
+	@Override
+	public String[] getAssetTagNames(
+			PortletPreferences portletPreferences, long scopeGroupId)
+		throws Exception {
+
+		return getAssetTagNames(portletPreferences);
 	}
 
 	@Override

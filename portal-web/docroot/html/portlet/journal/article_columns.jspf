@@ -44,6 +44,12 @@ row.addDate(curArticle.getDisplayDate());
 
 row.addText(PortalUtil.getUserName(curArticle));
 
+// Type
+
+DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), curArticle.getStructureId(), true);
+
+row.addText(ddmStructure.getName(locale));
+
 // Action
 
 row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/article_action.jsp");

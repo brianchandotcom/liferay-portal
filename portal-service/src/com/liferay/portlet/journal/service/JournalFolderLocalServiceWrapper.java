@@ -837,6 +837,19 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.journal.model.JournalFolder updateFolderAndDDMStructures(
+		long userId, long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.updateFolderAndDDMStructures(userId,
+			folderId, parentFolderId, name, description, ddmStructureIds,
+			overrideDDMStructures, mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
 	public void updateFolderDDMStructures(
 		com.liferay.portlet.journal.model.JournalFolder folder,
 		long[] ddmStructureIdsArray)
@@ -852,6 +865,14 @@ public class JournalFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderLocalService.updateStatus(userId, folder, status);
+	}
+
+	@Override
+	public void validateFolderDDMStructures(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.validateFolderDDMStructures(folderId,
+			parentFolderId);
 	}
 
 	/**

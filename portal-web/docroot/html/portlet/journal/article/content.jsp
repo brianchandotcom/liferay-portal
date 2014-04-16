@@ -534,7 +534,12 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	Liferay.Portlet.Journal.PROXY.pathThemeCss = '<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>';
 	Liferay.Portlet.Journal.PROXY.portletNamespace = '<portlet:namespace />';
 
-	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(Liferay.Portlet.Journal.PROXY.portletNamespace, '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>');
+	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(
+		{
+			articleId: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
+			namespace: '<portlet:namespace />'
+		}
+	);
 
 	var defaultLocaleSelector = A.one('#<portlet:namespace/>defaultLocale');
 

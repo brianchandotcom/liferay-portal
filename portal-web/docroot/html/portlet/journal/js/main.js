@@ -1,118 +1,125 @@
 AUI.add(
 	'liferay-portlet-journal',
 	function(A) {
-		var Journal = function(portletNamespace, articleId) {
-			var instance = this;
+		var Journal = A.Component.create(
+			{
+				AUGMENTS: [Liferay.PortletBase],
 
-			instance.articleId = articleId;
-			instance.portletNamespace = portletNamespace;
-		};
+				EXTENDS: A.Base,
 
-		Journal.prototype = {
-			displayTemplateMessage: function() {
-				var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
+				NAME: 'journal',
 
-				alert(templateMessage);
-			},
+				prototype: {
+					initializer: function(config) {
+						var instance = this;
 
-			getByName: function(currentForm, name, withoutNamespace) {
-				var instance = this;
+						instance.articleId = config.articleId;
+						instance.portletNamespace = config.namespace;
+					},
 
-				var inputName = withoutNamespace ? name : instance.portletNamespace + name;
+					displayTemplateMessage: function() {
+						var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
 
-				return A.one(currentForm).one('[name=' + inputName + ']');
-			},
+						alert(templateMessage);
+					},
 
-			getPrincipalForm: function(formName) {
-				var instance = this;
+					hasStructure: function() {
+						var instance = this;
 
-				return A.one('form[name=' + instance.portletNamespace + (formName || 'fm1') + ']');
-			},
+						var form = instance.getPrincipalForm();
 
-			hasStructure: function() {
-				var instance = this;
+						var structureId = instance.getByName(form, 'structureId');
 
-				var form = instance.getPrincipalForm();
+						return structureId && structureId.val();
+					},
 
-				var structureId = instance.getByName(form, 'structureId');
+					hasTemplate: function() {
+						var instance = this;
 
-				return structureId && structureId.val();
-			},
+						var form = instance.getPrincipalForm();
 
-			hasTemplate: function() {
-				var instance = this;
+						var templateId = instance.getByName(form, 'templateId');
 
-				var form = instance.getPrincipalForm();
+						return templateId && templateId.val();
+					},
 
-				var templateId = instance.getByName(form, 'templateId');
+					updateStructureDefaultValues: function() {
+						var instance = this;
 
-				return templateId && templateId.val();
-			},
+						var form = instance.getPrincipalForm();
 
-			saveArticle: function(cmd) {
-				var instance = this;
+						var classNameId = instance.getByName(form, 'classNameId');
 
-				var form = instance.getPrincipalForm();
+						return (classNameId && classNameId.val() > 0);
+					},
 
-				if (instance.hasStructure() && !instance.hasTemplate() && !instance.updateStructureDefaultValues()) {
-					instance.displayTemplateMessage();
+					getByName: function(currentForm, name, withoutNamespace) {
+						var instance = this;
+
+						var inputName = withoutNamespace ? name : instance.portletNamespace + name;
+
+						return A.one(currentForm).one('[name=' + inputName + ']');
+					},
+
+					getPrincipalForm: function(formName) {
+						var instance = this;
+
+						return A.one('form[name=' + instance.portletNamespace + (formName || 'fm1') + ']');
+					},
+
+					saveArticle: function(cmd) {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						if (instance.hasStructure() && !instance.hasTemplate() && !instance.updateStructureDefaultValues()) {
+							instance.displayTemplateMessage();
+						}
+						else {
+							if (!cmd) {
+								cmd = instance.articleId ? 'update' : 'add';
+							}
+
+							var articleIdInput = instance.getByName(form, 'articleId');
+							var cmdInput = instance.getByName(form, 'cmd');
+							var newArticleIdInput = instance.getByName(form, 'newArticleId');
+							var workflowActionInput = instance.getByName(form, 'workflowAction');
+
+							if (cmd == 'publish') {
+								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
+
+								cmd = instance.articleId ? 'update' : 'add';
+							}
+
+							cmdInput.val(cmd);
+
+							if (!instance.articleId) {
+								articleIdInput.val(newArticleIdInput.val());
+							}
+
+							submitForm(form);
+						}
+					},
+
+					translateArticle: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var cmdInput = instance.getByName(form, 'cmd');
+
+						cmdInput.val('translate');
+
+						submitForm(form);
+					}
 				}
-				else {
-					if (!cmd) {
-						cmd = instance.articleId ? 'update' : 'add';
-					}
-
-					var articleIdInput = instance.getByName(form, 'articleId');
-					var cmdInput = instance.getByName(form, 'cmd');
-					var newArticleIdInput = instance.getByName(form, 'newArticleId');
-					var workflowActionInput = instance.getByName(form, 'workflowAction');
-
-					if (cmd == 'publish') {
-						workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
-
-						cmd = instance.articleId ? 'update' : 'add';
-					}
-
-					cmdInput.val(cmd);
-
-					if (!instance.articleId) {
-						articleIdInput.val(newArticleIdInput.val());
-					}
-
-					submitForm(form);
-				}
-			},
-
-			translateArticle: function() {
-				var instance = this;
-
-				var form = instance.getPrincipalForm();
-
-				var cmdInput = instance.getByName(form, 'cmd');
-
-				cmdInput.val('translate');
-
-				submitForm(form);
-			},
-
-			updateStructureDefaultValues: function() {
-				var instance = this;
-
-				var form = instance.getPrincipalForm();
-
-				var classNameId = instance.getByName(form, 'classNameId');
-
-				return (classNameId && classNameId.val() > 0);
 			}
-
-		};
-
-		A.augment(Journal, A.EventTarget);
+		);
 
 		Liferay.Portlet.Journal = Journal;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base', 'liferay-portlet-base']
 	}
 );

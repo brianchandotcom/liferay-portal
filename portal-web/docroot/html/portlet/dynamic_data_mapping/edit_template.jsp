@@ -219,7 +219,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 										<aui:fieldset>
 											<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
 
-											<aui:input cssClass="lfr-ddm-small-image-value" hideLabel="<%= true %>" inlineField="<%= true %>" label="small-image-url" name="smallImageURL" />
+											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 										</aui:fieldset>
 
 										<aui:fieldset>

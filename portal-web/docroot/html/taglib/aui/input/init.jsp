@@ -36,7 +36,6 @@ boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:i
 java.lang.String formName = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:formName"));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:helpMessage"));
 java.lang.String helpTextCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:helpTextCssClass"), "add-on");
-boolean hideLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:hideLabel")), false);
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:ignoreRequestValue")));
 boolean includeHiddenField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:includeHiddenField")), true);

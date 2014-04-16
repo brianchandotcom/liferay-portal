@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.FieldWrapperTag;
@@ -35,10 +34,6 @@ public class InputResourceTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setLabel(String label) {
-		_label = label;
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -51,7 +46,6 @@ public class InputResourceTag extends IncludeTag {
 	protected void cleanUp() {
 		_cssClass = null;
 		_id = null;
-		_label = StringPool.BLANK;
 		_title = null;
 		_url = null;
 	}
@@ -63,29 +57,28 @@ public class InputResourceTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		if ((_id != null) && Validator.isNull(_label)) {
-			_label = TextFormatter.format(_id, TextFormatter.K);
+		if ((_id != null) && Validator.isNull(_title)) {
+			_title = TextFormatter.format(_id, TextFormatter.K);
 		}
 
-		if (Validator.isNull(_label)) {
+		if (Validator.isNull(_title)) {
 			FieldWrapperTag parentFieldWrapperTag =
 				(FieldWrapperTag)findAncestorWithClass(
 					this, FieldWrapperTag.class);
 
 			if (parentFieldWrapperTag != null) {
-				_label = parentFieldWrapperTag.getLabel();
+				_title = parentFieldWrapperTag.getLabel();
 
-				if ((_label == null) ||
-					_label.equals(parentFieldWrapperTag.getName())) {
+				if ((_title != null) &&
+					_title.equals(parentFieldWrapperTag.getName())) {
 
-					_label = StringPool.BLANK;
+					_title = null;
 				}
 			}
 		}
 
 		request.setAttribute("liferay-ui:input-resource:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-resource:id", _id);
-		request.setAttribute("liferay-ui:input-resource:label", _label);
 		request.setAttribute("liferay-ui:input-resource:title", _title);
 		request.setAttribute("liferay-ui:input-resource:url", _url);
 	}
@@ -95,7 +88,6 @@ public class InputResourceTag extends IncludeTag {
 
 	private String _cssClass;
 	private String _id;
-	private String _label = StringPool.BLANK;
 	private String _title;
 	private String _url;
 

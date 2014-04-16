@@ -24,7 +24,7 @@
 		</span>
 	</c:if>
 
-	<c:if test='<%= !hideLabel && Validator.isNotNull(label) && inlineLabel.equals("right") %>'>
+	<c:if test='<%= Validator.isNotNull(label) && inlineLabel.equals("right") %>'>
 		<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
 			<liferay-ui:message key="<%= label %>" />
 

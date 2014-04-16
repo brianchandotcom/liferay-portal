@@ -71,13 +71,11 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [
+						instance._eventHandles.push(
 							instance._entriesPanel.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance),
 							instance._entriesPanel.delegate(STR_KEY, instance._addApplication, STR_ENTER_DOWN, SELECTOR_CONTENT_ITEM, instance),
 							Liferay.on('closePortlet', instance._onPortletClose, instance)
-						];
-
-						instance._eventHandles = instance._eventHandles.concat(eventHandles);
+						);
 					},
 
 					_onPortletClose: function(event) {

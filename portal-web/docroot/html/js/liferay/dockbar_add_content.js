@@ -41,7 +41,7 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [
+						instance._eventHandles.push(
 							instance._numItems.on('change', instance._onChangeNumItems, instance),
 							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
 							Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance),
@@ -53,9 +53,7 @@ AUI.add(
 									instance.addPortlet(event.node, event.options);
 								}
 							)
-						];
-
-						instance._eventHandles = instance._eventHandles.concat(eventHandles);
+						);
 					},
 
 					_onChangeDisplayStyle: function(event) {

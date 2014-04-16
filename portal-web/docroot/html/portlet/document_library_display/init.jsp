@@ -106,7 +106,7 @@ if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
 	allFileEntryColumns += ",downloads";
 }
 
-	allFileEntryColumns += ",locked";
+allFileEntryColumns += ",locked";
 
 if (showActions) {
 	allFileEntryColumns += ",action";

@@ -216,8 +216,7 @@ public class DLSettings extends BaseServiceSettings {
 			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add(
 			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-		_fallbackKeys.add(
-			"showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		_fallbackKeys.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);
 
 		Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
 

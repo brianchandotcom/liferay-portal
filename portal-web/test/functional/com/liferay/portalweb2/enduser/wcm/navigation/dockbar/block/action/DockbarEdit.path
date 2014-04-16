@@ -78,6 +78,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_PAGE_NAME_FILED</td>
+	<td>//input[@id='_145_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLYURL</td>
+	<td>//input[@id='_145_friendlyURL']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -90,6 +100,11 @@
 <tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_TYPE_RADIO</td>
+	<td>//label[@class='radio' and contains(.,'${key_pageTypeLayout}')]/input</td>
 	<td></td>
 </tr>
 </tbody>

@@ -284,6 +284,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_COLUMN_1_LAYOUT_1_COLUMN</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span12')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span4')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'span8')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_50_SPLIT</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span6')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_50_SPLIT</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'span6')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

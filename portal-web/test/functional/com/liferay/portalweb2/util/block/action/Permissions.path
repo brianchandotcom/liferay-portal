@@ -137,6 +137,11 @@
 </tr>
 <!--CONTENT_PERMISSIONS-->
 <tr>
+	<td>CONTENT_PERMISSIONS_ROLE_NAME</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_ACCESS_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_ACCESS']</td>
 	<td></td>

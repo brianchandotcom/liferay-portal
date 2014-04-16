@@ -446,6 +446,55 @@
 		</execute>
 	</command>
 
+	<command name="NoGuestRolePermissionsFromPrivateLayout" priority="3">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Private Blogs Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoSitepageCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Private Blogs Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<var name="key_roleName" value="Guest" />
+
+		<execute action="Permissions#assertTextNotPresent" locator-key1="CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Private Blogs Page" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_roleName" value="Guest" />
+
+		<execute action="Permissions#assertTextNotPresent" locator-key1="CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
+	</command>
+
 	<command name="RolesOrganizationSearch" priority="4">
 		<var name="searchAssetTitle" value="Test Document" />
 

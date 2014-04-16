@@ -122,6 +122,14 @@
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="changePageTypeLayoutPG">
+		<var name="key_pageTypeLayout" value="${pageTypeLayout}" />
+
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
+		<execute action="DockbarEdit#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageTypeLayout}" />
+		<execute action="DockbarEdit#click" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="copyApplicationsFromPageToPagePG">
 		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
 		<execute action="DockbarEdit#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
@@ -358,6 +366,23 @@
 		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_LINK" />
 
 		<execute action="Home#refresh" />
+	</command>
+
+	<command name="viewPageLayoutPG">
+		<if>
+			<equals arg1="${pageLayout}" arg2="1 Column" />
+			<then>
+				<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_1_LAYOUT_1_COLUMN" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_COLUMN_2" />
+			</then>
+			<elseif>
+				<equals arg1="${pageLayout}" arg2="2 Column (30/70)" />
+				<then>
+					<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT" />
+					<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewPagesCP">

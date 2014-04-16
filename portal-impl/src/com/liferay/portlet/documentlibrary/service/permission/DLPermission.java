@@ -15,9 +15,14 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -48,8 +53,29 @@ public class DLPermission {
 			return hasPermission.booleanValue();
 		}
 
+		try {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					permissionChecker.getCompanyId(), RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(groupId));
+
+			if (count == 0) {
+				ResourceLocalServiceUtil.addResources(
+					permissionChecker.getCompanyId(), groupId, 0, RESOURCE_NAME,
+					groupId, false, true, true);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
 		return permissionChecker.hasPermission(
 			groupId, RESOURCE_NAME, groupId, actionId);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(DLPermission.class);
 
 }

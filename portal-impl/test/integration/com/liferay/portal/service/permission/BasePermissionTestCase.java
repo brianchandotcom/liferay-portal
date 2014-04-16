@@ -61,7 +61,7 @@ public abstract class BasePermissionTestCase {
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
-		removePortletModelViewPermission();
+		removePortletModelViewPermission(ResourceConstants.SCOPE_GROUP);
 	}
 
 	protected void addPortletModelViewPermission() throws Exception {
@@ -75,11 +75,12 @@ public abstract class BasePermissionTestCase {
 
 	protected abstract String getResourceName();
 
-	protected void removePortletModelViewPermission() throws Exception {
+	protected void removePortletModelViewPermission(int scope)
+		throws Exception {
+
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, getResourceName(),
-			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
-			ActionKeys.VIEW);
+			RoleConstants.GUEST, getResourceName(), scope,
+			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 	}
 
 	protected Group group;

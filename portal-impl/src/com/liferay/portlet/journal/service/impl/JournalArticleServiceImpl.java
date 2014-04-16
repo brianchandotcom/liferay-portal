@@ -35,6 +35,7 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

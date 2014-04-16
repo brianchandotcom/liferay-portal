@@ -487,6 +487,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * Deletes the company's logo.
 	 *
 	 * @param  companyId the primary key of the company
+	 * @return the deleted logo's company
 	 * @throws PortalException if the company with the primary key could not be
 	 *         found or if the company's logo could not be found
 	 * @throws SystemException if a system exception occurred

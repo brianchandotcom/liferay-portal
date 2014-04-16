@@ -172,7 +172,9 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 * asset type of the activity.
 	 * </p>
 	 *
+	 * @param  selector the context in which the activity interpreter is used
 	 * @param  activity the activity to be translated to human readable form
+	 * @param  serviceContext the service context to be applied
 	 * @return the activity feed that is a human readable form of the activity
 	 *         record or <code>null</code> if a compatible interpreter is not
 	 *         found

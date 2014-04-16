@@ -41,8 +41,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AssetRendererFactoryRegistryUtil {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getAssetRendererFactories(
-	 *             long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getAssetRendererFactories(long)}
 	 */
 	@Deprecated
 	public static List<AssetRendererFactory> getAssetRendererFactories() {

@@ -599,8 +599,8 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  classNameId the primary key of the class name for the template's
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
-	 * @param  includeAncestorTemplates whether to include the parent sites in the
-	 *         search
+	 * @param  includeAncestorTemplates whether to include the parent sites in
+	 *         the search
 	 * @return the matching template
 	 * @throws PortalException if a matching template could not be found
 	 * @throws SystemException if a system exception occurred

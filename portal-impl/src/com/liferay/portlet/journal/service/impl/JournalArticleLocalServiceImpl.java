@@ -472,15 +472,12 @@ public class JournalArticleLocalServiceImpl
 		// Workflow
 
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), groupId, userId,
-				JournalArticle.class.getName(), article.getId(), article,
-				serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 		else {
 			updateStatus(
 				userId, article, WorkflowConstants.STATUS_APPROVED, null,
-				new HashMap<String, Serializable>(), serviceContext);
+				serviceContext, new HashMap<String, Serializable>());
 		}
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
@@ -3349,8 +3346,8 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			updateStatus(
-				userId, article, status, null,
-				new HashMap<String, Serializable>(), serviceContext);
+				userId, article, status, null, serviceContext,
+				new HashMap<String, Serializable>());
 
 			// Trash
 
@@ -3633,8 +3630,8 @@ public class JournalArticleLocalServiceImpl
 		serviceContext.setScopeGroupId(article.getGroupId());
 
 		updateStatus(
-			userId, article, trashEntry.getStatus(), null,
-			new HashMap<String, Serializable>(), serviceContext);
+			userId, article, trashEntry.getStatus(), null, serviceContext,
+			new HashMap<String, Serializable>());
 
 		// Trash
 
@@ -4880,7 +4877,7 @@ public class JournalArticleLocalServiceImpl
 		if (expired && imported) {
 			updateStatus(
 				userId, article, article.getStatus(), articleURL,
-				new HashMap<String, Serializable>(), serviceContext);
+				serviceContext, new HashMap<String, Serializable>());
 		}
 
 		if (serviceContext.getWorkflowAction() ==
@@ -4894,10 +4891,7 @@ public class JournalArticleLocalServiceImpl
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
 
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), groupId, userId,
-				JournalArticle.class.getName(), article.getId(), article,
-				serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
@@ -5225,8 +5219,8 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public JournalArticle updateStatus(
 			long userId, JournalArticle article, int status, String articleURL,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		// Article
@@ -5435,7 +5429,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			notifySubscribers(article, serviceContext);
+			notifySubscribers(
+				article,
+				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				serviceContext);
 		}
 
 		return article;
@@ -5472,7 +5469,7 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article = getArticle(classPK);
 
 		return journalArticleLocalService.updateStatus(
-			userId, article, status, null, workflowContext, serviceContext);
+			userId, article, status, null, serviceContext, workflowContext);
 	}
 
 	/**
@@ -5509,8 +5506,8 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 
 		return journalArticleLocalService.updateStatus(
-			userId, article, status, articleURL, workflowContext,
-			serviceContext);
+			userId, article, status, articleURL, serviceContext,
+			workflowContext);
 	}
 
 	/**
@@ -5678,7 +5675,7 @@ public class JournalArticleLocalServiceImpl
 
 			journalArticleLocalService.updateStatus(
 				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
-				null, new HashMap<String, Serializable>(), serviceContext);
+				null, serviceContext, new HashMap<String, Serializable>());
 		}
 	}
 
@@ -6371,22 +6368,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			JournalArticle article, ServiceContext serviceContext)
+			JournalArticle article, String articleURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!article.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!article.isApproved() || Validator.isNull(articleURL)) {
 			return;
 		}
 
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
-		String articleURL = PortalUtil.getControlPanelFullURL(
-			serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
-
-		if (Validator.isNull(articleURL)) {
-			return;
-		}
 
 		articleURL = buildArticleURL(
 			articleURL, article.getGroupId(), article.getFolderId(),
@@ -6470,15 +6460,15 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setCompanyId(article.getCompanyId());
-		subscriptionSender.setContextAttributes(
-			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
-			article.getVersion());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_DIFFS$]", DiffHtmlUtil.replaceStyles(articleDiffs),
 			false);
+		subscriptionSender.setContextAttributes(
+			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
+			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
+			article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);
@@ -6677,6 +6667,24 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void startWorkflowInstance(
+			long userId, JournalArticle article, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL,
+			PortalUtil.getControlPanelFullURL(
+				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			article.getCompanyId(), article.getGroupId(), userId,
+			JournalArticle.class.getName(), article.getId(), article,
+			serviceContext, workflowContext);
 	}
 
 	protected void updateDDMStructureXSD(

@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
 import java.util.List;
 import java.util.Map;
@@ -379,6 +381,15 @@ public class DLUtil {
 
 	public static boolean isValidVersion(String version) {
 		return getDL().isValidVersion(version);
+	}
+
+	public static void startWorkflowInstance(
+			long userId, DLFileVersion dlFileVersion, String syncEventType,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getDL().startWorkflowInstance(
+			userId, dlFileVersion, syncEventType, serviceContext);
 	}
 
 	public void setDL(DL dl) {

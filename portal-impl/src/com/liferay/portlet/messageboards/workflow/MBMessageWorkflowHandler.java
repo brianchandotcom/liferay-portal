@@ -62,7 +62,7 @@ public class MBMessageWorkflowHandler extends BaseWorkflowHandler {
 			"serviceContext");
 
 		return MBMessageLocalServiceUtil.updateStatus(
-			userId, classPK, status, serviceContext);
+			userId, classPK, status, serviceContext, workflowContext);
 	}
 
 	@Override

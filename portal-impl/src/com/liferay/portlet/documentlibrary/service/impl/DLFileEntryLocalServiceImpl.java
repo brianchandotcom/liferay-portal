@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Lock;
@@ -402,9 +401,9 @@ public class DLFileEntryLocalServiceImpl
 		if ((serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
-			startWorkflowInstance(
-				userId, serviceContext, latestDLFileVersion,
-				DLSyncConstants.EVENT_UPDATE);
+			DLUtil.startWorkflowInstance(
+				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
+				serviceContext);
 		}
 
 		unlockFileEntry(fileEntryId);
@@ -1587,8 +1586,8 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		// File version
@@ -1671,7 +1670,7 @@ public class DLFileEntryLocalServiceImpl
 		dlAppHelperLocalService.updateStatus(
 			userId, new LiferayFileEntry(dlFileEntry),
 			new LiferayFileVersion(dlFileVersion), oldStatus, status,
-			workflowContext, serviceContext);
+			serviceContext, workflowContext);
 
 		// Indexer
 
@@ -2198,22 +2197,6 @@ public class DLFileEntryLocalServiceImpl
 		unlockFileEntry(dlFileEntry.getFileEntryId());
 	}
 
-	protected void startWorkflowInstance(
-			long userId, ServiceContext serviceContext,
-			DLFileVersion dlFileVersion, String syncEventType)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("event", syncEventType);
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,
-			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
-			dlFileVersion, serviceContext, workflowContext);
-	}
-
 	protected DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,
@@ -2357,8 +2340,8 @@ public class DLFileEntryLocalServiceImpl
 					syncEvent = DLSyncConstants.EVENT_ADD;
 				}
 
-				startWorkflowInstance(
-					userId, serviceContext, dlFileVersion, syncEvent);
+				DLUtil.startWorkflowInstance(
+					userId, dlFileVersion, syncEvent, serviceContext);
 			}
 		}
 		catch (PortalException pe) {

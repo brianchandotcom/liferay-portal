@@ -63,7 +63,7 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
 
 		return WikiPageLocalServiceUtil.updateStatus(
-			userId, page, status, serviceContext);
+			userId, page, status, serviceContext, workflowContext);
 	}
 
 	@Override

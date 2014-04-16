@@ -111,7 +111,7 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 			"serviceContext");
 
 		return DLFileEntryLocalServiceUtil.updateStatus(
-			userId, classPK, status, workflowContext, serviceContext);
+			userId, classPK, status, serviceContext, workflowContext);
 	}
 
 	@Override

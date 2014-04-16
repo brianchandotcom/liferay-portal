@@ -30,6 +30,9 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.HashMap;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -206,7 +209,8 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		if (approved) {
 			entry = BlogsEntryLocalServiceUtil.updateStatus(
 				TestPropsValues.getUserId(), entry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
 		}
 
 		return entry;

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
@@ -129,19 +128,9 @@ public class DLAppHelperLocalServiceImpl
 
 		try {
 			if (fileVersion instanceof LiferayFileVersion) {
-				DLFileVersion dlFileVersion =
-					(DLFileVersion)fileVersion.getModel();
-
-				Map<String, Serializable> workflowContext =
-					new HashMap<String, Serializable>();
-
-				workflowContext.put("event", DLSyncConstants.EVENT_ADD);
-
-				WorkflowHandlerRegistryUtil.startWorkflowInstance(
-					dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-					userId, DLFileEntryConstants.getClassName(),
-					dlFileVersion.getFileVersionId(), dlFileVersion,
-					serviceContext, workflowContext);
+				DLUtil.startWorkflowInstance(
+					userId, (DLFileVersion)fileVersion.getModel(),
+					DLSyncConstants.EVENT_ADD, serviceContext);
 			}
 		}
 		finally {
@@ -1060,7 +1049,7 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
-			new HashMap<String, Serializable>(), new ServiceContext());
+			new ServiceContext(), new HashMap<String, Serializable>());
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
 
@@ -1437,9 +1426,8 @@ public class DLAppHelperLocalServiceImpl
 	@Override
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
-			int oldStatus, int newStatus,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			int oldStatus, int newStatus, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
@@ -1539,7 +1527,10 @@ public class DLAppHelperLocalServiceImpl
 
 				// Subscriptions
 
-				notifySubscribers(latestFileVersion, serviceContext);
+				notifySubscribers(
+					latestFileVersion,
+					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+					serviceContext);
 			}
 		}
 		else {
@@ -1611,8 +1602,8 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), oldStatus,
-			new HashMap<String, Serializable>(), serviceContext);
+			userId, fileVersion.getFileVersionId(), oldStatus, serviceContext,
+			new HashMap<String, Serializable>());
 
 		// File versions
 
@@ -1695,8 +1686,8 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
+			new HashMap<String, Serializable>());
 
 		if (DLAppHelperThreadLocal.isEnabled()) {
 
@@ -1943,7 +1934,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected String getEntryURL(
-			FileVersion fileVersion, ServiceContext serviceContext)
+			long groupId, long fileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		HttpServletRequest request = serviceContext.getRequest();
@@ -1959,7 +1950,7 @@ public class DLAppHelperLocalServiceImpl
 
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(
-				fileVersion.getGroupId(), PortletKeys.DOCUMENT_LIBRARY);
+				groupId, PortletKeys.DOCUMENT_LIBRARY);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -1972,8 +1963,7 @@ public class DLAppHelperLocalServiceImpl
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 		return portletURL.toString();
 	}
@@ -2001,12 +1991,11 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			FileVersion fileVersion, ServiceContext serviceContext)
+			FileVersion fileVersion, String entryURL,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!fileVersion.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!fileVersion.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
@@ -2023,7 +2012,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		String entryTitle = fileVersion.getTitle();
-		String entryURL = getEntryURL(fileVersion, serviceContext);
 
 		String fromName = dlSettings.getEmailFromName();
 		String fromAddress = dlSettings.getEmailFromAddress();

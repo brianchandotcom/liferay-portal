@@ -96,8 +96,8 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #checkRestorableEntry(long, long, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #checkRestorableEntry(long,
+	 *             long, String)}
 	 */
 	@Deprecated
 	public void checkDuplicateEntry(
@@ -113,13 +113,15 @@ public interface TrashHandler {
 	 * restored or moved out of the Recycle Bin.
 	 * </p>
 	 *
-	 * @param  trashEntry the trash entry to check
-	 * @param  containerModelId the primary key of the destination (e.g. folder)
-	 * @param  newName the new name to be assigned to the trash entry
-	 *         (optionally <code>null</code> to forego renaming the trash entry)
-	 * @throws PortalException if a duplicate trash entry already existed in the
-	 *         destination container
-	 * @throws SystemException if a system exception occurred
+	 * @param      trashEntry the trash entry to check
+	 * @param      containerModelId the primary key of the destination (e.g.
+	 *             folder)
+	 * @param      newName the new name to be assigned to the trash entry
+	 *             (optionally <code>null</code> to forego renaming the trash
+	 *             entry)
+	 * @throws     PortalException if a duplicate trash entry already existed in
+	 *             the destination container
+	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #checkRestorableEntry(TrashEntry, long, String)}
 	 */

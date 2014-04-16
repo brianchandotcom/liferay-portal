@@ -68,8 +68,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #checkRestorableEntry(long, long, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #checkRestorableEntry(long,
+	 *             long, String)}
 	 */
 	@Deprecated
 	@Override

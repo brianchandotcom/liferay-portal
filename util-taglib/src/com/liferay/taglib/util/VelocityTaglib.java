@@ -418,6 +418,7 @@ public interface VelocityTaglib {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #stagingMenu}
 	 */
+	@Deprecated
 	public void staging() throws Exception;
 
 	public void stagingMenu() throws Exception;

@@ -1008,8 +1008,8 @@ public class Validator {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link ArrayUtil#isNotEmpty(
-	 *             Object[])}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ArrayUtil#isNotEmpty(Object[])}
 	 */
 	@Deprecated
 	public static boolean isNotNull(Object[] array) {

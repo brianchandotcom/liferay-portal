@@ -146,8 +146,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getTypeName(Locale)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getTypeName(Locale)}
 	 */
 	@Deprecated
 	@Override

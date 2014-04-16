@@ -623,6 +623,12 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Search" />
 		</execute>

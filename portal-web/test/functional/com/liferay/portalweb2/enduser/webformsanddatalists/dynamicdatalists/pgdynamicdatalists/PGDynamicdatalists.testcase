@@ -685,6 +685,42 @@
 		</execute>
 	</command>
 
+	<command name="SwitchListsViaDDLDisplayAndAssertEditableStillChecked" priority="3">
+		<var name="ddlDataDefinition1Name" value="To Do" />
+		<var name="ddlDataDefinition2Name" value="Meeting Minutes" />
+		<var name="ddlList1Name" value="List 1 Name" />
+		<var name="ddlList2Name" value="List 2 Name" />
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlList1Name}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinition1Name}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlList2Name}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinition2Name}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="DDLList#selectPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlList2Name}" />
+		</execute>
+
+		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGDynamicdatalistsConfiguration#assertChecked" locator-key1="TEMPLATES_EDITABLE_CHECKBOX" />
+	</command>
+
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
 

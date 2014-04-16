@@ -29,7 +29,11 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
+
+import java.net.URL;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -82,6 +86,65 @@ public class BackgroundTaskLocalServiceTest {
 			backgroundTask.getTaskExecutorClassName());
 
 		assertMapEquals(taskContextMap, backgroundTask.getTaskContextMap());
+	}
+
+	@Test
+	public void testAddBackgroundTaskAttachmentByFile() throws Exception {
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				new ServiceContext());
+
+		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
+
+		URL urlFile = getClass().getResource(_FILE_PATH);
+
+		File file = new File(urlFile.toURI());
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
+			userId, backgroundTask.getBackgroundTaskId(), _FILE_NAME, file);
+
+		BackgroundTask backgroundTaskWithAttachedFile =
+			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+				backgroundTask.getBackgroundTaskId());
+
+		Assert.assertEquals(
+			backgroundTaskWithAttachedFile.getAttachmentsFileEntriesCount(), 1);
+	}
+
+	@Test
+	public void testAddBackgroundTaskAttachmentByInputStream()
+		throws Exception {
+
+		long userId = _user.getUserId();
+
+		long groupId = _group.getGroupId();
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.addBackgroundTask(
+				userId, groupId, _BACKGROUND_TASK_NAME, null,
+				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				new ServiceContext());
+
+		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
+
+		InputStream inputStream = getClass().getResourceAsStream(_FILE_PATH);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
+			userId, backgroundTask.getBackgroundTaskId(), _FILE_NAME,
+			inputStream);
+
+		BackgroundTask backgroundTaskWithAttachedFile =
+			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+				backgroundTask.getBackgroundTaskId());
+
+		Assert.assertEquals(
+			backgroundTaskWithAttachedFile.getAttachmentsFileEntriesCount(), 1);
 	}
 
 	@Test
@@ -145,6 +208,11 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTaskLocalServiceTest.class);
 
 	private final static String _BACKGROUND_TASK_NAME = "Name";
+
+	private final static String _FILE_NAME = "backgroundTaskAttachmentTest.txt";
+
+	private final static String _FILE_PATH =
+		"/com/liferay/portal/util/dependencies/test.txt";
 
 	private final static Class _TASK_EXECUTOR_CLASS =
 		PortletStagingBackgroundTaskExecutor.class;

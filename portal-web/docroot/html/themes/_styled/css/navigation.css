@@ -14,10 +14,6 @@
 		}
 	}
 
-	.add-page-editor-input {
-		width: 150px;
-	}
-
 	.delete-tab {
 		color: #444;
 		cursor: pointer;
@@ -74,8 +70,49 @@
 		}
 	}
 
-	.lfr-nav-updateable.selected a:hover span {
-		cursor: text;
+	.lfr-nav-updateable {
+		.add-page-editor {
+			margin: 0 5px;
+
+			.input-append {
+				margin: 6px 0 7px;
+				width: 100%;
+			}
+
+			.add-page-editor-input, .btn {
+				height: 32px;
+			}
+
+			.add-page-editor-input {
+				@include box-sizing(border-box);
+
+				width: 70%;
+				z-index: 1;
+			}
+
+			.btn {
+				display: inline-block;
+				width: 30%;
+			}
+
+			@include respond-to(desktop) {
+				.add-page-editor-input, .btn {
+					height: auto;
+				}
+
+				.add-page-editor-input {
+					width: 150px;
+				}
+
+				.btn {
+					width: auto;
+				}
+			}
+		}
+
+		&.selected a:hover span {
+			cursor: text;
+		}
 	}
 }
 

@@ -942,6 +942,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user restoring the blogs entry
 	 * @param  entryId the primary key of the blogs entry to be restored
+	 * @return the restored blogs entry from the recycle bin
 	 * @throws PortalException if a user or blogs entry with the primary key
 	 *         could not be found or if the blogs entry owner's social activity
 	 *         counter could not be updated

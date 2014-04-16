@@ -521,11 +521,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		stopWatch.start();
 
-		Group group = null;
-
 		try {
 			if (groupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				// If the group is a personal site, check the "User Personal
 				// Site" group.
@@ -553,13 +551,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				// If the group is a staging group, check the live group.
 
-				if (group.isStagingGroup()) {
+				if (group.isStagingGroup() &&
+					!ResourceBlockLocalServiceUtil.isSupported(name)) {
+
 					if (primKey.equals(String.valueOf(groupId))) {
 						primKey = String.valueOf(group.getLiveGroupId());
 					}
 
 					groupId = group.getLiveGroupId();
-					group = group.getLiveGroup();
 				}
 			}
 		}

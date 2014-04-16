@@ -359,12 +359,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		long[] groupIds = {
-			themeDisplay.getCompanyGroupId(), themeDisplay.getSiteGroupId()
-		};
-
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(
-			groupIds, themeDisplay.getLocale());
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getSiteGroupId()), themeDisplay.getLocale());
 
 		if (classTypes.isEmpty()) {
 			return null;

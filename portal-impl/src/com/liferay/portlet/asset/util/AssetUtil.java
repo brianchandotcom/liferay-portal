@@ -490,10 +490,8 @@ public class AssetUtil {
 			}
 
 			Map<Long, String> classTypes = assetRendererFactory.getClassTypes(
-				new long[] {
-					themeDisplay.getCompanyGroupId(),
-					themeDisplay.getScopeGroupId()
-				},
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
 				themeDisplay.getLocale());
 
 			if ((classTypeIds.length == 0) || classTypes.isEmpty()) {

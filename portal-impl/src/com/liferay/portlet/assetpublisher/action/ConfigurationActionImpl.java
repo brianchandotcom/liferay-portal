@@ -361,7 +361,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getSiteGroupId()), themeDisplay.getLocale());
+				themeDisplay.getSiteGroupId()),
+			themeDisplay.getLocale());
 
 		if (classTypes.isEmpty()) {
 			return null;

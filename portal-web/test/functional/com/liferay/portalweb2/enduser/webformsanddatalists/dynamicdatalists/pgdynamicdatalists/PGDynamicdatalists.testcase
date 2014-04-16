@@ -361,7 +361,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#deletePGViaDDLDislay">
+		<execute macro="DDLList#deletePGViaDDLDisplay">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 	</command>

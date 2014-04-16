@@ -40,7 +40,7 @@
 		<execute action="CPDynamicdatalists#assertTextNotPresent" value1="${ddlListName}" />
 	</command>
 
-	<command name="deletePGViaDDLDislay">
+	<command name="deletePGViaDDLDisplay">
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />

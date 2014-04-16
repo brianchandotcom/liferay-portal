@@ -184,7 +184,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK</td>
+	<td>CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK</td>
 	<td>//a[@id='_88_rangeLink']</td>
 	<td></td>
 </tr>

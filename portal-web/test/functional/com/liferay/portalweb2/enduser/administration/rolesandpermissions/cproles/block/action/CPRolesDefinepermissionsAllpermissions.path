@@ -701,7 +701,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_VIEW_CHECKBOX</td>
-	<td>//input[contains(@value,'VIEW')]</td>
+	<td>//input[contains(@value,'VIEW') and @type='checkbox']</td>
 	<td></td>
 </tr>
 </tbody>

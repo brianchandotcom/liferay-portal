@@ -188,7 +188,7 @@ public class EntriesChecker extends RowChecker {
 		}
 
 		return getRowCheckBox(
-			request, checked, disabled,
+			checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "Checkbox",
 			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);

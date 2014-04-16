@@ -151,6 +151,10 @@
 		}
 	}
 
+	.lfr-search .control-group {
+		margin-bottom: 0;
+	}
+
 	.navbar .nav > li > a {
 		&:focus, &:hover {
 			color: #009AE5;

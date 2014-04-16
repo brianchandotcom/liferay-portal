@@ -32,7 +32,7 @@ else {
 %>
 
 <c:if test="<%= Validator.isNotNull(label) %>">
-	<label class="hidden-label" for="<%= id %>"><liferay-ui:message key="<%= label %>" /></label>
+	<label class="control-label lfr-input-resource" for="<%= id %>"><liferay-ui:message key="<%= label %>" /></label>
 </c:if>
 
 <input class="form-text lfr-input-resource <%= cssClass %>" <%= "id=\"" + id + "\"" %> onClick="Liferay.Util.selectAndCopy(this);" readonly="true" <%= Validator.isNotNull(title) ? "title=\"" + HtmlUtil.escapeAttribute(title) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />

@@ -17,28 +17,23 @@
 <%@ include file="/html/taglib/aui/select/init.jsp" %>
 
 <div class="<%= controlGroupCss %>">
-	<c:choose>
-		<c:when test='<%= !hideLabel && Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
-			<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
-				<liferay-ui:message key="<%= label %>" />
+	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
+		<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
+			<liferay-ui:message key="<%= label %>" />
 
-				<c:if test="<%= required && showRequiredLabel %>">
-					<span class="label-required">(<liferay-ui:message key="required" />)</span>
-				</c:if>
+			<c:if test="<%= required && showRequiredLabel %>">
+				<span class="label-required">(<liferay-ui:message key="required" />)</span>
+			</c:if>
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
+			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+				<liferay-ui:icon-help message="<%= helpMessage %>" />
+			</c:if>
 
-				<c:if test="<%= changesContext %>">
-					<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
-				</c:if>
-			</label>
-		</c:when>
-		<c:when test="<%= hideLabel %>">
-			<label class="hidden-label" for="<%= namespace + id %>"><liferay-ui:message key="<%= label %>" /></label>
-		</c:when>
-	</c:choose>
+			<c:if test="<%= changesContext %>">
+				<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
+			</c:if>
+		</label>
+	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(prefix) %>">
 		<span class="prefix">

@@ -126,7 +126,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					String taglibUpdateShippingAddress = renderResponse.getNamespace() + "updateAddress(this[this.selectedIndex].value, 'shipping');";
 					%>
 
-					<aui:select hideLabel="<%= true %>" label="shipping-address" name="addressShipping" onChange="<%= taglibUpdateShippingAddress %>">
+					<aui:select label="" name="addressShipping" onChange="<%= taglibUpdateShippingAddress %>">
 						<aui:option label='<%= "--" + LanguageUtil.get(pageContext,"my-addresses") + "--" %>' />
 
 						<%

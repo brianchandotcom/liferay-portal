@@ -120,7 +120,7 @@
 			<var name="assetTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
@@ -214,7 +214,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
@@ -344,7 +344,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
@@ -456,7 +456,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
@@ -617,7 +617,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
@@ -697,7 +697,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />

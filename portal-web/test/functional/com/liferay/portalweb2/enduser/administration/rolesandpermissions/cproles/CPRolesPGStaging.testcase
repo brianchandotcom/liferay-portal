@@ -388,7 +388,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -476,7 +476,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNow" />
 
 		<execute macro="User#logoutUserPG" />
 

@@ -326,6 +326,9 @@ public class UserNotificationEventLocalServiceImpl
 
 					message.put("data", userNotificationEvent.getPayload());
 					message.put("userId", userNotificationEvent.getUserId());
+					message.put(
+						"userNotificationEventId",
+						userNotificationEvent.getUserNotificationEventId());
 
 					MessageBusUtil.sendMessage(
 						DestinationNames.PUSH_NOTIFICATION, message);

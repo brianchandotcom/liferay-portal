@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-portlet-journal',
 	function(A) {
+		var Lang = A.Lang;
+
 		var Journal = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -9,12 +11,15 @@ AUI.add(
 
 				NAME: 'journal',
 
+				ATTRS: {
+					articleId: {
+						validator: Lang.isString
+					}
+				},
+
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
-
-						instance.articleId = config.articleId;
-						instance.portletNamespace = config.namespace;
 					},
 
 					displayTemplateMessage: function() {
@@ -56,7 +61,7 @@ AUI.add(
 					getByName: function(currentForm, name, withoutNamespace) {
 						var instance = this;
 
-						var inputName = withoutNamespace ? name : instance.portletNamespace + name;
+						var inputName = withoutNamespace ? name : instance.NS + name;
 
 						return A.one(currentForm).one('[name=' + inputName + ']');
 					},
@@ -64,7 +69,7 @@ AUI.add(
 					getPrincipalForm: function(formName) {
 						var instance = this;
 
-						return A.one('form[name=' + instance.portletNamespace + (formName || 'fm1') + ']');
+						return A.one('form[name=' + instance.NS + (formName || 'fm1') + ']');
 					},
 
 					saveArticle: function(cmd) {
@@ -76,8 +81,10 @@ AUI.add(
 							instance.displayTemplateMessage();
 						}
 						else {
+							var articleId = instance.get('articleId');
+
 							if (!cmd) {
-								cmd = instance.articleId ? 'update' : 'add';
+								cmd = articleId ? 'update' : 'add';
 							}
 
 							var articleIdInput = instance.getByName(form, 'articleId');
@@ -88,12 +95,12 @@ AUI.add(
 							if (cmd == 'publish') {
 								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
 
-								cmd = instance.articleId ? 'update' : 'add';
+								cmd = articleId ? 'update' : 'add';
 							}
 
 							cmdInput.val(cmd);
 
-							if (!instance.articleId) {
+							if (!articleId) {
 								articleIdInput.val(newArticleIdInput.val());
 							}
 

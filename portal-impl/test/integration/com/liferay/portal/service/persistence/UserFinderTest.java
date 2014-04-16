@@ -109,7 +109,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, params);
 
-		Assert.assertEquals(5, count);
+		Assert.assertEquals(4, count);
 	}
 
 	@Test
@@ -223,7 +223,7 @@ public class UserFinderTest {
 		Assert.assertTrue(users.contains(_organizationUser));
 		Assert.assertTrue(users.contains(_userGroupUser));
 		Assert.assertTrue(users.contains(TestPropsValues.getUser()));
-		Assert.assertEquals(5, users.size());
+		Assert.assertEquals(4, users.size());
 	}
 
 	@Test

@@ -18,16 +18,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletKeys;
@@ -38,7 +36,6 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -47,8 +44,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -107,40 +102,9 @@ public class DDLIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		Set<DDMStructure> ddmStructuresSet = new TreeSet<DDMStructure>();
-
-		long recordSetId = GetterUtil.getLong(
-			searchContext.getAttribute("recordSetId"));
-
-		if (recordSetId > 0) {
-			DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
-				recordSetId);
-
-			ddmStructuresSet.add(recordSet.getDDMStructure());
-		}
-		else {
-			long[] groupIds = searchContext.getGroupIds();
-
-			if (ArrayUtil.isNotEmpty(groupIds)) {
-				List<DDMStructure> ddmStructures =
-					DDMStructureLocalServiceUtil.getStructures(groupIds);
-
-				ddmStructuresSet.addAll(ddmStructures);
-			}
-		}
-
-		BooleanQuery ddmStructureQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
-
-		for (DDMStructure ddmStructure : ddmStructuresSet) {
-			addSearchDDMStruture(searchQuery, searchContext, ddmStructure);
-		}
-
-		if (ddmStructureQuery.hasClauses()) {
-			searchQuery.add(ddmStructureQuery, BooleanClauseOccur.MUST);
-		}
-
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+
+		addSearchTerm(searchQuery, searchContext, "ddmContent", false);
 	}
 
 	@Override
@@ -161,6 +125,9 @@ public class DDLIndexer extends BaseIndexer {
 		document.addKeyword(Field.STATUS, recordVersion.getStatus());
 		document.addKeyword(Field.VERSION, recordVersion.getVersion());
 
+		document.addText(
+			"ddmContent",
+			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
 		document.addKeyword("recordSetId", recordVersion.getRecordSetId());
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
@@ -230,6 +197,23 @@ public class DDLIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexRecords(companyId);
+	}
+
+	protected String extractDDMContent(
+			DDLRecordVersion recordVersion, Locale locale)
+		throws Exception {
+
+		Fields fields = StorageEngineUtil.getFields(
+			recordVersion.getDDMStorageId());
+
+		if (fields == null) {
+			return StringPool.BLANK;
+		}
+
+		DDLRecordSet recordSet = recordVersion.getRecordSet();
+
+		return DDMIndexerUtil.extractAttributes(
+			recordSet.getDDMStructure(), fields, locale);
 	}
 
 	@Override

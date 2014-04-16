@@ -58,7 +58,7 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
@@ -98,7 +98,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<div class="folder-pagination"></div>
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"

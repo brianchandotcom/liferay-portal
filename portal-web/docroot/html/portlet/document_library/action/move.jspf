@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= showActions && dlFileEntryActionsDisplayContext.isMoveButtonVisible() %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() && dlFileEntryActionsDisplayContext.isMoveButtonVisible() %>">
 
 	<%
 	PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);

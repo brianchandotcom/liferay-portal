@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
+dlActionsDisplayContext = new DLActionsDisplayContext(DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request), request);
+
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
@@ -49,13 +51,13 @@ catch (NoSuchFolderException nsfe) {
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplay" persistState="<%= true %>" title="display-settings">
-			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= showActions %>" />
+			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlActionsDisplayContext.isShowActions() %>" />
 
-			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= showFolderMenu %>" />
+			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlActionsDisplayContext.isFolderMenuVisible() %>" />
 
-			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= showTabs %>" />
+			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlActionsDisplayContext.isShowTabs() %>" />
 
-			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
+			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>" />
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
@@ -74,14 +76,14 @@ catch (NoSuchFolderException nsfe) {
 					</div>
 				</aui:field-wrapper>
 
-				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
+				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowSubfolders() %>" />
 
-				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= foldersPerPage %>" />
+				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= dlPortletInstanceSettings.getFoldersPerPage() %>" />
 
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
+					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllFolderColumns()));
 
 					// Left list
 
@@ -121,12 +123,12 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsListingPanel" persistState="<%= true %>" title="documents-listing">
 			<aui:fieldset>
-				<aui:input label="documents-per-page" name="preferences--fileEntriesPerPage--" size="2" type="text" value="<%= fileEntriesPerPage %>" />
+				<aui:input label="documents-per-page" name="preferences--fileEntriesPerPage--" size="2" type="text" value="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>" />
 
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(StringUtil.split(allFileEntryColumns));
+					Set<String> availableFileEntryColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllFileEntryColumns()));
 
 					// Left list
 
@@ -165,8 +167,8 @@ catch (NoSuchFolderException nsfe) {
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsRatingsPanel" persistState="<%= true %>" title="ratings">
-			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableRatings() %>" />
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableCommentRatings() %>" />
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 

@@ -26,6 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +44,9 @@ public class DLFileEntryActionsDisplayContext {
 	}
 
 	public DLFileEntryActionsDisplayContext(
-		HttpServletRequest request, FileEntry fileEntry,
-		FileVersion fileVersion) {
+			HttpServletRequest request, FileEntry fileEntry,
+			FileVersion fileVersion)
+		throws PortalException, SystemException {
 
 		_request = request;
 
@@ -72,7 +74,12 @@ public class DLFileEntryActionsDisplayContext {
 			new DLFileEntryActionsDisplayContextHelper(
 				_permissionChecker, fileEntry, fileVersion);
 
-		_dlActionsDisplayContext = new DLActionsDisplayContext(request);
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLUtil.getDLPortletInstanceSettings(
+				themeDisplay.getLayout(), _portletDisplay.getId());
+
+		_dlActionsDisplayContext = new DLActionsDisplayContext(
+			dlPortletInstanceSettings, request);
 	}
 
 	public String getPublishButtonLabel() throws SystemException {

@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
+dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
+
 dlSettings = DLUtil.getDLSettings(themeDisplay.getSiteGroupId(), request);
 
 String emailFromName = dlSettings.getEmailFromName();

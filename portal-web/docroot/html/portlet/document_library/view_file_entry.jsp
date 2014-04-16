@@ -121,7 +121,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 </c:if>
 
 <div class="view">
-	<c:if test="<%= showActions %>">
+	<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 		<liferay-ui:app-view-toolbar>
 			<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 		</liferay-ui:app-view-toolbar>
@@ -129,7 +129,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 
 	<aui:row>
 		<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
-			<c:if test="<%= showActions %>">
+			<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 				<liferay-ui:app-view-toolbar>
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 				</liferay-ui:app-view-toolbar>
@@ -211,7 +211,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
-						<c:if test="<%= enableRatings && fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= dlPortletInstanceSettings.getEnableRatings() && fileEntry.isSupportsSocial() %>">
 							<span class="lfr-asset-ratings">
 								<liferay-ui:ratings
 									className="<%= DLFileEntryConstants.getClassName() %>"
@@ -220,7 +220,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 							</span>
 						</c:if>
 
-						<c:if test="<%= enableRelatedAssets && fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= dlPortletInstanceSettings.getEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
 							<div class="entry-links">
 								<liferay-ui:asset-links
 									assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
@@ -273,7 +273,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 							classPK="<%= fileEntryId %>"
 							formAction="<%= discussionURL %>"
 							formName="fm2"
-							ratingsEnabled="<%= enableCommentRatings %>"
+							ratingsEnabled="<%= dlPortletInstanceSettings.getEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= fileEntry.getUserId() %>"
 						/>
@@ -700,7 +700,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 		);
 	}
 
-	<c:if test="<%= showActions %>">
+	<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
 		var fileEntryButtonGroup = [];

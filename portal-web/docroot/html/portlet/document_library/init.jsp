@@ -91,10 +91,10 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
+DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 
-int entriesPerPage = dlPortletInstanceSettings.getEntriesPerPage();
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
 
 String[] displayViews = StringUtil.split(dlPortletInstanceSettings.getDisplayViews());
 
@@ -117,8 +117,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
-
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
@@ -126,22 +124,9 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletName = portletResource;
 }
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
-
-boolean showActions = dlActionsDisplayContext.isShowActions();
-boolean showAddFolderButton = dlActionsDisplayContext.isAddFolderButtonVisible();
-boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-boolean showMinimalActionButtons = dlActionsDisplayContext.isShowMinimalActionsButton();
-boolean showTabs = dlActionsDisplayContext.isShowTabs();
 
-boolean enableRelatedAssets = dlPortletInstanceSettings.getEnableRelatedAssets();
-
-String allEntryColumns = dlActionsDisplayContext.getAllEntryColumns();
 String[] entryColumns = dlActionsDisplayContext.getEntryColumns();
-
-boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
-boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

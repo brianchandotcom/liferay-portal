@@ -103,7 +103,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</c:if>
 	</aui:nav>
 
-	<c:if test="<%= showFoldersSearch %>">
+	<c:if test="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>">
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
 				<liferay-portlet:resourceURL varImpl="searchURL">

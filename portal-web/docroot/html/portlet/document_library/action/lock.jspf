@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= showActions %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 	<c:if test="<%= dlFileEntryActionsDisplayContext.isCheckoutDocumentButtonVisible() %>">
 		<portlet:actionURL var="checkOutURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />

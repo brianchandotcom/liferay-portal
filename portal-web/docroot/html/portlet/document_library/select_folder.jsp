@@ -42,7 +42,7 @@ if (folder != null) {
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 	<aui:button-row>
-		<c:if test="<%= showAddFolderButton && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
+		<c:if test="<%= dlActionsDisplayContext.isAddFolderButtonVisible() && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
 			<portlet:renderURL var="editFolderURL">
 				<portlet:param name="struts_action" value="/document_library/edit_folder" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -70,7 +70,7 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
 
 String[] folderColumns = dlActionsDisplayContext.getFolderColumns();
 

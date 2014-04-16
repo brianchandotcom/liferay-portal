@@ -36,7 +36,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLActionsDisplayContext {
 
-	public DLActionsDisplayContext(HttpServletRequest request) {
+	public DLActionsDisplayContext(
+		DLPortletInstanceSettings dlPortletInstanceSettings,
+		HttpServletRequest request) {
+
+		_dlPortletInstanceSettings = dlPortletInstanceSettings;
 		_request = request;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -93,12 +97,8 @@ public class DLActionsDisplayContext {
 	}
 
 	public String[] getEntryColumns() throws PortalException, SystemException {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
 		String[] entryColumns = StringUtil.split(
-			dlPortletInstanceSettings.getEntryColumns());
+			_dlPortletInstanceSettings.getEntryColumns());
 
 		String portletId = _portletDisplay.getId();
 
@@ -118,12 +118,8 @@ public class DLActionsDisplayContext {
 	public String[] getFileEntryColumns()
 		throws PortalException, SystemException {
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
 		String[] fileEntryColumns = StringUtil.split(
-			dlPortletInstanceSettings.getFileEntryColumns());
+			_dlPortletInstanceSettings.getFileEntryColumns());
 
 		if (!isShowActions()) {
 			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
@@ -133,12 +129,8 @@ public class DLActionsDisplayContext {
 	}
 
 	public String[] getFolderColumns() throws PortalException, SystemException {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
 		String[] folderColumns = StringUtil.split(
-			dlPortletInstanceSettings.getFolderColumns());
+			_dlPortletInstanceSettings.getFolderColumns());
 
 		if (!isShowActions()) {
 			folderColumns = ArrayUtil.remove(folderColumns, "action");
@@ -170,11 +162,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
-		return dlPortletInstanceSettings.getShowFolderMenu();
+		return _dlPortletInstanceSettings.getShowFolderMenu();
 	}
 
 	public boolean isIEOnWin32() {
@@ -194,11 +182,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
-		return dlPortletInstanceSettings.getShowActions();
+		return _dlPortletInstanceSettings.getShowActions();
 	}
 
 	public boolean isShowMinimalActionsButton() {
@@ -222,11 +206,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				_portletDisplay.getPortletInstanceSettings());
-
-		return dlPortletInstanceSettings.getShowTabs();
+		return _dlPortletInstanceSettings.getShowTabs();
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {
@@ -253,6 +233,7 @@ public class DLActionsDisplayContext {
 		return _portletDisplay.isWebDAVEnabled();
 	}
 
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private Boolean _ieOnWin32;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;

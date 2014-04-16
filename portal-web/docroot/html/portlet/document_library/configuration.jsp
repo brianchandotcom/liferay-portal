@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
+dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
+
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
@@ -71,7 +74,7 @@ catch (NoSuchFolderException nsfe) {
 							</div>
 						</aui:field-wrapper>
 
-						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
+						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>" />
 
 						<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
 
@@ -79,7 +82,7 @@ catch (NoSuchFolderException nsfe) {
 							for (int pageDeltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
 							%>
 
-								<aui:option label="<%= pageDeltaValue %>" selected="<%= entriesPerPage == pageDeltaValue %>" />
+								<aui:option label="<%= pageDeltaValue %>" selected="<%= dlPortletInstanceSettings.getEntriesPerPage() == pageDeltaValue %>" />
 
 							<%
 							}
@@ -87,7 +90,7 @@ catch (NoSuchFolderException nsfe) {
 
 						</aui:select>
 
-						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableRelatedAssets() %>" />
 
 						<aui:field-wrapper label="display-style-views">
 
@@ -135,7 +138,7 @@ catch (NoSuchFolderException nsfe) {
 						<aui:field-wrapper label="show-columns">
 
 							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
+							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllEntryColumns()));
 
 							// Left list
 
@@ -174,8 +177,8 @@ catch (NoSuchFolderException nsfe) {
 				</liferay-ui:panel>
 
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsRatingsPanel" persistState="<%= true %>" title="ratings">
-					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
-					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableRatings() %>" />
+					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableCommentRatings() %>" />
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 

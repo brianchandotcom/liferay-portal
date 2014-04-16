@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -113,6 +115,14 @@ public interface DL {
 
 	public String getDLFolderControlPanelLink(
 			PortletRequest portletRequest, long folderId)
+		throws PortalException, SystemException;
+
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException;
+
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
 		throws PortalException, SystemException;
 
 	public DLSettings getDLSettings(long groupId)

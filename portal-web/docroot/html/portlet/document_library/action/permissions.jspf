@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= showActions %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 	<c:choose>
 		<c:when test="<%= (fileShortcut == null) %>">
 			<c:if test="<%= dlFileEntryActionsDisplayContext.isPermissionsButtonVisible() %>">

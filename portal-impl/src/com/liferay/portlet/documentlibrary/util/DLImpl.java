@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -475,6 +476,31 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new DLPortletInstanceSettings(settings);
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new DLPortletInstanceSettings(parameterMapSettings);
 	}
 
 	@Override

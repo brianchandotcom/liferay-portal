@@ -38,7 +38,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 %>
 
 	<c:choose>
-		<c:when test='<%= folderColumn.equals("action") && showActions %>'>
+		<c:when test='<%= folderColumn.equals("action") && dlActionsDisplayContext.isShowActions() %>'>
 
 			<%
 			String align = SearchEntry.DEFAULT_ALIGN;
@@ -122,7 +122,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 					buffer.append("</a>");
 				}
 
-				if (showSubfolders) {
+				if (dlPortletInstanceSettings.getShowSubfolders()) {
 					List subfolders = new ArrayList();
 
 					try {

@@ -64,22 +64,13 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
-
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
-
-boolean showActions = dlActionsDisplayContext.isShowActions();
-boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
-boolean showTabs = dlActionsDisplayContext.isShowTabs();
-
-boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
-boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());

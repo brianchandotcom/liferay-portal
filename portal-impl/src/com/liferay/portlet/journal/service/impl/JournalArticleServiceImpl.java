@@ -35,7 +35,6 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -606,17 +605,21 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * Returns the web content from the web content article matching the group,
 	 * article ID, and version.
 	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  themeDisplay the theme display
-	 * @return the matching web content
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article, if a matching web content article or DDM
-	 *         template could not be found, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
+	 * @param      groupId the primary key of the web content article's group
+	 * @param      articleId the primary key of the web content article
+	 * @param      version the web content article's version
+	 * @param      languageId the primary key of the language translation to get
+	 * @param      themeDisplay the theme display
+	 * @return     the matching web content
+	 * @throws     PortalException if the user did not have permission to view
+	 *             the web content article, if a matching web content article or
+	 *             DDM template could not be found, or if a portal exception
+	 *             occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
+	 *             String, double, String, PortletRequestModel, ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, double version, String languageId,
@@ -664,16 +667,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * Returns the latest web content from the web content article matching the
 	 * group and article ID.
 	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  languageId the primary key of the language translation to get
-	 * @param  themeDisplay the theme display
-	 * @return the matching web content
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article, if a matching web content article or DDM
-	 *         template could not be found, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
+	 * @param      groupId the primary key of the web content article's group
+	 * @param      articleId the primary key of the web content article
+	 * @param      languageId the primary key of the language translation to get
+	 * @param      themeDisplay the theme display
+	 * @return     the matching web content
+	 * @throws     PortalException if the user did not have permission to view
+	 *             the web content article, if a matching web content article or
+	 *             DDM template could not be found, or if a portal exception
+	 *             occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
+	 *             String, String, PortletRequestModel, ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, String languageId,

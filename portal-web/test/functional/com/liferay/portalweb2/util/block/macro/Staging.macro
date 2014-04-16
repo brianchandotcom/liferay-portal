@@ -74,21 +74,21 @@
 
 		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
-		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_RADIO" />
-		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_REPEAT_DAILY_RADIO" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_RADIO" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_REPEAT_DAILY_RADIO" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_scheduleTitleName" value="${scheduleTitleName}" />
 
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SCHEDULED_TABLE_TITLE" value1="${scheduleTitleName}" />
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SCHEDULED_TABLE_END_DATE" value1="No End Date" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="SCHEDULED_TABLE_TITLE" value1="${scheduleTitleName}" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="SCHEDULED_TABLE_END_DATE" value1="No End Date" />
 
-		<execute action="PGStagingPublishtolivenow#selectFrame" value1="relative=top" />
+		<execute action="StagingPublishtolivenow#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addPageVariationPG">
@@ -270,12 +270,48 @@
 		<execute action="PGStagingManagesitepagesvariations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Site page variation was merged." />
 	</command>
 
-	<command name="publishToLiveNowPG">
+	<command name="publishGlobalToLiveCP">
+		<var name="key_siteName" value="Global" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+
 		<if>
-			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<equals arg1="${remoteStaging}" arg2="true" />
+			<then>
+				<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_PUBLISH_TO_LIVE" value1="Publish to Remote Live" />
+			</then>
+			<else>
+				<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_PUBLISH_TO_LIVE" value1="Publish to Live" />
+			</else>
+		</if>
+
+		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="StagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
+		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+
+		<execute action="Home#pause" locator1="5000" />
+		<execute action="Home#refresh" />
+	</command>
+
+	<command name="publishToLiveNow">
+		<if>
+			<and>
+				<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+				<condition action="PGStaging#isElementPresent" locator-key1="STAGING_BUTTON" />
+			</and>
 			<then>
 				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="STAGING_BUTTON" />
+			<then>
+				<execute action="CPSitepages#assertClick" locator-key1="STAGING_BUTTON" value1="Staging" />
+				<execute action="CPSitepages#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE" value1="Publish to Live" />
 			</then>
 		</if>
 
@@ -289,64 +325,64 @@
 
 		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
-		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_NOW_RADIO" />
+		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_NOW_RADIO" />
 
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${uncheckLogo}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
-				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="PAGES_LOGO_CHECKBOX" />
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
+				<execute action="StagingPublishtolivenow#uncheck" locator-key1="PAGES_LOGO_CHECKBOX" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
 
-					<execute action="PGStagingPublishtolivenow#click" locator-key1="PAGES_SPECIFIC_PAGE_NAME" />
+					<execute action="StagingPublishtolivenow#click" locator-key1="PAGES_SPECIFIC_PAGE_NAME" />
 				</for>
 
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${uncheckApplication}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<var name="key_applicationName" value="${applicationName}" />
 
-				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+				<execute action="StagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 			</then>
 			<else>
 				<if>
-					<condition action="PGStagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+					<condition action="StagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
 					<then>
-						<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+						<execute action="StagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
 					</then>
 				</if>
 			</else>
@@ -355,35 +391,35 @@
 		<if>
 			<equals arg1="${uncheckContent}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
 
 				<var name="key_contentName" value="${contentName}" />
 
-				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute action="StagingPublishtolivenow#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="contentDateRange" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+				<execute action="StagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Select" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
-				<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
-				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
-				<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+				<execute action="StagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
+				<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
 			</then>
 		</if>
 
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGStagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
-		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="StagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
+		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 
 		<execute action="Home#pause" locator1="5000" />
 		<execute action="Home#refresh" />
@@ -464,12 +500,12 @@
 
 		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
-		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
-		<execute action="PGStagingPublishtolivenow#click" locator-key1="PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_RADIO" />
-		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
+		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_SCHEDULE_RADIO" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
 
 		<var name="displayDateHour" locator="//input[@id='_88_schedulerStartDateHour']" attribute="value" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
@@ -499,10 +535,10 @@
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
 
-		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TIME_INPUT" value1="${displayDate}" />
-		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="DATE_SCHEDULE_TIME_INPUT" value1="${displayDate}" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 
 		<execute action="Home#pause" locator1="5000" />
 		<execute action="Home#refresh" />
@@ -527,16 +563,16 @@
 
 		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
-		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-		<execute action="PGStagingPublishtolivenow#click" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" />
+		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
 
 		<var name="key_contentDateRange" value="DateRange" />
 
-		<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
-		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
-		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
-		<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" />
 	</command>
 
 	<command name="setHistoryVersionPG">

@@ -6,8 +6,17 @@ AUI.add(
 		var LogoEditor = A.Component.create(
 			{
 				ATTRS: {
+					aspectRatio: {
+						validator: Lang.isNumber,
+						value: null
+					},
+
 					maxFileSize: {
 						validator: Lang.isNumber
+					},
+
+					preserveRatio: {
+						value: false
 					},
 
 					previewURL: {
@@ -213,8 +222,29 @@ AUI.add(
 						var portraitPreviewImg = instance._portraitPreviewImg;
 
 						if (portraitPreviewImg.attr('src').indexOf('spacer.png') == -1) {
-							var cropHeight = portraitPreviewImg.height();
-							var cropWidth = portraitPreviewImg.width();
+							var aspectRatio = instance.get('aspectRatio');
+
+							var portraitPreviewImgHeight = portraitPreviewImg.height();
+							var portraitPreviewImgWidth = portraitPreviewImg.width();
+
+							var cropHeight = portraitPreviewImgHeight;
+							var cropWidth = portraitPreviewImgWidth;
+
+							if (aspectRatio !== null) {
+								if (cropHeight < cropWidth) {
+									cropWidth = cropHeight;
+								}
+								else {
+									cropHeight = cropWidth;
+								}
+
+								if (aspectRatio > 1) {
+									cropHeight = cropWidth / aspectRatio;
+								}
+								else {
+									cropWidth = cropHeight * aspectRatio;
+								}
+							}
 
 							if (imageCropper) {
 								imageCropper.enable();
@@ -235,6 +265,7 @@ AUI.add(
 									{
 										cropHeight: cropHeight,
 										cropWidth: cropWidth,
+										preserveRatio: instance.get('preserveRatio'),
 										srcNode: portraitPreviewImg
 									}
 								).render();
@@ -243,7 +274,7 @@ AUI.add(
 								instance._imageCropper = imageCropper;
 							}
 
-							instance._setCropBackgroundSize(cropWidth, cropHeight);
+							instance._setCropBackgroundSize(portraitPreviewImgWidth, portraitPreviewImgHeight);
 
 							Liferay.Util.toggleDisabled(instance._submitButton, false);
 						}

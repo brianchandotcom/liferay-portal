@@ -15,7 +15,6 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,21 +30,18 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -136,25 +132,20 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			_portletPreferences, getSiteGroupIds());
-
-		assetEntryQuery.setAllCategoryIds(getAllAssetCategoryIds());
-
-		assetEntryQuery.setAllTagIds(
-			AssetTagLocalServiceUtil.getTagIds(
-				getSiteGroupIds(), getAllAssetTagNames()));
-
-		configureSubTypeFieldFilter(assetEntryQuery, themeDisplay.getLocale());
-
-		assetEntryQuery.setClassTypeIds(getClassTypeIds());
-		assetEntryQuery.setEnablePermissions(isEnablePermissions());
-		assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
+			_portletPreferences, getGroupIds(), getAllAssetCategoryIds(),
+			getAllAssetTagNames());
 
 		String portletName = getPortletName();
 
 		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
 			assetEntryQuery.setGroupIds(getGroupIds());
 		}
+
+		assetEntryQuery.setClassTypeIds(getClassTypeIds());
+		assetEntryQuery.setEnablePermissions(isEnablePermissions());
+		assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
+
+		configureSubTypeFieldFilter(assetEntryQuery, themeDisplay.getLocale());
 
 		if (isShowOnlyLayoutAssets()) {
 			assetEntryQuery.setLayout(themeDisplay.getLayout());
@@ -458,20 +449,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _selectionStyle;
-	}
-
-	public long[] getSiteGroupIds() throws PortalException, SystemException {
-		if (_siteGroupIds == null) {
-			Set<Long> siteIds = new HashSet<Long>();
-
-			for (long groupId : getGroupIds()) {
-				siteIds.add(PortalUtil.getSiteGroupId(groupId));
-			}
-
-			_siteGroupIds = ArrayUtil.toLongArray(siteIds);
-		}
-
-		return _siteGroupIds;
 	}
 
 	public String getSocialBookmarksDisplayPosition() {
@@ -938,7 +915,6 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
-	private long[] _siteGroupIds;
 	private String _socialBookmarksDisplayPosition;
 	private String _socialBookmarksDisplayStyle;
 	private Boolean _subtypeFieldsFilterEnabled;

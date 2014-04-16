@@ -174,12 +174,29 @@ public class AssetPublisherUtil {
 			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherUtil#getAssetEntryQuery(PortletPreferences,
+	 *             long[], long[], String[])}
+	 */
+	@Deprecated
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] siteGroupIds)
 		throws PortalException, SystemException {
 
 		return getAssetPublisher().getAssetEntryQuery(
 			portletPreferences, siteGroupIds);
+	}
+
+	public static AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long[] scopeGroupIds,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
+		throws PortalException, SystemException {
+
+		return getAssetPublisher().getAssetEntryQuery(
+			portletPreferences, scopeGroupIds, overrideAllAssetCategoryIds,
+			overrideAllAssetTagNames);
 	}
 
 	public static AssetPublisher getAssetPublisher() {
@@ -197,7 +214,7 @@ public class AssetPublisherUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 *             AssetPublisherUtil#getAssetTagNames(PortletPreferences)}
 	 */
 	@Deprecated
 	public static String[] getAssetTagNames(

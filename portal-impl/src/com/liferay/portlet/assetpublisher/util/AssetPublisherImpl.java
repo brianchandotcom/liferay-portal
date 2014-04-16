@@ -87,11 +87,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletException;
@@ -604,9 +606,25 @@ public class AssetPublisherImpl implements AssetPublisher {
 			deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherImpl#getAssetEntryQuery(PortletPreferences,
+	 *             long[], long[], String[])}
+	 */
 	@Override
 	public AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] siteGroupIds)
+			PortletPreferences portletPreferences, long[] scopeGroupIds)
+		throws PortalException, SystemException {
+
+		return getAssetEntryQuery(
+			portletPreferences, scopeGroupIds, null, null);
+	}
+
+	@Override
+	public AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long[] scopeGroupIds,
+			long[] overrideAllAssetCategoryIds,
+			String[] overrideAllAssetTagNames)
 		throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -670,7 +688,17 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 		}
 
+		if (overrideAllAssetCategoryIds != null) {
+			allAssetCategoryIds = overrideAllAssetCategoryIds;
+		}
+
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
+
+		if (overrideAllAssetCategoryIds != null) {
+			allAssetTagNames = overrideAllAssetTagNames;
+		}
+
+		long[] siteGroupIds = getSiteGroupIds(scopeGroupIds);
 
 		for (String assetTagName : allAssetTagNames) {
 			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
@@ -740,7 +768,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisher#getAssetTagNames(PortletPreferences)}
+	 *             AssetPublisherImpl#getAssetTagNames(PortletPreferences)}
 	 */
 	@Deprecated
 	@Override
@@ -1341,6 +1369,18 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			getSubscriptionClassPK(plid, portletId));
+	}
+
+	protected long[] getSiteGroupIds(long[] scopeGroupIds)
+		throws PortalException, SystemException {
+
+		Set<Long> siteIds = new HashSet<Long>();
+
+		for (long groupId : scopeGroupIds) {
+			siteIds.add(PortalUtil.getSiteGroupId(groupId));
+		}
+
+		return ArrayUtil.toLongArray(siteIds);
 	}
 
 	private void _checkAssetEntries(

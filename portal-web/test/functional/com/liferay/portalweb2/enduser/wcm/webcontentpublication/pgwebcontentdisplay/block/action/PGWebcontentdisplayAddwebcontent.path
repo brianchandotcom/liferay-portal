@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZED</td>
-	<td>//input[@id='_15_title_${key_languageKey}']</td>
+	<td>//input[@id='_15_title__${key_languageKey}']</td>
 	<td></td>
 </tr>
 <tr>

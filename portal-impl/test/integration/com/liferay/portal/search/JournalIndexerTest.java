@@ -798,11 +798,12 @@ public class JournalIndexerTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
 		if (!approve) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
 		JournalTestUtil.updateArticle(

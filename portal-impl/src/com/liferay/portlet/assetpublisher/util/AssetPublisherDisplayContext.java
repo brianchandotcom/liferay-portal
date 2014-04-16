@@ -15,6 +15,7 @@
 package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,10 +29,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -45,6 +45,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
@@ -133,15 +134,8 @@ public class AssetPublisherDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] groupIds = getGroupIds();
-
-		if (!ArrayUtil.contains(groupIds, themeDisplay.getScopeGroupId())) {
-			groupIds = ArrayUtil.append(
-				groupIds, themeDisplay.getScopeGroupId());
-		}
-
 		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			_portletPreferences, groupIds);
+			_portletPreferences, getSiteGroupIds());
 
 		long[] classNameIds = getClassNameIds();
 		long[] classTypeIds = getClassTypeIds();
@@ -174,16 +168,9 @@ public class AssetPublisherDisplayContext {
 
 		assetEntryQuery.setAllCategoryIds(getAllAssetCategoryIds());
 
-		if (hasLayoutGroup(groupIds)) {
-			assetEntryQuery.setAllTagIds(
-				AssetTagLocalServiceUtil.getTagIds(
-					groupIds, getAllAssetTagNames()));
-		}
-		else {
-			assetEntryQuery.setAllTagIds(
-				AssetTagLocalServiceUtil.getTagIds(
-					getGroupIds(), getAllAssetTagNames()));
-		}
+		assetEntryQuery.setAllTagIds(
+			AssetTagLocalServiceUtil.getTagIds(
+				getSiteGroupIds(), getAllAssetTagNames()));
 
 		assetEntryQuery.setClassTypeIds(classTypeIds);
 		assetEntryQuery.setEnablePermissions(isEnablePermissions());
@@ -497,6 +484,20 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _selectionStyle;
+	}
+
+	public long[] getSiteGroupIds() throws PortalException, SystemException {
+		if (_siteGroupIds == null) {
+			Set<Long> siteIds = new HashSet<Long>();
+
+			for (long groupId : getGroupIds()) {
+				siteIds.add(PortalUtil.getSiteGroupId(groupId));
+			}
+
+			_siteGroupIds = ArrayUtil.toLongArray(siteIds);
+		}
+
+		return _siteGroupIds;
 	}
 
 	public String getSocialBookmarksDisplayPosition() {
@@ -833,18 +834,6 @@ public class AssetPublisherDisplayContext {
 		return portletConfig.getPortletName();
 	}
 
-	protected boolean hasLayoutGroup(long[] groupIds) throws SystemException {
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if ((group != null) && group.isLayout()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected void setDDMStructure() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -941,6 +930,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
+	private long[] _siteGroupIds;
 	private String _socialBookmarksDisplayPosition;
 	private String _socialBookmarksDisplayStyle;
 	private Boolean _subtypeFieldsFilterEnabled;

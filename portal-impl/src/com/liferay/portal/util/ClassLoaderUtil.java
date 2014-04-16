@@ -113,7 +113,7 @@ public class ClassLoaderUtil {
 
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public ClassLoader getAggregatePluginsClassLoader(
 			String[] servletContextNames, boolean addContextClassLoader);

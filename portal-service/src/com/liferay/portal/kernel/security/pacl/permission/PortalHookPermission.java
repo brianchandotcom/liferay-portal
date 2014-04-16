@@ -44,7 +44,7 @@ public class PortalHookPermission extends BasicPermission {
 		return _subject;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkPermission(
 			String name, ClassLoader portletClassLoader, Object subject);

@@ -363,7 +363,7 @@ public class TemplateContextHelper {
 		_helperUtilitiesMaps.remove(classLoader);
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public TemplateControlContext getTemplateControlContext();
 

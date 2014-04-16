@@ -39,7 +39,7 @@ public class PortalFilePermission {
 		_pacl.checkWrite(path);
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkCopy(String source, String destination);
 

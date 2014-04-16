@@ -162,7 +162,7 @@ public class HotDeployImpl implements HotDeploy {
 		_hotDeployListeners.clear();
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void initPolicy(
 			String servletContextName, ClassLoader classLoader,

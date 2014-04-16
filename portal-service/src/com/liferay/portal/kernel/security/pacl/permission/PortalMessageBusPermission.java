@@ -44,7 +44,7 @@ public class PortalMessageBusPermission extends BasicPermission {
 		return _destinationName;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkListen(String destinationName);
 

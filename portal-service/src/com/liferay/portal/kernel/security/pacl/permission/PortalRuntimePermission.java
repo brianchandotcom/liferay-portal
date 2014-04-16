@@ -137,7 +137,7 @@ public class PortalRuntimePermission extends BasicPermission {
 		return _subject;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public void checkDynamicQuery(Class<?> implClass);
 

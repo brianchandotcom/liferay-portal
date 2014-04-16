@@ -124,7 +124,7 @@ public class PortalBeanLocatorUtil {
 		_beanLocator = beanLocator;
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public ClassLoader getBeanLocatorClassLoader(BeanLocator beanLocator);
 

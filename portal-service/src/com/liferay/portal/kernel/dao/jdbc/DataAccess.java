@@ -121,7 +121,7 @@ public class DataAccess {
 			new UpgradeOptimizedConnectionHandler(con));
 	}
 
-	public static interface PACL {
+	public interface PACL {
 
 		public DataSource getDataSource();
 

@@ -440,6 +440,37 @@
 		<execute action="PGWikiAllpages#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
 	</command>
 
+	<command name="RateSOWikiFrontPage" priority="3">
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#rate4StarsPG">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#viewRate4StarsPG">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
 	<command name="ViewSOWikiFrontPageChildPageAsGuest" known-issues="LPS-45435" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />

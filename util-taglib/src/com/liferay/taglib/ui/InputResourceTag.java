@@ -76,7 +76,7 @@ public class InputResourceTag extends IncludeTag {
 				_label = parentFieldWrapperTag.getLabel();
 
 				if ((_label == null) ||
-					_label.equals(parentFieldWrapperTag.getName())) {
+					 _label.equals(parentFieldWrapperTag.getName())) {
 
 					_label = StringPool.BLANK;
 				}

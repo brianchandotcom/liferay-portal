@@ -45,22 +45,20 @@ pageContext.setAttribute("portletURL", portletURL);
 <form action="<%= HtmlUtil.escapeAttribute(portletURL.toString()) %>" method="get" name="<%= randomNamespace %><%= namespace %>fm" onSubmit="<%= randomNamespace %><%= namespace %>search(); return false;">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<aui:fieldset cssClass="lfr-search">
-		<aui:input inlineField="<%= true %>" label="search" name='<%= namespace + "keywords" %>' size="30" title="search" type="text" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+	<input name="<%= namespace %>keywords" size="30" title="<liferay-ui:message key="search" />" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
 
-		<%
-		String taglibOnClick = "Liferay.Util.focusFormField('#" + namespace + "keywords');";
-		%>
+	<%
+	String taglibOnClick = "Liferay.Util.focusFormField('#" + namespace + "keywords');";
+	%>
 
-		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
+	<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
-		<aui:select inlineField="<%= true %>" label="scope" name='<%= namespace + "groupId" %>' title="scope" useNamespace="<%= false %>">
-			<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
-			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
-		</aui:select>
+	<select name="<%= namespace %>groupId" title="<liferay-ui:message key="scope" /> ">
+		<option value="0" <%= (groupId == 0) ? "selected" : "" %>><liferay-ui:message key="everything" /></option>
+		<option value="<%= group.getGroupId() %>" <%= (groupId != 0) ? "selected" : "" %>><liferay-ui:message key='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' /></option>
+	</select>
 
-		<aui:input inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
-	</aui:fieldset>
+	<input align="absmiddle" border="0" src="<%= themeDisplay.getPathThemeImages() %>/common/search.png" title="<liferay-ui:message key="search" />" type="image" />
 
 	<aui:script>
 		function <%= randomNamespace %><%= namespace %>search() {

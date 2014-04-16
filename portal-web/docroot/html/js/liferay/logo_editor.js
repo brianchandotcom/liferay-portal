@@ -7,6 +7,7 @@ AUI.add(
 			{
 				ATTRS: {
 					aspectRatio: {
+						validator: Lang.isNumber,
 						value: null
 					},
 

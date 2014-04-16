@@ -44,6 +44,10 @@ row.addText("--");
 
 row.addText(PortalUtil.getUserName(curFolder));
 
+// Type
+
+row.addText("--");
+
 // Action
 
 row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/folder_action.jsp");

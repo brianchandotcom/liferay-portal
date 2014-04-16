@@ -53,6 +53,7 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 		headerNames.add("modified-date");
 		headerNames.add("display-date");
 		headerNames.add("author");
+		headerNames.add("structure");
 		headerNames.add(StringPool.BLANK);
 
 		//orderableHeaders.put("id", "id");

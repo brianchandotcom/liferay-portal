@@ -226,6 +226,8 @@ AUI.add(
 
 				var panel = DOCKBAR_PANELS[panelId];
 
+				var namespace = instance._namespace;
+
 				if (panel) {
 					var panelNode = panel.node;
 
@@ -251,7 +253,7 @@ AUI.add(
 									instance._togglePanel(panelId);
 								}
 
-								var navAddControls = A.one('#' + instance._namespace + 'navAddControls');
+								var navAddControls = A.one('#' + namespace + 'navAddControls');
 
 								if (navAddControls) {
 									var layoutControl;
@@ -298,7 +300,8 @@ AUI.add(
 							A.Array.each(
 								ADD_PANEL_COMPONENTS,
 								function(item, index, collection) {
-									var componentName = Liferay.Util.ns(instance._namespace, item);
+									var componentName = Liferay.Util.ns(namespace, item);
+
 									var component = Liferay.component(componentName);
 
 									if (component) {

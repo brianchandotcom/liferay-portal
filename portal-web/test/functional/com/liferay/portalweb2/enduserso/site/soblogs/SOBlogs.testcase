@@ -715,7 +715,7 @@
 		<var name="entryTitle1" value="Blogs Entry1 Title" />
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
 		<var name="entryTitle2Edit" value="Blogs Entry2 Title Edit" />
-		<var name="larFileName" value="SO_Blogs_LAR.portlet.lar" />
+		<var name="larFileName" value="SO_Blogs_LAR.site.lar" />
 		<var name="tagName1" value="tag name 1" />
 		<var name="tagName2" value="tag name 2" />
 		<var name="userFullName" value="Test Test" />

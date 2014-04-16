@@ -281,9 +281,9 @@
 	<td>Yahoo</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_BING</td>
-	<td>title=Bing</td>
-	<td>Bing</td>
+	<td>BOOKMARKS_POP_UP_MSN</td>
+	<td>title=MSN.com</td>
+	<td>MSN</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_POP_UP_IMAGE_GOOGLE</td>
@@ -296,9 +296,9 @@
 	<td>Yahoo</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_IMAGE_BING</td>
-	<td>//div[contains(@class,'logo') and contains(.,'Bing')]</td>
-	<td>Bing</td>
+	<td>BOOKMARKS_POP_UP_IMAGE_MSN</td>
+	<td>//img[@alt='MSN Logo']</td>
+	<td>MSN</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_NULL_WINDOW</td>

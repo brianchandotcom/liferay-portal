@@ -1,6 +1,29 @@
 <definition>
 	<var name="assetType" value="Wiki Page" />
 
+	<command name="addAttachmentPG">
+		<var name="key_attachmentFileName" value="${attachmentFileName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
+
+		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_ATTACHMENTS" value1="Attachments" />
+
+		<execute action="PGWikiWikipageAttachments#assertClick" locator-key1="ADD_ATTACHMENTS_BUTTON" value1="Add Attachments" />
+		<execute action="PGWikiWikipageAttachments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+
+		<execute action="Sikuli#uploadCommonFile" locator-key1="FILE_DIALOG" value1="${attachmentFileName}" />
+
+		<execute action="PGWikiWikipageAttachments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+		<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${attachmentFileName}" />
+		<execute action="PGWikiWikipageAttachments#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+	</command>
+
 	<command name="addChildPagePG">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
@@ -572,6 +595,17 @@
 		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
+	<command name="rate4StarsPG">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+	</command>
+
 	<command name="removeRedirectWikiPagePG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -755,6 +789,50 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAttachmentPG">
+		<var name="key_attachmentFileName" value="${attachmentFileName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<if>
+			<isset var="numberOfAttachments" />
+			<then>
+				<if>
+					<not>
+						<equals arg1="${numberOfAttachments}" arg2="1" />
+					</not>
+					<then>
+						<execute action="PGWiki#assertTextEquals" locator-key1="ATTACHMENTS_BUTTON" value1="${numberOfAttachments} Attachments" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute action="PGWiki#assertTextEquals" locator-key1="ATTACHMENTS_BUTTON" value1="1 Attachment" />
+			</else>
+		</if>
+
+		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
+
+		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_ATTACHMENTS" value1="Attachments" />
+
+		<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ATTACHMENT_TABLE_FILE_NAME" value1="${attachmentFileName}" />
+
+		<if>
+			<isset var="attachmentFileSize" />
+			<then>
+				<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ATTACHMENT_TABLE_SIZE" value1="${attachmentFileSize}" />
+			</then>
+			<else>
+				<execute action="PGWikiWikipageAttachments#assertElementPresent" locator-key1="ATTACHMENT_TABLE_SIZE" />
+			</else>
+		</if>
+
+		<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ATTACHMENT_TABLE_REMOVE" value1="Remove" />
+	</command>
+
 	<command name="viewChildPagePGViaWD">
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
@@ -763,6 +841,17 @@
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
+	</command>
+
+	<command name="viewCommentPG">
+		<var name="key_commentBody" value="${commentBody}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
 	</command>
 
 	<command name="viewCP">
@@ -939,6 +1028,29 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 		<execute action="PGWikidisplay#assertTextNotPresent" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGWikidisplay#assertElementNotPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
+	</command>
+
+	<command name="viewRate4StarsPG">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_5" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="AVERAGE_STAR_1" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="AVERAGE_STAR_EMPTY_5" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="RATINGS_AVERAGE" value1="Average (1 Vote)" />
 	</command>
 
 	<command name="viewSaveAsDraftFrontPagePG">

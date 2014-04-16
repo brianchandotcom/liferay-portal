@@ -293,6 +293,118 @@
 	<td>//li[@class='taglib-social-bookmark-plusone']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--YOUR_RATING_STAR-->
+<tr>
+	<td>YOUR_RATING_STAR_1</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[1][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_2</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[2][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_3</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[3][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_4</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[4][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_5</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[5][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_1</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[1][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_2</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[2][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_3</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[3][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_4</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[4][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_5</td>
+	<td>xpath=(//div[contains(@id,'Content')])[1]/a[5][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AVERAGE_STAR-->
+<tr>
+	<td>AVERAGE_STAR_1</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[1][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_2</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[2][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_3</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[3][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_4</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[4][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_5</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[5][@class='rating-element icon-star']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_1</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[1][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_2</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[2][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_3</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[3][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_4</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[4][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_5</td>
+	<td>xpath=(//div[contains(@id,'Content')])[2]/a[5][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -72,40 +72,36 @@
 
 	.lfr-nav-updateable {
 		.add-page-editor {
-			margin: 0 5px;
-
-			.input-append {
-				margin: 6px 0 7px;
-				width: 100%;
-			}
-
-			.add-page-editor-input, .btn {
-				height: 32px;
-			}
-
 			.add-page-editor-input {
-				@include box-sizing(border-box);
-
-				width: 70%;
-				z-index: 1;
+				width: 150px;
 			}
 
 			.btn {
-				display: inline-block;
-				width: 30%;
+				width: auto;
 			}
 
-			@include respond-to(desktop) {
+			@include respond-to(phone, tablet) {
+				margin: 0 5px;
+
+				.input-append {
+					margin: 6px 0 7px;
+					width: 100%;
+				}
+
 				.add-page-editor-input, .btn {
-					height: auto;
+					height: 32px;
 				}
 
 				.add-page-editor-input {
-					width: 150px;
+					@include box-sizing(border-box);
+
+					width: 70%;
+					z-index: 1;
 				}
 
 				.btn {
-					width: auto;
+					display: inline-block;
+					width: 30%;
 				}
 			}
 		}

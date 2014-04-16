@@ -124,6 +124,8 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			);
 		}
 	);
+
+	Liferay.component('<portlet:namespace />addContent', addContent);
 </aui:script>
 
 <%!

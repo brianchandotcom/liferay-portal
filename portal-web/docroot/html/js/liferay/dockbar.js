@@ -7,6 +7,8 @@ AUI.add(
 
 		var Util = Liferay.Util;
 
+		var ADD_PANEL_COMPONENTS = ['addApplication', 'addContent', 'addPage'];
+
 		var BODY = A.getBody();
 
 		var CSS_ADD_CONTENT = 'lfr-has-add-content';
@@ -224,6 +226,8 @@ AUI.add(
 
 				var panel = DOCKBAR_PANELS[panelId];
 
+				var namespace = instance._namespace;
+
 				if (panel) {
 					var panelNode = panel.node;
 
@@ -249,7 +253,7 @@ AUI.add(
 									instance._togglePanel(panelId);
 								}
 
-								var navAddControls = A.one('#' + instance._namespace + 'navAddControls');
+								var navAddControls = A.one('#' + namespace + 'navAddControls');
 
 								if (navAddControls) {
 									var layoutControl;
@@ -291,6 +295,21 @@ AUI.add(
 
 					if (!panelVisible) {
 						BODY.detach('layoutControlsEsc|key');
+
+						if (panelId === STR_ADD_PANEL) {
+							A.Array.each(
+								ADD_PANEL_COMPONENTS,
+								function(item, index, collection) {
+									var componentName = Liferay.Util.ns(namespace, item);
+
+									var component = Liferay.component(componentName);
+
+									if (component) {
+										component.destroy();
+									}
+								}
+							);
+						}
 					}
 
 					panelNode.toggle(panelVisible);

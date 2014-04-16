@@ -519,6 +519,18 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		return _journalArticleService.getArticleByUrlTitle(groupId, urlTitle);
 	}
 
+	@Override
+	public java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, double version,
+		java.lang.String languageId,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticleContent(groupId, articleId,
+			version, languageId, portletRequestModel, themeDisplay);
+	}
+
 	/**
 	* Returns the web content from the web content article matching the group,
 	* article ID, and version.
@@ -543,6 +555,17 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getArticleContent(groupId, articleId,
 			version, languageId, themeDisplay);
+	}
+
+	@Override
+	public java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, java.lang.String languageId,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticleContent(groupId, articleId,
+			languageId, portletRequestModel, themeDisplay);
 	}
 
 	/**

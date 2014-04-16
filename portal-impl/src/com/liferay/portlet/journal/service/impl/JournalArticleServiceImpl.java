@@ -571,6 +571,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return article;
 	}
 
+	@Override
 	public String getArticleContent(
 			long groupId, String articleId, double version, String languageId,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
@@ -614,6 +615,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, version, null, languageId, themeDisplay);
 	}
 
+	@Override
 	public String getArticleContent(
 			long groupId, String articleId, String languageId,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)

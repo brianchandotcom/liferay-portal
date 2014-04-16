@@ -519,6 +519,18 @@ public class JournalArticleServiceUtil {
 		return getService().getArticleByUrlTitle(groupId, urlTitle);
 	}
 
+	public static java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, double version,
+		java.lang.String languageId,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getArticleContent(groupId, articleId, version, languageId,
+			portletRequestModel, themeDisplay);
+	}
+
 	/**
 	* Returns the web content from the web content article matching the group,
 	* article ID, and version.
@@ -543,6 +555,17 @@ public class JournalArticleServiceUtil {
 		return getService()
 				   .getArticleContent(groupId, articleId, version, languageId,
 			themeDisplay);
+	}
+
+	public static java.lang.String getArticleContent(long groupId,
+		java.lang.String articleId, java.lang.String languageId,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getArticleContent(groupId, articleId, languageId,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**

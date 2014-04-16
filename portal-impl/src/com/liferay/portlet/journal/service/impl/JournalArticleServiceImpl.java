@@ -571,6 +571,22 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return article;
 	}
 
+	/**
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article
+	 * @param  version the web content article's version
+	 * @param  languageId the primary key of the language translation to get
+	 * @param  portletRequestModel the portlet request model
+	 * @param  themeDisplay the theme display
+	 * @return the matching web content
+	 * @throws PortalException if the user did not have permission to view the
+	 *         web content article, if a matching web content article or DDM
+	 *         template could not be found, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, double version, String languageId,
@@ -615,6 +631,21 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, version, null, languageId, themeDisplay);
 	}
 
+	/**
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article
+	 * @param  languageId the primary key of the language translation to get
+	 * @param  portletRequestModel the portlet request model
+	 * @param  themeDisplay the theme display
+	 * @return the matching web content
+	 * @throws PortalException if the user did not have permission to view the
+	 *         web content article, if a matching web content article or DDM
+	 *         template could not be found, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, String languageId,

@@ -20,15 +20,17 @@
 boolean facebookConnectAuthEnabled = FacebookConnectUtil.isEnabled(company.getCompanyId());
 boolean facebookConnectVerifiedAccountRequired = FacebookConnectUtil.isVerifiedAccountRequired(company.getCompanyId());
 String facebookConnectAppId = FacebookConnectUtil.getAppId(company.getCompanyId());
+
 String facebookConnectAppSecret = FacebookConnectUtil.getAppSecret(company.getCompanyId());
-String facebookConnectGraphURL = FacebookConnectUtil.getGraphURL(company.getCompanyId());
-String facebookConnectOauthAuthURL = FacebookConnectUtil.getAuthURL(company.getCompanyId());
-String facebookConnectOauthTokenURL = FacebookConnectUtil.getAccessTokenURL(company.getCompanyId());
-String facebookConnectRedirectURL = FacebookConnectUtil.getRedirectURL(company.getCompanyId());
 
 if (Validator.isNotNull(facebookConnectAppSecret)) {
 	facebookConnectAppSecret = Portal.TEMP_OBFUSCATION_VALUE;
 }
+
+String facebookConnectGraphURL = FacebookConnectUtil.getGraphURL(company.getCompanyId());
+String facebookConnectOauthAuthURL = FacebookConnectUtil.getAuthURL(company.getCompanyId());
+String facebookConnectOauthTokenURL = FacebookConnectUtil.getAccessTokenURL(company.getCompanyId());
+String facebookConnectRedirectURL = FacebookConnectUtil.getRedirectURL(company.getCompanyId());
 %>
 
 <aui:fieldset>

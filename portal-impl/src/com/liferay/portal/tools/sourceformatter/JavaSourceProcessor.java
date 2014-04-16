@@ -1125,6 +1125,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"instead of LocaleUtil.getDefault(): " + fileName);
 		}
 
+		// LPS-46017
+
+		newContent = StringUtil.replace(
+			newContent, " static interface ", " interface ");
+
 		String oldContent = newContent;
 
 		while (true) {

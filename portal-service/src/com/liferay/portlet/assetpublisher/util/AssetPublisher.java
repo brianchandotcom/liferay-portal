@@ -131,7 +131,7 @@ public interface AssetPublisher {
 		throws Exception;
 
 	public AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
+			PortletPreferences portletPreferences, long[] siteGroupIds)
 		throws PortalException, SystemException;
 
 	public String[] getAssetTagNames(

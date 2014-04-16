@@ -175,11 +175,11 @@ public class AssetPublisherUtil {
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
+			PortletPreferences portletPreferences, long[] siteGroupIds)
 		throws PortalException, SystemException {
 
 		return getAssetPublisher().getAssetEntryQuery(
-			portletPreferences, scopeGroupIds);
+			portletPreferences, siteGroupIds);
 	}
 
 	public static AssetPublisher getAssetPublisher() {

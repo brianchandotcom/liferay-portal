@@ -178,12 +178,12 @@ public abstract class DLAppTestUtil {
 			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 		}
 
-		if (workflowEnabled && approved) {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-		else {
+		if (workflowEnabled && !approved) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
 		FileEntry fileEntry = addFileEntry(

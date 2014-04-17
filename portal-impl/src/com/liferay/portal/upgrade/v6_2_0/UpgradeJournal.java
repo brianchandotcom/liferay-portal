@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,7 +64,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, long parentDDMStructureId, long classNameId,
 			String ddmStructureKey, String name, String description, String xsd,
-			Locale defaultLocale, String storageType, int type)
+			String storageType, int type)
 		throws Exception {
 
 		Connection con = null;
@@ -98,7 +100,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(12, name);
 			ps.setString(13, description);
 			ps.setString(
-				14, JournalConverterUtil.getDDMXSD(xsd, defaultLocale));
+				14,
+				JournalConverterUtil.getDDMXSD(xsd, getDefaultLocale(name)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
@@ -129,9 +132,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			parentDDMStructureId = updateStructure(parentStructureId);
 		}
 
-		Locale defaultLocale =
-			JournalConverterUtil.getStructureNameDefaultLocale(name);
-
 		long insertedDDMStructureId = getDDMStructureId(
 			groupId, ddmStructureKey, false);
 
@@ -140,7 +140,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				uuid_, ddmStructureId, groupId, companyId, userId, userName,
 				createDate, modifiedDate, parentDDMStructureId,
 				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				ddmStructureKey, name, description, xsd, defaultLocale,
+				ddmStructureKey, name, description, xsd,
 				PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE,
 				DDMStructureConstants.TYPE_DEFAULT);
 		}
@@ -257,6 +257,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		return ddmStructureId;
+	}
+
+	protected Locale getDefaultLocale(String xml) {
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(xml);
+
+		return LocaleUtil.fromLanguageId(defaultLanguageId);
 	}
 
 	@Override

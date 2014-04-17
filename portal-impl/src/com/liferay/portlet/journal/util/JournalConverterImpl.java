@@ -230,18 +230,6 @@ public class JournalConverterImpl implements JournalConverter {
 		return DDMXMLUtil.formatXML(document);
 	}
 
-	public Locale getStructureNameDefaultLocale(String structureName)
-		throws Exception {
-
-		Document document = SAXReaderUtil.read(structureName);
-
-		Element rootElement = document.getRootElement();
-
-		String languageId = rootElement.attributeValue("default-locale");
-
-		return LocaleUtil.fromLanguageId(languageId);
-	}
-
 	protected void addDDMFields(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, String defaultLocale)

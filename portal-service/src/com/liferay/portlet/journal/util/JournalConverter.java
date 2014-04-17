@@ -45,7 +45,4 @@ public interface JournalConverter {
 
 	public String getJournalXSD(String ddmXSD) throws Exception;
 
-	public Locale getStructureNameDefaultLocale(String structureName)
-		throws Exception;
-
 }

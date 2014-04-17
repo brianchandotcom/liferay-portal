@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +46,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -96,7 +99,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(11, ddmStructureKey);
 			ps.setString(12, name);
 			ps.setString(13, description);
-			ps.setString(14, JournalConverterUtil.getDDMXSD(xsd));
+			ps.setString(
+				14,
+				JournalConverterUtil.getDDMXSD(xsd, getDefaultLocale(name)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 
@@ -252,6 +257,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		return ddmStructureId;
+	}
+
+	protected Locale getDefaultLocale(String xml) {
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(xml);
+
+		return LocaleUtil.fromLanguageId(defaultLanguageId);
 	}
 
 	@Override

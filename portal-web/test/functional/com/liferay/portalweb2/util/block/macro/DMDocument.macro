@@ -94,6 +94,19 @@
 		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+
+					<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				</for>
+			</then>
+		</if>
+
 		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -130,16 +143,6 @@
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 
-		<if>
-			<condition action="SODocuments#isElementPresent" locator-key1="VERSION_HISTORY_TITLE" />
-			<then>
-				<var name="key_dmDocumentVersionNumber" value="PWC" />
-
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version PWC" />
-			</then>
-		</if>
-
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_VERSION" value1="Version PWC" />
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CANCEL_CHECKOUT_BUTTON" value1="Cancel Checkout" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -677,8 +680,26 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="ratePG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+
+		<if>
+			<equals arg1="${soDocument}" arg2="true" />
+			<then>
+				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_SOCIAL_OFFICE" />
+			</then>
+			<else>
+				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_PORTAL" />
+			</else>
+		</if>
+
+		<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_STATUS" />
+	</command>
+
 	<command name="removeDocumentViewPermissionsPG">
-		<var name="key_dmDocumentTitleS" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
 		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
@@ -1011,6 +1032,36 @@
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG" />
 	</command>
 
+	<command name="viewDocumentViewPermissionsPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+
+		<if>
+			<equals arg1="${viewPermissionValue}" arg2="checked" />
+			<then>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</then>
+			<elseif>
+				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</else>
+		</if>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewEditCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitleEdit}" />
 
@@ -1024,6 +1075,7 @@
 
 	<command name="viewEditedDraftPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
 
 		<execute action="PGDocumentsandmedia#assertTextPresent" locator-key1="BREADCRUMB_HOME" value1="Home" />
 		<execute action="PGDocumentsandmedia#type" locator-key1="BASIC_SEARCH_FIELD" value1="${dmDocumentTitle}" />
@@ -1062,6 +1114,36 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
 	</command>
 
+	<command name="viewFolderViewPermissionsPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+
+		<if>
+			<equals arg1="${viewPermissionValue}" arg2="checked" />
+			<then>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</then>
+			<elseif>
+				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</else>
+		</if>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewLockPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -1083,6 +1165,15 @@
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TAGS" value1="${tagName}" />
+				</for>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewPGDetails">
@@ -1171,6 +1262,19 @@
 		</if>
 
 		<execute macro="DMDocument#viewDocumentDetailsCmdPG" />
+	</command>
+
+	<command name="viewPGRating">
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="AVERAGE_RATING" value1="Average (1 Vote)" />
+
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_1" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_2" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_3" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_4" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_5" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_1" />
+		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
 	</command>
 
 	<command name="viewPGViaMG">

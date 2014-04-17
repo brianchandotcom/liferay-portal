@@ -5,18 +5,18 @@
 	margin-top: 1.5em;
 	overflow: auto;
 
-	@include respond-to(phone, tablet) {
-		@include experimental(overflow-scrolling, touch);
-
-		.searchcontainer-content .table {
-			max-width: none;
-		}
-	}
-
 	@include respond-to(phone) {
 		.selector-button {
 			width: auto;
 		}
+	}
+}
+
+.touch .lfr-search-container {
+	@include experimental(overflow-scrolling, touch);
+
+	.searchcontainer-content .table {
+		max-width: none;
 	}
 }
 

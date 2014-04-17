@@ -1485,14 +1485,14 @@ public class DLAppHelperLocalServiceImpl
 							AssetLinkConstants.TYPE_RELATED);
 
 						SystemEventHierarchyEntryThreadLocal.push(
-							AssetEntry.class);
+							DLFileEntryConstants.getClassName());
 
 						try {
 							assetEntryLocalService.deleteEntry(draftAssetEntry);
 						}
 						finally {
 							SystemEventHierarchyEntryThreadLocal.pop(
-								AssetEntry.class);
+								DLFileEntryConstants.getClassName());
 						}
 					}
 				}

@@ -36,7 +36,9 @@
 	<command name="ActivateDeactivateRemoteStaging" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
-		<execute macro="Staging#remoteStagingSetUp" />
+		<execute macro="Staging#remoteStagingSetUp">
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -1122,6 +1124,7 @@
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1157,6 +1160,7 @@
 
 		<execute macro="Staging#remoteStagingSetUp">
 			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

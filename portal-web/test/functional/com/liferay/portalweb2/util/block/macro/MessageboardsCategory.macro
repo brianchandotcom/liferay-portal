@@ -22,6 +22,19 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${displayStyle}" arg2="Question" />
+			<then>
+				<execute action="PGMessageboardsAddcategory#select" locator-key1="DISPLAY_STYLE_SELECT" value1="Question" />
+			</then>
+			<elseif>
+				<equals arg1="${displayStyle" arg2="Default" />
+				<then>
+					<execute action="PGMessageboardsAddcategory#select" locator-key1="DISPLAY_STYLE_SELECT" value1="Default" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

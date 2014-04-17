@@ -7,7 +7,7 @@
 	li {
 		position: relative;
 
-		&.lfr-nav-hover {
+		&.lfr-nav-deletable:hover {
 			.delete-tab {
 				@include opacity(1);
 			}

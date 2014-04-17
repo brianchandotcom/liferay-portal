@@ -280,19 +280,19 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			</div>
 		</aui:col>
 
-		<aui:col cssClass="lfr-asset-column-details context-pane" last="<%= true %>" width="<%= 30 %>">
-			<div class="body-row asset-details">
+		<aui:col cssClass="context-pane lfr-asset-column-details" last="<%= true %>" width="<%= 30 %>">
+			<div class="asset-details body-row">
 				<c:if test="<%= showAssetMetadata %>">
 					<div class="asset-details-content">
 						<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
 						</h3>
 
-						<div class="lfr-asset-icon lfr-asset-author">
+						<div class="lfr-asset-author lfr-asset-icon">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
 						</div>
 
-						<div class="lfr-asset-icon lfr-asset-date">
+						<div class="lfr-asset-date lfr-asset-icon">
 							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 						</div>
 
@@ -351,7 +351,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 							</c:choose>
 						</span>
 
-						<div class="lfr-asset-field url-file-container hide">
+						<div class="hide lfr-asset-field url-file-container">
 							<aui:field-wrapper name="url">
 								<liferay-ui:input-resource
 									id="url"
@@ -361,7 +361,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-							<div class="lfr-asset-field webdav-url-file-container hide">
+							<div class="hide lfr-asset-field webdav-url-file-container">
 
 								<%
 								String webDavHelpMessage = null;
@@ -731,15 +731,14 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		</c:if>
 
 		<c:if test="<%= dlActionsDisplayContext.isEditButtonVisible() %>">
+			<portlet:renderURL var="editURL">
+				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+			</portlet:renderURL>
+
 			fileEntryButtonGroup.push(
 				{
-
-					<portlet:renderURL var="editURL">
-						<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:renderURL>
-
 					icon: 'icon-pencil',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>',
 					on: {
@@ -752,15 +751,14 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		</c:if>
 
 		<c:if test="<%= dlActionsDisplayContext.isMoveButtonVisible() %>">
+			<portlet:renderURL var="moveURL">
+				<portlet:param name="struts_action" value="/document_library/move_entry" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+			</portlet:renderURL>
+
 			fileEntryButtonGroup.push(
 				{
-
-					<portlet:renderURL var="moveURL">
-						<portlet:param name="struts_action" value="/document_library/move_entry" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-					</portlet:renderURL>
-
 					icon: 'icon-move',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "move") %>',
 					on: {
@@ -821,16 +819,16 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		</c:if>
 
 		<c:if test="<%= dlActionsDisplayContext.isPermissionsButtonVisible() %>">
+			<liferay-security:permissionsURL
+				modelResource="<%= DLFileEntryConstants.getClassName() %>"
+				modelResourceDescription="<%= fileEntry.getTitle() %>"
+				resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
+				var="permissionsURL"
+				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+			/>
+
 			fileEntryButtonGroup.push(
 				{
-					<liferay-security:permissionsURL
-						modelResource="<%= DLFileEntryConstants.getClassName() %>"
-						modelResourceDescription="<%= fileEntry.getTitle() %>"
-						resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
 					icon: 'icon-permissions',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 					on: {
@@ -848,13 +846,13 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		</c:if>
 
 		<c:if test="<%= dlActionsDisplayContext.isMoveToTheRecycleBinButtonVisible() %>">
+			<portlet:renderURL var="viewFolderURL">
+				<portlet:param name="struts_action" value="/document_library/view" />
+				<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+			</portlet:renderURL>
+
 			fileEntryButtonGroup.push(
 				{
-					<portlet:renderURL var="viewFolderURL">
-						<portlet:param name="struts_action" value="/document_library/view" />
-						<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
-					</portlet:renderURL>
-
 					icon: 'icon-trash',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "move-to-the-recycle-bin") %>',
 					on: {
@@ -869,13 +867,13 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		</c:if>
 
 		<c:if test="<%= dlActionsDisplayContext.isDeleteButtonVisible() %>">
+			<portlet:renderURL var="viewFolderURL">
+				<portlet:param name="struts_action" value="/document_library/view" />
+				<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+			</portlet:renderURL>
+
 			fileEntryButtonGroup.push(
 				{
-					<portlet:renderURL var="viewFolderURL">
-						<portlet:param name="struts_action" value="/document_library/view" />
-						<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
-					</portlet:renderURL>
-
 					icon: 'icon-delete',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
 					on: {

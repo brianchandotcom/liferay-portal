@@ -127,12 +127,12 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 	var typeNode = A.one('#<portlet:namespace />type');
 	var typeSettings = A.one('#<portlet:namespace />typeSettings');
 
+	<portlet:resourceURL var="editorURL">
+		<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_editor" />
+	</portlet:resourceURL>
+
 	var loadTypeFields = function() {
 		A.io.request(
-			<portlet:resourceURL var="editorURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_editor" />
-			</portlet:resourceURL>
-
 			'<%= editorURL.toString() %>',
 			{
 				data: {

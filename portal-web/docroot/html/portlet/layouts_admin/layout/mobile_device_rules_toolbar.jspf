@@ -24,22 +24,6 @@
 	</div>
 </c:if>
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/mobile_device_rules/select_rule_group" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="className" value="<%= className %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectRuleGroup" %>' />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group_instance" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="className" value="<%= className %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<portlet:param name="saveCallback" value='<%= liferayPortletResponse.getNamespace() + "saveRuleGroupsPriorities" %>' />
-</liferay-portlet:renderURL>
-
 <aui:script>
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
 		dialog.hide();
@@ -100,6 +84,15 @@
 		['aui-loading-mask-deprecated']
 	);
 
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewRuleGroupInstancesURL">
+		<portlet:param name="struts_action" value="/layouts_admin/mobile_device_rules" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="className" value="<%= className %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	</liferay-portlet:resourceURL>
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateRuleGroupInstances',
@@ -107,15 +100,6 @@
 			var A = AUI();
 
 			A.io.request(
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewRuleGroupInstancesURL">
-					<portlet:param name="struts_action" value="/layouts_admin/mobile_device_rules" />
-					<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
-					<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="className" value="<%= className %>" />
-					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				</liferay-portlet:resourceURL>
-
 				'<%= viewRuleGroupInstancesURL.toString() %>',
 				{
 					on: {
@@ -137,6 +121,14 @@
 
 <aui:script use="aui-base">
 	var saveInstance = A.one('#<portlet:namespace />saveInstance');
+
+	<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/mobile_device_rules/select_rule_group" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="className" value="<%= className %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+		<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectRuleGroup" %>' />
+	</liferay-portlet:renderURL>
 
 	if (saveInstance) {
 		saveInstance.on(
@@ -162,6 +154,14 @@
 	}
 
 	var managePriorities = A.one('#<portlet:namespace />managePriorities');
+
+	<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group_instance" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="className" value="<%= className %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+		<portlet:param name="saveCallback" value='<%= liferayPortletResponse.getNamespace() + "saveRuleGroupsPriorities" %>' />
+	</liferay-portlet:renderURL>
 
 	if (managePriorities) {
 		managePriorities.on(

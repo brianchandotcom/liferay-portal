@@ -427,11 +427,6 @@ String iconMenuId = null;
 	</div>
 </div>
 
-<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
-	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-</portlet:renderURL>
-
 <aui:script use="uploader,liferay-util-window">
 	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {
 		var uploadMultipleDocumentsIcon = A.all('.upload-multiple-documents:hidden');
@@ -442,6 +437,11 @@ String iconMenuId = null;
 	var slideShow = A.one('.<%= randomNamespace %>-slide-show');
 
 	if (slideShow) {
+		<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
+			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		</portlet:renderURL>
+
 		slideShow.on(
 			'click',
 			function(event) {

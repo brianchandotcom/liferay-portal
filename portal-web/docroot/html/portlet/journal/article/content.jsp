@@ -141,18 +141,6 @@ if (Validator.isNotNull(content)) {
 	<portlet:param name="structureId" value="<%= structureId %>" />
 </portlet:renderURL>
 
-<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/journal/edit_article" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="portletResource" value="<%= portletResource %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="classPK" value="<%= classPK %>" />
-	<portlet:param name="structureId" value="<%= structureId %>" />
-	<portlet:param name="templateId" value="<%= templateId %>" />
-</portlet:renderURL>
-
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
 	<div class="journal-article-body-content">
 		<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
@@ -632,6 +620,18 @@ if (Validator.isNotNull(content)) {
 	var defaultLocaleSelector = A.one('#<portlet:namespace/>defaultLocale');
 
 	if (defaultLocaleSelector) {
+		<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+			<portlet:param name="struts_action" value="/journal/edit_article" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+			<portlet:param name="articleId" value="<%= articleId %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+			<portlet:param name="classPK" value="<%= classPK %>" />
+			<portlet:param name="structureId" value="<%= structureId %>" />
+			<portlet:param name="templateId" value="<%= templateId %>" />
+		</portlet:renderURL>
+
 		defaultLocaleSelector.on(
 			'change',
 			function(event) {
@@ -646,6 +646,16 @@ if (Validator.isNotNull(content)) {
 
 	var editDDMTemplate = A.one('#<portlet:namespace />editDDMTemplate');
 
+	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+		<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+		<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+		<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+		<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+	</liferay-portlet:renderURL>
+
 	if (editDDMTemplate) {
 		var windowId = A.guid();
 
@@ -657,17 +667,6 @@ if (Validator.isNotNull(content)) {
 						{
 							id: windowId,
 							title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
-
-							<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-								<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-								<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-								<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
-								<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-								<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-								<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
-							</liferay-portlet:renderURL>
-
 							uri: '<%= editTemplateURL %>'
 						}
 					);
@@ -678,6 +677,16 @@ if (Validator.isNotNull(content)) {
 
 	<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 		var editDDMStructure = A.one('#<portlet:namespace />editDDMStructure');
+
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+			<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+			<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+		</liferay-portlet:renderURL>
 
 		if (editDDMStructure) {
 			var windowId = A.guid();
@@ -691,17 +700,6 @@ if (Validator.isNotNull(content)) {
 								id: windowId,
 								refreshWindow: window,
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>',
-
-								<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-									<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-									<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-									<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-									<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
-									<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-									<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-									<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-								</liferay-portlet:renderURL>
-
 								uri: '<%= editStructureURL %>'
 							}
 						);

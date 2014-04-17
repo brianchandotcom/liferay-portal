@@ -42,18 +42,17 @@ String portletURLString = portletURL.toString();
 	%>
 
 	<aui:nav-bar>
-		<aui:nav>
-			<portlet:renderURL var="viewRolesURL">
-				<portlet:param name="struts_action" value="/roles_admin/view" />
-			</portlet:renderURL>
-
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
-				<liferay-portlet:renderURL varImpl="addRoleURL">
-					<portlet:param name="struts_action" value="/roles_admin/edit_role" />
-					<portlet:param name="redirect" value="<%= viewRolesURL %>" />
-				</liferay-portlet:renderURL>
-
+		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
+			<aui:nav>
 				<aui:nav-item dropdown="<%= true %>" label="add" selected='<%= toolbarItem.equals("add") %>'>
+					<portlet:renderURL var="viewRolesURL">
+						<portlet:param name="struts_action" value="/roles_admin/view" />
+					</portlet:renderURL>
+
+					<liferay-portlet:renderURL varImpl="addRoleURL">
+						<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+						<portlet:param name="redirect" value="<%= viewRolesURL %>" />
+					</liferay-portlet:renderURL>
 
 					<%
 					addRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
@@ -73,8 +72,8 @@ String portletURLString = portletURL.toString();
 
 					<aui:nav-item href="<%= addRoleURL.toString() %>" label="organization-role" />
 				</aui:nav-item>
-			</c:if>
-		</aui:nav>
+			</aui:nav>
+		</c:if>
 
 		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
 	</aui:nav-bar>

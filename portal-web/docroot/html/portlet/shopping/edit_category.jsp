@@ -67,11 +67,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 				}
 				%>
 
-				<portlet:renderURL var="viewCategoryURL">
-					<portlet:param name="struts_action" value="/shopping/view" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-				</portlet:renderURL>
-
 				<div class="input-append">
 					<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
 

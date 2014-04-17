@@ -28,15 +28,14 @@ if (group == null) {
 }
 %>
 
-<liferay-portlet:renderURL varImpl="assignMembersURL">
-	<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-	<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-</liferay-portlet:renderURL>
-
 <aui:nav-bar>
 	<aui:nav>
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_MEMBERS) %>">
 			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add-members" selected='<%= toolbarItem.equals("add-members") %>'>
+				<liferay-portlet:renderURL varImpl="assignMembersURL">
+					<liferay-portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
+					<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+				</liferay-portlet:renderURL>
 
 				<%
 				assignMembersURL.setParameter("tabs1", "users");

@@ -221,10 +221,9 @@ public class InputTag extends BaseInputTag {
 		String forLabel = id;
 
 		if (Validator.equals(type,"assetTags")) {
-			forLabel += "assetTagNames";
+			forLabel = forLabel.concat("assetTagNames");
 		}
-
-		if (Validator.equals(type, "checkbox")) {
+		else if (Validator.equals(type, "checkbox")) {
 			forLabel = forLabel.concat("Checkbox");
 		}
 

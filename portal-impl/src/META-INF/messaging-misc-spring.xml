@@ -139,6 +139,7 @@
 				<ref bean="destination.live_users" />
 				<ref bean="destination.marketplace" />
 				<ref bean="destination.message_boards_mailing_list" />
+				<ref bean="destination.push_notification" />
 				<ref bean="destination.subscription_clean_up" />
 				<ref bean="destination.subscription_sender" />
 			</list>

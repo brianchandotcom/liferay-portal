@@ -7,6 +7,14 @@
 		<case locator-key1="ASSET_ABSTRACT_READ_MORE">
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
+
+		<case locator-key1="ASSET_ABSTRACT_VIEW">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="DISPLAY_ICON_EDIT">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="assertElementPresent">

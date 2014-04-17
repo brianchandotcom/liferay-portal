@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>PGAssetpublisherAddnewwebcontentDisplaypage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherAddnewwebcontentDisplaypage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherAddnewwebcontentDisplaypage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_DISPLAY_PAGE_BUTTON</td>
+	<td>//div[contains(@id,'displayPageToolbar')]/div/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'message') and contains(@class,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK_BUTTON</td>
+	<td>//button[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PUBLIC_PAGE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Public Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_DISPLAY_PAGE_SELECTION</td>
+	<td>//li[contains(@id,'treeContainerPublicPages')]/div/span/a[contains(.,'${key_displayPageSelection}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

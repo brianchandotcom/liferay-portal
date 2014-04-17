@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_15_title_en_US']</td>
+	<td>//input[contains(@id,'_15_title') and contains(@id,'_en') and contains(@id,'_US')]</td>
 	<td></td>
 </tr>
 <tr>

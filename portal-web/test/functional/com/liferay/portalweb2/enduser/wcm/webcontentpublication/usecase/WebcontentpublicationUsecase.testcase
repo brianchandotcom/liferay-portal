@@ -1337,4 +1337,67 @@
 
 		<execute macro="User#loginPG" />
 	</command>
+
+	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page 2" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
+			<var name="assetLinkBehavior" value="View in Context" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page 2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="setAsDefaultPage" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#editDisplayPagePGViaAP">
+			<var name="assetTitle" value="WC WebContent Title" />
+			<var name="displayPageSelection" value="Asset Publisher Page 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewLinkedAssetPGViaAP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Asset Publisher Page 2" />
+	</command>
 </definition>

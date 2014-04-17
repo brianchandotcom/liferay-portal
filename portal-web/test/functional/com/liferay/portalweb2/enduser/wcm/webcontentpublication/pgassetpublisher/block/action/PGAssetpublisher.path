@@ -193,6 +193,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_VIEW</td>
+	<td>//a[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST</td>
 	<td>//fieldset[contains(@class,'add-comment')]/div/a[contains(.,'Be the first.')]</td>
 	<td></td>
@@ -405,7 +410,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_ICON_EDIT</td>
-	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Edit')]/span</td>
 	<td></td>
 </tr>
 <tr>

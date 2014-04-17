@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -139,6 +140,50 @@ public abstract class BaseUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
+	protected String getNotificationTemplate() throws Exception {
+		if (isActionable()) {
+			StringBundler sb = new StringBundler(15);
+
+			sb.append("<div class=\"title\">");
+			sb.append("[$TITLE$]");
+			sb.append("</div>");
+			sb.append("<div class=\"body\">");
+			sb.append("<a class=\"btn btn-action btn-success\" href=\"");
+			sb.append("[$CONFIRM_URL$]");
+			sb.append("\">");
+			sb.append("[$CONFIRM$]");
+			sb.append("</a>");
+			sb.append("<a class=\"btn btn-action btn-warning\" href=\"");
+			sb.append("[$IGNORE_URL$]");
+			sb.append("\">");
+			sb.append("[$IGNORE$]");
+			sb.append("</a>");
+			sb.append("</div>");
+
+			return sb.toString();
+		}
+		else {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("<div class=\"title\">");
+			sb.append("[$TITLE$]");
+			sb.append("</div>");
+			sb.append("<div class=\"body\">");
+			sb.append("[$BODY$]");
+			sb.append("</div>");
+
+			return sb.toString();
+		}
+	}
+
+	protected boolean isActionable() {
+		return _actionable;
+	}
+
+	protected void setActionable(boolean actionable) {
+		_actionable = actionable;
+	}
+
 	protected void setOpenDialog(boolean openDialog) {
 		_openDialog = openDialog;
 	}
@@ -154,6 +199,7 @@ public abstract class BaseUserNotificationHandler
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUserNotificationHandler.class);
 
+	private boolean _actionable = false;
 	private boolean _openDialog;
 	private String _portletId;
 	private String _selector = StringPool.BLANK;

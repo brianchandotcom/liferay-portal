@@ -731,13 +731,34 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		try {
 			clusterExecutorImpl = getClusterExecutorImpl(false, false);
 
-			// TimeoutException
+			String timestamp = String.valueOf(System.currentTimeMillis());
+
+			MethodHandler methodHandler = new MethodHandler(
+				testMethod1MethodKey, timestamp);
+
+			Address address = clusterExecutorImpl.getLocalClusterNodeAddress();
 
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
-				null, new AddressImpl(new MockAddress()));
+				methodHandler, address);
 
 			MockClusterResponseCallback mockClusterResponseCallback =
 				new MockClusterResponseCallback();
+
+			clusterExecutorImpl.execute(
+				clusterRequest, mockClusterResponseCallback, 1000,
+				TimeUnit.MILLISECONDS);
+
+			ClusterNodeResponses clusterNodeResponses =
+				mockClusterResponseCallback.waitMessage();
+
+			assertFutureClusterResponsesWithoutException(
+				clusterNodeResponses, clusterRequest.getUuid(), timestamp,
+				address);
+
+			// TimeoutException
+
+			clusterRequest = ClusterRequest.createUnicastRequest(
+				null, new AddressImpl(new MockAddress()));
 
 			clusterExecutorImpl.execute(
 				clusterRequest, mockClusterResponseCallback, 1000,

@@ -51,12 +51,12 @@
 <!--DISPLAY_DATE-->
 <tr>
 	<td>DISPLAY_DATE_DATE_INPUT</td>
-	<td>//input[@id='_84_displayDate']</td>
+	<td>//input[@id='__84__displayDate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_TIME_INPUT</td>
-	<td>//input[@id='_84_displayDateTime']</td>
+	<td>//input[@id='__84__displayDateTime']</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,12 +72,12 @@
 <!--EXPIRATION_DATE-->
 <tr>
 	<td>EXPIRATION_DATE_DATE_INPUT</td>
-	<td>//input[@id='_84_expirationDate']</td>
+	<td>//input[@id='__84__expirationDate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPIRATION_DATE_TIME_INPUT</td>
-	<td>//input[@id='_84_expirationDateTime']</td>
+	<td>//input[@id='__84__expirationDateTime']</td>
 	<td></td>
 </tr>
 </tbody>

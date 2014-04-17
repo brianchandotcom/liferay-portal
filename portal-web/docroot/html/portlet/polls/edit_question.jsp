@@ -161,7 +161,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
 			<liferay-portlet:param name="<%= EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
 		</liferay-portlet:actionURL>
-		
+
 		submitForm(document.<portlet:namespace />fm, '<%= addPollChoiceURL %>');
 	}
 

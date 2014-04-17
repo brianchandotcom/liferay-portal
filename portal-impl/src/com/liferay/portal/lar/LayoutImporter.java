@@ -1033,10 +1033,21 @@ public class LayoutImporter {
 				"A page template can only be imported to a page template");
 		}
 
-		if (larType.equals("layout-set") &&
-			(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+		if (larType.equals("layout-set")) {
+			if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+				throw new LARTypeException(
+					"A site can only be imported to a site");
+			}
 
-			throw new LARTypeException("A site can only be imported to a site");
+			long sourceCompanyGroupId = GetterUtil.getLong(
+				_headerElement.attributeValue("company-group-id"));
+			long sourceGroupId = GetterUtil.getLong(
+				_headerElement.attributeValue("group-id"));
+
+			if (group.isCompany() ^ (sourceCompanyGroupId == sourceGroupId)) {
+				throw new LARTypeException(
+					"A company site can only be imported to a company site");
+			}
 		}
 
 		if (larType.equals("layout-set-prototype") &&

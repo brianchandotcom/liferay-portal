@@ -133,7 +133,7 @@
 		<if>
 			<condition action="SODocuments#isElementPresent" locator-key1="VERSION_HISTORY_TITLE" />
 			<then>
-				<var name="versionNumber" value="PWC" />
+				<var name="key_dmDocumentVersionNumber" value="PWC" />
 
 				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version PWC" />
 			</then>
@@ -308,6 +308,25 @@
 				</if>
 			</then>
 		</if>
+
+		<if>
+			<isset var="changeLog" />
+			<then>
+				<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="editCommentPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmediaDocument#makeVisible" locator-key1="COMMENTS_EDIT" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_EDIT_LINK" value1="Edit" />
+		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_EDIT_FIELD" value1="${commentBodyEdit}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="editCP">

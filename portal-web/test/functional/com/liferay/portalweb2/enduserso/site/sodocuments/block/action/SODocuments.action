@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="VERSION_HISTORY_COMMENT_NO_COMMENTS">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

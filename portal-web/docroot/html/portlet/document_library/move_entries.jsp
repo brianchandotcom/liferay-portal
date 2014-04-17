@@ -145,7 +145,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				for (Folder folder : invalidMoveFolders) {
 				%>
 
-					<li class="move-error move-folder">
+					<li class="move-folder move-error">
 						<span class="folder-title">
 							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
@@ -211,7 +211,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 					Lock lock = invalidMoveFileEntry.getLock();
 				%>
 
-					<li class="move-error move-file">
+					<li class="move-file move-error">
 						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveFileEntry.getTitle()) %>">
 							<%= HtmlUtil.escape(invalidMoveFileEntry.getTitle()) %>
 						</span>
@@ -276,7 +276,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				for (DLFileShortcut fileShortcut : invalidShortcutEntries) {
 				%>
 
-					<li class="move-error move-file">
+					<li class="move-file move-error">
 						<span class="file-title">
 							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
 						</span>
@@ -315,7 +315,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 		<aui:field-wrapper label="new-folder">
 			<div class="input-append">
-				<liferay-ui:input-resource id="folderName" label="new-folder" url="<%= folderName %>" />
+				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
 			</div>

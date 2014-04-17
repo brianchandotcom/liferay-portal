@@ -26,8 +26,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.getParameter("customAttributesDisplay");
 %>
 
-<liferay-ui:icon-menu>
-	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+	<liferay-ui:icon-menu>
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/expando/view_attributes" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -38,5 +38,5 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 			image="edit"
 			url="<%= editURL %>"
 		/>
-	</c:if>
-</liferay-ui:icon-menu>
+	</liferay-ui:icon-menu>
+</c:if>

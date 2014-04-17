@@ -77,7 +77,7 @@
 		</if>
 
 		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		
+
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
@@ -389,7 +389,7 @@
 				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
-		
+
 		<if>
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
 			<then>
@@ -577,7 +577,7 @@
 
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
-	
+
 	<command name="viewNoAnonymousPostingCheckboxCP">
 		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 

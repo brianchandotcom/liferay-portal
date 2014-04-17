@@ -282,7 +282,7 @@ else {
 								}
 						%>
 
-								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, errorMessage) %>">
+								<li class="app-view-navigation-entry error folder" title="<%= LanguageUtil.get(pageContext, errorMessage) %>">
 
 									<%
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

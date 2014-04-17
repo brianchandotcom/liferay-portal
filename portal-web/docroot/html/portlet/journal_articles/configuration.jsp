@@ -127,7 +127,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				</aui:select>
 
 				<aui:field-wrapper label="order-by-column">
-					<aui:select inlineField="<%= true %>" label="" name="preferences--orderByCol--" value="<%= orderByCol %>">
+					<aui:select inlineField="<%= true %>" label="" name="preferences--orderByCol--" title="order-by-column" value="<%= orderByCol %>">
 						<aui:option label="display-date" />
 						<aui:option label="create-date" />
 						<aui:option label="modified-date" />
@@ -135,7 +135,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 						<aui:option label="id" />
 					</aui:select>
 
-					<aui:select label="" name="preferences--orderByType--" value="<%= orderByType %>">
+					<aui:select label="" name="preferences--orderByType--" title="order-by-type" value="<%= orderByType %>">
 						<aui:option label="ascending" value="asc" />
 						<aui:option label="descending" value="desc" />
 					</aui:select>

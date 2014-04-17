@@ -40,7 +40,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>'>
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {
@@ -61,7 +61,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>' value="<%= chartType %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>' title="chart-type" value="<%= chartType %>">
 		<aui:option label="group-statistics-chart-type-area-diagram" value="area" />
 		<aui:option label="group-statistics-chart-type-column-diagram" value="column" />
 		<aui:option label="group-statistics-chart-type-activity-distribution" value="pie" />
@@ -72,7 +72,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>' value="<%= dataRange %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>' title="date-range" value="<%= dataRange %>">
 		<aui:option label="group-statistics-data-range-this-year" value="year" />
 		<aui:option label="group-statistics-data-range-last-12-months" value="12months" />
 	</aui:select>
@@ -83,7 +83,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="chart-width" />:
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartWidth" + index + "--" %>'>
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartWidth" + index + "--" %>' title="chart-width">
 
 		<%
 		for (int i = 5; i < 100; i = i + 5) {

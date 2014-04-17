@@ -138,7 +138,7 @@ if (Validator.isNotNull(languageId)) {
 	%>
 
 	<aui:form action="<%= portletURL %>" method="post" name="fm">
-		<aui:select label="" name="languageId">
+		<aui:select label="" name="languageId" title="language">
 
 			<%
 			for (Locale availableLocale : availableLocales) {

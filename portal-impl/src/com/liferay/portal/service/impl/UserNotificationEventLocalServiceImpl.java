@@ -270,7 +270,7 @@ public class UserNotificationEventLocalServiceImpl
 			userId, notificationEvent);
 
 		if (deliveryType == UserNotificationDeliveryConstants.TYPE_PUSH) {
-			sendPushNotitication(userNotificationEvent);
+			sendPushNotitication(notificationEvent);
 		}
 
 		return userNotificationEvent;
@@ -315,7 +315,7 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	protected void sendPushNotitication(
-		final UserNotificationEvent userNotificationEvent) {
+		final NotificationEvent notificationEvent) {
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(
 			new Callable<Void>() {
@@ -324,11 +324,7 @@ public class UserNotificationEventLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					message.put("data", userNotificationEvent.getPayload());
-					message.put("userId", userNotificationEvent.getUserId());
-					message.put(
-						"userNotificationEventId",
-						userNotificationEvent.getUserNotificationEventId());
+					message.setPayload(notificationEvent.getPayload());
 
 					MessageBusUtil.sendMessage(
 						DestinationNames.PUSH_NOTIFICATION, message);

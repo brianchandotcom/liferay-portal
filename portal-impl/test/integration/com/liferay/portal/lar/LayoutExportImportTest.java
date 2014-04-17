@@ -114,11 +114,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		// Import a layout set to the company layout set
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
 		Group originalImportedGroup = importedGroup;
 		Group originalGroup = group;
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
 
 		importedGroup = company.getGroup();
 

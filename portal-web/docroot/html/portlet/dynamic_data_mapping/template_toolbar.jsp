@@ -38,6 +38,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 		<c:choose>
 			<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
 				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
+
 					<%
 					if (Validator.isNull(templateTypeValue)) {
 						message = "add-form-template";
@@ -57,6 +58,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				</c:if>
 
 				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
+
 					<%
 					if (Validator.isNull(templateTypeValue)) {
 						message = "add-display-template";

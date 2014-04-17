@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -1296,21 +1295,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 			}
 
-			// LPS-46028
-
-			Matcher matcher = _emptyCollectionPattern.matcher(line);
-
-			if (matcher.find()) {
-				String collectionType = TextFormatter.format(
-					matcher.group(1), TextFormatter.J);
-
-				processErrorMessage(
-					fileName,
-					"Use Collections.empty" + collectionType + "(): " +
-						fileName + " " + lineCount);
-			}
-
 			checkStringBundler(trimmedLine, fileName, lineCount);
+
+			checkEmptyCollection(trimmedLine, fileName, lineCount);
 
 			if (trimmedLine.startsWith("* @deprecated") &&
 				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION)) {
@@ -2874,8 +2861,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private Pattern _emptyCollectionPattern = Pattern.compile(
-		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	private Properties _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n\n(\t+)}\n");

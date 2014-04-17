@@ -492,6 +492,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			checkStringBundler(trimmedLine, fileName, lineCount);
 
+			checkEmptyCollection(trimmedLine, fileName, lineCount);
+
 			if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
 				javaSource = true;
 			}

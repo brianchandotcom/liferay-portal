@@ -180,6 +180,67 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AVERAGE_RATING-->
+<tr>
+	<td>AVERAGE_RATING</td>
+	<td>xPath=(//div[@class='rating-label'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_EMPTY_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_EMPTY_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_EMPTY_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_EMPTY_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_RATING_STAR_EMPTY_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--METADATA_PANEL-->
   <tr>
   	<td>METADATA_PANEL_BOOLEAN</td>

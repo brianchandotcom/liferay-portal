@@ -54,12 +54,13 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 				orderable="<%= true %>"
 			>
 
-			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
-				<portlet:param name="backURL" value="<%= searchContainer.getIteratorURL().toString() %>" />
-				<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
-			</liferay-portlet:renderURL>
+				<liferay-portlet:renderURL varImpl="rowURL">
+					<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
+					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="backURL" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
+				</liferay-portlet:renderURL>
+
 				<aui:a href="<%= rowURL.toString() %>"><%= layoutPrototype.getName(locale) %></aui:a>
 
 				<%

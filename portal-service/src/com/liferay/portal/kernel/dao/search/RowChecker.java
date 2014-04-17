@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -59,7 +60,12 @@ public class RowChecker {
 	}
 
 	public String getAllRowsCheckBox() {
-		return getAllRowsCheckbox(_allRowIds, StringUtil.quote(_rowIds));
+		return getAllRowsCheckBox(null);
+	}
+
+	public String getAllRowsCheckBox(HttpServletRequest request) {
+		return getAllRowsCheckbox(
+			request, _allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -95,8 +101,9 @@ public class RowChecker {
 		String primaryKey) {
 
 		return getRowCheckBox(
-			checked, disabled, _rowIds, primaryKey, StringUtil.quote(_rowIds),
-			StringUtil.quote(_allRowIds), StringPool.BLANK);
+			request, checked, disabled, _rowIds, primaryKey,
+			StringUtil.quote(_rowIds), StringUtil.quote(_allRowIds),
+			StringPool.BLANK);
 	}
 
 	public String getRowId() {
@@ -147,15 +154,19 @@ public class RowChecker {
 		_valign = valign;
 	}
 
-	protected String getAllRowsCheckbox(String name, String checkBoxRowIds) {
+	protected String getAllRowsCheckbox(
+		HttpServletRequest request, String name, String checkBoxRowIds) {
+
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder(11);
 
 		sb.append("<input name=\"");
 		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
 		sb.append("onClick=\"Liferay.Util.checkAll(");
 		sb.append("AUI().one(this).ancestor('");
@@ -180,11 +191,11 @@ public class RowChecker {
 	}
 
 	protected String getRowCheckBox(
-		boolean checked, boolean disabled, String name, String value,
-		String checkBoxRowIds, String checkBoxAllRowIds,
-		String checkBoxPostOnClick) {
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String value, String checkBoxRowIds,
+		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<input ");
 
@@ -198,6 +209,8 @@ public class RowChecker {
 
 		sb.append("name=\"");
 		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(LanguageUtil.get(request.getLocale(), "select"));
 		sb.append("\" type=\"checkbox\" value=\"");
 		sb.append(HtmlUtil.escapeAttribute(value));
 		sb.append("\" ");

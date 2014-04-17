@@ -32,6 +32,12 @@
 		padding: 0;
 	}
 
+	.palette-items-container {
+		font-size: 0;
+		margin: 0;
+		white-space: normal;
+	}
+
 	.palette-item-inner {
 		border: 1px solid #666;
 		margin-right: 4px;

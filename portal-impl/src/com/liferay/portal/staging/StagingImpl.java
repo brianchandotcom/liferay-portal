@@ -2506,9 +2506,7 @@ public class StagingImpl implements Staging {
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if ((remoteGroup.isCompany() && !group.isCompany()) ||
-				(!remoteGroup.isCompany() && group.isCompany())) {
-
+			if (remoteGroup.isCompany() ^ group.isCompany()) {
 				RemoteExportException ree = new RemoteExportException(
 					RemoteExportException.INVALID_GROUP);
 

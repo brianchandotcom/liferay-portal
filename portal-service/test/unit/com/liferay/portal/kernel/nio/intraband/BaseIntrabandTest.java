@@ -767,6 +767,54 @@ public class BaseIntrabandTest {
 
 		Assert.assertTrue(logRecord.getThrown() instanceof RuntimeException);
 
+		// Request dispatching successfully
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.SEVERE);
+
+		recordDatagramReceiveHandler = new RecordDatagramReceiveHandler(false);
+
+		_mockIntraband.registerDatagramReceiveHandler(
+			_type, recordDatagramReceiveHandler);
+
+		requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		requestDatagram.setAckRequest(true);
+		requestDatagram.setSequenceId(sequenceId);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		requestDatagram.completionHandler = recordCompletionHandler;
+
+		requestDatagram.timeout = 10000;
+
+		_mockIntraband.addResponseWaitingDatagram(requestDatagram);
+
+		requestDatagram.writeTo(sinkChannel);
+
+		receiveDatagram = Datagram.createReceiveDatagram();
+
+		channelContext.setReadingDatagram(receiveDatagram);
+
+		_mockIntraband.handleReading(sourceChannel, channelContext);
+
+		Assert.assertTrue(receiveDatagram.isRequest());
+		Assert.assertEquals(_type, receiveDatagram.getType());
+
+		dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		recordDatagram = recordDatagramReceiveHandler.getReceiveDatagram();
+
+		Assert.assertSame(receiveDatagram, recordDatagram);
+		Assert.assertEquals(_type, recordDatagram.getType());
+
+		dataByteBuffer = recordDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+		Assert.assertTrue(logRecords.isEmpty());
+
 		sourceChannel.close();
 		sinkChannel.close();
 	}

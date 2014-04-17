@@ -56,6 +56,15 @@ public class MailboxUtilTest {
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
+	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
+	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new MailboxUtil();
+	}
+
 	@AdviseWith(
 		adviceClasses = {PropsUtilAdvice.class, ReceiptStubAdvice.class}
 	)

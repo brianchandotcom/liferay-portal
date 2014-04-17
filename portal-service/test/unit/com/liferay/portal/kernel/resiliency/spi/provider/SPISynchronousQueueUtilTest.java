@@ -38,6 +38,14 @@ public class SPISynchronousQueueUtilTest {
 		new CodeCoverageAssertor();
 
 	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new SPISynchronousQueueUtil();
+	}
+
+	@Test
 	public void testSPISynchronousQueueUtil() throws Exception {
 
 		// Create

@@ -68,6 +68,14 @@ public class TransactionalPortalCacheTest {
 		_portalCache.registerCacheListener(_recordCacheListener);
 	}
 
+	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new TransactionalPortalCacheHelper();
+	}
+
 	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})
 	@Test
 	public void testNoneTransactionalCache1() {

@@ -98,6 +98,14 @@ public class DistributedRegistryTest {
 	}
 
 	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new DistributedRegistry();
+	}
+
+	@Test
 	public void testHasDistributed() {
 
 		// No such name

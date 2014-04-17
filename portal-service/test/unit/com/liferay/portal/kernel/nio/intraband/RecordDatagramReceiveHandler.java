@@ -19,6 +19,14 @@ package com.liferay.portal.kernel.nio.intraband;
  */
 public class RecordDatagramReceiveHandler implements DatagramReceiveHandler {
 
+	public RecordDatagramReceiveHandler() {
+		this(true);
+	}
+
+	public RecordDatagramReceiveHandler(boolean throwException) {
+		_throwException = throwException;
+	}
+
 	public Datagram getReceiveDatagram() {
 		return _datagram;
 	}
@@ -29,9 +37,12 @@ public class RecordDatagramReceiveHandler implements DatagramReceiveHandler {
 
 		_datagram = datagram;
 
-		throw new RuntimeException("RecordDatagramReceiveHandler");
+		if (_throwException) {
+			throw new RuntimeException("RecordDatagramReceiveHandler");
+		}
 	}
 
 	private volatile Datagram _datagram;
+	private boolean _throwException;
 
 }

@@ -59,6 +59,14 @@ public class ClassLoaderPoolTest {
 	}
 
 	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new ClassLoaderPool();
+	}
+
+	@Test
 	public void testGetClassLoaderWithInvalidContextName() {
 		ClassLoader classLoader = new URLClassLoader(new URL[0]);
 

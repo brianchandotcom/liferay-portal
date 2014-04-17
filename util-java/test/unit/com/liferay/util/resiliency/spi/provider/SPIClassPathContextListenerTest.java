@@ -268,7 +268,6 @@ public class SPIClassPathContextListenerTest {
 
 	@Test
 	public void testLoadClassDirectly() throws Exception {
-
 		String jvmClassPath = ClassPathUtil.getJVMClassPath(false);
 
 		URL[] urls = ClassPathUtil.getClassPathURLs(jvmClassPath);
@@ -386,6 +385,32 @@ public class SPIClassPathContextListenerTest {
 		spiProviders = MPIHelperUtil.getSPIProviders();
 
 		Assert.assertTrue(spiProviders.isEmpty());
+
+		// Register from SPI
+
+		_mockServletContext.addInitParameter(
+			"spiProviderClassName", MockSPIProvider.class.getName());
+
+		Field field = ReflectionUtil.getDeclaredField(SPIUtil.class, "_spi");
+
+		field.set(null, new MockSPI());
+
+		try {
+			spiClassPathContextListener.contextInitialized(
+				new ServletContextEvent(_mockServletContext));
+		}
+		finally {
+			field.set(null, null);
+		}
+
+		spiProviderReference = SPIClassPathContextListener.spiProviderReference;
+
+		Assert.assertNotNull(spiProviderReference.get());
+
+		spiProviders = MPIHelperUtil.getSPIProviders();
+
+		Assert.assertEquals(1, spiProviders.size());
+		Assert.assertSame(spiProviderReference.get(), spiProviders.get(0));
 
 		embeddedLibDir.delete();
 	}

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.nio.intraband.welder.socket;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.WelderTestUtil;
+import com.liferay.portal.kernel.nio.intraband.welder.socket.SocketWelder.Configuration;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
@@ -104,6 +105,10 @@ public class SocketWelderTest {
 			socketWelder.reuseAddress, serverSocket.getReuseAddress());
 		Assert.assertEquals(
 			socketWelder.soTimeout, serverSocket.getSoTimeout());
+
+		// Satisfy test coverage
+
+		new Configuration();
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})

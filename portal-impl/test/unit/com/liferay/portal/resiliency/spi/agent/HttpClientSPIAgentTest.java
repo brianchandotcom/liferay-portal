@@ -375,7 +375,7 @@ public class HttpClientSPIAgentTest {
 	@Test
 	public void testDestroy() throws Exception {
 
-		// Without log
+		// Error without log
 
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			HttpClientSPIAgent.class.getName(), Level.OFF);
@@ -412,7 +412,7 @@ public class HttpClientSPIAgentTest {
 
 		Assert.assertTrue(logRecords.isEmpty());
 
-		// With log
+		// Error with log
 
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			HttpClientSPIAgent.class.getName(), Level.WARNING);
@@ -444,6 +444,29 @@ public class HttpClientSPIAgentTest {
 		Throwable throwable = logRecord.getThrown();
 
 		Assert.assertSame(IOException.class, throwable.getClass());
+
+		// Successfully
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			HttpClientSPIAgent.class.getName(), Level.WARNING);
+
+		httpClientSPIAgent = new HttpClientSPIAgent(
+			_spiConfiguration,
+			new MockRegistrationReference(new MockIntraband()));
+
+		socketBlockingQueue = httpClientSPIAgent.socketBlockingQueue;
+
+		socket = new Socket(
+			InetAddressUtil.getLoopbackInetAddress(),
+			_spiConfiguration.getConnectorPort());
+
+		socketBlockingQueue.add(socket);
+
+		httpClientSPIAgent.destroy();
+
+		closePeers(socket, serverSocket);
+
+		Assert.assertTrue(logRecords.isEmpty());
 
 		serverSocket.close();
 	}

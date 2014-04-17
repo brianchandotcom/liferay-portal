@@ -36,6 +36,14 @@ public class SPIUtilTest {
 		new CodeCoverageAssertor();
 
 	@Test
+	public void testConstructor() {
+
+		// Satisfy test coverage
+
+		new SPIUtil();
+	}
+
+	@Test
 	public void testIsNotSPI() {
 		Assert.assertFalse(SPIUtil.isSPI());
 

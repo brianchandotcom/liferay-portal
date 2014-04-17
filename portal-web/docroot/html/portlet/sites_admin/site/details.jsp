@@ -235,14 +235,14 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							<c:otherwise>
 								<c:choose>
 									<c:when test="<%= group != null %>">
-										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
-											<portlet:param name="struts_action" value="/my_sites/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-										</liferay-portlet:actionURL>
-
 										<c:choose>
 											<c:when test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+												<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
+													<portlet:param name="struts_action" value="/my_sites/view" />
+													<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+													<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+												</liferay-portlet:actionURL>
+
 												<liferay-ui:icon
 													image="view"
 													label="<%= true %>"
@@ -337,14 +337,14 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							<c:otherwise>
 								<c:choose>
 									<c:when test="<%= group != null %>">
-										<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
-											<portlet:param name="struts_action" value="/my_sites/view" />
-											<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-										</liferay-portlet:actionURL>
-
 										<c:choose>
 											<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+												<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
+													<portlet:param name="struts_action" value="/my_sites/view" />
+													<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+													<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
+												</liferay-portlet:actionURL>
+
 												<liferay-ui:icon
 													image="view"
 													label="<%= true %>"

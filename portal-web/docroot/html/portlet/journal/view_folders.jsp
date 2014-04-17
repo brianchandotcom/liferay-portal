@@ -99,6 +99,7 @@ else {
 
 			<c:choose>
 				<c:when test='<%= ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && !expandFolder) && !browseBy.equals("structure") %>'>
+
 					<%
 					String navigation = ParamUtil.getString(request, "navigation", "home");
 
@@ -155,6 +156,7 @@ else {
 					/>
 
 					<c:if test="<%= themeDisplay.isSignedIn() %>">
+
 						<%
 						dataView = new HashMap<String, Object>();
 
@@ -181,6 +183,7 @@ else {
 					</c:if>
 
 					<c:if test="<%= DDMStructureLocalServiceUtil.getStructuresCount(groupIds, PortalUtil.getClassNameId(JournalArticle.class)) > 0 %>">
+
 						<%
 						dataView = new HashMap<String, Object>();
 
@@ -210,6 +213,7 @@ else {
 					</c:if>
 				</c:when>
 				<c:when test='<%= browseBy.equals("structure") %>'>
+
 					<%
 					Map<String, Object> dataView = new HashMap<String, Object>();
 
@@ -239,14 +243,11 @@ else {
 						List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(groupIds, PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
 
 						for (DDMStructure ddmStructure : ddmStructures) {
-						%>
-
-							<%
 							dataView = new HashMap<String, Object>();
 
 							dataView.put("browse-by", "structure");
 							dataView.put("structure-id", ddmStructure.getStructureKey());
-							%>
+						%>
 
 							<liferay-portlet:renderURL varImpl="viewDDMStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
@@ -275,6 +276,7 @@ else {
 					</c:if>
 				</c:when>
 				<c:otherwise>
+
 					<%
 					Map<String, Object> dataView = new HashMap<String, Object>();
 
@@ -305,14 +307,12 @@ else {
 						request.setAttribute("view_entries.jsp-folder", curFolder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 						request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
-					%>
 
-						<%
 						dataView = new HashMap<String, Object>();
 
 						dataView.put("folder-id", curFolder.getFolderId());
 						dataView.put("title", curFolder.getName());
-						%>
+					%>
 
 						<liferay-portlet:renderURL varImpl="viewURL">
 							<portlet:param name="struts_action" value="/journal/view" />

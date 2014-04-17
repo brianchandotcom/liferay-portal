@@ -324,11 +324,7 @@ public class UserNotificationEventLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					message.put("data", userNotificationEvent.getPayload());
-					message.put("userId", userNotificationEvent.getUserId());
-					message.put(
-						"userNotificationEventId",
-						userNotificationEvent.getUserNotificationEventId());
+					message.setPayload(userNotificationEvent.getPayload());
 
 					MessageBusUtil.sendMessage(
 						DestinationNames.PUSH_NOTIFICATION, message);

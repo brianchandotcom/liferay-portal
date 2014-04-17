@@ -35,5 +35,5 @@ if (!includeSelectAll) {
 
 		<div>
 			<c:if test="<%= !user.isDefaultUser() %>">
-				<aui:input cssClass="<%= cssClass %>" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" type="checkbox" />
+				<aui:input cssClass="<%= cssClass %>" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 			</c:if>

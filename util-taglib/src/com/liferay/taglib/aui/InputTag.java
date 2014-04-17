@@ -227,16 +227,24 @@ public class InputTag extends BaseInputTag {
 			forLabel = forLabel.concat("Checkbox");
 		}
 
+		String languageId = getLanguageId();
+
+		if (Validator.isNotNull(languageId)) {
+			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
+		}
+
 		String label = getLabel();
 
 		if (label == null) {
 			label = TextFormatter.format(name, TextFormatter.K);
 		}
 
-		String languageId = getLanguageId();
+		String title = getTitle();
 
-		if (Validator.isNotNull(languageId)) {
-			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
+		if ((title == null) && (Validator.isNull(label) ||
+			 Validator.equals(type, "image"))) {
+
+			title = TextFormatter.format(name, TextFormatter.K);
 		}
 
 		_inputName = getName();
@@ -282,6 +290,7 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
 		setNamespacedAttribute(request, "model", model);
+		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "wrappedField", wrappedField);
 
 		request.setAttribute(getAttributeNamespace() + "value", getValue());

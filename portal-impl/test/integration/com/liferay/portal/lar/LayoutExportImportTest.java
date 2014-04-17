@@ -110,6 +110,51 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	@Transactional
+	public void testExportImportCompanyGroupInvalidLARType() throws Exception {
+
+		// Import a layout set to the company layout set
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group originalImportedGroup = importedGroup;
+		Group originalGroup = group;
+
+		importedGroup = company.getGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+		finally {
+			importedGroup = originalImportedGroup;
+		}
+
+		// Import the company layout set to a layout set
+
+		group = company.getGroup();
+		importedGroup = originalGroup;
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+		finally {
+			importedGroup = originalImportedGroup;
+			group = originalGroup;
+		}
+	}
+
+	@Test
+	@Transactional
 	public void testExportImportLayoutPrototypeInvalidLARType()
 		throws Exception {
 
@@ -197,44 +242,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			Assert.fail();
 		}
 		catch (LARTypeException lte) {
-		}
-
-		// Import a layout set to the company layout set
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		Group originalImportedGroup = importedGroup;
-		Group originalGroup = group;
-
-		importedGroup = company.getGroup();
-
-		try {
-			exportImportLayouts(layoutIds, getImportParameterMap());
-
-			Assert.fail();
-		}
-		catch (LARTypeException lte) {
-		}
-		finally {
-			importedGroup = originalImportedGroup;
-		}
-
-		// Import the company layout set to a layout set
-
-		group = company.getGroup();
-		importedGroup = originalGroup;
-
-		try {
-			exportImportLayouts(layoutIds, getImportParameterMap());
-
-			Assert.fail();
-		}
-		catch (LARTypeException lte) {
-		}
-		finally {
-			importedGroup = originalImportedGroup;
-			group = originalGroup;
 		}
 	}
 

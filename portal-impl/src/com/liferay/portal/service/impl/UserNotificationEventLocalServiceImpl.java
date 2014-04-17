@@ -270,7 +270,7 @@ public class UserNotificationEventLocalServiceImpl
 			userId, notificationEvent);
 
 		if (deliveryType == UserNotificationDeliveryConstants.TYPE_PUSH) {
-			sendPushNotitication(notificationEvent);
+			sendPushNotification(notificationEvent);
 		}
 
 		return userNotificationEvent;
@@ -314,7 +314,7 @@ public class UserNotificationEventLocalServiceImpl
 		return userNotificationEvents;
 	}
 
-	protected void sendPushNotitication(
+	protected void sendPushNotification(
 		final NotificationEvent notificationEvent) {
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(

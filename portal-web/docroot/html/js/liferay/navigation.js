@@ -109,6 +109,8 @@ AUI.add(
 
 							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || navListSelector + '> li';
 
+							var navItemChildToggleSelector = Liferay.Data.NAV_ITEM_CHILD_TOGGLE_SELECTOR || '> span';
+
 							var navList = navBlock.one(navListSelector);
 
 							var items = navBlock.all(navItemSelector);
@@ -145,6 +147,7 @@ AUI.add(
 								}
 							);
 
+							instance._navItemChildToggleSelector = navItemChildToggleSelector;
 							instance._navItemSelector = navItemSelector;
 							instance._navListSelector = navListSelector;
 
@@ -796,7 +799,13 @@ AUI.add(
 							onSuccess = function(event, id, obj) {
 								var doc = A.getDoc();
 
+								var navChildToggle = textNode.all(instance._navItemChildToggleSelector);
+
 								textNode.text(pageTitle);
+
+								if (navChildToggle.size() > 0) {
+									textNode.append(navChildToggle);
+								}
 
 								actionNode.show();
 

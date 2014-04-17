@@ -258,6 +258,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TABLE_RSS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

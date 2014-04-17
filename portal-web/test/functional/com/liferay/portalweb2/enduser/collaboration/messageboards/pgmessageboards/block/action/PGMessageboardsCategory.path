@@ -146,6 +146,43 @@
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//a[contains(.,'Waiting for an Answer')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--QUESTION_CATEGORY_THREAD_TABLE-->
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]//span[@class='question-details']/span[contains(.,'Votes')]/span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]//span[@class='question-details']/span[contains(.,'Answer')]/span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VIEWS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]//span[@class='question-details']/span[contains(.,'Views')]/span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_QUESTION</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_LAST_POST</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]//div[@class='username']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTION_CATEGORY_THREAD_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -16,7 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
-page import="com.liferay.portlet.asset.model.AssetLink" %><%@
-page import="com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %>
+<%@ page import="com.liferay.taglib.ui.util.InputAssetLinksDisplayContext" %>
+
+<%
+InputAssetLinksDisplayContext displayContext = new InputAssetLinksDisplayContext(pageContext);
+%>

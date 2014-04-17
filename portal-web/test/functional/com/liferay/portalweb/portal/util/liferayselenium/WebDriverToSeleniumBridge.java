@@ -27,6 +27,9 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+
 import java.io.StringReader;
 
 import java.util.HashMap;
@@ -49,6 +52,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -351,22 +355,37 @@ public class WebDriverToSeleniumBridge
 
 		scrollWebElementIntoView(webElement);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
 		String[] coords = coordString.split(",");
 
 		int x = GetterUtil.getInteger(coords[0]);
 		int y = GetterUtil.getInteger(coords[1]);
 
-		actions.dragAndDropBy(webElement, x, y);
+		try {
+			WebElement scrolledWebElement = getWebElement(locator);
 
-		Action action = actions.build();
+			Point point = scrolledWebElement.getLocation();
 
-		action.perform();
+			int xCoordinate = point.getX() + 45;
+			int yCoordinate = point.getY() + 100;
+
+			Robot robot = new Robot();
+
+			robot.mouseMove(xCoordinate, yCoordinate);
+
+			robot.delay(1500);
+
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+
+			robot.delay(1500);
+
+			robot.mouseMove((xCoordinate + x), (yCoordinate + y));
+
+			robot.delay(1500);
+
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		}
+		catch (Exception e) {
+		}
 	}
 
 	@Override

@@ -269,7 +269,9 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
-	public void copyFromLive(PortletRequest portletRequest) throws Exception {
+	public void copyFromLive(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
 		long stagingGroupId = ParamUtil.getLong(
 			portletRequest, "stagingGroupId");
 
@@ -286,7 +288,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void copyFromLive(PortletRequest portletRequest, Portlet portlet)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long plid = ParamUtil.getLong(portletRequest, "plid");
 
@@ -310,7 +312,7 @@ public class StagingImpl implements Staging {
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
 			String portletId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long userId = PortalUtil.getUserId(portletRequest);
 
@@ -1311,7 +1313,9 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
-	public void lockGroup(long userId, long groupId) throws Exception {
+	public void lockGroup(long userId, long groupId)
+		throws PortalException, SystemException {
+
 		if (!PropsValues.STAGING_LOCK_ENABLED) {
 			return;
 		}
@@ -1332,7 +1336,7 @@ public class StagingImpl implements Staging {
 	@Override
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, String[]> parameterMap = getStagingParameters();
 
@@ -1418,7 +1422,9 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
-	public void publishToLive(PortletRequest portletRequest) throws Exception {
+	public void publishToLive(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
 		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
@@ -1442,7 +1448,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void publishToLive(PortletRequest portletRequest, Portlet portlet)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long plid = ParamUtil.getLong(portletRequest, "plid");
 
@@ -1487,14 +1493,14 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void publishToRemote(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		publishToRemote(portletRequest, false);
 	}
 
 	@Override
 	public void scheduleCopyFromLive(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long stagingGroupId = ParamUtil.getLong(
 			portletRequest, "stagingGroupId");
@@ -1512,7 +1518,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void schedulePublishToLive(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long stagingGroupId = ParamUtil.getLong(
 			portletRequest, "stagingGroupId");
@@ -1530,7 +1536,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void schedulePublishToRemote(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		publishToRemote(portletRequest, true);
 	}
@@ -1630,7 +1636,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void unscheduleCopyFromLive(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long stagingGroupId = ParamUtil.getLong(
 			portletRequest, "stagingGroupId");
@@ -1645,7 +1651,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void unschedulePublishToLive(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long stagingGroupId = ParamUtil.getLong(
 			portletRequest, "stagingGroupId");
@@ -1664,7 +1670,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void unschedulePublishToRemote(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
@@ -1680,7 +1686,7 @@ public class StagingImpl implements Staging {
 	public void updateLastImportSettings(
 			Element layoutElement, Layout layout,
 			PortletDataContext portletDataContext)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
@@ -1745,7 +1751,7 @@ public class StagingImpl implements Staging {
 	@Override
 	public void updateLastPublishDate(
 			long groupId, boolean privateLayout, Date lastPublishDate)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		if (lastPublishDate == null) {
 			lastPublishDate = new Date();
@@ -1769,7 +1775,7 @@ public class StagingImpl implements Staging {
 	public void updateLastPublishDate(
 			String portletId, PortletPreferences portletPreferences,
 			Date lastPublishDate)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		if (lastPublishDate == null) {
 			lastPublishDate = new Date();
@@ -1796,7 +1802,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void updateStaging(PortletRequest portletRequest, Group liveGroup)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -2011,7 +2017,8 @@ public class StagingImpl implements Staging {
 		return GetterUtil.getLong(
 			portalPreferences.getValue(
 				Staging.class.getName(),
-				getRecentLayoutBranchIdKey(layoutSetBranchId, plid)));
+				getRecentLayoutBranchIdKey(layoutSetBranchId, plid))
+		);
 	}
 
 	protected String getRecentLayoutBranchIdKey(
@@ -2123,7 +2130,7 @@ public class StagingImpl implements Staging {
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, Map<String, String[]> parameterMap,
 			boolean schedule)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -2238,7 +2245,7 @@ public class StagingImpl implements Staging {
 
 	protected void publishToRemote(
 			PortletRequest portletRequest, boolean schedule)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

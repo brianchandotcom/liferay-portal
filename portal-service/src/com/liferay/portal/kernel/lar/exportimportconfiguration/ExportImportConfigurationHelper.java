@@ -110,7 +110,7 @@ public class ExportImportConfigurationHelper {
 		exportLayoutsByExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	public static void publishLayoutsByExportImportConfiguration(
+	public static void publishLocalLayoutByExportImportConfiguration(
 			long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException {
 
@@ -135,6 +135,43 @@ public class ExportImportConfigurationHelper {
 		StagingUtil.publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
 			parameterMap, dateRange.getStartDate(), dateRange.getEndDate());
+	}
+
+	public static void publishRemoteLayoutByExportImportConfiguration(
+			long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		boolean privateLayout = GetterUtil.getBoolean(
+			settingsMap.get("privateLayout"));
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
+			"layoutIdMap");
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
+		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
+		String remotePathContext = MapUtil.getString(
+			settingsMap, "remotePathContext");
+		boolean secureConnection = MapUtil.getBoolean(
+			settingsMap, "secureConnection");
+		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+		boolean remotePrivateLayout = MapUtil.getBoolean(
+			settingsMap, "remotePrivateLayout");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfigurationId);
+
+		StagingUtil.copyRemoteLayouts(
+			sourceGroupId, privateLayout, layoutIdMap, parameterMap,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
+			dateRange.getEndDate());
 	}
 
 	public static ExportImportConfiguration

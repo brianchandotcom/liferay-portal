@@ -589,9 +589,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	}
 
 	protected ClusterLinkImpl getClusterLinkImpl() throws Exception {
-		JDKLoggerTestUtil.configureJDKLogger(
-			ClusterBase.class.getName(), Level.FINE);
-
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		clusterLinkImpl.setClusterForwardMessageListener(

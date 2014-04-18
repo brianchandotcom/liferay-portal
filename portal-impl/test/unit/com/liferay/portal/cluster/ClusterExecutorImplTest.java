@@ -253,9 +253,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	public void testErrorLogAndExceptions() throws Exception {
 		SetBadPortalInetSocketAddressAdvice.setPort(8080);
 
-		JDKLoggerTestUtil.configureJDKLogger(
-			ClusterBase.class.getName(), Level.FINE);
-
 		ClusterExecutorImpl clusterExecutorImpl = null;
 
 		try {

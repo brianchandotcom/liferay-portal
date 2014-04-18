@@ -132,14 +132,6 @@ public abstract class BaseUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return StringPool.BLANK;
-	}
-
 	protected String getBodyTemplate() throws Exception {
 		if (isActionable()) {
 			StringBundler sb = new StringBundler(5);
@@ -156,6 +148,14 @@ public abstract class BaseUserNotificationHandler
 			return "<div class=\"title\">[$TITLE$]</div><div class=\"body\">" +
 				"[$BODY$]</div>";
 		}
+	}
+
+	protected String getLink(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	protected boolean isActionable() {

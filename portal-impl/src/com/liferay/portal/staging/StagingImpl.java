@@ -2231,9 +2231,6 @@ public class StagingImpl implements Staging {
 			PortletRequest portletRequest, boolean schedule)
 		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
@@ -2389,30 +2386,6 @@ public class StagingImpl implements Staging {
 			Staging.class.getName(),
 			getRecentLayoutBranchIdKey(layoutSetBranchId, plid),
 			String.valueOf(layoutBranchId));
-	}
-
-	protected void updateGroupTypeSettingsProperties(
-			Group group, String remoteAddress, int remotePort,
-			String remotePathContext, boolean secureConnection,
-			long remoteGroupId)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
-		typeSettingsProperties.setProperty(
-			"remoteGroupId", String.valueOf(remoteGroupId));
-		typeSettingsProperties.setProperty(
-			"remotePathContext", remotePathContext);
-		typeSettingsProperties.setProperty(
-			"remotePort", String.valueOf(remotePort));
-		typeSettingsProperties.setProperty(
-			"secureConnection", String.valueOf(secureConnection));
-
-		group.setTypeSettingsProperties(typeSettingsProperties);
-
-		GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected void validateRemoteGroup(

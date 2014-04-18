@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.test.AdviseWith;
@@ -41,23 +42,30 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
 	public void testErrorDispatch() {
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			BaseAsyncDatagramReceiveHandler.class.getName(), Level.SEVERE);
 
-		ErrorAsyncDatagramReceiveHandler errorAsyncDatagramReceiveHandler =
-			new ErrorAsyncDatagramReceiveHandler();
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		errorAsyncDatagramReceiveHandler.receive(null, null);
+			ErrorAsyncDatagramReceiveHandler errorAsyncDatagramReceiveHandler =
+				new ErrorAsyncDatagramReceiveHandler();
 
-		Assert.assertEquals(1, logRecords.size());
+			errorAsyncDatagramReceiveHandler.receive(null, null);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals("Unable to dispatch", logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
 
-		Throwable throwable = logRecord.getThrown();
+			Assert.assertEquals("Unable to dispatch", logRecord.getMessage());
 
-		Assert.assertEquals(Exception.class, throwable.getClass());
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertEquals(Exception.class, throwable.getClass());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -253,27 +254,29 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	public void testErrorLogAndExceptions() throws Exception {
 		SetBadPortalInetSocketAddressAdvice.setPort(8080);
 
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
+
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+
+		PropsUtil.setProps(new PropsImpl());
+
+		PortalExecutorManagerUtil portalExecutorManagerUtil =
+			new PortalExecutorManagerUtil();
+
+		portalExecutorManagerUtil.setPortalExecutorManager(
+			new ClusterExecutorImplTest.MockPortalExecutorManager());
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterExecutorImpl.class.getName(), Level.SEVERE);
+
 		ClusterExecutorImpl clusterExecutorImpl = null;
 
 		try {
-			PortalUtil portalUtil = new PortalUtil();
-
-			portalUtil.setPortal(new PortalImpl());
-
-			PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-			portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
-
-			PropsUtil.setProps(new PropsImpl());
-
-			PortalExecutorManagerUtil portalExecutorManagerUtil =
-				new PortalExecutorManagerUtil();
-
-			portalExecutorManagerUtil.setPortalExecutorManager(
-				new ClusterExecutorImplTest.MockPortalExecutorManager());
-
-			List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-				ClusterExecutorImpl.class.getName(), Level.SEVERE);
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			clusterExecutorImpl = new ClusterExecutorImpl();
 
@@ -339,6 +342,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			}
 		}
 		finally {
+			captureHandler.close();
+
 			if (clusterExecutorImpl != null) {
 				clusterExecutorImpl.destroy();
 			}

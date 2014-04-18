@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 
 import java.io.DataInput;
@@ -29,6 +30,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -39,8 +41,13 @@ public class BaseClusterTestCase {
 
 	@Before
 	public void setup() {
-		JDKLoggerTestUtil.configureJDKLogger(
+		_captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterBase.class.getName(), Level.OFF);
+	}
+
+	@After
+	public void tearDown() {
+		_captureHandler.close();
 	}
 
 	@Aspect
@@ -138,5 +145,7 @@ public class BaseClusterTestCase {
 		}
 
 	}
+
+	private CaptureHandler _captureHandler;
 
 }

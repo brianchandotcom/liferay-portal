@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -258,25 +259,32 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger3() throws Exception {
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			QuartzSchedulerEngine.class.getName(), Level.FINE);
 
-		IntervalTrigger intervalTrigger = new IntervalTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		org.quartz.Trigger trigger = _quartzSchedulerEngine.getQuartzTrigger(
-			intervalTrigger);
+			IntervalTrigger intervalTrigger = new IntervalTrigger(
+				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
 
-		Assert.assertNull(trigger);
+			org.quartz.Trigger trigger =
+				_quartzSchedulerEngine.getQuartzTrigger(intervalTrigger);
 
-		Assert.assertEquals(1, logRecords.size());
+			Assert.assertNull(trigger);
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals(
-			"Not scheduling " + _TEST_JOB_NAME_0 + " because interval is less" +
-				" than or equal to 0",
-			logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Not scheduling " + _TEST_JOB_NAME_0 + " because interval " +
+					"is less than or equal to 0",
+				logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})

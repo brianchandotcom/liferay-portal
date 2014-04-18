@@ -17,6 +17,7 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -148,6 +149,9 @@ public class ClusterRequestReceiverTest
 	@AdviseWith(adviceClasses = {EnableClusterLinkAdvice.class})
 	@Test
 	public void testInvoke4() throws Exception {
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterRequestReceiver.class.getName(), Level.OFF);
+
 		ClusterExecutorImpl clusterExecutorImpl1 = null;
 		ClusterExecutorImpl clusterExecutorImpl2 = null;
 
@@ -165,9 +169,6 @@ public class ClusterRequestReceiverTest
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				methodHandler, address);
 
-			JDKLoggerTestUtil.configureJDKLogger(
-				ClusterRequestReceiver.class.getName(), Level.SEVERE);
-
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl1.execute(clusterRequest);
 
@@ -176,6 +177,8 @@ public class ClusterRequestReceiverTest
 				timestamp);
 		}
 		finally {
+			captureHandler.close();
+
 			if (clusterExecutorImpl1 != null) {
 				clusterExecutorImpl1.destroy();
 			}

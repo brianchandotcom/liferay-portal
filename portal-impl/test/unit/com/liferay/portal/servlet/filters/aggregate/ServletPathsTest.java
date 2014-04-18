@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.aggregate;
 
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -157,23 +158,31 @@ public class ServletPathsTest {
 
 		Assert.assertNull(servletPaths.getContent());
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ServletPaths.class.getName(), Level.SEVERE);
 
-		servletPaths = new ServletPaths(servletContext, file1.getName());
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		Assert.assertNull(servletPaths.getContent());
-		Assert.assertEquals(1, logRecords.size());
+			servletPaths = new ServletPaths(servletContext, file1.getName());
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertNull(servletPaths.getContent());
+			Assert.assertEquals(1, logRecords.size());
 
-		Throwable throwable = logRecord.getThrown();
+			LogRecord logRecord = logRecords.get(0);
 
-		Assert.assertSame(FileNotFoundException.class, throwable.getClass());
+			Throwable throwable = logRecord.getThrown();
 
-		servletPaths = new ServletPaths(servletContext, file2.getName());
+			Assert.assertSame(
+				FileNotFoundException.class, throwable.getClass());
 
-		Assert.assertEquals(testContent, servletPaths.getContent());
+			servletPaths = new ServletPaths(servletContext, file2.getName());
+
+			Assert.assertEquals(testContent, servletPaths.getContent());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@Test

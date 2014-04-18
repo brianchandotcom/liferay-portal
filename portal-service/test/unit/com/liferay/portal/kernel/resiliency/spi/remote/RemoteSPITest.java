@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPISynchronousQueueUtil;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.RegisterCallback;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.SPIShutdownHook;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -414,67 +415,77 @@ public class RemoteSPITest {
 
 		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
 
-		// Unable to stop with log
+		CaptureHandler captureHandler = null;
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			RemoteSPI.class.getName(), Level.SEVERE);
+		try {
 
-		_mockRemoteSPI.setFailOnStop(true);
+			// Unable to stop with log
 
-		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				RemoteSPI.class.getName(), Level.SEVERE);
 
-		Assert.assertEquals(1, logRecords.size());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		LogRecord logRecord = logRecords.get(0);
+			_mockRemoteSPI.setFailOnStop(true);
 
-		Assert.assertEquals("Unable to stop SPI", logRecord.getMessage());
+			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
 
-		Throwable throwable = logRecord.getThrown();
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertSame(RemoteException.class, throwable.getClass());
+			LogRecord logRecord = logRecords.get(0);
 
-		// Unable to stop without log
+			Assert.assertEquals("Unable to stop SPI", logRecord.getMessage());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			RemoteSPI.class.getName(), Level.OFF);
+			Throwable throwable = logRecord.getThrown();
 
-		_mockRemoteSPI.setFailOnStop(true);
+			Assert.assertSame(RemoteException.class, throwable.getClass());
 
-		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+			// Unable to stop without log
 
-		Assert.assertTrue(logRecords.isEmpty());
+			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
-		// Unable to destroy with log
+			_mockRemoteSPI.setFailOnStop(true);
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			RemoteSPI.class.getName(), Level.SEVERE);
+			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
 
-		_mockRemoteSPI.setFailOnStop(false);
-		_mockRemoteSPI.setFailOnDestroy(true);
+			Assert.assertTrue(logRecords.isEmpty());
 
-		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+			// Unable to destroy with log
 
-		Assert.assertEquals(1, logRecords.size());
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
-		logRecord = logRecords.get(0);
+			_mockRemoteSPI.setFailOnStop(false);
+			_mockRemoteSPI.setFailOnDestroy(true);
 
-		Assert.assertEquals("Unable to destroy SPI", logRecord.getMessage());
+			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
 
-		throwable = logRecord.getThrown();
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertSame(RemoteException.class, throwable.getClass());
+			logRecord = logRecords.get(0);
 
-		// Unable to destroy without log
+			Assert.assertEquals(
+				"Unable to destroy SPI", logRecord.getMessage());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			RemoteSPI.class.getName(), Level.OFF);
+			throwable = logRecord.getThrown();
 
-		_mockRemoteSPI.setFailOnStop(false);
-		_mockRemoteSPI.setFailOnDestroy(true);
+			Assert.assertSame(RemoteException.class, throwable.getClass());
 
-		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+			// Unable to destroy without log
 
-		Assert.assertTrue(logRecords.isEmpty());
+			logRecords = captureHandler.resetLogLevel(Level.OFF);
+
+			_mockRemoteSPI.setFailOnStop(false);
+			_mockRemoteSPI.setFailOnDestroy(true);
+
+			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	private void _setProcessOutputStream(

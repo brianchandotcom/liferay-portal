@@ -205,8 +205,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 			portletRequest, "remotePrivateLayout");
 
 		StagingUtil.validateRemote(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId);
+			groupId, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId);
 
 		return buildSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,

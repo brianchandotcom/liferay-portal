@@ -35,6 +35,42 @@
 		</execute>
 	</command>
 
+	<command name="AddSOWikiFrontPageAttachment" priority="5">
+		<var name="attachmentFileName" value="Document_1.jpg" />
+		<var name="attachmentFileSize" value="13k" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addAttachmentPG">
+			<var name="attachmentFileName" value="${attachmentFileName}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#viewAttachmentPG">
+			<var name="attachmentFileName" value="${attachmentFileName}" />
+			<var name="attachmentFileSize" value="${attachmentFileSize}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
 	<command name="AddSOWikiFrontPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />

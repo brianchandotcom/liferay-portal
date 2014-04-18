@@ -32,13 +32,6 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 	var toolbarButtonGroup = [];
 
 	<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/journal/preview_article_content" />
-			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		</liferay-portlet:renderURL>
-
 		var form = A.one(document.<portlet:namespace />fm1);
 
 		var formChanged = false;
@@ -63,6 +56,13 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 
 			return unsavedChanges;
 		};
+
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/journal/preview_article_content" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
 
 		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 

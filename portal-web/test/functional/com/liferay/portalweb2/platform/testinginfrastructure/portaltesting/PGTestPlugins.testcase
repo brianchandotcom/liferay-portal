@@ -1,8 +1,8 @@
 <definition component-name="portal-upgrades">
+	<property name="testray.main.component.name" value="Upgrades" />
 	<property name="custom.properties" value="hibernate.cache.use_query_cache=true$${line.separator}hibernate.cache.use_second_level_cache=true" />
 	<property name="portlet.plugins.includes" value="chat-portlet,test-blob-portlet,test-cache-configuration-portlet,test-clp-portlet,test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet,test-dependency-easy-portlet,test-dependency-fox-portlet,test-event-portlet,test-hook-portlet,test-http-client-portlet,test-jsr-286-plt-26-6-portlet,test-kaleo-portlet,test-localized-portlet,test-log-portlet,test-misc-portlet,test-opensocial-pubsub-portlet,test-pacl-portlet,test-resources-importer-portlet,test-transaction-portlet,test-user-attributes-portlet" />
 	<property name="web.plugins.includes" value="kaleo-web,resources-importer-web" />
-	<property name="testray.main.component.name" value="Upgrades" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -13,117 +13,95 @@
 	</tear-down>
 
 	<command name="ViewBlob" priority="5">
-		<var name="pageName" value="Test Page" />
-		<var name="portletName" value="Test Blob" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Blob" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewCacheConfiguration" priority="5">
-		<var name="pageName" value="Test Cache Configuration Page" />
-		<var name="portletName" value="Test Cache Configuration" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Cache Configuration Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Cache Configuration" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewCLP" priority="5">
-		<var name="pageName" value="Test CLP Page" />
-		<var name="portletName" value="Test CLP" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test CLP Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test CLP" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewDependencyAbleFox" priority="5">
-		<var name="pageName" value="Test Dependency Page" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Test Dependency Able" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Test Dependency Baker" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Test Dependency Charlie" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Test Dependency Dog" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewEvent" priority="5">
-		<var name="pageName" value="Test Event Page" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Event Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Event Consumer" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Event Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Event Producer" />
 		</execute>
 
@@ -133,62 +111,50 @@
 	</command>
 
 	<command name="ViewHook" known-issues="Ignore" priority="5">
-		<var name="pageName" value="Test Hook Page" />
-		<var name="portletName" value="Test Hook" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Hook Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Hook" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewHTTPClient" priority="5">
-		<var name="pageName" value="Test HTTP Client Page" />
-		<var name="portletName" value="Test HTTP Client" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test HTTP Client Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test HTTP Client" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewJSR" priority="5">
-		<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
-		<var name="portletName" value="Test JSR 286 PLT.26.6" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test JSR 286 PLT.26.6" />
 		</execute>
 
 		<execute action="PGTestJSR#click" locator-key1="TEST_ACTION_URL" />
 		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
 		<execute action="PGTestJSR#click" locator-key1="TEST_RENDER_URL" />
 		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
 		<execute action="PGTestJSR#click" locator-key1="TEST_RESOURCE_URL" />
@@ -196,87 +162,67 @@
 	</command>
 
 	<command name="ViewKaleo" known-issues="LPS-45103" priority="5">
-		<var name="pageName" value="Test Kaleo Page" />
-		<var name="portletName" value="Test Kaleo" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Kaleo Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Kaleo" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewLocalized" priority="5">
-		<var name="pageName" value="Test Localized Page" />
-		<var name="portletName" value="Test Localized Portlet" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewLog" known-issues="Ignore" priority="5">
-		<var name="pageName" value="Test Log Page" />
-		<var name="portletName" value="Test Log" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Log Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Log" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewMisc" priority="5">
-		<var name="pageName" value="Test Misc Localized Title Page" />
-		<var name="portletName" value="Test Misc Localized Title" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Misc Localized Title Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Misc Localized Title" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewPublisherSubscriber" priority="5">
-		<var name="pageName" value="Test Publisher Subscriber Page" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Publisher Subscriber Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Publisher Portlet" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Publisher Subscriber Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="Subscriber Portlet" />
 		</execute>
 
@@ -290,48 +236,36 @@
 	</command>
 
 	<command name="ViewResourcesImporter" known-issues="LPS-45835" priority="5">
-		<var name="pageName" value="Test Resources Importer Page" />
-		<var name="portletName" value="Test Resources Importer" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Resources Importer Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Resources Importer" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewTransaction" priority="5">
-		<var name="pageName" value="Test Transaction Page" />
-		<var name="portletName" value="Test Transaction" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test Transaction Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test Transaction" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
 	<command name="ViewUserAttributes" known-issues="Ignore" priority="5">
-		<var name="pageName" value="Test User Attributes Page" />
-		<var name="portletName" value="Test User Attributes" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Test User Attributes Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Test User Attributes" />
 		</execute>
 
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />

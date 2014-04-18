@@ -803,9 +803,7 @@ AUI.add(
 
 								textNode.text(pageTitle);
 
-								if (navChildToggle.size()) {
-									textNode.append(navChildToggle);
-								}
+								textNode.append(navChildToggle);
 
 								actionNode.show();
 

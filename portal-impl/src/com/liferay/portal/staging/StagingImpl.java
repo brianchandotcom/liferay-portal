@@ -401,26 +401,37 @@ public class StagingImpl implements Staging {
 			throw ree;
 		}
 
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				user.getUserId(), sourceGroupId, privateLayout, layoutIdMap,
+				parameterMap, remoteAddress, remotePort, remotePathContext,
+				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
+				endDate, null, null);
+
+		settingsMap.put("httpPrincipal", httpPrincipal);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), sourceGroupId, StringPool.BLANK,
+					StringPool.BLANK, ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
+
 		Map<String, Serializable> taskContextMap =
-			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				user.getUserId(), sourceGroupId, privateLayout, null,
-				parameterMap, Constants.PUBLISH, startDate, endDate, null);
+			new HashMap<String, Serializable>();
 
-		taskContextMap.put("httpPrincipal", httpPrincipal);
-
-		if (layoutIdMap != null) {
-			HashMap<Long, Boolean> serializableLayoutIdMap =
-				new HashMap<Long, Boolean>(layoutIdMap);
-
-			taskContextMap.put("layoutIdMap", serializableLayoutIdMap);
-		}
-
-		taskContextMap.put("remoteGroupId", remoteGroupId);
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
 			user.getUserId(), sourceGroupId, StringPool.BLANK, null,
 			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			serviceContext);
 	}
 
 	@Override
@@ -1374,13 +1385,26 @@ public class StagingImpl implements Staging {
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
 
-		Map<String, Serializable> taskContextMap =
-			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
-				Constants.PUBLISH, startDate, endDate, StringPool.BLANK);
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+				parameterMap, startDate, endDate, null, null);
 
-		taskContextMap.put("sourceGroupId", sourceGroupId);
-		taskContextMap.put("targetGroupId", targetGroupId);
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					userId, sourceGroupId, StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
 			userId, sourceGroupId, StringPool.BLANK, null,

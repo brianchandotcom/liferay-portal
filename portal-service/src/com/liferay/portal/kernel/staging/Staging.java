@@ -79,7 +79,7 @@ public interface Staging {
 			String remoteAddress, int remotePort, String remotePathContext,
 			boolean secureConnection, long remoteGroupId,
 			boolean remotePrivateLayout, Date startDate, Date endDate)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void deleteLastImportSettings(Group liveGroup, boolean privateLayout)
 		throws PortalException, SystemException;

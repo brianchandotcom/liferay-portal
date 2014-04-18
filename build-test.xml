@@ -1124,6 +1124,75 @@ create database lportal2 character set utf8;</echo>
 		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
 	</target>
 
+	<target name="merge-jenkins-test-results">
+		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
+
+		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
+
+		<copy flatten="true" todir="${jenkins.test.results.dir}">
+			<fileset dir="${env.JENKINS_HOME}/userContent/jobs/" erroronmissingdir="false">
+				<include name="**/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml" />
+			</fileset>
+		</copy>
+
+		<first id="first">
+			<fileset dir="${jenkins.test.results.dir}" includes="*.xml" />
+		</first>
+
+		<loadfile property="jenkins.results.xml.suite.file.header" srcfile="${toString:first}" />
+
+		<propertyregex
+			input="${jenkins.results.xml.suite.file.header}"
+			override="true"
+			property="jenkins.results.xml.suite.file.header"
+			regexp="&lt;testcase[\s\S.]*"
+			replace=""
+		/>
+
+		<propertyregex
+			input="${jenkins.results.xml.suite.file.header}"
+			override="true"
+			property="jenkins.results.xml.suite.file.header"
+			regexp="&lt;testsuite.*\n"
+			replace="&lt;testsuite&gt;${line.separator}"
+		/>
+
+		<echo file="${jenkins.results.xml.suite.file}" message="${jenkins.results.xml.suite.file.header}" />
+
+		<for param="jenkins.results.xml.file">
+			<path>
+				<fileset dir="${jenkins.test.results.dir}">
+					<include name="*.xml" />
+				</fileset>
+			</path>
+			<sequential>
+				<var name="jenkins.results.xml.suite.file.body" unset="true" />
+
+				<loadfile property="jenkins.results.xml.suite.file.body" srcfile="@{jenkins.results.xml.file}" />
+
+				<propertyregex
+					input="${jenkins.results.xml.suite.file.body}"
+					override="true"
+					property="jenkins.results.xml.suite.file.body"
+					regexp="&lt;\?xml[\s\S.]*&lt;testcase"
+					replace="&lt;testcase"
+				/>
+
+				<propertyregex
+					input="${jenkins.results.xml.suite.file.body}"
+					override="true"
+					property="jenkins.results.xml.suite.file.body"
+					regexp="&lt;/testcase&gt;[\s\S.]*"
+					replace="&lt;/testcase&gt;${line.separator}"
+				/>
+
+				<echo file="${jenkins.results.xml.suite.file}" append="true" message="${jenkins.results.xml.suite.file.body}" />
+			</sequential>
+		</for>
+
+		<echo file="${jenkins.results.xml.suite.file}" append="true" message="&lt;/testsuite&gt;" />
+	</target>
+
 	<target name="merge-test-results">
 		<mkdir dir="test-results" />
 

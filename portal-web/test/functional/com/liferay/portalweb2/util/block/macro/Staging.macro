@@ -434,14 +434,14 @@
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="pageVersioningEnabled" value="${pageVersioningEnabled}" />
 			<var name="remoteStaging" value="true" />
 			<var name="siteID" value="${siteID}" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>
 

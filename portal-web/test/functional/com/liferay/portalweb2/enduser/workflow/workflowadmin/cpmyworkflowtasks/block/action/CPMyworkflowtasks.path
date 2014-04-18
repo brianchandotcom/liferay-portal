@@ -229,12 +229,12 @@
 <!--PANEL-->
 <tr>
 	<td>PANEL_DUE_DATE</td>
-	<td>//input[@id='_153_dueDate']</td>
+	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_DUE_DATE_TIME</td>
-	<td>//input[@id='_153_dueDateTime']</td>
+	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDateTime')]</td>
 	<td></td>
 </tr>
 <tr>

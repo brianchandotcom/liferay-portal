@@ -255,17 +255,17 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData1}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel2}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="Content is temporarily unavailable." />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="${ddlRecordFieldData2}" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 
 		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
 		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
 
 		<execute action="Home#open" locator1="${adminViewURL}" />
 
 		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
 		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
 
 		<execute action="Home#open" locator1="${adminEditURL}" />

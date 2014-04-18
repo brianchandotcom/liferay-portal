@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,58 +47,66 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 		LoggingOutputProcessor loggingOutputProcessor =
 			new LoggingOutputProcessor();
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggingOutputProcessor.class.getName(), Level.OFF);
-
 		String stdErrString = "This is standard error message.";
 
 		byte[] stdErrBytes = stdErrString.getBytes(
 			StringPool.DEFAULT_CHARSET_NAME);
 
-		Assert.assertNull(
-			loggingOutputProcessor.processStdErr(
-				new UnsyncByteArrayInputStream(stdErrBytes)));
-		Assert.assertTrue(logRecords.isEmpty());
+		CaptureHandler captureHandler = null;
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggingOutputProcessor.class.getName(), Level.SEVERE);
+		try {
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				LoggingOutputProcessor.class.getName(), Level.OFF);
 
-		Assert.assertNull(
-			invokeProcessStdErr(
-				loggingOutputProcessor,
-				new UnsyncByteArrayInputStream(stdErrBytes)));
-		Assert.assertEquals(1, logRecords.size());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertNull(
+				loggingOutputProcessor.processStdErr(
+					new UnsyncByteArrayInputStream(stdErrBytes)));
+			Assert.assertTrue(logRecords.isEmpty());
 
-		Assert.assertEquals(stdErrString, logRecord.getMessage());
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
-		String stdOutString = "This is standard out message.";
+			Assert.assertNull(
+				invokeProcessStdErr(
+					loggingOutputProcessor,
+					new UnsyncByteArrayInputStream(stdErrBytes)));
+			Assert.assertEquals(1, logRecords.size());
 
-		byte[] stdOutBytes = stdOutString.getBytes(
-			StringPool.DEFAULT_CHARSET_NAME);
+			LogRecord logRecord = logRecords.get(0);
 
-		Assert.assertNull(
-			loggingOutputProcessor.processStdOut(
-				new UnsyncByteArrayInputStream(stdOutBytes)));
+			Assert.assertEquals(stdErrString, logRecord.getMessage());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggingOutputProcessor.class.getName(), Level.SEVERE);
+			String stdOutString = "This is standard out message.";
 
-		Assert.assertTrue(logRecords.isEmpty());
+			byte[] stdOutBytes = stdOutString.getBytes(
+				StringPool.DEFAULT_CHARSET_NAME);
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggingOutputProcessor.class.getName(), Level.INFO);
+			Assert.assertNull(
+				loggingOutputProcessor.processStdOut(
+					new UnsyncByteArrayInputStream(stdOutBytes)));
 
-		Assert.assertNull(
-			invokeProcessStdOut(
-				loggingOutputProcessor,
-				new UnsyncByteArrayInputStream(stdOutBytes)));
-		Assert.assertEquals(1, logRecords.size());
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
-		logRecord = logRecords.get(0);
+			Assert.assertTrue(logRecords.isEmpty());
 
-		Assert.assertEquals(stdOutString, logRecord.getMessage());
+			logRecords = captureHandler.resetLogLevel(Level.INFO);
+
+			Assert.assertNull(
+				invokeProcessStdOut(
+					loggingOutputProcessor,
+					new UnsyncByteArrayInputStream(stdOutBytes)));
+			Assert.assertEquals(1, logRecords.size());
+
+			logRecord = logRecords.get(0);
+
+			Assert.assertEquals(stdOutString, logRecord.getMessage());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 }

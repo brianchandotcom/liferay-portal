@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -198,27 +199,39 @@ public class ProcessUtilTest {
 
 		// Logging
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LoggingOutputProcessor.class.getName(), Level.INFO);
 
-		Future<ObjectValuePair<Void, Void>> loggingFuture = ProcessUtil.execute(
-			ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
-			_buildArguments(Echo.class, "2"));
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		loggingFuture.get();
+			Future<ObjectValuePair<Void, Void>> loggingFuture =
+				ProcessUtil.execute(
+					ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
+					_buildArguments(Echo.class, "2"));
 
-		loggingFuture.cancel(true);
+			loggingFuture.get();
 
-		List<String> messageRecords = new ArrayList<String>();
+			loggingFuture.cancel(true);
 
-		for (LogRecord logRecord : logRecords) {
-			messageRecords.add(logRecord.getMessage());
+			List<String> messageRecords = new ArrayList<String>();
+
+			for (LogRecord logRecord : logRecords) {
+				messageRecords.add(logRecord.getMessage());
+			}
+
+			Assert.assertTrue(
+				messageRecords.contains(Echo.buildMessage(false, 0)));
+			Assert.assertTrue(
+				messageRecords.contains(Echo.buildMessage(false, 1)));
+			Assert.assertTrue(
+				messageRecords.contains(Echo.buildMessage(true, 0)));
+			Assert.assertTrue(
+				messageRecords.contains(Echo.buildMessage(true, 1)));
 		}
-
-		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(false, 0)));
-		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(false, 1)));
-		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(true, 0)));
-		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(true, 1)));
+		finally {
+			captureHandler.close();
+		}
 
 		// Collector
 

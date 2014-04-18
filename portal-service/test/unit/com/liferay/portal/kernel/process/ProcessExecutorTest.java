@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessExecutor.ProcessContext;
 import com.liferay.portal.kernel.process.ProcessExecutor.ShutdownHook;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
@@ -420,48 +421,55 @@ public class ProcessExecutorTest {
 
 	@Test
 	public void testBrokenPiping() throws Exception {
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ProcessExecutor.class.getName(), Level.SEVERE);
 
-		BrokenPipingProcessCallable brokenPipingProcessCallable =
-			new BrokenPipingProcessCallable();
-
-		Future<String> future = ProcessExecutor.execute(
-			_classPath, brokenPipingProcessCallable);
-
 		try {
-			future.get();
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.fail();
-		}
-		catch (ExecutionException ee) {
-			Throwable cause = ee.getCause();
+			BrokenPipingProcessCallable brokenPipingProcessCallable =
+				new BrokenPipingProcessCallable();
 
-			Assert.assertTrue(cause instanceof ProcessException);
+			Future<String> future = ProcessExecutor.execute(
+				_classPath, brokenPipingProcessCallable);
 
+			try {
+				future.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Throwable cause = ee.getCause();
+
+				Assert.assertTrue(cause instanceof ProcessException);
+
+				Assert.assertEquals(
+					"Corrupted object input stream", cause.getMessage());
+			}
+
+			Assert.assertFalse(future.isCancelled());
+			Assert.assertTrue(future.isDone());
+
+			Assert.assertEquals(1, logRecords.size());
+
+			String message = logRecords.get(0).getMessage();
+
+			int index = message.lastIndexOf(' ');
+
+			Assert.assertTrue(index != -1);
 			Assert.assertEquals(
-				"Corrupted object input stream", cause.getMessage());
+				"Dumping content of corrupted object input stream to",
+				message.substring(0, index));
+
+			File file = new File(message.substring(index + 1));
+
+			Assert.assertTrue(file.exists());
+
+			file.delete();
 		}
-
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
-
-		Assert.assertEquals(1, logRecords.size());
-
-		String message = logRecords.get(0).getMessage();
-
-		int index = message.lastIndexOf(' ');
-
-		Assert.assertTrue(index != -1);
-		Assert.assertEquals(
-			"Dumping content of corrupted object input stream to",
-			message.substring(0, index));
-
-		File file = new File(message.substring(index + 1));
-
-		Assert.assertTrue(file.exists());
-
-		file.delete();
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@Test
@@ -529,53 +537,60 @@ public class ProcessExecutorTest {
 
 	@Test
 	public void testCrash() throws Exception {
-		JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ProcessExecutor.class.getName(), Level.OFF);
 
-		// Negative one crash
-
-		KillJVMProcessCallable killJVMProcessCallable =
-			new KillJVMProcessCallable(-1);
-
-		Future<Serializable> future = ProcessExecutor.execute(
-			_classPath, killJVMProcessCallable);
-
 		try {
-			future.get();
 
-			Assert.fail();
+			// Negative one crash
+
+			KillJVMProcessCallable killJVMProcessCallable =
+				new KillJVMProcessCallable(-1);
+
+			Future<Serializable> future = ProcessExecutor.execute(
+				_classPath, killJVMProcessCallable);
+
+			try {
+				future.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Assert.assertFalse(future.isCancelled());
+				Assert.assertTrue(future.isDone());
+
+				Throwable throwable = ee.getCause();
+
+				Assert.assertTrue(throwable instanceof ProcessException);
+			}
+
+			// Zero crash
+
+			killJVMProcessCallable = new KillJVMProcessCallable(0);
+
+			future = ProcessExecutor.execute(
+				_classPath, killJVMProcessCallable);
+
+			try {
+				future.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Assert.assertFalse(future.isCancelled());
+				Assert.assertTrue(future.isDone());
+
+				Throwable throwable = ee.getCause();
+
+				Assert.assertTrue(throwable instanceof ProcessException);
+
+				throwable = throwable.getCause();
+
+				Assert.assertTrue(throwable instanceof EOFException);
+			}
 		}
-		catch (ExecutionException ee) {
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Throwable throwable = ee.getCause();
-
-			Assert.assertTrue(throwable instanceof ProcessException);
-		}
-
-		// Zero crash
-
-		killJVMProcessCallable = new KillJVMProcessCallable(0);
-
-		future = ProcessExecutor.execute(_classPath, killJVMProcessCallable);
-
-		try {
-			future.get();
-
-			Assert.fail();
-		}
-		catch (ExecutionException ee) {
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Throwable throwable = ee.getCause();
-
-			Assert.assertTrue(throwable instanceof ProcessException);
-
-			throwable = throwable.getCause();
-
-			Assert.assertTrue(throwable instanceof EOFException);
+		finally {
+			captureHandler.close();
 		}
 	}
 
@@ -780,85 +795,97 @@ public class ProcessExecutorTest {
 
 	@Test
 	public void testLeadingLog() throws Exception {
-
-		// Warn level
-
 		String leadingLog = "Test leading log.\n";
 		String bodyLog = "Test body log.\n";
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.WARNING);
+		CaptureHandler captureHandler = null;
 
-		LeadingLogProcessCallable leadingLogProcessCallable =
-			new LeadingLogProcessCallable(leadingLog, bodyLog);
+		try {
 
-		List<String> arguments = _createArguments(_JPDA_OPTIONS1);
+			// Warn level
 
-		Future<String> future = ProcessExecutor.execute(
-			_classPath, arguments, leadingLogProcessCallable);
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				ProcessExecutor.class.getName(), Level.WARNING);
 
-		future.get();
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
+			LeadingLogProcessCallable leadingLogProcessCallable =
+				new LeadingLogProcessCallable(leadingLog, bodyLog);
 
-		Assert.assertEquals(1, logRecords.size());
+			List<String> arguments = _createArguments(_JPDA_OPTIONS1);
 
-		LogRecord logRecord = logRecords.get(0);
+			Future<String> future = ProcessExecutor.execute(
+				_classPath, arguments, leadingLogProcessCallable);
 
-		Assert.assertEquals(
-			"Found corrupt leading log " + leadingLog, logRecord.getMessage());
+			future.get();
 
-		// Fine level
+			Assert.assertFalse(future.isCancelled());
+			Assert.assertTrue(future.isDone());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.FINE);
+			Assert.assertEquals(1, logRecords.size());
 
-		leadingLogProcessCallable = new LeadingLogProcessCallable(
-			leadingLog, bodyLog);
+			LogRecord logRecord = logRecords.get(0);
 
-		arguments = _createArguments(_JPDA_OPTIONS1);
+			Assert.assertEquals(
+				"Found corrupt leading log " + leadingLog,
+				logRecord.getMessage());
 
-		future = ProcessExecutor.execute(
-			_classPath, arguments, leadingLogProcessCallable);
+			// Fine level
 
-		future.get();
+			logRecords = captureHandler.resetLogLevel(Level.FINE);
 
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
+			leadingLogProcessCallable = new LeadingLogProcessCallable(
+				leadingLog, bodyLog);
 
-		Assert.assertEquals(2, logRecords.size());
+			arguments = _createArguments(_JPDA_OPTIONS1);
 
-		LogRecord logRecord1 = logRecords.get(0);
+			future = ProcessExecutor.execute(
+				_classPath, arguments, leadingLogProcessCallable);
 
-		Assert.assertEquals(
-			"Found corrupt leading log " + leadingLog, logRecord1.getMessage());
+			future.get();
 
-		LogRecord logRecord2 = logRecords.get(1);
+			Assert.assertFalse(future.isCancelled());
+			Assert.assertTrue(future.isDone());
 
-		String message = logRecord2.getMessage();
+			Assert.assertEquals(2, logRecords.size());
 
-		Assert.assertTrue(message.contains("Invoked generic process callable"));
+			LogRecord logRecord1 = logRecords.get(0);
 
-		// Severe level
+			Assert.assertEquals(
+				"Found corrupt leading log " + leadingLog,
+				logRecord1.getMessage());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.SEVERE);
+			LogRecord logRecord2 = logRecords.get(1);
 
-		leadingLogProcessCallable = new LeadingLogProcessCallable(
-			leadingLog, bodyLog);
+			String message = logRecord2.getMessage();
 
-		arguments = _createArguments(_JPDA_OPTIONS1);
+			Assert.assertTrue(
+				message.contains("Invoked generic process callable"));
 
-		future = ProcessExecutor.execute(
-			_classPath, arguments, leadingLogProcessCallable);
+			// Severe level
 
-		future.get();
+			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
-		Assert.assertFalse(future.isCancelled());
-		Assert.assertTrue(future.isDone());
+			leadingLogProcessCallable = new LeadingLogProcessCallable(
+				leadingLog, bodyLog);
 
-		Assert.assertEquals(0, logRecords.size());
+			arguments = _createArguments(_JPDA_OPTIONS1);
+
+			future = ProcessExecutor.execute(
+				_classPath, arguments, leadingLogProcessCallable);
+
+			future.get();
+
+			Assert.assertFalse(future.isCancelled());
+			Assert.assertTrue(future.isDone());
+
+			Assert.assertEquals(0, logRecords.size());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test
@@ -1005,25 +1032,30 @@ public class ProcessExecutorTest {
 			}
 		}
 
-		JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ProcessExecutor.class.getName(), Level.OFF);
 
-		ProcessExecutor processExecutor = new ProcessExecutor();
-
-		processExecutor.destroy();
-
 		try {
-			future.get();
+			ProcessExecutor processExecutor = new ProcessExecutor();
 
-			Assert.fail();
+			processExecutor.destroy();
+
+			try {
+				future.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Assert.assertFalse(future.isCancelled());
+				Assert.assertTrue(future.isDone());
+
+				Throwable throwable = ee.getCause();
+
+				Assert.assertTrue(throwable instanceof ProcessException);
+			}
 		}
-		catch (ExecutionException ee) {
-			Assert.assertFalse(future.isCancelled());
-			Assert.assertTrue(future.isDone());
-
-			Throwable throwable = ee.getCause();
-
-			Assert.assertTrue(throwable instanceof ProcessException);
+		finally {
+			captureHandler.close();
 		}
 	}
 

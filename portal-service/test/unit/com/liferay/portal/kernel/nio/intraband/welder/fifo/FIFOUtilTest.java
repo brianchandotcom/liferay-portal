@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
@@ -159,41 +160,48 @@ public class FIFOUtilTest {
 			return;
 		}
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			FIFOUtil.class.getName(), Level.WARNING);
 
-		File newTmpDir = new File("newTmpDir");
-
-		newTmpDir.delete();
-
-		String oldTmpDirName = System.getProperty("java.io.tmpdir");
-
-		System.setProperty("java.io.tmpdir", newTmpDir.getAbsolutePath());
-
 		try {
-			Assert.assertFalse(FIFOUtil.isFIFOSupported());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			File newTmpDir = new File("newTmpDir");
+
+			newTmpDir.delete();
+
+			String oldTmpDirName = System.getProperty("java.io.tmpdir");
+
+			System.setProperty("java.io.tmpdir", newTmpDir.getAbsolutePath());
+
+			try {
+				Assert.assertFalse(FIFOUtil.isFIFOSupported());
+			}
+			finally {
+				System.setProperty("java.io.tmpdir", oldTmpDirName);
+			}
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to detect FIFO support", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertEquals(Exception.class, throwable.getClass());
+
+			String message = throwable.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith(
+					"Unable to create FIFO with command \"mkfifo\", " +
+						"external process returned "));
 		}
 		finally {
-			System.setProperty("java.io.tmpdir", oldTmpDirName);
+			captureHandler.close();
 		}
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"Unable to detect FIFO support", logRecord.getMessage());
-
-		Throwable throwable = logRecord.getThrown();
-
-		Assert.assertEquals(Exception.class, throwable.getClass());
-
-		String message = throwable.getMessage();
-
-		Assert.assertTrue(
-			message.startsWith(
-				"Unable to create FIFO with command \"mkfifo\", external " +
-					"process returned "));
 	}
 
 	@Test
@@ -202,25 +210,32 @@ public class FIFOUtilTest {
 			return;
 		}
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			FIFOUtil.class.getName(), Level.OFF);
 
-		File newTmpDir = new File("newTmpDir");
-
-		newTmpDir.delete();
-
-		String oldTmpDirName = System.getProperty("java.io.tmpdir");
-
-		System.setProperty("java.io.tmpdir", newTmpDir.getAbsolutePath());
-
 		try {
-			Assert.assertFalse(FIFOUtil.isFIFOSupported());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			File newTmpDir = new File("newTmpDir");
+
+			newTmpDir.delete();
+
+			String oldTmpDirName = System.getProperty("java.io.tmpdir");
+
+			System.setProperty("java.io.tmpdir", newTmpDir.getAbsolutePath());
+
+			try {
+				Assert.assertFalse(FIFOUtil.isFIFOSupported());
+			}
+			finally {
+				System.setProperty("java.io.tmpdir", oldTmpDirName);
+			}
+
+			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			System.setProperty("java.io.tmpdir", oldTmpDirName);
+			captureHandler.close();
 		}
-
-		Assert.assertTrue(logRecords.isEmpty());
 	}
 
 	private static boolean _shouldTest() {

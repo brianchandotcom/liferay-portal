@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
@@ -195,75 +196,86 @@ public class SPIClassPathContextListenerTest {
 
 	@Test
 	public void testClassPathGeneration() throws Exception {
-
-		// With log
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			SPIClassPathContextListener.class.getName(), Level.FINE);
-
-		_mockServletContext.addInitParameter(
-			"spiProviderClassName", "InvalidSPIProvider");
-
-		SPIClassPathContextListener spiClassPathContextListener =
-			new SPIClassPathContextListener();
-
-		spiClassPathContextListener.contextInitialized(
-			new ServletContextEvent(_mockServletContext));
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_jarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_global1JarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_portalServiceJarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_global2JarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_jdbcDriverJarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_extJarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
-		sb.append(_CONTEXT_PATH);
-		sb.append("/WEB-INF/classes");
-
-		String spiClassPath = sb.toString();
-
-		Assert.assertEquals(
-			spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
-		Assert.assertEquals(2, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"SPI class path " + spiClassPath, logRecord.getMessage());
-
-		logRecord = logRecords.get(1);
-
-		Assert.assertEquals(
-			"Unable to create SPI provider with name InvalidSPIProvider",
-			logRecord.getMessage());
-
-		// Without log
-
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			SPIClassPathContextListener.class.getName(), Level.OFF);
-
-		Field field = ReflectionUtil.getDeclaredField(SPIUtil.class, "_spi");
-
-		field.set(null, new MockSPI());
+		CaptureHandler captureHandler = null;
 
 		try {
+
+			// With log
+
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				SPIClassPathContextListener.class.getName(), Level.FINE);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			_mockServletContext.addInitParameter(
+				"spiProviderClassName", "InvalidSPIProvider");
+
+			SPIClassPathContextListener spiClassPathContextListener =
+				new SPIClassPathContextListener();
+
 			spiClassPathContextListener.contextInitialized(
 				new ServletContextEvent(_mockServletContext));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(_jarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_global1JarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_portalServiceJarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_global2JarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_jdbcDriverJarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_extJarFile.getAbsolutePath());
+			sb.append(File.pathSeparator);
+			sb.append(_CONTEXT_PATH);
+			sb.append("/WEB-INF/classes");
+
+			String spiClassPath = sb.toString();
+
+			Assert.assertEquals(
+				spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
+			Assert.assertEquals(2, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"SPI class path " + spiClassPath, logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Unable to create SPI provider with name InvalidSPIProvider",
+				logRecord.getMessage());
+
+			// Without log
+
+			logRecords = captureHandler.resetLogLevel(Level.OFF);
+
+			Field field = ReflectionUtil.getDeclaredField(
+				SPIUtil.class, "_spi");
+
+			field.set(null, new MockSPI());
+
+			try {
+				spiClassPathContextListener.contextInitialized(
+					new ServletContextEvent(_mockServletContext));
+			}
+			finally {
+				field.set(null, null);
+			}
+
+			Assert.assertEquals(
+				spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
+			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			field.set(null, null);
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
 		}
-
-		Assert.assertEquals(
-			spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
-		Assert.assertTrue(logRecords.isEmpty());
 	}
 
 	@Test
@@ -348,21 +360,28 @@ public class SPIClassPathContextListenerTest {
 
 		// Duplicate register
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			SPIClassPathContextListener.class.getName(), Level.SEVERE);
 
-		spiClassPathContextListener.contextInitialized(
-			new ServletContextEvent(_mockServletContext));
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		Assert.assertEquals(1, logRecords.size());
+			spiClassPathContextListener.contextInitialized(
+				new ServletContextEvent(_mockServletContext));
 
-		LogRecord logRecord = logRecords.get(0);
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertEquals(
-			"Duplicate SPI provider " + spiProviderReference.get() +
-				" is already registered in servlet context " +
-					_mockServletContext.getContextPath(),
-			logRecord.getMessage());
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Duplicate SPI provider " + spiProviderReference.get() +
+					" is already registered in servlet context " +
+						_mockServletContext.getContextPath(),
+				logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 
 		// Unregister
 

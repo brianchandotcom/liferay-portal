@@ -1896,81 +1896,9 @@ public class StagingImpl implements Staging {
 			throw roe;
 		}
 
-		if (remoteGroupId <= 0) {
-			roe = new RemoteOptionsException(
-				RemoteOptionsException.REMOTE_GROUP_ID);
-
-			roe.setRemoteGroupId(remoteGroupId);
-
-			throw roe;
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = permissionChecker.getUser();
-
-		String remoteURL = buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
-
-		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getEmailAddress(), user.getPassword(),
-			user.getPasswordEncrypted());
-
-		// Ping remote host and verify that the group exists in the same company
-		// as the remote user and also verify that the groups are both company
-		// groups or not
-
-		try {
-			GroupServiceHttp.checkRemoteStagingGroup(
-				httpPrincipal, remoteGroupId);
-
-			Group remoteGroup = GroupServiceHttp.getGroup(
-				httpPrincipal, remoteGroupId);
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if ((remoteGroup.isCompany() && !group.isCompany()) ||
-				(!remoteGroup.isCompany() && group.isCompany())) {
-
-				RemoteExportException ree = new RemoteExportException(
-					RemoteExportException.INVALID_GROUP);
-
-				ree.setGroupId(remoteGroupId);
-
-				throw ree;
-			}
-		}
-		catch (NoSuchGroupException nsge) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.NO_GROUP);
-
-			ree.setGroupId(remoteGroupId);
-
-			throw ree;
-		}
-		catch (PrincipalException pe) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.NO_PERMISSIONS);
-
-			ree.setGroupId(remoteGroupId);
-
-			throw ree;
-		}
-		catch (RemoteAuthException rae) {
-			rae.setURL(remoteURL);
-
-			throw rae;
-		}
-		catch (SystemException se) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION, se.getMessage());
-
-			ree.setURL(remoteURL);
-
-			throw ree;
-		}
+		validateRemoteGroup(
+			groupId, remoteGroupId, remoteAddress, remotePort,
+			remotePathContext, secureConnection);
 	}
 
 	/**
@@ -2536,6 +2464,88 @@ public class StagingImpl implements Staging {
 		group.setTypeSettingsProperties(typeSettingsProperties);
 
 		GroupLocalServiceUtil.updateGroup(group);
+	}
+
+	protected void validateRemoteGroup(
+			long groupId, long remoteGroupId, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection)
+		throws PortalException {
+
+		if (remoteGroupId <= 0) {
+			RemoteOptionsException roe = new RemoteOptionsException(
+				RemoteOptionsException.REMOTE_GROUP_ID);
+
+			roe.setRemoteGroupId(remoteGroupId);
+
+			throw roe;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		String remoteURL = buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			remoteURL, user.getEmailAddress(), user.getPassword(),
+			user.getPasswordEncrypted());
+
+		// Ping remote host and verify that the group exists in the same company
+		// as the remote user and also verify that the groups are both company
+		// groups or not
+
+		try {
+			GroupServiceHttp.checkRemoteStagingGroup(
+				httpPrincipal, remoteGroupId);
+
+			Group remoteGroup = GroupServiceHttp.getGroup(
+				httpPrincipal, remoteGroupId);
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if ((remoteGroup.isCompany() && !group.isCompany()) ||
+				(!remoteGroup.isCompany() && group.isCompany())) {
+
+				RemoteExportException ree = new RemoteExportException(
+					RemoteExportException.INVALID_GROUP);
+
+				ree.setGroupId(remoteGroupId);
+
+				throw ree;
+			}
+		}
+		catch (NoSuchGroupException nsge) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (PrincipalException pe) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_PERMISSIONS);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
+		}
+		catch (SystemException se) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.BAD_CONNECTION, se.getMessage());
+
+			ree.setURL(remoteURL);
+
+			throw ree;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(StagingImpl.class);

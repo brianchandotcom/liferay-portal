@@ -1203,7 +1203,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, trigger.getJobName(), description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
-				settingsMap, new ServiceContext());
+				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,

@@ -66,16 +66,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testDestroy1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
-			clusterLinkImpl = getClusterLinkImpl();
-		}
-		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
+		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -186,21 +179,13 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testGetLocalTransportAddresses1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
-			clusterLinkImpl = getClusterLinkImpl();
+		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
 
-			List<Address> addresses =
-				clusterLinkImpl.getLocalTransportAddresses();
+		Assert.assertSame(Collections.emptyList(), addresses);
 
-			Assert.assertSame(Collections.emptyList(), addresses);
-		}
-		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
+		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -240,21 +225,14 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testGetTransportAddressesByPriority1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
-			clusterLinkImpl = getClusterLinkImpl();
+		List<Address> addresses = clusterLinkImpl.getTransportAddresses(
+			Priority.LEVEL1);
 
-			List<Address> addresses = clusterLinkImpl.getTransportAddresses(
-				Priority.LEVEL1);
+		Assert.assertSame(Collections.emptyList(), addresses);
 
-			Assert.assertSame(Collections.emptyList(), addresses);
-		}
-		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
+		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -358,20 +336,13 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testSendMulticastMessage1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
-			clusterLinkImpl = getClusterLinkImpl();
+		Message message = createMessage();
 
-			Message message = createMessage();
+		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
-			clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
-		}
-		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
+		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(
@@ -536,21 +507,14 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testSendUnicastMessage1() throws Exception {
-		ClusterLinkImpl clusterLinkImpl = null;
+		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
-			clusterLinkImpl = getClusterLinkImpl();
+		Message message = createMessage();
 
-			Message message = createMessage();
+		clusterLinkImpl.sendUnicastMessage(
+			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
-			clusterLinkImpl.sendUnicastMessage(
-				new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
-		}
-		finally {
-			if (clusterLinkImpl != null) {
-				clusterLinkImpl.destroy();
-			}
-		}
+		clusterLinkImpl.destroy();
 	}
 
 	@AdviseWith(

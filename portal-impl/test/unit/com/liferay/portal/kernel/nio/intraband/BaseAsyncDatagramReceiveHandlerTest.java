@@ -58,16 +58,6 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 		Throwable throwable = logRecord.getThrown();
 
 		Assert.assertEquals(Exception.class, throwable.getClass());
-
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			BaseAsyncDatagramReceiveHandler.class.getName(), Level.OFF);
-
-		errorAsyncDatagramReceiveHandler =
-			new ErrorAsyncDatagramReceiveHandler();
-
-		errorAsyncDatagramReceiveHandler.receive(null, null);
-
-		Assert.assertTrue(logRecords.isEmpty());
 	}
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})

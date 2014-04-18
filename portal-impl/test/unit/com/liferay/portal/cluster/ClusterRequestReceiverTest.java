@@ -166,7 +166,7 @@ public class ClusterRequestReceiverTest
 				methodHandler, address);
 
 			JDKLoggerTestUtil.configureJDKLogger(
-				ClusterRequestReceiver.class.getName(), Level.SEVERE);
+				ClusterRequestReceiver.class.getName(), Level.OFF);
 
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl1.execute(clusterRequest);

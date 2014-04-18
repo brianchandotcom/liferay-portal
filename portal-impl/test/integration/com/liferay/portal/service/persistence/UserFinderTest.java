@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,24 +93,39 @@ public class UserFinderTest {
 		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 	}
 
-	@Test
-	public void testCountByKeywordsWithInheritedGroups() throws Exception {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+	@Before
+	public void setUp() throws Exception {
+		_inheritedUserGroupsParams = new LinkedHashMap<String, Object>();
 
-		params.put("inherit", Boolean.TRUE);
-		params.put(
+		_inheritedUserGroupsParams.put("inherit", Boolean.TRUE);
+		_inheritedUserGroupsParams.put(
 			"usersGroups",
 			new Long[] {
 				_group.getGroupId(), _organization.getGroupId(),
 				_userGroup.getGroupId()
 			});
 
+		_inheritedUserGroupsExpectedCount = UserFinderUtil.countByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
+
+		// inherit user roles
+
+		_roleId = RoleTestUtil.addRegularRole(_group.getGroupId());
+
+		_inheritUserRolesParams = new LinkedHashMap<String, Object>();
+
+		_inheritUserRolesParams.put("inherit", Boolean.TRUE);
+		_inheritUserRolesParams.put("usersRoles", _roleId);
+	}
+
+	@Test
+	public void testCountByKeywordsWithInheritedGroups() throws Exception {
 		int count = UserFinderUtil.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params);
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
 
-		Assert.assertEquals(4, count);
+		Assert.assertEquals(_inheritedUserGroupsExpectedCount, count);
 	}
 
 	@Test
@@ -203,27 +219,16 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsWithInheritedGroups() throws Exception {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("inherit", Boolean.TRUE);
-		params.put(
-			"usersGroups",
-			new Long[] {
-				_group.getGroupId(), _organization.getGroupId(),
-				_userGroup.getGroupId()
-			});
-
 		List<User> users = UserFinderUtil.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, params, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(users.contains(_groupUser));
 		Assert.assertTrue(users.contains(_organizationUser));
 		Assert.assertTrue(users.contains(_userGroupUser));
 		Assert.assertTrue(users.contains(TestPropsValues.getUser()));
-		Assert.assertEquals(4, users.size());
+		Assert.assertEquals(_inheritedUserGroupsExpectedCount, users.size());
 	}
 
 	@Test
@@ -286,5 +291,10 @@ public class UserFinderTest {
 	private static User _organizationUser;
 	private static UserGroup _userGroup;
 	private static User _userGroupUser;
+
+	private int _inheritedUserGroupsExpectedCount;
+	private LinkedHashMap<String, Object> _inheritedUserGroupsParams;
+	private LinkedHashMap<String, Object> _inheritUserRolesParams;
+	private long _roleId;
 
 }

@@ -57,11 +57,12 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
+
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(
-					MapUtil.getLong(
-						taskContextMap, "exportImportConfigurationId"));
+				getExportImportConfiguration(exportImportConfigurationId);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();

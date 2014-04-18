@@ -269,6 +269,12 @@ AUI.add(
 						}
 					},
 
+					_hoverNavItem: function(event) {
+						var instance = this;
+
+						event.currentTarget.toggleClass('lfr-nav-hover', (event.type == 'mouseenter'));
+					},
+
 					_makeDeletable: function() {
 						var instance = this;
 
@@ -294,6 +300,8 @@ AUI.add(
 								A.bind('_handleKeyDown', instance),
 								navItemSelector
 							);
+
+							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, '.lfr-nav-deletable', instance);
 
 							instance._deleteButton(navItems);
 						}

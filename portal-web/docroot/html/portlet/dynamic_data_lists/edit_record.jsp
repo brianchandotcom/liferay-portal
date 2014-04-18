@@ -127,14 +127,6 @@ if (translating) {
 				readOnly="<%= recordId <= 0 %>"
 			/>
 
-			<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="updateDefaultLanguageURL">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-			</liferay-portlet:renderURL>
-
-			<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="translateRecordURL" windowState="pop_up">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-			</liferay-portlet:renderURL>
-
 			<aui:script use="liferay-translation-manager">
 				var translationManager = Liferay.component('<portlet:namespace />translationManager');
 
@@ -150,6 +142,10 @@ if (translating) {
 				translationManager.after(
 					{
 						defaultLocaleChange: function(event) {
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="updateDefaultLanguageURL">
+								<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+							</liferay-portlet:renderURL>
+
 							var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + event.newVal;
 
 							window.location.href = url;
@@ -177,6 +173,10 @@ if (translating) {
 							var defaultLocale = translationManager.get('defaultLocale');
 
 							if (editingLocale !== defaultLocale) {
+								<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="translateRecordURL" windowState="pop_up">
+									<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+								</liferay-portlet:renderURL>
+
 								Liferay.Util.openWindow(
 									{
 										cache: false,

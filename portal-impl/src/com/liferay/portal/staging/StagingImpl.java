@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfi
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -70,7 +68,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
@@ -2191,54 +2188,17 @@ public class StagingImpl implements Staging {
 				startCalendar.getTime(), schedulerEndDate, description);
 		}
 		else {
-			MessageStatus messageStatus = new MessageStatus();
-
-			messageStatus.startTimer();
-
-			try {
-				if (scope.equals("all-pages")) {
-					publishLayouts(
-						themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-						privateLayout, parameterMap, dateRange.getStartDate(),
-						dateRange.getEndDate());
-				}
-				else {
-					publishLayouts(
-						themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-						privateLayout, layoutIds, parameterMap,
-						dateRange.getStartDate(), dateRange.getEndDate());
-				}
+			if (scope.equals("all-pages")) {
+				publishLayouts(
+					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
+					privateLayout, parameterMap, dateRange.getStartDate(),
+					dateRange.getEndDate());
 			}
-			catch (Exception e) {
-				messageStatus.setException(e);
-
-				throw e;
-			}
-			finally {
-				messageStatus.stopTimer();
-
-				Map<String, Serializable> settingsMap =
-					ExportImportConfigurationSettingsMapFactory.
-						buildSettingsMap(
-							themeDisplay.getUserId(), sourceGroupId,
-							targetGroupId, privateLayout, layoutIds,
-							parameterMap, dateRange.getStartDate(),
-							dateRange.getEndDate(), themeDisplay.getLocale(),
-							themeDisplay.getTimeZone());
-
-				ExportImportConfiguration exportImportConfiguration =
-					ExportImportConfigurationLocalServiceUtil.
-						addExportImportConfiguration(
-							themeDisplay.getUserId(), sourceGroupId,
-							PortalUUIDUtil.generate(), StringPool.BLANK,
-							ExportImportConfigurationConstants.
-								TYPE_PUBLISH_LAYOUT_LOCAL,
-							settingsMap, new ServiceContext());
-
-				messageStatus.setPayload(exportImportConfiguration);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.MESSAGE_BUS_MESSAGE_STATUS, messageStatus);
+			else {
+				publishLayouts(
+					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
+					privateLayout, layoutIds, parameterMap,
+					dateRange.getStartDate(), dateRange.getEndDate());
 			}
 		}
 	}
@@ -2348,50 +2308,11 @@ public class StagingImpl implements Staging {
 				startCalendar.getTime(), schedulerEndDate, description);
 		}
 		else {
-			MessageStatus messageStatus = new MessageStatus();
-
-			messageStatus.startTimer();
-
-			try {
-				copyRemoteLayouts(
-					groupId, privateLayout, layoutIdMap, parameterMap,
-					remoteAddress, remotePort, remotePathContext,
-					secureConnection, remoteGroupId, remotePrivateLayout,
-					dateRange.getStartDate(), dateRange.getEndDate());
-			}
-			catch (Exception e) {
-				messageStatus.setException(e);
-
-				throw e;
-			}
-			finally {
-				messageStatus.stopTimer();
-
-				Map<String, Serializable> settingsMap =
-					ExportImportConfigurationSettingsMapFactory.
-						buildSettingsMap(
-							themeDisplay.getUserId(), groupId, privateLayout,
-							layoutIdMap, parameterMap, remoteAddress,
-							remotePort, remotePathContext, secureConnection,
-							remoteGroupId, remotePrivateLayout,
-							dateRange.getStartDate(), dateRange.getEndDate(),
-							themeDisplay.getLocale(),
-							themeDisplay.getTimeZone());
-
-				ExportImportConfiguration exportImportConfiguration =
-					ExportImportConfigurationLocalServiceUtil.
-						addExportImportConfiguration(
-							themeDisplay.getUserId(), groupId,
-							PortalUUIDUtil.generate(), StringPool.BLANK,
-							ExportImportConfigurationConstants.
-								TYPE_PUBLISH_LAYOUT_REMOTE,
-							settingsMap, new ServiceContext());
-
-				messageStatus.setPayload(exportImportConfiguration);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.MESSAGE_BUS_MESSAGE_STATUS, messageStatus);
-			}
+			copyRemoteLayouts(
+				groupId, privateLayout, layoutIdMap, parameterMap,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
+				dateRange.getEndDate());
 		}
 	}
 

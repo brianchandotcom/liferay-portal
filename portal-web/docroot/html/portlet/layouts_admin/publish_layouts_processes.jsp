@@ -153,15 +153,16 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
 						url="<%= deleteBackgroundTaskURL %>"
 					/>
+					<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
+						<portlet:actionURL var="relaunchURL">
+							<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
+							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+						</portlet:actionURL>
 
-					<portlet:actionURL var="relaunchURL">
-						<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-						<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon image="submit" message='<%= LanguageUtil.get(pageContext, "relaunch") %>' url="<%= relaunchURL %>" />
+						<liferay-ui:icon image="submit" message='<%= LanguageUtil.get(pageContext, "relaunch") %>' url="<%= relaunchURL %>" />
+					</c:if>
 				</liferay-ui:icon-menu>
 			</c:if>
 		</liferay-ui:search-container-column-text>

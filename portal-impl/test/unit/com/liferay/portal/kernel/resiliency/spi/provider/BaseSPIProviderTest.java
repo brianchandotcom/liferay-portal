@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.resiliency.spi.agent.MockSPIAgent;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPIProxy;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -91,80 +92,88 @@ public class BaseSPIProviderTest {
 	@AdviseWith(adviceClasses = {ProcessExecutorAdvice.class})
 	@Test
 	public void testCreateSPI() throws PortalResiliencyException {
-
-		// Timeout
-
-		JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.OFF);
 
 		try {
-			_testSPIProvider.createSPI(_spiConfiguration);
+
+			// Timeout
+
+			try {
+				_testSPIProvider.createSPI(_spiConfiguration);
+			}
+			catch (PortalResiliencyException pre) {
+				Assert.assertEquals(
+					"SPI synchronous queue waiting timeout. Forcibly " +
+						"cancelled SPI process launch.",
+					pre.getMessage());
+
+				Assert.assertNull(pre.getCause());
+			}
+
+			// Sucess
+
+			ProcessExecutorAdvice.setRegisterBack(true);
+
+			SPI spi = _testSPIProvider.createSPI(_spiConfiguration);
+
+			Assert.assertSame(RemoteSPIProxy.class, spi.getClass());
+
+			// Reject
+
+			try {
+				_testSPIProvider.createSPI(_spiConfiguration);
+			}
+			catch (PortalResiliencyException pre) {
+				Assert.assertEquals(
+					"Unable to register SPI " + spi +
+						". Forcibly cancelled SPI process launch.",
+					pre.getMessage());
+
+				Assert.assertNull(pre.getCause());
+			}
+
+			// Interrupt
+
+			ProcessExecutorAdvice.setInterrupt(true);
+			ProcessExecutorAdvice.setRegisterBack(false);
+
+			try {
+				_testSPIProvider.createSPI(_spiConfiguration);
+			}
+			catch (PortalResiliencyException pre) {
+				Assert.assertEquals(
+					"Interrupted on waiting SPI process, registering back " +
+						"RMI stub",
+					pre.getMessage());
+
+				Throwable throwable = pre.getCause();
+
+				Assert.assertSame(
+					InterruptedException.class, throwable.getClass());
+			}
+
+			// Process executor failure
+
+			ProcessExecutorAdvice.setInterrupt(false);
+			ProcessExecutorAdvice.setRegisterBack(false);
+			ProcessExecutorAdvice.setThrowException(true);
+
+			try {
+				_testSPIProvider.createSPI(_spiConfiguration);
+			}
+			catch (PortalResiliencyException pre) {
+				Assert.assertEquals(
+					"Unable to launch SPI process", pre.getMessage());
+
+				Throwable throwable = pre.getCause();
+
+				Assert.assertSame(ProcessException.class, throwable.getClass());
+				Assert.assertEquals("ProcessException", throwable.getMessage());
+			}
 		}
-		catch (PortalResiliencyException pre) {
-			Assert.assertEquals(
-				"SPI synchronous queue waiting timeout. Forcibly cancelled " +
-					"SPI process launch.", pre.getMessage());
-
-			Assert.assertNull(pre.getCause());
-		}
-
-		// Sucess
-
-		ProcessExecutorAdvice.setRegisterBack(true);
-
-		SPI spi = _testSPIProvider.createSPI(_spiConfiguration);
-
-		Assert.assertSame(RemoteSPIProxy.class, spi.getClass());
-
-		// Reject
-
-		try {
-			_testSPIProvider.createSPI(_spiConfiguration);
-		}
-		catch (PortalResiliencyException pre) {
-			Assert.assertEquals(
-				"Unable to register SPI " + spi +
-					". Forcibly cancelled SPI process launch.",
-				pre.getMessage());
-
-			Assert.assertNull(pre.getCause());
-		}
-
-		// Interrupt
-
-		ProcessExecutorAdvice.setInterrupt(true);
-		ProcessExecutorAdvice.setRegisterBack(false);
-
-		try {
-			_testSPIProvider.createSPI(_spiConfiguration);
-		}
-		catch (PortalResiliencyException pre) {
-			Assert.assertEquals(
-				"Interrupted on waiting SPI process, registering back RMI stub",
-				pre.getMessage());
-
-			Throwable throwable = pre.getCause();
-
-			Assert.assertSame(InterruptedException.class, throwable.getClass());
-		}
-
-		// Process executor failure
-
-		ProcessExecutorAdvice.setInterrupt(false);
-		ProcessExecutorAdvice.setRegisterBack(false);
-		ProcessExecutorAdvice.setThrowException(true);
-
-		try {
-			_testSPIProvider.createSPI(_spiConfiguration);
-		}
-		catch (PortalResiliencyException pre) {
-			Assert.assertEquals(
-				"Unable to launch SPI process", pre.getMessage());
-
-			Throwable throwable = pre.getCause();
-
-			Assert.assertSame(ProcessException.class, throwable.getClass());
-			Assert.assertEquals("ProcessException", throwable.getMessage());
+		finally {
+			captureHandler.close();
 		}
 	}
 

@@ -14,24 +14,41 @@
 
 package com.liferay.portal.cluster;
 
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * @author Tina Tian
  */
 public class BaseClusterTestCase {
+
+	@Before
+	public void setUp() {
+		_captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			ClusterBase.class.getName(), Level.OFF);
+	}
+
+	@After
+	public void tearDown() {
+		_captureHandler.close();
+	}
 
 	@Aspect
 	public static class DisableClusterLinkAdvice {
@@ -128,5 +145,7 @@ public class BaseClusterTestCase {
 		}
 
 	}
+
+	private CaptureHandler _captureHandler;
 
 }

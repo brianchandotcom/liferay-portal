@@ -23,11 +23,13 @@ public class RemoteExportException extends PortalException {
 
 	public static final int BAD_CONNECTION = 1;
 
-	public static final int NO_GROUP = 2;
+	public static final int INVALID_GROUP = 2;
 
-	public static final int NO_LAYOUTS = 3;
+	public static final int NO_GROUP = 3;
 
-	public static final int NO_PERMISSIONS = 4;
+	public static final int NO_LAYOUTS = 4;
+
+	public static final int NO_PERMISSIONS = 5;
 
 	public RemoteExportException(int type) {
 		_type = type;

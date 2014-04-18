@@ -43,16 +43,16 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 		modelVar="customAttributesDisplay"
 		stringKey="<%= true %>"
 	>
+		<liferay-ui:search-container-row-parameter
+			name="customAttributesDisplay"
+			value="<%= customAttributesDisplay %>"
+		/>
+
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="struts_action" value="/expando/view_attributes" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
 		</portlet:renderURL>
-
-		<liferay-ui:search-container-row-parameter
-			name="customAttributesDisplay"
-			value="<%= customAttributesDisplay %>"
-		/>
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"

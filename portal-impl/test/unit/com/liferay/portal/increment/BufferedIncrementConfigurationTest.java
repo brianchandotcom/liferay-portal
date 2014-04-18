@@ -15,6 +15,7 @@
 package com.liferay.portal.increment;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -50,31 +51,45 @@ public class BufferedIncrementConfigurationTest {
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testInvalidSettingWithLog() {
-		List<LogRecord> logRecords = _doTestInvalidSetting(Level.WARNING);
+		CaptureHandler captureHandler = _doTestInvalidSetting(Level.WARNING);
 
-		Assert.assertEquals(2, logRecords.size());
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		LogRecord logRecord1 = logRecords.get(0);
+			Assert.assertEquals(2, logRecords.size());
 
-		Assert.assertEquals(
-			PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME +
-				"[]=-3. Auto reset to 0.",
-			logRecord1.getMessage());
+			LogRecord logRecord1 = logRecords.get(0);
 
-		LogRecord logRecord2 = logRecords.get(1);
+			Assert.assertEquals(
+				PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME +
+					"[]=-3. Auto reset to 0.",
+				logRecord1.getMessage());
 
-		Assert.assertEquals(
-			PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE +
-				"[]=-4. Auto reset to 1.",
-			logRecord2.getMessage());
+			LogRecord logRecord2 = logRecords.get(1);
+
+			Assert.assertEquals(
+				PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE +
+					"[]=-4. Auto reset to 1.",
+				logRecord2.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testInvalidSettingWithoutLog() {
-		List<LogRecord> logRecords = _doTestInvalidSetting(Level.OFF);
+		CaptureHandler captureHandler = _doTestInvalidSetting(Level.OFF);
 
-		Assert.assertTrue(logRecords.isEmpty());
+		try {
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
 	}
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
@@ -162,7 +177,7 @@ public class BufferedIncrementConfigurationTest {
 
 	}
 
-	private List<LogRecord> _doTestInvalidSetting(Level level) {
+	private CaptureHandler _doTestInvalidSetting(Level level) {
 		Map<String, String> props = new HashMap<String, String>();
 
 		props.put(PropsKeys.BUFFERED_INCREMENT_ENABLED, "false");
@@ -186,7 +201,7 @@ public class BufferedIncrementConfigurationTest {
 
 		PropsUtilAdvice.setProps(props);
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			BufferedIncrementConfiguration.class.getName(), level);
 
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
@@ -220,7 +235,7 @@ public class BufferedIncrementConfigurationTest {
 			Assert.assertEquals("Standby is disabled", ise.getMessage());
 		}
 
-		return logRecords;
+		return captureHandler;
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -143,31 +144,43 @@ public class IntrabandPortalCacheTest {
 
 		Assert.assertEquals(testValue, intrabandPortalCache.get(testKey));
 
-		// Unable to get, with log
+		CaptureHandler captureHandler = null;
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			IntrabandPortalCache.class.getName(), Level.WARNING);
+		try {
 
-		RuntimeException runtimeException = new RuntimeException();
+			// Unable to get, with log
 
-		runtimeExceptionReference.set(runtimeException);
+			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+				IntrabandPortalCache.class.getName(), Level.WARNING);
 
-		Assert.assertNull(intrabandPortalCache.get(testKey));
-		Assert.assertEquals(1, logRecords.size());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		LogRecord logRecord = logRecords.get(0);
+			RuntimeException runtimeException = new RuntimeException();
 
-		Assert.assertEquals(
-			"Unable to get, coverting to cache miss", logRecord.getMessage());
-		Assert.assertSame(runtimeException, logRecord.getThrown());
+			runtimeExceptionReference.set(runtimeException);
 
-		// Unable to get, without log
+			Assert.assertNull(intrabandPortalCache.get(testKey));
+			Assert.assertEquals(1, logRecords.size());
 
-		logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			IntrabandPortalCache.class.getName(), Level.OFF);
+			LogRecord logRecord = logRecords.get(0);
 
-		Assert.assertNull(intrabandPortalCache.get(testKey));
-		Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertEquals(
+				"Unable to get, coverting to cache miss",
+				logRecord.getMessage());
+			Assert.assertSame(runtimeException, logRecord.getThrown());
+
+			// Unable to get, without log
+
+			logRecords = captureHandler.resetLogLevel(Level.OFF);
+
+			Assert.assertNull(intrabandPortalCache.get(testKey));
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			if (captureHandler != null) {
+				captureHandler.close();
+			}
+		}
 	}
 
 	@Test

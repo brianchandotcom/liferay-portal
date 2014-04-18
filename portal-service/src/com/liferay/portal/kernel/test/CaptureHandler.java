@@ -74,6 +74,14 @@ public class CaptureHandler extends Handler {
 		_logRecords.add(logRecord);
 	}
 
+	public List<LogRecord> resetLogLevel(Level level) {
+		_logRecords.clear();
+
+		_logger.setLevel(level);
+
+		return _logRecords;
+	}
+
 	private Handler[] _handlers;
 	private Level _level;
 	private Logger _logger;

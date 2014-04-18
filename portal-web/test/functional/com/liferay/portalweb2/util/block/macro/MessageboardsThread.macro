@@ -72,15 +72,16 @@
 		<if>
 			<equals arg1="${threadAddTag}" arg2="true" />
 			<then>
-				<execute macro="MessageboardsThread#addTagPG" />
+				<execute macro="MessageboardsThread#addTagPGCmd" />
 			</then>
 		</if>
 
 		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="addTagPG">
+	<command name="addTagPGCmd">
 		<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="BODY_FIELD" />
 
@@ -92,11 +93,22 @@
 			</then>
 		</if>
 
-		<var name="key_tagName" value="${tagName}" />
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<execute action="PGMessageboardsPostthread#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute action="PGMessageboardsPostthread#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				</for>
+			</then>
+			<else>
+				<var name="key_tagName" value="${tagName}" />
 
-		<execute action="PGMessageboardsPostthread#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
-		<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+				<execute action="PGMessageboardsPostthread#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addWithWorkflowCP">
@@ -368,6 +380,17 @@
 		</execute>
 
 		<if>
+			<equals arg1="${displayStyle}" arg2="Question" />
+			<then>
+				<execute action="PGMessageboardsCategory#assertClick" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+			</then>
+			<else>
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+			</else>
+		</if>
+
+		<if>
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
 			<then>
 				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
@@ -535,6 +558,24 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewMarkAsAnswerPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<if>
+			<equals arg1="${displayStyle}" arg2="Question" />
+			<then>
+				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="${questionAnswers}" />
+				<execute action="PGMessageboardsCategory#assertClick" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+			</then>
+			<else>
+				<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_FLAG" value1="Resolved" />
+				<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="viewNoAnonymousPostingCheckboxCP">

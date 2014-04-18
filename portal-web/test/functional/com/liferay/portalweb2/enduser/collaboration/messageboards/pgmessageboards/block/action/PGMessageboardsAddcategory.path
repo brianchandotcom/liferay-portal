@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_STYLE_SELECT</td>
+	<td>//select[@id='_19_displayStyle']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

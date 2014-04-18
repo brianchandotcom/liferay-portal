@@ -19,6 +19,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENTS_AND_MEDIA_RATING_PORTAL</td>
+	<td>icons/dm_rating_portal.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_RATING_SOCIAL_OFFICE</td>
+	<td>icons/dm_rating_social_office.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_STATUS</td>
+	<td>icons/dm_status.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_ADDRESS</td>
 	<td>email_address.png</td>
 	<td></td>

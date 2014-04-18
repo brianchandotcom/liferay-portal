@@ -335,6 +335,36 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmFolderNameEdit}" />
 	</command>
 
+	<command name="viewFolderViewPermissionsPG">
+		<var name="key_dmFolderName" value="${dmFolder}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmFolderName}" />
+
+		<if>
+			<equals arg1="${viewPermissionValue}" arg2="checked" />
+			<then>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</then>
+			<elseif>
+				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</else>
+		</if>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 

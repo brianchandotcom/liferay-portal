@@ -2274,9 +2274,6 @@ public class StagingImpl implements Staging {
 			PortletRequest portletRequest, boolean schedule)
 		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");

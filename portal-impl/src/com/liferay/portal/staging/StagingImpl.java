@@ -346,7 +346,7 @@ public class StagingImpl implements Staging {
 			String remoteAddress, int remotePort, String remotePathContext,
 			boolean secureConnection, long remoteGroupId,
 			boolean remotePrivateLayout, Date startDate, Date endDate)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

@@ -107,7 +107,7 @@ public class StagingUtil {
 			String remoteAddress, int remotePort, String remotePathContext,
 			boolean secureConnection, long remoteGroupId,
 			boolean remotePrivateLayout, Date startDate, Date endDate)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		getStaging().copyRemoteLayouts(
 			sourceGroupId, privateLayout, layoutIdMap, parameterMap,

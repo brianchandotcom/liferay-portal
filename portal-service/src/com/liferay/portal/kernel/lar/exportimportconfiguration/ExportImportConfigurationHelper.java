@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
@@ -110,7 +112,7 @@ public class ExportImportConfigurationHelper {
 
 	public static void publishLayoutsByExportImportConfiguration(
 			long userId, long exportImportConfigurationId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

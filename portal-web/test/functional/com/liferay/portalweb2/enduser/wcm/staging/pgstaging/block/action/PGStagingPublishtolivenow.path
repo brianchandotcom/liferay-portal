@@ -212,12 +212,12 @@
 <!--DATE_RANGE-->
 <tr>
 	<td>DATE_RANGE_START_DATE</td>
-	<td>//input[@id='_88_startDate']</td>
+	<td>//input[@name='_88_startDate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_END_DATE</td>
-	<td>//input[@id='_88_endDate']</td>
+	<td>//input[@name='_88_endDate']</td>
 	<td></td>
 </tr>
 <tr>

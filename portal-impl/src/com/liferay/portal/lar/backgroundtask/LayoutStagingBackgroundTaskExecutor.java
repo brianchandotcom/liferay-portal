@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
@@ -56,12 +58,22 @@ public class LayoutStagingBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		long targetGroupId = MapUtil.getLong(taskContextMap, "targetGroupId");
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long userId = MapUtil.getLong(settingsMap, "userId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
 		StagingUtil.lockGroup(userId, targetGroupId);
 
-		long sourceGroupId = MapUtil.getLong(taskContextMap, "sourceGroupId");
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		clearBackgroundTaskStatus(backgroundTask);
 
@@ -70,8 +82,8 @@ public class LayoutStagingBackgroundTaskExecutor
 		try {
 			Callable<MissingReferences> layoutStagingCallable =
 				new LayoutStagingCallable(
-					backgroundTask.getBackgroundTaskId(), sourceGroupId,
-					targetGroupId, taskContextMap, userId);
+					backgroundTask.getBackgroundTaskId(), settingsMap,
+					sourceGroupId, targetGroupId, userId);
 
 			missingReferences = TransactionalCallableUtil.call(
 				_transactionAttribute, layoutStagingCallable);
@@ -141,13 +153,13 @@ public class LayoutStagingBackgroundTaskExecutor
 	private class LayoutStagingCallable implements Callable<MissingReferences> {
 
 		private LayoutStagingCallable(
-			long backgroundTaskId, long sourceGroupId, long targetGroupId,
-			Map<String, Serializable> taskContextMap, long userId) {
+			long backgroundTaskId, Map<String, Serializable> settingsMap,
+			long sourceGroupId, long targetGroupId, long userId) {
 
 			_backgroundTaskId = backgroundTaskId;
+			_settingsMap = settingsMap;
 			_sourceGroupId = sourceGroupId;
 			_targetGroupId = targetGroupId;
-			_taskContextMap = taskContextMap;
 			_userId = userId;
 		}
 
@@ -158,13 +170,13 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			try {
 				boolean privateLayout = MapUtil.getBoolean(
-					_taskContextMap, "privateLayout");
+					_settingsMap, "privateLayout");
 				long[] layoutIds = GetterUtil.getLongValues(
-					_taskContextMap.get("layoutIds"));
+					_settingsMap.get("layoutIds"));
 				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)_taskContextMap.get("parameterMap");
-				Date startDate = (Date)_taskContextMap.get("startDate");
-				Date endDate = (Date)_taskContextMap.get("endDate");
+					(Map<String, String[]>)_settingsMap.get("parameterMap");
+				Date startDate = (Date)_settingsMap.get("startDate");
+				Date endDate = (Date)_settingsMap.get("endDate");
 
 				file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 					_sourceGroupId, privateLayout, layoutIds, parameterMap,
@@ -210,9 +222,9 @@ public class LayoutStagingBackgroundTaskExecutor
 		}
 
 		private long _backgroundTaskId;
+		private Map<String, Serializable> _settingsMap;
 		private long _sourceGroupId;
 		private long _targetGroupId;
-		private Map<String, Serializable> _taskContextMap;
 		private long _userId;
 
 	}

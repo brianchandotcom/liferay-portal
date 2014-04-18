@@ -2410,30 +2410,6 @@ public class StagingImpl implements Staging {
 			String.valueOf(layoutBranchId));
 	}
 
-	protected void updateGroupTypeSettingsProperties(
-			Group group, String remoteAddress, int remotePort,
-			String remotePathContext, boolean secureConnection,
-			long remoteGroupId)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
-		typeSettingsProperties.setProperty(
-			"remoteGroupId", String.valueOf(remoteGroupId));
-		typeSettingsProperties.setProperty(
-			"remotePathContext", remotePathContext);
-		typeSettingsProperties.setProperty(
-			"remotePort", String.valueOf(remotePort));
-		typeSettingsProperties.setProperty(
-			"secureConnection", String.valueOf(secureConnection));
-
-		group.setTypeSettingsProperties(typeSettingsProperties);
-
-		GroupLocalServiceUtil.updateGroup(group);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 
 }

@@ -916,6 +916,30 @@ public class AssetCategoryWrapper implements AssetCategory,
 		return false;
 	}
 
+	public long getId() {
+		return _assetCategory.getId();
+	}
+
+	public long getNSLeft() {
+		return _assetCategory.getNSLeft();
+	}
+
+	public long getNSRight() {
+		return _assetCategory.getNSRight();
+	}
+
+	public long getScopeId() {
+		return _assetCategory.getScopeId();
+	}
+
+	public void setNSLeft(long nsLeft) {
+		_assetCategory.setNSLeft(nsLeft);
+	}
+
+	public void setNSRight(long nsRight) {
+		_assetCategory.setNSRight(nsRight);
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return _assetCategory.getStagedModelType();

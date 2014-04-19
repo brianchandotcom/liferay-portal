@@ -3605,6 +3605,30 @@ public class AssetCategoryUtil {
 		getPersistence().setAssetEntries(pk, assetEntries);
 	}
 
+	public static long countAncestors(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countAncestors(assetCategory);
+	}
+
+	public static long countDescendants(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countDescendants(assetCategory);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAncestors(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getAncestors(assetCategory);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getDescendants(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDescendants(assetCategory);
+	}
+
 	/**
 	* Rebuilds the asset categories tree for the scope using the modified pre-order tree traversal algorithm.
 	*

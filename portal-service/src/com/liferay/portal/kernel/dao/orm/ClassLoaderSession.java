@@ -355,6 +355,27 @@ public class ClassLoaderSession implements Session {
 
 	@NotPrivileged
 	@Override
+	public boolean isDirty() throws ORMException {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			return _session.isDirty();
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	@NotPrivileged
+	@Override
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		Thread currentThread = Thread.currentThread();
 

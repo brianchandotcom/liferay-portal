@@ -215,6 +215,17 @@ public class SessionImpl implements Session {
 
 	@NotPrivileged
 	@Override
+	public boolean isDirty() throws ORMException {
+		try {
+			return _session.isDirty();
+		}
+		catch (Exception e) {
+			throw ExceptionTranslator.translate(e);
+		}
+	}
+
+	@NotPrivileged
+	@Override
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return _session.load(clazz, id);

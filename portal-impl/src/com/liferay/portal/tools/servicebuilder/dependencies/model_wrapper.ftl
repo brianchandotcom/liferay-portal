@@ -166,6 +166,32 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 		return false;
 	}
 
+	<#if entity.isHierarchicalTree()>
+		public long getId() {
+			return _${entity.varName}.getId();
+		}
+
+		public long getNSLeft() {
+			return _${entity.varName}.getNSLeft();
+		}
+
+		public long getNSRight() {
+			return _${entity.varName}.getNSRight();
+		}
+
+		public long getScopeId() {
+			return _${entity.varName}.getScopeId();
+		}
+
+		public void setNSLeft(long nsLeft) {
+			_${entity.varName}.setNSLeft(nsLeft);
+		}
+
+		public void setNSRight(long nsRight) {
+			_${entity.varName}.setNSRight(nsRight);
+		}
+	</#if>
+
 	<#if entity.isStagedModel() && !hasGetStagedModelTypeMethod!false>
 		@Override
 		public StagedModelType getStagedModelType() {

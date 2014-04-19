@@ -105,7 +105,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesPrivatePagesPermissions" known-issues="LPS-45472" priority="4">
+	<command name="SitesPrivatePagesPermissions" priority="4">
 		<var name="sitePageName" value="site Page" />
 
 		<execute macro="Page#gotoCP">

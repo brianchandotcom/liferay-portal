@@ -929,6 +929,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component']
+		requires: ['aui-component', 'event-mouseenter']
 	}
 );

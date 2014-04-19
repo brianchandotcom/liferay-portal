@@ -139,8 +139,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				catch (Exception e) {
 					throw new TypeConversionException(e);
 				}
-
 			}
+
 			throw tce;
 		}
 

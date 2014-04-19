@@ -262,7 +262,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogs" known-issues="LPS-45854" priority="4" >
+	<command name="StagingBlogs" known-issues="LPS-45854" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

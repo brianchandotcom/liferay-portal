@@ -602,7 +602,7 @@
 		</execute>
 	</command>
 
-	<command name="BlogsOrganizationWorkflowStaging" known-issues="LPS-45916" priority="4" >
+	<command name="BlogsOrganizationWorkflowStaging" known-issues="LPS-45916" priority="4">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">

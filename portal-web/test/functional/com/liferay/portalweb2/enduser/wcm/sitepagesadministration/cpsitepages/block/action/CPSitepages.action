@@ -5,6 +5,12 @@
 		</case>
 	</command>
 
+	<command name="assertClick">
+		<case locator-key1="STAGING_BUTTON">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+	</command>
+
 	<command name="assertElementPresent">
 		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
 			<execute function="AssertElementPresent#assertElementPresent" />

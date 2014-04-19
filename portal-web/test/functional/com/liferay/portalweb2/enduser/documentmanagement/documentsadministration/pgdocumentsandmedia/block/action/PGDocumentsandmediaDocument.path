@@ -242,81 +242,81 @@
 	<td></td>
 </tr>
 <!--METADATA_PANEL-->
-  <tr>
-  	<td>METADATA_PANEL_BOOLEAN</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${booleanValue}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_DATE</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${dateValue}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_DECIMAL</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${decimalValue}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media') and contains(.,'${dmDocument}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA_FILE</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media')]/a[contains(.,'${dmDocument}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_HTML</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${htmlContent}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_INTERGER</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${integerValue}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_LINK_TO_PAGE</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page') and contains(.,'${pageName}')]</td>
-  	<td></td>
-  </tr>
-  <tr>
-  	<td>METADATA_PANEL_LINK_TO_PAGE</td>
-  	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page')]/a[contains(.,'${pageName}')]</td>
-  	<td></td>
-  </tr>
- <tr>
- 	<td>METADATA_PANEL_NUMBER</td>
- 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${numberValue}')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td>METADATA_PANEL_RADIO</td>
- 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${radioOption}')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td>METADATA_PANEL_SELECT</td>
- 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${selectOption}')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td>METADATA_PANEL_TEXT</td>
- 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${textContent}')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td>METADATA_PANEL_TEXT_BOX</td>
- 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Text Box') and contains(.,'${textBoxContent}')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td></td>
- 	<td></td>
- 	<td></td>
- </tr>
+<tr>
+	<td>METADATA_PANEL_BOOLEAN</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_booleanValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DATE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dateValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DECIMAL</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_decimalValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media') and contains(.,'${key_dmDocument}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA_FILE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media')]/a[contains(.,'${key_dmDocument}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_HTML</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_htmlContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_INTERGER</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_integerValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_LINK_TO_PAGE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page') and contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_LINK_TO_PAGE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page')]/a[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_NUMBER</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_numberValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_RADIO</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_radioOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_SELECT</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_selectOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_TEXT</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_textContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_TEXT_BOX</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Text Box') and contains(.,'${key_textBoxContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_BE_THE_FIRST</td>

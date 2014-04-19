@@ -21,5 +21,13 @@
 		<case comparator="startsWith" locator-key1="MARKETING_">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case comparator="startsWith" locator-key1="METADATA_">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="METADATA_PANEL_NUMBER">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
 	</command>
 </definition>

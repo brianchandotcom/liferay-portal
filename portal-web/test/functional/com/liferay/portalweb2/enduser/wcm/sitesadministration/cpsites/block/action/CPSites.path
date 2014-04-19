@@ -258,6 +258,11 @@
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SITE_MENULIST_PUBLISH_TO_LIVE</td>
+	<td>//a[contains(@id,'publishGlobalLink')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

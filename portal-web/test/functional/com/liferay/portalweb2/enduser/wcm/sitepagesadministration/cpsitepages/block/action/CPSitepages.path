@@ -296,7 +296,7 @@
 </tr>
 <tr>
 	<td>STAGING_BUTTON</td>
-	<td>//li[@class='dropdown']/a/span[contains(.,'Staging')]</td>
+	<td>//div/ul/li[contains(.,'Staging')]/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,9 +1,5 @@
 <definition>
 	<command name="addField">
-		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
-
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-
 		<var name="key_field" value="${field}" />
 
 		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
@@ -22,8 +18,6 @@
 		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
 		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
 		<execute action="PGDocumentsandmediaManageMetadatasetsAdd#click" locator-key1="METADATA_SET_NAME_FIELD" />
-
-		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addPG">
@@ -41,10 +35,9 @@
 			</execute>
 		</for>
 
-		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrame" locator-key1="METADATA_SETS_IFRAME" />
-
 		<execute action="PGDocumentsandmediaManageMetadatasetsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGDocumentsandmediaManageMetadatasets#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGDocumentsandmediaManageMetadatasets#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="deletePG">

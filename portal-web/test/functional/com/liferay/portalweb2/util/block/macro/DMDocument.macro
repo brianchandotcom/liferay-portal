@@ -78,6 +78,36 @@
 				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
+
+		<if>
+			<isset var="textField" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${textField}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="numberField" />
+			<then>
+				<var name="key_fieldName" value="Number" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${numberField}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="booleanField" />
+			<then>
+				<var name="key_fieldName" value="Boolean" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" value1="${booleanField}" />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -440,6 +470,12 @@
 
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="gotoPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="moveToFolderCP">
@@ -977,9 +1013,18 @@
 
 	<command name="viewDocumentTypePG">
 		<if>
+			<isset var="booleanValue" />
+			<then>
+				<var name="key_booleanValue" value="${booleanValue}" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_BOOLEAN" value1="${booleanValue}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="selectOption" />
 			<then>
-				<var name="${selectOption}" value="selectOption" />
+				<var name="key_selectOption" value="${selectOption}" />
 
 				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
 			</then>
@@ -988,24 +1033,28 @@
 		<if>
 			<isset var="radioOption" />
 			<then>
-				<var name="${radioOption}" value="radioOption" />
+				<var name="key_radioOption" value="${radioOption}" />
 
 				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_RADIO" value1="${radioOption}" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="metadataSetName" arg2="Meeting Metadata" />" />
+			<isset var="textContent" />
 			<then>
-				<for list="${textContent}" param="textContent">
-					<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="METADATA_PANEL_TEXT" value1="${textContent} Content" />
-				</for>
+				<var name="key_textContent" value="${textContent}" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_TEXT" value1="${textContent}" />
 			</then>
-			<else>
-				<for list="${textContent}" param="textContent">
-					<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="METADATA_PANEL_TEXT" value1="${textContent} Content" />
-				</for>
-			</else>
+		</if>
+
+		<if>
+			<isset var="numberValue" />
+			<then>
+				<var name="key_numberValue" value="${numberValue}" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_NUMBER" value1="${numberValue}" />
+			</then>
 		</if>
 	</command>
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -89,7 +90,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		resultsMap.put("context", _contextPath);
 		resultsMap.put("basePath", _basePath);
 		resultsMap.put("baseURL", _baseURL);
-		resultsMap.put("version", "7.0");	// todo add portal version
+		resultsMap.put("version", ReleaseInfo.getVersion());
 
 		if (_discover.length > 0) {
 			resultsMap.put("discover", _discover);

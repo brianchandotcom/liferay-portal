@@ -23,26 +23,30 @@ import flexjson.PathExpression;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * @author Igor Spasic
+ */
 public class FlexjsonBeanAnalyzerTransformer
-		extends FlexjsonObjectJSONTransformer {
+	extends FlexjsonObjectJSONTransformer {
 
 	public FlexjsonBeanAnalyzerTransformer(
-			List<PathExpression> pathExpressions) {
+		List<PathExpression> pathExpressions) {
 
 		_pathExpressions = pathExpressions;
-		_propertiesMap = new LinkedHashMap<String, Map>();
+		_propertiesMap = new LinkedHashMap<String, Map<String, String>>();
 	}
 
-	public Map<String, Map> getPropertiesMap() {
+	public Map<String, Map<String, String>> getPropertiesMap() {
 		return _propertiesMap;
 	}
 
 	@Override
 	public void transform(Object object) {
-		Class type = null;
+		Class<?> type = null;
 
 		if (object instanceof Class) {
-			type = (Class)object;
+			type = (Class<?>)object;
 		}
 		else {
 			type = object.getClass();
@@ -84,6 +88,6 @@ public class FlexjsonBeanAnalyzerTransformer
 	}
 
 	private final List<PathExpression> _pathExpressions;
-	private final Map<String, Map> _propertiesMap;
+	private final Map<String, Map<String, String>> _propertiesMap;
 
 }

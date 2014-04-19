@@ -87,7 +87,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 
 		resultsMap.put("services", _buildJsonWebServiceActionMappingMaps());
-		resultsMap.put("types", _buildTypesList(_types));
+		resultsMap.put("types", _buildTypes());
 		resultsMap.put("version", ReleaseInfo.getVersion());
 
 		return new DiscoveryContent(resultsMap);
@@ -215,39 +215,41 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		if (type.isInterface()) {
 			try {
+				Class<?> clazz = getClass();
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
 				String modelImplClassName = type.getName();
 
 				modelImplClassName =
-						StringUtil.replace(
-							modelImplClassName, ".model.", ".model.impl.");
+					StringUtil.replace(
+						modelImplClassName, ".model.", ".model.impl.");
 
 				modelImplClassName += "ModelImpl";
-
-				ClassLoader classLoader = this.getClass().getClassLoader();
-
+				
 				type = classLoader.loadClass(modelImplClassName);
 			}
-			catch (ClassNotFoundException e) {
+			catch (ClassNotFoundException cnfe) {
 			}
 		}
 
-		// scan properties
-
 		try {
-			final JSONContext context = JSONContext.get();
+			JSONContext jsonContext = JSONContext.get();
 
-			final List<PathExpression> pathExpressions =
+			List<PathExpression> pathExpressions =
 				new ArrayList<PathExpression>();
 
-			context.setPathExpressions(pathExpressions);
+			jsonContext.setPathExpressions(pathExpressions);
 
 			FlexjsonBeanAnalyzerTransformer flexjsonBeanAnalyzerTransformer =
-					new FlexjsonBeanAnalyzerTransformer(pathExpressions) {
-						@Override
-						protected String getTypeName(Class<?> type) {
-							return _formatType(type, null);
-						}
-					};
+				new FlexjsonBeanAnalyzerTransformer(pathExpressions) {
+
+					@Override
+					protected String getTypeName(Class<?> type) {
+						return _formatType(type, null);
+					}
+
+				};
 
 			flexjsonBeanAnalyzerTransformer.transform(type);
 
@@ -261,26 +263,24 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 	}
 
-	private List<Map<String, Object>> _buildTypesList(List<Class<?>> allTypes) {
+	private List<Map<String, Object>> _buildTypes() {
 		List<Map<String, Object>> types = new ArrayList<Map<String, Object>>();
 
-		for (int i = 0; i < allTypes.size(); i++) {
-			Class<?> type = allTypes.get(i);
+		for (int i = 0; i < _types.size(); i++) {
+			Class<?> type = _types.get(i);
 
 			Map<String, Object> map = new LinkedHashMap<String, Object>();
 
 			types.add(map);
 
-			map.put("type", type.getName());
+			Map<String, Map<String, String>> propertiesMap =
+				_buildPropertiesMap(type);
 
-			// properties
-
-			Map<String, Map<String, String>> properties = _buildPropertiesMap(
-				type);
-
-			if (properties != null) {
-				map.put("properties", properties);
+			if (propertiesMap != null) {
+				map.put("properties", propertiesMap);
 			}
+
+			map.put("type", type.getName());
 		}
 
 		return types;

@@ -126,7 +126,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							className, ".model.", ".model.impl.");
 
 						className += "Impl";
-						
+
 						try {
 							targetType = classLoader.loadClass(className);
 						}

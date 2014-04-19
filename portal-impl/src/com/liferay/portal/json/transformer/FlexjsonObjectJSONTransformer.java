@@ -45,12 +45,12 @@ public class FlexjsonObjectJSONTransformer
 
 		String path = getPath();
 
-		addExcludesAndIncludesType(type, pathExpressions, path);
+		addExcludesAndIncludes(type, pathExpressions, path);
 
 		super.transform(object);
 	}
 
-	protected void addExcludesAndIncludesType(
+	protected void addExcludesAndIncludes(
 		Class<?> type, List<PathExpression> pathExpressions, String path) {
 
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(type);

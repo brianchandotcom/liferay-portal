@@ -34,7 +34,6 @@ public class FlexjsonBeanAnalyzerTransformer
 		List<PathExpression> pathExpressions) {
 
 		_pathExpressions = pathExpressions;
-		_propertiesMap = new LinkedHashMap<String, Map<String, String>>();
 	}
 
 	public Map<String, Map<String, String>> getPropertiesMap() {
@@ -52,34 +51,36 @@ public class FlexjsonBeanAnalyzerTransformer
 			type = object.getClass();
 		}
 
-		JSONContext context = getContext();
-		Path contextPath = context.getPath();
+		addExcludesAndIncludes(type, _pathExpressions, getPath());
 
-		String path = getPath();
+		JSONContext jsonContext = getContext();
 
-		addExcludesAndIncludesType(type, _pathExpressions, path);
+		Path path = jsonContext.getPath();
 
-		BeanAnalyzer analyzer = BeanAnalyzer.analyze(type);
+		BeanAnalyzer beanAnalyzer = BeanAnalyzer.analyze(type);
 
-		for (BeanProperty prop : analyzer.getProperties()) {
-			String name = prop.getName();
+		for (BeanProperty beanProperty : beanAnalyzer.getProperties()) {
+			String name = beanProperty.getName();
 
 			if (name.equals("class")) {
 				continue;
 			}
 
-			contextPath.enqueue(name);
+			path.enqueue(name);
 
-			if (getContext().isIncluded(prop) && prop.isReadable() ) {
-				Map<String, String> propertyMap =
+			if (jsonContext.isIncluded(beanProperty) &&
+				beanProperty.isReadable()) {
+
+				Map<String, String> properties =
 					new LinkedHashMap<String, String>();
 
-				propertyMap.put("type", getTypeName(prop.getPropertyType()));
+				properties.put(
+					"type", getTypeName(beanProperty.getPropertyType()));
 
-				_propertiesMap.put(name, propertyMap);
+				_propertiesMap.put(name, properties);
 			}
 
-			contextPath.pop();
+			path.pop();
 		}
 	}
 
@@ -88,6 +89,7 @@ public class FlexjsonBeanAnalyzerTransformer
 	}
 
 	private final List<PathExpression> _pathExpressions;
-	private final Map<String, Map<String, String>> _propertiesMap;
+	private final Map<String, Map<String, String>> _propertiesMap =
+		new LinkedHashMap<String, Map<String, String>>();
 
 }

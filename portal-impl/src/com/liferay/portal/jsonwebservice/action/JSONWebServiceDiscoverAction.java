@@ -226,7 +226,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 						modelImplClassName, ".model.", ".model.impl.");
 
 				modelImplClassName += "ModelImpl";
-				
+
 				type = classLoader.loadClass(modelImplClassName);
 			}
 			catch (ClassNotFoundException cnfe) {

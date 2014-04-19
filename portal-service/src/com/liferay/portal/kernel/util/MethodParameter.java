@@ -117,29 +117,11 @@ public class MethodParameter {
 		return list.toArray(new String[list.size()]);
 	}
 
-	private static Class<?>[] _loadGenericTypes(String[] signatures)
-		throws ClassNotFoundException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?>[] types = new Class<?>[signatures.length];
-
-		for (int i = 0; i < signatures.length; i++) {
-			String className = _getClassName(signatures[i]);
-
-			types[i] = contextClassLoader.loadClass(className);
-		}
-
-		return types;
-	}
-
 	private static String _getClassName(String signature) {
 		String className = signature;
-		
+
 		char c = signature.charAt(0);
-		
+
 		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
 			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'Z')) {
 		}
@@ -158,8 +140,26 @@ public class MethodParameter {
 			throw new IllegalArgumentException(
 				"Invalid signature " + signature);
 		}
-		
+
 		return className;
+	}
+
+	private static Class<?>[] _loadGenericTypes(String[] signatures)
+		throws ClassNotFoundException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?>[] types = new Class<?>[signatures.length];
+
+		for (int i = 0; i < signatures.length; i++) {
+			String className = _getClassName(signatures[i]);
+
+			types[i] = contextClassLoader.loadClass(className);
+		}
+
+		return types;
 	}
 
 	private Class<?>[] _genericTypes;

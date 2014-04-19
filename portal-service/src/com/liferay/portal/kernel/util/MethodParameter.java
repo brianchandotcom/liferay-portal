@@ -143,13 +143,13 @@ public class MethodParameter {
 		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
 			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'Z')) {
 		}
+		else if (c == 'L') {
+			className = className.substring(1, className.length() - 1);
+		}
 		else if (c == 'V') {
 			if (signature.length() != 1) {
 				throw new IllegalArgumentException("Invalid: " + signature);
 			}
-		}
-		else if (c == 'L') {
-			className = className.substring(1, className.length() - 1);
 		}
 		else if (c == '[') {
 			className = className.replace('/', '.');

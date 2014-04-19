@@ -155,7 +155,8 @@ public class MethodParameter {
 			className = className.replace('/', '.');
 		}
 		else {
-			throw new IllegalArgumentException("Invalid: " + signature);
+			throw new IllegalArgumentException(
+				"Invalid signature " + signature);
 		}
 		
 		return className;

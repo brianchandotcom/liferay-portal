@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Igor Spasic
@@ -83,7 +84,7 @@ public class MethodParameter {
 
 		StringBuilder sb = new StringBuilder(generics.length());
 
-		ArrayList<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<String>();
 
 		int level = 0;
 

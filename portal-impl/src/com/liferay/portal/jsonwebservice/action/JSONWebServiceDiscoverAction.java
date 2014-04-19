@@ -172,10 +172,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 					new HashMap<String, String>();
 
 				parameterMap.put("name", methodParameter.getName());
-
 				parameterMap.put(
-						"type", _formatType(
-							methodParameter.getType(), genericTypes));
+					"type",
+					_formatType(methodParameter.getType(), genericTypes));
 
 				parametersList.add(parameterMap);
 			}
@@ -184,40 +183,16 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			jsonWebServiceActionMappingMap.put("path", path);
 
-			Method actionMethod = jsonWebServiceActionMapping.getActionMethod();
-
 			Map<String, String> returnsMap =
 				new LinkedHashMap<String, String>();
 
-			Class<?> realActionClass =
-				jsonWebServiceActionMapping.getActionClass();
-
-			Method realActionMethod =
-				jsonWebServiceActionMapping.getRealActionMethod();
-
-			Class<?>[] genericReturnTypes = null;
-
-			Type genericReturnType = realActionMethod.getGenericReturnType();
-
-			if (genericReturnType instanceof ParameterizedType) {
-				ParameterizedType parameterizedType =
-					(ParameterizedType)genericReturnType;
-
-				Type[] generics = parameterizedType.getActualTypeArguments();
-
-				genericReturnTypes = new Class[generics.length];
-
-				for (int i = 0; i < generics.length; i++) {
-					Type generic = generics[i];
-
-					genericReturnTypes[i] = ReflectUtil.getRawType(
-						generic, realActionClass);
-				}
-			}
+			Method actionMethod = jsonWebServiceActionMapping.getActionMethod();
 
 			returnsMap.put(
-				"type", _formatType(
-					actionMethod.getReturnType(), genericReturnTypes));
+				"type",
+				_formatType(
+					actionMethod.getReturnType(),
+					_getGenericReturnTypes(jsonWebServiceActionMapping)));
 
 			jsonWebServiceActionMappingMap.put("returns", returnsMap);
 
@@ -227,9 +202,11 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return jsonWebServiceActionMappingMaps;
 	}
 
-	private Map<String, Map<String, String>> _buildPropertiesMap(Class<?> type) {
-		Package pkg = type.getPackage(); 
-		
+	private Map<String, Map<String, String>> _buildPropertiesMap(
+		Class<?> type) {
+
+		Package pkg = type.getPackage();
+
 		String packageName = pkg.getName();
 
 		if (packageName.startsWith("java.")) {
@@ -298,8 +275,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			// properties
 
-			Map<String, Map<String, String>> properties =
-				_buildPropertiesMap(type);
+			Map<String, Map<String, String>> properties = _buildPropertiesMap(
+				type);
 
 			if (properties != null) {
 				map.put("properties", properties);
@@ -397,6 +374,35 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		sb.append(StringPool.GREATER_THAN);
 
 		return typeName + sb.toString();
+	}
+
+	private Class<?>[] _getGenericReturnTypes(
+		JSONWebServiceActionMapping jsonWebServiceActionMapping) {
+
+		Method realActionMethod =
+			jsonWebServiceActionMapping.getRealActionMethod();
+
+		Type genericReturnType = realActionMethod.getGenericReturnType();
+
+		if (!(genericReturnType instanceof ParameterizedType)) {
+			return null;
+		}
+
+		ParameterizedType parameterizedType =
+			(ParameterizedType)genericReturnType;
+
+		Type[] genericTypes = parameterizedType.getActualTypeArguments();
+
+		Class<?>[] genericReturnTypes = new Class[genericTypes.length];
+
+		for (int i = 0; i < genericTypes.length; i++) {
+			Type genericType = genericTypes[i];
+
+			genericReturnTypes[i] = ReflectUtil.getRawType(
+				genericType, jsonWebServiceActionMapping.getActionClass());
+		}
+
+		return genericReturnTypes;
 	}
 
 	private boolean _isAcceptPath(String path) {

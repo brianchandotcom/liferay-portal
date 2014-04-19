@@ -127,9 +127,7 @@ public class MethodParameter {
 		Class<?>[] types = new Class<?>[signatures.length];
 
 		for (int i = 0; i < signatures.length; i++) {
-			String className = signatures[i];
-
-			className = _signatureToClassName(className);
+			String className = _getClassName(signatures[i]);
 
 			types[i] = contextClassLoader.loadClass(className);
 		}
@@ -137,32 +135,29 @@ public class MethodParameter {
 		return types;
 	}
 
-	private static String _signatureToClassName(String desc) {
-		String className = desc;
-		switch (desc.charAt(0)) {
-			case 'B':
-			case 'C':
-			case 'D':
-			case 'F':
-			case 'I':
-			case 'J':
-			case 'S':
-			case 'Z':
-			case 'V':
-				if (desc.length() != 1) {
-					throw new IllegalArgumentException("Invalid: " + desc);
-				}
-
-				break;
-			case 'L':
-				className = className.substring(1, className.length() - 1);
-			case '[':
-				className = className.replace('/', '.');
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid: " + desc);
+	private static String _getClassName(String signature) {
+		String className = signature;
+		
+		char c = signature.charAt(0);
+		
+		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
+			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'Z')) {
 		}
-
+		else if (c == 'V') {
+			if (signature.length() != 1) {
+				throw new IllegalArgumentException("Invalid: " + signature);
+			}
+		}
+		else if (c == 'L') {
+			className = className.substring(1, className.length() - 1);
+		}
+		else if (c == '[') {
+			className = className.replace('/', '.');
+		}
+		else {
+			throw new IllegalArgumentException("Invalid: " + signature);
+		}
+		
 		return className;
 	}
 

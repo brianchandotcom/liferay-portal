@@ -734,6 +734,34 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#if>
 
+	<#if entity.isHierarchicalTree()>
+		public long getNestedSetsLeft() {
+			return _left${pkColumn.methodName};
+		}
+
+		public long getNestedSetsRight() {
+			return _right${pkColumn.methodName};
+		}
+
+		public long getNestedSetsScopeId() {
+			<#if entity.hasColumn("groupId")>
+				<#assign scopeColumn = entity.getColumn("groupId")>
+			<#else>
+				<#assign scopeColumn = entity.getColumn("companyId")>
+			</#if>
+
+			return _${scopeColumn.name};
+		}
+
+		public void setNestedSetsLeft(long nestedSetsLeft) {
+			_left${pkColumn.methodName} = nestedSetsLeft;
+		}
+
+		public void setNestedSetsRight(long nestedSetsRight) {
+			_right${pkColumn.methodName} = nestedSetsRight;
+		}
+	</#if>
+
 	<#if entity.isStagedModel()>
 		@Override
 		public StagedModelType getStagedModelType() {

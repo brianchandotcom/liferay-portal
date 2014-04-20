@@ -2962,6 +2962,22 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public long countAncestors(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long countDescendants(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAncestors(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getDescendants(
+		com.liferay.portlet.asset.model.AssetCategory assetCategory)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Rebuilds the asset categories tree for the scope using the modified pre-order tree traversal algorithm.
 	*

@@ -33,6 +33,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class ValidatorTest extends PowerMockito {
 
 	@Test
+	public void testIsContent() throws Exception {
+		Assert.assertTrue(Validator.isContent("Hello World\n\t"));
+		Assert.assertTrue(Validator.isContent("\n\tHello World"));
+		Assert.assertTrue(Validator.isContent("Hello\n\t World"));
+		Assert.assertFalse(Validator.isContent("\t"));
+		Assert.assertFalse(Validator.isContent("\n"));
+		Assert.assertFalse(Validator.isContent("\n\t"));
+	}
+
+	@Test
 	public void testIsDomain() throws Exception {
 
 		// 来锐.com, живот.рс

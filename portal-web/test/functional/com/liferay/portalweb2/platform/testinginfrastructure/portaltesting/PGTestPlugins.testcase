@@ -85,7 +85,17 @@
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute macro="Portlet#viewCannotAddPG">
+			<var name="portletName" value="Test Dependency Easy" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Dependency Page" />
+		</execute>
+
+		<execute macro="Portlet#viewCannotAddPG">
+			<var name="portletName" value="Test Dependency Fox" />
+		</execute>
 	</command>
 
 	<command name="ViewEvent" priority="5">

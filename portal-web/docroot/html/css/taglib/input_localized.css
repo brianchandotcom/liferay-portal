@@ -27,6 +27,12 @@
 		margin-right: 14px;
 	}
 
+	.palette-items-container {
+		font-size: 0;
+		margin: 0;
+		white-space: normal;
+	}
+
 	.palette-item {
 		border-width: 0;
 		padding: 0;

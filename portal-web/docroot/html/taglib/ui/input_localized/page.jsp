@@ -209,8 +209,8 @@ if ((exception != null) && fieldName.equals(focusField)) {
 		%>
 
 		<div class="input-localized-content" id="<portlet:namespace /><%= id %>ContentBox" role="menu">
-			<table class="palette-container">
-				<tr class="palette-items-container">
+			<div class="palette-container">
+				<ul class="palette-items-container">
 
 					<%
 					LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
@@ -243,19 +243,19 @@ if ((exception != null) && fieldName.equals(focusField)) {
 						}
 					%>
 
-						<td class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>" role="menuitem">
+						<li class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>" role="menuitem" style="display: inline-block;">
 							<a class="palette-item-inner" href="javascript:void(0);">
 								<img alt="<%= curLocale.getDisplayName(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request))) %> <liferay-ui:message key="translation" />" class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
 								<div class='<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>'></div>
 							</a>
-						</td>
+						</li>
 
 					<%
 					}
 					%>
 
-				</tr>
-			</table>
+				</ul>
+			</div>
 		</div>
 	</c:if>
 </span>

@@ -380,7 +380,7 @@ public class JournalTestUtil {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
 		for (Locale locale : _locales) {
-			descriptionMap.put(locale, title);
+			descriptionMap.put(locale, ServiceTestUtil.randomString(50));
 		}
 
 		Map<Locale, String> contentMap = new HashMap<Locale, String>();

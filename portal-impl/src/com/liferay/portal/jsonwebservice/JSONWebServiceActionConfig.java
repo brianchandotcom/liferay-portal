@@ -45,13 +45,6 @@ public class JSONWebServiceActionConfig
 
 		_fullPath = _contextPath + _path;
 
-		try {
-			_realActionMethod = _actionClass.getDeclaredMethod(
-				actionMethod.getName(), actionMethod.getParameterTypes());
-		}
-		catch (NoSuchMethodException nsme) {
-		}
-
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
 		sb.append(_fullPath);
@@ -156,11 +149,6 @@ public class JSONWebServiceActionConfig
 	}
 
 	@Override
-	public Method getRealActionMethod() {
-		return _realActionMethod;
-	}
-
-	@Override
 	public String getSignature() {
 		return _signature;
 	}
@@ -172,7 +160,7 @@ public class JSONWebServiceActionConfig
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{actionClass=");
 		sb.append(_actionClass);
@@ -188,8 +176,6 @@ public class JSONWebServiceActionConfig
 		sb.append(_methodParameters);
 		sb.append(", path=");
 		sb.append(_path);
-		sb.append(", realActionMethod=");
-		sb.append(_realActionMethod);
 		sb.append(", signature=");
 		sb.append(_signature);
 		sb.append("}");
@@ -205,7 +191,6 @@ public class JSONWebServiceActionConfig
 	private String _method;
 	private MethodParameter[] _methodParameters;
 	private String _path;
-	private Method _realActionMethod;
 	private String _signature;
 
 }

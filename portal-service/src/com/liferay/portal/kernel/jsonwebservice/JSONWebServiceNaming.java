@@ -85,7 +85,7 @@ public class JSONWebServiceNaming {
 			return false;
 		}
 
-		if (excludedTypesNames == null) {
+		if (excludedTypes == null) {
 			return true;
 		}
 
@@ -96,12 +96,8 @@ public class JSONWebServiceNaming {
 				parameterType = parameterType.getComponentType();
 			}
 
-			String parameterTypeName = parameterType.getName();
-
-			for (String excludedTypesName : excludedTypesNames) {
-				if (parameterTypeName.startsWith(excludedTypesName)) {
-					return false;
-				}
+			if (excludedTypes.contains(parameterType)) {
+				return false;
 			}
 		}
 
@@ -111,12 +107,8 @@ public class JSONWebServiceNaming {
 			returnType = returnType.getComponentType();
 		}
 
-		String returnTypeName = returnType.getName();
-
-		for (String excludedTypesName : excludedTypesNames) {
-			if (excludedTypesName.startsWith(returnTypeName)) {
-				return false;
-			}
+		if (excludedTypes.contains(returnType)) {
+			return false;
 		}
 
 		return true;
@@ -178,8 +170,8 @@ public class JSONWebServiceNaming {
 		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
 	protected String[] excludedPaths = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_EXCLUDES);
-	protected String[] excludedTypesNames =
-		{InputStream.class.getName(), OutputStream.class.getName(), "javax."};
+	protected Set<Class<?>> excludedTypes = SetUtil.fromArray(
+		new Class<?>[] {InputStream.class, OutputStream.class});
 	protected String[] includedPaths = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_INCLUDES);
 	protected Set<String> invalidHttpMethods = SetUtil.fromArray(

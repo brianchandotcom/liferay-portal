@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertNotVisible">
+		<execute selenium="waitForNotVisible" />
+
+		<execute selenium="assertNotVisible" />
+	</command>
+</definition>

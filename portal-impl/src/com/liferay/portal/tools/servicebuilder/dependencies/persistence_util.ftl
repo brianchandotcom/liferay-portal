@@ -15,6 +15,12 @@ import com.liferay.portal.service.ServiceContext;
 import java.util.Date;
 import java.util.List;
 
+<#if osgiModule>
+	import org.osgi.framework.Bundle;
+	import org.osgi.framework.FrameworkUtil;
+	import org.osgi.util.tracker.ServiceTracker;
+</#if>
+
 /**
  * The persistence utility for the ${entity.humanName} service. This utility wraps {@link ${entity.name}PersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
@@ -152,6 +158,8 @@ public class ${entity.name}Util {
 		if (_persistence == null) {
 			<#if pluginName != "">
 				_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${packagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
+			<#elseif osgiModule>
+				return _serviceTracker.getService();
 			<#else>
 				_persistence = (${entity.name}Persistence)PortalBeanLocatorUtil.locate(${entity.name}Persistence.class.getName());
 			</#if>
@@ -169,6 +177,18 @@ public class ${entity.name}Util {
 	public void setPersistence(${entity.name}Persistence persistence) {
 	}
 
-	private static ${entity.name}Persistence _persistence;
+	<#if osgiModule>
+		private static ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence> _serviceTracker;
+
+		static {
+			Bundle bundle = FrameworkUtil.getBundle(${entity.name}Util.class);
+
+			_serviceTracker = new ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence>(bundle.getBundleContext(), ${entity.name}Persistence.class, null);
+
+			_serviceTracker.open();
+		}
+	<#else>
+		private static ${entity.name}Persistence _persistence;
+	</#if>
 
 }

@@ -3151,11 +3151,6 @@ public class ServiceBuilder {
 
 		context.put("entities", _ejbList);
 
-		String springXmlSessionTemplate = _getTplProperty(
-			"spring_xml_session", "spring_xml_session.ftl");
-
-		context.put("springXmlSessionTemplate", springXmlSessionTemplate);
-
 		// Content
 
 		String content = _processTemplate(_tplSpringXml, context);
@@ -3836,6 +3831,7 @@ public class ServiceBuilder {
 		context.put("portletShortName", _portletShortName);
 		context.put("portletPackageName", _portletPackageName);
 		context.put("outputPath", _outputPath);
+		context.put("osgiModule", _osgiModule);
 		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("packagePath", _packagePath);
 		context.put("pluginName", _pluginName);

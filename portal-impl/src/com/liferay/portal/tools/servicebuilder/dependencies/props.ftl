@@ -17,6 +17,8 @@
     build.date=${currentTimeMillis?c}
     build.auto.upgrade=true
 
+<#if !osgiModule>
+
 ##
 ## Spring
 ##
@@ -30,3 +32,4 @@
         WEB-INF/classes/META-INF/portlet-spring.xml,\
         \
         WEB-INF/classes/META-INF/ext-spring.xml
+<#if>

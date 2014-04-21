@@ -209,7 +209,7 @@ public class BookmarksUtil {
 			groupId, BookmarksConstants.SERVICE_NAME);
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new BookmarksSettings(parameterMapSettings);
 	}

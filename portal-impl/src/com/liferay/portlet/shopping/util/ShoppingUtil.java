@@ -1008,7 +1008,7 @@ public class ShoppingUtil {
 			groupId, ShoppingConstants.SERVICE_NAME);
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new ShoppingSettings(parameterMapSettings);
 	}

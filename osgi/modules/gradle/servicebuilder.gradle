@@ -1,34 +1,34 @@
-ext {
-	liferayProjectDir = "${rootDir}/../../.."
-	resourcesDir = "src/main/resources"
-	sourcesDir = "src/main/java"
-	targetEntityName = ""
-}
-
 configurations {
 	servicebuilder
 }
 
 dependencies {
+	servicebuilder files(["${liferayProjectDir}/osgi/modules/gradle/servicebuilder"])
+	servicebuilder files(["${liferayProjectDir}/portal-impl/classes"])
+	servicebuilder files(["${liferayProjectDir}/portal-service/classes"])
+	servicebuilder files(["${liferayProjectDir}/tools/"])
 	servicebuilder files(["${liferayProjectDir}/util-java/classes"])
 	servicebuilder files(["${liferayProjectDir}/util-taglib/classes"])
-	servicebuilder files(["${liferayProjectDir}/osgi/modules/gradle/servicebuilder"])
-	servicebuilder files(["${liferayProjectDir}/portal-service/classes"])
-	servicebuilder files(["${liferayProjectDir}/portal-impl/classes"])
-	servicebuilder files(["${liferayProjectDir}/tools/"])
 
 	servicebuilder fileTree(
 		dir:"${liferayProjectDir}/lib/development",
 		includes: ["**/*.jar"]
 	)
         servicebuilder fileTree(
-                dir:"${liferayProjectDir}/lib/global",
-                includes: ["**/*.jar"]
+		dir:"${liferayProjectDir}/lib/global",
+		includes: ["**/*.jar"]
         )
 	servicebuilder fileTree(
 		dir:"${liferayProjectDir}/lib/portal",
 		includes: ["*.jar"]
 	)
+}
+
+ext {
+        liferayProjectDir = "${rootDir}/../../.."
+        resourcesDir = "src/main/resources"
+        sourcesDir = "src/main/java"
+        targetEntityName = ""
 }
 
 task buildService(type: JavaExec) {
@@ -56,12 +56,5 @@ task buildService(type: JavaExec) {
 	args "service.target.entity.name=${project.ext.targetEntityName}"
 	args "service.test.dir=src/test/java"
     	args "service.osgi.module=true"
-	args "-Dservice.tpl.actionable_dynamic_query=/osgi_actionable_dynamic_query.ftl"
-	args "-Dservice.tpl.export_actionable_dynamic_query=/osgi_export_actionable_dynamic_query.ftl"
-	args "-Dservice.tpl.persistence_util=/osgi_persistence_util.ftl"
-	args "-Dservice.tpl.props=/osgi_props.ftl"
-	args "-Dservice.tpl.service_util=/osgi_service_util.ftl"
-	args "-Dservice.tpl.spring_xml=/osgi_spring_xml.ftl"
-	args "-Dservice.tpl.spring_xml_session=/blueprint_xml.ftl"
 	args "-Dservice.tpl.spring.extra.namespaces=osgi"
 }

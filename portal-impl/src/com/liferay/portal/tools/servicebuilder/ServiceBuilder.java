@@ -531,8 +531,6 @@ public class ServiceBuilder {
 		boolean build, long buildNumber, boolean buildNumberIncrement,
 		boolean osgiModule) {
 
-		_tplActionableDynamicQuery = _getTplProperty(
-			"actionable_dynamic_query", _tplActionableDynamicQuery);
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
 		_tplBadColumnNames = _getTplProperty(
@@ -542,9 +540,6 @@ public class ServiceBuilder {
 		_tplBlobModel = _getTplProperty("blob_model", _tplBlobModel);
 		_tplEjbPk = _getTplProperty("ejb_pk", _tplEjbPk);
 		_tplException = _getTplProperty("exception", _tplException);
-		_tplExportActionableDynamicQuery = _getTplProperty(
-			"export_actionable_dynamic_query",
-			_tplExportActionableDynamicQuery);
 		_tplExtendedModel = _getTplProperty(
 			"extended_model", _tplExtendedModel);
 		_tplExtendedModelBaseImpl = _getTplProperty(
@@ -1767,12 +1762,10 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String path = _osgiModule ? _outputPath : _serviceOutputPath;
-
 		String pkg = _osgiModule ? "impl/" : StringPool.BLANK;
 
 		File ejbFile = new File(
-			path + "/service/persistence/" + pkg +
+			_serviceOutputPath + "/service/persistence/" + pkg +
 				entity.getName() + "ActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -1913,12 +1906,10 @@ public class ServiceBuilder {
 
 		// Write file
 
-		String path = _osgiModule ? _outputPath : _serviceOutputPath;
-
 		String pkg = _osgiModule ? "impl/" : StringPool.BLANK;
 
 		File ejbFile = new File(
-			path + "/service/persistence/" + pkg +
+			_serviceOutputPath + "/service/persistence/" + pkg +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -3151,11 +3142,6 @@ public class ServiceBuilder {
 
 		context.put("entities", _ejbList);
 
-		String springXmlSessionTemplate = _getTplProperty(
-			"spring_xml_session", "spring_xml_session.ftl");
-
-		context.put("springXmlSessionTemplate", springXmlSessionTemplate);
-
 		// Content
 
 		String content = _processTemplate(_tplSpringXml, context);
@@ -3836,6 +3822,7 @@ public class ServiceBuilder {
 		context.put("portletShortName", _portletShortName);
 		context.put("portletPackageName", _portletPackageName);
 		context.put("outputPath", _outputPath);
+		context.put("osgiModule", _osgiModule);
 		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("packagePath", _packagePath);
 		context.put("pluginName", _pluginName);

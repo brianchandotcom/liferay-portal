@@ -6,17 +6,11 @@ AUI.add(
 		var AEvent = A.Event;
 		var Util = Liferay.Util;
 
-		var CSS_HIDDEN = 'hidden';
+		var trim = Lang.trim;
 
 		var NAME = 'menutoggle';
 
 		var SELECTOR_NAV_ITEM_FILTER = '.nav-item-filter';
-
-		var TPL_INPUT_FILTER = '<div class="btn-toolbar search-panel">' +
-			'<div class="control-group">' +
-				'<input class="field search-query span12 focus nav-item-filter" placeholder="{placeholder}" type="text">' +
-			'</div>' +
-		'</div>';
 
 		var MenuToggle = A.Component.create(
 			{
@@ -84,35 +78,20 @@ AUI.add(
 					_addMenuFilter: function() {
 						var instance = this;
 
-						var menu = instance._content.one('.dropdown-menu');
-
 						if (!instance._menuFilter) {
+							var menu = instance._content.one('.dropdown-menu');
+
 							var menuItems = menu.all('li');
 
 							var itemsSize = menuItems.size();
 
 							if (itemsSize > instance.get('maxDisplayItems')) {
-								menu.prepend(
-									Lang.sub(
-										TPL_INPUT_FILTER,
-										{
-											placeholder: instance.get('strings').placeholder
-										}
-									)
-								);
-
 								instance._createMenuFilter(menu, menuItems);
-
-								instance._menuFilter.on('results', instance._filterMenu, instance, menuItems);
 							}
 						}
-
-						setTimeout(
-							function() {
-								Util.focusFormField(menu.one(SELECTOR_NAV_ITEM_FILTER));
-							},
-							0
-						);
+						else {
+							instance._menuFilter.reset();
+						}
 					},
 
 					_bindUI: function() {
@@ -133,9 +112,9 @@ AUI.add(
 					_createMenuFilter: function(menu, menuItems) {
 						var instance = this;
 
-						instance._menuFilter = new MenuFilter(
+						instance._menuFilter = new Liferay.MenuFilter(
 							{
-								inputNode: menu.one(SELECTOR_NAV_ITEM_FILTER),
+								content: menu,
 
 								minQueryLength: 0,
 
@@ -150,7 +129,7 @@ AUI.add(
 										function(node) {
 											results.push(
 												{
-													name: node.one('.nav-item-label').text(),
+													name: trim(node.one('.nav-item-label').text()),
 													node: node
 												}
 											);
@@ -163,17 +142,8 @@ AUI.add(
 								queryDelay: 0
 							}
 						);
-					},
 
-					_filterMenu: function(event, menuItems) {
-						menuItems.addClass(CSS_HIDDEN);
-
-						AArray.each(
-							event.results,
-							function(result) {
-								result.raw.node.removeClass(CSS_HIDDEN);
-							}
-						);
+						return instance._menuFilter;
 					},
 
 					_getEventOutside: function(event) {
@@ -276,29 +246,10 @@ AUI.add(
 			}
 		);
 
-		var MenuFilter = A.Component.create(
-			{
-				NAME: 'menufilter',
-
-				EXTENDS: A.Base,
-
-				AUGMENTS: A.AutoCompleteBase,
-
-				prototype: {
-					initializer: function() {
-						var instance = this;
-
-						instance._bindUIACBase();
-						instance._syncUIACBase();
-					}
-				}
-			}
-		);
-
 		Liferay.MenuToggle = MenuToggle;
 	},
 	'',
 	{
-		requires: ['aui-node', 'autocomplete-base', 'autocomplete-filters', 'event-move', 'event-outside', 'liferay-store']
+		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-store', 'liferay-menu-filter']
 	}
 );

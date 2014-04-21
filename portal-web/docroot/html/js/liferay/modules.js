@@ -539,6 +539,14 @@
 							'liferay-store'
 						]
 					},
+					'liferay-menu-filter': {
+						path: 'menu_filter.js',
+						requires: [
+							'autocomplete-base',
+							'autocomplete-filters',
+							'autocomplete-highlighters'
+						]
+					},
 					'liferay-message': {
 						path: 'message.js',
 						requires: [

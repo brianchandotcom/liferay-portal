@@ -81,6 +81,14 @@
 		</default>
 	</command>
 
+	<command name="assertNotVisible">
+		<default>
+			<description message="Assert that the ${locator1} is NOT visible." />
+
+			<execute function="AssertNotVisible#assertNotVisible" />
+		</default>
+	</command>
+
 	<command name="assertSelectedLabel">
 		<default>
 			<execute function="AssertSelectedLabel#assertSelectedLabel" />

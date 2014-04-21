@@ -62,72 +62,72 @@
 <!--MORE_OPTIONS-->
 <tr>
 	<td>MORE_OPTIONS_GUEST_ACCESS</td>
-	<td>//input[@id='_28_guestPermissions_ACCESS']</td>
+	<td>//input[@id='_198_guestPermissions_ACCESS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_ADD_ENTRY</td>
-	<td>//input[@id='_28_guestPermissions_ADD_ENTRY']</td>
+	<td>//input[@id='_198_guestPermissions_ADD_ENTRY']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_ADD_SUBFOLDER</td>
-	<td>//input[@id='_28_guestPermissions_ADD_SUBFOLDER']</td>
+	<td>//input[@id='_198_guestPermissions_ADD_SUBFOLDER']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_DELETE</td>
-	<td>//input[@id='_28_guestPermissions_DELETE']</td>
+	<td>//input[@id='_198_guestPermissions_DELETE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_PERMISSIONS</td>
-	<td>//input[@id='_28_guestPermissions_PERMISSIONS']</td>
+	<td>//input[@id='_198_guestPermissions_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_SUBSCRIBE</td>
-	<td>//input[@id='_28_guestPermissions_SUBSCRIBE']</td>
+	<td>//input[@id='_198_guestPermissions_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_GUEST_UPDATE</td>
-	<td>//input[@id='_28_guestPermissions_UPDATE']</td>
+	<td>//input[@id='_198_guestPermissions_UPDATE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_ACCESS</td>
-	<td>//input[@id='_28_groupPermissions_ACCESS']</td>
+	<td>//input[@id='_198_groupPermissions_ACCESS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_ADD_ENTRY</td>
-	<td>//input[@id='_28_groupPermissions_ADD_ENTRY']</td>
+	<td>//input[@id='_198_groupPermissions_ADD_ENTRY']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_ADD_SUBFOLDER</td>
-	<td>//input[@id='_28_groupPermissions_ADD_SUBFOLDER']</td>
+	<td>//input[@id='_198_groupPermissions_ADD_SUBFOLDER']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_DELETE</td>
-	<td>//input[@id='_28_groupPermissions_DELETE']</td>
+	<td>//input[@id='_198_groupPermissions_DELETE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_PERMISSIONS</td>
-	<td>//input[@id='_28_groupPermissions_PERMISSIONS']</td>
+	<td>//input[@id='_198_groupPermissions_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_SUBSCRIBE</td>
-	<td>//input[@id='_28_groupPermissions_SUBSCRIBE']</td>
+	<td>//input[@id='_198_groupPermissions_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MORE_OPTIONS_SITE_MEMBER_UPDATE</td>
-	<td>//input[@id='_28_groupPermissions_UPDATE']</td>
+	<td>//input[@id='_198_groupPermissions_UPDATE']</td>
 	<td></td>
 </tr>
 </tbody>

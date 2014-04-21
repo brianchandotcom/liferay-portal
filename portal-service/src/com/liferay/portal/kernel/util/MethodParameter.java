@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Igor Spasic
@@ -84,7 +83,7 @@ public class MethodParameter {
 
 		StringBuilder sb = new StringBuilder(generics.length());
 
-		List<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<String>();
 
 		int level = 0;
 
@@ -108,40 +107,7 @@ public class MethodParameter {
 			}
 		}
 
-		if (sb.length() > 0) {
-			list.add(sb.toString());
-
-			sb.setLength(0);
-		}
-
 		return list.toArray(new String[list.size()]);
-	}
-
-	private static String _getClassName(String signature) {
-		String className = signature;
-
-		char c = signature.charAt(0);
-
-		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
-			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'Z')) {
-		}
-		else if (c == 'L') {
-			className = className.substring(1, className.length() - 1);
-		}
-		else if (c == 'V') {
-			if (signature.length() != 1) {
-				throw new IllegalArgumentException("Invalid: " + signature);
-			}
-		}
-		else if (c == '[') {
-			className = className.replace('/', '.');
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid signature " + signature);
-		}
-
-		return className;
 	}
 
 	private static Class<?>[] _loadGenericTypes(String[] signatures)
@@ -154,9 +120,56 @@ public class MethodParameter {
 		Class<?>[] types = new Class<?>[signatures.length];
 
 		for (int i = 0; i < signatures.length; i++) {
-			String className = _getClassName(signatures[i]);
+			String className = signatures[i];
 
-			types[i] = contextClassLoader.loadClass(className);
+			char c = className.charAt(0);
+
+			if (c == 'B') {
+				types[i] = byte.class;
+			}
+			else if (c == 'C') {
+				types[i] = char.class;
+			}
+			else if (c == 'D') {
+				types[i] = double.class;
+			}
+			else if (c == 'F') {
+				types[i] = float.class;
+			}
+			else if (c == 'I') {
+				types[i] = int.class;
+			}
+			else if (c == 'J') {
+				types[i] = long.class;
+			}
+			else if (c == 'L') {
+				className = className.substring(1, className.length() - 1);
+				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
+
+				types[i] = contextClassLoader.loadClass(className);
+			}
+			else if (c == 'S') {
+				types[i] = short.class;
+			}
+			else if (c == 'Z') {
+				types[i] = boolean.class;
+			}
+			else if (c == 'V') {
+				types[i] = void.class;
+			}
+			else if (c == CharPool.OPEN_BRACKET) {
+				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
+
+				try {
+					types[i] = contextClassLoader.loadClass(className);
+				}
+				catch (ClassNotFoundException cnfe) {
+					types[i] = Class.forName(className);
+				}
+			}
+			else {
+				throw new ClassNotFoundException(className);
+			}
 		}
 
 		return types;

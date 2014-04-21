@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_28_keywords']</td>
+	<td>//input[@id='_198_keywords']</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_BOOKMARK_ENTRY</td>
-	<td>//div[@id='_28_objectsSearchContainer']/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td/span/a/span</td>
+	<td>//div[@id='_198_objectsSearchContainer']/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

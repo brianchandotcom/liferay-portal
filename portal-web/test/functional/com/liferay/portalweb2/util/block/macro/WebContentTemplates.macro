@@ -190,6 +190,22 @@
 
 		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 
+		<execute action="CPWebcontentTemplates#type" locator-key1="SEARCH_FIELD" value1="2" />
+		<execute action="CPWebcontentTemplates#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<while>
+			<condition action="CPWebcontentTemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_GENERIC" />
+			<then>
+				<execute action="CPWebcontentTemplates#check" locator-key1="TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute action="CPWebcontentTemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPWebcontentTemplates#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</while>
+
+		<execute action="CPWebcontentTemplates#type" locator-key1="SEARCH_FIELD" value1="structure" />
+		<execute action="CPWebcontentTemplates#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
 		<while>
 			<condition action="CPWebcontentTemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_GENERIC" />
 			<then>

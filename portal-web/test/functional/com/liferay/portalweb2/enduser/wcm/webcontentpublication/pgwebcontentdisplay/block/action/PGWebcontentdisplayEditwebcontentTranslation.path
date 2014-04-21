@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_15_title_${key_languageKey}']</td>
+	<td>//input[@id='_15_title__${key_languageKey}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//input[@id='_15_title_${key_languageKey}']/../../../../div[contains(.,'Text')]//input</td>
+	<td>//input[@id='_15_title__${key_languageKey}']/../../../../div[contains(.,'Text')]//input</td>
 	<td></td>
 </tr>
 <tr>

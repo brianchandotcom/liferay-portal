@@ -19,7 +19,7 @@
 <%
 String bodyContentString = StringPool.BLANK;
 
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-bar:bodyContent");
+BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav:bodyContent");
 
 if (bodyContent != null) {
 	bodyContentString = bodyContent.getString();

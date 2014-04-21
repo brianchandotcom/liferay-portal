@@ -126,13 +126,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
+	protected String getPage() {
+		return _PAGE;
 	}
 
 	@Override
@@ -149,11 +144,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav:";
 
-	private static final String _END_PAGE =
-		"/html/taglib/aui/nav/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/aui/nav/start.jsp";
+	private static final String _PAGE =
+		"/html/taglib/aui/nav/page.jsp";
 
 	private java.lang.String _ariaLabel = null;
 	private java.lang.String _ariaRole = null;

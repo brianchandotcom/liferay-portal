@@ -85,7 +85,7 @@
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
-		<execute macro="TestPlugins#viewNoTestPlugin">
+		<execute macro="Portlet#viewCannotAddPG">
 			<var name="portletName" value="Test Dependency Easy" />
 		</execute>
 
@@ -93,7 +93,7 @@
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
-		<execute macro="TestPlugins#viewNoTestPlugin">
+		<execute macro="Portlet#viewCannotAddPG">
 			<var name="portletName" value="Test Dependency Fox" />
 		</execute>
 	</command>

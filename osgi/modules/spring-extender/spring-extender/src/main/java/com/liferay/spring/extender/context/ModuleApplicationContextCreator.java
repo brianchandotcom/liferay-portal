@@ -28,6 +28,7 @@ import java.util.Enumeration;
 import org.eclipse.gemini.blueprint.context.DelegatedExecutionOsgiBundleApplicationContext;
 import org.eclipse.gemini.blueprint.context.support.OsgiBundleXmlApplicationContext;
 import org.eclipse.gemini.blueprint.extender.OsgiApplicationContextCreator;
+import org.eclipse.gemini.blueprint.extender.support.internal.ConfigUtils;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -72,9 +73,10 @@ public class ModuleApplicationContextCreator
 			parentAppContext = _buildParentContext(extenderBundle, classLoader);
 		}
 
+		String[] locations = ConfigUtils.getHeaderLocations(headers);
+
 		OsgiBundleXmlApplicationContext osgiBundleXmlApplicationContext =
-			new OsgiBundleXmlApplicationContext(
-				configs.split(","), parentAppContext);
+			new OsgiBundleXmlApplicationContext(locations, parentAppContext);
 
 		osgiBundleXmlApplicationContext.setBundleContext(bundleContext);
 

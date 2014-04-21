@@ -600,7 +600,7 @@ public class MBUtil {
 			groupId, MBConstants.SERVICE_NAME);
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new MBSettings(parameterMapSettings);
 	}

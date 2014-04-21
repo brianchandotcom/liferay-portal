@@ -75,7 +75,7 @@ public class BlogsUtil {
 			groupId, BlogsConstants.SERVICE_NAME);
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new BlogsSettings(parameterMapSettings);
 	}

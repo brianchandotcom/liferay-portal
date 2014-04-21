@@ -495,7 +495,7 @@ public class DLImpl implements DL {
 			groupId, DLConstants.SERVICE_NAME);
 
 		Settings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new DLSettings(parameterMapSettings);
 	}

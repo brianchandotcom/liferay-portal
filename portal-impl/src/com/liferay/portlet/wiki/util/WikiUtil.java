@@ -605,7 +605,7 @@ public class WikiUtil {
 			groupId, WikiConstants.SERVICE_NAME);
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new WikiSettings(parameterMapSettings);
 	}

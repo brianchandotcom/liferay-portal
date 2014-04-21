@@ -1,6 +1,15 @@
-package ${packagePath}.service.persistence;
+<#if osgiModule>
+	package ${packagePath}.service.persistence.impl;
+<#else>
+	package ${packagePath}.service.persistence;
+</#if>
 
-import ${packagePath}.model.${entity.name};
+<#if osgiModule>
+	import ${packagePath}.model.impl.${entity.name}Impl;
+<#else>
+	import ${packagePath}.model.${entity.name};
+</#if>
+
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
@@ -20,6 +29,8 @@ public abstract class ${entity.name}ActionableDynamicQuery
 
 		<#if pluginName != "">
 			setClassLoader(${packagePath}.service.ClpSerializer.class.getClassLoader());
+		<#elseif osgiModule >
+			setClassLoader(${entity.name}Impl.class.getClassLoader());
 		<#else>
 			setClassLoader(PortalClassLoaderUtil.getClassLoader());
 		</#if>

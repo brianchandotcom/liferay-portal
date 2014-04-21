@@ -227,6 +227,7 @@ public class ServiceBuilder {
 		String springFileName = arguments.get("service.spring.file");
 		String apiDir = arguments.get("service.api.dir");
 		String implDir = arguments.get("service.impl.dir");
+		String resourcesDir = arguments.get("service.resources.dir");
 		String remotingFileName = arguments.get("service.remoting.file");
 		String sqlDir = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
@@ -241,15 +242,16 @@ public class ServiceBuilder {
 		String testDir = arguments.get("service.test.dir");
 		long buildNumber = GetterUtil.getLong(arguments.get("service.build.number"), 1);
 		boolean buildNumberIncrement = GetterUtil.getBoolean(arguments.get("service.build.number.increment"), true);
+		boolean osgiModule = GetterUtil.getBoolean(arguments.get("service.osgi.module"), false);
 
 		try {
 			new ServiceBuilder(
 				fileName, hbmFileName, modelHintsFileName, springFileName,
-				apiDir, implDir, remotingFileName, sqlDir, sqlFileName,
-				sqlIndexesFileName, sqlSequencesFileName,
+				apiDir, implDir, resourcesDir, remotingFileName, sqlDir,
+				sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
 				autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, propsUtil, pluginName, targetEntityName,
-				testDir, true, buildNumber, buildNumberIncrement);
+				testDir, true, buildNumber, buildNumberIncrement, osgiModule);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
@@ -503,30 +505,34 @@ public class ServiceBuilder {
 	public ServiceBuilder(
 		String fileName, String hbmFileName, String modelHintsFileName,
 		String springFileName, String apiDir, String implDir,
-		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlSequencesFileName,
-		boolean autoImportDefaultReferences, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir) {
+		String resourcesDir, String remotingFileName, String sqlDir,
+		String sqlFileName, String sqlIndexesFileName,
+		String sqlSequencesFileName, boolean autoImportDefaultReferences,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir) {
 
 		this(
 			fileName, hbmFileName, modelHintsFileName, springFileName, apiDir,
-			implDir, remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
-			sqlSequencesFileName, autoImportDefaultReferences,
-			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
-			targetEntityName, testDir, true, 1, true);
+			implDir, resourcesDir, remotingFileName, sqlDir, sqlFileName,
+			sqlIndexesFileName, sqlSequencesFileName,
+			autoImportDefaultReferences, autoNamespaceTables,
+			beanLocatorUtil, propsUtil, pluginName, targetEntityName,
+			testDir, true, 1, true, false);
 	}
 
 	public ServiceBuilder(
 		String fileName, String hbmFileName, String modelHintsFileName,
 		String springFileName, String apiDir, String implDir,
-		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlSequencesFileName,
-		boolean autoImportDefaultReferences, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir, boolean build,
-		long buildNumber, boolean buildNumberIncrement) {
+		String resourcesDir, String remotingFileName, String sqlDir,
+		String sqlFileName, String sqlIndexesFileName,
+		String sqlSequencesFileName, boolean autoImportDefaultReferences,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir,
+		boolean build, long buildNumber, boolean buildNumberIncrement,
+		boolean osgiModule) {
 
+		_tplActionableDynamicQuery = _getTplProperty(
+			"actionable_dynamic_query", _tplActionableDynamicQuery);
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
 		_tplBadColumnNames = _getTplProperty(
@@ -536,6 +542,9 @@ public class ServiceBuilder {
 		_tplBlobModel = _getTplProperty("blob_model", _tplBlobModel);
 		_tplEjbPk = _getTplProperty("ejb_pk", _tplEjbPk);
 		_tplException = _getTplProperty("exception", _tplException);
+		_tplExportActionableDynamicQuery = _getTplProperty(
+			"export_actionable_dynamic_query",
+			_tplExportActionableDynamicQuery);
 		_tplExtendedModel = _getTplProperty(
 			"extended_model", _tplExtendedModel);
 		_tplExtendedModelBaseImpl = _getTplProperty(
@@ -589,6 +598,7 @@ public class ServiceBuilder {
 			_springFileName = springFileName;
 			_apiDir = apiDir;
 			_implDir = implDir;
+			_resourcesDir = resourcesDir;
 			_remotingFileName = remotingFileName;
 			_sqlDir = sqlDir;
 			_sqlFileName = sqlFileName;
@@ -606,6 +616,7 @@ public class ServiceBuilder {
 			_build = build;
 			_buildNumber = buildNumber;
 			_buildNumberIncrement = buildNumberIncrement;
+			_osgiModule = osgiModule;
 
 			String content = getContent(fileName);
 
@@ -994,11 +1005,11 @@ public class ServiceBuilder {
 
 		ServiceBuilder serviceBuilder = new ServiceBuilder(
 			refFileName, _hbmFileName, _modelHintsFileName, _springFileName,
-			_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
-			_sqlIndexesFileName, _sqlSequencesFileName,
+			_apiDir, _implDir, _resourcesDir, _remotingFileName, _sqlDir,
+			_sqlFileName, _sqlIndexesFileName, _sqlSequencesFileName,
 			_autoImportDefaultReferences, _autoNamespaceTables,
 			_beanLocatorUtil, _propsUtil, _pluginName, _targetEntityName,
-			_testDir, false, _buildNumber, _buildNumberIncrement);
+			_testDir, false, _buildNumber, _buildNumberIncrement, _osgiModule);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -1756,8 +1767,12 @@ public class ServiceBuilder {
 
 		// Write file
 
+		String path = _osgiModule ? _outputPath : _serviceOutputPath;
+
+		String pkg = _osgiModule ? "impl/" : StringPool.BLANK;
+
 		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
+			path + "/service/persistence/" + pkg +
 				entity.getName() + "ActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -1898,8 +1913,12 @@ public class ServiceBuilder {
 
 		// Write file
 
+		String path = _osgiModule ? _outputPath : _serviceOutputPath;
+
+		String pkg = _osgiModule ? "impl/" : StringPool.BLANK;
+
 		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
+			path + "/service/persistence/" + pkg +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -2570,13 +2589,15 @@ public class ServiceBuilder {
 	}
 
 	private void _createProps() throws Exception {
-		if (Validator.isNull(_pluginName)) {
+		if (Validator.isNull(_pluginName) && !_osgiModule) {
 			return;
 		}
 
 		// Content
 
-		File propsFile = new File(_implDir + "/service.properties");
+		String basePath = _osgiModule ? _resourcesDir : _implDir;
+
+		File propsFile = new File(basePath + "/service.properties");
 
 		long buildNumber = 1;
 		long buildDate = System.currentTimeMillis();
@@ -3136,6 +3157,12 @@ public class ServiceBuilder {
 
 		File xmlFile = new File(_springFileName);
 
+		String extraNamespacesString = _getTplProperty(
+			"spring.extra.namespaces", StringPool.BLANK);
+
+		String[] extraNamespaces = extraNamespacesString.split(
+			StringPool.SPACE);
+
 		String xml =
 			"<?xml version=\"1.0\"?>\n" +
 			"\n" +
@@ -3144,8 +3171,9 @@ public class ServiceBuilder {
 			"\tdefault-init-method=\"afterPropertiesSet\"\n" +
 			"\txmlns=\"http://www.springframework.org/schema/beans\"\n" +
 			"\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-			"\txsi:schemaLocation=\"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd\"\n" +
-			">\n" +
+			_addExtraSpringNamespacesDeclaration(extraNamespaces) +
+			"\txsi:schemaLocation=\"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd\n" +
+			_addExtraSpringSchemaLocations(extraNamespaces) + "\">\n" +
 			"</beans>";
 
 		if (!xmlFile.exists()) {
@@ -3199,6 +3227,38 @@ public class ServiceBuilder {
 		if (!oldContent.equals(newContent)) {
 			FileUtil.write(xmlFile, newContent);
 		}
+	}
+
+	private String _addExtraSpringNamespacesDeclaration(
+		String... extraNamespaces) {
+
+		StringBundler sb = new StringBundler(extraNamespaces.length * 4);
+
+		for (String extraNamespace : extraNamespaces) {
+			sb.append("\txmlns:");
+			sb.append(extraNamespace);
+			sb.append("=\"http://www.springframework.org/schema/");
+			sb.append(extraNamespace + "\"\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _addExtraSpringSchemaLocations(
+		String... extraNamespaces) {
+
+		StringBundler sb = new StringBundler(extraNamespaces.length * 6);
+
+		for (String extraNamespace : extraNamespaces) {
+			sb.append("\thttp://www.springframework.org/schema/");
+			sb.append(extraNamespace);
+			sb.append(" http://www.springframework.org/schema/");
+			sb.append(extraNamespace);
+			sb.append("/spring-" + extraNamespace);
+			sb.append(".xsd");
+		}
+
+		return sb.toString();
 	}
 
 	private void _createSQLIndexes() throws IOException {
@@ -3771,6 +3831,7 @@ public class ServiceBuilder {
 		context.put("portletShortName", _portletShortName);
 		context.put("portletPackageName", _portletPackageName);
 		context.put("outputPath", _outputPath);
+		context.put("osgiModule", _osgiModule);
 		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("packagePath", _packagePath);
 		context.put("pluginName", _pluginName);
@@ -4893,6 +4954,7 @@ public class ServiceBuilder {
 		new HashMap<String, JavaClass>();
 	private String _modelHintsFileName;
 	private boolean _mvccEnabled;
+	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
 	private String _pluginName;
@@ -4907,6 +4969,7 @@ public class ServiceBuilder {
 	private String _sqlFileName;
 	private String _sqlIndexesFileName;
 	private String _sqlSequencesFileName;
+	private String _resourcesDir;
 	private String _targetEntityName;
 	private String _testDir;
 	private String _testOutputPath;

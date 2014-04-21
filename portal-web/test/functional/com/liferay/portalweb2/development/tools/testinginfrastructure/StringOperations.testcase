@@ -89,6 +89,22 @@
 		</execute>
 	</command>
 
+	<command name="Regex" priority="5">
+		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="0" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="regularexpression=32132" />
+		</execute>
+
+		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="1" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="32132" />
+		</execute>
+	</command>
+
 	<command name="Replace" priority="5">
 		<echo message="Test replace()" />
 

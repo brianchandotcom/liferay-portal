@@ -1559,63 +1559,11 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="jar" depends="compile">
-		<gradle-execute
-			gradleModuleDir="/registry"
-			gradleTask=":registry-impl:deploy"
-		/>
-
 		<ant dir="../util-bridges" target="jar" inheritAll="false" />
 		<ant dir="../util-java" target="jar" inheritAll="false" />
 		<ant dir="../util-taglib" target="jar" inheritAll="false" />
 
 		<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
-
-		<copy todir="${portal.deploy.dependencies.dir}/osgi/core" preservelastmodified="true">
-			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/core" includes="*.jar" />
-		</copy>
-
-		<fileset dir="${portal.deploy.dependencies.dir}/osgi/core" id="osgi.core.jars">
-			<include name="*.jar" />
-		</fileset>
-
-		<pathconvert property="osgi.core.jars.list" pathsep="," refid="osgi.core.jars">
-			<flattenmapper />
-		</pathconvert>
-
-		<if>
-			<not>
-				<uptodate targetfile="${jar.file}.jar">
-					<srcfiles dir="${portal.deploy.dependencies.dir}/osgi/core" includes="**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<echo file="${portal.deploy.dependencies.dir}/osgi/core/jars.txt">${osgi.core.jars.list}</echo>
-			</then>
-		</if>
-
-		<copy todir="${portal.deploy.dependencies.dir}/osgi/portal" preservelastmodified="true">
-			<fileset dir="${project.dir}/osgi/lib/common/portal" includes="*.jar" />
-			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/portal" includes="*.jar" />
-		</copy>
-
-		<fileset dir="${portal.deploy.dependencies.dir}/osgi/portal" id="osgi.portal.jars">
-			<include name="*.jar" />
-		</fileset>
-
-		<pathconvert property="osgi.portal.jars.list" pathsep="," refid="osgi.portal.jars">
-			<flattenmapper />
-		</pathconvert>
-
-		<if>
-			<not>
-				<uptodate targetfile="${jar.file}.jar">
-					<srcfiles dir="${portal.deploy.dependencies.dir}/osgi/portal" includes="**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<echo file="${portal.deploy.dependencies.dir}/osgi/portal/jars.txt">${osgi.portal.jars.list}</echo>
-			</then>
-		</if>
 
 		<for list="1,2,3,4,5,6,7,8,9" param="index">
 			<sequential>

@@ -7,6 +7,8 @@
 
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
 	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
@@ -547,8 +549,6 @@
 
 		<execute macro="Site#addCP">
 			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateActive" value="${siteTemplateActive}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Blank" />
 		</execute>
 
@@ -575,9 +575,9 @@
 		</execute>
 
 		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">
+			<var name="assertUnavailableLanguages" value="true" />
 			<var name="currentLanguageList" value="DETAILS_FRIENDLY_URL_PORTUGUESE_BRAZIL,DETAILS_FRIENDLY_URL_SPANISH_SPAIN" />
-			<var name="negativeAssertion" value="true" />
-			<var name="noLanguageList" value="DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES" />
+			<var name="unavailableLanguageList" value="DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES" />
 		</execute>
 	</command>
 </definition>

@@ -497,9 +497,9 @@
 		</for>
 
 		<if>
-			<equals arg1="${negativeAssertion}" arg2="true" />
+			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
-				<for list="${noLanguageList}" param="languageKey">
+				<for list="${unavailableLanguageList}" param="languageKey">
 					<execute action="DockbarEdit#assertElementNotPresent" locator-key1="${languageKey}" />
 				</for>
 			</then>

@@ -16,24 +16,30 @@
 
 <%@ include file="/html/taglib/aui/nav/init.jsp" %>
 
-<c:if test="<%= collapsible %>">
-	<div class="collapse nav-collapse" id="<%= id %>NavbarCollapse">
+<%
+bodyContentString = StringUtil.replace(bodyContentString,new String[] {StringPool.NEW_LINE, StringPool.TAB},new String[] {StringPool.BLANK, StringPool.BLANK});
+%>
+
+<c:if test="<%= Validator.isNotNull(bodyContentString) %>">
+	<c:if test="<%= collapsible %>">
+		<div class="collapse nav-collapse" id="<%= id %>NavbarCollapse">
+	</c:if>
+
+	<ul aria-label="<%= Validator.isNull(ariaLabel) ? portletDisplay.getTitle() : ariaLabel %>" class="nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+		<%= bodyContentString %>
+	</ul>
+
+	<c:if test="<%= collapsible %>">
+		</div>
+
+		<aui:script use="aui-base,event-outside,liferay-menu-toggle">
+			var toggleMenu = new Liferay.MenuToggle(
+				{
+					content: '#<%= id %>NavbarCollapse, #<%= id %>NavbarBtn',
+					toggleTouch: true,
+					trigger: '#<%= id %>NavbarBtn'
+				}
+			);
+		</aui:script>
+	</c:if >
 </c:if>
-
-<ul aria-label="<%= Validator.isNull(ariaLabel) ? portletDisplay.getTitle() : ariaLabel %>" class="nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<%= bodyContentString %>
-</ul>
-
-<c:if test="<%= collapsible %>">
-	</div>
-
-	<aui:script use="aui-base,event-outside,liferay-menu-toggle">
-		var toggleMenu = new Liferay.MenuToggle(
-			{
-				content: '#<%= id %>NavbarCollapse, #<%= id %>NavbarBtn',
-				toggleTouch: true,
-				trigger: '#<%= id %>NavbarBtn'
-			}
-		);
-	</aui:script>
-</c:if >

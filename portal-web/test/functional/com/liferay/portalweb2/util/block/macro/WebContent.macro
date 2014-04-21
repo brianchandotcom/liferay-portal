@@ -807,9 +807,20 @@
 		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="CPWebcontentEditwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
-		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
-		<execute action="CPWebcontentEditwebcontent#selectFrame" value1="relative=top" />
+		
+		<if>
+			<isset var="webContentText" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+			</then>
+			<else>
+				<execute action="CPWebcontentEditwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
+				<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
+				<execute action="CPWebcontentEditwebcontent#selectFrame" value1="relative=top" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="expirationDate" />

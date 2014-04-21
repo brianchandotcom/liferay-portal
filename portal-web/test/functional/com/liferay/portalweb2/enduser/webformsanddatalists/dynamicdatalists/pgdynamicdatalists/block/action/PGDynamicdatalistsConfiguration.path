@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAILURE_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

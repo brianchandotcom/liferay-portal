@@ -157,6 +157,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_ADD_RECORD_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_RECORD']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_ADD_PAGE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_ADD_LAYOUT']</td>
 	<td></td>

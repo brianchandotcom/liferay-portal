@@ -30,6 +30,7 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Eduardo Lundgren
@@ -37,7 +38,7 @@ import javax.servlet.jsp.JspException;
  * @author Nathan Cavanaugh
  * @author Julio Camarero
  */
-public class NavTag extends BaseNavTag {
+public class NavTag extends BaseNavTag implements BodyTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -122,6 +123,11 @@ public class NavTag extends BaseNavTag {
 
 		_calledCollapsibleSetter = false;
 		_namespacedId = null;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		return EVAL_BODY_BUFFERED;
 	}
 
 	@Override

@@ -240,7 +240,7 @@
 			<condition action="CPWebcontentStructures#isElementPresent" locator-key1="STRUCTURE_TABLE_ACTIONS_GENERIC" />
 			<then>
 				<execute action="CPWebcontentStructures#check" locator-key1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute action="CPWebcontentStructures#click" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPWebcontentStructures#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
 				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
@@ -253,7 +253,7 @@
 			<condition action="CPWebcontentStructures#isElementPresent" locator-key1="STRUCTURE_TABLE_ACTIONS_GENERIC" />
 			<then>
 				<execute action="CPWebcontentStructures#check" locator-key1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute action="CPWebcontentStructures#click" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPWebcontentStructures#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
 				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>

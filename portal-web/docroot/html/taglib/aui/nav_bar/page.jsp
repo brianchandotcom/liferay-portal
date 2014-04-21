@@ -16,12 +16,14 @@
 
 <%@ include file="/html/taglib/aui/nav_bar/init.jsp" %>
 
-<div class="navbar <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<div class="navbar-inner">
-		<div class="container">
-			<%= responsiveButtons %>
+<c:if test="<%= Validator.isContent(bodyContentString) %>">
+	<div class="navbar <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+		<div class="navbar-inner">
+			<div class="container">
+				<%= responsiveButtons %>
 
-			<%= bodyContentString %>
+				<%= bodyContentString %>
+			</div>
 		</div>
 	</div>
-</div>
+</c:if>

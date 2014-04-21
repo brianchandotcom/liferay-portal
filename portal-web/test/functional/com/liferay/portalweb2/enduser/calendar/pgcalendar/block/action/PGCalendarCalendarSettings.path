@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>
@@ -63,7 +68,11 @@
 	<td>//button[@class='btn btn-cancel']</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_CALENDAR</td>

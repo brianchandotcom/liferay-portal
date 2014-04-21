@@ -46,7 +46,7 @@
 <!--SCHEDULER_EVENT-->
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC</td>
-	<td>//div[contains(@class,'scheduler-view-agenda-event')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,8 +55,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_GENERIC_2</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')][2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_REPEATING</td>
 	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]/div[contains(.,'Repeating')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_REPEATING_2</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]/div[contains(.,'Repeating')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

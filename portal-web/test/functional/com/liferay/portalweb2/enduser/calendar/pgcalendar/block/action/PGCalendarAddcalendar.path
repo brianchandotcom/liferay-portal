@@ -13,7 +13,16 @@
 	<td></td>
 	<td>PGCalendarAddNewCalendar</td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CALENDAR_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'_1_WAR_calendarportlet')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>

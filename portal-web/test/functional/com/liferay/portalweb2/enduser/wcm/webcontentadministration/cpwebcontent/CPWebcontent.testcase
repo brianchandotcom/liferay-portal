@@ -837,6 +837,100 @@
 		</execute>
 	</command>
 
+	<command name="ImportLAR" priority="5">
+		<var name="larFileName" value="Web_Content.portlet.lar" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames" value="Text" />
+		<var name="structureName" value="WC Structure Name" />
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateFieldNames" value="Text" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#exportDDL">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="WebContentTemplates#tearDownCP" />
+
+		<execute macro="WebContentStructures#tearDownCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importDDL">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewCP">
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+	</command>
+
 	<command name="PublishDraftWebContent" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />

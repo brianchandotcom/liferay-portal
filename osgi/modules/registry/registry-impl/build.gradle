@@ -9,4 +9,4 @@ dependencies {
 	compile project(':registry-api')
 }
 
-project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/core" : null
+project.ext.deployDir = project.hasProperty('appServerParentDir') ? project.appServerParentDir + "/osgi/core" : null

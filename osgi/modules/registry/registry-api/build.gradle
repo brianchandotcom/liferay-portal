@@ -1,1 +1,1 @@
-project.ext.deployDir = project.hasProperty('globalLibDir') ? project.globalLibDir : null
+project.ext.deployDir = project.hasProperty('appServerLibGlobalDir') ? project.appServerLibGlobalDir : null

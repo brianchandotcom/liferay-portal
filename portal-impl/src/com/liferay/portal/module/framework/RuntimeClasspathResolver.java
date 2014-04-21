@@ -14,15 +14,11 @@
 
 package com.liferay.portal.module.framework;
 
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * @author Raymond Augé
@@ -32,14 +28,7 @@ public class RuntimeClasspathResolver implements ClasspathResolver {
 	@Override
 	public URL[] getClasspathURLs() throws Exception {
 		File coreDir = new File(
-			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
-
-		_initDir(
-			"com/liferay/portal/deploy/dependencies/osgi/core",
-			coreDir.getAbsolutePath());
-		_initDir(
-			"com/liferay/portal/deploy/dependencies/osgi/portal",
-			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
 
 		File[] files = coreDir.listFiles();
 
@@ -50,39 +39,6 @@ public class RuntimeClasspathResolver implements ClasspathResolver {
 		}
 
 		return urls;
-	}
-
-	private static void _initDir(String sourcePath, String destinationPath)
-		throws Exception {
-
-		if (!FileUtil.exists(destinationPath)) {
-			FileUtil.mkdirs(destinationPath);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		URL url = classLoader.getResource(sourcePath + "/jars.txt");
-
-		URLConnection urlConnection = url.openConnection();
-
-		String[] jarFileNames = StringUtil.split(
-			StringUtil.read(urlConnection.getInputStream()));
-
-		for (String jarFileName : jarFileNames) {
-			File destinationFile = new File(destinationPath, jarFileName);
-
-			long lastModified = urlConnection.getLastModified();
-
-			if ((destinationFile.lastModified() < lastModified) ||
-				(lastModified == 0)) {
-
-				byte[] bytes = FileUtil.getBytes(
-					classLoader.getResourceAsStream(
-						sourcePath + "/" + jarFileName));
-
-				FileUtil.write(destinationFile, bytes);
-			}
-		}
 	}
 
 }

@@ -6,6 +6,8 @@
 	<import file="../../build-common-java.xml" />
 
 	<target name="clean">
+		<delete dir="${app.server.parent.dir}/osgi" />
+
 		<gradle-execute
 			gradleTask="clean"
 		/>
@@ -18,6 +20,18 @@
 	</target>
 
 	<target name="deploy">
+		<mkdir dir="${app.server.parent.dir}/osgi/core" />
+		<mkdir dir="${app.server.parent.dir}/osgi/portal" />
+
+		<copy todir="${app.server.parent.dir}/osgi/core" preservelastmodified="true">
+			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/core" includes="*.jar" />
+		</copy>
+
+		<copy todir="${app.server.parent.dir}/osgi/portal" preservelastmodified="true">
+			<fileset dir="${project.dir}/osgi/lib/common/portal" includes="*.jar" />
+			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/portal" includes="*.jar" />
+		</copy>
+
 		<gradle-execute
 			gradleTask="deploy"
 		/>

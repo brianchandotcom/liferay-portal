@@ -24,7 +24,7 @@ DLFileShortcut fileShortcut = null;
 
 boolean showWhenSingleIcon = false;
 
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	showWhenSingleIcon = true;
 }
 

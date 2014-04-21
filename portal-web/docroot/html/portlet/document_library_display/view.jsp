@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-long defaultFolderId = dlSettings.getDefaultFolderId();
+long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 

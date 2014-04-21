@@ -176,7 +176,7 @@ entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryS
 folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
 folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 
-if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
 	PortalUtil.setPageDescription(folder.getDescription(), request);
 }

@@ -1958,6 +1958,8 @@ public class DLAppHelperLocalServiceImpl
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
 			serviceContext.getCompanyId());
 
+		String portletId = PortletKeys.DOCUMENT_LIBRARY;
+
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(
 				groupId, PortletKeys.DOCUMENT_LIBRARY);
@@ -1965,11 +1967,11 @@ public class DLAppHelperLocalServiceImpl
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			plid = controlPanelPlid;
+			portletId = PortletKeys.DOCUMENT_LIBRARY_ADMIN;
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.DOCUMENT_LIBRARY, plid,
-			PortletRequest.RENDER_PHASE);
+			request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/view_file_entry");

@@ -17,12 +17,6 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-String strutsAction = "/document_library_display";
-
-if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
-	strutsAction = "/document_library";
-}
-
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
@@ -39,8 +33,7 @@ catch (NoSuchFolderException nsfe) {
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
-	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
-	<liferay-portlet:param name="settingsScope" value="group" />
+	<liferay-portlet:param name="settingsScope" value="portletInstance" />
 </liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
@@ -183,7 +176,7 @@ catch (NoSuchFolderException nsfe) {
 </aui:form>
 
 <liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
+	<portlet:param name="struts_action" value="/document_library_display/select_folder" />
 </liferay-portlet:renderURL>
 
 <aui:script use="aui-base">

@@ -721,7 +721,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Nav" bodyContent="true">
+	<component name="Nav" bodyContent="false">
 		<attributes>
 			<attribute>
 				<name>ariaLabel</name>

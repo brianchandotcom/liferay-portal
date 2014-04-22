@@ -7,9 +7,19 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="User#tearDownCP" />
+
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
 
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 
@@ -17,6 +27,174 @@
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="AddWikiPageAsSiteUser" priority="4">
+		<var name="pageName" value="Wiki Page" />
+		<var name="portletName" value="Wiki" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+		<var name="workflowAssetType" value="Wiki Page" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WIKI_PAGE_SELECT" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addPageWithWorkflowPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageWithWorkflowPG">
+			<var name="wikiPageStatus" value="Pending" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_DEFINITION" value1="Single Approver" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_STATUS" value1="Review" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${wikiPageTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageWithWorkflowPG">
+			<var name="wikiPageStatus" value="Pending" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${wikiPageTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
+		</execute>
+	</command>
 
 	<command name="ViewTaskCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />

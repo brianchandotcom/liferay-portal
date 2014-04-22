@@ -28,7 +28,7 @@ public class RuntimeServiceLoaderCondition implements ServiceLoaderCondition {
 	public boolean isLoad(URL url) {
 		String path = url.getPath();
 
-		return path.contains(PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR);
+		return path.contains(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
 	}
 
 }

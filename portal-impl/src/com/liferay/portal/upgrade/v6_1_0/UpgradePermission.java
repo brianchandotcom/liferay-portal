@@ -140,8 +140,8 @@ public class UpgradePermission extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 
-		List<String> modelActions =
-			ResourceActionsUtil.getModelResourceActions(Role.class.getName());
+		List<String> modelActions = ResourceActionsUtil.getModelResourceActions(
+			Role.class.getName());
 
 		ResourceActionLocalServiceUtil.checkResourceActions(
 			Role.class.getName(), modelActions);

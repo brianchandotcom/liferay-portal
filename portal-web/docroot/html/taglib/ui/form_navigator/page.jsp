@@ -74,7 +74,16 @@ if (Validator.isNotNull(historyKey)) {
 			</aui:button-row>
 		</c:when>
 		<c:otherwise>
-			<div class="taglib-form-navigator row-fluid" id="<portlet:namespace />tabs">
+
+			<%
+			String wrapperCssClass = "row-fluid";
+
+			if (displayStyle.equals("steps")) {
+				wrapperCssClass = wrapperCssClass.concat(" form-steps");
+			}
+			%>
+
+			<div class="<%= wrapperCssClass %>" id="<portlet:namespace />tabs">
 				<liferay-util:buffer var="formSectionsBuffer">
 					<div class="form-navigator-content span8">
 						<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
@@ -113,6 +122,8 @@ if (Validator.isNotNull(historyKey)) {
 								error = true;
 							}
 
+							int curStep = 1;
+
 							for (String section : sections) {
 								String sectionId = namespace + _getSectionId(section);
 
@@ -122,10 +133,10 @@ if (Validator.isNotNull(historyKey)) {
 									continue;
 								}
 
-								String cssClass = StringPool.BLANK;
+								String cssClass = "tab";
 
 								if (sectionId.equals(namespace + errorSection)) {
-									cssClass += "section-error";
+									cssClass += " section-error";
 
 									curSection = section;
 								}
@@ -140,16 +151,28 @@ if (Validator.isNotNull(historyKey)) {
 							%>
 
 								<li class="<%= cssClass %>" data-sectionId="<%= sectionId %>" id="<%= sectionId %>Tab">
-									<a href="#<%= sectionId %>" id="<%= sectionId %>Link">
+									<a class="tab-label" href="#<%= sectionId %>" id="<%= sectionId %>Link">
 										<span class="badge badge-important error-notice">!</span>
 
-										<liferay-ui:message key="<%= section %>" />
+										<c:choose>
+											<c:when test='<%= displayStyle.equals("steps") %>'>
+												<span class="number"><liferay-ui:message key="<%= String.valueOf(curStep) %>" /></span>
+
+												<span class="message"><liferay-ui:message key="<%= section %>" /></span>
+
+												<aui:icon cssClass="tab-icon" image="long-arrow-right" />
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message key="<%= section %>" />
+											</c:otherwise>
+										</c:choose>
 
 										<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>
 									</a>
 								</li>
 
 							<%
+								curStep++;
 							}
 							%>
 
@@ -158,18 +181,28 @@ if (Validator.isNotNull(historyKey)) {
 					}
 					%>
 
-					<c:if test="<%= showButtons %>">
+					<c:if test='<%= showButtons && !displayStyle.equals("steps") %>'>
 						<aui:button-row>
 							<aui:button primary="<%= true %>" type="submit" />
 
 							<aui:button href="<%= backURL %>" type="cancel" />
 						</aui:button-row>
-					</c:if>
 
-					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+						<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+					</c:if>
 				</ul>
 
 				<%= formSectionsBuffer %>
+
+				<c:if test='<%= showButtons && displayStyle.equals("steps") %>'>
+					<aui:button-row>
+						<aui:button primary="<%= true %>" type="submit" />
+
+						<aui:button href="<%= backURL %>" type="cancel" />
+					</aui:button-row>
+
+					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+				</c:if>
 			</div>
 
 			<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">

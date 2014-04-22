@@ -334,6 +334,135 @@
 		<execute action="PGNavigation#assertTextNotPresent" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
+	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
+		<var name="siteNameLists" value="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" />
+
+		<for list="${siteNameLists}" param="siteNameListsCount" >
+
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="Site#addCommunityCP">
+				<var name="siteName" value="${siteNameListsCount}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Site Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="Site Organization Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Site Organization Name" />
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Dockbar#viewMySitesDropDownSiteName">
+			<var name="siteName" value="Site Organization Name" />
+		</execute>
+	</command>
+
+	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="privateVirtualHosts" value="true" />
+			<var name="privatePageVirtualHostURL" value="www.able.com" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="virtualHostsURL" value="http://www.able.com:8080/private-page" />
+		</execute>
+
+		<execute macro="Site#viewPrivateVirtaulHostUrlUserLoginRedirect">
+			<var name="userEmailAddress" value="@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080/private-page" />
+		</execute>
+
+		<execute action="Home#assertLocation" value1="http://www.able.com:8080/private-page" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Private Page" />
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />

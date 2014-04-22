@@ -2381,8 +2381,6 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
 
-	public static final String SITES_FORM_ADD_SOCIAL = "sites.form.add.socila";
-
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
@@ -2390,8 +2388,6 @@ public interface PropsKeys {
 	public static final String SITES_FORM_UPDATE_MISCELLANEOUS = "sites.form.update.miscellaneous";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
-
-	public static final String SITES_FORM_UPDATE_SOCIAL = "sites.form.update.social";
 
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND = "sites.friendly.url.page.not.found";
 

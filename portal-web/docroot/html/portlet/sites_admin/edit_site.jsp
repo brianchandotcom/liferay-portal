@@ -79,14 +79,12 @@ String[] mainSections = PropsValues.SITES_FORM_ADD_MAIN;
 String[] seoSections = PropsValues.SITES_FORM_ADD_SEO;
 String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
 String[] miscellaneousSections = PropsValues.SITES_FORM_ADD_MISCELLANEOUS;
-String[] socialSections = PropsValues.SITES_FORM_ADD_SOCIAL;
 
 if (group != null) {
 	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
 	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
 	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
 	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
-	socialSections = PropsValues.SITES_FORM_UPDATE_SOCIAL;
 }
 
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
@@ -125,7 +123,7 @@ if ((group != null) && (group.hasStagingGroup() || (group.hasRemoteStagingGroup(
 	advancedSections = ArrayUtil.remove(advancedSections, "staging");
 }
 
-String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections, socialSections};
+String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 
 if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	if (group != null) {
@@ -292,5 +290,5 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 </aui:script>
 
 <%!
-private static final String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced", "miscellaneous", "social"};
+private static final String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced", "miscellaneous"};
 %>

@@ -785,7 +785,9 @@ public class HtmlImpl implements Html {
 	}
 
 	private static final String[] _MS_WORD_HTML = new String[] {
-		"&reg;", StringPool.APOSTROPHE, StringPool.QUOTE, StringPool.QUOTE
+		"&reg;", StringPool.RIGHT_SINGLE_QUOTE_ENCODED,
+		StringPool.LEFT_DOUBLE_QUOTE_ENCODED,
+		StringPool.RIGHT_DOUBLE_QUOTE_ENCODED
 	};
 
 	private static final String[] _MS_WORD_UNICODE = new String[] {

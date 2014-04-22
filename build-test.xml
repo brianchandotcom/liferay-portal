@@ -1166,6 +1166,8 @@ create database lportal2 character set utf8;</echo>
 				</fileset>
 			</path>
 			<sequential>
+				<echo message="Merging @{jenkins.results.xml.file}" />
+
 				<var name="jenkins.results.xml.suite.file.body" unset="true" />
 
 				<loadfile property="jenkins.results.xml.suite.file.body" srcfile="@{jenkins.results.xml.file}" />
@@ -1191,6 +1193,13 @@ create database lportal2 character set utf8;</echo>
 		</for>
 
 		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
+
+		<if>
+			<isset property="jenkins.testray.results.dir" />
+			<then>
+				<copy file="${jenkins.results.xml.suite.file}" todir="${jenkins.testray.results.dir}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="merge-test-results">

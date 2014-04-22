@@ -15,8 +15,6 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
@@ -325,9 +323,6 @@ public class BackgroundTaskLocalServiceTest {
 
 		return taskContext;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		BackgroundTaskLocalServiceTest.class);
 
 	private final static String _BACKGROUND_TASK_NAME = "Name";
 

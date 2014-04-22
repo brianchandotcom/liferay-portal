@@ -1,0 +1,11 @@
+<definition>
+	<command name="type">
+		<case locator-key1="DESCRIPTION_FIELD">
+			<execute function="Type#typeWaitForCKEditor" />
+		</case>
+
+		<case locator-key1="NAME_FIELD">
+			<execute function="Type#typeWaitForCKEditor" />
+		</case>
+	</command>
+</definition>

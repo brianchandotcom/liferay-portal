@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD_EVENT_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td>//div[contains(@class,'modal-content yui3-widget-stdmod yui3-widget-content-expanded')]//iframe[@class='dialog-iframe-node ']</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,12 +66,12 @@
 <!--START_DATE-->
 <tr>
 	<td>START_DATE</td>
-	<td>//input[contains(@id,'calendarportlet_startTime') and @placeholder='mm/dd/yyyy']</td>
+	<td>//input[contains(@name,'calendarportlet_startTime') and @placeholder='mm/dd/yyyy']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>START_DATE_TIME</td>
-	<td>//input[contains(@id,'calendarportlet_startTime') and @placeholder='h:mm am/pm']</td>
+	<td>//input[contains(@name,'calendarportlet_startTime') and @placeholder='h:mm am/pm']</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,12 +82,12 @@
 <!--END_DATE-->
 <tr>
 	<td>END_DATE</td>
-	<td>//input[contains(@id,'calendarportlet_endTime') and @placeholder='mm/dd/yyyy']</td>
+	<td>//input[contains(@name,'calendarportlet_endTime') and @placeholder='mm/dd/yyyy']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>END_DATE_TIME</td>
-	<td>//input[contains(@id,'calendarportlet_endTime') and @placeholder='h:mm am/pm']</td>
+	<td>//input[contains(@name,'calendarportlet_endTime') and @placeholder='h:mm am/pm']</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--REPEAT-->
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'calendarportlet_allDayCheckbox')]</td>
@@ -188,6 +187,148 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--INVITATIONS-->
+<tr>
+	<td>INVITATIONS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD</td>
+	<td>//input[contains(@id,'inviteResource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD_LIST</td>
+	<td>//ul[@role='listbox']/li[@data-text='${key_resource}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PENDING</td>
+	<td>//div[contains(@id,'calendarListPending')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_ACCEPTED</td>
+	<td>//div[contains(@id,'calendarListAccepted')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INVITATIONS_RESOURCES_AVAILABILITY-->
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(@id,'checkAvailability')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(@id,'checkAvailability')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_TODAY_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'today btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PREV_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-prev btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_NEXT_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-next btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON_ACTIVE</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON_ACTIVE</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_ALL_DAY_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'12:00 AM') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'11:59 PM')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]//div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 208, 208)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event scheduler-event-past calendar-portlet-event-pending scheduler-event-disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--REMINDERS-->
 <tr>
 	<td>REMINDERS_PANEL_COLLAPSED</td>
@@ -234,52 +375,6 @@
 <tr>
 	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
 	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--INVITATIONS-->
-<tr>
-	<td>INVITATIONS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingInvitationPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingInvitationPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_INVITE_RESOURCE_FIELD</td>
-	<td>//input[contains(@id,'inviteResource')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_INVITE_RESOURCE_FIELD_LIST</td>
-	<td>//ul[@role='listbox']/li[@data-text='${user}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_PENDING</td>
-	<td>//div[contains(@id,'calendarListPending')]/div/div[contains(.,'${user}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_ACCEPTED</td>
-	<td>//div[contains(@id,'calendarListAccepted')]/div/div[contains(.,'test test')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_DECLINED</td>
-	<td>//div[contains(@id,'calendarListDeclined')]/div/div[contains(.,'${user}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITATIONS_MAYBE</td>
-	<td>//div[contains(@id,'calendarListMaybe')]/div/div[contains(.,'${user}')]/span</td>
 	<td></td>
 </tr>
 </tbody>

@@ -10,6 +10,7 @@
 				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_MENULIST_ARROW" />
 				<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
+				<execute action="PGCalendarAddcalendar#selectFrame" locator-key1="ADD_CALENDAR_IFRAME" />
 				<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
 				<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				<execute action="PGCalendarAddcalendar#click" locator-key1="SAVE_BUTTON" />
@@ -22,6 +23,7 @@
 					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
+					<execute action="PGCalendarAddcalendar#selectFrame" locator-key1="ADD_CALENDAR_IFRAME" />
 					<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
 					<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="PGCalendarAddcalendar#click" locator-key1="SAVE_BUTTON" />
@@ -148,9 +150,7 @@
 		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="HEADER_TITLE" value1="${calendarName}" />
 		<execute action="PGCalendarCalendarSettings#check" locator-key1="ENABLE_COMMENTS_CHECKBOX" />
 		<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
-
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="enableViewEventDetailsPermissionsPG">

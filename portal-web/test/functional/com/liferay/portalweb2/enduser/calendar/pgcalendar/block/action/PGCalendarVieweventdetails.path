@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCEPT_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Accept')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAYBE_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Maybe')]</td>
 	<td></td>

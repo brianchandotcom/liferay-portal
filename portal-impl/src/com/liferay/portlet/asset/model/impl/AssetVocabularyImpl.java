@@ -30,7 +30,6 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
-
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ import java.util.List;
 public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	public AssetVocabularyImpl() {
+		super();
 	}
 
 	@Override
@@ -126,27 +126,17 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isMultiValued() {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
-
-		return GetterUtil.getBoolean(
-			_settingsProperties.getProperty("multiValued"), true);
-	}
-
-	@Override
 	public boolean isMissingRequiredCategory(
 			long assetClassNameId, long assetClassTypeId,
 			final long[] selectedCategoryIds)
 		throws SystemException {
 
 		if (_isSettingAssociatedToAsset(
-			"requiredClassNameIds", assetClassNameId, assetClassTypeId)) {
+				"requiredClassNameIds", assetClassNameId, assetClassTypeId)) {
 
 			List<AssetCategory> categories = getCategories();
-			if (ListUtil.isEmpty(categories)) {
 
+			if (ListUtil.isEmpty(categories)) {
 				return false;
 			}
 
@@ -165,6 +155,16 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isMultiValued() {
+		if (_settingsProperties == null) {
+			_settingsProperties = getSettingsProperties();
+		}
+
+		return GetterUtil.getBoolean(
+			_settingsProperties.getProperty("multiValued"), true);
 	}
 
 	@Override
@@ -194,15 +194,15 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		String[] settingValueIds = StringUtil.split(
-			_settingsProperties.getProperty(settingName),
-			StringPool.COMMA);
+			_settingsProperties.getProperty(settingName), StringPool.COMMA);
 
 		if (settingValueIds.length == 0) {
 			return false;
 		}
 
 		if (ArrayUtil.contains(
-			settingValueIds, AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS)) {
+				settingValueIds,
+				AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS)) {
 
 			return true;
 		}
@@ -212,8 +212,9 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		sb.append(StringPool.COLON);
 		String classNamePrefix = sb.toString();
 
-		if (ArrayUtil.exists(settingValueIds,
-			new PrefixPredicateFilter(classNamePrefix, true))) {
+		if (ArrayUtil.exists(
+				settingValueIds,
+				new PrefixPredicateFilter(classNamePrefix, true))) {
 
 			return true;
 		}
@@ -258,7 +259,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 		return false;
 	}
-
 
 	private UnicodeProperties _settingsProperties;
 

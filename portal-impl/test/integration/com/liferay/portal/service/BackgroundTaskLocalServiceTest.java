@@ -211,9 +211,9 @@ public class BackgroundTaskLocalServiceTest {
 
 		BackgroundTask ammendBackgroundTask =
 			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
-			backgroundTask.getBackgroundTaskId(),
-			backgroundTask.getTaskContextMap(),
-			BackgroundTaskConstants.STATUS_FAILED, serviceContext);
+				backgroundTask.getBackgroundTaskId(),
+				backgroundTask.getTaskContextMap(),
+				BackgroundTaskConstants.STATUS_FAILED, serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_FAILED,
@@ -251,6 +251,17 @@ public class BackgroundTaskLocalServiceTest {
 			ammendBackgroundTask.getStatus());
 
 		Assert.assertFalse(ammendBackgroundTask.isCompleted());
+	}
+
+	@Test
+	public void testAmendBackgroundTaskNullBackgroundTaskId() throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		BackgroundTask amendBackgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				33L, null, 0, serviceContext);
+
+		Assert.assertNull(amendBackgroundTask);
 	}
 
 	@Test
@@ -303,17 +314,6 @@ public class BackgroundTaskLocalServiceTest {
 				backgroundTask.getStatus(), serviceContext);
 
 		AssertUtils.assertEquals(ammendBackgroundTask.getTaskContextMap(), map);
-	}
-
-	@Test
-	public void testAmendBackgroundTaskNullBackgroundTaskId() throws Exception {
-		ServiceContext serviceContext = new ServiceContext();
-
-		BackgroundTask amendBackgroundTask =
-			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
-				33L, null, 0, serviceContext);
-
-		Assert.assertNull(amendBackgroundTask);
 	}
 
 	protected Map<String, Serializable> getTaskContextMap() throws Exception {

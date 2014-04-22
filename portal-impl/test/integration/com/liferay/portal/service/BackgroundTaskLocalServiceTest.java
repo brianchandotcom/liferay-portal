@@ -90,7 +90,7 @@ public class BackgroundTaskLocalServiceTest {
 	}
 
 	@Test
-	public void testAddBackgroundTaskAttachmentByFile() throws Exception {
+	public void testAddBackgroundTaskAttachmentFromFile() throws Exception {
 		long userId = _user.getUserId();
 
 		long groupId = _group.getGroupId();
@@ -119,7 +119,7 @@ public class BackgroundTaskLocalServiceTest {
 	}
 
 	@Test
-	public void testAddBackgroundTaskAttachmentByInputStream()
+	public void testAddBackgroundTaskAttachmentFromInputStream()
 		throws Exception {
 
 		long userId = _user.getUserId();
@@ -149,7 +149,7 @@ public class BackgroundTaskLocalServiceTest {
 	}
 
 	@Test
-	public void testAddBackgroundTaskWithBackgroundTask() throws Exception {
+	public void testAddBackgroundTaskFromBackgroundTask() throws Exception {
 		long userId = _user.getUserId();
 
 		long groupId = _group.getGroupId();

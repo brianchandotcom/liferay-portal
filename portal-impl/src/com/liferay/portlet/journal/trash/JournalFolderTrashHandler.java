@@ -23,6 +23,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRenderer;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -235,7 +236,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		JournalFolderLocalServiceUtil.updateJournalFolder(folder);
 	}
 
-	protected void checkRestorableEntry(
+	protected void checkDuplicateEntry(
 			long classPK, long trashEntryId, long containerModelId,
 			String originalTitle, String newName)
 		throws PortalException, SystemException {
@@ -259,6 +260,30 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			ree.setTrashEntryId(trashEntryId);
 
 			throw ree;
+		}
+	}
+
+	protected void checkRestorableEntry(
+			long classPK, long trashEntryId, long containerModelId,
+			String originalTitle, String newName)
+		throws PortalException, SystemException {
+
+		checkValidContainer(classPK, containerModelId);
+
+		checkDuplicateEntry(
+			classPK, trashEntryId, containerModelId, originalTitle, newName);
+	}
+
+	protected void checkValidContainer(long classPK, long containerModelId)
+		throws PortalException, SystemException {
+
+		try {
+			JournalFolderLocalServiceUtil.validateFolderDDMStructures(
+				classPK, containerModelId);
+		}
+		catch (InvalidDDMStructureException idse) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_CONTAINER);
 		}
 	}
 

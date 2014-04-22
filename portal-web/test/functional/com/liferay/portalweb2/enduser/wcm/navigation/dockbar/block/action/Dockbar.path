@@ -449,6 +449,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_SITES_SITE_ORGANIZATION</td>
+	<td>//li[2]/a/span[@class='site-name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

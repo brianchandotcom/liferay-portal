@@ -26,6 +26,7 @@ import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
@@ -138,6 +139,12 @@ public class UpgradePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+
+		List<String> modelActions =
+			ResourceActionsUtil.getModelResourceActions(Role.class.getName());
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			Role.class.getName(), modelActions);
 
 		// LPS-14202 and LPS-17841
 

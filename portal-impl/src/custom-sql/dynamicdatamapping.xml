@@ -56,7 +56,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
-				{DDMStructure.*}
+				DISTINCT {DDMStructure.*}
 			FROM
 				DDMStructure
 			WHERE

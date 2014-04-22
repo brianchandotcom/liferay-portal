@@ -15,6 +15,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +38,7 @@ import java.net.URL;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -146,6 +148,13 @@ public class BackgroundTaskLocalServiceTest {
 
 		Assert.assertEquals(
 			backgroundTaskWithAttachedFile.getAttachmentsFileEntriesCount(), 1);
+
+		List<FileEntry> attachmentsFileEntries =
+			backgroundTaskWithAttachedFile.getAttachmentsFileEntries();
+
+		FileEntry attachment = attachmentsFileEntries.get(0);
+
+		Assert.assertEquals(_FILE_NAME, attachment.getTitle());
 	}
 
 	@Test

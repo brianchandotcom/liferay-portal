@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -39,9 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	MBMessageLocalServiceUtil.class, PortalSocketPermission.class
-})
+@PrepareForTest({MBMessageLocalServiceUtil.class, PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
 public class LinkbackConsumerUtilTest extends PowerMockito {
 
@@ -65,6 +63,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 
 		LinkbackConsumerUtil.addNewTrackback(
 			messageId, "__url__", "__entryUrl__");
+
 		LinkbackConsumerUtil.verifyNewTrackbacks();
 
 		Mockito.verify(
@@ -88,12 +87,14 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			"__URLtoString_containing_**entryUrl**__"
 		);
 
-		LinkbackConsumerUtil.addNewTrackback(0L, "__url__", "**entryUrl**");
+		long messageId = 0;
+
+		LinkbackConsumerUtil.addNewTrackback(
+			messageId, "__url__", "**entryUrl**");
+
 		LinkbackConsumerUtil.verifyNewTrackbacks();
 
-		Mockito.verifyZeroInteractions(
-			_mbMessageLocalService
-		);
+		Mockito.verifyZeroInteractions(_mbMessageLocalService);
 
 		Mockito.verify(
 			_http
@@ -116,6 +117,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 
 		LinkbackConsumerUtil.addNewTrackback(
 			messageId, "__PROBLEM_URL__", "__entryUrl__");
+
 		LinkbackConsumerUtil.verifyNewTrackbacks();
 
 		Mockito.verify(
@@ -132,19 +134,17 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 	}
 
 	protected void setUpHttp() {
+		mockStatic(PortalSocketPermission.class, new DoesNothing());
+
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(_http);
-
-		PowerMockito.mockStatic(
-			PortalSocketPermission.class, new DoesNothing());
 	}
 
 	protected void setUpMessageBoards() {
-		PowerMockito.mockStatic(
-			MBMessageLocalServiceUtil.class, new CallsRealMethods());
+		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
 
-		PowerMockito.stub(
+		stub(
 			method(MBMessageLocalServiceUtil.class, "getService")
 		).toReturn(
 			_mbMessageLocalService

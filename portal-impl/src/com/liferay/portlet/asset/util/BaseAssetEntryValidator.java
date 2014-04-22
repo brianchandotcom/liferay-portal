@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
@@ -77,7 +78,8 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 	}
 
 	protected void validate(
-			long classNameId, long[] categoryIds, AssetVocabulary vocabulary)
+			long classNameId, final long[] categoryIds,
+			AssetVocabulary vocabulary)
 		throws PortalException, SystemException {
 
 		UnicodeProperties settingsProperties =
@@ -117,41 +119,32 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 				vocabulary.getVocabularyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
+		PredicateFilter<AssetCategory> existingCategoryFilter =
+			new PredicateFilter<AssetCategory>() {
+
+				@Override
+				public boolean filter(AssetCategory assetCategory) {
+					return ArrayUtil.contains(
+						categoryIds, assetCategory.getCategoryId());
+				}
+
+			};
+
 		if ((requiredClassNameIds.length > 0) &&
 			((requiredClassNameIds[0] ==
 				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
 			 ArrayUtil.contains(requiredClassNameIds, classNameId))) {
 
-			boolean found = false;
-
-			for (AssetCategory category : categories) {
-				if (ArrayUtil.contains(categoryIds, category.getCategoryId())) {
-					found = true;
-
-					break;
-				}
-			}
-
-			if (!found && !categories.isEmpty()) {
+			if (!ListUtil.exists(categories, existingCategoryFilter)) {
 				throw new AssetCategoryException(
 					vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
 			}
 		}
 
 		if (!vocabulary.isMultiValued()) {
-			boolean duplicate = false;
-
-			for (AssetCategory category : categories) {
-				if (ArrayUtil.contains(categoryIds, category.getCategoryId())) {
-					if (!duplicate) {
-						duplicate = true;
-					}
-					else {
-						throw new AssetCategoryException(
-							vocabulary,
-							AssetCategoryException.TOO_MANY_CATEGORIES);
-					}
-				}
+			if (ListUtil.count(categories, existingCategoryFilter) > 1) {
+				throw new AssetCategoryException(
+					vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
 			}
 		}
 	}

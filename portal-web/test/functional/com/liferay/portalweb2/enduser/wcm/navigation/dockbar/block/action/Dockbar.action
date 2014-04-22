@@ -67,6 +67,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="PAGE_INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="ADD">
 			<execute function="Click#clickAtSidebarClickAt" />

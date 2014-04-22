@@ -102,4 +102,35 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 	</command>
+
+	<command name="ResetPageChanges" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="2" />
+			<var name="columnNumberTo" value="1" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="SiteTemplates#resetPageChanges">
+			<var name="columnNumberTo" value="1" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewResetPageChanges">
+			<var name="columnNumberFrom" value="2" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+	</command>
 </definition>

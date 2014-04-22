@@ -151,10 +151,7 @@
 		<execute action="Home#assertTextEquals" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
 		<execute action="Home#dragAndDrop" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" locator-key2="PAGE_COLUMN_${columnNumberTo}" value1="${portletName}" />
 		<execute action="Home#assertTextEquals" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
-
-		<execute macro="Staging#undoStagingPageVersioningPG" />
-
-		<execute action="Home#assertTextEquals" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="flagAllDisplaySettingsCheckboxes">

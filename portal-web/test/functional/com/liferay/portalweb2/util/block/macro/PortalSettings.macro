@@ -430,6 +430,12 @@
 		<execute action="CPPortalsettingsDisplaysettings#assertSelectedLabel" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>
 
+	<command name="viewDefaultLanguageCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<execute action="CPPortalsettingsDisplaysettings#assertSelectedLabel" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
+	</command>
+
 	<command name="viewDefaultUserAssociationsCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
 

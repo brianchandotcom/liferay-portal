@@ -123,15 +123,16 @@ public class MethodParameter {
 		char c = signature.charAt(0);
 
 		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
-			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'Z')) {
-		}
-		else if (c == 'L') {
-			className = className.substring(1, className.length() - 1);
-		}
-		else if (c == 'V') {
+			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
+			(c == 'Z')) {
+
 			if (signature.length() != 1) {
 				throw new IllegalArgumentException("Invalid: " + signature);
 			}
+		}
+		else if (c == 'L') {
+			className = className.substring(1, className.length() - 1);
+			className = className.replace('/', '.');
 		}
 		else if (c == '[') {
 			className = className.replace('/', '.');
@@ -155,6 +156,14 @@ public class MethodParameter {
 
 		for (int i = 0; i < signatures.length; i++) {
 			String className = _getClassName(signatures[i]);
+
+			if (className.startsWith(StringPool.OPEN_BRACKET)) {
+				try {
+					types[i] = Class.forName(className, true, contextClassLoader);
+					continue;
+				} catch (ClassNotFoundException ex) {
+				}
+			}
 
 			types[i] = contextClassLoader.loadClass(className);
 		}

@@ -206,7 +206,7 @@ if (summary != null) {
 
 							PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-							categoryURL.setParameter(Field.ASSET_CATEGORY_TITLES, assetCategory.getTitle(LocaleUtil.getDefault()));
+							categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));
 						%>
 
 							<c:if test="<%= i == 0 %>">

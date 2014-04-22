@@ -64,6 +64,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE</td>
+	<td>//input[@id='__161__displayDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DAY</td>
+	<td>//input[@id='__161__displayDateDay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_MONTH</td>
+	<td>//input[@id='__161__displayDateMonth']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_YEAR</td>
+	<td>//input[@id='__161__displayDateYear']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td></td>

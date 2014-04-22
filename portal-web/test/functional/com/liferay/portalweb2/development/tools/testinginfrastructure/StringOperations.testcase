@@ -21,6 +21,14 @@
 		</execute>
 	</command>
 
+	<command name="GetIPAddress" priority="5">
+		<echo message="Test getIPAddress()" />
+
+		<var name="ipAddress" value="${getIPAddress()}" />
+
+		<echo message="${ipAddress}" />
+	</command>
+
 	<command name="Increment" priority="5">
 		<echo message="Test increment()" />
 
@@ -39,14 +47,6 @@
 			<var name="actual" value="${number?increment()}" />
 			<var name="expected" value="2" />
 		</execute>
-	</command>
-
-	<command name="IPAddress" priority="5">
-		<echo message="Test getIPAddress()" />
-
-		<var name="ipAddress" value="${getIPAddress()}" />
-
-		<echo message="${ipAddress}" />
 	</command>
 
 	<command name="Length" priority="5">

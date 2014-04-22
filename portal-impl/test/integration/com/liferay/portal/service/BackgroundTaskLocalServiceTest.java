@@ -67,20 +67,17 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAddBackgroundTask() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, taskContextMap, new ServiceContext());
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, taskContextMap,
+				new ServiceContext());
 
 		Assert.assertNotNull(backgroundTask);
-		Assert.assertEquals(userId, backgroundTask.getUserId());
-		Assert.assertEquals(groupId, backgroundTask.getGroupId());
+		Assert.assertEquals(_user.getUserId(), backgroundTask.getUserId());
+		Assert.assertEquals(_group.getGroupId(), backgroundTask.getGroupId());
 		Assert.assertEquals(_BACKGROUND_TASK_NAME, backgroundTask.getName());
 
 		Assert.assertEquals(
@@ -93,14 +90,10 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAddBackgroundTaskAttachmentFromFile() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
 				new ServiceContext());
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
@@ -110,7 +103,8 @@ public class BackgroundTaskLocalServiceTest {
 		File file = new File(url.toURI());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), _FILE_NAME, file);
+			_user.getUserId(), backgroundTask.getBackgroundTaskId(), _FILE_NAME,
+			file);
 
 		BackgroundTask backgroundTaskWithAttachedFile =
 			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
@@ -124,14 +118,10 @@ public class BackgroundTaskLocalServiceTest {
 	public void testAddBackgroundTaskAttachmentFromInputStream()
 		throws Exception {
 
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
 				new ServiceContext());
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
@@ -139,7 +129,7 @@ public class BackgroundTaskLocalServiceTest {
 		InputStream inputStream = getClass().getResourceAsStream(_FILE_PATH);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), _FILE_NAME,
+			_user.getUserId(), backgroundTask.getBackgroundTaskId(), _FILE_NAME,
 			inputStream);
 
 		BackgroundTask backgroundTaskWithAttachedFile =
@@ -159,14 +149,10 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAddBackgroundTaskFromBackgroundTask() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		BackgroundTask backgroundTaskImpl = new BackgroundTaskImpl();
 
-		backgroundTaskImpl.setUserId(userId);
-		backgroundTaskImpl.setGroupId(groupId);
+		backgroundTaskImpl.setUserId(_user.getUserId());
+		backgroundTaskImpl.setGroupId(_group.getGroupId());
 		backgroundTaskImpl.setName(_BACKGROUND_TASK_NAME);
 		backgroundTaskImpl.setTaskExecutorClassName(
 			_TASK_EXECUTOR_CLASS.getCanonicalName());
@@ -182,8 +168,8 @@ public class BackgroundTaskLocalServiceTest {
 				backgroundTaskImpl);
 
 		Assert.assertNotNull(backgroundTask);
-		Assert.assertEquals(userId, backgroundTask.getUserId());
-		Assert.assertEquals(groupId, backgroundTask.getGroupId());
+		Assert.assertEquals(_user.getUserId(), backgroundTask.getUserId());
+		Assert.assertEquals(_group.getGroupId(), backgroundTask.getGroupId());
 		Assert.assertEquals(_BACKGROUND_TASK_NAME, backgroundTask.getName());
 		Assert.assertEquals(
 			_TASK_EXECUTOR_CLASS.getCanonicalName(),
@@ -195,16 +181,13 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAmendBackgroundTaskFailedStatus() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -226,16 +209,13 @@ public class BackgroundTaskLocalServiceTest {
 	public void testAmendBackgroundTaskNotFailedNotSuccessful()
 		throws Exception {
 
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -267,16 +247,13 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAmendBackgroundTaskSuccessfulStatus() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -296,16 +273,13 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAmendBackgroundTaskTaskContextMap() throws Exception {
-		long userId = _user.getUserId();
-
-		long groupId = _group.getGroupId();
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
-				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
+				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
+				null, _TASK_EXECUTOR_CLASS, getTaskContextMap(),
+				serviceContext);
 
 		Map map = getTaskContextMap();
 

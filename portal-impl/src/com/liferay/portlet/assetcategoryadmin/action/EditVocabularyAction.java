@@ -25,14 +25,14 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -91,60 +91,36 @@ public class EditVocabularyAction extends PortletAction {
 	protected UnicodeProperties getSettingsProperties(
 		ActionRequest actionRequest) {
 
-		UnicodeProperties settingsProperties = new UnicodeProperties();
-
-		boolean multiValued = ParamUtil.getBoolean(
-			actionRequest, "multiValued");
-
-		settingsProperties.setProperty(
-			"multiValued", String.valueOf(multiValued));
-
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
-		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
-		Set<String> selectedClassTypeIds = new LinkedHashSet<String>();
-		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
+		List<Long> classNameIds = new ArrayList<Long>(indexes.length);
+		List<Long> classTypeIds = new ArrayList<Long>(indexes.length);
+		List<Boolean> required = new ArrayList<Boolean>(indexes.length);
 
 		for (int index : indexes) {
-			long classNameId = ParamUtil.getLong(
+			Long classNameId = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
-			long classTypeId = ParamUtil.getLong(
-				actionRequest,
-				"classNameId" + index + "-subtype-" + classNameId);
+			classNameIds.add(classNameId);
 
-			boolean required = ParamUtil.getBoolean(
-				actionRequest, "required" + index);
+			classTypeIds.add(
+				ParamUtil.getLong(
+					actionRequest,
+					"subtype" + classNameId + "-classNameId" + index));
 
-			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
-				selectedClassNameIds.clear();
-				selectedClassNameIds.add(classNameId);
-				selectedClassTypeIds.add(classNameId + ":" + classTypeId);
-
-				if (required) {
-					requiredClassNameIds.clear();
-					requiredClassNameIds.add(classNameId);
-				}
-
-				break;
-			}
-			else {
-				selectedClassNameIds.add(classNameId);
-				selectedClassTypeIds.add(classNameId + ":" + classTypeId);
-
-				if (required) {
-					requiredClassNameIds.add(classNameId);
-				}
-			}
+			required.add(
+				ParamUtil.getBoolean(actionRequest, "required" + index));
 		}
 
-		settingsProperties.setProperty(
-			"selectedClassNameIds", StringUtil.merge(selectedClassNameIds));
-		settingsProperties.setProperty(
-			"selectedClassTypeIds", StringUtil.merge(selectedClassTypeIds));
-		settingsProperties.setProperty(
-			"requiredClassNameIds", StringUtil.merge(requiredClassNameIds));
+		AssetVocabularySettingsProperties settingsProperties =
+			new AssetVocabularySettingsProperties();
+
+		settingsProperties.setMultiValued(
+			ParamUtil.getBoolean(actionRequest, "multiValued"));
+
+		settingsProperties.addAssociatedAssets(
+			classNameIds, classTypeIds, required);
 
 		return settingsProperties;
 	}

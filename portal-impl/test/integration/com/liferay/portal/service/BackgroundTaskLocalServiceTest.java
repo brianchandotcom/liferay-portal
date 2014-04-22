@@ -15,6 +15,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
@@ -84,7 +85,8 @@ public class BackgroundTaskLocalServiceTest {
 			_TASK_EXECUTOR_CLASS.getCanonicalName(),
 			backgroundTask.getTaskExecutorClassName());
 
-		assertMapEquals(taskContextMap, backgroundTask.getTaskContextMap());
+		AssertUtils.assertEquals(
+			taskContextMap, backgroundTask.getTaskContextMap());
 	}
 
 	@Test
@@ -178,7 +180,8 @@ public class BackgroundTaskLocalServiceTest {
 			_TASK_EXECUTOR_CLASS.getCanonicalName(),
 			backgroundTask.getTaskExecutorClassName());
 
-		assertMapEquals(taskContextMap, backgroundTask.getTaskContextMap());
+		AssertUtils.assertEquals(
+			taskContextMap, backgroundTask.getTaskContextMap());
 	}
 
 	@Test
@@ -290,7 +293,7 @@ public class BackgroundTaskLocalServiceTest {
 				backgroundTask.getBackgroundTaskId(), map,
 				backgroundTask.getStatus(), serviceContext);
 
-		assertMapEquals(ammendBackgroundTask.getTaskContextMap(), map);
+		AssertUtils.assertEquals(ammendBackgroundTask.getTaskContextMap(), map);
 	}
 
 	@Test
@@ -302,14 +305,6 @@ public class BackgroundTaskLocalServiceTest {
 				33L, null, 0, serviceContext);
 
 		Assert.assertNull(amendBackgroundTask);
-	}
-
-	protected void assertMapEquals(Map map1, Map map2) {
-		Assert.assertEquals(map1.size(), map2.size());
-
-		for (Object object :map1.keySet()) {
-			Assert.assertEquals(map1.get(object), map2.get(object));
-		}
 	}
 
 	protected Map<String, Serializable> getTaskContextMap() throws Exception {

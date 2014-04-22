@@ -70,7 +70,7 @@ public class BackgroundTaskLocalServiceTest {
 
 		long groupId = _group.getGroupId();
 
-		Map<String, Serializable> taskContextMap = getRandomTaskContextMap();
+		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
@@ -98,14 +98,14 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(),
 				new ServiceContext());
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
 
-		URL urlFile = getClass().getResource(_FILE_PATH);
+		URL url = getClass().getResource(_FILE_PATH);
 
-		File file = new File(urlFile.toURI());
+		File file = new File(url.toURI());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), _FILE_NAME, file);
@@ -129,7 +129,7 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(),
 				new ServiceContext());
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
@@ -162,7 +162,7 @@ public class BackgroundTaskLocalServiceTest {
 		backgroundTaskImpl.setTaskExecutorClassName(
 			_TASK_EXECUTOR_CLASS.getCanonicalName());
 
-		Map<String, Serializable> taskContextMap = getRandomTaskContextMap();
+		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
 		String taskContext = JSONFactoryUtil.serialize(taskContextMap);
 
@@ -194,8 +194,7 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
-				serviceContext);
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -226,8 +225,7 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
-				serviceContext);
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -256,8 +254,7 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
-				serviceContext);
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_NEW, backgroundTask.getStatus());
@@ -286,10 +283,9 @@ public class BackgroundTaskLocalServiceTest {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				userId, groupId, _BACKGROUND_TASK_NAME, null,
-				_TASK_EXECUTOR_CLASS, getRandomTaskContextMap(),
-				serviceContext);
+				_TASK_EXECUTOR_CLASS, getTaskContextMap(), serviceContext);
 
-		Map map = getRandomTaskContextMap();
+		Map map = getTaskContextMap();
 
 		BackgroundTask ammendBackgroundTask =
 			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
@@ -318,9 +314,7 @@ public class BackgroundTaskLocalServiceTest {
 		}
 	}
 
-	protected Map<String, Serializable> getRandomTaskContextMap()
-		throws Exception {
-
+	protected Map<String, Serializable> getTaskContextMap() throws Exception {
 		Map<String, Serializable> taskContext =
 			new HashMap<String, Serializable>();
 

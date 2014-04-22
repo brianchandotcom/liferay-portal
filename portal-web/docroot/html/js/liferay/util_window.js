@@ -239,6 +239,8 @@ AUI.add(
 
 					if (dialogIframeConfig) {
 						modal.plug(A.Plugin.DialogIframe, dialogIframeConfig);
+
+						modal.get('boundingBox').addClass('dialog-iframe-modal');
 					}
 
 					if (!Lang.isValue(config.title)) {

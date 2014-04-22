@@ -73,7 +73,7 @@ if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOK
 
 String[] folderColumns = bookmarksSettings.getFolderColumns();
 
-if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (!portletId.equals(PortletKeys.BOOKMARKS) && !portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
@@ -85,7 +85,7 @@ if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOK
 
 String[] entryColumns = bookmarksSettings.getEntryColumns();
 
-if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
+if (!portletId.equals(PortletKeys.BOOKMARKS) && !portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
 

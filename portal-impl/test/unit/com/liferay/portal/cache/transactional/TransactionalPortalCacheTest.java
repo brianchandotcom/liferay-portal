@@ -443,7 +443,7 @@ public class TransactionalPortalCacheTest {
 		}
 		else {
 			Assert.assertEquals(_KEY_2, _recordCacheListener._key);
-			Assert.assertEquals(_VALUE_2, _recordCacheListener._value);
+			Assert.assertEquals(_VALUE_1, _recordCacheListener._value);
 		}
 
 		_recordCacheListener.reset();

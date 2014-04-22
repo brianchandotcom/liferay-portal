@@ -6,7 +6,6 @@
 	<var name="portletName" value="Calendar" />
 
 	<tear-down>
-
 		<if>
 			<condition action="PGCalendar#isElementPresent" locator-key1="SCHEDULER_EVENT_GENERIC" />
 			<then>

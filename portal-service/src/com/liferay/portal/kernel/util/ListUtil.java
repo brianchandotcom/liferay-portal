@@ -60,6 +60,24 @@ public class ListUtil {
 		copy.addAll(master);
 	}
 
+	public static <E> int count(List<? extends E> list,
+		PredicateFilter<E> predicateFilter) {
+
+		if (isEmpty(list)) {
+			return 0;
+		}
+
+		int counter = 0;
+
+		for (E element : list) {
+			if (predicateFilter.filter(element)) {
+				++counter;
+			}
+		}
+
+		return counter;
+	}
+
 	public static <E> void distinct(
 		List<? extends E> list, Comparator<E> comparator) {
 
@@ -86,6 +104,22 @@ public class ListUtil {
 
 	public static void distinct(List<?> list) {
 		distinct(list, null);
+	}
+
+	public static <E> boolean exists(List<? extends E> list,
+		PredicateFilter<E> predicateFilter) {
+
+		if (isEmpty(list)) {
+			return false;
+		}
+
+		for (E element : list) {
+			if (predicateFilter.filter(element)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static <T> List<T> filter(

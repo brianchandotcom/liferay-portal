@@ -2583,6 +2583,8 @@ public interface PropsKeys {
 
 	public static final String TRASH_ENTRIES_MAX_AGE = "trash.entries.max.age";
 
+	public static final String TRASH_ENTRIES_MAX_CLEAN_COUNT = "trash.entries.max.clean.count";
+
 	public static final String TRASH_ENTRY_CHECK_INTERVAL = "trash.entry.check.interval";
 
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";

@@ -259,7 +259,8 @@ public class BackgroundTaskLocalServiceTest {
 
 		BackgroundTask amendBackgroundTask =
 			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
-				33L, null, 0, serviceContext);
+				Long.MIN_VALUE, null, BackgroundTaskConstants.STATUS_NEW,
+				serviceContext);
 
 		Assert.assertNull(amendBackgroundTask);
 	}

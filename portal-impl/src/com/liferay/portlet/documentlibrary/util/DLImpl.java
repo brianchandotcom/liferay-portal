@@ -498,7 +498,7 @@ public class DLImpl implements DL {
 			layout, portletId);
 
 		Settings parameterMapSettings = new ParameterMapSettings(
-			settings, request.getParameterMap());
+			request.getParameterMap(), settings);
 
 		return new DLPortletInstanceSettings(parameterMapSettings);
 	}

@@ -1,4 +1,8 @@
-package ${packagePath}.service.persistence;
+<#if osgiModule>
+	package ${packagePath}.service.persistence.impl;
+<#else>
+	package ${packagePath}.service.persistence;
+</#if>
 
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.service.${entity.name}LocalServiceUtil;

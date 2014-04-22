@@ -20,36 +20,25 @@
 <liferay-ui:error key="restrictedRelationInvalid" message="please-restrict-by-site-or-type" />
 <liferay-ui:error key="selectAtLeastOneRelation" message="please-select-at-least-one-relation-type" />
 
-<h3><liferay-ui:message key="relations" /><h3>
+<h3><liferay-ui:message key="relations" /></h3>
 
 <%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
-
-boolean interactionsEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsEnabled", true);
-
-boolean interactionsAnyUser = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsAnyUser", true);
-
-boolean interactionsSitesEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsSitesEnabled", true);
-
-boolean interactionsSocialRelationTypesEnabled = PrefsParamUtil.getBoolean(companyPortletPreferences, request, "interactionsSocialRelationTypesEnabled", true);
-
-String interactionsSocialRelationTypesString = companyPortletPreferences.getValue("interactionsSocialRelationTypes", StringPool.BLANK);
-int[] interactionsSocialRelationTypes = GetterUtil.getIntegerValues(StringUtil.split(interactionsSocialRelationTypesString));
+SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigurationUtil.getSocialRelationConfiguration(company.getCompanyId(), request);
 %>
 
-<aui:input checked="<%= interactionsEnabled %>" label="enable-interactions" name="settings--interactionsEnabled--" type="checkbox" value="<%= interactionsEnabled %>" />
+<aui:input checked="<%= socialRelationConfiguration.isInteractionsEnabled() %>" label="enable-interactions" name="settings--interactionsEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isInteractionsEnabled() %>" />
 
 <div class="interactions-settings" id="<portlet:namespace />interactionsSettings">
-	<aui:input checked="<%= interactionsAnyUser %>" id="interactionsAnyUser" label="each-user-can-interact-with-any-user" name="settings--interactionsAnyUser--" type="radio" value="<%= true %>" />
+	<aui:input checked="<%= socialRelationConfiguration.isInteractionsAnyUserEnabled() %>" id="interactionsAnyUser" label="each-user-can-interact-with-any-user" name="settings--interactionsAnyUserEnabled--" type="radio" value="<%= true %>" />
 
-	<aui:input checked="<%= !interactionsAnyUser %>" id="interactionsChooseUsers" label="each-user-can-interact-only-with" name="settings--interactionsAnyUser--" type="radio" value="<%= false %>" />
+	<aui:input checked="<%= !socialRelationConfiguration.isInteractionsAnyUserEnabled() %>" id="interactionsChooseUsers" label="each-user-can-interact-only-with" name="settings--interactionsAnyUserEnabled--" type="radio" value="<%= false %>" />
 
 	<div class="interactions-users" id="<portlet:namespace />interactionsUsersWrapper">
-		<aui:input checked="<%= interactionsSitesEnabled %>" label="users-that-belong-to-the-sites-that-the-user-also-belongs-to" name="settings--interactionsSitesEnabled--" type="checkbox" value="<%= interactionsSitesEnabled %>" />
+		<aui:input checked="<%= socialRelationConfiguration.isInteractionsSitesEnabled() %>" label="users-that-belong-to-the-sites-that-the-user-also-belongs-to" name="settings--interactionsSitesEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isInteractionsSitesEnabled() %>" />
 
-		<aui:input checked="<%= interactionsSocialRelationTypesEnabled %>" label="users-with-the-following-social-relations" name="settings--interactionsSocialRelationTypesEnabled--" type="checkbox" value="<%= interactionsSocialRelationTypesEnabled %>" />
+		<aui:input checked="<%= socialRelationConfiguration.isInteractionsSocialRelationTypesEnabled() %>" label="users-with-the-following-social-relations" name="settings--interactionsSocialRelationTypesEnabled--" type="checkbox" value="<%= socialRelationConfiguration.isInteractionsSocialRelationTypesEnabled() %>" />
 
-		<aui:input name="settings--interactionsSocialRelationTypes--" type="hidden" value="<%= interactionsSocialRelationTypesString %>" />
+		<aui:input name="settings--interactionsSocialRelationTypes--" type="hidden" value="<%= socialRelationConfiguration.getInteractionsSocialRelationTypes() %>" />
 
 		<%
 		List<Integer> allSocialRelationTypes = SocialRelationConstants.getAllSocialRelationTypes();
@@ -64,7 +53,7 @@ int[] interactionsSocialRelationTypes = GetterUtil.getIntegerValues(StringUtil.s
 
 				List leftList = new ArrayList();
 
-				int[] socialRelationTypesArray = interactionsSocialRelationTypes;
+				int[] socialRelationTypesArray = socialRelationConfiguration.getInteractionsSocialRelationTypesArray();
 
 				for (int socialRelationType : socialRelationTypesArray) {
 					leftList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationConstants.getTypeLabel(socialRelationType))));
@@ -99,7 +88,7 @@ int[] interactionsSocialRelationTypes = GetterUtil.getIntegerValues(StringUtil.s
 	Liferay.Util.toggleBoxes('<portlet:namespace />interactionsSocialRelationTypesEnabledCheckbox','<portlet:namespace />socialRelations');
 
 	Liferay.Util.toggleRadio('<portlet:namespace />interactionsAnyUser', '', '<portlet:namespace />interactionsUsersWrapper');
-	Liferay.Util.toggleRadio('<portlet:namespace />interactionsChooseUsers','<portlet:namespace />interactionsUsersWrapper', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />interactionsChooseUsers', '<portlet:namespace />interactionsUsersWrapper', '');
 
 	var form = A.one('#<portlet:namespace />fm');
 

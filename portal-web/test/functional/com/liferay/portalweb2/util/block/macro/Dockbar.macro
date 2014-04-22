@@ -16,4 +16,9 @@
 		<execute action="Dockbar#assertTextEquals" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_PAGE_LINK" value1="Page" />
 	</command>
+
+	<command name="viewMySitesDropDownSiteName">
+		<execute action="Dockbar#click" locator-key1="MY_SITES" value1="My Sites" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES_SITE_ORGANIZATION" value1="${siteName}" />
+	</command>
 </definition>

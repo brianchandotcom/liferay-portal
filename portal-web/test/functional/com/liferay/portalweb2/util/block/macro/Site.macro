@@ -950,6 +950,11 @@
 		</if>
 	</command>
 
+	<command name="viewPrivateVirtaulHostUrlUserLoginRedirect">
+		<execute action="PGLogin#assertTextEquals" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#assertElementPresent" locator-key1="PASSWORD_FIELD" />
+	</command>
+
 	<command name="viewSiteAdminPermissionsCP">
 		<var name="key_siteName" value="${siteName}" />
 

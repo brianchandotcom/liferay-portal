@@ -188,6 +188,27 @@
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPREADSHEET_EDIT_CONTROLS-->
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST</td>
+	<td>//label[contains(.,'More rows at bottom.')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

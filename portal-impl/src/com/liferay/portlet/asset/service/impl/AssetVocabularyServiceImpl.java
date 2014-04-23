@@ -190,7 +190,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
-		return AssetUtil.filterVocabularies(vocabularies, className);
+		return AssetUtil.filterVocabularies(vocabularies, className, 0);
 	}
 
 	@Override

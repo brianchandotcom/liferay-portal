@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import flexjson.JSONContext;
 import flexjson.PathExpression;
@@ -148,7 +149,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			List<Map<String, String>> parametersList =
 				new ArrayList<Map<String, String>>(methodParameters.length);
 
-			for (MethodParameter methodParameter : methodParameters) {
+			for (int i = 0; i < methodParameters.length; i++) {
+				MethodParameter methodParameter = methodParameters[i];
+
 				Class<?>[] genericTypes = null;
 
 				try {
@@ -164,8 +167,17 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				parameterMap.put("name", methodParameter.getName());
 				parameterMap.put(
 					"type",
-					_formatType(methodParameter.getType(), genericTypes,
-					false));
+					_formatType(methodParameter.getType(), genericTypes, false)
+				);
+
+				if (javadocMethod != null) {
+					String parameterComment = javadocMethod.getParameterComment(
+						i);
+
+					if (!Validator.isBlank(parameterComment)) {
+						parameterMap.put("description", parameterComment);
+					}
+				}
 
 				parametersList.add(parameterMap);
 			}
@@ -185,6 +197,14 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 					actionMethod.getReturnType(),
 					_getGenericReturnTypes(jsonWebServiceActionMapping), true));
 
+			if (javadocMethod != null) {
+				String returnComment = javadocMethod.getReturnComment();
+
+				if (!Validator.isBlank(returnComment)) {
+					returnsMap.put("description", returnComment);
+				}
+			}
+
 			jsonWebServiceActionMappingMap.put("returns", returnsMap);
 
 			jsonWebServiceActionMappingMaps.add(jsonWebServiceActionMappingMap);
@@ -195,14 +215,6 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private Map<String, Map<String, String>> _buildPropertiesMap(
 		Class<?> type) {
-
-		Package pkg = type.getPackage();
-
-		String packageName = pkg.getName();
-
-		if (packageName.startsWith("java.")) {
-			return null;
-		}
 
 		if (type.isInterface()) {
 			try {

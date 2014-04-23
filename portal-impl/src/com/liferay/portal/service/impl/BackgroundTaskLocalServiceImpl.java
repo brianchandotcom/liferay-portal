@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -85,9 +84,7 @@ public class BackgroundTaskLocalServiceImpl
 		backgroundTask.setTaskExecutorClassName(taskExecutorClass.getName());
 
 		if (taskContextMap != null) {
-			String taskContext = JSONFactoryUtil.serialize(taskContextMap);
-
-			backgroundTask.setTaskContext(taskContext);
+			backgroundTask.setTaskContextMap(taskContextMap);
 		}
 
 		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_NEW);
@@ -169,9 +166,7 @@ public class BackgroundTaskLocalServiceImpl
 		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		if (taskContextMap != null) {
-			String taskContext = JSONFactoryUtil.serialize(taskContextMap);
-
-			backgroundTask.setTaskContext(taskContext);
+			backgroundTask.setTaskContextMap(taskContextMap);
 		}
 
 		if ((status == BackgroundTaskConstants.STATUS_FAILED) ||

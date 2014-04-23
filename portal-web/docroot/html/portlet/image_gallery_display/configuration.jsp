@@ -18,6 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
+IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings, dlSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -46,39 +47,13 @@ dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.get
 				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>" />
 
 				<aui:field-wrapper label="show-media-type">
-
-					<%
-
-					// Left list
-
-					List leftList = new ArrayList();
-
-					String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
-
-					for (String mimeType : mediaGalleryMimeTypes) {
-						leftList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
-					}
-
-					// Right list
-
-					List rightList = new ArrayList();
-
-					Set<String> allMediaGalleryMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
-
-					for (String mimeType : allMediaGalleryMimeTypes) {
-						if (Arrays.binarySearch(mediaGalleryMimeTypes, mimeType) < 0) {
-							rightList.add(new KeyValuePair(mimeType, LanguageUtil.get(pageContext, mimeType)));
-						}
-					}
-					%>
-
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentMimeTypes"
-						leftList="<%= leftList %>"
+						leftList="<%= igConfigurationDisplayContext.getCurrentMimeTypes() %>"
 						leftReorder="true"
 						leftTitle="current"
 						rightBoxName="availableMimeTypes"
-						rightList="<%= rightList %>"
+						rightList="<%= igConfigurationDisplayContext.getAvailableMimeTypes() %>"
 						rightTitle="available"
 					/>
 				</aui:field-wrapper>

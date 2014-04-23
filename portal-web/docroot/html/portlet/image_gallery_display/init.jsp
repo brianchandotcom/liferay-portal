@@ -33,6 +33,7 @@ page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
+page import="com.liferay.portlet.imagegallerydisplay.context.IGConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 
 <%

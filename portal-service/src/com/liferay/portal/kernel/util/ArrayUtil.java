@@ -848,6 +848,22 @@ public class ArrayUtil {
 		return set.toArray(new String[set.size()]);
 	}
 
+	public static <T> boolean exists(
+		T[] array, PredicateFilter<T> predicateFilter) {
+
+		if (isEmpty(array)) {
+			return false;
+		}
+
+		for (T o : array) {
+			if (predicateFilter.filter(o)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean[] filter(
 		boolean[] array, PredicateFilter<Boolean> predicateFilter) {
 

@@ -9,6 +9,7 @@
 
 	<target name="build-taglibs">
 		<delete file="${project.dir}/util-taglib/src/META-INF/aui.tld" failonerror="false" />
+		<delete file="${project.dir}/util-taglib/src/META-INF/ddm.tld" failonerror="false" />
 
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"

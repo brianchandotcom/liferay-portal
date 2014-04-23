@@ -96,10 +96,11 @@ boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+%>
 
-DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEntryActionsDisplayContext(request, fileEntry, fileVersion);
-
-boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisible();
+<%
+DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEntryActionsDisplayContext(request, dlPortletInstanceSettings, fileEntry, fileVersion);
+DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayContext.getDLActionsDisplayContext();
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -174,7 +175,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 
 			<div class="body-row">
 				<div class="document-info">
-					<c:if test="<%= showAssetMetadata %>">
+					<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() %>">
 						<h2 class="document-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
 							<%= HtmlUtil.escape(documentTitle) %>
 						</h2>
@@ -233,7 +234,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 						<%= HtmlUtil.escape(fileVersion.getDescription()) %>
 					</span>
 
-					<c:if test="<%= showAssetMetadata && fileEntry.isSupportsSocial() %>">
+					<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() && fileEntry.isSupportsSocial() %>">
 						<div class="lfr-asset-categories">
 							<liferay-ui:asset-categories-summary
 								className="<%= DLFileEntryConstants.getClassName() %>"
@@ -262,7 +263,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 					<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
 				</c:if>
 
-				<c:if test="<%= showAssetMetadata && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
+				<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
@@ -284,7 +285,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 
 		<aui:col cssClass="lfr-asset-column-details context-pane" last="<%= true %>" width="<%= 30 %>">
 			<div class="body-row asset-details">
-				<c:if test="<%= showAssetMetadata %>">
+				<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() %>">
 					<div class="asset-details-content">
 						<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
@@ -485,7 +486,7 @@ boolean showAssetMetadata = dlFileEntryActionsDisplayContext.isAssetMetadataVisi
 						}
 						%>
 
-						<c:if test="<%= showAssetMetadata %>">
+						<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() %>">
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 								<%

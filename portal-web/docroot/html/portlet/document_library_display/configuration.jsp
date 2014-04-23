@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-dlActionsDisplayContext = new DLActionsDisplayContext(DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request), request);
+dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
 
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
@@ -32,6 +32,8 @@ try {
 catch (NoSuchFolderException nsfe) {
 	rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 }
+
+DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -51,11 +53,11 @@ catch (NoSuchFolderException nsfe) {
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplay" persistState="<%= true %>" title="display-settings">
-			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlActionsDisplayContext.isShowActions() %>" />
+			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowActions() %>" />
 
-			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlActionsDisplayContext.isFolderMenuVisible() %>" />
+			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFolderMenu() %>" />
 
-			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlActionsDisplayContext.isShowTabs() %>" />
+			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowTabs() %>" />
 
 			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>" />
 		</liferay-ui:panel>
@@ -83,7 +85,8 @@ catch (NoSuchFolderException nsfe) {
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllFolderColumns()));
+					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(dlEntriesListDisplayContext.getAllFolderColumns()));
+					String[] folderColumns = StringUtil.split(dlPortletInstanceSettings.getFolderColumns());
 
 					// Left list
 
@@ -128,7 +131,8 @@ catch (NoSuchFolderException nsfe) {
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllFileEntryColumns()));
+					Set<String> availableFileEntryColumns = SetUtil.fromArray(StringUtil.split(dlEntriesListDisplayContext.getAllFileEntryColumns()));
+					String[] fileEntryColumns = StringUtil.split(dlPortletInstanceSettings.getFileEntryColumns());
 
 					// Left list
 

@@ -18,7 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
+DLEntryListDisplayContext dlEntryListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
 
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
@@ -138,7 +138,8 @@ catch (NoSuchFolderException nsfe) {
 						<aui:field-wrapper label="show-columns">
 
 							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(dlActionsDisplayContext.getAllEntryColumns()));
+							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(dlEntryListDisplayContext.getAllEntryColumns()));
+							String[] entryColumns = StringUtil.split(dlPortletInstanceSettings.getEntryColumns());
 
 							// Left list
 

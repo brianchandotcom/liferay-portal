@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-dlActionsDisplayContext = new DLActionsDisplayContext(DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request), request);
-
 String randomNamespace = null;
 
 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
@@ -97,6 +95,8 @@ else {
 
 	showPermissionsURL = DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
+
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 
 boolean showWhenSingleIcon = false;
 

@@ -18,8 +18,6 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
-
 dlSettings = DLUtil.getDLSettings(themeDisplay.getSiteGroupId(), request);
 
 String emailFromName = dlSettings.getEmailFromName();

@@ -32,6 +32,8 @@ if (folder != null) {
 
 	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
+
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <aui:form method="post" name="selectFolderFm">

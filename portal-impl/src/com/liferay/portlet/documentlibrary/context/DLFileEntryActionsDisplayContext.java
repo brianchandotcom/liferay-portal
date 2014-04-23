@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +28,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,15 +38,20 @@ import javax.servlet.http.HttpServletRequest;
 public class DLFileEntryActionsDisplayContext {
 
 	public DLFileEntryActionsDisplayContext(
-			HttpServletRequest request, FileEntry fileEntry)
+			HttpServletRequest request,
+			DLPortletInstanceSettings dlPortletInstanceSettings,
+			FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		this(request, fileEntry, fileEntry.getFileVersion());
+		this(
+			request, dlPortletInstanceSettings, fileEntry,
+			fileEntry.getFileVersion());
 	}
 
 	public DLFileEntryActionsDisplayContext(
-			HttpServletRequest request, FileEntry fileEntry,
-			FileVersion fileVersion)
+			HttpServletRequest request,
+			DLPortletInstanceSettings dlPortletInstanceSettings,
+			FileEntry fileEntry, FileVersion fileVersion)
 		throws PortalException, SystemException {
 
 		_request = request;
@@ -74,12 +80,12 @@ public class DLFileEntryActionsDisplayContext {
 			new DLFileEntryActionsDisplayContextHelper(
 				_permissionChecker, fileEntry, fileVersion);
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			DLUtil.getDLPortletInstanceSettings(
-				themeDisplay.getLayout(), _portletDisplay.getId());
-
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
-			dlPortletInstanceSettings, request);
+			request, dlPortletInstanceSettings);
+	}
+
+	public DLActionsDisplayContext getDLActionsDisplayContext() {
+		return _dlActionsDisplayContext;
 	}
 
 	public String getPublishButtonLabel() throws SystemException {
@@ -232,10 +238,13 @@ public class DLFileEntryActionsDisplayContext {
 	public boolean isOpenInMsOfficeButtonVisible()
 		throws PortalException, SystemException {
 
+		DLContext dlDisplayContext =
+			_dlActionsDisplayContext.getDLDisplayContext();
+
 		if (_dlFileEntryActionsDisplayContextHelper.hasViewPermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
-			_dlActionsDisplayContext.isWebDAVEnabled() &&
-			_dlActionsDisplayContext.isIEOnWin32()) {
+			dlDisplayContext.isWebDAVEnabled() &&
+			dlDisplayContext.isIEOnWin32()) {
 
 			return true;
 		}
@@ -344,8 +353,11 @@ public class DLFileEntryActionsDisplayContext {
 	private boolean _isFileEntryTrashable()
 		throws PortalException, SystemException {
 
+		DLContext dlDisplayContext =
+			_dlActionsDisplayContext.getDLDisplayContext();
+
 		if (_dlFileEntryActionsDisplayContextHelper.isDLFileEntry() &&
-			_dlActionsDisplayContext.isTrashEnabled()) {
+			dlDisplayContext.isTrashEnabled()) {
 
 			return true;
 		}

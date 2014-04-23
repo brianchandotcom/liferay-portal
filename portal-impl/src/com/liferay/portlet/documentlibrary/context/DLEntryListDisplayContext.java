@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -26,28 +24,27 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
- * @author Sergio González
  */
-public class DLActionsDisplayContext {
+public class DLEntryListDisplayContext {
 
-	public DLActionsDisplayContext(
-		DLPortletInstanceSettings dlPortletInstanceSettings,
-		HttpServletRequest request) {
+	public DLEntryListDisplayContext(
+		HttpServletRequest request,
+		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
 		_dlPortletInstanceSettings = dlPortletInstanceSettings;
-		_request = request;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_portletDisplay = themeDisplay.getPortletDisplay();
-		_scopeGroupId = themeDisplay.getScopeGroupId();
+
+		_dlActionsDisplayContext = new DLActionsDisplayContext(
+			request, dlPortletInstanceSettings);
 	}
 
 	public String getAllEntryColumns() throws PortalException, SystemException {
@@ -57,7 +54,7 @@ public class DLActionsDisplayContext {
 			allEntryColumns += ",downloads";
 		}
 
-		if (isShowActions()) {
+		if (_dlActionsDisplayContext.isShowActions()) {
 			allEntryColumns += ",action";
 		}
 
@@ -77,7 +74,7 @@ public class DLActionsDisplayContext {
 
 		allFileEntryColumns += ",locked";
 
-		if (isShowActions()) {
+		if (_dlActionsDisplayContext.isShowActions()) {
 			allFileEntryColumns += ",action";
 		}
 
@@ -89,11 +86,15 @@ public class DLActionsDisplayContext {
 
 		String allFolderColumns = "name,num-of-folders,num-of-documents";
 
-		if (isShowActions()) {
+		if (_dlActionsDisplayContext.isShowActions()) {
 			allFolderColumns += ",action";
 		}
 
 		return allFolderColumns;
+	}
+
+	public DLActionsDisplayContext getDLActionsDisplayContext() {
+		return _dlActionsDisplayContext;
 	}
 
 	public String[] getEntryColumns() throws PortalException, SystemException {
@@ -102,7 +103,7 @@ public class DLActionsDisplayContext {
 
 		String portletId = _portletDisplay.getId();
 
-		if (!isShowActions()) {
+		if (!_dlActionsDisplayContext.isShowActions()) {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
 		}
 		else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) &&
@@ -121,7 +122,7 @@ public class DLActionsDisplayContext {
 		String[] fileEntryColumns = StringUtil.split(
 			_dlPortletInstanceSettings.getFileEntryColumns());
 
-		if (!isShowActions()) {
+		if (!_dlActionsDisplayContext.isShowActions()) {
 			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
 		}
 
@@ -132,112 +133,15 @@ public class DLActionsDisplayContext {
 		String[] folderColumns = StringUtil.split(
 			_dlPortletInstanceSettings.getFolderColumns());
 
-		if (!isShowActions()) {
+		if (!_dlActionsDisplayContext.isShowActions()) {
 			folderColumns = ArrayUtil.remove(folderColumns, "action");
 		}
 
 		return folderColumns;
 	}
 
-	public boolean isAddFolderButtonVisible() {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isFolderMenuVisible()
-		throws PortalException, SystemException {
-
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return _dlPortletInstanceSettings.getShowFolderMenu();
-	}
-
-	public boolean isIEOnWin32() {
-		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
-		}
-
-		return _ieOnWin32;
-	}
-
-	public boolean isShowActions() throws PortalException, SystemException {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return _dlPortletInstanceSettings.getShowActions();
-	}
-
-	public boolean isShowMinimalActionsButton() {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return ParamUtil.getBoolean(_request, "showMinimalActionButtons");
-	}
-
-	public boolean isShowTabs() throws PortalException, SystemException {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return _dlPortletInstanceSettings.getShowTabs();
-	}
-
-	public boolean isShowWhenSingleIconActionButton() {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isTrashEnabled() throws PortalException, SystemException {
-		if (_trashEnabled == null) {
-			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
-		}
-
-		return _trashEnabled;
-	}
-
-	public boolean isWebDAVEnabled() {
-		return _portletDisplay.isWebDAVEnabled();
-	}
-
+	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private Boolean _ieOnWin32;
 	private PortletDisplay _portletDisplay;
-	private HttpServletRequest _request;
-	private long _scopeGroupId;
-	private Boolean _trashEnabled;
 
 }

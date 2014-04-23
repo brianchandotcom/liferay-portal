@@ -45,6 +45,8 @@ else {
 String keywords = ParamUtil.getString(request, "keywords");
 
 int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">

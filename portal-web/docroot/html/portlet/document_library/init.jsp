@@ -45,6 +45,9 @@ page import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException"
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
 page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants" %><%@
@@ -64,9 +67,7 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortc
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
@@ -93,8 +94,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
 DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
-
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlPortletInstanceSettings, request);
 
 String[] displayViews = StringUtil.split(dlPortletInstanceSettings.getDisplayViews());
 
@@ -125,8 +124,6 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-
-String[] entryColumns = dlActionsDisplayContext.getEntryColumns();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

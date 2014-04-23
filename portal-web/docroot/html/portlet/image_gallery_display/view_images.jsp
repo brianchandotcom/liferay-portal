@@ -22,6 +22,8 @@ String[] mediaGalleryMimeTypes = (String[])request.getAttribute("view.jsp-mediaG
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.jsp-searchContainer");
 
 List results = searchContainer.getResults();
+
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <c:choose>
@@ -59,7 +61,7 @@ List results = searchContainer.getResults();
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEntryActionsDisplayContext(request, fileEntry);
+				DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEntryActionsDisplayContext(request, dlPortletInstanceSettings, fileEntry);
 				%>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">

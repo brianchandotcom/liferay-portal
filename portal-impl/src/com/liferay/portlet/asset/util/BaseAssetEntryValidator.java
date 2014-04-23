@@ -15,25 +15,17 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.List;
@@ -45,8 +37,8 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] entryNames)
+			long groupId, String className, long classTypeId,
+			long[] categoryIds, String[] entryNames)
 		throws PortalException, SystemException {
 
 		List<AssetVocabulary> vocabularies =
@@ -73,81 +65,52 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
 
 		for (AssetVocabulary vocabulary : vocabularies) {
-			validate(classNameId, categoryIds, vocabulary);
+			validate(classNameId, classTypeId, categoryIds, vocabulary);
 		}
 	}
 
 	protected void validate(
-			long classNameId, final long[] categoryIds,
+			long classNameId, long classTypeId, final long[] categoryIds,
 			AssetVocabulary vocabulary)
 		throws PortalException, SystemException {
 
-		UnicodeProperties settingsProperties =
-			vocabulary.getSettingsProperties();
-
-		long[] selectedClassNameIds = StringUtil.split(
-			settingsProperties.getProperty("selectedClassNameIds"), 0L);
-
-		if (selectedClassNameIds.length == 0) {
+		if (!vocabulary.isAssociatedToAsset(classNameId, classTypeId)) {
 			return;
 		}
 
-		if ((selectedClassNameIds[0] !=
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
-			!ArrayUtil.contains(selectedClassNameIds, classNameId)) {
-
+		if (!_isAssetCategorizable(classNameId)) {
 			return;
 		}
 
-		String className = PortalUtil.getClassName(classNameId);
+		if (vocabulary.isMissingRequiredCategory(
+				classNameId, classTypeId, categoryIds)) {
+
+			throw new AssetCategoryException(
+				vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
+		}
+
+		if (!vocabulary.isMultiValued() &&
+			vocabulary.isDuplicatedCategory(categoryIds)) {
+
+			throw new AssetCategoryException(
+				vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
+		}
+	}
+
+	private boolean _isAssetCategorizable(long assetClassNameId) {
+		String className = PortalUtil.getClassName(assetClassNameId);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isCategorizable()) {
+		if ((assetRendererFactory != null) &&
+			assetRendererFactory.isCategorizable()) {
 
-			return;
+			return true;
 		}
 
-		long[] requiredClassNameIds = StringUtil.split(
-			settingsProperties.getProperty("requiredClassNameIds"), 0L);
-
-		List<AssetCategory> categories =
-			AssetCategoryLocalServiceUtil.getVocabularyCategories(
-				vocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		PredicateFilter<AssetCategory> existingCategoryFilter =
-			new PredicateFilter<AssetCategory>() {
-				@Override
-				public boolean filter(AssetCategory assetCategory) {
-					return ArrayUtil.contains(
-						categoryIds, assetCategory.getCategoryId());
-				}
-			};
-
-		if ((requiredClassNameIds.length > 0) &&
-			((requiredClassNameIds[0] ==
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
-			 ArrayUtil.contains(requiredClassNameIds, classNameId))) {
-
-			boolean exists =
-				ListUtil.exists(categories, existingCategoryFilter);
-
-			if (!exists && !categories.isEmpty()) {
-				throw new AssetCategoryException(
-					vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
-			}
-		}
-
-		if (!vocabulary.isMultiValued()) {
-			if (ListUtil.count(categories, existingCategoryFilter) > 1) {
-				throw new AssetCategoryException(
-					vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
-			}
-		}
+		return false;
 	}
 
 }

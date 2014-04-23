@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice.action;
 
+import com.liferay.portal.json.model.FileData;
 import com.liferay.portal.json.transformer.FlexjsonBeanAnalyzerTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
@@ -174,7 +175,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				parameterMap.put("name", methodParameter.getName());
 				parameterMap.put(
 					"type",
-					_formatType(methodParameter.getType(), genericTypes));
+					_formatType(methodParameter.getType(), genericTypes,
+					false));
 
 				parametersList.add(parameterMap);
 			}
@@ -192,7 +194,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				"type",
 				_formatType(
 					actionMethod.getReturnType(),
-					_getGenericReturnTypes(jsonWebServiceActionMapping)));
+					_getGenericReturnTypes(jsonWebServiceActionMapping), true));
 
 			jsonWebServiceActionMappingMap.put("returns", returnsMap);
 
@@ -246,7 +248,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 					@Override
 					protected String getTypeName(Class<?> type) {
-						return _formatType(type, null);
+						return _formatType(type, null, false);
 					}
 
 				};
@@ -286,11 +288,14 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return types;
 	}
 
-	private String _formatType(Class<?> type, Class<?>[] genericTypes) {
+	private String _formatType(
+			Class<?> type, Class<?>[] genericTypes, boolean isReturnType) {
+
 		if (type.isArray()) {
 			Class<?> componentType = type.getComponentType();
 
-			return _formatType(componentType, genericTypes) + "[]";
+			return _formatType(
+				componentType, genericTypes, isReturnType) + "[]";
 		}
 
 		if (type.isPrimitive()) {
@@ -300,11 +305,21 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		if (type.equals(Boolean.class)) {
 			return "boolean";
 		}
+		else if (type.equals(Class.class)) {
+			if (!isReturnType) {
+				return "string";
+			}
+		}
 		else if (type.equals(Date.class)) {
 			return "long";
 		}
 		else if (type.equals(File.class)) {
-			return "file";
+			if (!isReturnType) {
+				return "file";
+			}
+			else {
+				type = FileData.class;
+			}
 		}
 		else if (type.equals(Locale.class) || type.equals(String.class) ||
 				 type.equals(TimeZone.class)) {
@@ -363,7 +378,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				sb.append(StringPool.COMMA);
 			}
 
-			sb.append(_formatType(genericType, null));
+			sb.append(_formatType(genericType, null, isReturnType));
 		}
 
 		sb.append(StringPool.GREATER_THAN);

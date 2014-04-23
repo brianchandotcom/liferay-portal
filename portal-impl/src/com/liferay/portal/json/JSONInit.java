@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.transformer.FileJSONTransformer;
 import com.liferay.portal.json.transformer.FlexjsonObjectJSONTransformer;
 import com.liferay.portal.json.transformer.JSONArrayJSONTransformer;
 import com.liferay.portal.json.transformer.JSONObjectJSONTransformer;
@@ -33,6 +34,7 @@ import flexjson.transformer.Transformer;
 import flexjson.transformer.TransformerWrapper;
 import flexjson.transformer.TypeTransformerMap;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
@@ -92,6 +94,9 @@ public class JSONInit {
 
 		transformersMap.put(
 			InputStream.class, new TransformerWrapper(new NullTransformer()));
+
+		transformersMap.put(
+			File.class, new TransformerWrapper(new FileJSONTransformer()));
 
 		transformersMap.put(
 			JSONArray.class,

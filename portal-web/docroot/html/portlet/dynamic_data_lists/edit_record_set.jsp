@@ -85,9 +85,8 @@ if (ddmStructureId > 0) {
 
 		<aui:input name="description" />
 
-		<aui:field-wrapper label="data-definition" required="<%= true %>">
 		<div class="control-group">
-			<aui:input label="data-definition" name="ddmStructureNameDisplay" type="resource"  value="<%= ddmStructureName %>" />
+			<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource"  value="<%= ddmStructureName %>" />
 
 			<liferay-ui:icon
 				iconCssClass="icon-search"
@@ -96,7 +95,6 @@ if (ddmStructureId > 0) {
 				message="select"
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 			/>
-		</aui:field-wrapper>
 		</div>
 
 		<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) %>">

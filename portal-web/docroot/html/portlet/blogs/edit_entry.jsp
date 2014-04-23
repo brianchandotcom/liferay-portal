@@ -125,10 +125,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				<aui:fieldset label="trackbacks-already-sent">
 
 					<%
+					int i = 0;
+
 					for (String trackback : StringUtil.split(entry.getTrackbacks())) {
 					%>
 
-						<liferay-ui:input-resource url="<%= trackback %>" /><br />
+						<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
 
 					<%
 					}

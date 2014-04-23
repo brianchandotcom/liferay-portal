@@ -59,7 +59,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
 
 		<%
-		String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
+		String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 		List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
 		%>
@@ -145,7 +145,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 					<%
 					SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-					String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
+					String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 					int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId, true);
 
@@ -244,7 +244,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-				String[] mediaGalleryMimeTypes = dlSettings.getMediaGalleryMimeTypes();
+				String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 				int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
 

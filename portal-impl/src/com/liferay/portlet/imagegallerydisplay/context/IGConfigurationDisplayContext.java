@@ -17,7 +17,6 @@ package com.liferay.portlet.imagegallerydisplay.context;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.ArrayList;
@@ -34,12 +33,11 @@ public class IGConfigurationDisplayContext {
 
 	public IGConfigurationDisplayContext(
 		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings,
-		DLSettings dlSettings) {
+		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
 		_request = request;
 
-		_dlSettings = dlSettings;
+		_dlPortletInstanceSettings = dlPortletInstanceSettings;
 	}
 
 	public List<KeyValuePair> getAvailableMimeTypes() {
@@ -59,7 +57,8 @@ public class IGConfigurationDisplayContext {
 	}
 
 	private void _computeMimeTypes() {
-		String[] mediaGalleryMimeTypes = _dlSettings.getMediaGalleryMimeTypes();
+		String[] mediaGalleryMimeTypes =
+			_dlPortletInstanceSettings.getMimeTypes();
 
 		_currentMimeTypes = new ArrayList<KeyValuePair>();
 
@@ -85,7 +84,7 @@ public class IGConfigurationDisplayContext {
 
 	private List<KeyValuePair> _availableMimeTypes;
 	private List<KeyValuePair> _currentMimeTypes;
-	private DLSettings _dlSettings;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private HttpServletRequest _request;
 
 }

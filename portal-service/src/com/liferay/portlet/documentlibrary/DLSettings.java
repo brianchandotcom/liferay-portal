@@ -19,18 +19,13 @@ import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
-
-import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
 public class DLSettings extends BaseServiceSettings {
 
-	public static final String[] MULTI_VALUED_KEYS = {
-		"mimeTypes"
-	};
+	public static final String[] MULTI_VALUED_KEYS = {};
 
 	public DLSettings(Settings settings) {
 		super(settings, _fallbackKeys);
@@ -98,12 +93,6 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
-	public String[] getMediaGalleryMimeTypes() {
-		return typedSettings.getValues(
-			"mimeTypes", _defaultMediaGalleryMimeTypes);
-	}
-
-	private static String[] _defaultMediaGalleryMimeTypes;
 	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 
 	static {
@@ -149,11 +138,6 @@ public class DLSettings extends BaseServiceSettings {
 		_fallbackKeys.add(
 			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
 		_fallbackKeys.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);
-
-		Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
-
-		_defaultMediaGalleryMimeTypes = allMimeTypes.toArray(
-			new String[allMimeTypes.size()]);
 	}
 
 }

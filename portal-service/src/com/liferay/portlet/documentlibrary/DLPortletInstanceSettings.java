@@ -15,10 +15,12 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Sergio González
@@ -26,7 +28,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 public class DLPortletInstanceSettings extends BaseServiceSettings {
 
 	public static final String[] MULTI_VALUED_KEYS = {
-		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns"
+		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
+		"mimeTypes"
 	};
 
 	public DLPortletInstanceSettings(Settings settings) {
@@ -78,6 +81,10 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 		return typedSettings.getIntegerValue("foldersPerPage");
 	}
 
+	public String[] getMimeTypes() {
+		return typedSettings.getValues("mimeTypes", _defaultMimeTypes);
+	}
+
 	public long getRootFolderId() {
 		return typedSettings.getLongValue(
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -102,6 +109,9 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 	public boolean getShowTabs() {
 		return typedSettings.getBooleanValue("showTabs");
 	}
+
+	private static final String[] _defaultMimeTypes =
+		DLUtil.getAllMediaGalleryMimeTypes().toArray(StringPool.EMPTY_ARRAY);
 
 	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 

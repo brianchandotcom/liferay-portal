@@ -18,7 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings, dlSettings);
+IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

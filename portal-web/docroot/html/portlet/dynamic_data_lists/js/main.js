@@ -347,6 +347,8 @@ AUI.add(
 
 						instance._setDataStableSort(instance.get('data'));
 
+						instance.set('scrollable', true);
+
 						instance.on('dataChange', instance._onDataChange);
 						instance.on('model:change', instance._onRecordUpdate);
 					},
@@ -388,6 +390,30 @@ AUI.add(
 							},
 							callback
 						);
+					},
+
+					_afterActiveCellIndexChange: function(event) {
+						var instance = this;
+
+						var activeCell = instance.get('activeCell');
+						var boundingBox = instance.get('boundingBox');
+						var scrollableElement = boundingBox.one('.table-x-scroller');
+
+						var activeCellWidth = activeCell.outerWidth() + 2;
+						var scrollableWidth = scrollableElement.outerWidth();
+
+						var activeCellOffsetLeft = activeCell.get('offsetLeft');
+						var scrollLeft = scrollableElement.get('scrollLeft');
+						var scrollTo = scrollLeft;
+
+						if ((scrollLeft + scrollableWidth) < (activeCellOffsetLeft + activeCellWidth)) {
+							scrollTo = (activeCellOffsetLeft + activeCellWidth) - scrollableWidth;
+						}
+						else if (activeCellOffsetLeft < scrollLeft) {
+							scrollTo = activeCellOffsetLeft;
+						}
+
+						scrollableElement.set('scrollLeft', scrollTo);
 					},
 
 					_normalizeRecordData: function(record) {

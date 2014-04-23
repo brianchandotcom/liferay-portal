@@ -245,7 +245,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileRank.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -257,7 +257,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileRank.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -246,7 +246,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(TrashEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -258,7 +258,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(TrashEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -395,7 +395,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			public ActionableDynamicQuery getActionableDynamicQuery() throws SystemException {
 				ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-				actionableDynamicQuery.setBaseLocalService(this);
+				actionableDynamicQuery.setBaseLocalService(${packagePath}.service.${entity.name}LocalServiceUtil.getService());
 				actionableDynamicQuery.setClass(${entity.name}.class);
 				actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -419,7 +419,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 
 			protected void initActionableDynamicQuery(ActionableDynamicQuery actionableDynamicQuery) throws SystemException {
-				actionableDynamicQuery.setBaseLocalService(this);
+				actionableDynamicQuery.setBaseLocalService(${packagePath}.service.${entity.name}LocalServiceUtil.getService());
 				actionableDynamicQuery.setClass(${entity.name}.class);
 				actionableDynamicQuery.setClassLoader(getClassLoader());
 

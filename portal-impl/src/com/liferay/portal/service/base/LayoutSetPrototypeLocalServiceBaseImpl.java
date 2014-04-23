@@ -270,7 +270,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutSetPrototype.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -282,7 +282,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutSetPrototype.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

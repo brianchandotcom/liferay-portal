@@ -240,7 +240,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLSyncEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -252,7 +252,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLSyncEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

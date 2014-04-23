@@ -242,7 +242,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AnnouncementsDelivery.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -254,7 +254,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AnnouncementsDelivery.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

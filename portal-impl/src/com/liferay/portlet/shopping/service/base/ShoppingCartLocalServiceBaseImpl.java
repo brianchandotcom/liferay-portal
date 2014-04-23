@@ -246,7 +246,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ShoppingCart.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -258,7 +258,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ShoppingCart.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

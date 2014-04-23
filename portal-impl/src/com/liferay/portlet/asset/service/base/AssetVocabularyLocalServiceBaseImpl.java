@@ -283,7 +283,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetVocabulary.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -295,7 +295,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetVocabulary.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

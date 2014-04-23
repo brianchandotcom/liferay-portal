@@ -244,7 +244,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCProductVersion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -256,7 +256,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCProductVersion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -286,7 +286,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiNode.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -298,7 +298,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiNode.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

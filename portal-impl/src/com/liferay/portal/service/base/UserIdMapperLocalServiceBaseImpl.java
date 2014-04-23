@@ -239,7 +239,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserIdMapperLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserIdMapper.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserIdMapperLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserIdMapper.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

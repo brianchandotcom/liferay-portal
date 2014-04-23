@@ -243,7 +243,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PortletPreferencesLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PortletPreferences.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -255,7 +255,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PortletPreferencesLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PortletPreferences.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -244,7 +244,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.SystemEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SystemEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -256,7 +256,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.SystemEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SystemEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

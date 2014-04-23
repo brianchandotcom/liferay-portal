@@ -246,7 +246,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserNotificationDelivery.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -259,7 +259,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserNotificationDelivery.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

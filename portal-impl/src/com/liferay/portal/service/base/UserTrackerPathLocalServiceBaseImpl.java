@@ -239,7 +239,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserTrackerPathLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserTrackerPath.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserTrackerPathLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserTrackerPath.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

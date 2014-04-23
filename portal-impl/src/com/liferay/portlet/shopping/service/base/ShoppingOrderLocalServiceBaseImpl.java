@@ -251,7 +251,7 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ShoppingOrder.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -263,7 +263,7 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ShoppingOrder.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

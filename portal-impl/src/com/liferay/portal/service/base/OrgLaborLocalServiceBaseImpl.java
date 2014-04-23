@@ -235,7 +235,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.OrgLaborLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(OrgLabor.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -247,7 +247,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.OrgLaborLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(OrgLabor.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

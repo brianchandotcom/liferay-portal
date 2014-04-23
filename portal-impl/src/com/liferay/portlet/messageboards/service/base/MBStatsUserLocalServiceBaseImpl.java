@@ -248,7 +248,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBStatsUser.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -260,7 +260,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBStatsUser.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

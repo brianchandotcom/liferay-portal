@@ -280,7 +280,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.RoleLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Role.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -292,7 +292,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.RoleLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Role.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

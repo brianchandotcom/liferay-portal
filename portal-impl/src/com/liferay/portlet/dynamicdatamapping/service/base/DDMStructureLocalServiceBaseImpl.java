@@ -290,7 +290,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMStructure.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -302,7 +302,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMStructure.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

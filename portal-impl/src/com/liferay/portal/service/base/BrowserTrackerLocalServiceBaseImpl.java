@@ -239,7 +239,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BrowserTrackerLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BrowserTracker.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BrowserTrackerLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BrowserTracker.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

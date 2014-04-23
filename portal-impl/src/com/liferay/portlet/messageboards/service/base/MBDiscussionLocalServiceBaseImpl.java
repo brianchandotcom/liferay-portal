@@ -285,7 +285,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBDiscussion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -297,7 +297,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBDiscussion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -289,7 +289,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileShortcut.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -301,7 +301,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileShortcut.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

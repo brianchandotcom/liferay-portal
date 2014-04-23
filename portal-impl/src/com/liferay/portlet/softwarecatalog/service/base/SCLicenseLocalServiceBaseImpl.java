@@ -239,7 +239,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCLicense.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCLicense.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

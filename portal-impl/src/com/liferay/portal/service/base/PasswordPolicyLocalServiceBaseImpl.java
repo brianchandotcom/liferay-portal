@@ -266,7 +266,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PasswordPolicyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PasswordPolicy.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -278,7 +278,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PasswordPolicyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PasswordPolicy.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

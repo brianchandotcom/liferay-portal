@@ -242,7 +242,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetTagStats.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -254,7 +254,7 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetTagStats.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

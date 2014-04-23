@@ -244,7 +244,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BackgroundTaskLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BackgroundTask.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -256,7 +256,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BackgroundTaskLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BackgroundTask.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

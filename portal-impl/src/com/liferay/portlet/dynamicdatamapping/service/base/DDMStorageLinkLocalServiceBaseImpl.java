@@ -240,7 +240,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMStorageLink.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -252,7 +252,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMStorageLink.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

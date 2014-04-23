@@ -244,7 +244,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ResourceTypePermission.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -257,7 +257,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ResourceTypePermission.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

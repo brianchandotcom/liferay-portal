@@ -249,7 +249,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ExportImportConfiguration.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -262,7 +262,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ExportImportConfiguration.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -256,7 +256,7 @@ public abstract class SocialActivityLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SocialActivity.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -268,7 +268,7 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SocialActivity.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

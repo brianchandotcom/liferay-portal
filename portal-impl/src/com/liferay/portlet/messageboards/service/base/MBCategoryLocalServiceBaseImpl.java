@@ -297,7 +297,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBCategory.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -309,7 +309,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBCategory.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

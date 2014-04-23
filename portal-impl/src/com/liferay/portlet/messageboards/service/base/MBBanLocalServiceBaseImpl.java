@@ -270,7 +270,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBBan.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -282,7 +282,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBBan.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

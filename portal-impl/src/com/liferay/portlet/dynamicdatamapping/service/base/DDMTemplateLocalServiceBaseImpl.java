@@ -286,7 +286,7 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMTemplate.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -298,7 +298,7 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMTemplate.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

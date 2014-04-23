@@ -276,7 +276,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutFriendlyURL.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -288,7 +288,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutFriendlyURL.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

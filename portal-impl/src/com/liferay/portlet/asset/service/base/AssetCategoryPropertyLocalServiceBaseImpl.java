@@ -244,7 +244,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetCategoryProperty.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -256,7 +256,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetCategoryProperty.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

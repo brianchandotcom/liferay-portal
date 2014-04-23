@@ -276,7 +276,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBThreadFlag.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -288,7 +288,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBThreadFlag.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

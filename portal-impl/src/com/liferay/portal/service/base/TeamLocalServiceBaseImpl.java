@@ -239,7 +239,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.TeamLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Team.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.TeamLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Team.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

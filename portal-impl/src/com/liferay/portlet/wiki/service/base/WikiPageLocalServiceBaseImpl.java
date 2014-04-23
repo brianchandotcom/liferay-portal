@@ -303,7 +303,7 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPage.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -315,7 +315,7 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPage.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

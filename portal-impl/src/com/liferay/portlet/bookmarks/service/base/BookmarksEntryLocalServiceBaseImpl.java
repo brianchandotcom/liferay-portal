@@ -300,7 +300,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BookmarksEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -312,7 +312,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BookmarksEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -281,7 +281,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(JournalFeed.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -293,7 +293,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(JournalFeed.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

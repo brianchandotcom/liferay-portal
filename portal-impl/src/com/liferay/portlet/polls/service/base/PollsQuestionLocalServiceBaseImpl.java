@@ -280,7 +280,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PollsQuestion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -292,7 +292,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PollsQuestion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

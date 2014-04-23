@@ -240,7 +240,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPageResource.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -252,7 +252,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(WikiPageResource.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

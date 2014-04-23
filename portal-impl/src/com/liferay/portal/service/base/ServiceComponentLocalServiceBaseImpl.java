@@ -239,7 +239,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ServiceComponent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -251,7 +251,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ServiceComponent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

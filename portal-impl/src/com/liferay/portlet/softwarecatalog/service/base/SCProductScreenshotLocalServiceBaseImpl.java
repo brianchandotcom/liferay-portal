@@ -242,7 +242,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCProductScreenshot.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -254,7 +254,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SCProductScreenshot.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

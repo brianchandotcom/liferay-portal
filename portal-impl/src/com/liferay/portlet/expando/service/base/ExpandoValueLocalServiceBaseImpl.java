@@ -246,7 +246,7 @@ public abstract class ExpandoValueLocalServiceBaseImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ExpandoValue.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -258,7 +258,7 @@ public abstract class ExpandoValueLocalServiceBaseImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ExpandoValue.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

@@ -248,7 +248,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 		throws SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LockLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Lock.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -260,7 +260,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery)
 		throws SystemException {
-		actionableDynamicQuery.setBaseLocalService(this);
+		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LockLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Lock.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 

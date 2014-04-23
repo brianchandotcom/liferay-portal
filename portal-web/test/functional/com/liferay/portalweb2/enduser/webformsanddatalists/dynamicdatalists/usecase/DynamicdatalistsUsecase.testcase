@@ -803,7 +803,7 @@
 		</execute>
 	</command>
 
-	<command name="UniqueFormTemplate" priority="5">
+	<command name="FormTemplateUniqueField" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -842,7 +842,7 @@
 			<var name="field" value="Separator" />
 		</execute>
 
-		<execute macro="DynamicDataMapping#deleteFormTemplateField">
+		<execute macro="DynamicDataMapping#deleteField">
 			<var name="fieldName" value="This is a unique field" />
 		</execute>
 
@@ -855,7 +855,7 @@
 			<var name="field" value="Separator" />
 		</execute>
 
-		<execute macro="DynamicDataMapping#deleteFormTemplateField">
+		<execute macro="DynamicDataMapping#deleteField">
 			<var name="fieldName" value="Separator" />
 		</execute>
 

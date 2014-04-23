@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="hotdeploy-listeners/src/main/java" />
+	<classpathentry kind="src" path="/portal-master" />
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/core/osgi.cmpn.jar" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/core/osgi.core.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

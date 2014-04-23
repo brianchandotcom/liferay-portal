@@ -5,6 +5,18 @@
 		</case>
 	</command>
 
+	<command name="copy">
+		<case locator-key1="BODY_FIELD">
+			<execute function="Copy#ckEditorCopy" />
+		</case>
+	</command>
+
+	<command name="paste">
+		<case locator-key1="BODY_FIELD">
+			<execute function="Paste#ckEditorPaste" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="BODY_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />

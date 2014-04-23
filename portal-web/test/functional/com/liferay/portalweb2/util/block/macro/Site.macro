@@ -257,12 +257,13 @@
 	</command>
 
 	<command name="assignDefaultSiteTeam">
-		<var name="key_teamName" value="${teamName}" />
-
 		<execute action="CPSitesettings#click" locator-key1="MENU_ADVANCED_DEFAULT_USER_ASSOCIATIONS" />
 
 		<execute action="CPSitesettingsDefaultUserAssociations#assertClick" locator-key1="TEAMS_SELECT" value1="Select" />
-		<execute action="CPSitesettingsDefaultUserAssociations#selectFrame" locator-key1="IFRAME_TEAMS_SELECT" />
+		<execute action="CPSitesettingsDefaultUserAssociations#selectFrame" locator-key1="TEAMS_SELECT_IFRAME" />
+
+		<var name="key_teamName" value="${teamName}" />
+
 		<execute action="CPSitesettingsDefaultUserAssociations#assertClick" locator-key1="TEAMS_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="CPSitesettingsDefaultUserAssociations#selectFrame" value1="relative=top" />
 

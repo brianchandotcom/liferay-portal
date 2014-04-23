@@ -84,7 +84,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
-				{DDMTemplate.*}
+				DISTINCT {DDMTemplate.*}
 			FROM
 				DDMTemplate
 			WHERE
@@ -108,7 +108,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
-				{DDMTemplate.*}
+				DISTINCT {DDMTemplate.*}
 			FROM
 				DDMTemplate
 			WHERE

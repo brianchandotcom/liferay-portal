@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var STR_OPEN = 'open';
 
+		var UA = A.UA;
+
 		A.mix(
 			Liferay.NavigationInteraction.prototype,
 			{
@@ -54,6 +56,16 @@ AUI.add(
 				_initChildMenuHandlers: function(navigation) {
 					var instance = this;
 
+					var android = UA.android;
+
+					var delay = 0;
+
+					if (android && android < 4.4) {
+						delay = 400;
+					}
+
+					instance._handleShowNavigationMenuFn = A.throttle(A.bind('_handleShowNavigationMenu', instance), delay);
+
 					if (navigation) {
 						A.Event.defineOutside('touchstart');
 
@@ -73,7 +85,7 @@ AUI.add(
 					if (menuNew.one('.child-menu') && target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-item')) {
 						event.preventDefault();
 
-						instance._handleShowNavigationMenu(menuNew, instance.MAP_HOVER.menu, event);
+						instance._handleShowNavigationMenuFn(menuNew, instance.MAP_HOVER.menu, event);
 					}
 				}
 			},

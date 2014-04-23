@@ -153,19 +153,21 @@ public class ${entity.name}Util {
 	</#list>
 
 	public static ${entity.name}Persistence getPersistence() {
-		if (_persistence == null) {
-			<#if osgiModule>
-				return _serviceTracker.getService();
-			<#elseif pluginName != "">
-				_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${packagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
-			<#else>
-				_persistence = (${entity.name}Persistence)PortalBeanLocatorUtil.locate(${entity.name}Persistence.class.getName());
-			</#if>
+		<#if osgiModule>
+			return _serviceTracker.getService();
+		<#else>
+			if (_persistence == null) {
+				<#if pluginName != "">
+					_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${packagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
+				<#else>
+					_persistence = (${entity.name}Persistence)PortalBeanLocatorUtil.locate(${entity.name}Persistence.class.getName());
+				</#if>
 
-			ReferenceRegistry.registerReference(${entity.name}Util.class, "_persistence");
-		}
+				ReferenceRegistry.registerReference(${entity.name}Util.class, "_persistence");
+			}
 
-		return _persistence;
+			return _persistence;
+		</#if>
 	}
 
 	/**

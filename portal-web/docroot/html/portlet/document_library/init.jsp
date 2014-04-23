@@ -46,6 +46,7 @@ page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
 page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@

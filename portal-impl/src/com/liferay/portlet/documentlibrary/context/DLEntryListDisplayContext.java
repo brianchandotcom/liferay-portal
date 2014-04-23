@@ -17,11 +17,9 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
@@ -45,54 +43,6 @@ public class DLEntryListDisplayContext {
 
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
 			request, dlPortletInstanceSettings);
-	}
-
-	public String[] getAllEntryColumns()
-		throws PortalException, SystemException {
-
-		String allEntryColumns = "name,size,status";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allEntryColumns += ",downloads";
-		}
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allEntryColumns += ",action";
-		}
-
-		allEntryColumns += ",modified-date,create-date";
-
-		return StringUtil.split(allEntryColumns);
-	}
-
-	public String[] getAllFileEntryColumns()
-		throws PortalException, SystemException {
-
-		String allFileEntryColumns = "name,size";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allFileEntryColumns += ",downloads";
-		}
-
-		allFileEntryColumns += ",locked";
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allFileEntryColumns += ",action";
-		}
-
-		return StringUtil.split(allFileEntryColumns);
-	}
-
-	public String[] getAllFolderColumns()
-		throws PortalException, SystemException {
-
-		String allFolderColumns = "name,num-of-folders,num-of-documents";
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allFolderColumns += ",action";
-		}
-
-		return StringUtil.split(allFolderColumns);
 	}
 
 	public DLActionsDisplayContext getDLActionsDisplayContext() {

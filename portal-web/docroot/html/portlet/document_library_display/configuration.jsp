@@ -18,22 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-
-try {
-	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-
-	rootFolderName = rootFolder.getName();
-
-	if (rootFolder.getGroupId() != scopeGroupId) {
-		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		rootFolderName = StringPool.BLANK;
-	}
-}
-catch (NoSuchFolderException nsfe) {
-	rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-}
-
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -85,7 +70,7 @@ DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayCo
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(dlEntriesListDisplayContext.getAllFolderColumns());
+					Set<String> availableFolderColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllFolderColumns());
 					String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
 					// Left list
@@ -131,7 +116,7 @@ DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayCo
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlEntriesListDisplayContext.getAllFileEntryColumns());
+					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllFileEntryColumns());
 					String[] fileEntryColumns = dlPortletInstanceSettings.getFileEntryColumns();
 
 					// Left list

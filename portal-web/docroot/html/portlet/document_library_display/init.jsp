@@ -22,6 +22,7 @@ page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@

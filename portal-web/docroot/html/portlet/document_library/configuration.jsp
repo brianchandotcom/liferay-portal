@@ -18,7 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-DLEntryListDisplayContext dlEntryListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -124,7 +124,7 @@ DLEntryListDisplayContext dlEntryListDisplayContext = new DLEntryListDisplayCont
 						<aui:field-wrapper label="show-columns">
 
 							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(dlEntryListDisplayContext.getAllEntryColumns());
+							Set<String> availableEntryColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllEntryColumns());
 							String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
 
 							// Left list

@@ -2215,7 +2215,7 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
 	* is preferable to use the indexed version {@link #search(long, long, List,
-	* long, String, String, String, String, String, String, String, String,
+	* long, String, String, String, String, String, int, String, String,
 	* LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
 	* possible for performance reasons.
 	*
@@ -2485,6 +2485,24 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
+		java.lang.String type, int status, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	long, String, String, String, String, String, int, String,
+	String, LinkedHashMap, boolean, int, int, Sort)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
 		java.lang.String type, java.lang.String status,
 		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
@@ -2694,8 +2712,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
-		java.lang.String type, java.lang.String status,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String type, int status, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
@@ -3001,8 +3019,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @param articleURL the web content article's accessible URL
-	* @param workflowContext the web content article's configured workflow
-	context
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, and portlet preferences. With
 	respect to social activities, by setting the service context's
@@ -3010,6 +3026,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
+	* @param workflowContext the web content article's configured workflow
+	context
 	* @return the updated web content article
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred

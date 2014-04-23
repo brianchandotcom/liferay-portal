@@ -17,7 +17,6 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,35 +30,34 @@ import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
 
-import com.sun.media.jai.codec.ImageCodec;
-import com.sun.media.jai.codec.ImageDecoder;
-import com.sun.media.jai.codec.ImageEncoder;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Arrays;
-import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
-
-import javax.media.jai.RenderedImageAdapter;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -315,9 +313,29 @@ public class ImageToolImpl implements ImageTool {
 			return (BufferedImage)renderedImage;
 		}
 
-		RenderedImageAdapter adapter = new RenderedImageAdapter(renderedImage);
+		ColorModel colorModel = renderedImage.getColorModel();
 
-		return adapter.getAsBufferedImage();
+		WritableRaster writableRaster =
+			colorModel.createCompatibleWritableRaster(
+				renderedImage.getWidth(), renderedImage.getHeight());
+
+		Hashtable properties = new Hashtable();
+
+		String[] keys = renderedImage.getPropertyNames();
+
+		if (!ArrayUtil.isEmpty(keys)) {
+			for (String key : keys) {
+				properties.put(key, renderedImage.getProperty(key));
+			}
+		}
+
+		BufferedImage bufferedImage = new BufferedImage(
+			colorModel, writableRaster, colorModel.isAlphaPremultiplied(),
+			properties);
+
+		renderedImage.copyData(writableRaster);
+
+		return bufferedImage;
 	}
 
 	@Override
@@ -423,29 +441,49 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public ImageBag read(byte[] bytes) {
-		RenderedImage renderedImage = null;
-		String type = TYPE_NOT_AVAILABLE;
+	public ImageBag read(byte[] bytes) throws IOException {
+		BufferedImage bufferedImage = null;
 
-		Enumeration<ImageCodec> enu = ImageCodec.getCodecs();
+		String formatName = null;
 
-		while (enu.hasMoreElements()) {
-			ImageCodec codec = enu.nextElement();
+		InputStream inputStream = new ByteArrayInputStream(bytes);
 
-			if (codec.isFormatRecognized(bytes)) {
-				type = codec.getFormatName();
+		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
+			inputStream);
 
-				renderedImage = read(bytes, type);
+		Iterator iterator = ImageIO.getImageReaders(imageInputStream);
 
-				break;
-			}
+		if (iterator.hasNext()) {
+			ImageReader reader = (ImageReader)iterator.next();
+			reader.setInput(imageInputStream);
+			bufferedImage = reader.read(0);
+			formatName = reader.getFormatName();
 		}
 
-		if (type.equals("jpeg")) {
+		formatName = formatName.toLowerCase();
+
+		String type = TYPE_JPEG;
+
+		if (formatName.contains(TYPE_BMP)) {
+			type = TYPE_BMP;
+		}
+		else if (formatName.contains(TYPE_GIF)) {
+			type = TYPE_GIF;
+		}
+		else if (formatName.contains("jpeg") || type.equals("jpeg")) {
 			type = TYPE_JPEG;
 		}
+		else if (formatName.contains(TYPE_PNG)) {
+			type = TYPE_PNG;
+		}
+		else if (formatName.contains(TYPE_TIFF)) {
+			type = TYPE_TIFF;
+		}
+		else {
+			throw new IllegalArgumentException(type + " is not supported");
+		}
 
-		return new ImageBag(renderedImage, type);
+		return new ImageBag(bufferedImage, type);
 	}
 
 	@Override
@@ -583,10 +621,7 @@ public class ImageToolImpl implements ImageTool {
 		throws IOException {
 
 		if (contentType.contains(TYPE_BMP)) {
-			ImageEncoder imageEncoder = ImageCodec.createImageEncoder(
-				TYPE_BMP, os, null);
-
-			imageEncoder.encode(renderedImage);
+			ImageIO.write(renderedImage, "bmp", os);
 		}
 		else if (contentType.contains(TYPE_GIF)) {
 			encodeGIF(renderedImage, os);
@@ -602,10 +637,7 @@ public class ImageToolImpl implements ImageTool {
 		else if (contentType.contains(TYPE_TIFF) ||
 				 contentType.contains("tif")) {
 
-			ImageEncoder imageEncoder = ImageCodec.createImageEncoder(
-				TYPE_TIFF, os, null);
-
-			imageEncoder.encode(renderedImage);
+			ImageIO.write(renderedImage, "tiff", os);
 		}
 	}
 
@@ -627,10 +659,15 @@ public class ImageToolImpl implements ImageTool {
 				type = "jpeg";
 			}
 
-			ImageDecoder imageDecoder = ImageCodec.createImageDecoder(
-				type, new UnsyncByteArrayInputStream(bytes), null);
+			InputStream in = new ByteArrayInputStream(bytes);
+			ImageInputStream iis = ImageIO.createImageInputStream(in);
+			Iterator iter = ImageIO.getImageReaders(iis);
 
-			renderedImage = imageDecoder.decodeAsRenderedImage();
+			if (iter.hasNext()) {
+				ImageReader reader = (ImageReader)iter.next();
+				reader.setInput(iis);
+				renderedImage = reader.read(0);
+			}
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {

@@ -256,6 +256,22 @@
 		<execute action="CPSitememberships#assertTextNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
+	<command name="assignDefaultSiteTeam">
+		<var name="key_teamName" value="${teamName}" />
+
+		<execute action="CPSitesettings#click" locator-key1="MENU_ADVANCED_DEFAULT_USER_ASSOCIATIONS" />
+
+		<execute action="CPSitesettingsDefaultUserAssociations#assertClick" locator-key1="TEAMS_SELECT" value1="Select" />
+		<execute action="CPSitesettingsDefaultUserAssociations#selectFrame" locator-key1="IFRAME_TEAMS_SELECT" />
+		<execute action="CPSitesettingsDefaultUserAssociations#assertClick" locator-key1="TEAMS_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPSitesettingsDefaultUserAssociations#selectFrame" value1="relative=top" />
+
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPSitesettingsDefaultUserAssociations#assertTextEquals" locator-key1="TEAMS_SELECTED" value1="${teamName}" />
+	</command>
+
 	<command name="assignRoleCP">
 		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
 		<execute action="CPSitememberships#assertClick" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" value1="Users" />

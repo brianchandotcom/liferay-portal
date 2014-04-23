@@ -34,8 +34,8 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	public String getDisplayViews() {
-		return typedSettings.getValue("displayViews");
+	public String[] getDisplayViews() {
+		return typedSettings.getValues("displayViews");
 	}
 
 	public boolean getEnableCommentRatings() {
@@ -54,20 +54,20 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 		return typedSettings.getIntegerValue("entriesPerPage");
 	}
 
-	public String getEntryColumns() {
-		return typedSettings.getValue("entryColumns");
+	public String[] getEntryColumns() {
+		return typedSettings.getValues("entryColumns");
 	}
 
 	public int getFileEntriesPerPage() {
 		return typedSettings.getIntegerValue("fileEntriesPerPage");
 	}
 
-	public String getFileEntryColumns() {
-		return typedSettings.getValue("fileEntryColumns");
+	public String[] getFileEntryColumns() {
+		return typedSettings.getValues("fileEntryColumns");
 	}
 
-	public String getFolderColumns() {
-		return typedSettings.getValue("folderColumns");
+	public String[] getFolderColumns() {
+		return typedSettings.getValues("folderColumns");
 	}
 
 	public int getFoldersPerPage() {

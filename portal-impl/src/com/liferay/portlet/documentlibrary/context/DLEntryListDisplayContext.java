@@ -47,7 +47,9 @@ public class DLEntryListDisplayContext {
 			request, dlPortletInstanceSettings);
 	}
 
-	public String getAllEntryColumns() throws PortalException, SystemException {
+	public String[] getAllEntryColumns()
+		throws PortalException, SystemException {
+
 		String allEntryColumns = "name,size,status";
 
 		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
@@ -60,10 +62,10 @@ public class DLEntryListDisplayContext {
 
 		allEntryColumns += ",modified-date,create-date";
 
-		return allEntryColumns;
+		return StringUtil.split(allEntryColumns);
 	}
 
-	public String getAllFileEntryColumns()
+	public String[] getAllFileEntryColumns()
 		throws PortalException, SystemException {
 
 		String allFileEntryColumns = "name,size";
@@ -78,10 +80,10 @@ public class DLEntryListDisplayContext {
 			allFileEntryColumns += ",action";
 		}
 
-		return allFileEntryColumns;
+		return StringUtil.split(allFileEntryColumns);
 	}
 
-	public String getAllFolderColumns()
+	public String[] getAllFolderColumns()
 		throws PortalException, SystemException {
 
 		String allFolderColumns = "name,num-of-folders,num-of-documents";
@@ -90,7 +92,7 @@ public class DLEntryListDisplayContext {
 			allFolderColumns += ",action";
 		}
 
-		return allFolderColumns;
+		return StringUtil.split(allFolderColumns);
 	}
 
 	public DLActionsDisplayContext getDLActionsDisplayContext() {
@@ -98,8 +100,7 @@ public class DLEntryListDisplayContext {
 	}
 
 	public String[] getEntryColumns() throws PortalException, SystemException {
-		String[] entryColumns = StringUtil.split(
-			_dlPortletInstanceSettings.getEntryColumns());
+		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
 
 		String portletId = _portletDisplay.getId();
 
@@ -119,8 +120,8 @@ public class DLEntryListDisplayContext {
 	public String[] getFileEntryColumns()
 		throws PortalException, SystemException {
 
-		String[] fileEntryColumns = StringUtil.split(
-			_dlPortletInstanceSettings.getFileEntryColumns());
+		String[] fileEntryColumns =
+			_dlPortletInstanceSettings.getFileEntryColumns();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {
 			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
@@ -130,8 +131,7 @@ public class DLEntryListDisplayContext {
 	}
 
 	public String[] getFolderColumns() throws PortalException, SystemException {
-		String[] folderColumns = StringUtil.split(
-			_dlPortletInstanceSettings.getFolderColumns());
+		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {
 			folderColumns = ArrayUtil.remove(folderColumns, "action");

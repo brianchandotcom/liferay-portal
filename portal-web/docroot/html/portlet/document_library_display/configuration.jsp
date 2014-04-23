@@ -85,8 +85,8 @@ DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayCo
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(dlEntriesListDisplayContext.getAllFolderColumns()));
-					String[] folderColumns = StringUtil.split(dlPortletInstanceSettings.getFolderColumns());
+					Set<String> availableFolderColumns = SetUtil.fromArray(dlEntriesListDisplayContext.getAllFolderColumns());
+					String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
 					// Left list
 
@@ -131,8 +131,8 @@ DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayCo
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(StringUtil.split(dlEntriesListDisplayContext.getAllFileEntryColumns()));
-					String[] fileEntryColumns = StringUtil.split(dlPortletInstanceSettings.getFileEntryColumns());
+					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlEntriesListDisplayContext.getAllFileEntryColumns());
+					String[] fileEntryColumns = dlPortletInstanceSettings.getFileEntryColumns();
 
 					// Left list
 

@@ -124,8 +124,8 @@ DLEntryListDisplayContext dlEntryListDisplayContext = new DLEntryListDisplayCont
 						<aui:field-wrapper label="show-columns">
 
 							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(dlEntryListDisplayContext.getAllEntryColumns()));
-							String[] entryColumns = StringUtil.split(dlPortletInstanceSettings.getEntryColumns());
+							Set<String> availableEntryColumns = SetUtil.fromArray(dlEntryListDisplayContext.getAllEntryColumns());
+							String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
 
 							// Left list
 

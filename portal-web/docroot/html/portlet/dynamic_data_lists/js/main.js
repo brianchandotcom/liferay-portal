@@ -399,7 +399,9 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 						var scrollableElement = boundingBox.one('.table-x-scroller');
 
-						var activeCellWidth = activeCell.outerWidth() + 2;
+						var tableHighlightBorder = instance.highlight.get('activeBorderWidth')[0];
+
+						var activeCellWidth = activeCell.outerWidth() + tableHighlightBorder;
 						var scrollableWidth = scrollableElement.outerWidth();
 
 						var activeCellOffsetLeft = activeCell.get('offsetLeft');

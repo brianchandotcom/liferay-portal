@@ -308,14 +308,6 @@
 		</if>
 
 		<if>
-			<condition action="CPSitepages#isElementPresent" locator-key1="STAGING_BUTTON" />
-			<then>
-				<execute action="CPSitepages#assertClick" locator-key1="STAGING_BUTTON" value1="Staging" />
-				<execute action="CPSitepages#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE" value1="Publish to Live" />
-			</then>
-		</if>
-
-		<if>
 			<condition action="PGStaging#isElementPresent" locator-key1="STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
 			<then>
 				<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
@@ -323,10 +315,17 @@
 			</then>
 		</if>
 
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="NAVIGATION_PUBLIC_PAGES" />
+			<condition action="CPSitepages#isElementPresent" locator-key1="STAGING_BUTTON" />
+			<then>
+				<execute action="CPSitepages#assertClick" locator-key1="STAGING_BUTTON" value1="Staging" />
+			</then>
+		</if>
+
 		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
 		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="StagingPublishtolivenow#check" locator-key1="DATE_NOW_RADIO" />
 
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />

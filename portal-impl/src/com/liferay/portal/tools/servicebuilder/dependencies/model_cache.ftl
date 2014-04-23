@@ -13,6 +13,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * The cache model class for representing ${entity.name} in entity cache.

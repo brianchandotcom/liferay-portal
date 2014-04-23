@@ -460,7 +460,7 @@ public class ImageToolImpl implements ImageTool {
 			formatName = reader.getFormatName();
 		}
 
-		formatName = formatName.toLowerCase();
+		formatName = StringUtil.toLowerCase(formatName);
 
 		String type = TYPE_JPEG;
 

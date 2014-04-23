@@ -12,33 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.jsonwebservice;
+package com.liferay.portal.json.transformer;
 
-import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.json.model.FileData;
 
-import java.lang.reflect.Method;
+import java.io.File;
 
 /**
  * @author Igor Spasic
  */
-public interface JSONWebServiceActionMapping {
+public class FileJSONTransformer extends FlexjsonObjectJSONTransformer {
 
-	public Class<?> getActionClass();
+	@Override
+	public void transform(Object object) {
+		File file = (File)object;
 
-	public Method getActionMethod();
+		FileData fileData = new FileData(file);
 
-	public Object getActionObject();
-
-	public String getContextPath();
-
-	public String getMethod();
-
-	public MethodParameter[] getMethodParameters();
-
-	public String getPath();
-
-	public Method getRealActionMethod();
-
-	public String getSignature();
+		super.transform(fileData);
+	}
 
 }

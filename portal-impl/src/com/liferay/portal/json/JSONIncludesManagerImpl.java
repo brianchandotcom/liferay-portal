@@ -16,8 +16,15 @@ package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONIncludesManager;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import javax.portlet.PortletURL;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -126,22 +133,41 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 		}
 	}
 
+	private boolean _isExcludedType(Class type) {
+		String typeName = type.getName();
+		for (String excludesTypeName : _excludesTypes) {
+			if (typeName.startsWith(excludesTypeName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _scanFieldsAndMethods(
 		List<String> list, Class<?> type, boolean include) {
 
 		Field[] fields = type.getDeclaredFields();
 
 		for (Field field : fields) {
+			String name = field.getName();
+
+			if (name.startsWith(StringPool.UNDERLINE)) {
+				name = name.substring(1);
+			}
+
+			if (!include) {
+				Class fieldType = field.getType();
+
+				if (_isExcludedType(fieldType)) {
+					list.add(name);
+				}
+			}
+
 			JSON jsonAnnotation = field.getAnnotation(JSON.class);
 
 			if ((jsonAnnotation != null) &&
 				(jsonAnnotation.include() == include)) {
-
-				String name = field.getName();
-
-				if (name.startsWith(StringPool.UNDERLINE)) {
-					name = name.substring(1);
-				}
 
 				if (!list.contains(name)) {
 					list.add(name);
@@ -152,12 +178,20 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 		Method[] methods = type.getDeclaredMethods();
 
 		for (Method method : methods) {
+			String name = _getPropertyName(method);
+
+			if (!include) {
+				Class propertyType = method.getReturnType();
+
+				if (_isExcludedType(propertyType)) {
+					list.add(name);
+				}
+			}
+
 			JSON jsonAnnotation = method.getAnnotation(JSON.class);
 
 			if ((jsonAnnotation != null) &&
 				(jsonAnnotation.include() == include)) {
-
-				String name = _getPropertyName(method);
 
 				if (name != null) {
 					if (!list.contains(name)) {
@@ -174,6 +208,12 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
 	private Map<Class<?>, String[]> _excludesMap =
 		new HashMap<Class<?>, String[]>();
+	private String[] _excludesTypes =
+		{ExpandoBridge.class.getName(), InputStream.class.getName(), "javax.",
+			LiferayPortletRequest.class.getName(),
+			LiferayPortletResponse.class.getName(),
+			OutputStream.class.getName(), PortletDisplay.class.getName(),
+			PortletURL.class.getName()};
 	private Map<Class<?>, String[]> _includesMap =
 		new HashMap<Class<?>, String[]>();
 

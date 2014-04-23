@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Array;
@@ -37,8 +38,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
+import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverterManager;
 
 import jodd.util.NameValue;
@@ -93,13 +96,60 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Object entry = list.get(i);
 
 			if (entry != null) {
-				entry = TypeConverterManager.convertType(entry, componentType);
+				entry = _convertType(entry, componentType);
 			}
 
 			Array.set(array, i, entry);
 		}
 
 		return array;
+	}
+
+	private Object _convertType(Object inputObject, Class<?> targetType) {
+		Object outputObject = null;
+
+		try {
+			outputObject = TypeConverterManager.convertType(
+				inputObject, targetType);
+		}
+		catch (TypeConversionException tce) {
+			if (inputObject instanceof Map) {
+				try {
+					if (targetType.isInterface()) {
+						Class<?> clazz = getClass();
+
+						ClassLoader classLoader = clazz.getClassLoader();
+
+						String className = targetType.getName();
+
+						className = StringUtil.replace(
+							className, ".model.", ".model.impl.");
+
+						className += "Impl";
+
+						try {
+							targetType = classLoader.loadClass(className);
+						}
+						catch (ClassNotFoundException e) {
+						}
+					}
+
+					outputObject = targetType.newInstance();
+
+					BeanCopy beanCopy = BeanCopy.beans(
+						inputObject, outputObject);
+
+					beanCopy.copy();
+				}
+				catch (Exception e) {
+					throw new TypeConversionException(e);
+				}
+			}
+
+			throw tce;
+		}
+
+		return outputObject;
 	}
 
 	private Object _convertValueToParameterValue(
@@ -186,8 +236,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			Object parameterValue = null;
 
 			try {
-				parameterValue = TypeConverterManager.convertType(
-					value, parameterType);
+				parameterValue = _convertType(value, parameterType);
 			}
 			catch (Exception e) {
 				String stringValue = value.toString();
@@ -239,7 +288,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		for (Object entry : list) {
 			if (entry != null) {
-				entry = TypeConverterManager.convertType(entry, types[0]);
+				entry = _convertType(entry, types[0]);
 			}
 
 			newList.add(entry);
@@ -260,13 +309,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Map<Object, Object> newMap = new HashMap<Object, Object>(map.size());
 
 		for (Map.Entry<?, ?> entry : map.entrySet()) {
-			Object key = TypeConverterManager.convertType(
-				entry.getKey(), types[0]);
+			Object key = _convertType(entry.getKey(), types[0]);
 
 			Object value = entry.getValue();
 
 			if (value != null) {
-				value = TypeConverterManager.convertType(value, types[1]);
+				value = _convertType(value, types[1]);
 			}
 
 			newMap.put(key, value);

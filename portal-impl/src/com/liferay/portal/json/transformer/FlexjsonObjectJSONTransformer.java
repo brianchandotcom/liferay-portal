@@ -16,9 +16,8 @@ package com.liferay.portal.json.transformer;
 
 import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONTransformer;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import flexjson.JSONContext;
 import flexjson.Path;
@@ -44,7 +43,15 @@ public class FlexjsonObjectJSONTransformer
 			(List<PathExpression>)BeanUtil.getDeclaredProperty(
 				getContext(), "pathExpressions");
 
-		String path = _getPath();
+		String path = getPath();
+
+		addExcludesAndIncludes(type, pathExpressions, path);
+
+		super.transform(object);
+	}
+
+	protected void addExcludesAndIncludes(
+		Class<?> type, List<PathExpression> pathExpressions, String path) {
 
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(type);
 
@@ -53,8 +60,14 @@ public class FlexjsonObjectJSONTransformer
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(type);
 
 		_include(pathExpressions, path, includes);
+	}
 
-		super.transform(object);
+	protected String getPath() {
+		JSONContext jsonContext = getContext();
+
+		Path path = jsonContext.getPath();
+
+		return StringUtil.merge(path.getPath(), StringPool.PERIOD);
 	}
 
 	private void _exclude(
@@ -81,27 +94,6 @@ public class FlexjsonObjectJSONTransformer
 
 			pathExpressions.add(pathExpression);
 		}
-	}
-
-	private String _getPath() {
-		JSONContext jsonContext = getContext();
-
-		Path path = jsonContext.getPath();
-
-		List<String> paths = path.getPath();
-
-		if (paths.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(paths.size() * 2);
-
-		for (String curPath : paths) {
-			sb.append(curPath);
-			sb.append(CharPool.PERIOD);
-		}
-
-		return sb.toString();
 	}
 
 	private void _include(

@@ -363,13 +363,13 @@
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
 
 		<if>
-			<equals arg1="${creole}" arg2="true" />
+			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
 				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="Creole" />
 			</then>
 			<elseif>
-				<equals arg1="${html}" arg2="true" />
+				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
@@ -378,7 +378,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${mediawiki}" arg2="true" />
+				<equals arg1="${mediawikiSource}" arg2="true" />
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="MediaWiki" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
@@ -388,16 +388,11 @@
 			</elseif>
 			<else>
 				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
-				<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-				<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-
-				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 			</else>
 		</if>
+
+		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="changeParentWikipagetoWikipagePG">

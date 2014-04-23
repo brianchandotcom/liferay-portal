@@ -451,7 +451,7 @@ public class JournalConverterImpl implements JournalConverter {
 				dynamicContentElement.getText(), CharPool.AT);
 
 			if (ArrayUtil.isEmpty(values)) {
-				values = new String[]{"1", "public"};
+				values = new String[] {"1", "public"};
 			}
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

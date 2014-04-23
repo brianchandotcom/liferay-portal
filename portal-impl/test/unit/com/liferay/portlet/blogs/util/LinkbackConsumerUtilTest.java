@@ -53,7 +53,9 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 	}
 
 	@Test
-	public void testDeleteCommentIfEntryURLNotInArticle() throws Exception {
+	public void testDeleteCommentIfBlogEntryURLNotInReferrer()
+		throws Exception {
+
 		Mockito.when(
 			_http.URLtoString("__url__")
 		).thenReturn(
@@ -81,7 +83,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 	}
 
 	@Test
-	public void testDeleteCommentIfUnreachableArticle() throws Exception {
+	public void testDeleteCommentIfReferrerIsUnreachable() throws Exception {
 		Mockito.doThrow(
 			IOException.class
 		).when(
@@ -111,7 +113,9 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 	}
 
 	@Test
-	public void testPreserveCommentIfEntryURLIsInArticle() throws Exception {
+	public void testPreserveCommentIfBlogEntryURLIsInReferrer()
+		throws Exception {
+
 		Mockito.when(
 			_http.URLtoString("__url__")
 		).thenReturn(

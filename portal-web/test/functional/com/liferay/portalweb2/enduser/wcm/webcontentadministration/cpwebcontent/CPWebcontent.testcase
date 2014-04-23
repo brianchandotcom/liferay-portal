@@ -884,7 +884,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="LAR#exportDDL">
+		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
 
@@ -898,7 +898,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="LAR#importDDL">
+		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
 

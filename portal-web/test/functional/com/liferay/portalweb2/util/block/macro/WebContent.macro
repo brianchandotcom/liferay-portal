@@ -807,7 +807,7 @@
 		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		
+
 		<if>
 			<isset var="webContentText" />
 			<then>

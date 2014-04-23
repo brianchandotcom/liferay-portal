@@ -52,7 +52,7 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
+			if (blacklistLastChar.startsWith(UnicodeFormatter.UNICODE_PREFIX)) {
 				blacklistLastChar = UnicodeFormatter.parseString(
 					blacklistLastChar);
 			}
@@ -202,7 +202,5 @@ public final class DLValidatorImpl implements DLValidator {
 			throw new InvalidFileVersionException();
 		}
 	}
-
-	private static final String _UNICODE_PREFIX = "\\u";
 
 }

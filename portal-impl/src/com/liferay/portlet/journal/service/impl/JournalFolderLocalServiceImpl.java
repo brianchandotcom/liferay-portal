@@ -712,64 +712,6 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public JournalFolder updateFolderAndDDMStructures(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long[] ddmStructureIds,
-			boolean overrideDDMStructures, boolean mergeWithParentFolder,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		// Merge folders
-
-		if (!overrideDDMStructures) {
-			ddmStructureIds = new long[0];
-		}
-
-		validateArticleDDMStructures(folderId, ddmStructureIds);
-
-		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
-			folderId);
-
-		parentFolderId = getParentFolderId(folder, parentFolderId);
-
-		if (mergeWithParentFolder && (folderId != parentFolderId)) {
-			mergeFolders(folder, parentFolderId);
-
-			return folder;
-		}
-
-		// Folder
-
-		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
-
-		folder.setModifiedDate(serviceContext.getModifiedDate(null));
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
-		folder.setName(name);
-		folder.setDescription(description);
-		folder.setOverrideDDMStructures(overrideDDMStructures);
-		folder.setExpandoBridgeAttributes(serviceContext);
-
-		journalFolderPersistence.update(folder);
-
-		// Asset
-
-		updateAsset(
-			userId, folder, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		// Dynamic data mapping
-
-		if (ddmStructureIds != null) {
-			updateFolderDDMStructures(folder, ddmStructureIds);
-		}
-
-		return folder;
-	}
-
 	@Override
 	public void updateFolderDDMStructures(
 			JournalFolder folder, long[] ddmStructureIdsArray)
@@ -1203,6 +1145,62 @@ public class JournalFolderLocalServiceImpl
 				indexer.reindex(folder);
 			}
 		}
+	}
+
+	protected JournalFolder updateFolderAndDDMStructures(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long[] ddmStructureIds,
+			boolean overrideDDMStructures, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Merge folders
+
+		if (!overrideDDMStructures) {
+			ddmStructureIds = new long[0];
+		}
+
+		validateArticleDDMStructures(folderId, ddmStructureIds);
+
+		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		parentFolderId = getParentFolderId(folder, parentFolderId);
+
+		if (mergeWithParentFolder && (folderId != parentFolderId)) {
+			mergeFolders(folder, parentFolderId);
+
+			return folder;
+		}
+
+		// Folder
+
+		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
+
+		folder.setModifiedDate(serviceContext.getModifiedDate(null));
+		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
+		folder.setName(name);
+		folder.setDescription(description);
+		folder.setOverrideDDMStructures(overrideDDMStructures);
+		folder.setExpandoBridgeAttributes(serviceContext);
+
+		journalFolderPersistence.update(folder);
+
+		// Asset
+
+		updateAsset(
+			userId, folder, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		// Dynamic data mapping
+
+		if (ddmStructureIds != null) {
+			updateFolderDDMStructures(folder, ddmStructureIds);
+		}
+
+		return folder;
 	}
 
 	protected void validateArticleDDMStructures(

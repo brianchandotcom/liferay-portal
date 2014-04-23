@@ -184,9 +184,7 @@ public class BackgroundTaskLocalServiceTest {
 
 		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
-		String taskContext = JSONFactoryUtil.serialize(taskContextMap);
-
-		backgroundTaskImpl.setTaskContext(taskContext);
+		backgroundTaskImpl.setTaskContext(taskContextMap);
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(

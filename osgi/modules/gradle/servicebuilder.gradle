@@ -48,7 +48,7 @@ task buildService(type: JavaExec) {
 	args "service.build.number=1"
 	args "service.build.number.increment=true"
 	args "service.hbm.file=${project.ext.resourcesDir}/META-INF/module-hbm.xml"
-	args "service.impl.dir=${project.ext.sourcesDir}
+	args "service.impl.dir=${project.ext.sourcesDir}"
 	args "service.input.file=${project.ext.resourcesDir}/service.xml"
 	args "service.model.hints.file=${project.ext.resourcesDir}/META-INF/portlet-model-hints.xml"
 	args "service.osgi.module=true"

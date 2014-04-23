@@ -14,12 +14,20 @@
 
 package com.liferay.portlet.documentlibrarydisplay.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,13 +40,115 @@ public class DLDisplayConfigurationDisplayContext {
 		HttpServletRequest request,
 		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
+		_request = request;
+		_dlPortletInstanceSettings = dlPortletInstanceSettings;
+
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
 			request, dlPortletInstanceSettings);
 	}
 
-	public String[] getAllFileEntryColumns()
-		throws PortalException, SystemException {
+	public List<KeyValuePair> getAvailableFileEntryColumns() {
+		if (_availableFileEntryColumns == null) {
+			_computeFileEntryColumns();
+		}
 
+		return _availableFileEntryColumns;
+	}
+
+	public List<KeyValuePair> getAvailableFolderColumns() {
+		if (_availableFolderColumns == null) {
+			_computeFolderColumns();
+		}
+
+		return _availableFolderColumns;
+	}
+
+	public List<KeyValuePair> getCurrentFileEntryColumns() {
+		if (_currentFileEntryColumns == null) {
+			_computeFileEntryColumns();
+		}
+
+		return _currentFileEntryColumns;
+	}
+
+	public List<KeyValuePair> getCurrentFolderColumns() {
+		if (_currentFolderColumns == null) {
+			_computeFolderColumns();
+		}
+
+		return _currentFolderColumns;
+	}
+
+	public DLActionsDisplayContext getDLActionsDisplayContext() {
+		return _dlActionsDisplayContext;
+	}
+
+	private void _computeFileEntryColumns() {
+		String[] fileEntryColumns =
+			_dlPortletInstanceSettings.getFileEntryColumns();
+
+		_currentFileEntryColumns = new ArrayList<KeyValuePair>();
+
+		for (String fileEntryColumn : fileEntryColumns) {
+			_currentFileEntryColumns.add(
+				new KeyValuePair(
+					fileEntryColumn,
+					LanguageUtil.get(_request, fileEntryColumn)));
+		}
+
+		_availableFileEntryColumns = new ArrayList<KeyValuePair>();
+
+		Arrays.sort(fileEntryColumns);
+
+		Set<String> allFileEntryColumns = SetUtil.fromArray(
+			_getAllFileEntryColumns());
+
+		for (String fileEntryColumn : allFileEntryColumns) {
+			if (Arrays.binarySearch(fileEntryColumns, fileEntryColumn) < 0) {
+				_availableFileEntryColumns.add(
+					new KeyValuePair(
+						fileEntryColumn,
+						LanguageUtil.get(_request, fileEntryColumn)));
+			}
+		}
+
+		_availableFileEntryColumns = ListUtil.sort(
+			_availableFileEntryColumns,
+			new KeyValuePairComparator(false, true));
+	}
+
+	private void _computeFolderColumns() {
+		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
+
+		_currentFolderColumns = new ArrayList<KeyValuePair>();
+
+		for (String folderColumn : folderColumns) {
+			_currentFolderColumns.add(
+				new KeyValuePair(
+					folderColumn, LanguageUtil.get(_request, folderColumn)));
+		}
+
+		_availableFolderColumns = new ArrayList<KeyValuePair>();
+
+		Arrays.sort(folderColumns);
+
+		Set<String> allFolderColumns = SetUtil.fromArray(
+			_getAllFolderColumns());
+
+		for (String folderColumn : allFolderColumns) {
+			if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
+				_availableFolderColumns.add(
+					new KeyValuePair(
+						folderColumn,
+						LanguageUtil.get(_request, folderColumn)));
+			}
+		}
+
+		_availableFolderColumns = ListUtil.sort(
+			_availableFolderColumns, new KeyValuePairComparator(false, true));
+	}
+
+	private String[] _getAllFileEntryColumns() {
 		String allFileEntryColumns = "name,size";
 
 		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
@@ -54,9 +164,7 @@ public class DLDisplayConfigurationDisplayContext {
 		return StringUtil.split(allFileEntryColumns);
 	}
 
-	public String[] getAllFolderColumns()
-		throws PortalException, SystemException {
-
+	private String[] _getAllFolderColumns() {
 		String allFolderColumns = "name,num-of-folders,num-of-documents";
 
 		if (_dlActionsDisplayContext.isShowActions()) {
@@ -66,10 +174,12 @@ public class DLDisplayConfigurationDisplayContext {
 		return StringUtil.split(allFolderColumns);
 	}
 
-	public DLActionsDisplayContext getDLActionsDisplayContext() {
-		return _dlActionsDisplayContext;
-	}
-
+	private List<KeyValuePair> _availableFileEntryColumns;
+	private List<KeyValuePair> _availableFolderColumns;
+	private List<KeyValuePair> _currentFileEntryColumns;
+	private List<KeyValuePair> _currentFolderColumns;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private HttpServletRequest _request;
 
 }

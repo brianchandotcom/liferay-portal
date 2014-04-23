@@ -68,41 +68,13 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 				<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= dlPortletInstanceSettings.getFoldersPerPage() %>" />
 
 				<aui:field-wrapper label="show-columns">
-
-					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(dlDisplayConfigurationDisplayContext.getAllFolderColumns());
-					String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
-
-					// Left list
-
-					List leftList = new ArrayList();
-
-					for (String folderColumn : folderColumns) {
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
-					}
-
-					// Right list
-
-					List rightList = new ArrayList();
-
-					Arrays.sort(folderColumns);
-
-					for (String folderColumn : availableFolderColumns) {
-						if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-							rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
-						}
-					}
-
-					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-					%>
-
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentFolderColumns"
-						leftList="<%= leftList %>"
+						leftList="<%= dlDisplayConfigurationDisplayContext.getCurrentFolderColumns() %>"
 						leftReorder="true"
 						leftTitle="current"
 						rightBoxName="availableFolderColumns"
-						rightList="<%= rightList %>"
+						rightList="<%= dlDisplayConfigurationDisplayContext.getAvailableFolderColumns() %>"
 						rightTitle="available"
 					/>
 				</aui:field-wrapper>
@@ -114,41 +86,13 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 				<aui:input label="documents-per-page" name="preferences--fileEntriesPerPage--" size="2" type="text" value="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>" />
 
 				<aui:field-wrapper label="show-columns">
-
-					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlDisplayConfigurationDisplayContext.getAllFileEntryColumns());
-					String[] fileEntryColumns = dlPortletInstanceSettings.getFileEntryColumns();
-
-					// Left list
-
-					List leftList = new ArrayList();
-
-					for (String fileEntryColumn : fileEntryColumns) {
-						leftList.add(new KeyValuePair(fileEntryColumn, LanguageUtil.get(pageContext, fileEntryColumn)));
-					}
-
-					// Right list
-
-					List rightList = new ArrayList();
-
-					Arrays.sort(fileEntryColumns);
-
-					for (String fileEntryColumn : availableFileEntryColumns) {
-						if (Arrays.binarySearch(fileEntryColumns, fileEntryColumn) < 0) {
-							rightList.add(new KeyValuePair(fileEntryColumn, LanguageUtil.get(pageContext, fileEntryColumn)));
-						}
-					}
-
-					rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-					%>
-
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentFileEntryColumns"
-						leftList="<%= leftList %>"
+						leftList="<%= dlDisplayConfigurationDisplayContext.getCurrentFileEntryColumns() %>"
 						leftReorder="true"
 						leftTitle="current"
 						rightBoxName="availableFileEntryColumns"
-						rightList="<%= rightList %>"
+						rightList="<%= dlDisplayConfigurationDisplayContext.getAvailableFileEntryColumns() %>"
 						rightTitle="available"
 					/>
 				</aui:field-wrapper>

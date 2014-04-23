@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portlet.documentlibrarydisplay.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
  */
-public class DLConfigurationDisplayContext {
+public class DLDisplayConfigurationDisplayContext {
 
-	public DLConfigurationDisplayContext(
+	public DLDisplayConfigurationDisplayContext(
 		HttpServletRequest request,
 		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
@@ -35,22 +36,34 @@ public class DLConfigurationDisplayContext {
 			request, dlPortletInstanceSettings);
 	}
 
-	public String[] getAllEntryColumns()
+	public String[] getAllFileEntryColumns()
 		throws PortalException, SystemException {
 
-		String allEntryColumns = "name,size,status";
+		String allFileEntryColumns = "name,size";
 
 		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allEntryColumns += ",downloads";
+			allFileEntryColumns += ",downloads";
 		}
+
+		allFileEntryColumns += ",locked";
 
 		if (_dlActionsDisplayContext.isShowActions()) {
-			allEntryColumns += ",action";
+			allFileEntryColumns += ",action";
 		}
 
-		allEntryColumns += ",modified-date,create-date";
+		return StringUtil.split(allFileEntryColumns);
+	}
 
-		return StringUtil.split(allEntryColumns);
+	public String[] getAllFolderColumns()
+		throws PortalException, SystemException {
+
+		String allFolderColumns = "name,num-of-folders,num-of-documents";
+
+		if (_dlActionsDisplayContext.isShowActions()) {
+			allFolderColumns += ",action";
+		}
+
+		return StringUtil.split(allFolderColumns);
 	}
 
 	public DLActionsDisplayContext getDLActionsDisplayContext() {

@@ -18,7 +18,7 @@
 
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
-DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfigurationDisplayContext(request, dlPortletInstanceSettings);
+DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new DLDisplayConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -70,7 +70,7 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFolderColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllFolderColumns());
+					Set<String> availableFolderColumns = SetUtil.fromArray(dlDisplayConfigurationDisplayContext.getAllFolderColumns());
 					String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
 					// Left list
@@ -116,7 +116,7 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 				<aui:field-wrapper label="show-columns">
 
 					<%
-					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllFileEntryColumns());
+					Set<String> availableFileEntryColumns = SetUtil.fromArray(dlDisplayConfigurationDisplayContext.getAllFileEntryColumns());
 					String[] fileEntryColumns = dlPortletInstanceSettings.getFileEntryColumns();
 
 					// Left list

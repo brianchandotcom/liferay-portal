@@ -23,23 +23,14 @@ import javax.servlet.jsp.JspException;
  * @author Julio Camarero
  * @generated
  */
-public class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
+public class BaseSpacerTag extends com.liferay.portal.kernel.servlet.taglib.TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
 		return super.doStartTag();
 	}
 
-	public java.lang.String getUse() {
-		return _use;
-	}
-
-	public void setUse(java.lang.String use) {
-		_use = use;
-	}
-
 	protected void cleanUp() {
-		_use = null;
 	}
 
 	protected String getPage() {
@@ -47,8 +38,7 @@ public class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/aui/script/page.jsp";
+		"/html/taglib/aui/spacer/page.jsp";
 
-	private java.lang.String _use = null;
 
 }

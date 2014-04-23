@@ -19,6 +19,7 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
+boolean defineVar = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:component:defineVar")), true);
 java.lang.String excludeAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:excludeAttributes"));
 java.lang.String javaScriptAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:javaScriptAttributes"));
 java.lang.String module = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:module"));

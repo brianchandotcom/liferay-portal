@@ -1,0 +1,8 @@
+evaluationDependsOn(':polls-impl')
+
+dependencies {
+	compile files(["${liferayProjectDir}/portal-impl/classes"])
+	compile files(["${liferayProjectDir}/portal-impl/test-classes/integration"])
+
+	compile project(':polls-impl')
+}

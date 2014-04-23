@@ -75,7 +75,7 @@ public class FlexjsonObjectJSONTransformer
 
 		for (String name : names) {
 			PathExpression pathExpression = new PathExpression(
-				path.concat(name), false);
+				path.concat(StringPool.PERIOD).concat(name), false);
 
 			for (int i = 0; i < pathExpressions.size(); i++) {
 				PathExpression curPathExpression = pathExpressions.get(i);
@@ -101,7 +101,7 @@ public class FlexjsonObjectJSONTransformer
 
 		for (String name : names) {
 			PathExpression pathExpression = new PathExpression(
-				path.concat(name), true);
+				path.concat(StringPool.PERIOD).concat(name), true);
 
 			if (!pathExpressions.contains(pathExpression)) {
 				pathExpressions.add(0, pathExpression);

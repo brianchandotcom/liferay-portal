@@ -42,7 +42,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	public ConfigurationActionImpl() {
 		addMultiValuedKeys(DLPortletInstanceSettings.MULTI_VALUED_KEYS);
-		addMultiValuedKeys(DLSettings.MULTI_VALUED_KEYS);
 	}
 
 	@Override

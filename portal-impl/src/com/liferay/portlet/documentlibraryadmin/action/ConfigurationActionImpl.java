@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DLSettings;
 
 import javax.portlet.ActionRequest;
@@ -35,7 +34,6 @@ import javax.portlet.PortletConfig;
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	public ConfigurationActionImpl() {
-		addMultiValuedKeys(DLPortletInstanceSettings.MULTI_VALUED_KEYS);
 		addMultiValuedKeys(DLSettings.MULTI_VALUED_KEYS);
 	}
 

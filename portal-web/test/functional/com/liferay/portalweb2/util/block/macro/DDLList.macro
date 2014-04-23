@@ -29,6 +29,13 @@
 		<execute action="PGDynamicdatalistsAddlist#assertClick" locator-key1="DATA_DEFINITION_SELECT_LINK" value1="Select" />
 	</command>
 
+	<command name="attemptDeleteRecordPGViaDDLDisplay">
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="FAILURE_MESSAGE" value1="You do not have the required permissions." />
+	</command>
+
 	<command name="deleteCP">
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
@@ -170,6 +177,13 @@
 
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalistsList#assertElementPresent" locator-key1="ADD_RECORD_BUTTON" />
+	</command>
+
+	<command name="viewDeleteRecordOptionPGViaDDLDisplay">
+		<execute action="PGDynamicdatalists#type" locator-key1="BASIC_SEARCH_FIELD" value1="${ddlListRecordName}" />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
 	</command>
 
 	<command name="viewPGViaDDLDisplay">

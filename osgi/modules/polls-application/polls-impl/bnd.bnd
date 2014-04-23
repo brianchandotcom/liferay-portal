@@ -1,0 +1,11 @@
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portlet.polls.lar,\
+	com.liferay.portlet.polls.service.permission
+Include-Resource:\
+	build/classes/main,\
+	build/resources/main
+Liferay-Service: true
+Private-Package: *
+Spring-Context: META-INF/spring/*.xml;create-asynchronously:=false
+Web-ContextPath: /polls-impl

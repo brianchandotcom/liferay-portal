@@ -32,14 +32,15 @@
 		</execute>
 	</command>
 
-	<command name="exportSiteCmd">
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute action="CPSitepagesExport#type" locator-key1="EXPORT_FILE_NAME" value1="${larFileName}" />
-			</then>
-		</if>
+	<command name="exportPortlet">
+		<execute macro="LAR#gotoExportImportCmd" />
 
+		<execute macro="LAR#exportCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
+	<command name="exportSiteCmd">
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
@@ -49,20 +50,25 @@
 
 		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
 
-		<var name="key_larFileName" value="${larFileName}" />
-
 		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute action="CPSitepagesExport#assertClick" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
-		<execute action="CPSitepagesExport#downloadTempFile" locator1="${larFileName}" />
+
+		<var name="valueName" method='selenium#getText("//tr/td[5]/span/a")' />
+
+		<echo message="value name ${valueName}" />
+
+		<var name="larFileName" input="${valueName}"  pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" group="1" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
 		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="exportSiteCP">
 		<execute macro="LAR#gotoExportSiteCmd" />
 
-		<execute macro="LAR#exportSiteCmd">
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<execute macro="LAR#exportSiteCmd" />
 	</command>
 
 	<command name="exportUserGroups">
@@ -77,28 +83,24 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />
 		</execute>
-
-		<execute action="BasePortletExport#selectFrame" locator-key1="EXPORT_IFRAME" />
 	</command>
 
 	<command name="gotoExportSiteCmd">
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
-
-		<execute action="CPSitepagesExport#selectFrame" locator-key1="EXPORT_IFRAME" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
-
-		<execute action="CPSitepagesImport#selectFrame" locator-key1="IMPORT_IFRAME" />
 	</command>
 
 	<command name="importCmd">
@@ -116,6 +118,16 @@
 	</command>
 
 	<command name="importDDL">
+		<execute macro="LAR#gotoExportImportCmd" />
+
+		<execute macro="LAR#selectImportFileCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="LAR#importCmd" />
+	</command>
+
+	<command name="importPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
 
 		<execute macro="LAR#selectImportFileCmd">

@@ -1,0 +1,76 @@
+<definition component-name="portal-staging">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="ExportImportSmoke" priority="5">
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
+
+		<if>
+			<equals arg1="${exportPermissions}" arg2="true" />
+			<then>
+				<execute action="CPSitepagesExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var name="valueName" method='selenium#getText("//tr/td[5]/span/a")' />
+
+		<echo message="value name ${valueName}" />
+
+		<var name="larFileName" input="${valueName}"  pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" group="1" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+</definition>

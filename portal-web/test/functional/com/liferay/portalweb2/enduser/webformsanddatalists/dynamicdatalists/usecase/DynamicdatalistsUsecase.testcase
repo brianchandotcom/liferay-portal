@@ -135,6 +135,64 @@
 		</execute>
 	</command>
 
+	<command name="AssertConfigurationMenulist" priority="3">
+		<var name="ddlDataDefinitionName" value="To Do" />
+		<var name="ddlListName" value="List Name" />
+		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
+			<var name="configureChecked" value="false" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalistsConfiguration#check" locator-key1="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextNotPresent" locator-key1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
+
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="MAXIMIZE" value1="Maximize" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="MINIMIZE" value1="Minimize" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="OPTION_MENULIST_REMOVE" value1="Remove" />
+
+		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
+
+		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+	</command>
+
 	<command name="AssertGuestCannotEditRecord" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />

@@ -32,6 +32,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setClassTypePK(long classTypePK) {
+		_classTypePK = classTypePK;
+	}
+
 	public void setContentCallback(String contentCallback) {
 		_contentCallback = contentCallback;
 	}
@@ -48,6 +52,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		_className = null;
 		_classPK = 0;
+		_classTypePK = 0;
 		_contentCallback = null;
 		_curCategoryIds = null;
 		_hiddenInput = "assetCategoryIds";
@@ -66,6 +71,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-ui:asset-categories-selector:classPK",
 			String.valueOf(_classPK));
 		request.setAttribute(
+			"liferay-ui:asset-categories-selector:classTypePK",
+			String.valueOf(_classTypePK));
+		request.setAttribute(
 			"liferay-ui:asset-categories-selector:contentCallback",
 			String.valueOf(_contentCallback));
 		request.setAttribute(
@@ -80,6 +88,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
+	private long _classTypePK;
 	private String _contentCallback;
 	private String _curCategoryIds;
 	private String _hiddenInput = "assetCategoryIds";

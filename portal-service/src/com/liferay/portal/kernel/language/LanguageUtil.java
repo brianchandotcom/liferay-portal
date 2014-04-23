@@ -156,6 +156,10 @@ public class LanguageUtil {
 			resourceBundle, pattern, arguments, translateArguments);
 	}
 
+	public static String get(HttpServletRequest request, String key) {
+		return getLanguage().get(request, key);
+	}
+
 	public static String get(Locale locale, String key) {
 		return getLanguage().get(locale, key);
 	}

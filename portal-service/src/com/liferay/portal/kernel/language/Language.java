@@ -91,6 +91,8 @@ public interface Language {
 		ResourceBundle resourceBundle, String pattern, Object[] arguments,
 		boolean translateArguments);
 
+	public String get(HttpServletRequest request, String key);
+
 	public String get(Locale locale, String key);
 
 	public String get(Locale locale, String key, String defaultValue);

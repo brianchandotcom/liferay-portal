@@ -19,20 +19,6 @@
 <%
 dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
 DLEntryListDisplayContext dlEntryListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
-
-try {
-	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-
-	rootFolderName = rootFolder.getName();
-
-	if (rootFolder.getGroupId() != scopeGroupId) {
-		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		rootFolderName = StringPool.BLANK;
-	}
-}
-catch (NoSuchFolderException nsfe) {
-	rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

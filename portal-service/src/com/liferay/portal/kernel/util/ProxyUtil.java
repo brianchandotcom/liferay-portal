@@ -99,6 +99,8 @@ public class ProxyUtil {
 
 		try {
 			constructor = clazz.getConstructor(_argumentsClazz);
+
+			constructor.setAccessible(true);
 		}
 		catch (Exception e) {
 			throw new InternalError(e.toString());

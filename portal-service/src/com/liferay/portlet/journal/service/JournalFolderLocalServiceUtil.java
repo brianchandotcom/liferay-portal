@@ -763,6 +763,13 @@ public class JournalFolderLocalServiceUtil {
 		return getService().updateStatus(userId, folder, status);
 	}
 
+	public static void validateFolderDDMStructures(long folderId,
+		long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().validateFolderDDMStructures(folderId, parentFolderId);
+	}
+
 	public static JournalFolderLocalService getService() {
 		if (_service == null) {
 			_service = (JournalFolderLocalService)PortalBeanLocatorUtil.locate(JournalFolderLocalService.class.getName());

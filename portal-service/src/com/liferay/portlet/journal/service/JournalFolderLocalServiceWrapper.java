@@ -854,6 +854,14 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.updateStatus(userId, folder, status);
 	}
 
+	@Override
+	public void validateFolderDDMStructures(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.validateFolderDDMStructures(folderId,
+			parentFolderId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

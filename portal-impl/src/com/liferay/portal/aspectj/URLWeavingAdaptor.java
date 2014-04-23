@@ -157,8 +157,10 @@ public class URLWeavingAdaptor extends WeavingAdaptor {
 	private class RecordGeneratedClassHandler implements GeneratedClassHandler {
 
 		@Override
-		public void acceptClass(String name, byte[] bytes) {
-			_generatedClasses.put(name, bytes);
+		public void acceptClass(
+			String name, byte[] originalBytes, byte[] weavedBytes) {
+
+			_generatedClasses.put(name, weavedBytes);
 		}
 
 	}

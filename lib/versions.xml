@@ -1005,7 +1005,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/aspectj-rt.jar</file-name>
-		<version>1.6.12</version>
+		<version>1.8.0</version>
 		<project-name>AspectJ</project-name>
 		<project-url>http://www.eclipse.org/aspectj</project-url>
 		<licenses>
@@ -1017,7 +1017,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/aspectj-weaver.jar</file-name>
-		<version>1.6.12</version>
+		<version>1.8.0</version>
 		<project-name>AspectJ</project-name>
 		<project-url>http://www.eclipse.org/aspectj</project-url>
 		<licenses>

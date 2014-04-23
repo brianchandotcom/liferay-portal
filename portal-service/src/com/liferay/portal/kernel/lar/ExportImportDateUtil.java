@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -89,7 +91,7 @@ public class ExportImportDateUtil {
 
 	public static DateRange getDateRange(
 			ExportImportConfiguration configuration)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, Serializable> settingsMap = configuration.getSettingsMap();
 
@@ -126,7 +128,7 @@ public class ExportImportDateUtil {
 	}
 
 	public static DateRange getDateRange(long configurationId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -138,7 +140,7 @@ public class ExportImportDateUtil {
 	public static DateRange getDateRange(
 			PortletRequest portletRequest, long groupId, boolean privateLayout,
 			long plid, String portletId, String defaultRange)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -207,7 +209,7 @@ public class ExportImportDateUtil {
 			int endDateMonth, int endDateDay, int endDateHour,
 			int endDateMinute, String portletId, long groupId, long plid,
 			boolean privateLayout, Locale locale, TimeZone timeZone)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Date startDate = null;
 		Date endDate = null;

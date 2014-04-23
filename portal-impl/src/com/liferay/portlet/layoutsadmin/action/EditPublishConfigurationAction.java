@@ -15,6 +15,8 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationHelper;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
@@ -23,10 +25,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -85,12 +91,19 @@ public class EditPublishConfigurationAction
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
 			}
-			else if (cmd.equals(Constants.PUBLISH_TO_LIVE) ||
-					 cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-
+			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 				ExportImportConfigurationHelper.
-					publishLayoutsByExportImportConfiguration(
+					publishLocalLayoutByExportImportConfiguration(
 						themeDisplay.getUserId(), exportImportConfigurationId);
+			}
+			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+				ExportImportConfigurationHelper.
+					publishRemoteLayoutByExportImportConfiguration(
+						exportImportConfigurationId);
+			}
+			else if (cmd.equals(Constants.RELAUNCH)) {
+				relaunchPublishLayoutConfiguration(
+					themeDisplay.getUserId(), actionRequest);
 			}
 			else if (Validator.isNull(cmd)) {
 				addSessionMessages(actionRequest);
@@ -189,6 +202,43 @@ public class EditPublishConfigurationAction
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) + "settingsMap",
 			settingsMap);
+	}
+
+	protected void relaunchPublishLayoutConfiguration(
+			long userId, ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, "backgroundTaskId");
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(
+					MapUtil.getLong(
+						taskContextMap, "exportImportConfigurationId"));
+
+		if (exportImportConfiguration.getType() ==
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
+
+			ExportImportConfigurationHelper.
+				publishLocalLayoutByExportImportConfiguration(
+					userId,
+					exportImportConfiguration.getExportImportConfigurationId());
+		}
+		else if (exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) {
+
+			ExportImportConfigurationHelper.
+				publishRemoteLayoutByExportImportConfiguration(
+					exportImportConfiguration.getExportImportConfigurationId());
+		}
 	}
 
 	protected ExportImportConfiguration updatePublishConfiguration(

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -1202,7 +1203,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, trigger.getJobName(), description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
-				settingsMap, new ServiceContext());
+				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
@@ -1320,7 +1322,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, trigger.getJobName(), description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
-				settingsMap, new ServiceContext());
+				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,

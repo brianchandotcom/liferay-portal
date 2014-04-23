@@ -96,8 +96,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
 DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
 
-String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
-
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 

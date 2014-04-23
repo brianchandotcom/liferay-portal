@@ -44,6 +44,8 @@ boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
+String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }

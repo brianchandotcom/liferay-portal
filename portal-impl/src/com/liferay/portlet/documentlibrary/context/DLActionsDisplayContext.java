@@ -76,7 +76,7 @@ public class DLActionsDisplayContext {
 		return _dlPortletInstanceSettings.getShowFolderMenu();
 	}
 
-	public boolean isShowActions() throws PortalException, SystemException {
+	public boolean isShowActions() {
 		String portletId = _portletDisplay.getId();
 
 		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||

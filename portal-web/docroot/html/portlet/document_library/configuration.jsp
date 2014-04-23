@@ -79,40 +79,13 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableRelatedAssets() %>" />
 
 						<aui:field-wrapper label="display-style-views">
-
-							<%
-							Set<String> availableDisplayViews = SetUtil.fromArray(PropsValues.DL_DISPLAY_VIEWS);
-
-							// Left list
-
-							List leftList = new ArrayList();
-
-							for (String displayView : displayViews) {
-								leftList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
-							}
-
-							// Right list
-
-							List rightList = new ArrayList();
-
-							Arrays.sort(displayViews);
-
-							for (String displayView : availableDisplayViews) {
-								if (Arrays.binarySearch(displayViews, displayView) < 0) {
-									rightList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
-								}
-							}
-
-							rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-							%>
-
 							<liferay-ui:input-move-boxes
 								leftBoxName="currentDisplayViews"
-								leftList="<%= leftList %>"
+								leftList="<%= dlConfigurationDisplayContext.getCurrentDisplayViews() %>"
 								leftReorder="true"
 								leftTitle="current"
 								rightBoxName="availableDisplayViews"
-								rightList="<%= rightList %>"
+								rightList="<%= dlConfigurationDisplayContext.getAvailableDisplayViews() %>"
 								rightTitle="available"
 							/>
 						</aui:field-wrapper>
@@ -122,41 +95,13 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryEntriesListingPanel" persistState="<%= true %>" title="entries-listing-for-list-display-style">
 					<aui:fieldset>
 						<aui:field-wrapper label="show-columns">
-
-							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(dlConfigurationDisplayContext.getAllEntryColumns());
-							String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
-
-							// Left list
-
-							List leftList = new ArrayList();
-
-							for (String entryColumn : entryColumns) {
-								leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
-							}
-
-							// Right list
-
-							List rightList = new ArrayList();
-
-							Arrays.sort(entryColumns);
-
-							for (String entryColumn : availableEntryColumns) {
-								if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
-									rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
-								}
-							}
-
-							rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-							%>
-
 							<liferay-ui:input-move-boxes
 								leftBoxName="currentEntryColumns"
-								leftList="<%= leftList %>"
+								leftList="<%= dlConfigurationDisplayContext.getCurrentEntryColumns() %>"
 								leftReorder="true"
 								leftTitle="current"
 								rightBoxName="availableEntryColumns"
-								rightList="<%= rightList %>"
+								rightList="<%= dlConfigurationDisplayContext.getAvailableEntryColumns() %>"
 								rightTitle="available"
 							/>
 						</aui:field-wrapper>

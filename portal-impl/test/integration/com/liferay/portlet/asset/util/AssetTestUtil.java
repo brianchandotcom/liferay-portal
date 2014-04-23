@@ -25,10 +25,14 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.junit.Assert;
 
 /**
  * @author Mate Thurzo
@@ -88,6 +92,41 @@ public class AssetTestUtil {
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
 			userId, ServiceTestUtil.randomString(), serviceContext);
+	}
+
+	public static AssetVocabulary addVocabularyAssociatedToAssets(
+			long groupId, boolean multiValued, List<Long> assetClassNameIds,
+			List<Long> assetClassTypeIds, List<Boolean> assetsRequired)
+		throws Exception {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		titleMap.put(locale, ServiceTestUtil.randomString());
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		descriptionMap.put(locale, ServiceTestUtil.randomString());
+
+		long userId = TestPropsValues.getUserId();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId, userId);
+
+		AssetVocabularySettingsProperties settingsProperties =
+			new AssetVocabularySettingsProperties();
+
+		settingsProperties.setMultiValued(multiValued);
+
+		settingsProperties.addAssociatedAssets(
+			assetClassNameIds, assetClassTypeIds, assetsRequired);
+
+		AssetVocabulary vocabulary = AssetVocabularyServiceUtil.addVocabulary(
+			ServiceTestUtil.randomString(), titleMap, descriptionMap,
+			settingsProperties.toString(), serviceContext);
+
+		Assert.assertNotNull(vocabulary);
+
+		return vocabulary;
 	}
 
 }

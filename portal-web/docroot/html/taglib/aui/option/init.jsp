@@ -25,6 +25,7 @@ boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("au
 java.lang.Object label = (java.lang.Object)request.getAttribute("aui:option:label");
 boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:option:selected")));
 java.lang.String style = GetterUtil.getString((java.lang.String)request.getAttribute("aui:option:style"));
+boolean useModelValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:option:useModelValue")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:option:value");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:option:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:option:scopedAttributes");

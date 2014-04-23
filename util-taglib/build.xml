@@ -118,6 +118,7 @@
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/aui.tld" />
+			<arg value="${project.dir}/util-taglib/src/META-INF/ddm.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />

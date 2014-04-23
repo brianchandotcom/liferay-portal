@@ -55,7 +55,6 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 
 import jodd.util.ReflectUtil;
-import jodd.util.Wildcard;
 
 /**
  * @author Igor Spasic
@@ -67,7 +66,6 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		_baseURL = String.valueOf(request.getRequestURL());
 		_contextPath = ParamUtil.getString(
 			request, "contextPath", request.getContextPath());
-		_discover = StringUtil.split(request.getParameter("discover"));
 	}
 
 	@Override
@@ -82,11 +80,6 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		resultsMap.put("context", _contextPath);
 		resultsMap.put("basePath", _basePath);
 		resultsMap.put("baseURL", _baseURL);
-
-		if (_discover.length > 0) {
-			resultsMap.put("discover", _discover);
-		}
-
 		resultsMap.put("services", _buildJsonWebServiceActionMappingMaps());
 		resultsMap.put("types", _buildTypes());
 		resultsMap.put("version", ReleaseInfo.getVersion());
@@ -129,10 +122,6 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				jsonWebServiceActionMappings) {
 
 			String path = jsonWebServiceActionMapping.getPath();
-
-			if (!_isAcceptPath(path)) {
-				continue;
-			}
 
 			Map<String, Object> jsonWebServiceActionMappingMap =
 				new LinkedHashMap<String, Object>();
@@ -415,23 +404,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return genericReturnTypes;
 	}
 
-	private boolean _isAcceptPath(String path) {
-		if (_discover.length == 0) {
-			return true;
-		}
-
-		if (Wildcard.matchOne(path, _discover) != -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	private String _basePath;
 	private String _baseURL;
 	private String _contextPath;
-	private String[] _discover;
 	private List<Class<?>> _types = new ArrayList<Class<?>>();
 
 }

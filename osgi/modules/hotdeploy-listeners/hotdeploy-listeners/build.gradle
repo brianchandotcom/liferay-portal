@@ -1,0 +1,10 @@
+dependencies {
+	compile files(["${liferayProjectDir}/portal-impl/classes"])
+
+	compile (
+		[group: 'org.osgi', name: 'org.osgi.compendium', version: '4.3.1'],
+		[group: 'org.osgi', name: 'org.osgi.core', version: '4.3.1']
+	)
+}
+
+project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/portal" : null

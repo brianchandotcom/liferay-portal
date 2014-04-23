@@ -1,0 +1,5 @@
+Bundle-Activator: ${classes;IMPLEMENTS;org.osgi.framework.BundleActivator}
+Bundle-Version: 1.0.0
+Include-Resource:\
+	build/classes/main
+

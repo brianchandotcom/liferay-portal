@@ -15,10 +15,14 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
@@ -29,6 +33,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -238,13 +243,9 @@ public class DLFileEntryActionsDisplayContext {
 	public boolean isOpenInMsOfficeButtonVisible()
 		throws PortalException, SystemException {
 
-		DLContext dlDisplayContext =
-			_dlActionsDisplayContext.getDLDisplayContext();
-
 		if (_dlFileEntryActionsDisplayContextHelper.hasViewPermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
-			dlDisplayContext.isWebDAVEnabled() &&
-			dlDisplayContext.isIEOnWin32()) {
+			_isWebDAVEnabled() && _isIEOnWin32()) {
 
 			return true;
 		}
@@ -353,11 +354,8 @@ public class DLFileEntryActionsDisplayContext {
 	private boolean _isFileEntryTrashable()
 		throws PortalException, SystemException {
 
-		DLContext dlDisplayContext =
-			_dlActionsDisplayContext.getDLDisplayContext();
-
 		if (_dlFileEntryActionsDisplayContextHelper.isDLFileEntry() &&
-			dlDisplayContext.isTrashEnabled()) {
+			_isTrashEnabled()) {
 
 			return true;
 		}
@@ -365,15 +363,46 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	private boolean _isIEOnWin32() {
+		if (_ieOnWin32 == null) {
+			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
+		}
+
+		return _ieOnWin32;
+	}
+
+	private boolean _isTrashEnabled() {
+		if (_trashEnabled == null) {
+			try {
+				_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
+			}
+			catch (NestableException ne) {
+				_trashEnabled = false;
+				_log.error("Unable to determine if trash is enabled", ne);
+			}
+		}
+
+		return _trashEnabled;
+	}
+
+	private boolean _isWebDAVEnabled() {
+		return _portletDisplay.isWebDAVEnabled();
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DLFileEntryActionsDisplayContext.class);
+
 	private long _companyId;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private long _fileEntryTypeId;
 	private long _folderId;
+	private Boolean _ieOnWin32;
 	private PermissionChecker _permissionChecker;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;
 	private long _scopeGroupId;
+	private Boolean _trashEnabled;
 
 }

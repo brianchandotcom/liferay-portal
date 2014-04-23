@@ -42,12 +42,6 @@ public class DLActionsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_portletDisplay = themeDisplay.getPortletDisplay();
-
-		_dlDisplayContext = new DLContext(request);
-	}
-
-	public DLContext getDLDisplayContext() {
-		return _dlDisplayContext;
 	}
 
 	public boolean isAddFolderButtonVisible() {
@@ -124,7 +118,6 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
-	private DLContext _dlDisplayContext;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;

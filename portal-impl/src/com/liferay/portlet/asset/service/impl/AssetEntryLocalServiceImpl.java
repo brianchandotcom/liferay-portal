@@ -604,7 +604,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		validate(groupId, className, categoryIds, tagNames);
+		validate(groupId, className, classTypeId, categoryIds, tagNames);
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -917,8 +917,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
+			long groupId, String className, long classTypeId,
+			long[] categoryIds, String[] tagNames)
 		throws PortalException, SystemException {
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
@@ -928,7 +928,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntryValidator validator = (AssetEntryValidator)InstancePool.get(
 			PropsValues.ASSET_ENTRY_VALIDATOR);
 
-		validator.validate(groupId, className, categoryIds, tagNames);
+		validator.validate(
+			groupId, className, classTypeId, categoryIds, tagNames);
 	}
 
 	protected String[] getClassNames(long companyId, String className) {

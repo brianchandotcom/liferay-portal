@@ -49,6 +49,38 @@ public class RandomUtil {
 		return results;
 	}
 
+	public static boolean randomBoolean() {
+		return random.nextBoolean();
+	}
+
+	public static int randomInt() {
+		int value = random.nextInt();
+
+		if (value > 0) {
+			return value;
+		}
+		else if (value == 0) {
+			return randomInt();
+		}
+		else {
+			return -value;
+		}
+	}
+
+	public static long randomLong() {
+		long value = random.nextLong();
+
+		if (value > 0) {
+			return value;
+		}
+		else if (value == 0) {
+			return randomLong();
+		}
+		else {
+			return -value;
+		}
+	}
+
 	public static void shuffle(Random random, int[] numbers) {
 		for (int i = numbers.length; i > 1; i--) {
 			int position = random.nextInt(i);

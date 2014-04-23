@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -60,7 +61,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -339,22 +339,12 @@ public class ServiceTestUtil {
 		return CounterLocalServiceUtil.increment();
 	}
 
-	public static boolean randomBoolean() throws Exception {
-		return _random.nextBoolean();
+	public static boolean randomBoolean() {
+		return RandomUtil.randomBoolean();
 	}
 
-	public static int randomInt() throws Exception {
-		int value = _random.nextInt();
-
-		if (value > 0) {
-			return value;
-		}
-		else if (value == 0) {
-			return randomInt();
-		}
-		else {
-			return -value;
-		}
+	public static int randomInt() {
+		return RandomUtil.randomInt();
 	}
 
 	public static Map<Locale, String> randomLocaleStringMap() throws Exception {
@@ -371,18 +361,8 @@ public class ServiceTestUtil {
 		return map;
 	}
 
-	public static long randomLong() throws Exception {
-		long value = _random.nextLong();
-
-		if (value > 0) {
-			return value;
-		}
-		else if (value == 0) {
-			return randomLong();
-		}
-		else {
-			return -value;
-		}
+	public static long randomLong() {
+		return RandomUtil.randomLong();
 	}
 
 	public static String randomString() throws Exception {
@@ -462,7 +442,5 @@ public class ServiceTestUtil {
 
 		messageBus.replace(baseDestination);
 	}
-
-	private static Random _random = new Random();
 
 }

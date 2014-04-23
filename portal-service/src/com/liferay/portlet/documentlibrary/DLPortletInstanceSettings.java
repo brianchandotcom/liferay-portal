@@ -25,6 +25,10 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
  */
 public class DLPortletInstanceSettings extends BaseServiceSettings {
 
+	public static final String[] MULTI_VALUED_KEYS = {
+		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns"
+	};
+
 	public DLPortletInstanceSettings(Settings settings) {
 		super(settings, _fallbackKeys);
 	}

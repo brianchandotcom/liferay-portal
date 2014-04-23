@@ -28,6 +28,10 @@ import java.util.Set;
  */
 public class DLSettings extends BaseServiceSettings {
 
+	public static final String[] MULTI_VALUED_KEYS = {
+		"mimeTypes"
+	};
+
 	public DLSettings(Settings settings) {
 		super(settings, _fallbackKeys);
 	}

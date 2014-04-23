@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -1676,6 +1677,10 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getRelativeHomeURL(request);
+	}
+
+	public static ResourceBundle getResourceBundle(Locale locale) {
+		return getPortal().getResourceBundle(locale);
 	}
 
 	public static long getScopeGroupId(HttpServletRequest request)

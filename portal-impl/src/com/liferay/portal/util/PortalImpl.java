@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassName;
@@ -4741,6 +4742,11 @@ public class PortalImpl implements Portal {
 		}
 
 		return homeURL;
+	}
+
+	@Override
+	public ResourceBundle getResourceBundle(Locale locale) {
+		return LanguageResources.getResourceBundle(locale);
 	}
 
 	@Override

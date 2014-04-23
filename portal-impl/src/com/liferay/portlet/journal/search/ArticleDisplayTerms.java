@@ -75,7 +75,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);
 		folderId = ParamUtil.getLong(portletRequest, FOLDER_ID);
 		navigation = ParamUtil.getString(portletRequest, NAVIGATION);
-		status = ParamUtil.getString(portletRequest, STATUS);
+		status = ParamUtil.getInteger(portletRequest, STATUS);
 		structureId = ParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = ParamUtil.getString(portletRequest, TITLE);
@@ -129,7 +129,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		return navigation;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
@@ -229,7 +229,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -242,7 +242,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected List<Long> folderIds;
 	protected long groupId;
 	protected String navigation;
-	protected String status;
+	protected int status;
 	protected String structureId;
 	protected String templateId;
 	protected String title;

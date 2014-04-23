@@ -18,6 +18,45 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="CopyAndPasteTextInCKEditor" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute action="PGMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="Message Boards Subject" />
+		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="Message Boards Body" />
+		<execute action="PGMessageboardsPostthread#copy" locator-key1="BODY_FIELD" />
+		<execute action="PGMessageboardsPostthread#paste" locator-key1="BODY_FIELD" />
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="Message Boards Body" />
+			<var name="threadSubject" value="Message Boards Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="SearchMessageBoardsAttachment" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -184,9 +183,7 @@ public class BackgroundTaskLocalServiceTest {
 
 		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
-		String taskContext = JSONFactoryUtil.serialize(taskContextMap);
-
-		backgroundTaskImpl.setTaskContext(taskContext);
+		backgroundTaskImpl.setTaskContextMap(taskContextMap);
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(

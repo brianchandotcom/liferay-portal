@@ -40,12 +40,7 @@ String format = ParamUtil.getString(request, "format");
 
 List<String> portletTitles = new ArrayList<String>();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("struts_action", "/search/search");
-portletURL.setParameter("groupId", String.valueOf(groupId));
-portletURL.setParameter("keywords", keywords);
-portletURL.setParameter("format", format);
+PortletURL portletURL = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 
 request.setAttribute("search.jsp-portletURL", portletURL);
 request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack());

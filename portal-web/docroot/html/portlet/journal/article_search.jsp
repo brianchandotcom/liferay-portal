@@ -115,7 +115,10 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 				<aui:select inlineField="<%= true %>" name="<%= displayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
 					<aui:option label="any" value="<%= WorkflowConstants.STATUS_ANY %>" />
 					<aui:option label="draft" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
-					<aui:option label="pending" value="<%= WorkflowConstants.STATUS_PENDING %>" />
+					<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName()) %>">
+						<aui:option label="pending" value="<%= WorkflowConstants.STATUS_PENDING %>" />
+						<aui:option label="scheduled" value="<%= WorkflowConstants.STATUS_SCHEDULED %>" />
+					</c:if>
 					<aui:option label="approved" value="<%= WorkflowConstants.STATUS_APPROVED %>" />
 					<aui:option label="expired" value="<%= WorkflowConstants.STATUS_EXPIRED %>" />
 				</aui:select>

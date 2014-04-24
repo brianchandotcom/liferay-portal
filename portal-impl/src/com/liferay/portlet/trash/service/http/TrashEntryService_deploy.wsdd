@@ -51,6 +51,16 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="overrideClassPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.trash.portlet.liferay.com" xmlns:rtns="http://model.trash.portlet.liferay.com" name="restoreEntry" qname="operNS:restoreEntry" returnQName="restoreEntryReturn" returnType="rtns:TrashEntrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.trash.portlet.liferay.com" xmlns:rtns="http://model.trash.portlet.liferay.com" name="restoreEntry" qname="operNS:restoreEntry" returnQName="restoreEntryReturn" returnType="rtns:TrashEntrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="overrideClassPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+		</operation>
 		<parameter name="allowedMethods" value="deleteEntries deleteEntry getEntries moveEntry restoreEntry" />
 		<parameter name="className" value="com.liferay.portlet.trash.service.http.TrashEntryServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://model.trash.portlet.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.trash.portlet.liferay.com" />

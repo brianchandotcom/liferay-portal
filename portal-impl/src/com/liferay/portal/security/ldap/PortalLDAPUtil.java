@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
@@ -296,20 +295,13 @@ public class PortalLDAPUtil {
 			long companyId, String screenName, String emailAddress)
 		throws Exception {
 
-		try {
-			long preferredLDAPServerId =
-				LDAPSettingsUtil.getPreferredLDAPServerId(
-					companyId, screenName);
+		long preferredLDAPServerId = LDAPSettingsUtil.getPreferredLDAPServerId(
+			companyId, screenName);
 
-			if ((preferredLDAPServerId >= 0) &&
-				hasUser(
-					preferredLDAPServerId, companyId, screenName,
-					emailAddress)) {
-
-				return preferredLDAPServerId;
-			}
-		}
-		catch (NoSuchUserException nsue) {
+		if ((preferredLDAPServerId >= 0) &&
+			hasUser(
+				preferredLDAPServerId, companyId, screenName, emailAddress)) {
+			return preferredLDAPServerId;
 		}
 
 		long[] ldapServerIds = StringUtil.split(

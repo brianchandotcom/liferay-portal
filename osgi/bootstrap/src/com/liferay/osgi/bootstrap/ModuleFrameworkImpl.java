@@ -379,10 +379,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			FrameworkFactory.class, serviceLoaderCondition);
 
-		if (frameworkFactories.isEmpty()) {
-			return;
-		}
-
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
 		Map<String, String> properties = _buildFrameworkProperties(

@@ -522,7 +522,7 @@ public abstract class BaseIndexer implements Indexer {
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
 			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames())) {
-				addDefaultSelectedFieldNames(queryConfig);
+				addDefaultSelectedFieldNames(searchContext, queryConfig);
 			}
 
 			addFacetSelectedFieldNames(searchContext, queryConfig);
@@ -642,12 +642,21 @@ public abstract class BaseIndexer implements Indexer {
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
-	protected void addDefaultSelectedFieldNames(QueryConfig queryConfig) {
+	protected void addDefaultSelectedFieldNames(
+		SearchContext searchContext, QueryConfig queryConfig) {
+
 		Set<String> selectedFieldNames = null;
 
 		if (!ArrayUtil.isEmpty(getDefaultSelectedFieldNames())) {
 			selectedFieldNames = SetUtil.fromArray(
 				getDefaultSelectedFieldNames());
+
+			if (searchContext.isIncludeAttachments() ||
+				searchContext.isIncludeDiscussions()) {
+
+				selectedFieldNames.add(Field.CLASS_NAME_ID);
+				selectedFieldNames.add(Field.CLASS_PK);
+			}
 		}
 
 		if (!ArrayUtil.isEmpty(getDefaultSelectedLocalizedFieldNames())) {

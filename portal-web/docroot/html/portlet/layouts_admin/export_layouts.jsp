@@ -479,7 +479,7 @@ if (!cmd.equals(Constants.ADD)) {
 											<liferay-ui:icon
 												image="calendar"
 												label="<%= true %>"
-												message='<%= LanguageUtil.get(locale, "date-range") + selectedLabelsHTML %>'
+												message='<%= LanguageUtil.get(pageContext, "date-range") + selectedLabelsHTML %>'
 											/>
 										</li>
 

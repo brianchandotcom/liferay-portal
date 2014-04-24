@@ -94,7 +94,7 @@ for (int i = 0; i < choices.size(); i++) {
 	<strong><liferay-ui:message key="total-votes" />:</strong> <%= numberFormat.format(totalVotes) %>
 </div>
 
-<c:if test="<%= portletName.equals(PortletKeys.POLLS) %>">
+<c:if test="<%= portletName.equals(PollsPortletKeys.POLLS) %>">
 	<br />
 
 	<div>

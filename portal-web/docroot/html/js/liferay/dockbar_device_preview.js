@@ -245,9 +245,11 @@ AUI.add(
 									cache: false,
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
+									height: dialogConfig.height,
 									id: instance._dialogId,
 									iframeId: 'devicePreviewIframe',
-									uri: WIN.location.href
+									uri: WIN.location.href,
+									width: dialogConfig.width
 								},
 								function(dialogWindow) {
 									var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
@@ -427,11 +429,23 @@ AUI.add(
 					_onSizeInput: function(event) {
 						var instance = this;
 
+						var height = Lang.toInt(instance.get(STR_INPUT_HEIGHT).val());
+						var width = Lang.toInt(instance.get(STR_INPUT_WIDTH).val());
+
 						instance._openDeviceDialog(
 							{
-								height: Lang.toInt(instance.get(STR_INPUT_HEIGHT).val()),
+								height: height,
 								resizable: true,
-								width: Lang.toInt(instance.get(STR_INPUT_WIDTH).val())
+								width: width
+							}
+						);
+
+						var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+						dialog.iframe.node.setStyles(
+							{
+								height: height,
+								width: width
 							}
 						);
 					}

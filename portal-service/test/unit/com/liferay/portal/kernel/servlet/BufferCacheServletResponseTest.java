@@ -21,17 +21,15 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-
-import java.lang.reflect.Field;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -158,10 +156,8 @@ public class BufferCacheServletResponseTest {
 
 		servletOutputStream = bufferCacheServletResponse.getOutputStream();
 
-		Field outputStreamField = ReflectionUtil.getDeclaredField(
-			ServletOutputStreamAdapter.class, "outputStream");
-
-		outputStreamField.set(servletOutputStream, failFlushOutputStream);
+		ReflectionTestUtil.setFieldValue(
+			servletOutputStream, "outputStream", failFlushOutputStream);
 
 		try {
 			bufferCacheServletResponse.getBufferSize();
@@ -254,11 +250,10 @@ public class BufferCacheServletResponseTest {
 		UnsyncPrintWriter unsyncPrintWriter =
 			(UnsyncPrintWriter)bufferCacheServletResponse.getWriter();
 
-		Field writerField = ReflectionUtil.getDeclaredField(
-			UnsyncPrintWriter.class, "_writer");
+		Object writer = ReflectionTestUtil.getFieldValue(
+			unsyncPrintWriter, "_writer");
 
-		Assert.assertTrue(
-			writerField.get(unsyncPrintWriter) instanceof DummyWriter);
+		Assert.assertTrue(writer instanceof DummyWriter);
 		Assert.assertTrue(bufferCacheServletResponse.calledGetWriter);
 
 		bufferCacheServletResponse.setCharBuffer(null);
@@ -268,8 +263,9 @@ public class BufferCacheServletResponseTest {
 		unsyncPrintWriter =
 			(UnsyncPrintWriter)bufferCacheServletResponse.getWriter();
 
-		Assert.assertTrue(
-			writerField.get(unsyncPrintWriter) instanceof UnsyncStringWriter);
+		writer = ReflectionTestUtil.getFieldValue(unsyncPrintWriter, "_writer");
+
+		Assert.assertTrue(writer instanceof UnsyncStringWriter);
 		Assert.assertTrue(bufferCacheServletResponse.calledGetWriter);
 
 		// Servlet output stream

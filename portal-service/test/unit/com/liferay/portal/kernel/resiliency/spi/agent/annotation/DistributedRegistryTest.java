@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.resiliency.spi.agent.annotation;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.Map;
 
@@ -40,9 +38,15 @@ public class DistributedRegistryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_exactDirections = _getExactDirections();
-		_postfixDirections = _getPostfixDirections();
-		_prefixDirections = _getPrefixDirections();
+		_exactDirections =
+			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
+				DistributedRegistry.class, "_exactDirections");
+		_postfixDirections =
+			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
+				DistributedRegistry.class, "_postfixDirections");
+		_prefixDirections =
+			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
+				DistributedRegistry.class, "_prefixDirections");
 	}
 
 	@Test
@@ -281,33 +285,6 @@ public class DistributedRegistryTest {
 		Assert.assertFalse(
 			DistributedRegistry.unregisterDistributed(
 				"name3", null, MatchType.PREFIX));
-	}
-
-	private static Map<String, Direction> _getExactDirections()
-		throws Exception {
-
-		Field exactDirectionsField = ReflectionUtil.getDeclaredField(
-			DistributedRegistry.class, "_exactDirections");
-
-		return (Map<String, Direction>)exactDirectionsField.get(null);
-	}
-
-	private static Map<String, Direction> _getPostfixDirections()
-		throws Exception {
-
-		Field postfixDirectionsField = ReflectionUtil.getDeclaredField(
-			DistributedRegistry.class, "_postfixDirections");
-
-		return (Map<String, Direction>)postfixDirectionsField.get(null);
-	}
-
-	private static Map<String, Direction> _getPrefixDirections()
-		throws Exception {
-
-		Field prefixDirectionsField = ReflectionUtil.getDeclaredField(
-			DistributedRegistry.class, "_prefixDirections");
-
-		return (Map<String, Direction>)prefixDirectionsField.get(null);
 	}
 
 	private Map<String, Direction> _exactDirections;

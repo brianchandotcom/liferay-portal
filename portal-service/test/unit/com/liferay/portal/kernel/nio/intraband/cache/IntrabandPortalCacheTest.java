@@ -25,11 +25,8 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -77,8 +74,12 @@ public class IntrabandPortalCacheTest {
 		Assert.assertEquals(_testName, intrabandPortalCache.getName());
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intrabandPortalCache));
-		Assert.assertSame(_mockIntraband, getIntraband(intrabandPortalCache));
+			ReflectionTestUtil.getFieldValue(
+				intrabandPortalCache, "_registrationReference"));
+		Assert.assertSame(
+			_mockIntraband,
+			ReflectionTestUtil.getFieldValue(
+				intrabandPortalCache, "_intraband"));
 	}
 
 	@Test
@@ -358,27 +359,6 @@ public class IntrabandPortalCacheTest {
 			PortalCacheActionType.REMOVE_ALL,
 			portalCacheActionTypes[actionTypeOrdinal]);
 		Assert.assertEquals(_testName, deserializer.readString());
-	}
-
-	private static MockIntraband getIntraband(
-			IntrabandPortalCache<?, ?> intrabandPortalCache)
-		throws Exception {
-
-		Field intrabandField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCache.class, "_intraband");
-
-		return (MockIntraband)intrabandField.get(intrabandPortalCache);
-	}
-
-	private static MockRegistrationReference getRegistrationReference(
-			IntrabandPortalCache<?, ?> intrabandPortalCache)
-		throws Exception {
-
-		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCache.class, "_registrationReference");
-
-		return (MockRegistrationReference)registrationReferenceField.get(
-			intrabandPortalCache);
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

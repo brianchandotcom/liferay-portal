@@ -20,12 +20,11 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,8 +104,10 @@ public class ThreadLocalDistributorTest {
 			Assert.assertEquals(
 				"_object is not of type ThreadLocal", logRecord3.getMessage());
 
-			List<ThreadLocal<Serializable>> threadLocals = getThreadLocals(
-				threadLocalDistributor);
+			List<ThreadLocal<Serializable>> threadLocals =
+				(List<ThreadLocal<Serializable>>)
+					ReflectionTestUtil.getFieldValue(
+						threadLocalDistributor, "_threadLocals");
 
 			Assert.assertEquals(1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
@@ -124,7 +125,9 @@ public class ThreadLocalDistributorTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 
-			threadLocals = getThreadLocals(threadLocalDistributor);
+			threadLocals = (List<ThreadLocal<Serializable>>)
+				ReflectionTestUtil.getFieldValue(
+					threadLocalDistributor, "_threadLocals");
 
 			Assert.assertEquals(1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
@@ -165,8 +168,9 @@ public class ThreadLocalDistributorTest {
 
 		threadLocalDistributor.capture();
 
-		Serializable[] threadLocalValues = getThreadLocalValues(
-			threadLocalDistributor);
+		Serializable[] threadLocalValues =
+			(Serializable[])ReflectionTestUtil.getFieldValue(
+				threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertEquals(1, threadLocalValues.length);
 		Assert.assertSame(testValue, threadLocalValues[0]);
@@ -213,28 +217,6 @@ public class ThreadLocalDistributorTest {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
-	}
-
-	protected List<ThreadLocal<Serializable>> getThreadLocals(
-			ThreadLocalDistributor threadLocalDistributor)
-		throws Exception {
-
-		Field threadLocalsField = ReflectionUtil.getDeclaredField(
-			ThreadLocalDistributor.class, "_threadLocals");
-
-		return (List<ThreadLocal<Serializable>>)threadLocalsField.get(
-			threadLocalDistributor);
-	}
-
-	protected Serializable[] getThreadLocalValues(
-			ThreadLocalDistributor threadLocalDistributor)
-		throws Exception {
-
-		Field threadLocalValuesField = ReflectionUtil.getDeclaredField(
-			ThreadLocalDistributor.class, "_threadLocalValues");
-
-		return (Serializable[])threadLocalValuesField.get(
-			threadLocalDistributor);
 	}
 
 	private List<KeyValuePair> _keyValuePairs = new ArrayList<KeyValuePair>();

@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -50,7 +50,6 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -1148,11 +1147,9 @@ public class ProcessExecutorTest {
 	}
 
 	private static Thread _getHeartbeatThread(boolean remove) throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			ProcessContext.class, "_heartbeatThreadReference");
-
 		AtomicReference<? extends Thread> heartbeatThreadReference =
-			(AtomicReference<? extends Thread>)field.get(null);
+			(AtomicReference<? extends Thread>)ReflectionTestUtil.getFieldValue(
+				ProcessContext.class, "_heartbeatThreadReference");
 
 		if (remove) {
 			return heartbeatThreadReference.getAndSet(null);
@@ -1160,21 +1157,6 @@ public class ProcessExecutorTest {
 		else {
 			return heartbeatThreadReference.get();
 		}
-	}
-
-	private static Field _getObjectOutputStreamField() throws Exception {
-		Field objectOutputStreamField = ReflectionUtil.getDeclaredField(
-			ProcessOutputStream.class, "_objectOutputStream");
-
-		int modifiers = objectOutputStreamField.getModifiers();
-
-		Field modifiersField = ReflectionUtil.getDeclaredField(
-			Field.class, "modifiers");
-
-		modifiersField.setInt(
-			objectOutputStreamField, modifiers & ~Modifier.FINAL);
-
-		return objectOutputStreamField;
 	}
 
 	private static ExecutorService _invokeGetExecutorService()
@@ -1195,15 +1177,6 @@ public class ProcessExecutorTest {
 		field.setAccessible(true);
 
 		field.set(null, null);
-	}
-
-	private static void _setDetachField(Thread heartbeatThread, boolean detach)
-		throws Exception {
-
-		Field field = ReflectionUtil.getDeclaredField(
-			heartbeatThread.getClass(), "_detach");
-
-		field.set(heartbeatThread, detach);
 	}
 
 	private static void _waitForSignalFile(
@@ -1364,7 +1337,8 @@ public class ProcessExecutorTest {
 
 				heartbeatThread = _getHeartbeatThread(true);
 
-				_setDetachField(heartbeatThread, true);
+				ReflectionTestUtil.setFieldValue(
+					heartbeatThread, "_detach", true);
 
 				heartbeatThread.join();
 
@@ -1846,11 +1820,9 @@ public class ProcessExecutorTest {
 			ProcessOutputStream processOutputStream =
 				ProcessContext.getProcessOutputStream();
 
-			Field objectOutputStreamField = _getObjectOutputStreamField();
-
 			_oldObjectOutputStream =
-				(ObjectOutputStream)objectOutputStreamField.get(
-					processOutputStream);
+				(ObjectOutputStream)ReflectionTestUtil.getFieldValue(
+					processOutputStream, "_objectOutputStream");
 
 			_thread = Thread.currentThread();
 		}
@@ -1861,10 +1833,9 @@ public class ProcessExecutorTest {
 				ProcessOutputStream processOutputStream =
 					ProcessContext.getProcessOutputStream();
 
-				Field objectOutputStreamField = _getObjectOutputStreamField();
-
-				objectOutputStreamField.set(
-					processOutputStream, _oldObjectOutputStream);
+				ReflectionTestUtil.setFieldValue(
+					processOutputStream, "_objectOutputStream",
+					_oldObjectOutputStream);
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
@@ -2074,14 +2045,9 @@ public class ProcessExecutorTest {
 							break;
 
 						case _CODE_NULL_OUT_OOS :
-							Field objectOutputStreamField =
-								_getObjectOutputStreamField();
-
-							ProcessOutputStream processOutputStream =
-								ProcessContext.getProcessOutputStream();
-
-							objectOutputStreamField.set(
-								processOutputStream, null);
+							ReflectionTestUtil.setFieldValue(
+								ProcessContext.getProcessOutputStream(),
+								"_objectOutputStream", null);
 
 							outputStream.write(_CODE_NULL_OUT_OOS);
 

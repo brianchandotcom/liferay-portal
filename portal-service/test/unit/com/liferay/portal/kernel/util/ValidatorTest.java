@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.lang.reflect.Method;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -552,13 +552,12 @@ public class ValidatorTest extends PowerMockito {
 			String methodName, String[] params, boolean valid)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			Validator.class, methodName, String.class);
-
 		for (String param : params) {
-			Boolean b = (Boolean)method.invoke(null, param);
-
-			Assert.assertEquals(valid, b);
+			Assert.assertEquals(
+				valid,
+				ReflectionTestUtil.invoke(
+					Validator.class, methodName, new Class<?>[] {String.class},
+					param));
 		}
 	}
 

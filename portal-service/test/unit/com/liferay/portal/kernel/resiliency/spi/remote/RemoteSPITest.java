@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessExecutor.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockRemoteSPI;
@@ -38,14 +39,12 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ReflectPermission;
@@ -126,7 +125,8 @@ public class RemoteSPITest {
 
 			};
 
-		_setProcessOutputStream(processOutputStream);
+		ReflectionTestUtil.setFieldValue(
+			ProcessContext.class, "_processOutputStream", processOutputStream);
 
 		ConcurrentMap<String, Object> attributes =
 			ProcessExecutor.ProcessContext.getAttributes();
@@ -484,16 +484,6 @@ public class RemoteSPITest {
 				captureHandler.close();
 			}
 		}
-	}
-
-	private void _setProcessOutputStream(
-			ProcessOutputStream processOutputStream)
-		throws Exception {
-
-		Field processOutputStreamField = ReflectionUtil.getDeclaredField(
-			ProcessExecutor.ProcessContext.class, "_processOutputStream");
-
-		processOutputStreamField.set(null, processOutputStream);
 	}
 
 	private static File _currentDir = new File(".");

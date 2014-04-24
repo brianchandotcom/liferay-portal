@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
-import java.lang.reflect.Field;
 
 import java.nio.ByteBuffer;
 
@@ -45,10 +43,13 @@ public class IntrabandBridgeMessageListenerTest {
 			new IntrabandBridgeMessageListener(_mockRegistrationReference);
 
 		Assert.assertSame(
-			_mockIntraband, getIntraband(intrabandBridgeMessageListener));
+			_mockIntraband,
+			ReflectionTestUtil.getFieldValue(
+				intrabandBridgeMessageListener, "_intraband"));
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intrabandBridgeMessageListener));
+			ReflectionTestUtil.getFieldValue(
+				intrabandBridgeMessageListener, "_registrationReference"));
 	}
 
 	@Test
@@ -82,28 +83,6 @@ public class IntrabandBridgeMessageListenerTest {
 		Message receivedMessage = receivedMessageRoutingBag.getMessage();
 
 		Assert.assertEquals(payload, receivedMessage.getPayload());
-	}
-
-	private static MockIntraband getIntraband(
-			IntrabandBridgeMessageListener intrabandBridgeMessageListener)
-		throws Exception {
-
-		Field intrabandField = ReflectionUtil.getDeclaredField(
-			IntrabandBridgeMessageListener.class, "_intraband");
-
-		return (MockIntraband)intrabandField.get(
-			intrabandBridgeMessageListener);
-	}
-
-	private static MockRegistrationReference getRegistrationReference(
-			IntrabandBridgeMessageListener intrabandBridgeMessageListener)
-		throws Exception {
-
-		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
-			IntrabandBridgeMessageListener.class, "_registrationReference");
-
-		return (MockRegistrationReference)registrationReferenceField.get(
-			intrabandBridgeMessageListener);
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

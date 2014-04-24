@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -101,11 +102,16 @@ public class LayoutPrototypeLocalServiceImpl
 		if (GetterUtil.getBoolean(
 				serviceContext.getAttribute("addDefaultLayout"), true)) {
 
+			Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+			friendlyURLMap.put(LocaleUtil.getSiteDefault(), "/layout");
+
 			layoutLocalService.addLayout(
 				userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				layoutPrototype.getName(LocaleUtil.getDefault()), null, null,
-				LayoutConstants.TYPE_PORTLET, false, "/layout", serviceContext);
+				layoutPrototype.getNameMap(), null, null, null, null,
+				LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
+				friendlyURLMap, serviceContext);
 		}
 
 		return layoutPrototype;

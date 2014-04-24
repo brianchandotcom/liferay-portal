@@ -134,7 +134,7 @@ if (layout != null) {
 									deletable: !A.UA.touch && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,
 									id: <%= curLayout.getLayoutId() %>,
 									sortable: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
-									updateable: <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
+									updateable: <%= !group.isLayoutPrototype() && LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
 								}
 
 							<%

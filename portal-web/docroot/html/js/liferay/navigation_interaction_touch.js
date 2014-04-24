@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var STR_OPEN = 'open';
 
-		var UA = A.UA;
-
 		A.mix(
 			Liferay.NavigationInteraction.prototype,
 			{
@@ -56,7 +54,7 @@ AUI.add(
 				_initChildMenuHandlers: function(navigation) {
 					var instance = this;
 
-					var android = UA.android;
+					var android = A.UA.android;
 
 					var delay = 0;
 

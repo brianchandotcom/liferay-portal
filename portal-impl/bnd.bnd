@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.portal.dao.shard,\
 	com.liferay.portal.dao.shard.advice,\
 	com.liferay.portal.deploy.hot,\
+	com.liferay.portal.freemarker,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
 	com.liferay.portal.monitoring.statistics.service,\
@@ -22,8 +23,11 @@ Export-Package:\
 	com.liferay.portal.spring.hibernate,\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
+	com.liferay.portal.xml,\
 	\
 	javax.sql,org.hibernate,\
+	\
+	jodd.util,\
 	\
 	org.hibernate.engine
 Import-Package: *

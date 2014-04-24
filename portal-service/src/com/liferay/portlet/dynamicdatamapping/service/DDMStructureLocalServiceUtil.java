@@ -1091,12 +1091,12 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
-		long[] groupIds, long journalFolderId, boolean inherited)
+		long[] groupIds, long journalFolderId, int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getJournalFolderStructures(groupIds, journalFolderId,
-			inherited);
+			restrictionType);
 	}
 
 	/**

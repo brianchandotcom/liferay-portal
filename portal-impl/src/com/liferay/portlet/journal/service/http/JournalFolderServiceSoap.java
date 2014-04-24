@@ -445,13 +445,13 @@ public class JournalFolderServiceSoap {
 	public static com.liferay.portlet.journal.model.JournalFolderSoap updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.updateFolder(folderId,
 					parentFolderId, name, description, ddmStructureIds,
-					overrideDDMStructures, mergeWithParentFolder, serviceContext);
+					restrictionType, mergeWithParentFolder, serviceContext);
 
 			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
 		}

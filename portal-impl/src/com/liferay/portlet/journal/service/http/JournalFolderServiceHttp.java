@@ -965,7 +965,7 @@ public class JournalFolderServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, boolean overrideDDMStructures,
+		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -976,8 +976,8 @@ public class JournalFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId, name, description,
-					ddmStructureIds, overrideDDMStructures,
-					mergeWithParentFolder, serviceContext);
+					ddmStructureIds, restrictionType, mergeWithParentFolder,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -1097,7 +1097,7 @@ public class JournalFolderServiceHttp {
 		};
 	private static final Class<?>[] _updateFolderParameterTypes27 = new Class[] {
 			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, long[].class, boolean.class, boolean.class,
+			java.lang.String.class, long[].class, int.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

@@ -240,8 +240,9 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				else if (causeString.contains("PrincipalException")) {
 					returnValue = "207";
 				}
-				else if (causeString.contains("ImageSizeException") ||
-						 causeString.contains("FileSizeException")) {
+				else if (causeString.contains("FileSizeException") ||
+						 causeString.contains("ImageSizeException") ||
+						 causeString.contains("SizeLimitExceededException")) {
 
 					returnValue = "208";
 				}

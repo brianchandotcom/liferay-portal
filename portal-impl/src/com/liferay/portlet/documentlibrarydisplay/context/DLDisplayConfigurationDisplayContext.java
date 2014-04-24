@@ -53,7 +53,7 @@ public class DLDisplayConfigurationDisplayContext {
 
 	public List<KeyValuePair> getAvailableFileEntryColumns() {
 		if (_availableFileEntryColumns == null) {
-			_computeFileEntryColumns();
+			_populateFileEntryColumns();
 		}
 
 		return _availableFileEntryColumns;
@@ -61,7 +61,7 @@ public class DLDisplayConfigurationDisplayContext {
 
 	public List<KeyValuePair> getAvailableFolderColumns() {
 		if (_availableFolderColumns == null) {
-			_computeFolderColumns();
+			_populateFolderColumns();
 		}
 
 		return _availableFolderColumns;
@@ -69,7 +69,7 @@ public class DLDisplayConfigurationDisplayContext {
 
 	public List<KeyValuePair> getCurrentFileEntryColumns() {
 		if (_currentFileEntryColumns == null) {
-			_computeFileEntryColumns();
+			_populateFileEntryColumns();
 		}
 
 		return _currentFileEntryColumns;
@@ -77,7 +77,7 @@ public class DLDisplayConfigurationDisplayContext {
 
 	public List<KeyValuePair> getCurrentFolderColumns() {
 		if (_currentFolderColumns == null) {
-			_computeFolderColumns();
+			_populateFolderColumns();
 		}
 
 		return _currentFolderColumns;
@@ -87,7 +87,33 @@ public class DLDisplayConfigurationDisplayContext {
 		return _dlActionsDisplayContext;
 	}
 
-	private void _computeFileEntryColumns() {
+	private String[] _getAllFileEntryColumns() {
+		String allFileEntryColumns = "name,size";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			allFileEntryColumns += ",downloads";
+		}
+
+		allFileEntryColumns += ",locked";
+
+		if (_dlActionsDisplayContext.isShowActions()) {
+			allFileEntryColumns += ",action";
+		}
+
+		return StringUtil.split(allFileEntryColumns);
+	}
+
+	private String[] _getAllFolderColumns() {
+		String allFolderColumns = "name,num-of-folders,num-of-documents";
+
+		if (_dlActionsDisplayContext.isShowActions()) {
+			allFolderColumns += ",action";
+		}
+
+		return StringUtil.split(allFolderColumns);
+	}
+
+	private void _populateFileEntryColumns() {
 		String[] fileEntryColumns =
 			_dlPortletInstanceSettings.getFileEntryColumns();
 
@@ -123,7 +149,7 @@ public class DLDisplayConfigurationDisplayContext {
 			new KeyValuePairComparator(false, true));
 	}
 
-	private void _computeFolderColumns() {
+	private void _populateFolderColumns() {
 		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
 
 		_currentFolderColumns = new ArrayList<KeyValuePair>();
@@ -154,32 +180,6 @@ public class DLDisplayConfigurationDisplayContext {
 
 		_availableFolderColumns = ListUtil.sort(
 			_availableFolderColumns, new KeyValuePairComparator(false, true));
-	}
-
-	private String[] _getAllFileEntryColumns() {
-		String allFileEntryColumns = "name,size";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allFileEntryColumns += ",downloads";
-		}
-
-		allFileEntryColumns += ",locked";
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allFileEntryColumns += ",action";
-		}
-
-		return StringUtil.split(allFileEntryColumns);
-	}
-
-	private String[] _getAllFolderColumns() {
-		String allFolderColumns = "name,num-of-folders,num-of-documents";
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allFolderColumns += ",action";
-		}
-
-		return StringUtil.split(allFolderColumns);
 	}
 
 	private List<KeyValuePair> _availableFileEntryColumns;

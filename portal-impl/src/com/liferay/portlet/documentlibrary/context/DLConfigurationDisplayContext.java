@@ -52,7 +52,7 @@ public class DLConfigurationDisplayContext {
 
 	public List<KeyValuePair> getAvailableDisplayViews() {
 		if (_availableDisplayViews == null) {
-			_computeDisplayViews();
+			_populateDisplayViews();
 		}
 
 		return _availableDisplayViews;
@@ -60,7 +60,7 @@ public class DLConfigurationDisplayContext {
 
 	public List<KeyValuePair> getAvailableEntryColumns() {
 		if (_availableEntryColumns == null) {
-			_computeEntryColumns();
+			_populateEntryColumns();
 		}
 
 		return _availableEntryColumns;
@@ -68,7 +68,7 @@ public class DLConfigurationDisplayContext {
 
 	public List<KeyValuePair> getCurrentDisplayViews() {
 		if (_currentDisplayViews == null) {
-			_computeDisplayViews();
+			_populateDisplayViews();
 		}
 
 		return _currentDisplayViews;
@@ -76,7 +76,7 @@ public class DLConfigurationDisplayContext {
 
 	public List<KeyValuePair> getCurrentEntryColumns() {
 		if (_currentEntryColumns == null) {
-			_computeEntryColumns();
+			_populateEntryColumns();
 		}
 
 		return _currentEntryColumns;
@@ -86,7 +86,23 @@ public class DLConfigurationDisplayContext {
 		return _dlActionsDisplayContext;
 	}
 
-	private void _computeDisplayViews() {
+	private String[] _getAllEntryColumns() {
+		String allEntryColumns = "name,size,status";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			allEntryColumns += ",downloads";
+		}
+
+		if (_dlActionsDisplayContext.isShowActions()) {
+			allEntryColumns += ",action";
+		}
+
+		allEntryColumns += ",modified-date,create-date";
+
+		return StringUtil.split(allEntryColumns);
+	}
+
+	private void _populateDisplayViews() {
 		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
 
 		_currentDisplayViews = new ArrayList<KeyValuePair>();
@@ -119,7 +135,7 @@ public class DLConfigurationDisplayContext {
 			_availableDisplayViews, new KeyValuePairComparator(false, true));
 	}
 
-	private void _computeEntryColumns() {
+	private void _populateEntryColumns() {
 		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
 
 		_currentEntryColumns = new ArrayList<KeyValuePair>();
@@ -149,22 +165,6 @@ public class DLConfigurationDisplayContext {
 
 		_availableEntryColumns = ListUtil.sort(
 			_availableEntryColumns, new KeyValuePairComparator(false, true));
-	}
-
-	private String[] _getAllEntryColumns() {
-		String allEntryColumns = "name,size,status";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allEntryColumns += ",downloads";
-		}
-
-		if (_dlActionsDisplayContext.isShowActions()) {
-			allEntryColumns += ",action";
-		}
-
-		allEntryColumns += ",modified-date,create-date";
-
-		return StringUtil.split(allEntryColumns);
 	}
 
 	private List<KeyValuePair> _availableDisplayViews;

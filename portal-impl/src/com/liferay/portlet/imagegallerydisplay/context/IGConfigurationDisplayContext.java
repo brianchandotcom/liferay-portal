@@ -45,7 +45,7 @@ public class IGConfigurationDisplayContext {
 
 	public List<KeyValuePair> getAvailableMimeTypes() {
 		if (_availableMimeTypes == null) {
-			_computeMimeTypes();
+			_populateMimeTypes();
 		}
 
 		return _availableMimeTypes;
@@ -53,13 +53,13 @@ public class IGConfigurationDisplayContext {
 
 	public List<KeyValuePair> getCurrentMimeTypes() {
 		if (_currentMimeTypes == null) {
-			_computeMimeTypes();
+			_populateMimeTypes();
 		}
 
 		return _currentMimeTypes;
 	}
 
-	private void _computeMimeTypes() {
+	private void _populateMimeTypes() {
 		String[] mediaGalleryMimeTypes =
 			_dlPortletInstanceSettings.getMimeTypes();
 

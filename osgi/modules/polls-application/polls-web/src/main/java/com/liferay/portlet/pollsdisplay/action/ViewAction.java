@@ -55,7 +55,8 @@ public class ViewAction extends PortletAction {
 				PollsQuestion question = PollsQuestionServiceUtil.getQuestion(
 					questionId);
 
-				renderRequest.setAttribute(PollsWebKeys.POLLS_QUESTION, question);
+				renderRequest.setAttribute(
+					PollsWebKeys.POLLS_QUESTION, question);
 			}
 		}
 		catch (Exception e) {

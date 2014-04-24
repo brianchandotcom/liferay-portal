@@ -16,19 +16,21 @@ package com.liferay.portlet.polls.action;
 
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.polls.util.PollsUtil;
 
 import java.io.OutputStream;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import org.jfree.chart.ChartFactory;
@@ -42,12 +44,13 @@ import org.jfree.data.general.PieDataset;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewChartAction extends Action {
+public class ViewChartAction extends PortletAction {
 
 	@Override
-	public ActionForward execute(
+	public void serveResource(
 			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			PortletConfig portletConfig, ResourceRequest request,
+			ResourceResponse response)
 		throws Exception {
 
 		try {
@@ -96,16 +99,20 @@ public class ViewChartAction extends Action {
 
 			response.setContentType(ContentTypes.IMAGE_JPEG);
 
-			OutputStream outputStream = response.getOutputStream();
+			OutputStream outputStream = response.getPortletOutputStream();
 
 			ChartUtilities.writeChartAsJPEG(outputStream, jFreeChat, 400, 400);
-
-			return null;
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			PortletSession portletSession = request.getPortletSession();
 
-			return null;
+			PortletContext portletContext = portletSession.getPortletContext();
+
+			PortletRequestDispatcher requestDispatcher =
+				portletContext.getRequestDispatcher(
+					"/html/portlet/polls/error.jsp");
+
+			requestDispatcher.forward(request, response);
 		}
 	}
 

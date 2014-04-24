@@ -458,7 +458,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertEquals(
-			"\"search target>active:false:boolean\"", toJSON(invokerResult));
+			"\"search target\\u003eactive:false:boolean\"", toJSON(invokerResult));
 
 		params.put("params", new String[] {"active", "false", "boolean"});
 
@@ -471,7 +471,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		invokerResult = (JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertEquals(
-			"\"search target>active,false,boolean\"", toJSON(invokerResult));
+			"\"search target\\u003eactive,false,boolean\"", toJSON(invokerResult));
 	}
 
 	@Test

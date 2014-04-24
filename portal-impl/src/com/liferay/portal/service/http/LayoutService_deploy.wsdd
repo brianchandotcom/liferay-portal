@@ -151,6 +151,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="jobName" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupName" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="updateIconImage" qname="operNS:updateIconImage" returnQName="updateIconImageReturn" returnType="rtns:LayoutSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="plid" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="bytes" type="tns:base64Binary"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="updateLayout" qname="operNS:updateLayout" returnQName="updateLayoutReturn" returnType="rtns:LayoutSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
@@ -250,7 +254,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="plid" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="priority" type="tns:int"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addLayout deleteLayout deleteTempFileEntry getAncestorLayouts getDefaultPlid getLayoutByUuidAndGroupId getLayoutName getLayoutReferences getLayouts getTempFileEntryNames setLayouts unschedulePublishToLive unschedulePublishToRemote updateLayout updateLookAndFeel updateName updateParentLayoutId updatePriority" />
+		<parameter name="allowedMethods" value="addLayout deleteLayout deleteTempFileEntry getAncestorLayouts getDefaultPlid getLayoutByUuidAndGroupId getLayoutName getLayoutReferences getLayouts getTempFileEntryNames setLayouts unschedulePublishToLive unschedulePublishToRemote updateIconImage updateLayout updateLookAndFeel updateName updateParentLayoutId updatePriority" />
 		<parameter name="className" value="com.liferay.portal.service.http.LayoutServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

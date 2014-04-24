@@ -58,6 +58,12 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoriesCount" qname="operNS:getCategoriesCount" returnQName="getCategoriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="excludedCategoryIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="parentCategoryIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoriesCount" qname="operNS:getCategoriesCount" returnQName="getCategoriesCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="parentCategoryIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
@@ -70,8 +76,22 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoriesCount" qname="operNS:getCategoriesCount" returnQName="getCategoriesCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="excludedCategoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategories" qname="operNS:getCategories" returnQName="getCategoriesReturn" returnType="rtns:ArrayOf_tns2_MBCategorySoap" returnItemType="tns2:MBCategorySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategories" qname="operNS:getCategories" returnQName="getCategoriesReturn" returnType="rtns:ArrayOf_tns2_MBCategorySoap" returnItemType="tns2:MBCategorySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="excludedCategoryIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="urn:http.service.messageboards.portlet.liferay.com" qname="parentCategoryIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategories" qname="operNS:getCategories" returnQName="getCategoriesReturn" returnType="rtns:ArrayOf_tns2_MBCategorySoap" returnItemType="tns2:MBCategorySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -98,6 +118,14 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategories" qname="operNS:getCategories" returnQName="getCategoriesReturn" returnType="rtns:ArrayOf_tns2_MBCategorySoap" returnItemType="tns2:MBCategorySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="urn:http.service.messageboards.portlet.liferay.com" xmlns:tns2="http://model.messageboards.portlet.liferay.com" name="getCategories" qname="operNS:getCategories" returnQName="getCategoriesReturn" returnType="rtns:ArrayOf_tns2_MBCategorySoap" returnItemType="tns2:MBCategorySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="excludedCategoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentCategoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>

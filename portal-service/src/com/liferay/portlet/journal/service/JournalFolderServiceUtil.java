@@ -251,13 +251,13 @@ public class JournalFolderServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFolder(folderId, parentFolderId, name, description,
-			ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+			ddmStructureIds, restrictionType, mergeWithParentFolder,
 			serviceContext);
 	}
 

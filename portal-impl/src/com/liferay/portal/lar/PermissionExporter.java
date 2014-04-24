@@ -55,7 +55,72 @@ public class PermissionExporter {
 
 	public static final String ROLE_TEAM_PREFIX = "ROLE_TEAM_,*";
 
-	protected void exportPermissions(
+	public static void exportPortletDataPermissions(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("portlet-data-permissions");
+
+		Map<String, List<KeyValuePair>> permissionsMap =
+			portletDataContext.getPermissions();
+
+		for (Map.Entry<String, List<KeyValuePair>> entry :
+				permissionsMap.entrySet()) {
+
+			String[] permissionParts = StringUtil.split(
+				entry.getKey(), CharPool.POUND);
+
+			String resourceName = permissionParts[0];
+			long resourcePK = GetterUtil.getLong(permissionParts[1]);
+
+			Element portletDataElement = rootElement.addElement("portlet-data");
+
+			portletDataElement.addAttribute("resource-name", resourceName);
+			portletDataElement.addAttribute(
+				"resource-pk", String.valueOf(resourcePK));
+
+			List<KeyValuePair> permissions = entry.getValue();
+
+			for (KeyValuePair permission : permissions) {
+				String roleName = permission.getKey();
+				String actions = permission.getValue();
+
+				Element permissionsElement = portletDataElement.addElement(
+					"permissions");
+
+				permissionsElement.addAttribute("role-name", roleName);
+				permissionsElement.addAttribute("actions", actions);
+			}
+		}
+
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getRootPath(portletDataContext) +
+				"/portlet-data-permissions.xml",
+			document.formattedString());
+	}
+
+	public static void exportPortletPermissions(
+			PortletDataContext portletDataContext, LayoutCache layoutCache,
+			String portletId, Layout layout, Element portletElement)
+		throws Exception {
+
+		long companyId = portletDataContext.getCompanyId();
+		long groupId = portletDataContext.getGroupId();
+
+		String resourceName = PortletConstants.getRootPortletId(portletId);
+		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			layout.getPlid(), portletId);
+
+		Element permissionsElement = portletElement.addElement("permissions");
+
+		exportPermissions(
+			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
+			permissionsElement, true);
+	}
+
+	protected static void exportPermissions(
 			LayoutCache layoutCache, long companyId, long groupId,
 			String resourceName, String resourcePrimKey,
 			Element permissionsElement, boolean portletActions)
@@ -120,71 +185,6 @@ public class PermissionExporter {
 				actionKeyElement.addText(action);
 			}
 		}
-	}
-
-	protected void exportPortletDataPermissions(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("portlet-data-permissions");
-
-		Map<String, List<KeyValuePair>> permissionsMap =
-			portletDataContext.getPermissions();
-
-		for (Map.Entry<String, List<KeyValuePair>> entry :
-				permissionsMap.entrySet()) {
-
-			String[] permissionParts = StringUtil.split(
-				entry.getKey(), CharPool.POUND);
-
-			String resourceName = permissionParts[0];
-			long resourcePK = GetterUtil.getLong(permissionParts[1]);
-
-			Element portletDataElement = rootElement.addElement("portlet-data");
-
-			portletDataElement.addAttribute("resource-name", resourceName);
-			portletDataElement.addAttribute(
-				"resource-pk", String.valueOf(resourcePK));
-
-			List<KeyValuePair> permissions = entry.getValue();
-
-			for (KeyValuePair permission : permissions) {
-				String roleName = permission.getKey();
-				String actions = permission.getValue();
-
-				Element permissionsElement = portletDataElement.addElement(
-					"permissions");
-
-				permissionsElement.addAttribute("role-name", roleName);
-				permissionsElement.addAttribute("actions", actions);
-			}
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/portlet-data-permissions.xml",
-			document.formattedString());
-	}
-
-	protected void exportPortletPermissions(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			String portletId, Layout layout, Element portletElement)
-		throws Exception {
-
-		long companyId = portletDataContext.getCompanyId();
-		long groupId = portletDataContext.getGroupId();
-
-		String resourceName = PortletConstants.getRootPortletId(portletId);
-		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-			layout.getPlid(), portletId);
-
-		Element permissionsElement = portletElement.addElement("permissions");
-
-		exportPermissions(
-			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-			permissionsElement, true);
 	}
 
 	protected Element exportRoles(

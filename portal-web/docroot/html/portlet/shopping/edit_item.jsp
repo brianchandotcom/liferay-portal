@@ -547,7 +547,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	}
 
 	function <portlet:namespace />editItemQuantities() {
-		var itemQuantitiesURL = "<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" anchor="false"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>&<portlet:namespace />fieldsQuantities=" + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
+		var itemQuantitiesURL = "<liferay-portlet:renderURL anchor="false" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>&<portlet:namespace />fieldsQuantities=" + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
 
 		<%
 		for (int i = 0; i < fieldsCount; i++) {

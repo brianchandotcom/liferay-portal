@@ -779,7 +779,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="gradle-execute">
 		<attribute name="gradleModuleDir" default="" />
 		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="-Dorg.gradle.project.appServerLibGlobalDir=${app.server.lib.global.dir} -Dorg.gradle.project.appServerLibPortalDir=${app.server.lib.portal.dir} -Dorg.gradle.project.appServerParentDir=${app.server.parent.dir}" />
+		<attribute name="gradleTaskArgs" default="-Dorg.gradle.project.appServerLibGlobalDir=${app.server.lib.global.dir} -Dorg.gradle.project.appServerLibPortalDir=${app.server.lib.portal.dir} -Dorg.gradle.project.appServerParentDir=${liferay.home}" />
 
 		<sequential>
 			<if>

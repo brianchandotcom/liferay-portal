@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -28,7 +30,9 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.util.AssetTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -144,6 +148,37 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
 		Assert.assertEquals(title, vocabulary.getName());
+	}
+
+	@Test
+	public void testDeleteVocabularyWithCategoriesShouldDeleteOnCascade()
+		throws Exception {
+
+		long groupId = GroupTestUtil.addGroup().getGroupId();
+
+		int countResources =
+			ResourceActionLocalServiceUtil.getResourceActions(
+				AssetVocabulary.class.getName()).size();
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(groupId);
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			groupId, vocabulary.getVocabularyId());
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			vocabulary.getVocabularyId());
+
+		Assert.assertNull(
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				vocabulary.getVocabularyId()));
+
+		Assert.assertNull(
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+				category.getCategoryId()));
+
+		Assert.assertEquals(countResources,
+			ResourceActionLocalServiceUtil.getResourceActions(
+				AssetVocabulary.class.getName()).size());
 	}
 
 	private Locale _locale;

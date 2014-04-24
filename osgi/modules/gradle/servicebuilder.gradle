@@ -63,5 +63,5 @@ task buildService(type: JavaExec) {
 	args "service.sql.indexes.file=indexes.sql"
 	args "service.sql.sequences.file=sequences.sql"
 	args "service.target.entity.name=${project.ext.targetEntityName}"
-	args "service.test.dir=src/test/java"
+	args "service.test.dir=${project.ext.testDir}/src/test/java"
 }

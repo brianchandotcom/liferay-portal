@@ -3,6 +3,7 @@ evaluationDependsOn(':polls-api')
 project.ext {
 	apiDir = '../polls-api'
 	deployDir = project.hasProperty('appServerParentDir') ? project.appServerParentDir + "/osgi/core" : null
+	testDir = '../polls-tests'
 	webDir = '../polls-web'
 }
 

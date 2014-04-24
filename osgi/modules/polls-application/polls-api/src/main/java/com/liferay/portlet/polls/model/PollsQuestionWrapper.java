@@ -756,8 +756,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.polls.model.PollsQuestion pollsQuestion) {
+	public int compareTo(PollsQuestion pollsQuestion) {
 		return _pollsQuestion.compareTo(pollsQuestion);
 	}
 
@@ -767,17 +766,17 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsQuestion> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<PollsQuestion> toCacheModel() {
 		return _pollsQuestion.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.polls.model.PollsQuestion toEscapedModel() {
+	public PollsQuestion toEscapedModel() {
 		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.portlet.polls.model.PollsQuestion toUnescapedModel() {
+	public PollsQuestion toUnescapedModel() {
 		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
 	}
 

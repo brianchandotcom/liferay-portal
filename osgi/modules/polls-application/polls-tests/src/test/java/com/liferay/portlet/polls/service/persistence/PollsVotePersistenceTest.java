@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.polls.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -471,6 +471,6 @@ public class PollsVotePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PollsVotePersistenceTest.class);
 	private ModelListener<PollsVote>[] _modelListeners;
-	private PollsVotePersistence _persistence = (PollsVotePersistence)PortalBeanLocatorUtil.locate(PollsVotePersistence.class.getName());
-	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
+	private PollsVotePersistence _persistence = (PollsVotePersistence)PortletBeanLocatorUtil.locate(PollsVotePersistence.class.getName());
+	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortletBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

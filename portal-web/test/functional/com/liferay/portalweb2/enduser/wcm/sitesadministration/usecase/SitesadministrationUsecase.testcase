@@ -843,4 +843,33 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="SiteTeamsXSS" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="teamName"><![CDATA[<script>alert(123)</script>]]></var>
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#assignDefaultSiteTeam">
+			<var name="teamName"><![CDATA[<script>alert(123)</script>]]></var>
+		</execute>
+	</command>
 </definition>

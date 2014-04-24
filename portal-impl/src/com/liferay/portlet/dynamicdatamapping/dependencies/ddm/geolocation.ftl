@@ -41,7 +41,7 @@
 
 			var coordinatesNode = A.one('#${portletNamespace}${namespacedFieldName}Coordinates');
 
-			coordinatesNode.setContent('<@liferay_ui.message key="loading" />');
+			coordinatesNode.html('<@liferay_ui.message key="loading" />');
 
 			Liferay.Util.getGeolocation(
 				function(latitude, longitude) {
@@ -56,7 +56,7 @@
 						)
 					);
 
-					coordinatesNode.setContent([latitude, longitude].join(', '));
+					coordinatesNode.html([latitude, longitude].join(', '));
 				}
 			);
 		},

@@ -609,8 +609,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portlet.polls.model.PollsChoice pollsChoice) {
+	public int compareTo(PollsChoice pollsChoice) {
 		return _pollsChoice.compareTo(pollsChoice);
 	}
 
@@ -620,17 +619,17 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsChoice> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<PollsChoice> toCacheModel() {
 		return _pollsChoice.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.polls.model.PollsChoice toEscapedModel() {
+	public PollsChoice toEscapedModel() {
 		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.portlet.polls.model.PollsChoice toUnescapedModel() {
+	public PollsChoice toUnescapedModel() {
 		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
 	}
 

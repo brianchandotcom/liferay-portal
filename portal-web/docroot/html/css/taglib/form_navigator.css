@@ -14,8 +14,7 @@
 		position: relative;
 
 		> ul.form-navigator.well {
-			background: transparent;
-			border: none;
+			border-width: 0;
 			clear: both;
 			float: none;
 			overflow: visible;
@@ -36,8 +35,6 @@
 				z-index: 50;
 
 				&.active {
-					@include opacity(1);
-
 					&:last-child .tab-label .tab-icon {
 						display: none;
 					}
@@ -45,71 +42,34 @@
 					.tab-label {
 						position: relative;
 
-						&:hover, &:focus {
-							background: transparent;
-						}
-
 						.message {
-							@include opacity(0.7);
-
-							color: #000;
 							display: inline-block;
 						}
 
-						.number {
-							@include opacity(1);
-
-							background: #60BFEF;
-							font-size: 18px;
-						}
-
 						.tab-icon {
-							color: #60BFEF;
 							display: inline-block;
 						}
 					}
 				}
 
-				&.section-error .tab-label .message {
-					color: #B50303;
-				}
-
 				.tab-label {
-					background: transparent;
 					display: block;
 					margin: 0 5px 0 -5px;
 					outline: 0;
 					padding: 0;
-
-					&:hover, &:focus {
-						text-decoration: none;
-
-						.number {
-							@include opacity(1);
-						}
-					}
 
 					.error-notice {
 						display: none;
 					}
 
 					.number {
-						@include opacity(0.6);
-
-						background: #CCC;
 						clear: both;
-						color: #FFF;
 						display: inline-block;
-						font-size: 14px;
-						font-weight: bold;
 						margin: 5px;
-						text-decoration: none;
 						width: 30px;
 					}
 
 					.message {
-						color: #000;
-						font-size: 12px;
 						margin-left: -5px;
 					}
 
@@ -148,5 +108,79 @@
 	.section-error .error-notice {
 		display: inline-block;
 		margin-right: 5px;
+	}
+}
+
+/* Skin */
+
+.taglib-form-navigator {
+	ul.form-navigator.well {
+	}
+
+	> .form-steps {
+		> ul.form-navigator.well {
+			background: transparent;
+
+			.tab {
+
+				&.active {
+					@include opacity(1);
+
+					.tab-label {
+						&:hover, &:focus {
+							background: transparent;
+						}
+
+						.message {
+							@include opacity(0.7);
+
+							color: #000;
+						}
+
+						.number {
+							@include opacity(1);
+
+							background: #60BFEF;
+							font-size: 18px;
+						}
+
+						.tab-icon {
+							color: #60BFEF;
+						}
+					}
+				}
+
+				&.section-error .tab-label .message {
+					color: #B50303;
+				}
+
+				.tab-label {
+					background: transparent;
+
+					&:hover, &:focus {
+						text-decoration: none;
+
+						.number {
+							@include opacity(1);
+						}
+					}
+
+					.number {
+						@include opacity(0.6);
+
+						background: #CCC;
+						color: #FFF;
+						font-size: 14px;
+						font-weight: bold;
+						text-decoration: none;
+					}
+
+					.message {
+						color: #000;
+						font-size: 12px;
+					}
+				}
+			}
+		}
 	}
 }

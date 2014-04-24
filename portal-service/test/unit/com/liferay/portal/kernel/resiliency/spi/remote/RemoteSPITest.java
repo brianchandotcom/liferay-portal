@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.SPIShutdownHook
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
@@ -130,10 +131,8 @@ public class RemoteSPITest {
 		ConcurrentMap<String, Object> attributes =
 			ProcessExecutor.ProcessContext.getAttributes();
 
-		Method bridgeCallMethod = ReflectionUtil.getBridgeMethod(
-			RemoteSPI.class, "call");
-
-		SPI spi = (SPI)bridgeCallMethod.invoke(_mockRemoteSPI);
+		SPI spi = (SPI)ReflectionTestUtil.invokeBridge(
+			_mockRemoteSPI, "call", new Class<?>[0]);
 
 		Assert.assertSame(spi, UnicastRemoteObject.toStub(_mockRemoteSPI));
 
@@ -237,11 +236,10 @@ public class RemoteSPITest {
 		RegisterCallback registerCallback = new RegisterCallback(
 			uuid, _mockRemoteSPI);
 
-		Method bridgeCallMethod = ReflectionUtil.getBridgeMethod(
-			RegisterCallback.class, "call");
-
 		Assert.assertSame(
-			_mockRemoteSPI, bridgeCallMethod.invoke(registerCallback));
+			_mockRemoteSPI,
+			ReflectionTestUtil.invokeBridge(
+				registerCallback, "call", new Class<?>[0]));
 
 		Assert.assertSame(_mockRemoteSPI, takeSPIFutureTask.get());
 

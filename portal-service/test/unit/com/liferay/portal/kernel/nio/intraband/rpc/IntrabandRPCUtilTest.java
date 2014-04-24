@@ -27,14 +27,12 @@ import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil.FutureComple
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil.FutureResult;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.nio.ByteBuffer;
 
@@ -277,14 +275,12 @@ public class IntrabandRPCUtilTest {
 
 		// Bridge set
 
-		Method bridgeSetMethod = ReflectionUtil.getDeclaredBridgeMethod(
-			FutureResult.class, "set", Serializable.class);
-
 		FutureResult<String> futureResult = new FutureResult<String>();
 
 		String s = new String();
 
-		bridgeSetMethod.invoke(futureResult, s);
+		ReflectionTestUtil.invokeBridge(
+			futureResult, "set", new Class<?>[] {Serializable.class}, s);
 
 		Assert.assertSame(s, futureResult.get());
 

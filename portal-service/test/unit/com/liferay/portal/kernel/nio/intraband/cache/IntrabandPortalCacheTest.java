@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -192,11 +192,10 @@ public class IntrabandPortalCacheTest {
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		Method bridgePutMethod = ReflectionUtil.getBridgeMethod(
-			IntrabandPortalCache.class, "put", Serializable.class,
-			Object.class);
-
-		bridgePutMethod.invoke(intrabandPortalCache, testKey, testValue);
+		ReflectionTestUtil.invokeBridge(
+			intrabandPortalCache, "put",
+			new Class<?>[] {Serializable.class, Object.class}, testKey,
+			testValue);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -225,11 +224,10 @@ public class IntrabandPortalCacheTest {
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		Method bridgePutQuietMethod = ReflectionUtil.getBridgeMethod(
-			IntrabandPortalCache.class, "putQuiet", Serializable.class,
-			Object.class);
-
-		bridgePutQuietMethod.invoke(intrabandPortalCache, testKey, testValue);
+		ReflectionTestUtil.invokeBridge(
+			intrabandPortalCache, "putQuiet",
+			new Class<?>[] {Serializable.class, Object.class}, testKey,
+			testValue);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 

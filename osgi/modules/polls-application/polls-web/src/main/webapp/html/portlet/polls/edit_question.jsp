@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-PollsQuestion question = (PollsQuestion)request.getAttribute(WebKeys.POLLS_QUESTION);
+PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_QUESTION);
 
 long questionId = BeanParamUtil.getLong(question, request, "questionId");
 

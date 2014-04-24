@@ -48,6 +48,10 @@ public interface Html {
 
 	public String render(String html);
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceMsWordCharacters(String text);
 
 	public String replaceNewLine(String html);

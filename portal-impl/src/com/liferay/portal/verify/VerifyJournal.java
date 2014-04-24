@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -305,15 +303,6 @@ public class VerifyJournal extends VerifyProcess {
 			AssetEntryLocalServiceUtil.updateEntry(
 				assetEntry.getClassName(), assetEntry.getClassPK(), null,
 				assetEntry.isVisible());
-		}
-
-		String content = GetterUtil.getString(article.getContent());
-
-		String newContent = HtmlUtil.replaceMsWordCharacters(content);
-
-		if (!content.equals(newContent)) {
-			JournalArticleLocalServiceUtil.updateContent(
-				groupId, articleId, version, newContent);
 		}
 
 		try {

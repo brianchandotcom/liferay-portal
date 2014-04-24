@@ -56,41 +56,6 @@ public class AssetVocabularyImplTest {
 	}
 
 	@Test
-	public void testIsAssociatedToAssetWhenAssociatedToAll() throws Exception {
-		_vocabulary = _addVocabularyAssociatedToAsset(0L, 0L, true);
-
-		Assert.assertTrue(_vocabulary.isAssociatedToAsset(1L, 0L));
-		Assert.assertTrue(_vocabulary.isAssociatedToAsset(1L, 1L));
-	}
-
-	@Test
-	public void testIsAssociatedToAssetWhenAssociatedToClassName()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 0L, true);
-
-		Assert.assertTrue(_vocabulary.isAssociatedToAsset(1L, 0L));
-		Assert.assertTrue(_vocabulary.isAssociatedToAsset(1L, 1L));
-
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(2L, 0L));
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(2L, 2L));
-	}
-
-	@Test
-	public void testIsAssociatedToAssetWhenAssociatedToClassNameAndClassType()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, true);
-
-		Assert.assertTrue(_vocabulary.isAssociatedToAsset(1L, 1L));
-
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(1L, 0L));
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(1L, 2L));
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(2L, 0L));
-		Assert.assertFalse(_vocabulary.isAssociatedToAsset(2L, 2L));
-	}
-
-	@Test
 	public void testIsDuplicatedCategoryWhenAllCategoriesAreSelected()
 		throws Exception {
 
@@ -247,64 +212,6 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertFalse(
 			_vocabulary.isMissingRequiredCategory(1L, 2L, new long[]{}));
-	}
-
-	@Test
-	public void testIsRequiredReturnsFalseWhenAllIsNotRequired()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(0L, 0L, false);
-
-		Assert.assertFalse(_vocabulary.isRequired(1L));
-		Assert.assertFalse(_vocabulary.isRequired(2L));
-	}
-
-	@Test
-	public void testIsRequiredReturnsFalseWhenClassNameAndTypeIsNotRequired()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, false);
-
-		Assert.assertFalse(_vocabulary.isRequired(1L));
-		Assert.assertFalse(_vocabulary.isRequired(2L));
-	}
-
-	@Test
-	public void testIsRequiredReturnsFalseWhenClassNameIsNotRequired()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 0L, false);
-
-		Assert.assertFalse(_vocabulary.isRequired(1L));
-		Assert.assertFalse(_vocabulary.isRequired(2L));
-	}
-
-	@Test
-	public void testIsRequiredReturnsTrueWhenAllIsRequired() throws Exception {
-		_vocabulary = _addVocabularyAssociatedToAsset(0L, 0L, true);
-
-		Assert.assertTrue(_vocabulary.isRequired(1L));
-		Assert.assertTrue(_vocabulary.isRequired(2L));
-	}
-
-	@Test
-	public void testIsRequiredReturnsTrueWhenClassNameAndTypeIsRequired()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, true);
-
-		Assert.assertTrue(_vocabulary.isRequired(1L));
-		Assert.assertFalse(_vocabulary.isRequired(2L));
-	}
-
-	@Test
-	public void testIsRequiredReturnsTrueWhenClassNameIsRequired()
-		throws Exception {
-
-		_vocabulary = _addVocabularyAssociatedToAsset(1L, 0L, true);
-
-		Assert.assertTrue(_vocabulary.isRequired(1L));
-		Assert.assertFalse(_vocabulary.isRequired(2L));
 	}
 
 	private AssetVocabulary _addVocabularyAssociatedToAsset(

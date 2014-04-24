@@ -15,11 +15,8 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.exception.NestableException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -371,15 +368,9 @@ public class DLFileEntryActionsDisplayContext {
 		return _ieOnWin32;
 	}
 
-	private boolean _isTrashEnabled() {
+	private boolean _isTrashEnabled() throws PortalException, SystemException {
 		if (_trashEnabled == null) {
-			try {
-				_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
-			}
-			catch (NestableException ne) {
-				_trashEnabled = false;
-				_log.error("Unable to determine if trash is enabled", ne);
-			}
+			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
 		}
 
 		return _trashEnabled;
@@ -388,9 +379,6 @@ public class DLFileEntryActionsDisplayContext {
 	private boolean _isWebDAVEnabled() {
 		return _portletDisplay.isWebDAVEnabled();
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		DLFileEntryActionsDisplayContext.class);
 
 	private long _companyId;
 	private DLActionsDisplayContext _dlActionsDisplayContext;

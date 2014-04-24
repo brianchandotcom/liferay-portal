@@ -648,6 +648,12 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getFoldersCount(groupId, parentFolderId, status);
 	}
 
+	public static long getInheritedWorkflowFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchFolderException {
+		return getService().getInheritedWorkflowFolderId(folderId);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getNoAssetFolders()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getNoAssetFolders();
@@ -738,13 +744,13 @@ public class JournalFolderLocalServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFolder(userId, folderId, parentFolderId, name,
-			description, ddmStructureIds, overrideDDMStructures,
+			description, ddmStructureIds, restrictionType,
 			mergeWithParentFolder, serviceContext);
 	}
 

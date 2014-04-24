@@ -7709,7 +7709,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setTreePath(journalFolder.getTreePath());
 		journalFolderImpl.setName(journalFolder.getName());
 		journalFolderImpl.setDescription(journalFolder.getDescription());
-		journalFolderImpl.setOverrideDDMStructures(journalFolder.isOverrideDDMStructures());
+		journalFolderImpl.setRestrictionType(journalFolder.getRestrictionType());
 		journalFolderImpl.setStatus(journalFolder.getStatus());
 		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());

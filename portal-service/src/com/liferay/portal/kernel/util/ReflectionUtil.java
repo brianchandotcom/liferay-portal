@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -161,80 +160,6 @@ public class ReflectionUtil {
 		}
 
 		return false;
-	}
-
-	public static <T extends Enum<T>> T newEnumElement(
-			Class<T> enumClass, Class<?>[] constructorParameterTypes,
-			String name, int ordinal, Object... constructorParameters)
-		throws Exception {
-
-		Class<?>[] parameterTypes = null;
-
-		if ((constructorParameterTypes != null) &&
-			(constructorParameterTypes.length != 0)) {
-
-			parameterTypes = new Class<?>[constructorParameterTypes.length + 2];
-
-			parameterTypes[0] = String.class;
-			parameterTypes[1] = int.class;
-
-			System.arraycopy(
-				constructorParameterTypes, 0, parameterTypes, 2,
-				constructorParameterTypes.length);
-		}
-		else {
-			parameterTypes = new Class<?>[2];
-
-			parameterTypes[0] = String.class;
-			parameterTypes[1] = int.class;
-		}
-
-		Constructor<T> constructor = enumClass.getDeclaredConstructor(
-			parameterTypes);
-
-		Method acquireConstructorAccessorMethod = getDeclaredMethod(
-			Constructor.class, "acquireConstructorAccessor");
-
-		acquireConstructorAccessorMethod.invoke(constructor);
-
-		Field constructorAccessorField = getDeclaredField(
-			Constructor.class, "constructorAccessor");
-
-		Object constructorAccessor = constructorAccessorField.get(constructor);
-
-		Method newInstanceMethod = getDeclaredMethod(
-			constructorAccessor.getClass(), "newInstance", Object[].class);
-
-		Object[] parameters = null;
-
-		if ((constructorParameters != null) &&
-			(constructorParameters.length != 0)) {
-
-			parameters = new Object[constructorParameters.length + 2];
-
-			parameters[0] = name;
-			parameters[1] = ordinal;
-
-			System.arraycopy(
-				constructorParameters, 0, parameters, 2,
-				constructorParameters.length);
-		}
-		else {
-			parameters = new Object[2];
-
-			parameters[0] = name;
-			parameters[1] = ordinal;
-		}
-
-		return (T)newInstanceMethod.invoke(
-			constructorAccessor, new Object[] {parameters});
-	}
-
-	public static <T extends Enum<T>> T newEnumElement(
-			Class<T> enumClass, String name, int ordinal)
-		throws Exception {
-
-		return newEnumElement(enumClass, null, name, ordinal, (Object[])null);
 	}
 
 	private static void _getInterfaces(

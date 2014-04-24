@@ -14,8 +14,6 @@
 		position: relative;
 
 		> ul.form-navigator.well {
-			@include box-shadow(none);
-
 			background: transparent;
 			border: none;
 			clear: both;
@@ -52,7 +50,7 @@
 						}
 
 						.message {
-							@include opacity(.7);
+							@include opacity(0.7);
 
 							color: #000;
 							display: inline-block;
@@ -72,28 +70,8 @@
 					}
 				}
 
-				&.section-error .tab-label {
-					.message {
-						color: #B50303;
-					}
-
-					.number {
-						@include box-shadow(0px 0px 10px 0px #B50303);
-
-						transition-duration: .25s;
-						transition-property: box-shadow;
-						transition-timing-function: ease-out;
-					}
-				}
-
-				&.section-success .tab-label {
-					.number {
-						@include box-shadow(0px 0px 10px 0px #488f06);
-
-						transition-duration: .25s;
-						transition-property: box-shadow;
-						transition-timing-function: ease-out;
-					}
+				&.section-error .tab-label .message {
+					color: #B50303;
 				}
 
 				.tab-label {
@@ -107,12 +85,7 @@
 						text-decoration: none;
 
 						.number {
-							@include box-shadow(0px 0px 5px 0px #60BFEF);
 							@include opacity(1);
-
-							transition-duration: .25s;
-							transition-property: box-shadow;
-							transition-timing-function: ease-out;
 						}
 					}
 
@@ -121,8 +94,7 @@
 					}
 
 					.number {
-						@include border-radius(50%);
-						@include opacity(.6);
+						@include opacity(0.6);
 
 						background: #CCC;
 						clear: both;

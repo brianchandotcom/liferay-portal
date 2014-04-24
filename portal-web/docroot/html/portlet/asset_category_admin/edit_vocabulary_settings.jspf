@@ -65,7 +65,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 			<div class="lfr-form-row lfr-form-row-inline">
 				<div class="row-fields">
-					<aui:select cssClass="vocabulary-asset-type-select" label="choose-asset-type" name="classNameId0">
+					<aui:select cssClass="vocabulary-asset-type-select" inlineField="<%= true %>" label="choose-asset-type" name="classNameId0">
 						<aui:option label="all-asset-types" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 						<%
@@ -84,7 +84,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 					for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
 					%>
 
-							<aui:select cssClass="hide subtype-select subtype-classNameId0" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
+							<aui:select cssClass="hide subtype-select subtype-classNameId0" inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
 								<aui:option label="all-asset-subtypes" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
@@ -130,7 +130,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 				<div class="lfr-form-row lfr-form-row-inline">
 					<div class="row-fields">
-						<aui:select cssClass="vocabulary-asset-type-select" label="choose-asset-type" name="<%= rowClassNameId %>">
+						<aui:select cssClass="vocabulary-asset-type-select" inlineField="<%= true %>" label="choose-asset-type" name="<%= rowClassNameId %>">
 							<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 							<%
@@ -158,7 +158,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 							}
 						%>
 
-							<aui:select cssClass='<%= (hidden ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' label="" name='<%= "subtype" + factory.getClassNameId() + "-" + rowClassNameId %>'>
+							<aui:select cssClass='<%= (hidden ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-" + rowClassNameId %>'>
 								<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%

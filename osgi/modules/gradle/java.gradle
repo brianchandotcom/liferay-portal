@@ -174,13 +174,13 @@ task bndIntegrationTest << {
 	)
 
 	ant.taskdef(
-		classname: "com.liferay.util.ant.bnd.TestTask",
+		classname: "com.liferay.portal.ant.bnd.TestTask",
 		classpath: configurations.bnd.asPath,
 		name: "bndTest"
 	)
 
 	ant.taskdef(
-		classname: "com.liferay.util.ant.ManifestHelperTask",
+		classname: "com.liferay.portal.ant.ManifestHelperTask",
 		classpath: configurations.bnd.asPath,
 		name: "manifestHelper"
 	)

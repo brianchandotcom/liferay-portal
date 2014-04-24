@@ -1121,12 +1121,25 @@ release was successful.</echo>
 			</not>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
+			
+				<if>
+					<contains string="${app.server.jboss.zip.name}" substring="jboss-eap" />
+					<then>
+						<fail>
+.
 
-				<get
-					dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-					src="${app.server.jboss.zip.url}"
-					verbose="true"
-				/>
+Please download the JBoss EAP zip file from ${app.server.jboss.zip.url} and
+place it here: ${app.server.parent.dir}. Then rerun this task.
+						</fail>
+					</then>
+				</if>
+				<else>
+					<get
+						dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+						src="${app.server.jboss.zip.url}"
+						verbose="true"
+					/>
+				</else>
 			</then>
 		</if>
 

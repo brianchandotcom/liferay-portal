@@ -514,13 +514,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		String expectedContent = replaceLinksToLayoutsParameters(
 			content, importedPrivateLayout, importedPublicLayout);
 
-		content = replaceLinksToLayoutsParameters(
-			content, _stagingPrivateLayout, _stagingPublicLayout);
-
 		Element rootElement =
 			_portletDataContextImport.getImportDataRootElement();
 
 		Element entryElement = rootElement.element("entry");
+
+		content = replaceLinksToLayoutsParameters(
+			content, _stagingPrivateLayout, _stagingPublicLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,

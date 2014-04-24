@@ -203,7 +203,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				data: {
 					xsd: content
 				},
-				dataType: 'json',
+				dataType: 'JSON',
 				on: {
 					failure: function(message) {
 						displayMessage(MESSAGE_FAILURE, '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>');

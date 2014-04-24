@@ -78,7 +78,7 @@ AUI.add(
 							instance.get('url'),
 							{
 								autoLoad: false,
-								dataType: 'json',
+								dataType: 'JSON',
 								form: form.getDOM()
 							}
 						);

@@ -679,7 +679,7 @@ AUI.add(
 											fileName: li.attr('data-fileName')
 										}
 									),
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										success: function(event, id, obj) {
 											instance._handleDeleteResponse(this.get('responseData'), li);
@@ -964,7 +964,7 @@ AUI.add(
 												instance._formatTempFiles(this.get('responseData'));
 											}
 										},
-										dataType: 'json'
+										dataType: 'JSON'
 									}
 								);
 							}

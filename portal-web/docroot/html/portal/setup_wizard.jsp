@@ -321,7 +321,7 @@
 											form: {
 												id: document.fm
 											},
-											dataType: 'json',
+											dataType: 'JSON',
 											after: {
 												success: function(event, id, obj) {
 													command.val('<%= Constants.UPDATE %>');

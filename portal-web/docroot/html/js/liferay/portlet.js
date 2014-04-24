@@ -195,7 +195,7 @@
 
 			var data = {
 				cmd: 'add',
-				dataType: 'json',
+				dataType: 'JSON',
 				doAsUserId: doAsUserId,
 				portletData: portletData,
 				p_auth: Liferay.authToken,

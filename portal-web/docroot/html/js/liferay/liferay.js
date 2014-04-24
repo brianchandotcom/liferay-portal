@@ -175,7 +175,7 @@ Liferay = window.Liferay || {};
 							cmd: A.JSON.stringify(payload),
 							p_auth: Liferay.authToken
 						},
-						dataType: 'json'
+						dataType: 'JSON'
 					},
 					ioConfig
 				)

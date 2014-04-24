@@ -58,7 +58,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			A.io.request(
 				uri,
 				{
-					dataType: 'json',
+					dataType: 'JSON',
 					form: {
 						id: form
 					},

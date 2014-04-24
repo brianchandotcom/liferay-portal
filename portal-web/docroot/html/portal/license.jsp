@@ -430,7 +430,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 								<%= Constants.CMD %>: cmd,
 								clusterNodeId: clusterNodeId
 							},
-							dataType: 'json',
+							dataType: 'JSON',
 							on: {
 								failure: function() {
 									var errorMessage = A.Lang.sub(Liferay.Language.get('error-contacting-x'), [ip]);

@@ -361,7 +361,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					url,
 					{
 						data: data,
-						dataType: 'json',
+						dataType: 'JSON',
 						on: {
 							failure: function() {
 								if (saveStatus) {

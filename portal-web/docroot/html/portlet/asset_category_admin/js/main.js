@@ -1187,7 +1187,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										success: function(event, id, obj) {
 											var response = this.get(STR_RESPONSE_DATA);
@@ -1248,7 +1248,7 @@ AUI.add(
 								{
 									'arguments': {},
 									autoLoad: false,
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										success: function(event, id, obj, args) {
 											var response = this.get(STR_RESPONSE_DATA);
@@ -1278,7 +1278,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										success: function(event, id, obj) {
 											var response = this.get(STR_RESPONSE_DATA);
@@ -1568,7 +1568,7 @@ AUI.add(
 									start: 0,
 									vocabularyId: vocabularyId
 								},
-								dataType: 'json',
+								dataType: 'JSON',
 								on: {
 									success: function(event) {
 										callback(this.get(STR_RESPONSE_DATA));

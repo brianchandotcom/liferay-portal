@@ -682,7 +682,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										failure: function(event, id, obj) {
 											instance._onTagUpdateFailure(obj);

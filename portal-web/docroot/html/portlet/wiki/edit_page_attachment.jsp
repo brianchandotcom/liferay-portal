@@ -211,7 +211,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			A.io.request(
 				document.<portlet:namespace />fm2.action,
 				{
-					dataType: 'json',
+					dataType: 'JSON',
 					form: {
 						id: document.<portlet:namespace />fm2
 					},

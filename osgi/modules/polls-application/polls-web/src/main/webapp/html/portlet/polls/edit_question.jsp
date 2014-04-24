@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.polls.util.PollsWebKeys" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -113,6 +114,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				if ((question != null) && ((i - 1) < choices.size())) {
 					choice = (PollsChoice)choices.get(i - 1);
+				}
+				else {
+					choice = PollsChoiceLocalServiceUtil.createPollsChoice(0);
 				}
 			%>
 

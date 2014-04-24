@@ -73,7 +73,7 @@ public interface DDMDisplay {
 		throws Exception;
 
 	public long[] getTemplateGroupIds(
-			ThemeDisplay themeDisplay, boolean showGlobalScope)
+			ThemeDisplay themeDisplay, boolean includeAncestorTemplates)
 		throws Exception;
 
 	public long getTemplateHandlerClassNameId(

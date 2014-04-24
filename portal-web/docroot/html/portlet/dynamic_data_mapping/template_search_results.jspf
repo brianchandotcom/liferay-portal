@@ -17,7 +17,7 @@
 <%
 TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
-long[] groupIds = ddmDisplay.getTemplateGroupIds(themeDisplay, showGlobalScope);
+long[] groupIds = ddmDisplay.getTemplateGroupIds(themeDisplay, showAncestorScopes);
 long[] classNameIds = ddmDisplay.getTemplateClassNameIds(classNameId);
 long[] classPKs = ddmDisplay.getTemplateClassPKs(company.getCompanyId(), classNameId, classPK);
 

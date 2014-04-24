@@ -19,7 +19,7 @@ StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSear
 
 long[] groupIds = new long[] {groupId};
 
-if (showGlobalScope) {
+if (showAncestorScopes) {
 	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
 }
 

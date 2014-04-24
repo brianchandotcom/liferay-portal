@@ -17,9 +17,9 @@ package com.liferay.portal.resiliency.spi.action;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -304,7 +304,7 @@ public class PortalResiliencyActionTest {
 
 			int ordinal = newLifecycles.length - 1;
 
-			newLifecycles[ordinal] = ReflectionUtil.newEnumElement(
+			newLifecycles[ordinal] = ReflectionTestUtil.newEnumElement(
 				SPIAgent.Lifecycle.class, new Class<?>[] {String.class},
 					"UNKNOWN", ordinal, "UNKNOWN");
 

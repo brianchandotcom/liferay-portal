@@ -1,7 +1,6 @@
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portlet.polls.lar,\
-	com.liferay.portlet.polls.service.permission
+	com.liferay.portlet.polls.lar
 Include-Resource:\
 	build/classes/main,\
 	build/resources/main

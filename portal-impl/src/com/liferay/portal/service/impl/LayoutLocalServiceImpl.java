@@ -888,9 +888,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutExporter layoutExporter = new LayoutExporter();
-
-			return layoutExporter.exportLayoutsAsFile(
+			return LayoutExporter.exportLayoutsAsFile(
 				groupId, privateLayout, layoutIds, parameterMap, startDate,
 				endDate);
 		}
@@ -1028,9 +1026,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletExporter portletExporter = new PortletExporter();
-
-			return portletExporter.exportPortletInfoAsFile(
+			return PortletExporter.exportPortletInfoAsFile(
 				plid, groupId, portletId, parameterMap, startDate, endDate);
 		}
 		catch (PortalException pe) {
@@ -1820,9 +1816,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutImporter layoutImporter = new LayoutImporter();
-
-			layoutImporter.importLayouts(
+			LayoutImporter.importLayouts(
 				userId, groupId, privateLayout, parameterMap, file);
 		}
 		catch (PortalException pe) {
@@ -1952,9 +1946,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletImporter portletImporter = new PortletImporter();
-
-			portletImporter.importPortletInfo(
+			PortletImporter.importPortletInfo(
 				userId, plid, groupId, portletId, parameterMap, file);
 		}
 		catch (PortalException pe) {
@@ -3052,9 +3044,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutImporter layoutImporter = new LayoutImporter();
-
-			return layoutImporter.validateFile(
+			return LayoutImporter.validateFile(
 				userId, groupId, privateLayout, parameterMap, file);
 		}
 		catch (PortalException pe) {
@@ -3105,9 +3095,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletImporter portletImporter = new PortletImporter();
-
-			return portletImporter.validateFile(
+			return PortletImporter.validateFile(
 				userId, plid, groupId, portletId, parameterMap, file);
 		}
 		catch (PortalException pe) {

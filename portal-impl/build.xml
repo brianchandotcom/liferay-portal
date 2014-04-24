@@ -1376,8 +1376,8 @@ public class Creole10Parser]]></replacevalue>
 				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
 			</and>
 			<then>
-				<copy todir="${app.server.classes.portal.dir}/.." overwrite="true" preservelastmodified="true">
-					<dirset dir="classes" />
+				<copy todir="${app.server.classes.portal.dir}" overwrite="true" preservelastmodified="true">
+					<fileset dir="classes" />
 				</copy>
 			</then>
 		</if>

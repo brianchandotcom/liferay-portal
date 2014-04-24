@@ -359,11 +359,6 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public String get(HttpServletRequest request, String key) {
-		return _get(request, key, key);
-	}
-
-	@Override
 	public String get(Locale locale, String key) {
 		return get(locale, key, key);
 	}
@@ -417,7 +412,22 @@ public class LanguageImpl implements Language, Serializable {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		return _get(request, key, defaultValue);
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		Locale locale = _getLocale(request);
+
+		if (portletConfig == null) {
+			return get(locale, key, defaultValue);
+		}
+
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		if (resourceBundle.containsKey(key)) {
+			return _get(resourceBundle, key);
+		}
+
+		return get(locale, key, defaultValue);
 	}
 
 	@Override
@@ -825,27 +835,6 @@ public class LanguageImpl implements Language, Serializable {
 	private String _escapePattern(String pattern) {
 		return StringUtil.replace(
 			pattern, StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
-	}
-
-	private String _get(
-		HttpServletRequest request, String key, String defaultValue) {
-
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		Locale locale = _getLocale(request);
-
-		if (portletConfig == null) {
-			return get(locale, key, defaultValue);
-		}
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-		if (resourceBundle.containsKey(key)) {
-			return _get(resourceBundle, key);
-		}
-
-		return get(locale, key, defaultValue);
 	}
 
 	private String _get(ResourceBundle resourceBundle, String key) {

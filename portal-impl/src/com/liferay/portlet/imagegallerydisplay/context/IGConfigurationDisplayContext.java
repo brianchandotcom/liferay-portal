@@ -16,6 +16,8 @@ package com.liferay.portlet.imagegallerydisplay.context;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -35,9 +37,10 @@ public class IGConfigurationDisplayContext {
 		HttpServletRequest request,
 		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
-		_request = request;
-
 		_dlPortletInstanceSettings = dlPortletInstanceSettings;
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<KeyValuePair> getAvailableMimeTypes() {
@@ -65,7 +68,8 @@ public class IGConfigurationDisplayContext {
 		for (String mimeType : mediaGalleryMimeTypes) {
 			_currentMimeTypes.add(
 				new KeyValuePair(
-					mimeType, LanguageUtil.get(_request, mimeType)));
+					mimeType,
+					LanguageUtil.get(_themeDisplay.getLocale(), mimeType)));
 		}
 
 		_availableMimeTypes = new ArrayList<KeyValuePair>();
@@ -77,7 +81,8 @@ public class IGConfigurationDisplayContext {
 			if (Arrays.binarySearch(mediaGalleryMimeTypes, mimeType) < 0) {
 				_availableMimeTypes.add(
 					new KeyValuePair(
-						mimeType, LanguageUtil.get(_request, mimeType)));
+						mimeType,
+						LanguageUtil.get(_themeDisplay.getLocale(), mimeType)));
 			}
 		}
 	}
@@ -85,6 +90,6 @@ public class IGConfigurationDisplayContext {
 	private List<KeyValuePair> _availableMimeTypes;
 	private List<KeyValuePair> _currentMimeTypes;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

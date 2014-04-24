@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext;
 
@@ -40,11 +42,13 @@ public class DLDisplayConfigurationDisplayContext {
 		HttpServletRequest request,
 		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
-		_request = request;
 		_dlPortletInstanceSettings = dlPortletInstanceSettings;
 
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
 			request, dlPortletInstanceSettings);
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<KeyValuePair> getAvailableFileEntryColumns() {
@@ -93,7 +97,8 @@ public class DLDisplayConfigurationDisplayContext {
 			_currentFileEntryColumns.add(
 				new KeyValuePair(
 					fileEntryColumn,
-					LanguageUtil.get(_request, fileEntryColumn)));
+					LanguageUtil.get(
+						_themeDisplay.getLocale(), fileEntryColumn)));
 		}
 
 		_availableFileEntryColumns = new ArrayList<KeyValuePair>();
@@ -108,7 +113,8 @@ public class DLDisplayConfigurationDisplayContext {
 				_availableFileEntryColumns.add(
 					new KeyValuePair(
 						fileEntryColumn,
-						LanguageUtil.get(_request, fileEntryColumn)));
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), fileEntryColumn)));
 			}
 		}
 
@@ -125,7 +131,8 @@ public class DLDisplayConfigurationDisplayContext {
 		for (String folderColumn : folderColumns) {
 			_currentFolderColumns.add(
 				new KeyValuePair(
-					folderColumn, LanguageUtil.get(_request, folderColumn)));
+					folderColumn,
+					LanguageUtil.get(_themeDisplay.getLocale(), folderColumn)));
 		}
 
 		_availableFolderColumns = new ArrayList<KeyValuePair>();
@@ -140,7 +147,8 @@ public class DLDisplayConfigurationDisplayContext {
 				_availableFolderColumns.add(
 					new KeyValuePair(
 						folderColumn,
-						LanguageUtil.get(_request, folderColumn)));
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), folderColumn)));
 			}
 		}
 
@@ -180,6 +188,6 @@ public class DLDisplayConfigurationDisplayContext {
 	private List<KeyValuePair> _currentFolderColumns;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

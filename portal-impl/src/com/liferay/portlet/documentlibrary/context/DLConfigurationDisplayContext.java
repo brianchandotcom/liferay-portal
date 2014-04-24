@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
 import java.util.ArrayList;
@@ -39,12 +41,13 @@ public class DLConfigurationDisplayContext {
 		HttpServletRequest request,
 		DLPortletInstanceSettings dlPortletInstanceSettings) {
 
-		_request = request;
-
 		_dlPortletInstanceSettings = dlPortletInstanceSettings;
 
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
 			request, dlPortletInstanceSettings);
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<KeyValuePair> getAvailableDisplayViews() {
@@ -91,7 +94,8 @@ public class DLConfigurationDisplayContext {
 		for (String displayView : displayViews) {
 			_currentDisplayViews.add(
 				new KeyValuePair(
-					displayView, LanguageUtil.get(_request, displayView)));
+					displayView,
+					LanguageUtil.get(_themeDisplay.getLocale(), displayView)));
 		}
 
 		Arrays.sort(displayViews);
@@ -105,7 +109,9 @@ public class DLConfigurationDisplayContext {
 			if (Arrays.binarySearch(displayViews, displayView) < 0) {
 				_availableDisplayViews.add(
 					new KeyValuePair(
-						displayView, LanguageUtil.get(_request, displayView)));
+						displayView,
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), displayView)));
 			}
 		}
 
@@ -121,7 +127,8 @@ public class DLConfigurationDisplayContext {
 		for (String entryColumn : entryColumns) {
 			_currentEntryColumns.add(
 				new KeyValuePair(
-					entryColumn, LanguageUtil.get(_request, entryColumn)));
+					entryColumn,
+					LanguageUtil.get(_themeDisplay.getLocale(), entryColumn)));
 		}
 
 		Arrays.sort(entryColumns);
@@ -134,7 +141,9 @@ public class DLConfigurationDisplayContext {
 			if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
 				_availableEntryColumns.add(
 					new KeyValuePair(
-						entryColumn, LanguageUtil.get(_request, entryColumn)));
+						entryColumn,
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), entryColumn)));
 			}
 		}
 
@@ -164,6 +173,6 @@ public class DLConfigurationDisplayContext {
 	private List<KeyValuePair> _currentEntryColumns;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

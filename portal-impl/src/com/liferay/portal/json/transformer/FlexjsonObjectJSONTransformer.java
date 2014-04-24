@@ -67,7 +67,17 @@ public class FlexjsonObjectJSONTransformer
 
 		Path path = jsonContext.getPath();
 
-		return StringUtil.merge(path.getPath(), StringPool.PERIOD);
+		List<String> paths = path.getPath();
+
+		if (paths.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		String mergedPath = StringUtil.merge(paths, StringPool.PERIOD);
+
+		mergedPath = mergedPath.concat(StringPool.PERIOD);
+
+		return mergedPath;
 	}
 
 	private void _exclude(
@@ -75,7 +85,7 @@ public class FlexjsonObjectJSONTransformer
 
 		for (String name : names) {
 			PathExpression pathExpression = new PathExpression(
-				path.concat(StringPool.PERIOD).concat(name), false);
+				path.concat(name), false);
 
 			for (int i = 0; i < pathExpressions.size(); i++) {
 				PathExpression curPathExpression = pathExpressions.get(i);
@@ -101,7 +111,7 @@ public class FlexjsonObjectJSONTransformer
 
 		for (String name : names) {
 			PathExpression pathExpression = new PathExpression(
-				path.concat(StringPool.PERIOD).concat(name), true);
+				path.concat(name), true);
 
 			if (!pathExpressions.contains(pathExpression)) {
 				pathExpressions.add(0, pathExpression);

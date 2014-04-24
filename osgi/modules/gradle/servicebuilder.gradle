@@ -2,7 +2,16 @@ configurations {
 	servicebuilder
 }
 
+ext {
+        liferayProjectDir = "${rootDir}/../../.."
+        resourcesDir = "src/main/resources"
+        sourcesDir = "src/main/java"
+        targetEntityName = ""
+}
+
 dependencies {
+	servicebuilder files(["${resourcesDir}"])
+
 	servicebuilder files(["${liferayProjectDir}/osgi/modules/gradle/servicebuilder"])
 	servicebuilder files(["${liferayProjectDir}/portal-impl/classes"])
 	servicebuilder files(["${liferayProjectDir}/portal-service/classes"])
@@ -24,13 +33,6 @@ dependencies {
 		dir:"${liferayProjectDir}/lib/portal",
 		includes: ["*.jar"]
 	)
-}
-
-ext {
-	liferayProjectDir = "${rootDir}/../../.."
-	resourcesDir = "src/main/resources"
-	sourcesDir = "src/main/java"
-	targetEntityName = ""
 }
 
 task buildService(type: JavaExec) {

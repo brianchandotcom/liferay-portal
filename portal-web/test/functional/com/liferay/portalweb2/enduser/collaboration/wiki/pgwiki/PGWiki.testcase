@@ -313,9 +313,7 @@
 
 	<command name="AddWikiPage" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
-		<var name="wikiPageRevision" value="1.0" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
-		<var name="wikiPageUsername" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -332,9 +330,9 @@
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageRevision" value="${wikiPageRevision}" />
+			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${wikiPageUsername}" />
+			<var name="wikiPageUsername" value="Test Test" />
 		</execute>
 	</command>
 
@@ -378,10 +376,20 @@
 		</execute>
 
 		<execute macro="WikiPage#addPG">
-			<var name="html" value="true" />
+			<var name="htmlSource" value="true" />
 			<var name="welcomeToLiferay" value="${welcomeToLiferay}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="Test Test" />
 		</execute>
 	</command>
 

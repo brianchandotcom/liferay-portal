@@ -122,8 +122,6 @@ public class StringPool {
 
 	public static final String LAQUO_CHAR = "\u00AB";
 
-	public static final String LEFT_DOUBLE_QUOTE_ENCODED = "&ldquo;";
-
 	public static final String LESS_THAN = "<";
 
 	public static final String LESS_THAN_OR_EQUAL = "<=";
@@ -175,10 +173,6 @@ public class StringPool {
 	public static final String RETURN = "\r";
 
 	public static final String RETURN_NEW_LINE = "\r\n";
-
-	public static final String RIGHT_DOUBLE_QUOTE_ENCODED = "&rdquo;";
-
-	public static final String RIGHT_SINGLE_QUOTE_ENCODED = "&rsquo;";
 
 	public static final String SEMICOLON = ";";
 

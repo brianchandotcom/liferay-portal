@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
+<%
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+%>
+
 <c:choose>
 	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 
@@ -27,9 +31,9 @@
 		long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 		%>
 
-		<c:if test="<%= showTabs || showFoldersSearch %>">
+		<c:if test="<%= dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.getShowFoldersSearch() %>">
 			<aui:nav-bar>
-				<c:if test="<%= showTabs %>">
+				<c:if test="<%= dlActionsDisplayContext.isShowTabs() %>">
 					<aui:nav>
 
 						<%
@@ -68,7 +72,7 @@
 					</aui:nav>
 				</c:if>
 
-				<c:if test="<%= showFoldersSearch %>">
+				<c:if test="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>">
 					<liferay-portlet:renderURL varImpl="searchURL">
 						<portlet:param name="struts_action" value="/document_library_display/search" />
 					</liferay-portlet:renderURL>
@@ -97,7 +101,7 @@
 			</aui:nav-bar>
 		</c:if>
 	</c:when>
-	<c:when test="<%= (showTabs || showFoldersSearch) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= (dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.getShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="home"
 		/>

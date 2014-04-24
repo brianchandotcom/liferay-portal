@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -184,8 +185,8 @@ public class DLImpl implements DL {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				portletDisplay.getPortletInstanceSettings());
+			DLUtil.getDLPortletInstanceSettings(
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		data.put("folder-id", dlPortletInstanceSettings.getDefaultFolderId());
 
@@ -207,8 +208,8 @@ public class DLImpl implements DL {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
-			new DLPortletInstanceSettings(
-				portletDisplay.getPortletInstanceSettings());
+			DLUtil.getDLPortletInstanceSettings(
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
 
@@ -475,6 +476,31 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new DLPortletInstanceSettings(settings);
+	}
+
+	@Override
+	public DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			request.getParameterMap(), settings);
+
+		return new DLPortletInstanceSettings(parameterMapSettings);
 	}
 
 	@Override

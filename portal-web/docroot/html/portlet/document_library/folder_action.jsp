@@ -96,15 +96,17 @@ else {
 	showPermissionsURL = DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+
 boolean showWhenSingleIcon = false;
 
-if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if ((row == null) || dlActionsDisplayContext.isShowWhenSingleIconActionButton()) {
 	showWhenSingleIcon = true;
 }
 
 boolean view = false;
 
-if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !showMinimalActionButtons) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlActionsDisplayContext.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 
@@ -112,8 +114,8 @@ String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu direction='<%= showMinimalActionButtons ? "down" : "left" %>' extended="<%= showMinimalActionButtons ? false : true %>" icon="<%= showMinimalActionButtons ? StringPool.BLANK : null %>" message='<%= showMinimalActionButtons ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" triggerCssClass="btn">
-		<c:if test="<%= showActions %>">
+	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" triggerCssClass="btn">
+		<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 			<c:choose>
 				<c:when test="<%= folder != null %>">
 
@@ -305,7 +307,7 @@ String iconMenuId = null;
 
 		<c:choose>
 			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
+				<c:if test="<%= dlActionsDisplayContext.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
 							<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
@@ -355,7 +357,7 @@ String iconMenuId = null;
 					/>
 				</c:if>
 
-				<c:if test="<%= showActions && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+				<c:if test="<%= dlActionsDisplayContext.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 					<portlet:renderURL var="editFileShortcutURL">
 						<portlet:param name="struts_action" value="/document_library_display/edit_file_shortcut" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -389,7 +391,7 @@ String iconMenuId = null;
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test="<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) && !showMinimalActionButtons %>">
+	<c:when test="<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlActionsDisplayContext.isShowMinimalActionsButton() %>">
 
 		<%= iconMenu %>
 

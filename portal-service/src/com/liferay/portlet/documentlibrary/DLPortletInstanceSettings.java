@@ -15,15 +15,22 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Sergio González
  */
 public class DLPortletInstanceSettings extends BaseServiceSettings {
+
+	public static final String[] MULTI_VALUED_KEYS = {
+		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
+		"mimeTypes"
+	};
 
 	public DLPortletInstanceSettings(Settings settings) {
 		super(settings, _fallbackKeys);
@@ -34,8 +41,8 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	public String getDisplayViews() {
-		return typedSettings.getValue("displayViews");
+	public String[] getDisplayViews() {
+		return typedSettings.getValues("displayViews");
 	}
 
 	public boolean getEnableCommentRatings() {
@@ -54,24 +61,28 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 		return typedSettings.getIntegerValue("entriesPerPage");
 	}
 
-	public String getEntryColumns() {
-		return typedSettings.getValue("entryColumns");
+	public String[] getEntryColumns() {
+		return typedSettings.getValues("entryColumns");
 	}
 
 	public int getFileEntriesPerPage() {
 		return typedSettings.getIntegerValue("fileEntriesPerPage");
 	}
 
-	public String getFileEntryColumns() {
-		return typedSettings.getValue("fileEntryColumns");
+	public String[] getFileEntryColumns() {
+		return typedSettings.getValues("fileEntryColumns");
 	}
 
-	public String getFolderColumns() {
-		return typedSettings.getValue("folderColumns");
+	public String[] getFolderColumns() {
+		return typedSettings.getValues("folderColumns");
 	}
 
 	public int getFoldersPerPage() {
 		return typedSettings.getIntegerValue("foldersPerPage");
+	}
+
+	public String[] getMimeTypes() {
+		return typedSettings.getValues("mimeTypes", _defaultMimeTypes);
 	}
 
 	public long getRootFolderId() {
@@ -98,6 +109,9 @@ public class DLPortletInstanceSettings extends BaseServiceSettings {
 	public boolean getShowTabs() {
 		return typedSettings.getBooleanValue("showTabs");
 	}
+
+	private static final String[] _defaultMimeTypes =
+		DLUtil.getAllMediaGalleryMimeTypes().toArray(StringPool.EMPTY_ARRAY);
 
 	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -22,13 +22,14 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Iván Zaera
  */
-public class DLActionsDisplayContextHelper {
+public class DLFileEntryActionsDisplayContextHelper {
 
-	public DLActionsDisplayContextHelper(
+	public DLFileEntryActionsDisplayContextHelper(
 		PermissionChecker permissionChecker, FileEntry fileEntry,
 		FileVersion fileVersion) {
 

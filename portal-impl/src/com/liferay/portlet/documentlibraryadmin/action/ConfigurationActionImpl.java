@@ -33,6 +33,10 @@ import javax.portlet.PortletConfig;
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
+	public ConfigurationActionImpl() {
+		addMultiValuedKeys(DLSettings.MULTI_VALUED_KEYS);
+	}
+
 	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,

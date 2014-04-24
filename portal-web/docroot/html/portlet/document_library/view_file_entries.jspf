@@ -30,14 +30,14 @@
 
 	boolean showDeleteButton = permissionChecker.hasPermission(scopeGroupId, DLFileEntryConstants.getClassName(), scopeGroupId, ActionKeys.DELETE);
 
-	if (showActions && showDeleteButton) {
+	if (dlActionsDisplayContext.isShowActions() && showDeleteButton) {
 		entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 	}
 	%>
 
 	<liferay-ui:search-container
 		curParam="cur2"
-		delta="<%= fileEntriesPerPage %>"
+		delta="<%= dlPortletInstanceSettings.getEntriesPerPage() %>"
 		deltaConfigurable="<%= false %>"
 		emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
 		headerNames="<%= StringUtil.merge(fileEntryColumns) %>"
@@ -135,7 +135,7 @@
 
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= (total > 0) && showActions && showDeleteButton %>">
+		<c:if test="<%= (total > 0) && dlActionsDisplayContext.isShowActions() && showDeleteButton %>">
 			<aui:button onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value='<%= ((repositoryId == scopeGroupId) && TrashUtil.isTrashEnabled(scopeGroupId)) ? "move-to-the-recycle-bin" : "delete" %>' />
 
 			<div class="separator"><!-- --></div>

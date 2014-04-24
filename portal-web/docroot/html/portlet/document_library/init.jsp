@@ -45,6 +45,10 @@ page import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException"
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
 page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLConfigurationDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants" %><%@
@@ -64,7 +68,6 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortc
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
@@ -90,12 +93,15 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+	portletName = portletResource;
+}
+
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
-
-int entriesPerPage = dlPortletInstanceSettings.getEntriesPerPage();
-
-String[] displayViews = StringUtil.split(dlPortletInstanceSettings.getDisplayViews());
+DLPortletInstanceSettings dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId);
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
@@ -116,60 +122,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
-
-String portletId = portletDisplay.getId();
-
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-	portletName = portletResource;
-}
-
-boolean showActions = dlPortletInstanceSettings.getShowActions();
-boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
-boolean showAddFolderButton = false;
-boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
-boolean showTabs = dlPortletInstanceSettings.getShowTabs();
-
-if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	showActions = true;
-	showAssetMetadata = true;
-	showAddFolderButton = true;
-	showFolderMenu = true;
-	showTabs = true;
-	showMinimalActionButtons = true;
-}
-else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.TRASH)) {
-	showAssetMetadata = true;
-}
-
-boolean enableRelatedAssets = dlPortletInstanceSettings.getEnableRelatedAssets();
-
-String allEntryColumns = "name,size,status";
-
-if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-	allEntryColumns += ",downloads";
-}
-
-if (showActions) {
-	allEntryColumns += ",action";
-}
-
-allEntryColumns += ",modified-date,create-date";
-
-String[] entryColumns = StringUtil.split(dlPortletInstanceSettings.getEntryColumns());
-
-if (!showActions) {
-	entryColumns = ArrayUtil.remove(entryColumns, "action");
-}
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) && !ArrayUtil.contains(entryColumns, "action")) {
-	entryColumns = ArrayUtil.append(entryColumns, "action");
-}
-
-boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
-boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

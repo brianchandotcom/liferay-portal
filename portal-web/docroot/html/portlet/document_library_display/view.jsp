@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
+DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
+
 String topLink = ParamUtil.getString(request, "topLink", "home");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -53,6 +56,9 @@ int status = WorkflowConstants.STATUS_APPROVED;
 if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
+
+String[] folderColumns = dlEntriesListDisplayContext.getFolderColumns();
+String[] fileEntryColumns = dlEntriesListDisplayContext.getFileEntryColumns();
 
 int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
 int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
@@ -105,7 +111,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		</c:if>
 
 		<aui:row>
-			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= showFolderMenu ? 75 : 100 %>">
+			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
 				<liferay-ui:panel-container extended="<%= false %>" id='<%= renderResponse.getNamespace() + "documentLibraryDisplayInfoPanelContainer" %>' persistState="<%= true %>">
 					<c:if test="<%= folder != null %>">
 						<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
@@ -142,7 +148,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="view-folders" extended="<%= true %>" id='<%= renderResponse.getNamespace() + "documentLibraryDisplayFoldersListingPanel" %>' persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
 							<liferay-ui:search-container
 								curParam="cur1"
-								delta="<%= foldersPerPage %>"
+								delta="<%= dlPortletInstanceSettings.getFoldersPerPage() %>"
 								deltaConfigurable="<%= false %>"
 								headerNames="<%= StringUtil.merge(folderColumns) %>"
 								iteratorURL="<%= portletURL %>"
@@ -178,7 +184,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				</liferay-ui:panel-container>
 			</aui:col>
 
-			<c:if test="<%= showFolderMenu %>">
+			<c:if test="<%= dlActionsDisplayContext.isFolderMenuVisible() %>">
 				<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 					<div class="lfr-asset-summary">
 						<liferay-ui:icon
@@ -231,7 +237,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 			%>
 
 			<liferay-ui:search-container
-				delta="<%= fileEntriesPerPage %>"
+				delta="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>"
 				deltaConfigurable="<%= false %>"
 				emptyResultsMessage="there-are-no-documents"
 				iteratorURL="<%= portletURL %>"

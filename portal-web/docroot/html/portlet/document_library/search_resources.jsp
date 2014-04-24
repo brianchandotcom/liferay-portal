@@ -70,7 +70,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 int searchType = ParamUtil.getInteger(request, "searchType");
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
 
 int total = 0;
 

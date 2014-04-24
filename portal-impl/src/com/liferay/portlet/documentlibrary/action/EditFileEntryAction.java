@@ -49,6 +49,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -59,7 +60,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.documentlibrary.DLSettings;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -719,12 +720,15 @@ public class EditFileEntryAction extends PortletAction {
 			ThemeDisplay themeDisplay = (ThemeDisplay)
 				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			DLSettings dlSettings = DLUtil.getDLSettings(
-				themeDisplay.getScopeGroupId());
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			DLPortletInstanceSettings dlPortletInstanceSettings =
+				DLUtil.getDLPortletInstanceSettings(
+					themeDisplay.getLayout(), portletDisplay.getId());
 
 			Set<String> extensions = new HashSet<String>();
 
-			String[] mimeTypes = dlSettings.getMediaGalleryMimeTypes();
+			String[] mimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
 			for (String mimeType : mimeTypes) {
 				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
@@ -990,10 +994,15 @@ public class EditFileEntryAction extends PortletAction {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-					DLSettings dlSettings = DLUtil.getDLSettings(
-						themeDisplay.getScopeGroupId());
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-					String[] mimeTypes = dlSettings.getMediaGalleryMimeTypes();
+					DLPortletInstanceSettings dlPortletInstanceSettings =
+						DLUtil.getDLPortletInstanceSettings(
+							themeDisplay.getLayout(), portletDisplay.getId());
+
+					String[] mimeTypes =
+						dlPortletInstanceSettings.getMimeTypes();
 
 					if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
 						throw new FileMimeTypeException(contentType);

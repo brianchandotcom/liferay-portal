@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
+
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
 String navigation = ParamUtil.getString(request, "navigation");
@@ -53,12 +56,14 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 
+String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+
 if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
 
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
@@ -98,7 +103,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<div class="folder-pagination"></div>
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"
@@ -207,6 +212,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
 	<%
+	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];
 
 	for (int i = 0; i < entryColumns.length; i++) {

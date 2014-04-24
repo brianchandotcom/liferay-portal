@@ -14,10 +14,10 @@
  */
 --%>
 
-<c:if test="<%= showActions %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
 	<c:choose>
 		<c:when test="<%= (fileShortcut == null) %>">
-			<c:if test="<%= dlActionsDisplayContext.isEditButtonVisible() %>">
+			<c:if test="<%= dlFileEntryActionsDisplayContext.isEditButtonVisible() %>">
 				<portlet:renderURL var="editURL">
 					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

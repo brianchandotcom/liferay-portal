@@ -14,8 +14,8 @@
  */
 --%>
 
-<c:if test="<%= showActions %>">
-	<c:if test="<%= dlActionsDisplayContext.isCheckoutDocumentButtonVisible() %>">
+<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+	<c:if test="<%= dlFileEntryActionsDisplayContext.isCheckoutDocumentButtonVisible() %>">
 		<portlet:actionURL var="checkOutURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" />
@@ -29,7 +29,7 @@
 			url="<%= checkOutURL %>"
 		/>
 	</c:if>
-	<c:if test="<%= dlActionsDisplayContext.isCheckinButtonVisible() %>">
+	<c:if test="<%= dlFileEntryActionsDisplayContext.isCheckinButtonVisible() %>">
 		<portlet:actionURL var="checkInURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKIN %>" />
@@ -43,7 +43,7 @@
 			url="<%= checkInURL %>"
 		/>
 	</c:if>
-	<c:if test="<%= dlActionsDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+	<c:if test="<%= dlFileEntryActionsDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
 		<portlet:actionURL var="cancelCheckOutURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" />

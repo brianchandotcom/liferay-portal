@@ -21,6 +21,8 @@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolder" %><%@
@@ -31,6 +33,7 @@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalSer
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
+page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearchTerms" %>
@@ -42,7 +45,13 @@ if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+}
+
+DLPortletInstanceSettings dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId);
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
@@ -62,63 +71,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }
-
-boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
-boolean showSubfolders = dlPortletInstanceSettings.getShowSubfolders();
-int foldersPerPage = dlPortletInstanceSettings.getFoldersPerPage();
-
-String allFolderColumns = "name,num-of-folders,num-of-documents";
-
-String portletId = portletDisplay.getId();
-
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-}
-
-boolean showActions = dlPortletInstanceSettings.getShowActions();
-boolean showAddFolderButton = false;
-boolean showFolderMenu = dlPortletInstanceSettings.getShowFolderMenu();
-boolean showTabs = dlPortletInstanceSettings.getShowTabs();
-
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-	showActions = true;
-	showAddFolderButton = true;
-	showFolderMenu = true;
-	showTabs = true;
-}
-
-if (showActions) {
-	allFolderColumns += ",action";
-}
-
-String[] folderColumns = StringUtil.split(dlPortletInstanceSettings.getFolderColumns());
-
-if (!showActions) {
-	folderColumns = ArrayUtil.remove(folderColumns, "action");
-}
-
-int fileEntriesPerPage = dlPortletInstanceSettings.getFileEntriesPerPage();
-
-String allFileEntryColumns = "name,size";
-
-if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-	allFileEntryColumns += ",downloads";
-}
-
-allFileEntryColumns += ",locked";
-
-if (showActions) {
-	allFileEntryColumns += ",action";
-}
-
-String[] fileEntryColumns = StringUtil.split(dlPortletInstanceSettings.getFileEntryColumns());
-
-if (!showActions) {
-	fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
-}
-
-boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
-boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
 
 boolean mergedView = false;
 

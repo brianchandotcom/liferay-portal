@@ -568,6 +568,36 @@
 		</for>
 	</command>
 
+	<command name="viewTranslationsPG">
+		<execute action="Home#open" locator1="${sitePageURL}" />
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+
+		<if>
+			<isset var="childPageName" />
+			<then>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${childPageName}" />
+			</then>
+			<else>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+			</else>
+		</if>
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_MESSAGE_INFO" value1="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="Set Spanish (Spain) as your preferred language." />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${adminTranslation}" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES" value1="${mySitesTranslation}" />
+	</command>
+
+	<command name="viewUserPageLayoutPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertTextNotPresent" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute action="Dockbar#assertTextNotPresent" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
+	</command>
+
 	<command name="viewWithWorkflowPG">
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 		<execute action="Home#pause" locator1="5000" />

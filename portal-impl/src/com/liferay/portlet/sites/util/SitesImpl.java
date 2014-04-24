@@ -890,6 +890,10 @@ public class SitesImpl implements Sites {
 		long lastMergeTime = GetterUtil.getLong(
 			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
 
+		if (lastMergeTime == 0) {
+			return false;
+		}
+
 		Date existingLayoutModifiedDate = layout.getModifiedDate();
 
 		if ((existingLayoutModifiedDate != null) &&

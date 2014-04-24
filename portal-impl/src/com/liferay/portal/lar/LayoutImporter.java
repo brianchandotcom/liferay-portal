@@ -81,11 +81,13 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -478,6 +480,8 @@ public class LayoutImporter {
 		List<Layout> previousLayouts = LayoutUtil.findByG_P(
 			groupId, privateLayout);
 
+		Set<Layout> modifiedLayouts = new HashSet<Layout>();
+
 		// Remove layouts that were deleted from the layout set prototype
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
@@ -493,6 +497,12 @@ public class LayoutImporter {
 					layout.getSourcePrototypeLayoutUuid();
 
 				if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+					continue;
+				}
+
+				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+					modifiedLayouts.add(layout);
+
 					continue;
 				}
 
@@ -577,6 +587,10 @@ public class LayoutImporter {
 
 			if (layout != null) {
 				plid = layout.getPlid();
+
+				if (modifiedLayouts.contains(layout)) {
+					continue;
+				}
 			}
 
 			portletDataContext.setPlid(plid);
@@ -691,8 +705,7 @@ public class LayoutImporter {
 
 		GroupLocalServiceUtil.updateSite(groupId, true);
 
-		// Last merge time must be the same for merged layouts and the layout
-		// set
+		// Last merge time is updated only if there aren't any modified layouts
 
 		if (layoutsImportMode.equals(
 				PortletDataHandlerKeys.
@@ -702,6 +715,10 @@ public class LayoutImporter {
 
 			for (Layout layout : layouts.values()) {
 				layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+				if (modifiedLayouts.contains(layout)) {
+					continue;
+				}
 
 				UnicodeProperties typeSettingsProperties =
 					layout.getTypeSettingsProperties();
@@ -726,7 +743,9 @@ public class LayoutImporter {
 				settingsProperties.getProperty(
 					Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
-			if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			if (Validator.isNull(mergeFailFriendlyURLLayouts) &&
+				(modifiedLayouts.size() == 0)) {
+
 				settingsProperties.setProperty(
 					Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 

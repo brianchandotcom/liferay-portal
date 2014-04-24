@@ -309,6 +309,39 @@ public class LayoutTestUtil {
 			layout.getTypeSettings());
 	}
 
+	public static Layout updateLayoutPortletPreference(
+			Layout layout, String portletId, String portletPreferenceName,
+			String portletPreferenceValue)
+		throws Exception {
+
+		PortletPreferences layoutPortletPreferences =
+			LayoutTestUtil.getPortletPreferences(layout, portletId);
+
+		layoutPortletPreferences.setValue(
+			portletPreferenceName, portletPreferenceValue);
+
+		layoutPortletPreferences.store();
+
+		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
+	}
+
+	public static Layout updateLayoutPortletPreferences(
+			Layout layout, String portletId,
+			Map<String, String> portletPreferences)
+		throws Exception {
+
+		PortletPreferences layoutPortletPreferences =
+			LayoutTestUtil.getPortletPreferences(layout, portletId);
+
+		for (Map.Entry<String, String> entry : portletPreferences.entrySet()) {
+			layoutPortletPreferences.setValue(entry.getKey(), entry.getValue());
+		}
+
+		layoutPortletPreferences.store();
+
+		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
+	}
+
 	public static Layout updateLayoutTemplateId(
 			Layout layout, String layoutTemplateId)
 		throws Exception {

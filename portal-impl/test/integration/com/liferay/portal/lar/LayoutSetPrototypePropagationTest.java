@@ -259,23 +259,13 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
-	public void testReset() throws Exception {
+	public void testResetLayoutTemplate() throws Exception {
 		SitesUtil.resetPrototype(layout);
 		SitesUtil.resetPrototype(_layout);
 
 		propagateChanges(group);
 
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
-
-		layout.setLayoutPrototypeLinkEnabled(true);
-
-		LayoutLocalServiceUtil.updateLayout(layout);
-
-		_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
-
-		_layout.setLayoutPrototypeLinkEnabled(true);
-
-		LayoutLocalServiceUtil.updateLayout(_layout);
+		setLinkEnabled(true);
 
 		layout = LayoutTestUtil.updateLayoutTemplateId(layout, "1_column");
 
@@ -294,9 +284,66 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertEquals(
 			initialLayoutTemplateId,
 			LayoutTestUtil.getLayoutTemplateId(layout));
+
+		_layout = propagateChanges(_layout);
+
 		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
 		Assert.assertEquals(
 			"1_column", LayoutTestUtil.getLayoutTemplateId(_layout));
+	}
+
+	@Test
+	public void testResetPortletPreferences() throws Exception {
+		LayoutTestUtil.updateLayoutPortletPreference(
+			prototypeLayout, journalContentPortletId, "showAvailableLocales",
+			Boolean.FALSE.toString());
+
+		SitesUtil.resetPrototype(layout);
+		SitesUtil.resetPrototype(_layout);
+
+		propagateChanges(group);
+
+		setLinkEnabled(true);
+
+		layout = LayoutTestUtil.updateLayoutPortletPreference(
+			layout, journalContentPortletId, "showAvailableLocales",
+			Boolean.TRUE.toString());
+
+		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+
+		_layout = LayoutTestUtil.updateLayoutPortletPreference(
+			_layout, _journalContentPortletId, "showAvailableLocales",
+			Boolean.TRUE.toString());
+
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		SitesUtil.resetPrototype(layout);
+
+		layout = propagateChanges(layout);
+
+		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+
+		PortletPreferences layoutPortletPreferences =
+			LayoutTestUtil.getPortletPreferences(
+				layout, journalContentPortletId);
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(),
+			layoutPortletPreferences.getValue(
+				"showAvailableLocales", StringPool.BLANK));
+
+		_layout = propagateChanges(_layout);
+
+		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+
+		layoutPortletPreferences = LayoutTestUtil.getPortletPreferences(
+			_layout, _journalContentPortletId);
+
+		Assert.assertEquals(
+			Boolean.TRUE.toString(),
+			layoutPortletPreferences.getValue(
+				"showAvailableLocales", StringPool.BLANK));
 	}
 
 	@Override
@@ -331,6 +378,11 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutTestUtil.updateLayoutTemplateId(
 			_prototypeLayout, initialLayoutTemplateId);
+
+		_journalContentPortletId =
+			addJournalContentPortletToLayout(
+				TestPropsValues.getUserId(), _prototypeLayout,
+				_layoutSetPrototypeJournalArticle, "column-1");
 
 		_initialPrototypeLayoutCount =
 			LayoutLocalServiceUtil.getLayoutsCount(
@@ -578,6 +630,7 @@ public class LayoutSetPrototypePropagationTest
 
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutCount;
+	private String _journalContentPortletId;
 	private Layout _layout;
 	private LayoutSetPrototype _layoutSetPrototype;
 	private Group _layoutSetPrototypeGroup;

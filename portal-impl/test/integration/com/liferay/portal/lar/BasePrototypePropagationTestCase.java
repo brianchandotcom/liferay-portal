@@ -192,26 +192,22 @@ public abstract class BasePrototypePropagationTestCase {
 
 		setLinkEnabled(linkEnabled);
 
-		PortletPreferences layoutSetPrototypePortletPreferences =
-			LayoutTestUtil.getPortletPreferences(
-				prototypeLayout, journalContentPortletId);
-
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		layoutSetPrototypePortletPreferences.setValue(
-			"articleId", StringPool.BLANK);
+		Map<String, String> portletPreferencesMap =
+			new HashMap<String, String>();
 
-		layoutSetPrototypePortletPreferences.setValue(
+		portletPreferencesMap.put("articleId", StringPool.BLANK);
+		portletPreferencesMap.put(
 			"showAvailableLocales", Boolean.FALSE.toString());
 
 		if (globalScope) {
-			layoutSetPrototypePortletPreferences.setValue(
-				"groupId", String.valueOf(globalGroupId));
-			layoutSetPrototypePortletPreferences.setValue(
-				"lfrScopeType", "company");
+			portletPreferencesMap.put("groupId", String.valueOf(globalGroupId));
+			portletPreferencesMap.put("lfrScopeType", "company");
 		}
 
-		layoutSetPrototypePortletPreferences.store();
+		LayoutTestUtil.updateLayoutPortletPreferences(
+			prototypeLayout, journalContentPortletId, portletPreferencesMap);
 
 		layout = propagateChanges(layout);
 

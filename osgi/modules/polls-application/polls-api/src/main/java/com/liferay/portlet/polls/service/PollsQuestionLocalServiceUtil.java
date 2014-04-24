@@ -16,8 +16,10 @@ package com.liferay.portlet.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for PollsQuestion. This utility wraps
@@ -456,14 +458,7 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	public static PollsQuestionLocalService getService() {
-		if (_service == null) {
-			_service = (PollsQuestionLocalService)PortalBeanLocatorUtil.locate(PollsQuestionLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(PollsQuestionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -473,5 +468,14 @@ public class PollsQuestionLocalServiceUtil {
 	public void setService(PollsQuestionLocalService service) {
 	}
 
-	private static PollsQuestionLocalService _service;
+	private static ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(PollsQuestionLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<PollsQuestionLocalService, PollsQuestionLocalService>(bundle.getBundleContext(),
+				PollsQuestionLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

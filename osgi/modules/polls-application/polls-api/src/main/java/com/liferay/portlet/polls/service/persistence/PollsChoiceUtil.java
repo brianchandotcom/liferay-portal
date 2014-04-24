@@ -16,14 +16,17 @@ package com.liferay.portlet.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.polls.model.PollsChoice;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -909,14 +912,7 @@ public class PollsChoiceUtil {
 	}
 
 	public static PollsChoicePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (PollsChoicePersistence)PortalBeanLocatorUtil.locate(PollsChoicePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(PollsChoiceUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -926,5 +922,14 @@ public class PollsChoiceUtil {
 	public void setPersistence(PollsChoicePersistence persistence) {
 	}
 
-	private static PollsChoicePersistence _persistence;
+	private static ServiceTracker<PollsChoicePersistence, PollsChoicePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(PollsChoiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<PollsChoicePersistence, PollsChoicePersistence>(bundle.getBundleContext(),
+				PollsChoicePersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

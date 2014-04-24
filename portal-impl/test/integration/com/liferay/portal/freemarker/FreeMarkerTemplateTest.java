@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
@@ -34,8 +34,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
 import java.io.StringReader;
-
-import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -60,13 +58,11 @@ public class FreeMarkerTemplateTest {
 		_configuration = new Configuration();
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				Configuration.class, "cache");
-
 			TemplateCache templateCache = new LiferayTemplateCache(
 				_configuration);
 
-			field.set(_configuration, templateCache);
+			ReflectionTestUtil.setFieldValue(
+				_configuration, "cache", templateCache);
 		}
 		catch (Exception e) {
 			throw new TemplateException(

@@ -27,6 +27,75 @@
 		</execute>
 	</tear-down>
 
+	<command name="AddPageAndChildPageTranslations" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Home" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addPageTranslations">
+			<var name="pageTranslation" value="es_ES" />
+			<var name="PageTranslationName" value="Casa" />
+			<var name="sitePageName" value="Home" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewTranslationsPG">
+			<var name="adminTranslation" value="Administración" />
+			<var name="mySitesTranslation" value="Mis Sitios" />
+			<var name="pageName" value="Casa" />
+			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/home" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="Blog Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="SitePage#addPageTranslations">
+			<var name="childPageName" value="Blog Page" />
+			<var name="pageTranslation" value="es_ES" />
+			<var name="PageTranslationName" value="Blog Página" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="Blog Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewTranslationsPG">
+			<var name="adminTranslation" value="Administración" />
+			<var name="childPageName" value="Blog Página" />
+			<var name="mySitesTranslation" value="Mis Sitios" />
+			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/blog-page" />
+		</execute>
+	</command>
+
 	<command name="AddWebContentWithGlobalScopeViaCPToLiferayAP" priority="4">
 		<var name="globalSiteType" value="Global" />
 		<var name="pageName" value="Test Page 1" />
@@ -481,6 +550,26 @@
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentText}" />
+	</command>
+
+	<command name="GlobalScope" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="Site#viewGlobalLandingDefault">
+			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Global" />
+		</execute>
 	</command>
 
 	<command name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">

@@ -155,6 +155,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE_SELECTOR_SITE_NAME</td>
+	<td>//div[contains(@class,'control-panel-site-selector')]/a[contains(@id,'_145_controlPanelSiteSelector')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -457,6 +462,16 @@
 <tr>
 	<td>PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE</td>
 	<td>//div[@id='portalMessageContainer']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTAL_LOCALIZATION_PREFERRED_MESSAGE</td>
+	<td>//div[@id='portalMessageContainer']/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTAL_LOCALIZATION_MESSAGE_INFO</td>
+	<td>//div[@id='portalMessageContainer']</td>
 	<td></td>
 </tr>
 <tr>

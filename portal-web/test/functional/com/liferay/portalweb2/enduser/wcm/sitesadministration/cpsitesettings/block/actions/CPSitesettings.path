@@ -69,6 +69,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PARENT_SITE-->
+<tr>
+	<td>PARENT_SITE_SELECT</td>
+	<td>//a[@id='_165_selectParentSiteLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>

@@ -43,16 +43,15 @@ import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.impl.LockImpl;
-import com.liferay.portal.service.LockLocalService;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.impl.LockLocalServiceImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -67,7 +66,6 @@ import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
@@ -102,20 +100,13 @@ public class ClusterSchedulerEngineTest {
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
-		Field field = ReflectionUtil.getDeclaredField(
-			LockLocalServiceUtil.class, "_service");
-
-		LockLocalService lockLocalService = new MockLockLocalService();
-
-		field.set(null, lockLocalService);
-
-		field = ClusterableContextThreadLocal.class.getDeclaredField(
-			"_contextThreadLocal");
-
-		field.setAccessible(true);
+		ReflectionTestUtil.setFieldValue(
+			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
 
 		_threadLocalContext =
-			(ThreadLocal<HashMap<String, Serializable>>)field.get(null);
+			(ThreadLocal<HashMap<String, Serializable>>)
+				ReflectionTestUtil.getFieldValue(
+					ClusterableContextThreadLocal.class, "_contextThreadLocal");
 
 		Method method = ClusterSchedulerEngine.class.getDeclaredMethod(
 			"delete", String.class);
@@ -982,13 +973,11 @@ public class ClusterSchedulerEngineTest {
 			ClusterSchedulerEngine clusterSchedulerEngine)
 		throws Exception {
 
-		Field field = ReflectionUtil.getDeclaredField(
-			ClusterSchedulerEngine.class, "_memoryClusteredJobs");
-
 		Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 			memoryJobs =
 				(Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>)
-					field.get(clusterSchedulerEngine);
+					ReflectionTestUtil.getFieldValue(
+						clusterSchedulerEngine, "_memoryClusteredJobs");
 
 		if (memoryJobs.isEmpty()) {
 			return Collections.emptyMap();
@@ -1037,11 +1026,9 @@ public class ClusterSchedulerEngineTest {
 	private boolean _isMaster(ClusterSchedulerEngine clusterSchedulerEngine)
 		throws Exception {
 
-		Field localClusterNodeAddressField = ReflectionUtil.getDeclaredField(
-			ClusterSchedulerEngine.class, "_localClusterNodeAddress");
-
 		String localClusterNodeAddress =
-			(String)localClusterNodeAddressField.get(clusterSchedulerEngine);
+			(String)ReflectionTestUtil.getFieldValue(
+				clusterSchedulerEngine, "_localClusterNodeAddress");
 
 		Lock lock = MockLockLocalService.getLock();
 

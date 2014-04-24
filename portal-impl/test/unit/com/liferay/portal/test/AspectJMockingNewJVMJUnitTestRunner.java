@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.NewJVMJUnitTestRunner;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,8 +29,6 @@ import com.liferay.util.SerializableUtil;
 
 import java.io.File;
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.net.URL;
 
@@ -156,10 +154,8 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 
 				currentThread.setContextClassLoader(weavingClassLoader);
 
-				Method method = ReflectionUtil.getDeclaredMethod(
-					originalProcessCallable.getClass(), "call");
-
-				return (Serializable)method.invoke(originalProcessCallable);
+				return (Serializable)ReflectionTestUtil.invoke(
+					originalProcessCallable, "call", new Class<?>[0]);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

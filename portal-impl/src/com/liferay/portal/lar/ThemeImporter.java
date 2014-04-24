@@ -30,7 +30,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
  */
 public class ThemeImporter {
 
-	public void importTheme(
+	public static void importTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
 

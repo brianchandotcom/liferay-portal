@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.asset.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -88,8 +91,110 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 			KEY_REQUIRED_CLASSNAMES, StringUtil.merge(requiredClassNameIds));
 	}
 
+	public String[] getAssociatedAssetIds() {
+		return StringUtil.split(
+			getProperty(KEY_SELECTED_CLASSNAMES), StringPool.COMMA);
+	}
+
+	public String[] getAssociatedRequiredAssetIds() {
+		return StringUtil.split(
+			getProperty(KEY_REQUIRED_CLASSNAMES), StringPool.COMMA);
+	}
+
+	public boolean isAssociatedToAsset(long assetClassNameId) {
+		return _isSettingAssociatedToAsset(
+				KEY_SELECTED_CLASSNAMES, assetClassNameId);
+	}
+
+	public boolean isAssociatedToAsset(
+		long assetClassNameId, long assetClassTypeId) {
+
+		return _isSettingAssociatedToAsset(
+				KEY_SELECTED_CLASSNAMES, assetClassNameId, assetClassTypeId);
+	}
+
+	public boolean isMultiValued() {
+		return GetterUtil.getBoolean(getProperty(KEY_MULTIVALUED), true);
+	}
+
+	public boolean isRequired(long classNameId) {
+		return _isSettingAssociatedToAsset(
+			KEY_REQUIRED_CLASSNAMES, classNameId);
+	}
+
+	public boolean isRequired(long classNameId, long classTypeId) {
+		return _isSettingAssociatedToAsset(
+				KEY_REQUIRED_CLASSNAMES, classNameId, classTypeId);
+	}
+
 	public void setMultiValued(boolean multiValued) {
 		setProperty(KEY_MULTIVALUED, String.valueOf(multiValued));
+	}
+
+	private boolean _isSettingAssociatedToAsset(
+		String settingName, long assetClassNameId) {
+
+		String[] settingValueIds = StringUtil.split(
+			getProperty(settingName), StringPool.COMMA);
+
+		if (settingValueIds.length == 0) {
+			return false;
+		}
+
+		if (ArrayUtil.contains(
+				settingValueIds,
+				AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS)) {
+
+			return true;
+		}
+
+		StringBundler sb = new StringBundler(2);
+		sb.append(assetClassNameId);
+		sb.append(StringPool.COLON);
+		String classNamePrefix = sb.toString();
+
+		if (ArrayUtil.exists(
+				settingValueIds,
+				new PrefixPredicateFilter(classNamePrefix, true))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSettingAssociatedToAsset(
+		String settingName, long assetClassNameId, long assetClassTypeId) {
+
+		String[] settingAssetIds = StringUtil.split(
+			getProperty(settingName), StringPool.COMMA);
+
+		if (settingAssetIds.length == 0) {
+			return false;
+		}
+
+		StringBundler sb = new StringBundler(3);
+		sb.append(assetClassNameId);
+		sb.append(StringPool.COLON);
+		sb.append(assetClassTypeId);
+		String classNameAndType = sb.toString();
+
+		sb = new StringBundler(3);
+		sb.append(assetClassNameId);
+		sb.append(StringPool.COLON);
+		sb.append(AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+		String classNameOnly = sb.toString();
+
+		String allClasses = AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS;
+
+		if (ArrayUtil.contains(settingAssetIds, classNameAndType) ||
+			ArrayUtil.contains(settingAssetIds, classNameOnly) ||
+			ArrayUtil.contains(settingAssetIds, allClasses)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String KEY_MULTIVALUED = "multiValued";

@@ -41,15 +41,8 @@ String[] selectedClassTypeIds = null;
 long[] requiredClassNameIds = null;
 
 if (vocabulary != null) {
-	UnicodeProperties settingsProperties = vocabulary.getSettingsProperties();
-
-	selectedClassNameIds = StringUtil.split(settingsProperties.getProperty("selectedClassNameIds"), 0L);
-	selectedClassTypeIds = StringUtil.split(settingsProperties.getProperty("selectedClassTypeIds"), StringPool.COMMA);
-	requiredClassNameIds = StringUtil.split(settingsProperties.getProperty("requiredClassNameIds"), 0L);
-
-	if ((requiredClassNameIds != null) && _isDefaultClassNameIds(requiredClassNameIds)) {
-		required = true;
-	}
+	selectedClassNameIds = vocabulary.getAssociatedAssetClassNameIds();
+	requiredClassNameIds = vocabulary.getAssociatedRequiredAssetClassNameIds();
 }
 
 if (ArrayUtil.isEmpty(selectedClassNameIds)) {
@@ -138,11 +131,12 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 				String rowClassNameId = "classNameId" + index;
 
-				boolean requiredIndex = false;
+				String[] parts = StringUtil.split(selectedClassNameIds[index], CharPool.COLON);
+				Long classNameId = Long.valueOf(parts[0]);
+				Long classTypeId = Long.valueOf(parts[1]);
 
-				if (ArrayUtil.contains(requiredClassNameIds, selectedClassNameIds[index])) {
-					requiredIndex = true;
-				}
+				boolean requiredIndex =
+					vocabulary.isRequired(classNameId, classTypeId);
 		%>
 
 				<div class="lfr-form-row lfr-form-row-inline">

@@ -59,17 +59,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getSettingsProperties() {
-		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
-
-			_settingsProperties.fastLoad(super.getSettings());
-		}
-
-		return _settingsProperties;
-	}
-
-	@Override
 	public String getTitle(String languageId) {
 		String value = super.getTitle(languageId);
 
@@ -93,16 +82,15 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isAssociatedToAsset(long assetClassNameId) {
-		return _isSettingAssociatedToAsset(
-			"selectedClassNameIds", assetClassNameId);
+		return getSettingProperties().isAssociatedToAsset(assetClassNameId);
 	}
 
 	@Override
 	public boolean isAssociatedToAsset(
 		long assetClassNameId, long assetClassTypeId) {
 
-		return _isSettingAssociatedToAsset(
-			"selectedClassNameIds", assetClassNameId, assetClassTypeId);
+		return getSettingProperties().isAssociatedToAsset(
+			assetClassNameId, assetClassTypeId);
 	}
 
 	@Override
@@ -127,7 +115,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMissingRequiredCategory(
-			long assetClassNameId, long assetClassTypeId,
+			long classNameId, long classNameId,
 			final long[] selectedCategoryIds)
 		throws SystemException {
 
@@ -159,17 +147,17 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
-
-		return GetterUtil.getBoolean(
-			_settingsProperties.getProperty("multiValued"), true);
+		return getSettingProperties().isMultiValued();
 	}
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		return _isSettingAssociatedToAsset("requiredClassNameIds", classNameId);
+		return getSettingProperties().isRequired(classNameId);
+	}
+
+	@Override
+	public boolean isRequired(long classNameId, long classTypeId) {
+		return getSettingProperties().isRequired(classNameId, classTypeId);
 	}
 
 	@Override
@@ -179,87 +167,14 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		super.setSettings(settings);
 	}
 
-	@Override
-	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		_settingsProperties = settingsProperties;
-
-		super.setSettings(settingsProperties.toString());
-	}
-
-	private boolean _isSettingAssociatedToAsset(
-		String settingName, long assetClassNameId) {
-
+	protected AssetVocabularySettingsProperties getSettingProperties() {
 		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
+			_settingsProperties = new AssetVocabularySettingsProperties();
+			_settingsProperties.fastLoad(super.getSettings());
 		}
 
-		String[] settingValueIds = StringUtil.split(
-			_settingsProperties.getProperty(settingName), StringPool.COMMA);
-
-		if (settingValueIds.length == 0) {
-			return false;
-		}
-
-		if (ArrayUtil.contains(
-				settingValueIds,
-				AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS)) {
-
-			return true;
-		}
-
-		StringBundler sb = new StringBundler(2);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		String classNamePrefix = sb.toString();
-
-		if (ArrayUtil.exists(
-				settingValueIds,
-				new PrefixPredicateFilter(classNamePrefix, true))) {
-
-			return true;
-		}
-
-		return false;
+		return _settingsProperties;
 	}
 
-	private boolean _isSettingAssociatedToAsset(
-		String settingName, long assetClassNameId, long assetClassTypeId) {
-
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
-
-		String[] settingAssetIds = StringUtil.split(
-			_settingsProperties.getProperty(settingName), StringPool.COMMA);
-
-		if (settingAssetIds.length == 0) {
-			return false;
-		}
-
-		StringBundler sb = new StringBundler(3);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		sb.append(assetClassTypeId);
-		String classNameAndType = sb.toString();
-
-		sb = new StringBundler(3);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		sb.append(AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
-		String classNameOnly = sb.toString();
-
-		String allClasses = AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS;
-
-		if (ArrayUtil.contains(settingAssetIds, classNameAndType) ||
-			ArrayUtil.contains(settingAssetIds, classNameOnly) ||
-			ArrayUtil.contains(settingAssetIds, allClasses)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private UnicodeProperties _settingsProperties;
-
+	private AssetVocabularySettingsProperties _settingsProperties;
 }

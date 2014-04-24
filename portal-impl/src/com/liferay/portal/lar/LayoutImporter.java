@@ -290,41 +290,48 @@ public class LayoutImporter {
 
 		validateFile(portletDataContext);
 
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		Element headerElement = rootElement.element("header");
+
 		// Company id
 
 		long sourceCompanyId = GetterUtil.getLong(
-			_headerElement.attributeValue("company-id"));
+			headerElement.attributeValue("company-id"));
 
 		portletDataContext.setSourceCompanyId(sourceCompanyId);
 
 		// Company group id
 
 		long sourceCompanyGroupId = GetterUtil.getLong(
-			_headerElement.attributeValue("company-group-id"));
+			headerElement.attributeValue("company-group-id"));
 
 		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
 
 		// Group id
 
 		long sourceGroupId = GetterUtil.getLong(
-			_headerElement.attributeValue("group-id"));
+			headerElement.attributeValue("group-id"));
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
 		// User personal site group id
 
 		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			_headerElement.attributeValue("user-personal-site-group-id"));
+			headerElement.attributeValue("user-personal-site-group-id"));
 
 		portletDataContext.setSourceUserPersonalSiteGroupId(
 			sourceUserPersonalSiteGroupId);
 
 		// Layout and layout set prototype
 
-		String layoutSetPrototypeUuid = _layoutsElement.attributeValue(
+		Element layoutsElement = portletDataContext.getImportDataGroupElement(
+			Layout.class);
+
+		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");
 
-		String larType = _headerElement.attributeValue("type");
+		String larType = headerElement.attributeValue("type");
 
 		if (group.isLayoutPrototype() && larType.equals("layout-prototype")) {
 			deleteMissingLayouts = false;
@@ -334,7 +341,7 @@ public class LayoutImporter {
 					group.getClassPK());
 
 			String layoutPrototypeUuid = GetterUtil.getString(
-				_headerElement.attributeValue("type-uuid"));
+				headerElement.attributeValue("type-uuid"));
 
 			LayoutPrototype existingLayoutPrototype = null;
 
@@ -374,7 +381,7 @@ public class LayoutImporter {
 					group.getClassPK());
 
 			String importedLayoutSetPrototypeUuid = GetterUtil.getString(
-				_headerElement.attributeValue("type-uuid"));
+				headerElement.attributeValue("type-uuid"));
 
 			LayoutSetPrototype existingLayoutSetPrototype = null;
 
@@ -410,7 +417,7 @@ public class LayoutImporter {
 		}
 		else if (larType.equals("layout-set-prototype")) {
 			layoutSetPrototypeUuid = GetterUtil.getString(
-				_headerElement.attributeValue("type-uuid"));
+				headerElement.attributeValue("type-uuid"));
 		}
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
@@ -424,7 +431,7 @@ public class LayoutImporter {
 		// Look and feel
 
 		if (importLogo) {
-			String logoPath = _headerElement.attributeValue("logo-path");
+			String logoPath = headerElement.attributeValue("logo-path");
 
 			byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
 				logoPath);
@@ -443,7 +450,7 @@ public class LayoutImporter {
 
 		if (importLayoutSetSettings) {
 			String settings = GetterUtil.getString(
-				_headerElement.elementText("settings"));
+				headerElement.elementText("settings"));
 
 			LayoutSetLocalServiceUtil.updateSettings(
 				groupId, privateLayout, settings);
@@ -452,7 +459,7 @@ public class LayoutImporter {
 		// Read asset tags, expando tables, locks, and permissions to make them
 		// available to the data handlers through the context
 
-		Element portletsElement = _rootElement.element("portlets");
+		Element portletsElement = rootElement.element("portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
 
@@ -516,15 +523,17 @@ public class LayoutImporter {
 			}
 		}
 
+		List<Element> layoutElements = layoutsElement.elements();
+
 		if (_log.isDebugEnabled()) {
-			if (!_layoutElements.isEmpty()) {
+			if (!layoutElements.isEmpty()) {
 				_log.debug("Importing layouts");
 			}
 		}
 
 		List<String> sourceLayoutsUuids = new ArrayList<String>();
 
-		for (Element layoutElement : _layoutElements) {
+		for (Element layoutElement : layoutElements) {
 			importLayout(portletDataContext, sourceLayoutsUuids, layoutElement);
 		}
 
@@ -755,7 +764,7 @@ public class LayoutImporter {
 
 		// Page priorities
 
-		updateLayoutPriorities(portletDataContext);
+		updateLayoutPriorities(portletDataContext, layoutElements);
 
 		// Deletion system events
 
@@ -789,9 +798,7 @@ public class LayoutImporter {
 	protected void readXML(PortletDataContext portletDataContext)
 		throws Exception {
 
-		if ((_rootElement != null) && (_headerElement != null) &&
-			(_layoutsElement != null) && (_layoutElements != null)) {
-
+		if (portletDataContext.getImportDataRootElement() != null) {
 			return;
 		}
 
@@ -804,20 +811,12 @@ public class LayoutImporter {
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
-			_rootElement = document.getRootElement();
-
-			portletDataContext.setImportDataRootElement(_rootElement);
+			portletDataContext.setImportDataRootElement(
+				document.getRootElement());
 		}
 		catch (Exception e) {
 			throw new LARFileException(e);
 		}
-
-		_headerElement = _rootElement.element("header");
-
-		_layoutsElement = portletDataContext.getImportDataGroupElement(
-			Layout.class);
-
-		_layoutElements = _layoutsElement.elements();
 	}
 
 	protected void setPortletScope(
@@ -925,7 +924,7 @@ public class LayoutImporter {
 		// Gathering imported layouts and create a navigable set for each parent
 		// layout ID to handle each priority queue separately
 
-		for (Element layoutElement : _layoutElements) {
+		for (Element layoutElement : layoutElements) {
 			String action = layoutElement.attributeValue(Constants.ACTION);
 
 			if (action.equals(Constants.ADD)) {
@@ -1016,8 +1015,12 @@ public class LayoutImporter {
 
 		int buildNumber = ReleaseInfo.getBuildNumber();
 
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		Element headerElement = rootElement.element("header");
+
 		int importBuildNumber = GetterUtil.getInteger(
-			_headerElement.attributeValue("build-number"));
+			headerElement.attributeValue("build-number"));
 
 		if (buildNumber != importBuildNumber) {
 			throw new LayoutImportException(
@@ -1027,7 +1030,7 @@ public class LayoutImporter {
 
 		// Type
 
-		String larType = _headerElement.attributeValue("type");
+		String larType = headerElement.attributeValue("type");
 
 		if (!larType.equals("layout-prototype") &&
 			!larType.equals("layout-set") &&
@@ -1059,9 +1062,9 @@ public class LayoutImporter {
 			}
 
 			long sourceCompanyGroupId = GetterUtil.getLong(
-				_headerElement.attributeValue("company-group-id"));
+				headerElement.attributeValue("company-group-id"));
 			long sourceGroupId = GetterUtil.getLong(
-				_headerElement.attributeValue("group-id"));
+				headerElement.attributeValue("group-id"));
 
 			if (group.isCompany() ^ (sourceCompanyGroupId == sourceGroupId)) {
 				throw new LARTypeException(
@@ -1083,7 +1086,7 @@ public class LayoutImporter {
 
 		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
 			StringUtil.split(
-				_headerElement.attributeValue("available-locales")));
+				headerElement.attributeValue("available-locales")));
 
 		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
 			portletDataContext.getScopeGroupId());
@@ -1105,8 +1108,8 @@ public class LayoutImporter {
 		// Layout prototypes validity
 
 		validateLayoutPrototypes(
-			portletDataContext.getCompanyId(), _layoutsElement,
-			_layoutElements);
+			portletDataContext.getCompanyId(),
+			portletDataContext.getImportDataGroupElement(Layout.class));
 	}
 
 	protected void validateLayoutPrototypes(
@@ -1135,6 +1138,8 @@ public class LayoutImporter {
 						layoutSetPrototypeUuid, layoutSetPrototypeName));
 			}
 		}
+
+		List<Element> layoutElements = layoutsElement.elements();
 
 		for (Element layoutElement : layoutElements) {
 			String action = layoutElement.attributeValue(Constants.ACTION);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.cluster.clusterlink.messaging;
 
+import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
 import com.liferay.portal.cache.ehcache.EhcachePortalCacheManager;
 import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
 import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
@@ -81,30 +82,39 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			PortalCacheClusterEventType portalCacheClusterEventType =
 				portalCacheClusterEvent.getEventType();
 
-			if (portalCacheClusterEventType.equals(
-					PortalCacheClusterEventType.REMOVE_ALL)) {
+			boolean isReplicate = ClusterReplicationThreadLocal.isReplicate();
 
-				ehcache.removeAll(true);
-			}
-			else if (portalCacheClusterEventType.equals(
-						PortalCacheClusterEventType.PUT) ||
-					 portalCacheClusterEventType.equals(
-						PortalCacheClusterEventType.UPDATE)) {
+			ClusterReplicationThreadLocal.setReplicate(false);
 
-				Serializable elementKey =
-					portalCacheClusterEvent.getElementKey();
-				Serializable elementValue =
-					portalCacheClusterEvent.getElementValue();
+			try {
+				if (portalCacheClusterEventType.equals(
+						PortalCacheClusterEventType.REMOVE_ALL)) {
 
-				if (elementValue == null) {
-					ehcache.remove(elementKey, true);
+					ehcache.removeAll();
+				}
+				else if (portalCacheClusterEventType.equals(
+							PortalCacheClusterEventType.PUT) ||
+						 portalCacheClusterEventType.equals(
+							PortalCacheClusterEventType.UPDATE)) {
+
+					Serializable elementKey =
+						portalCacheClusterEvent.getElementKey();
+					Serializable elementValue =
+						portalCacheClusterEvent.getElementValue();
+
+					if (elementValue == null) {
+						ehcache.remove(elementKey);
+					}
+					else {
+						ehcache.put(new Element(elementKey, elementValue));
+					}
 				}
 				else {
-					ehcache.put(new Element(elementKey, elementValue), true);
+					ehcache.remove(portalCacheClusterEvent.getElementKey());
 				}
 			}
-			else {
-				ehcache.remove(portalCacheClusterEvent.getElementKey(), true);
+			finally {
+				ClusterReplicationThreadLocal.setReplicate(isReplicate);
 			}
 		}
 	}

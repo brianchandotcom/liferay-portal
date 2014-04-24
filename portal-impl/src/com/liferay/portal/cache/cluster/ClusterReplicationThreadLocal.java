@@ -21,14 +21,26 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
  */
 public class ClusterReplicationThreadLocal {
 
+	public static boolean isReplicate() {
+		return _replicateThreadLocal.get();
+	}
+
 	public static boolean isReplicateUpdate() {
 		return _replicateUpdateThreadLocal.get();
+	}
+
+	public static void setReplicate(boolean replicate) {
+		_replicateThreadLocal.set(replicate);
 	}
 
 	public static void setReplicateUpdate(boolean replicateUpdate) {
 		_replicateUpdateThreadLocal.set(replicateUpdate);
 	}
 
+	private static ThreadLocal<Boolean> _replicateThreadLocal =
+		new InitialThreadLocal<Boolean>(
+			ClusterReplicationThreadLocal.class + "._replicateThreadLocal",
+			Boolean.TRUE);
 	private static ThreadLocal<Boolean> _replicateUpdateThreadLocal =
 		new InitialThreadLocal<Boolean>(
 			ClusterReplicationThreadLocal.class +

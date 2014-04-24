@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMissingRequiredCategory(
-			long classNameId, long classNameId,
+			long classNameId, long classTypeId,
 			final long[] selectedCategoryIds)
 		throws SystemException {
 
@@ -131,11 +132,13 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 			PredicateFilter<AssetCategory> categoryFilter =
 				new PredicateFilter<AssetCategory>() {
+
 					@Override
 					public boolean filter(AssetCategory assetCategory) {
 						return ArrayUtil.contains(
 							selectedCategoryIds, assetCategory.getCategoryId());
 					}
+
 				};
 
 			if (!ListUtil.exists(categories, categoryFilter)) {
@@ -178,4 +181,5 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	private AssetVocabularySettingsProperties _settingsProperties;
+
 }

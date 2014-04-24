@@ -87,29 +87,3 @@ String formName = PortalUtil.generateRandomKey(request, "portlet_asset_category_
 		</div>
 	</aui:fieldset>
 </aui:form>
-
-<aui:script use="aui-base">
-
-	var form = A.one('#<portlet:namespace /><%= formName %>');
-
-	form.delegate(
-		'change',
-		function(event) {
-			var allSelectsClass = event.currentTarget.attr('name') + "-subtype";
-			allSelectsClass = allSelectsClass.replace("<portlet:namespace />", "");
-			console.log(allSelectsClass);
-			A.all("." + allSelectsClass).each(
-				function(item) {
-					item.hide();
-				}
-			);
-
-			var selectToShow = event.currentTarget.attr('name') + "-subtype-" + event.currentTarget.val();
-			var select = A.one('#' + selectToShow);
-			if (select !== null) {
-				select.show();
-			}
-		},
-		'.asset-type'
-	);
-</aui:script>

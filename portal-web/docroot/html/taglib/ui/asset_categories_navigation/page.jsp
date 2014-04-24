@@ -56,7 +56,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			hidePortletWhenEmpty = false;
 	%>
 
-			<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" persistState="<%= true %>" title="<%= vocabulary.getTitle(locale) %>">
+			<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" persistState="<%= true %>" title="<%= AssetVocabularyUtil.getUnambiguousVocabularyTitle(vocabularies, vocabulary, themeDisplay.getSiteGroupId(), themeDisplay.getLocale()) %>">
 				<%= vocabularyNavigation %>
 			</liferay-ui:panel>
 

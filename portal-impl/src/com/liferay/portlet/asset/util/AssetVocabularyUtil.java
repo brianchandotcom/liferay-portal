@@ -22,16 +22,72 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
  */
 public class AssetVocabularyUtil {
+
+	public static String getUnambiguousVocabularyTitle(
+			List<AssetVocabulary> vocabularies,
+			final AssetVocabulary vocabulary, long groupId, final Locale locale)
+		throws PortalException, SystemException {
+
+		final String vocabularyTitle = vocabulary.getTitle(locale);
+
+		if (vocabulary.getGroupId() == groupId ) {
+			return vocabularyTitle;
+		}
+
+		List<AssetVocabulary> ambiguousVocabularies = ListUtil.filter(
+			vocabularies,
+			new PredicateFilter<AssetVocabulary>() {
+
+				@Override
+				public boolean filter(AssetVocabulary curVocabulary) {
+					String curVocabularyTitle = curVocabulary.getTitle(locale);
+
+					if (curVocabularyTitle.equals(vocabularyTitle) &&
+						(curVocabulary.getVocabularyId() !=
+							vocabulary.getVocabularyId())) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		if (!ambiguousVocabularies.isEmpty()) {
+			Group vocabularyGroup = GroupLocalServiceUtil.getGroup(
+				vocabulary.getGroupId());
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(vocabularyTitle);
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(vocabularyGroup.getDescriptiveName(locale));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+
+		return vocabularyTitle;
+	}
 
 	public static List<AssetVocabulary> getVocabularies(Hits hits)
 		throws PortalException, SystemException {

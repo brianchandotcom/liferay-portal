@@ -69,7 +69,7 @@ if (Validator.isNotNull(className)) {
 					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
 					%>
 
-					(<%= vocabularyGroup.getDescriptiveName() %>)
+					(<%= vocabularyGroup.getDescriptiveName(locale) %>)
 				</c:if>
 
 				<c:if test="<%= vocabulary.isRequired(classNameId) %>">

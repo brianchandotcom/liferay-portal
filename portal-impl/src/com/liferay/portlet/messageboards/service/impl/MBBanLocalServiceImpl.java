@@ -111,7 +111,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
-			deleteBan(ban);
+			mbBanLocalService.deleteBan(ban);
 		}
 	}
 
@@ -120,7 +120,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
 		for (MBBan ban : bans) {
-			deleteBan(ban);
+			mbBanLocalService.deleteBan(ban);
 		}
 	}
 

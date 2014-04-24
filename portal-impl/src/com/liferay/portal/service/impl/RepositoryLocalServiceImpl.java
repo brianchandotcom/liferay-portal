@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
@@ -165,32 +164,33 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryId);
 
 		if (repository != null) {
-			SystemEventHierarchyEntryThreadLocal.push(Repository.class);
-
-			try {
-				expandoValueLocalService.deleteValues(
-					Repository.class.getName(), repositoryId);
-
-				DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(
-					repository.getDlFolderId());
-
-				if (dlFolder != null) {
-					dlFolderLocalService.deleteDLFolder(dlFolder);
-				}
-
-				repositoryPersistence.remove(repository);
-
-				repositoryEntryPersistence.removeByRepositoryId(repositoryId);
-			}
-			finally {
-				SystemEventHierarchyEntryThreadLocal.pop(Repository.class);
-			}
-
-			systemEventLocalService.addSystemEvent(
-				0, repository.getGroupId(), Repository.class.getName(),
-				repositoryId, repository.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+			repositoryLocalService.deleteRepository(repository);
 		}
+
+		return repository;
+	}
+
+	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
+	public Repository deleteRepository(Repository repository)
+		throws SystemException {
+
+		expandoValueLocalService.deleteValues(
+			Repository.class.getName(), repository.getRepositoryId());
+
+		DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(
+			repository.getDlFolderId());
+
+		if (dlFolder != null) {
+			dlFolderLocalService.deleteDLFolder(dlFolder);
+		}
+
+		repositoryPersistence.remove(repository);
+
+		repositoryEntryPersistence.removeByRepositoryId(
+			repository.getRepositoryId());
 
 		return repository;
 	}

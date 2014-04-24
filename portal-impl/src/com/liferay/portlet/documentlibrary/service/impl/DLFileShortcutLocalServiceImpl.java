@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -165,6 +167,7 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFileShortcut(DLFileShortcut fileShortcut)
 		throws PortalException, SystemException {
 
@@ -205,7 +208,7 @@ public class DLFileShortcutLocalServiceImpl
 		DLFileShortcut fileShortcut =
 			dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
 
-		deleteFileShortcut(fileShortcut);
+		dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
 	}
 
 	@Override
@@ -216,7 +219,7 @@ public class DLFileShortcutLocalServiceImpl
 			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			deleteFileShortcut(fileShortcut);
+			dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
 		}
 	}
 
@@ -237,7 +240,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			if (includeTrashedEntries || !fileShortcut.isInTrashExplicitly()) {
-				deleteFileShortcut(fileShortcut);
+				dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
 			}
 		}
 	}

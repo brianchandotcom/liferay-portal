@@ -407,14 +407,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
-		SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
-
-		try {
-			localRepository.deleteFileEntry(fileEntryId);
-		}
-		finally {
-			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
-		}
+		localRepository.deleteFileEntry(fileEntryId);
 	}
 
 	/**

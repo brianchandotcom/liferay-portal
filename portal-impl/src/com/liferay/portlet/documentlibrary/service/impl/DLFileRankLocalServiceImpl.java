@@ -102,9 +102,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	}
 
 	@Override
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
-		type = SystemEventConstants.TYPE_DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFileRank(DLFileRank dlFileRank) throws SystemException {
 		dlFileRankPersistence.remove(dlFileRank);
 	}
@@ -116,7 +114,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		DLFileRank dlFileRank = dlFileRankPersistence.findByPrimaryKey(
 			fileRankId);
 
-		deleteFileRank(dlFileRank);
+		dlFileRankLocalService.deleteFileRank(dlFileRank);
 	}
 
 	@Override
@@ -127,7 +125,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			fileEntryId);
 
 		for (DLFileRank dlFileRank : dlFileRanks) {
-			deleteFileRank(dlFileRank);
+			dlFileRankLocalService.deleteFileRank(dlFileRank);
 		}
 	}
 
@@ -137,7 +135,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			userId);
 
 		for (DLFileRank dlFileRank : dlFileRanks) {
-			deleteFileRank(dlFileRank);
+			dlFileRankLocalService.deleteFileRank(dlFileRank);
 		}
 	}
 

@@ -119,7 +119,7 @@ public class JournalFolderLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
+		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalFolder deleteFolder(JournalFolder folder)
 		throws PortalException, SystemException {
@@ -130,7 +130,7 @@ public class JournalFolderLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
+		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalFolder deleteFolder(
 			JournalFolder folder, boolean includeTrashedEntries)
@@ -143,7 +143,8 @@ public class JournalFolderLocalServiceImpl
 
 		for (JournalFolder curFolder : folders) {
 			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
-				deleteFolder(curFolder, includeTrashedEntries);
+				journalFolderLocalService.deleteFolder(
+					curFolder, includeTrashedEntries);
 			}
 		}
 

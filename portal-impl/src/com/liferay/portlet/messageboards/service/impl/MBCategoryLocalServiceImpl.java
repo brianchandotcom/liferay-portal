@@ -951,7 +951,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		mbCategoryPersistence.update(toCategory);
 
-		deleteCategory(fromCategory);
+		mbCategoryLocalService.deleteCategory(fromCategory);
 	}
 
 	protected void moveDependentsToTrash(

@@ -108,18 +108,18 @@ public class BookmarksFolderLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
+		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public BookmarksFolder deleteFolder(BookmarksFolder folder)
 		throws PortalException, SystemException {
 
-		return deleteFolder(folder, true);
+		return bookmarksFolderLocalService.deleteFolder(folder, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
+		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public BookmarksFolder deleteFolder(
 			BookmarksFolder folder, boolean includeTrashedEntries)
@@ -130,7 +130,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		for (BookmarksFolder curFolder : folders) {
 			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
-				deleteFolder(curFolder);
+				bookmarksFolderLocalService.deleteFolder(curFolder);
 			}
 		}
 

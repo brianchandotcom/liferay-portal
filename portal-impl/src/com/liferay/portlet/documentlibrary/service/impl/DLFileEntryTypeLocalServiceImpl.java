@@ -220,7 +220,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		deleteFileEntryType(dlFileEntryType);
+		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypePersistence.findByGroupId(groupId);
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			deleteFileEntryType(dlFileEntryType);
+			dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 		}
 	}
 

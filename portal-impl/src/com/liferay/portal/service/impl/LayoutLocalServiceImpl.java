@@ -609,17 +609,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Asset
 
-		SystemEventHierarchyEntryThreadLocal.pop(
-			Layout.class, layout.getPlid());
-
-		try {
-			assetEntryLocalService.deleteEntry(
-				Layout.class.getName(), layout.getPlid());
-		}
-		finally {
-			SystemEventHierarchyEntryThreadLocal.push(
-				Layout.class, layout.getPlid());
-		}
+		assetEntryLocalService.deleteEntry(
+			Layout.class.getName(), layout.getPlid());
 
 		// Ratings
 

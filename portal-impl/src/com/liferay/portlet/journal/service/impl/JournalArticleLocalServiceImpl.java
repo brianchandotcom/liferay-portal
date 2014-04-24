@@ -896,7 +896,8 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false)
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
@@ -921,7 +922,9 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
@@ -5316,18 +5319,9 @@ public class JournalArticleLocalServiceImpl
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,
 							AssetLinkConstants.TYPE_RELATED);
 
-						SystemEventHierarchyEntryThreadLocal.push(
-							JournalArticle.class);
-
-						try {
-							assetEntryLocalService.deleteEntry(
-								JournalArticle.class.getName(),
-								article.getPrimaryKey());
-						}
-						finally {
-							SystemEventHierarchyEntryThreadLocal.pop(
-								JournalArticle.class);
-						}
+						assetEntryLocalService.deleteEntry(
+							JournalArticle.class.getName(),
+							article.getPrimaryKey());
 					}
 				}
 

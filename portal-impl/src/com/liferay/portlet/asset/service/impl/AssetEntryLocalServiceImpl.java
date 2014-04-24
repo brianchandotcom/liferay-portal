@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -84,12 +83,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.getEntryId());
 
 		assetEntryPersistence.remove(entry);
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, entry.getGroupId(), entry.getClassName(), entry.getClassPK(),
-			entry.getClassUuid(), null, SystemEventConstants.TYPE_DELETE, null);
 
 		// Links
 

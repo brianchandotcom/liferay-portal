@@ -102,7 +102,7 @@ public class MBThreadFlagLocalServiceImpl
 		MBThreadFlag threadFlag = mbThreadFlagPersistence.findByPrimaryKey(
 			threadFlagId);
 
-		deleteThreadFlag(threadFlag);
+		mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
 	}
 
 	@Override

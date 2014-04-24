@@ -34,11 +34,8 @@ Collection<AssetRendererFactory> assetFactoriesWithClassTypes = ListUtil.filter(
 		}
 	});
 
-boolean required = false;
-
-long[] selectedClassNameIds = null;
-String[] selectedClassTypeIds = null;
-long[] requiredClassNameIds = null;
+String[] selectedClassNameIds = null;
+String[] requiredClassNameIds = null;
 
 if (vocabulary != null) {
 	selectedClassNameIds = vocabulary.getAssociatedAssetClassNameIds();
@@ -46,11 +43,11 @@ if (vocabulary != null) {
 }
 
 if (ArrayUtil.isEmpty(selectedClassNameIds)) {
-	selectedClassNameIds = new long[] {0};
+	selectedClassNameIds = new String[] {"0"};
 }
 
 if (ArrayUtil.isEmpty(requiredClassNameIds)) {
-	requiredClassNameIds = new long[] {0};
+	requiredClassNameIds = new String[] {"0"};
 }
 %>
 
@@ -87,13 +84,8 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 					for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
 					%>
 
-							<aui:select label=""
-										name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'
-										cssClass='hide subtype-select subtype-classNameId0'>
-								<aui:option label="all-asset-classtypes"
-											selected="<%= true %>"
-											value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>"
-								/>
+							<aui:select cssClass="hide subtype-select subtype-classNameId0" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
+								<aui:option label="all-asset-subtypes" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
 								Map<Long, String> classTypes = factory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
@@ -104,10 +96,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 								for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
 								%>
 
-									<aui:option label="<%= classType.getValue() %>"
-												selected="<%= false %>"
-												value="<%= classType.getKey() %>"
-									/>
+									<aui:option label="<%= classType.getValue() %>" selected="<%= false %>" value="<%= classType.getKey() %>" />
 
 								<%
 								}
@@ -119,7 +108,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 					}
 					%>
 
-					<aui:input cssClass="vocabulary-checkbox" label="required" name="required0" type="checkbox" value="<%= required %>" />
+					<aui:input cssClass="vocabulary-checkbox" label="required" name="required0" type="checkbox" value="<%= false %>" />
 				</div>
 			</div>
 
@@ -148,7 +137,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 							for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
 								boolean selected = false;
 
-								if (assetRendererFactory.getClassNameId() == selectedClassNameIds[index]) {
+								if (classNameId.equals(assetRendererFactory.getClassNameId())) {
 									selected = true;
 								}
 							%>
@@ -164,19 +153,13 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 						<%
 						for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
 							boolean hidden = true;
-							if (factory.getClassNameId() == selectedClassNameIds[index]) {
+							if (classNameId.equals(factory.getClassNameId())) {
 								hidden = false;
 							}
 						%>
 
-						<aui:select label=""
-										name='<%= rowClassNameId + "-subtype-" + factory.getClassNameId() %>'
-										cssClass='<%= rowClassNameId + "-subtype " + (hidden ? "hide" : "") %>'>
-
-								<aui:option label="all-asset-classtypes"
-											selected="<%= true %>"
-											value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>"
-								/>
+							<aui:select cssClass='<%= (hidden ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' label="" name='<%= "subtype" + factory.getClassNameId() + "-" + rowClassNameId %>'>
+								<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
 								Map<Long, String> classTypes = factory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
@@ -186,15 +169,12 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 								for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
 									boolean selected = false;
-									if (Arrays.asList(selectedClassTypeIds).contains(factory.getClassNameId() + ":" + classType.getKey())) {
+									if (classNameId.equals(factory.getClassNameId()) && classTypeId.equals(classType.getKey())) {
 										selected = true;
 									}
 								%>
 
-									<aui:option label="<%= classType.getValue() %>"
-												selected="<%= selected %>"
-												value="<%= classType.getKey() %>"
-									/>
+									<aui:option label="<%= classType.getValue() %>" selected="<%= selected %>" value="<%= classType.getKey() %>" />
 
 								<%
 								}
@@ -231,6 +211,17 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 	).render();
 
 	extraFields.setData('autoFieldsInstance', autoFields);
+
+	autoFields.on(
+		'clone',
+		function(event) {
+			event.row.all(".subtype-select").each(
+				function(item) {
+					item.hide();
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script use="aui-base">

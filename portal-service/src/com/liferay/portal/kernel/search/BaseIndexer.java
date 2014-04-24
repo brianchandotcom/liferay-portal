@@ -522,7 +522,7 @@ public abstract class BaseIndexer implements Indexer {
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
 			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames())) {
-				addDefaultSelectedFieldNames(searchContext, queryConfig);
+				addDefaultSelectedFieldNames(searchContext);
 			}
 
 			addFacetSelectedFieldNames(searchContext, queryConfig);
@@ -642,8 +642,9 @@ public abstract class BaseIndexer implements Indexer {
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
-	protected void addDefaultSelectedFieldNames(
-		SearchContext searchContext, QueryConfig queryConfig) {
+	protected void addDefaultSelectedFieldNames(SearchContext searchContext) {
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		Set<String> selectedFieldNames = null;
 

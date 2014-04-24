@@ -590,9 +590,11 @@ public class ServiceBuilder {
 
 			_springNamespaces = springNamespaces;
 
-			if (!ArrayUtil.contains(_springNamespaces, "beans")) {
+			if (!ArrayUtil.contains(
+					_springNamespaces, _SPRING_BEANS_NAMESPACE)) {
+
 				_springNamespaces = ArrayUtil.append(
-					_springNamespaces, "beans");
+					_springNamespaces, _SPRING_BEANS_NAMESPACE);
 			}
 
 			_apiDir = apiDir;
@@ -4228,8 +4230,13 @@ public class ServiceBuilder {
 		StringBundler sb = new StringBundler(_springNamespaces.length * 4);
 
 		for (String namespace : _springNamespaces) {
-			sb.append("\txmlns:");
-			sb.append(namespace);
+			sb.append("\txmlns");
+
+			if (!_SPRING_BEANS_NAMESPACE.equals(namespace)) {
+				sb.append(":");
+				sb.append(namespace);
+			}
+
 			sb.append("=\"http://www.springframework.org/schema/");
 			sb.append(namespace);
 			sb.append("\"\n");
@@ -4951,6 +4958,8 @@ public class ServiceBuilder {
 	private static final int _SESSION_TYPE_LOCAL = 1;
 
 	private static final int _SESSION_TYPE_REMOTE = 0;
+
+	private static final String _SPRING_BEANS_NAMESPACE = "beans";
 
 	private static final String _SQL_CREATE_TABLE = "create table ";
 

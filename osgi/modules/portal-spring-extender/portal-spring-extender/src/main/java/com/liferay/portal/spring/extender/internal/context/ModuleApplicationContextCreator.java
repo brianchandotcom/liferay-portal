@@ -91,14 +91,6 @@ public class ModuleApplicationContextCreator
 			Bundle bundle, ClassLoader classLoader)
 		throws IOException {
 
-		Dictionary<String, String> headers = bundle.getHeaders();
-
-		String liferayService = headers.get("Liferay-Service");
-
-		if (liferayService == null) {
-			return null;
-		}
-
 		GenericApplicationContext genericApplicationContext =
 			new GenericApplicationContext();
 

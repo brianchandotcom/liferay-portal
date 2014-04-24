@@ -43,7 +43,13 @@ if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+}
+
+DLPortletInstanceSettings dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId);
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
@@ -63,12 +69,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	catch (NoSuchFolderException nsfe) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
-}
-
-String portletId = portletDisplay.getId();
-
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
 }
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);

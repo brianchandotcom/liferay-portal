@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(themeDisplay.getLayout(), portletId, request);
+dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId, request);
 IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 

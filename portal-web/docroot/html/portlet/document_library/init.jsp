@@ -93,8 +93,15 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+	portletName = portletResource;
+}
+
 DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
-DLPortletInstanceSettings dlPortletInstanceSettings = new DLPortletInstanceSettings(portletDisplay.getPortletInstanceSettings());
+DLPortletInstanceSettings dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId);
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
@@ -113,13 +120,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	catch (NoSuchFolderException nsfe) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
-}
-
-String portletId = portletDisplay.getId();
-
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-	portletName = portletResource;
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);

@@ -44,12 +44,12 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -720,11 +720,11 @@ public class EditFileEntryAction extends PortletAction {
 			ThemeDisplay themeDisplay = (ThemeDisplay)
 				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			Layout layout = themeDisplay.getLayout();
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			DLPortletInstanceSettings dlPortletInstanceSettings =
 				DLUtil.getDLPortletInstanceSettings(
-					layout, PortalUtil.getPortletId(portletRequest));
+					themeDisplay.getLayout(), portletDisplay.getId());
 
 			Set<String> extensions = new HashSet<String>();
 
@@ -994,11 +994,12 @@ public class EditFileEntryAction extends PortletAction {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-					Layout layout = themeDisplay.getLayout();
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
 					DLPortletInstanceSettings dlPortletInstanceSettings =
 						DLUtil.getDLPortletInstanceSettings(
-							layout, PortalUtil.getPortletId(actionRequest));
+							themeDisplay.getLayout(), portletDisplay.getId());
 
 					String[] mimeTypes =
 						dlPortletInstanceSettings.getMimeTypes();

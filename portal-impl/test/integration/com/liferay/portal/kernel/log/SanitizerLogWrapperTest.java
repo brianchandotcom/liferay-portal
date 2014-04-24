@@ -14,14 +14,12 @@
 
 package com.liferay.portal.kernel.log;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.CaptureAppender;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Log4JLoggerTestUtil;
-
-import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.Properties;
@@ -89,10 +87,8 @@ public class SanitizerLogWrapperTest {
 
 		System.setProperty("log.sanitizer.whitelist.characters", sb.toString());
 
-		Field field = ReflectionUtil.getDeclaredField(
-			SanitizerLogWrapper.class, "_LOG_SANITIZER_ENABLED");
-
-		field.set(null, true);
+		ReflectionTestUtil.setFieldValue(
+			SanitizerLogWrapper.class, "_LOG_SANITIZER_ENABLED", true);
 
 		SanitizerLogWrapper.init();
 	}

@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.net.URL;
 
@@ -78,9 +76,12 @@ public class IntrabandPortalCacheManagerTest {
 
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intrabandPortalCacheManager));
+			ReflectionTestUtil.getFieldValue(
+				intrabandPortalCacheManager, "_registrationReference"));
 		Assert.assertSame(
-			_mockIntraband, getIntraband(intrabandPortalCacheManager));
+			_mockIntraband,
+			ReflectionTestUtil.getFieldValue(
+				intrabandPortalCacheManager, "_intraband"));
 	}
 
 	@Test
@@ -224,36 +225,12 @@ public class IntrabandPortalCacheManagerTest {
 			PortalCacheActionType.CLEAR_ALL.ordinal(), deserializer.readInt());
 	}
 
-	private static MockIntraband getIntraband(
-			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
-		throws Exception {
-
-		Field intrabandField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCacheManager.class, "_intraband");
-
-		return (MockIntraband)intrabandField.get(intrabandPortalCacheManager);
-	}
-
 	private static Map<String, PortalCache<?, ?>> getPortalCaches(
 			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
 		throws Exception {
 
-		Field intrabandField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCacheManager.class, "_portalCaches");
-
-		return (Map<String, PortalCache<?, ?>>)intrabandField.get(
-			intrabandPortalCacheManager);
-	}
-
-	private static MockRegistrationReference getRegistrationReference(
-			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
-		throws Exception {
-
-		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCacheManager.class, "_registrationReference");
-
-		return (MockRegistrationReference)registrationReferenceField.get(
-			intrabandPortalCacheManager);
+		return (Map<String, PortalCache<?, ?>>)ReflectionTestUtil.getFieldValue(
+			intrabandPortalCacheManager, "_portalCaches");
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

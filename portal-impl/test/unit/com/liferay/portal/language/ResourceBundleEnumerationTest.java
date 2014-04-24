@@ -15,9 +15,7 @@
 package com.liferay.portal.language;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
-import java.lang.reflect.Method;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,12 +49,10 @@ public class ResourceBundleEnumerationTest {
 
 		Assert.assertTrue(resourceBundleEnumeration.hasMoreElements());
 		Assert.assertEquals("key1", resourceBundleEnumeration.nextElement());
-
-		Method nextElementMethod = ReflectionUtil.getBridgeMethod(
-			ResourceBundleEnumeration.class, "nextElement");
-
 		Assert.assertEquals(
-			"key2", nextElementMethod.invoke(resourceBundleEnumeration));
+			"key2",
+			ReflectionTestUtil.invokeBridge(
+				resourceBundleEnumeration, "nextElement", new Class<?>[0]));
 		Assert.assertTrue(resourceBundleEnumeration.hasMoreElements());
 		Assert.assertEquals("key3", resourceBundleEnumeration.nextElement());
 
@@ -79,12 +75,9 @@ public class ResourceBundleEnumerationTest {
 
 		Assert.assertTrue(resourceBundleEnumeration.hasMoreElements());
 		Assert.assertEquals("key1", resourceBundleEnumeration.nextElement());
-
-		Method nextElementMethod = ReflectionUtil.getBridgeMethod(
-			ResourceBundleEnumeration.class, "nextElement");
-
 		Assert.assertEquals(
-			"key2", nextElementMethod.invoke(resourceBundleEnumeration));
+			"key2", ReflectionTestUtil.invokeBridge(
+				resourceBundleEnumeration, "nextElement", new Class<?>[0]));
 
 		try {
 			resourceBundleEnumeration.nextElement();

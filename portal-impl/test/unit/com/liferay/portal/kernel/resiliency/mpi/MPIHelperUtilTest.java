@@ -33,18 +33,17 @@ import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -932,10 +931,9 @@ public class MPIHelperUtilTest {
 	private static Object _directResigterSPI(String spiId, SPI spi)
 		throws Exception {
 
-		Field spisField = ReflectionUtil.getDeclaredField(
-			MPIHelperUtil.class, "_spis");
-
-		Map<Object, SPI> spis = (Map<Object, SPI>)spisField.get(null);
+		Map<Object, SPI> spis =
+			(Map<Object, SPI>)ReflectionTestUtil.getFieldValue(
+				MPIHelperUtil.class, "_spis");
 
 		Object spiKey = _createSPIKey(spi.getSPIProviderName(), spiId);
 
@@ -945,10 +943,8 @@ public class MPIHelperUtilTest {
 	}
 
 	private static MPI _getMPIImpl() throws Exception {
-		Field mpiImplField = ReflectionUtil.getDeclaredField(
+		MPI mpiImpl = (MPI)ReflectionTestUtil.getFieldValue(
 			MPIHelperUtil.class, "_mpiImpl");
-
-		MPI mpiImpl = (MPI)mpiImplField.get(null);
 
 		Assert.assertNotNull(mpiImpl);
 

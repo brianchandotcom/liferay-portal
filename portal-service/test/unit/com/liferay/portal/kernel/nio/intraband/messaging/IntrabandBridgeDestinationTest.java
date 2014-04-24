@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-
-import java.lang.reflect.Field;
 
 import java.nio.ByteBuffer;
 
@@ -436,10 +434,7 @@ public class IntrabandBridgeDestinationTest {
 			spisMap.put(spiConfiguration.getSPIId(), spi);
 		}
 
-		Field spisField = ReflectionUtil.getDeclaredField(
-			MPIHelperUtil.class, "_spis");
-
-		spisField.set(null, spisMap);
+		ReflectionTestUtil.setFieldValue(MPIHelperUtil.class, "_spis", spisMap);
 	}
 
 	private String _toRoutingId(SPI spi) throws RemoteException {

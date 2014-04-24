@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.AdviseWith;
@@ -38,8 +38,6 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
-
-import java.lang.reflect.Field;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -138,11 +136,9 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		try {
 			clusterExecutorImpl = getClusterExecutorImpl(false, false);
 
-			Field field = ReflectionUtil.getDeclaredField(
-				ClusterExecutorImpl.class, "_clusterEventListeners");
-
 			List<ClusterEventListener> fieldClusterEventListeners =
-				(List<ClusterEventListener>)field.get(clusterExecutorImpl);
+				(List<ClusterEventListener>)ReflectionTestUtil.getFieldValue(
+					clusterExecutorImpl, "_clusterEventListeners");
 
 			ClusterEventListener clusterEventListener =
 				new MockClusterEventListener();
@@ -776,11 +772,9 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			clusterExecutorImpl.execute(
 				clusterRequest, mockClusterResponseCallback);
 
-			Field field = ReflectionUtil.getDeclaredField(
-				ClusterExecutorImpl.class, "_executorService");
-
-			ExecutorService executorService = (ExecutorService)field.get(
-				clusterExecutorImpl);
+			ExecutorService executorService =
+				(ExecutorService)ReflectionTestUtil.getFieldValue(
+					clusterExecutorImpl, "_executorService");
 
 			executorService.shutdownNow();
 

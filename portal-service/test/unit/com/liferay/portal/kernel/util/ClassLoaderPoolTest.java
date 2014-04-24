@@ -15,8 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -43,17 +42,15 @@ public class ClassLoaderPoolTest {
 
 		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
 
-		Field classLoadersField = ReflectionUtil.getDeclaredField(
-			ClassLoaderPool.class, "_classLoaders");
-
-		_classLoaders = (Map<String, ClassLoader>)classLoadersField.get(null);
+		_classLoaders =
+			(Map<String, ClassLoader>)ReflectionTestUtil.getFieldValue(
+				ClassLoaderPool.class, "_classLoaders");
 
 		_classLoaders.clear();
 
-		Field contextNamesField = ReflectionUtil.getDeclaredField(
-			ClassLoaderPool.class, "_contextNames");
-
-		_contextNames = (Map<ClassLoader, String>)contextNamesField.get(null);
+		_contextNames =
+			(Map<ClassLoader, String>)ReflectionTestUtil.getFieldValue(
+				ClassLoaderPool.class, "_contextNames");
 
 		_contextNames.clear();
 	}

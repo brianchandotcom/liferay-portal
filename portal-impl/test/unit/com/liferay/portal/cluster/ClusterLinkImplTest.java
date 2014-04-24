@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
-
-import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.List;
@@ -743,10 +741,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	protected List<JChannel> getJChannels(ClusterLinkImpl clusterLinkImpl)
 		throws Exception {
 
-		Field field = ReflectionUtil.getDeclaredField(
-			ClusterLinkImpl.class, "_transportJChannels");
-
-		return (List<JChannel>)field.get(clusterLinkImpl);
+		return (List<JChannel>)ReflectionTestUtil.getFieldValue(
+			clusterLinkImpl, "_transportJChannels");
 	}
 
 	protected org.jgroups.Address getJGroupsAddress(

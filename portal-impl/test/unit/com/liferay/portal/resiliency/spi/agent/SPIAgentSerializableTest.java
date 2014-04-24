@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
@@ -47,9 +47,6 @@ import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -515,11 +512,10 @@ public class SPIAgentSerializableTest {
 				}
 
 				try {
-					Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
-						MailboxUtil.class, "depositMail", ByteBuffer.class);
-
-					long receipt = (Long)depositMailMethod.invoke(
-						null, datagram.getDataByteBuffer());
+					long receipt = (Long)ReflectionTestUtil.invoke(
+						MailboxUtil.class, "depositMail",
+						new Class<?>[] {ByteBuffer.class},
+						datagram.getDataByteBuffer());
 
 					receiptReference.set(receipt);
 
@@ -682,11 +678,9 @@ public class SPIAgentSerializableTest {
 
 		threadLocalDistributor.afterPropertiesSet();
 
-		Field threadLocalValuesField = ReflectionUtil.getDeclaredField(
-			ThreadLocalDistributor.class, "_threadLocalValues");
-
 		Serializable[] serializables =
-			(Serializable[])threadLocalValuesField.get(threadLocalDistributor);
+			(Serializable[])ReflectionTestUtil.getFieldValue(
+				threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);
 		Assert.assertEquals(1, serializables.length);
@@ -710,8 +704,8 @@ public class SPIAgentSerializableTest {
 		Assert.assertEquals(1, threadLocalDistributors.length);
 		Assert.assertSame(threadLocalDistributor, threadLocalDistributors[0]);
 
-		serializables = (Serializable[])threadLocalValuesField.get(
-			threadLocalDistributor);
+		serializables = (Serializable[])ReflectionTestUtil.getFieldValue(
+			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);
 		Assert.assertEquals(1, serializables.length);

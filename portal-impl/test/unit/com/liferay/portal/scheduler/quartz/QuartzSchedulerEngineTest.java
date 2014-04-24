@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -46,8 +46,6 @@ import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,17 +120,13 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
-		_memorySchedulerField = ReflectionUtil.getDeclaredField(
-			QuartzSchedulerEngine.class, "_memoryScheduler");
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_memoryScheduler",
+			new MockScheduler(StorageType.MEMORY));
 
-		_memorySchedulerField.set(
-			_quartzSchedulerEngine, new MockScheduler(StorageType.MEMORY));
-
-		_persistedSchedulerField = ReflectionUtil.getDeclaredField(
-			QuartzSchedulerEngine.class, "_persistedScheduler");
-
-		_persistedSchedulerField.set(
-			_quartzSchedulerEngine, new MockScheduler(StorageType.PERSISTED));
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_persistedScheduler",
+			new MockScheduler(StorageType.PERSISTED));
 
 		_quartzSchedulerEngine.start();
 	}
@@ -320,7 +314,8 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 
 		MockScheduler mockScheduler =
-			(MockScheduler)_persistedSchedulerField.get(_quartzSchedulerEngine);
+			(MockScheduler)ReflectionTestUtil.getFieldValue(
+				_quartzSchedulerEngine, "_persistedScheduler");
 
 		mockScheduler.addJob(
 			_TEST_JOB_NAME_PREFIX + "persisted", _TEST_GROUP_NAME,
@@ -659,8 +654,9 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUpdate3() throws Exception {
-		MockScheduler mockScheduler = (MockScheduler)_memorySchedulerField.get(
-			_quartzSchedulerEngine);
+		MockScheduler mockScheduler =
+			(MockScheduler)ReflectionTestUtil.getFieldValue(
+				_quartzSchedulerEngine, "_memoryScheduler");
 
 		String jobName = _TEST_JOB_NAME_PREFIX + "memory";
 
@@ -737,8 +733,6 @@ public class QuartzSchedulerEngineTest {
 
 	private static final String _TEST_PORTLET_ID = "testPortletId";
 
-	private Field _memorySchedulerField;
-	private Field _persistedSchedulerField;
 	private QuartzSchedulerEngine _quartzSchedulerEngine;
 	private SynchronousDestination _testDestination;
 

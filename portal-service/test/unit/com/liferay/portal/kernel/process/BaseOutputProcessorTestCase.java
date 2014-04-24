@@ -16,13 +16,12 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.junit.Assert;
 
@@ -113,20 +112,18 @@ public class BaseOutputProcessorTestCase {
 			OutputProcessor<T, ?> outputProcessor, InputStream inputStream)
 		throws Exception {
 
-		Method method = ReflectionUtil.getBridgeMethod(
-			outputProcessor.getClass(), "processStdErr", InputStream.class);
-
-		return (T)method.invoke(outputProcessor, inputStream);
+		return (T)ReflectionTestUtil.invokeBridge(
+			outputProcessor, "processStdErr",
+			new Class<?>[] {InputStream.class}, inputStream);
 	}
 
 	protected static <T> T invokeProcessStdOut(
 			OutputProcessor<?, T> outputProcessor, InputStream inputStream)
 		throws Exception {
 
-		Method method = ReflectionUtil.getBridgeMethod(
-			outputProcessor.getClass(), "processStdOut", InputStream.class);
-
-		return (T)method.invoke(outputProcessor, inputStream);
+		return (T)ReflectionTestUtil.invokeBridge(
+			outputProcessor, "processStdOut",
+			new Class<?>[] {InputStream.class}, inputStream);
 	}
 
 }

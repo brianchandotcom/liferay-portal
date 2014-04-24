@@ -15,11 +15,9 @@
 package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.File;
-
-import java.lang.reflect.Field;
 
 import java.security.Permission;
 
@@ -97,11 +95,8 @@ public class AutoDeleteFileInputStreamTest {
 		Assert.assertFalse(tempFile.exists());
 		Assert.assertEquals(2, checkDeleteCount.get());
 
-		Class<?> clazz = Class.forName("java.io.DeleteOnExitHook");
-
-		Field filesField = ReflectionUtil.getDeclaredField(clazz, "files");
-
-		Set<String> files = (Set<String>)filesField.get(null);
+		Set<String> files = (Set<String>)ReflectionTestUtil.getFieldValue(
+			Class.forName("java.io.DeleteOnExitHook"), "files");
 
 		Assert.assertTrue(files.contains(tempFile.getPath()));
 	}

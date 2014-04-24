@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.servlet.ReadOnlyServletResponse;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,9 +52,6 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
@@ -561,11 +558,9 @@ public class HttpClientSPIAgentTest {
 		serializer.writeString(_SERVLET_CONTEXT_NAME);
 		serializer.writeObject(new SPIAgentRequest(_mockHttpServletRequest));
 
-		Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
-			MailboxUtil.class, "depositMail", ByteBuffer.class);
-
-		long receipt = (Long)depositMailMethod.invoke(
-			null, serializer.toByteBuffer());
+		long receipt = (Long)ReflectionTestUtil.invoke(
+			MailboxUtil.class, "depositMail", new Class<?>[] {ByteBuffer.class},
+			serializer.toByteBuffer());
 
 		byte[] data = new byte[8];
 
@@ -956,11 +951,9 @@ public class HttpClientSPIAgentTest {
 		serializer.writeString(_SERVLET_CONTEXT_NAME);
 		serializer.writeObject(new SPIAgentResponse(_SERVLET_CONTEXT_NAME));
 
-		Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
-			MailboxUtil.class, "depositMail", ByteBuffer.class);
-
-		long receipt = (Long)depositMailMethod.invoke(
-			null, serializer.toByteBuffer());
+		long receipt = (Long)ReflectionTestUtil.invoke(
+			MailboxUtil.class, "depositMail", new Class<?>[] {ByteBuffer.class},
+			serializer.toByteBuffer());
 
 		Socket remoteSocket = serverSocket.accept();
 
@@ -1124,11 +1117,8 @@ public class HttpClientSPIAgentTest {
 		httpClientSPIAgent.transferResponse(
 			mockHttpServletRequest, bufferCacheServletResponse, null);
 
-		Class<?> clazz = Class.forName("java.io.DeleteOnExitHook");
-
-		Field filesField = ReflectionUtil.getDeclaredField(clazz, "files");
-
-		Set<String> files = (Set<String>)filesField.get(null);
+		Set<String> files = (Set<String>)ReflectionTestUtil.getFieldValue(
+			Class.forName("java.io.DeleteOnExitHook"), "files");
 
 		Assert.assertTrue(files.contains(tempFile.getPath()));
 	}
@@ -1147,10 +1137,7 @@ public class HttpClientSPIAgentTest {
 			SocketChannel socketChannel, FileDescriptor fileDescriptor)
 		throws Exception {
 
-		Field fileDescriptorField = ReflectionUtil.getDeclaredField(
-			socketChannel.getClass(), "fd");
-
-		fileDescriptorField.set(socketChannel, fileDescriptor);
+		ReflectionTestUtil.setFieldValue(socketChannel, "fd", fileDescriptor);
 
 		socketChannel.close();
 	}
@@ -1158,29 +1145,27 @@ public class HttpClientSPIAgentTest {
 	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl)
 		throws Exception {
 
-		Field implField = ReflectionUtil.getDeclaredField(Socket.class, "impl");
-
-		SocketImpl oldSocketImpl = (SocketImpl)implField.get(socket);
+		SocketImpl oldSocketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
+			socket, "impl");
 
 		if (socketImpl == null) {
 			Socket unbindSocket = new Socket();
 
-			socketImpl = (SocketImpl)implField.get(unbindSocket);
+			socketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
+				unbindSocket, "impl");
 
-			Field cmdsockField = ReflectionUtil.getDeclaredField(
-				socketImpl.getClass(), "cmdsock");
+			ReflectionTestUtil.setFieldValue(
+				socketImpl, "cmdsock", new Socket() {
 
-			cmdsockField.set(socketImpl, new Socket() {
+					@Override
+					public synchronized void close() throws IOException {
+						throw new IOException();
+					}
 
-				@Override
-				public synchronized void close() throws IOException {
-					throw new IOException();
-				}
-
-			});
+				});
 		}
 
-		implField.set(socket, socketImpl);
+		ReflectionTestUtil.setFieldValue(socket, "impl", socketImpl);
 
 		return oldSocketImpl;
 	}
@@ -1209,11 +1194,10 @@ public class HttpClientSPIAgentTest {
 			}
 
 			try {
-				Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
-					MailboxUtil.class, "depositMail", ByteBuffer.class);
-
-				long receipt = (Long)depositMailMethod.invoke(
-					null, datagram.getDataByteBuffer());
+				long receipt = (Long)ReflectionTestUtil.invoke(
+					MailboxUtil.class, "depositMail",
+					new Class<?>[] {ByteBuffer.class},
+					datagram.getDataByteBuffer());
 
 				_receiptData = new byte[8];
 

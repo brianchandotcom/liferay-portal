@@ -779,19 +779,24 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="gradle-execute">
 		<attribute name="gradleModuleDir" default="" />
 		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="-Dorg.gradle.project.appServerLibGlobalDir=${app.server.lib.global.dir} -Dorg.gradle.project.appServerLibPortalDir=${app.server.lib.portal.dir} -Dorg.gradle.project.liferayHome=${liferay.home}" />
 
 		<sequential>
+			<property name="absolute.app.server.lib.global.dir" location="${app.server.lib.global.dir}"/>
+			<property name="absolute.app.server.lib.portal.dir" location="${app.server.lib.portal.dir}"/>
+			<property name="absolute.liferay.home" location="${liferay.home}"/>
+
+			<property name="gradleTaskArgs" value="-Dorg.gradle.project.appServerLibGlobalDir=${absolute.app.server.lib.global.dir} -Dorg.gradle.project.appServerLibPortalDir=${absolute.app.server.lib.portal.dir} -Dorg.gradle.project.liferayHome=${absolute.liferay.home}" />
+
 			<if>
 				<os family="unix" />
 				<then>
 					<exec append="true" dir="${project.dir}/osgi/modules@{gradleModuleDir}" executable="${project.dir}/tools/gradle/gradlew">
-						<arg line="--daemon -q @{gradleTask} @{gradleTaskArgs}" />
+						<arg line="--daemon -q @{gradleTask} ${gradleTaskArgs}" />
 					</exec>
 				</then>
 				<else>
 					<exec append="true" dir="${project.dir}/osgi/modules@{gradleModuleDir}" executable="${project.dir}/tools/gradle/gradlew.bat">
-						<arg line="--daemon -q @{gradleTask} @{gradleTaskArgs}" />
+						<arg line="--daemon -q @{gradleTask} ${gradleTaskArgs}" />
 					</exec>
 				</else>
 			</if>

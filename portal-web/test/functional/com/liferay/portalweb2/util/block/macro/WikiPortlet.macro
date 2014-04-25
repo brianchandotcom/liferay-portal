@@ -1,4 +1,23 @@
 <definition>
+	<command name="viewAllowUsersToAddWikiToAnyWebSiteCheckbox">
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_SHARING" value1="Sharing" />
+
+		<if>
+			<isset var="checkboxUncheck" />
+			<then>
+				<execute action="PGWikidisplayConfiguration#check" locator-key1="ALLOWUSERSTOADDWIKITOANYWEBSITECHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGWikidisplayConfiguration#uncheck" locator-key1="ALLOWUSERSTOADDWIKITOANYWEBSITECHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="PGWikidisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewNoPermissionCP">
 		<execute action="CPWiki#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Wiki" />
 		<execute action="CPWiki#assertElementPresent" locator-key1="WIKI_NODE_TABLE" />

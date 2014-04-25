@@ -45,7 +45,7 @@ import java.util.Set;
  */
 public class DeletionSystemEventExporter {
 
-	public void exportDeletionSystemEvents(
+	public static void exportDeletionSystemEvents(
 			PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -72,7 +72,7 @@ public class DeletionSystemEventExporter {
 			document.formattedString());
 	}
 
-	protected void addCreateDateProperty(
+	protected static void addCreateDateProperty(
 		PortletDataContext portletDataContext, DynamicQuery dynamicQuery) {
 
 		if (!portletDataContext.hasDateRange()) {
@@ -90,7 +90,7 @@ public class DeletionSystemEventExporter {
 		dynamicQuery.add(createDateProperty.le(endDate));
 	}
 
-	protected void doAddCriteria(
+	protected static void doAddCriteria(
 		PortletDataContext portletDataContext,
 		Set<StagedModelType> deletionSystemEventStagedModelTypes,
 		DynamicQuery dynamicQuery) {
@@ -142,7 +142,7 @@ public class DeletionSystemEventExporter {
 		addCreateDateProperty(portletDataContext, dynamicQuery);
 	}
 
-	protected void doExportDeletionSystemEvents(
+	protected static void doExportDeletionSystemEvents(
 			final PortletDataContext portletDataContext,
 			final Element rootElement,
 			final Set<StagedModelType> deletionSystemEventStagedModelTypes)
@@ -179,7 +179,7 @@ public class DeletionSystemEventExporter {
 		actionableDynamicQuery.performActions();
 	}
 
-	protected void exportDeletionSystemEvent(
+	protected static void exportDeletionSystemEvent(
 		PortletDataContext portletDataContext, SystemEvent systemEvent,
 		Element deletionSystemEventsElement) {
 

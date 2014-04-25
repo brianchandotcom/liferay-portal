@@ -30,7 +30,7 @@ import com.liferay.portlet.layoutsadmin.lar.StagedThemeImpl;
  */
 public class ThemeExporter {
 
-	public void exportTheme(
+	public static void exportTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
 
@@ -62,7 +62,7 @@ public class ThemeExporter {
 			layoutSet.getColorSchemeId(), layoutSet.getCss());
 	}
 
-	public void exportTheme(
+	public static void exportTheme(
 			PortletDataContext portletDataContext,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -96,7 +96,7 @@ public class ThemeExporter {
 			layoutSetBranch.getColorSchemeId(), layoutSetBranch.getCss());
 	}
 
-	protected void exportThemeSettings(
+	protected static void exportThemeSettings(
 			PortletDataContext portletDataContext, String themeId,
 			String colorSchemeId, String css)
 		throws Exception {

@@ -40,7 +40,7 @@ import org.xml.sax.InputSource;
  */
 public class DeletionSystemEventImporter {
 
-	public void importDeletionSystemEvents(
+	public static void importDeletionSystemEvents(
 			final PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -77,7 +77,7 @@ public class DeletionSystemEventImporter {
 		saxParser.parse(new InputSource(new StringReader(xml)));
 	}
 
-	protected void doImportDeletionSystemEvents(
+	protected static void doImportDeletionSystemEvents(
 		PortletDataContext portletDataContext, Element element) {
 
 		Set<StagedModelType> stagedModelTypes =

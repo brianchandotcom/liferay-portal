@@ -55,7 +55,89 @@ import java.util.Map;
  */
 public class PermissionImporter {
 
-	protected Role checkRole(
+	public static void checkRoles(
+			LayoutCache layoutCache, long companyId, long groupId, long userId,
+			Element portletElement)
+		throws Exception {
+
+		Element permissionsElement = portletElement.element("permissions");
+
+		if (permissionsElement == null) {
+			return;
+		}
+
+		List<Element> roleElements = permissionsElement.elements("role");
+
+		for (Element roleElement : roleElements) {
+			checkRole(layoutCache, companyId, groupId, userId, roleElement);
+		}
+	}
+
+	public static void importPortletPermissions(
+			LayoutCache layoutCache, long companyId, long groupId, long userId,
+			Layout layout, Element portletElement, String portletId)
+		throws Exception {
+
+		Element permissionsElement = portletElement.element("permissions");
+
+		if ((layout != null) && (permissionsElement != null)) {
+			String resourceName = PortletConstants.getRootPortletId(portletId);
+
+			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
+
+			importPermissions(
+				layoutCache, companyId, groupId, userId, layout, resourceName,
+				resourcePrimKey, permissionsElement);
+		}
+	}
+
+	public static void readPortletDataPermissions(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/portlet-data-permissions.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> portletDataElements = rootElement.elements(
+			"portlet-data");
+
+		for (Element portletDataElement : portletDataElements) {
+			String resourceName = portletDataElement.attributeValue(
+				"resource-name");
+			long resourcePK = GetterUtil.getLong(
+				portletDataElement.attributeValue("resource-pk"));
+
+			List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+
+			List<Element> permissionsElements = portletDataElement.elements(
+				"permissions");
+
+			for (Element permissionsElement : permissionsElements) {
+				String roleName = permissionsElement.attributeValue(
+					"role-name");
+				String actions = permissionsElement.attributeValue("actions");
+
+				KeyValuePair permission = new KeyValuePair(roleName, actions);
+
+				permissions.add(permission);
+			}
+
+			portletDataContext.addPermissions(
+				resourceName, resourcePK, permissions);
+		}
+	}
+
+	protected static Role checkRole(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Element roleElement)
 		throws Exception {
@@ -109,25 +191,7 @@ public class PermissionImporter {
 		return role;
 	}
 
-	protected void checkRoles(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Element portletElement)
-		throws Exception {
-
-		Element permissionsElement = portletElement.element("permissions");
-
-		if (permissionsElement == null) {
-			return;
-		}
-
-		List<Element> roleElements = permissionsElement.elements("role");
-
-		for (Element roleElement : roleElements) {
-			checkRole(layoutCache, companyId, groupId, userId, roleElement);
-		}
-	}
-
-	protected List<String> getActions(Element element) {
+	protected static List<String> getActions(Element element) {
 		List<String> actions = new ArrayList<String>();
 
 		List<Element> actionKeyElements = element.elements("action-key");
@@ -139,10 +203,10 @@ public class PermissionImporter {
 		return actions;
 	}
 
-	protected void importPermissions(
+	protected static void importPermissions(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Layout layout, String resourceName, String resourcePrimKey,
-			Element permissionsElement, boolean portletActions)
+			Element permissionsElement)
 		throws Exception {
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
@@ -178,70 +242,6 @@ public class PermissionImporter {
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
 			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 			resourcePrimKey, roleIdsToActionIds);
-	}
-
-	protected void importPortletPermissions(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element portletElement, String portletId)
-		throws Exception {
-
-		Element permissionsElement = portletElement.element("permissions");
-
-		if ((layout != null) && (permissionsElement != null)) {
-			String resourceName = PortletConstants.getRootPortletId(portletId);
-
-			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), portletId);
-
-			importPermissions(
-				layoutCache, companyId, groupId, userId, layout, resourceName,
-				resourcePrimKey, permissionsElement, true);
-		}
-	}
-
-	protected void readPortletDataPermissions(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/portlet-data-permissions.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> portletDataElements = rootElement.elements(
-			"portlet-data");
-
-		for (Element portletDataElement : portletDataElements) {
-			String resourceName = portletDataElement.attributeValue(
-				"resource-name");
-			long resourcePK = GetterUtil.getLong(
-				portletDataElement.attributeValue("resource-pk"));
-
-			List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
-
-			List<Element> permissionsElements = portletDataElement.elements(
-				"permissions");
-
-			for (Element permissionsElement : permissionsElements) {
-				String roleName = permissionsElement.attributeValue(
-					"role-name");
-				String actions = permissionsElement.attributeValue("actions");
-
-				KeyValuePair permission = new KeyValuePair(roleName, actions);
-
-				permissions.add(permission);
-			}
-
-			portletDataContext.addPermissions(
-				resourceName, resourcePK, permissions);
-		}
 	}
 
 }

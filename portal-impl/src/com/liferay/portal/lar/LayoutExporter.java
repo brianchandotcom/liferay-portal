@@ -102,6 +102,23 @@ public class LayoutExporter {
 	public static final String SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
+	public static File exportLayoutsAsFile(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws Exception {
+
+		try {
+			ExportImportThreadLocal.setLayoutExportInProcess(true);
+
+			return doExportLayoutsAsFile(
+				groupId, privateLayout, layoutIds, parameterMap, startDate,
+				endDate);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutExportInProcess(false);
+		}
+	}
+
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
@@ -205,24 +222,7 @@ public class LayoutExporter {
 		}
 	}
 
-	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws Exception {
-
-		try {
-			ExportImportThreadLocal.setLayoutExportInProcess(true);
-
-			return doExportLayoutsAsFile(
-				groupId, privateLayout, layoutIds, parameterMap, startDate,
-				endDate);
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutExportInProcess(false);
-		}
-	}
-
-	protected File doExportLayoutsAsFile(
+	protected static File doExportLayoutsAsFile(
 			long groupId, boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
@@ -384,10 +384,10 @@ public class LayoutExporter {
 			missingReferencesElement);
 
 		if (layoutSetBranch != null) {
-			_themeExporter.exportTheme(portletDataContext, layoutSetBranch);
+			ThemeExporter.exportTheme(portletDataContext, layoutSetBranch);
 		}
 		else {
-			_themeExporter.exportTheme(portletDataContext, layoutSet);
+			ThemeExporter.exportTheme(portletDataContext, layoutSet);
 		}
 
 		if (exportLayoutSetSettings) {
@@ -515,7 +515,7 @@ public class LayoutExporter {
 				ExportImportHelperUtil.getExportPortletControlsMap(
 					companyId, portletId, parameterMap, type);
 
-			_portletExporter.exportPortlet(
+			PortletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,
 				portletsElement, exportPermissions,
 				exportPortletControlsMap.get(
@@ -530,17 +530,16 @@ public class LayoutExporter {
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-		_portletExporter.exportAssetLinks(portletDataContext);
-		_portletExporter.exportAssetTags(portletDataContext);
-		_portletExporter.exportExpandoTables(portletDataContext);
-		_portletExporter.exportLocks(portletDataContext);
+		PortletExporter.exportAssetLinks(portletDataContext);
+		PortletExporter.exportAssetTags(portletDataContext);
+		PortletExporter.exportExpandoTables(portletDataContext);
+		PortletExporter.exportLocks(portletDataContext);
 
-		_deletionSystemEventExporter.exportDeletionSystemEvents(
+		DeletionSystemEventExporter.exportDeletionSystemEvents(
 			portletDataContext);
 
 		if (exportPermissions) {
-			_permissionExporter.exportPortletDataPermissions(
-				portletDataContext);
+			PermissionExporter.exportPortletDataPermissions(portletDataContext);
 		}
 
 		ExportImportHelperUtil.writeManifestSummary(
@@ -556,7 +555,7 @@ public class LayoutExporter {
 		return zipWriter.getFile();
 	}
 
-	protected void exportLayout(
+	protected static void exportLayout(
 			PortletDataContext portletDataContext, List<Portlet> portlets,
 			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout)
 		throws Exception {
@@ -692,11 +691,5 @@ public class LayoutExporter {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
-
-	private DeletionSystemEventExporter _deletionSystemEventExporter =
-		new DeletionSystemEventExporter();
-	private PermissionExporter _permissionExporter = new PermissionExporter();
-	private PortletExporter _portletExporter = new PortletExporter();
-	private ThemeExporter _themeExporter = new ThemeExporter();
 
 }

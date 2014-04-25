@@ -299,9 +299,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());
 
-		PortletImporter portletImporter = new PortletImporter();
-
-		portletImporter.readAssetTags(portletDataContext);
+		PortletImporter.readAssetTags(portletDataContext);
 	}
 
 	protected boolean isCommentableStagedModel() {

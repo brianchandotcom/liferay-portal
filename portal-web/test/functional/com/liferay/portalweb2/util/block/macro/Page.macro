@@ -582,9 +582,9 @@
 			</else>
 		</if>
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_MESSAGE_INFO" value1="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />
 		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Display the page in English (United States)." />
-		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="Set Spanish (Spain) as your preferred language." />
+		<execute action="Home#assertTextEquals" locator-key1="PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="${pageLocalizationPreferredLanguage}" />
 
 		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${adminTranslation}" />
 		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES" value1="${mySitesTranslation}" />

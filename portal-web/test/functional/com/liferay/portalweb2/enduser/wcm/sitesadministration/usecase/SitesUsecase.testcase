@@ -62,6 +62,8 @@
 		<execute macro="Page#viewTranslationsPG">
 			<var name="adminTranslation" value="Administración" />
 			<var name="mySitesTranslation" value="Mis Sitios" />
+			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
+			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
 			<var name="pageName" value="Casa" />
 			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/home" />
 		</execute>
@@ -92,6 +94,8 @@
 			<var name="adminTranslation" value="Administración" />
 			<var name="childPageName" value="Blog Página" />
 			<var name="mySitesTranslation" value="Mis Sitios" />
+			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
+			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
 			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/blog-page" />
 		</execute>
 	</command>
@@ -552,7 +556,7 @@
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentText}" />
 	</command>
 
-	<command name="GlobalScope" priority="4">
+	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

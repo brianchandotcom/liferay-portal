@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SITE_ID</td>
-	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
+	<td>//input[@id='_165_siteId']</td>
 	<td></td>
 </tr>
 <tr>

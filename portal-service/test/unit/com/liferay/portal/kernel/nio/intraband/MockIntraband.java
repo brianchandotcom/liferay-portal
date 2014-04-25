@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
+import java.io.IOException;
+
 import java.nio.channels.Channel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.ScatteringByteChannel;
@@ -55,15 +57,42 @@ public class MockIntraband extends BaseIntraband {
 			scatteringByteChannel, gatheringByteChannel);
 	}
 
+	public void setIOException(IOException ioException) {
+		_ioException = ioException;
+	}
+
 	@Override
 	protected void doSendDatagram(
 		RegistrationReference registrationReference, Datagram datagram) {
 
 		_registrationReference = registrationReference;
 		_datagram = datagram;
+
+		CompletionHandler<?> completionHandler =
+			DatagramHelper.getCompletionHandler(datagram);
+
+		if (completionHandler == null) {
+			return;
+		}
+
+		if (_ioException == null) {
+			Datagram responseDatagram = processDatagram(datagram);
+
+			if (responseDatagram != null) {
+				completionHandler.replied(null, responseDatagram);
+			}
+		}
+		else {
+			completionHandler.failed(null, _ioException);
+		}
+	}
+
+	protected Datagram processDatagram(Datagram datagram) {
+		return null;
 	}
 
 	private Datagram _datagram;
+	private IOException _ioException;
 	private RegistrationReference _registrationReference;
 
 }

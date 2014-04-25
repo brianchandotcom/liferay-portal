@@ -1712,18 +1712,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/felix-fileinstall.jar</file-name>
-		<version>3.1.10</version>
-		<project-name>Apache Felix</project-name>
-		<project-url>http://felix.apache.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/flexjson.jar</file-name>
 		<version>3.2</version>
 		<project-name>Flexjson</project-name>
@@ -3867,6 +3855,18 @@
 			<license>
 				<license-name>Eclipse Public License Version 1.0</license-name>
 				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>osgi/lib/common/portal/org.apache.felix.fileinstall.jar</file-name>
+		<version>3.1.10</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>

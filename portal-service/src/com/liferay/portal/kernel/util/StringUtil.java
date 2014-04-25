@@ -1571,11 +1571,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1616,11 +1616,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1692,11 +1692,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1737,11 +1737,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1782,11 +1782,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1827,11 +1827,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();
@@ -1872,11 +1872,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]).trim());
 		}
 
 		return sb.toString();
@@ -1917,11 +1917,11 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {
-			sb.append(String.valueOf(array[i]).trim());
-
-			if ((i + 1) != array.length) {
+			if (i != 0) {
 				sb.append(delimiter);
 			}
+
+			sb.append(String.valueOf(array[i]));
 		}
 
 		return sb.toString();

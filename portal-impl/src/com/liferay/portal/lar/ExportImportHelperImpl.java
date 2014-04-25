@@ -817,6 +817,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public UserIdStrategy getUserIdStrategy(long userId, String userIdStrategy)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.getUserById(userId);
+
+		if (UserIdStrategy.ALWAYS_CURRENT_USER_ID.equals(userIdStrategy)) {
+			return new AlwaysCurrentUserIdStrategy(user);
+		}
+
+		return new CurrentUserIdStrategy(user);
+	}
+
+	@Override
 	public boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 
@@ -2181,19 +2194,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return null;
-	}
-
-	protected UserIdStrategy getUserIdStrategy(
-			long userId, String userIdStrategy)
-		throws Exception {
-
-		User user = UserLocalServiceUtil.getUserById(userId);
-
-		if (UserIdStrategy.ALWAYS_CURRENT_USER_ID.equals(userIdStrategy)) {
-			return new AlwaysCurrentUserIdStrategy(user);
-		}
-
-		return new CurrentUserIdStrategy(user);
 	}
 
 	protected String replaceExportHostname(

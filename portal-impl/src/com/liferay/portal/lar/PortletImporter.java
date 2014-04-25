@@ -553,16 +553,6 @@ public class PortletImporter {
 		zipReader.close();
 	}
 
-	protected UserIdStrategy getUserIdStrategy(
-		User user, String userIdStrategy) {
-
-		if (UserIdStrategy.ALWAYS_CURRENT_USER_ID.equals(userIdStrategy)) {
-			return new AlwaysCurrentUserIdStrategy(user);
-		}
-
-		return new CurrentUserIdStrategy(user);
-	}
-
 	protected void importAssetTag(
 			PortletDataContext portletDataContext, Map<Long, Long> assetTagPKs,
 			Element assetTagElement, AssetTag assetTag)

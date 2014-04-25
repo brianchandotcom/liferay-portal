@@ -214,6 +214,9 @@ public interface ExportImportHelper {
 			long groupId, long userId, String folderName)
 		throws PortalException, SystemException;
 
+	public UserIdStrategy getUserIdStrategy(long userId, String userIdStrategy)
+		throws PortalException, SystemException;
+
 	public boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel);
 

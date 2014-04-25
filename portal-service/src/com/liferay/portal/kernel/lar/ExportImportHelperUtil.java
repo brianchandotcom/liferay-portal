@@ -276,6 +276,14 @@ public class ExportImportHelperUtil {
 			groupId, userId, folderName);
 	}
 
+	public static UserIdStrategy getUserIdStrategy(
+			long userId, String userIdStrategy)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getUserIdStrategy(
+			userId, userIdStrategy);
+	}
+
 	public static boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 

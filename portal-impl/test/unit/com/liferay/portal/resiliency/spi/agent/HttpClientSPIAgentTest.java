@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxException;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
@@ -792,10 +793,14 @@ public class HttpClientSPIAgentTest {
 
 		// Unable to send, successfully close
 
+		MockIntraband mockIntraband = new MockIntraband();
+
+		IOException ioException = new IOException();
+
+		mockIntraband.setIOException(ioException);
+
 		httpClientSPIAgent = new HttpClientSPIAgent(
-			_spiConfiguration,
-			new MockRegistrationReference(
-				new DirectMailboxIntraBand(new IOException())));
+			_spiConfiguration, new MockRegistrationReference(mockIntraband));
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
@@ -829,6 +834,11 @@ public class HttpClientSPIAgentTest {
 			Throwable throwable = pre.getCause();
 
 			Assert.assertSame(IOException.class, throwable.getClass());
+
+			throwable = throwable.getCause();
+
+			Assert.assertSame(MailboxException.class, throwable.getClass());
+			Assert.assertSame(ioException, throwable.getCause());
 		}
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
@@ -852,12 +862,9 @@ public class HttpClientSPIAgentTest {
 
 			SocketImpl socketImpl = swapSocketImpl(socket, null);
 
-			DirectMailboxIntraBand directMailboxIntraBand =
-				new DirectMailboxIntraBand(new IOException());
-
 			httpClientSPIAgent = new HttpClientSPIAgent(
 				_spiConfiguration,
-				new MockRegistrationReference(directMailboxIntraBand));
+				new MockRegistrationReference(mockIntraband));
 
 			socketBlockingQueue = httpClientSPIAgent.socketBlockingQueue;
 
@@ -890,12 +897,9 @@ public class HttpClientSPIAgentTest {
 
 			socketImpl = swapSocketImpl(socket, null);
 
-			directMailboxIntraBand = new DirectMailboxIntraBand(
-				new IOException());
-
 			httpClientSPIAgent = new HttpClientSPIAgent(
 				_spiConfiguration,
-				new MockRegistrationReference(directMailboxIntraBand));
+				new MockRegistrationReference(mockIntraband));
 
 			socketBlockingQueue = httpClientSPIAgent.socketBlockingQueue;
 
@@ -936,9 +940,32 @@ public class HttpClientSPIAgentTest {
 
 		socketChannel.configureBlocking(true);
 
+		mockIntraband = new MockIntraband() {
+
+			@Override
+			protected Datagram processDatagram(Datagram datagram) {
+				try {
+					long receipt = (Long)ReflectionTestUtil.invoke(
+						MailboxUtil.class, "depositMail",
+						new Class<?>[] {ByteBuffer.class},
+						datagram.getDataByteBuffer());
+
+					byte[] receiptData = new byte[8];
+
+					BigEndianCodec.putLong(receiptData, 0, receipt);
+
+					return Datagram.createResponseDatagram(
+						datagram, ByteBuffer.wrap(receiptData));
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+
+		};
+
 		httpClientSPIAgent = new HttpClientSPIAgent(
-			_spiConfiguration,
-			new MockRegistrationReference(new DirectMailboxIntraBand(null)));
+			_spiConfiguration, new MockRegistrationReference(mockIntraband));
 
 		socketBlockingQueue = httpClientSPIAgent.socketBlockingQueue;
 
@@ -1178,44 +1205,6 @@ public class HttpClientSPIAgentTest {
 	private Portlet _portlet;
 	private SPIConfiguration _spiConfiguration = new SPIConfiguration(
 		null, null, 1234, "baseDir", null, null, null);
-
-	private static class DirectMailboxIntraBand extends MockIntraband {
-
-		public DirectMailboxIntraBand(IOException ioException) {
-			_ioException = ioException;
-		}
-
-		@Override
-		public Datagram sendSyncDatagram(
-				RegistrationReference registrationReference, Datagram datagram)
-			throws IOException {
-
-			if (_ioException != null) {
-				throw _ioException;
-			}
-
-			try {
-				long receipt = (Long)ReflectionTestUtil.invoke(
-					MailboxUtil.class, "depositMail",
-					new Class<?>[] {ByteBuffer.class},
-					datagram.getDataByteBuffer());
-
-				_receiptData = new byte[8];
-
-				BigEndianCodec.putLong(_receiptData, 0, receipt);
-
-				return Datagram.createResponseDatagram(
-					datagram, ByteBuffer.wrap(_receiptData));
-			}
-			catch (Exception e) {
-				throw new IOException(e);
-			}
-		}
-
-		private IOException _ioException;
-		private byte[] _receiptData;
-
-	}
 
 	private static class RecordSPIAgentResponse extends SPIAgentResponse {
 

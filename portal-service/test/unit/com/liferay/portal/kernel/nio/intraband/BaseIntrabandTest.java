@@ -1509,8 +1509,7 @@ public class BaseIntrabandTest {
 
 		// Datagram writing IOException
 
-		final IOException expectedIOException = new IOException(
-			"Force to fail");
+		final IOException expectedIOException = new IOException();
 
 		Intraband intraband = new MockIntraband(_DEFAULT_TIMEOUT) {
 
@@ -1546,14 +1545,8 @@ public class BaseIntrabandTest {
 		intraband = new MockIntraband(_DEFAULT_TIMEOUT) {
 
 			@Override
-			protected void doSendDatagram(
-				RegistrationReference registrationReference,
-				Datagram datagram) {
-
-				CompletionHandler<Object> completionHandler =
-					datagram.completionHandler;
-
-				completionHandler.replied(null, expectedDatagram);
+			protected Datagram processDatagram(Datagram datagram) {
+				return expectedDatagram;
 			}
 
 		};

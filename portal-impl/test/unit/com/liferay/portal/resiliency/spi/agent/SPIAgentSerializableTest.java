@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
-import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxException;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
@@ -58,7 +57,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -496,21 +494,12 @@ public class SPIAgentSerializableTest {
 			PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE,
 			String.valueOf(Long.MAX_VALUE));
 
-		final AtomicBoolean throwException = new AtomicBoolean(true);
 		final AtomicLong receiptReference = new AtomicLong();
 
 		MockIntraband mockIntraband = new MockIntraband() {
 
 			@Override
-			public Datagram sendSyncDatagram(
-					RegistrationReference registrationReference,
-					Datagram datagram)
-				throws IOException {
-
-				if (throwException.get()) {
-					throw new IOException("Unable to send");
-				}
-
+			protected Datagram processDatagram(Datagram datagram) {
 				try {
 					long receipt = (Long)ReflectionTestUtil.invoke(
 						MailboxUtil.class, "depositMail",
@@ -527,7 +516,7 @@ public class SPIAgentSerializableTest {
 						datagram, ByteBuffer.wrap(data));
 				}
 				catch (Exception e) {
-					throw new IOException(e);
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -535,6 +524,10 @@ public class SPIAgentSerializableTest {
 
 		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
 			_SERVLET_CONTEXT_NAME);
+
+		IOException ioException = new IOException();
+
+		mockIntraband.setIOException(ioException);
 
 		try {
 			agentSerializable.writeTo(
@@ -547,19 +540,15 @@ public class SPIAgentSerializableTest {
 			Throwable throwable = ioe.getCause();
 
 			Assert.assertSame(MailboxException.class, throwable.getClass());
-
-			throwable = throwable.getCause();
-
-			Assert.assertSame(IOException.class, throwable.getClass());
-			Assert.assertEquals("Unable to send", throwable.getMessage());
+			Assert.assertSame(ioException, throwable.getCause());
 		}
 
 		// Successfully send
 
-		throwException.set(false);
-
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
+
+		mockIntraband.setIOException(null);
 
 		agentSerializable.writeTo(
 			new MockRegistrationReference(mockIntraband),

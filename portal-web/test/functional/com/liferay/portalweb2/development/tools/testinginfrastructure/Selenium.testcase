@@ -94,7 +94,7 @@
 		</execute>
 	</command>
 
-	<command name="GetAttribute" priority="5">
+	<!--<command name="GetAttribute" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -113,7 +113,7 @@
 			<var name="actual" value="${title}" />
 			<var name="expected" value="Title" />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="GetBodyText" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -207,8 +207,6 @@
 		</execute>
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
-
-		<var name="int" locator="//input[@id='__161__displayDateYear']" />
 
 		<var name="string" method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" />
 		<execute macro="TestUtils#assertEquals">

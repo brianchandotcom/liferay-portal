@@ -208,14 +208,16 @@
 		</execute>
 	</command>
 
-	<!--<command name="Unquote" priority="5">
-		<var name="stringUnquote" method='StringUtil#unquote("\"To greet say Hello!\"")' />
+	<command name="Unquote" priority="5">
+		<var name="stringUnquote"><![CDATA["HELP"]]></var>
+
+		<var name="string" method='StringUtil#unquote("${stringUnquote}")' />
 
 		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${stringUnquote}" />
-			<var name="expected" value="To greet say Hello!" />
+			<var name="actual" value="${string}" />
+			<var name="expected" value="HELP" />
 		</execute>
-	</command>-->
+	</command>
 
 	<command name="UpperCase" priority="5">
 		<var name="string" method='StringUtil#upperCase("heLLo")' />

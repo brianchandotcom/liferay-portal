@@ -830,6 +830,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.isInTrashExplicitly();
 	}
 
+	@Override
+	public boolean isInTrashImplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.isInTrashImplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
@@ -1031,6 +1037,18 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchParentPage()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.fetchParentPage();
+	}
+
+	@Override
+	public com.liferay.portlet.wiki.model.WikiPage fetchRedirectPage()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.fetchRedirectPage();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPage.getAttachmentsFileEntries();
@@ -1091,17 +1109,22 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getParentPage() {
+	public com.liferay.portlet.wiki.model.WikiPage getParentPage()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPage.getParentPage();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getParentPages() {
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getParentPages()
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPage.getParentPages();
 	}
 
 	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage() {
+	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPage.getRedirectPage();
 	}
 

@@ -41,4 +41,6 @@ public interface TrashedModel {
 
 	public boolean isInTrashExplicitly() throws SystemException;
 
+	public boolean isInTrashImplicitly() throws SystemException;
+
 }

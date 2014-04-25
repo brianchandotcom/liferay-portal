@@ -597,6 +597,21 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 			return false;
 		}
+
+		@Override
+		public boolean isInTrashImplicitly() throws SystemException {
+			if (!isInTrash()) {
+				return false;
+			}
+
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+
+			if (trashEntry != null) {
+				return false;
+			}
+
+			return true;
+		}
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

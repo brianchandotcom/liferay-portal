@@ -956,6 +956,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public boolean isInTrashImplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntry.isInTrashImplicitly();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _dlFileEntry.isNew();
 	}

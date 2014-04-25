@@ -1385,6 +1385,12 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.isInTrashExplicitly();
 	}
 
+	@Override
+	public boolean isInTrashImplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticle.isInTrashImplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

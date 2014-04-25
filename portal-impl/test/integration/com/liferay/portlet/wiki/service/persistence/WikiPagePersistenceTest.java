@@ -548,6 +548,23 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_H_R() {
+		try {
+			_persistence.countByN_H_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				StringPool.NULL);
+
+			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+				(String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByN_H_S() {
 		try {
 			_persistence.countByN_H_S(ServiceTestUtil.nextLong(),

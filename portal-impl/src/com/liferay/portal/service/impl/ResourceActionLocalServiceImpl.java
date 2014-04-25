@@ -206,6 +206,11 @@ public class ResourceActionLocalServiceImpl
 		return resourceActionPersistence.findByName(name);
 	}
 
+	@Override
+	public int getResourceActionsCount(String name) throws SystemException {
+		return resourceActionPersistence.countByName(name);
+	}
+
 	protected String encodeKey(String name, String actionId) {
 		return name.concat(StringPool.POUND).concat(actionId);
 	}

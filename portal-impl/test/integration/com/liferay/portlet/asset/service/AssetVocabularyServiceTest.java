@@ -75,8 +75,8 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		int initialResourcesActionsCount =
-			ResourceActionLocalServiceUtil.getResourceActions(
-				AssetVocabulary.class.getName()).size();
+			ResourceActionLocalServiceUtil.getResourceActionsCount(
+				AssetVocabulary.class.getName());
 
 		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -97,8 +97,8 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(
 			initialResourcesActionsCount,
-			ResourceActionLocalServiceUtil.getResourceActions(
-				AssetVocabulary.class.getName()).size());
+			ResourceActionLocalServiceUtil.getResourceActionsCount(
+				AssetVocabulary.class.getName()));
 	}
 
 	@Test

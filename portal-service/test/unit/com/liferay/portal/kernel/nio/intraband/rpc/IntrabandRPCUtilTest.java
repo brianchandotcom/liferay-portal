@@ -16,12 +16,9 @@ package com.liferay.portal.kernel.nio.intraband.rpc;
 
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
-import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
-import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
-import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil.FutureCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil.FutureResult;
@@ -75,55 +72,22 @@ public class IntrabandRPCUtilTest {
 	public void testExecuteFail() throws Exception {
 		PortalClassLoaderUtil.setClassLoader(getClass().getClassLoader());
 
+		final Exception exception = new Exception("Execution error");
+
 		MockIntraband mockIntraband = new MockIntraband() {
 
 			@Override
-			protected void doSendDatagram(
-				RegistrationReference registrationReference,
-				Datagram datagram) {
-
-				throw new RuntimeException();
-			}
-
-		};
-
-		try {
-			IntrabandRPCUtil.execute(
-				new MockRegistrationReference(mockIntraband),
-				new TestProcessCallable());
-
-			Assert.fail();
-		}
-		catch (IntrabandRPCException ibrpce) {
-			Throwable throwable = ibrpce.getCause();
-
-			Assert.assertSame(RuntimeException.class, throwable.getClass());
-		}
-
-		final Exception exception = new Exception("Execution error");
-
-		mockIntraband = new MockIntraband() {
-
-			@Override
-			protected void doSendDatagram(
-				RegistrationReference registrationReference,
-				Datagram datagram) {
-
+			protected Datagram processDatagram(Datagram datagram) {
 				try {
 					Serializer serializer = new Serializer();
 
 					serializer.writeObject(new RPCResponse(exception));
 
-					CompletionHandler<Object> completionHandler =
-						DatagramHelper.getCompletionHandler(datagram);
-
-					completionHandler.replied(
-						null,
-						Datagram.createResponseDatagram(
-							datagram, serializer.toByteBuffer()));
+					return Datagram.createResponseDatagram(
+						datagram, serializer.toByteBuffer());
 				}
 				catch (Exception e) {
-					Assert.fail(e.getMessage());
+					throw new RuntimeException();
 				}
 			}
 
@@ -154,10 +118,7 @@ public class IntrabandRPCUtilTest {
 		MockIntraband mockIntraband = new MockIntraband() {
 
 			@Override
-			protected void doSendDatagram(
-				RegistrationReference registrationReference,
-				Datagram datagram) {
-
+			protected Datagram processDatagram(Datagram datagram) {
 				Deserializer deserializer = new Deserializer(
 					datagram.getDataByteBuffer());
 
@@ -170,16 +131,11 @@ public class IntrabandRPCUtilTest {
 					serializer.writeObject(
 						new RPCResponse(processCallable.call()));
 
-					CompletionHandler<Object> completionHandler =
-						DatagramHelper.getCompletionHandler(datagram);
-
-					completionHandler.replied(
-						null,
-						Datagram.createResponseDatagram(
-							datagram, serializer.toByteBuffer()));
+					return Datagram.createResponseDatagram(
+						datagram, serializer.toByteBuffer());
 				}
 				catch (Exception e) {
-					Assert.fail(e.getMessage());
+					throw new RuntimeException(e);
 				}
 			}
 

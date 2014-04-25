@@ -549,12 +549,6 @@
 				<defaultValue>add-on</defaultValue>
 			</attribute>
 			<attribute>
-				<name>hideLabel</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>false</defaultValue>
-			</attribute>
-			<attribute>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1059,12 +1053,6 @@
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>hideLabel</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<defaultValue>false</defaultValue>
 			</attribute>
 			<attribute>
 				<name>id</name>

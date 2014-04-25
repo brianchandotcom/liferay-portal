@@ -66,7 +66,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					Arrays.sort(classNameIds);
 					%>
 
-					<aui:select hideLabel="<%= true %>" label="asset-type" name="preferences--anyAssetType--">
+					<aui:select label="" name="preferences--anyAssetType--" title="asset-type">
 						<aui:option label="any" selected="<%= assetPublisherDisplayContext.isAnyAssetType() %>" value="<%= true %>" />
 						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !assetPublisherDisplayContext.isAnyAssetType() && (classNameIds.length > 1) %>" value="<%= false %>" />
 
@@ -390,7 +390,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
 							%>
 
-							<aui:select hideLabel="<%= true %>" inlineField="<%= true %>" label="order-by-type" name="preferences--orderByType1--" value="<%= orderByType1 %>">
+							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--" title="order-by-type" value="<%= orderByType1 %>">
 								<aui:option label="ascending" value="ASC" />
 								<aui:option label="descending" value="DESC" />
 							</aui:select>
@@ -420,7 +420,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String orderByType2 = assetPublisherDisplayContext.getOrderByType2();
 							%>
 
-							<aui:select hideLabel="<%= true %>" inlineField="<%= true %>" label="order-by-type" name="preferences--orderByType2--">
+							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--" title="order-by-type">
 								<aui:option label="ascending" selected='<%= orderByType2.equals("ASC") %>' value="ASC" />
 								<aui:option label="descending" selected='<%= orderByType2.equals("DESC") %>' value="DESC" />
 							</aui:select>

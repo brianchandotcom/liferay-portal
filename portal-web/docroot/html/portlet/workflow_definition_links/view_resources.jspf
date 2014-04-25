@@ -95,7 +95,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 			<liferay-ui:search-container-column-text
 				name="workflow"
 			>
-				<aui:select hideLabel="<%= true %>" label="workflow-definition" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>'>
+				<aui:select label="" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>' title="workflow-definition">
 
 					<%
 					WorkflowDefinitionLink workflowDefinitionLink = null;

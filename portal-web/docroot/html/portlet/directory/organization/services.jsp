@@ -63,7 +63,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 					%>
 
 						<th>
-							<label><liferay-ui:message key="<%= day %>" /></label>
+							<label><%= day %></label>
 						</th>
 
 					<%

@@ -61,10 +61,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		return _helpMessage;
 	}
 
-	public boolean getHideLabel() {
-		return _hideLabel;
-	}
-
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -185,12 +181,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		_helpMessage = helpMessage;
 
 		setScopedAttribute("helpMessage", helpMessage);
-	}
-
-	public void setHideLabel(boolean hideLabel) {
-		_hideLabel = hideLabel;
-
-		setScopedAttribute("hideLabel", hideLabel);
 	}
 
 	public void setId(java.lang.String id) {
@@ -322,7 +312,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		_disabled = false;
 		_first = false;
 		_helpMessage = null;
-		_hideLabel = false;
 		_id = null;
 		_ignoreRequestValue = false;
 		_inlineField = false;
@@ -364,7 +353,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "first", _first);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
-		setNamespacedAttribute(request, "hideLabel", _hideLabel);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
@@ -402,7 +390,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _disabled = false;
 	private boolean _first = false;
 	private java.lang.String _helpMessage = null;
-	private boolean _hideLabel = false;
 	private java.lang.String _id = null;
 	private boolean _ignoreRequestValue = false;
 	private boolean _inlineField = false;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletResponse;
 
@@ -162,32 +161,12 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(20);
+		StringBuilder sb = new StringBuilder(11);
 
-		String id = null;
-
-		if (request != null) {
-			id = PortalUtil.generateRandomKey(request, name);
-
-			sb.append("<label class=\"hide-accessible\" for=\"");
-			sb.append(_portletResponse.getNamespace());
-			sb.append(id);
-			sb.append("\">");
-			sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
-			sb.append("</label>");
-		}
-
-		sb.append("<input ");
-
-		if (id != null) {
-			sb.append("id=\"");
-			sb.append(_portletResponse.getNamespace());
-			sb.append(id);
-			sb.append("\" ");
-		}
-
-		sb.append("name=\"");
+		sb.append("<input name=\"");
 		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
 		sb.append("onClick=\"Liferay.Util.checkAll(");
 		sb.append("AUI().one(this).ancestor('");
@@ -216,22 +195,7 @@ public class RowChecker {
 		String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(30);
-
-		String id = null;
-
-		if (request != null) {
-			id = PortalUtil.generateRandomKey(request, value);
-		}
-
-		if (id != null) {
-			sb.append("<label class=\"hide-accessible\" for=\"");
-			sb.append(_portletResponse.getNamespace());
-			sb.append(id);
-			sb.append("\">");
-			sb.append(LanguageUtil.get(request.getLocale(), "select"));
-			sb.append("</label>");
-		}
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<input ");
 
@@ -243,15 +207,10 @@ public class RowChecker {
 			sb.append("disabled ");
 		}
 
-		if (id != null) {
-			sb.append("id=\"");
-			sb.append(_portletResponse.getNamespace());
-			sb.append(id);
-			sb.append("\" ");
-		}
-
 		sb.append("name=\"");
 		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(LanguageUtil.get(request.getLocale(), "select"));
 		sb.append("\" type=\"checkbox\" value=\"");
 		sb.append(HtmlUtil.escapeAttribute(value));
 		sb.append("\" ");

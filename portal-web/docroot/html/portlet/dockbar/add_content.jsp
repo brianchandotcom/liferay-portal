@@ -36,7 +36,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		<div class="btn-toolbar">
 			<aui:input cssClass="search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
 
-			<aui:select cssClass="input-mini" hideLabel="<%= true %>" inlineField="<%= true %>" label="number-of-items-to-display" name="numItems">
+			<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems" title="number-of-items-to-display">
 
 				<%
 				for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

@@ -47,6 +47,8 @@ Import-Package: \
 	*
 Include-Resource:\
 	build/classes/main,\
+	WEB-INF/classes/portlet.properties=build/resources/main/portlet.properties,\
+	WEB-INF/classes/resource-actions=build/resources/main/resource-actions,\
 	WEB-INF/lib/util-java.jar=../../../../util-java/util-java.jar,\
 	WEB-INF/lib/util-taglib.jar=../../../../util-taglib/util-taglib.jar
 Web-ContextPath: /polls-web

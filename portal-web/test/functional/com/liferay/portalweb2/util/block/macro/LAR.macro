@@ -169,6 +169,7 @@
 
 		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
 		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
+		<execute action="Home#pause" locator1="5000" />
 
 		<execute action="BasePortletImport#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />
 		<execute action="BasePortletImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />
@@ -181,6 +182,7 @@
 
 		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
 		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
+		<execute action="Home#pause" locator1="5000" />
 
 		<execute action="CPSitepagesImport#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />
 		<execute action="CPSitepagesImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />

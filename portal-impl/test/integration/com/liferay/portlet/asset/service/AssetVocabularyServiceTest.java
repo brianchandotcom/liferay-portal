@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -68,6 +72,28 @@ public class AssetVocabularyServiceTest {
 		GroupLocalServiceUtil.deleteGroup(_group);
 
 		LocaleThreadLocal.setSiteDefaultLocale(_locale);
+	}
+
+	@Test
+	public void testDeleteVocabularyWithCategories() throws Exception {
+		int initialAssetCategoriesCount = searchCount();
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary.getVocabularyId());
+
+		AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary.getVocabularyId(),
+			category.getCategoryId());
+
+		Assert.assertEquals(initialAssetCategoriesCount + 2, searchCount());
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			vocabulary.getVocabularyId());
+
+		Assert.assertEquals(initialAssetCategoriesCount, searchCount());
 	}
 
 	@Test
@@ -177,6 +203,18 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
 		Assert.assertEquals(title, vocabulary.getName());
+	}
+
+	protected int searchCount() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(AssetCategory.class);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
 	}
 
 	private Group _group;

@@ -31,7 +31,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
@@ -66,18 +65,9 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
 			classPK);
 
-		long folderId = article.getFolderId();
-
-		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-				folderId);
-
-			if (folder.isOverrideDDMStructures()) {
-				break;
-			}
-
-			folderId = folder.getParentFolderId();
-		}
+		long folderId =
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				article.getFolderId());
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			article.getGroupId(),
@@ -88,6 +78,15 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
 				companyId, groupId, JournalFolder.class.getName(), folderId,
 				ddmStructure.getStructureId(), true);
+
+		if (workflowDefinitionLink == null) {
+			workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						companyId, groupId, JournalFolder.class.getName(),
+						folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+						true);
+		}
 
 		return workflowDefinitionLink;
 	}

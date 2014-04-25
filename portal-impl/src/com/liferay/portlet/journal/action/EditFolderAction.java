@@ -32,6 +32,7 @@ import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -77,6 +78,9 @@ public class EditFolderAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribeFolder(actionRequest);
+			}
+			else if (cmd.equals("updateWorkflowDefinitions")) {
+				updateWorkflowDefinitions(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -222,13 +226,32 @@ public class EditFolderAction extends PortletAction {
 				ParamUtil.getString(
 					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
 				0L);
-			boolean overrideDDMStructures = ParamUtil.getBoolean(
-				actionRequest, "overrideDDMStructures");
+			int restrinctionType = ParamUtil.getInteger(
+				actionRequest, "restrictionType");
 
 			JournalFolderServiceUtil.updateFolder(
 				folderId, parentFolderId, name, description, ddmStructureIds,
-				overrideDDMStructures, mergeWithParentFolder, serviceContext);
+				restrinctionType, mergeWithParentFolder, serviceContext);
 		}
+	}
+
+	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			JournalFolder.class.getName(), actionRequest);
+
+		long[] ddmStructureIds = StringUtil.split(
+			ParamUtil.getString(
+				actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
+			0L);
+		int restrinctionType = ParamUtil.getInteger(
+			actionRequest, "restrictionType");
+
+		JournalFolderServiceUtil.updateFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
+			ddmStructureIds, restrinctionType, false, serviceContext);
 	}
 
 }

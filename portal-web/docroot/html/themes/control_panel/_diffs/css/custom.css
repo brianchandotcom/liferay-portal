@@ -645,14 +645,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						left: 48px;
 						margin-top: 0 !important;
 
-						&:before {
-							content: '';
-							height: 44px;
-							margin-left: 0;
-							position: absolute;
-							width: 50px;
-						}
-
 						.accordion-inner {
 							border-top-width: 0;
 						}

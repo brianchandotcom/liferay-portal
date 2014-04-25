@@ -3871,6 +3871,42 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>osgi/lib/common/portal/org.apache.felix.gogo.command.jar</file-name>
+		<version>0.12.0</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>osgi/lib/common/portal/org.apache.felix.gogo.runtime.jar</file-name>
+		<version>0.10.0</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>osgi/lib/common/portal/org.apache.felix.gogo.shell.jar</file-name>
+		<version>0.10.0</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>osgi/lib/common/portal/org.apache.felix.scr.jar</file-name>
 		<version>1.6.2</version>
 		<project-name>Apache Felix</project-name>
@@ -3883,9 +3919,21 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>osgi/lib/common/portal/org.eclipse.equinox.console.jar</file-name>
+		<version>1.0.0.v20120522-1841</version>
+		<project-name>Eclipse Equinox Console</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>osgi/lib/common/portal/org.eclipse.gemini.mgmt.jar</file-name>
 		<version>1.0.1.RELEASE</version>
-		<project-name>Jetty</project-name>
+		<project-name>Gemini Management</project-name>
 		<project-url>http://www.eclipse.org/gemini/management</project-url>
 		<licenses>
 			<license>

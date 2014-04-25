@@ -142,7 +142,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false,
+		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteThread(MBThread thread)
 		throws PortalException, SystemException {

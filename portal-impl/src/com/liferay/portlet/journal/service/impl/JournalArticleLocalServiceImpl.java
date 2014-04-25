@@ -896,7 +896,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
@@ -923,7 +923,7 @@ public class JournalArticleLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,

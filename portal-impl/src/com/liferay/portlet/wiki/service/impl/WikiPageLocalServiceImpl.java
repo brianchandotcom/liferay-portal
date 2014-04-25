@@ -488,7 +488,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deletePage(WikiPage page)
 		throws PortalException, SystemException {

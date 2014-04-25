@@ -90,6 +90,10 @@
 			<execute function="Click#textClickAtClickDockbar" />
 		</case>
 
+		<case locator-key1="PREVIEW">
+			<execute function="Click#clickAtSidebarClickAt" />
+		</case>
+
 		<case locator-key1="USER_NAME">
 			<execute function="Click#clickAt" />
 		</case>

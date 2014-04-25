@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -64,6 +63,37 @@ public class AssetVocabularyServiceTest {
 	@After
 	public void tearDown() {
 		LocaleThreadLocal.setSiteDefaultLocale(_locale);
+	}
+
+	@Test
+	public void testDeleteVocabularyWithCategoriesShouldDeleteOnCascade()
+		throws Exception {
+
+		long groupId = GroupTestUtil.addGroup().getGroupId();
+
+		int countResources =
+			ResourceActionLocalServiceUtil.getResourceActions(
+				AssetVocabulary.class.getName()).size();
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(groupId);
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			groupId, vocabulary.getVocabularyId());
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			vocabulary.getVocabularyId());
+
+		Assert.assertNull(
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				vocabulary.getVocabularyId()));
+
+		Assert.assertNull(
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+				category.getCategoryId()));
+
+		Assert.assertEquals(countResources,
+			ResourceActionLocalServiceUtil.getResourceActions(
+				AssetVocabulary.class.getName()).size());
 	}
 
 	@Test
@@ -148,37 +178,6 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
 		Assert.assertEquals(title, vocabulary.getName());
-	}
-
-	@Test
-	public void testDeleteVocabularyWithCategoriesShouldDeleteOnCascade()
-		throws Exception {
-
-		long groupId = GroupTestUtil.addGroup().getGroupId();
-
-		int countResources =
-			ResourceActionLocalServiceUtil.getResourceActions(
-				AssetVocabulary.class.getName()).size();
-
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(groupId);
-
-		AssetCategory category = AssetTestUtil.addCategory(
-			groupId, vocabulary.getVocabularyId());
-
-		AssetVocabularyLocalServiceUtil.deleteVocabulary(
-			vocabulary.getVocabularyId());
-
-		Assert.assertNull(
-			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-				vocabulary.getVocabularyId()));
-
-		Assert.assertNull(
-			AssetCategoryLocalServiceUtil.fetchAssetCategory(
-				category.getCategoryId()));
-
-		Assert.assertEquals(countResources,
-			ResourceActionLocalServiceUtil.getResourceActions(
-				AssetVocabulary.class.getName()).size());
 	}
 
 	private Locale _locale;

@@ -489,7 +489,7 @@
 		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_MENULIST_MOVE" />
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
 
-		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="SELECT_PARENT_FOLDER_BUTTON" value1="Select" />
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator-key1="FOLDER_WINDOW_ID" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
@@ -497,7 +497,7 @@
 		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator1="relative=top" />
 
-		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="PARENT_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="NEW_FOLDER" value1="${dmFolderName}" />
 		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
 
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

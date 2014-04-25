@@ -405,19 +405,15 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
-	public List<JournalFolder> getNoAssetFolders() throws SystemException {
-		return journalFolderFinder.findF_ByNoAssets();
-	}
-
-	@Override
-	public long getOverridedDDMStructuresFolderId(long folderId)
+	public long getInheritedDDMStructuresFolderId(
+			long folderId, int restrictionType)
 		throws NoSuchFolderException, SystemException {
 
 		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 				folderId);
 
-			if (folder.isOverrideDDMStructures()) {
+			if (folder.getRestrictionType() == restrictionType) {
 				break;
 			}
 
@@ -425,6 +421,11 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return folderId;
+	}
+
+	@Override
+	public List<JournalFolder> getNoAssetFolders() throws SystemException {
+		return journalFolderFinder.findF_ByNoAssets();
 	}
 
 	@Override
@@ -692,7 +693,8 @@ public class JournalFolderLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return updateFolder(
-			userId, folderId, parentFolderId, name, description, null, false,
+			userId, folderId, parentFolderId, name, description, null,
+			JournalFolderConstants.RESTRICTION_TYPE_INHERIT,
 			mergeWithParentFolder, serviceContext);
 	}
 
@@ -700,9 +702,8 @@ public class JournalFolderLocalServiceImpl
 	@Override
 	public JournalFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
-			String description, long[] ddmStructureIds,
-			boolean overrideDDMStructures, boolean mergeWithParentFolder,
-			ServiceContext serviceContext)
+			String description, long[] ddmStructureIds, int restrictionType,
+			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalFolder folder = null;
@@ -710,7 +711,7 @@ public class JournalFolderLocalServiceImpl
 		if (folderId > JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folder = doUpdateFolder(
 				userId, folderId, parentFolderId, name, description,
-				ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+				ddmStructureIds, restrictionType, mergeWithParentFolder,
 				serviceContext);
 		}
 
@@ -719,10 +720,22 @@ public class JournalFolderLocalServiceImpl
 		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
 			new ArrayList<ObjectValuePair<Long, String>>();
 
+		if (ArrayUtil.isEmpty(ddmStructureIds)) {
+			ddmStructureIds = ArrayUtil.append(
+				ddmStructureIds, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+		}
+		else {
+			workflowDefinitionOVPs.add(
+				new ObjectValuePair<Long, String>(
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+					StringPool.BLANK));
+		}
+
 		for (long ddmStructureId : ddmStructureIds) {
 			String workflowDefinition = StringPool.BLANK;
 
-			if (overrideDDMStructures ||
+			if ((restrictionType !=
+					JournalFolderConstants.RESTRICTION_TYPE_INHERIT) ||
 				(folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
 				workflowDefinition = ParamUtil.getString(
@@ -818,8 +831,7 @@ public class JournalFolderLocalServiceImpl
 			ddmStructureLocalService.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					parentFolder.getGroupId()),
-				parentFolder.getFolderId(),
-				!parentFolder.isOverrideDDMStructures());
+				parentFolder.getFolderId(), parentFolder.getRestrictionType());
 
 		long[] ddmStructureIds = new long[folderDDMStructures.size()];
 
@@ -834,14 +846,15 @@ public class JournalFolderLocalServiceImpl
 
 	protected JournalFolder doUpdateFolder(
 			long userId, long folderId, long parentFolderId, String name,
-			String description, long[] ddmStructureIds,
-			boolean overrideDDMStructures, boolean mergeWithParentFolder,
-			ServiceContext serviceContext)
+			String description, long[] ddmStructureIds, int restrictionType,
+			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Merge folders
 
-		if (!overrideDDMStructures) {
+		if (restrictionType ==
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+
 			ddmStructureIds = new long[0];
 		}
 
@@ -867,7 +880,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
-		folder.setOverrideDDMStructures(overrideDDMStructures);
+		folder.setRestrictionType(restrictionType);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);

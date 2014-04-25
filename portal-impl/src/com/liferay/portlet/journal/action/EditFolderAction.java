@@ -222,12 +222,12 @@ public class EditFolderAction extends PortletAction {
 				ParamUtil.getString(
 					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
 				0L);
-			boolean overrideDDMStructures = ParamUtil.getBoolean(
-				actionRequest, "overrideDDMStructures");
+			int restrinctionType = ParamUtil.getInteger(
+				actionRequest, "restrictionType");
 
 			JournalFolderServiceUtil.updateFolder(
 				folderId, parentFolderId, name, description, ddmStructureIds,
-				overrideDDMStructures, mergeWithParentFolder, serviceContext);
+				restrinctionType, mergeWithParentFolder, serviceContext);
 		}
 	}
 

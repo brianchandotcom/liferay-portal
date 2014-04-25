@@ -66,18 +66,11 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
 			classPK);
 
-		long folderId = article.getFolderId();
-
-		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-				folderId);
-
-			if (folder.isOverrideDDMStructures()) {
-				break;
-			}
-
-			folderId = folder.getParentFolderId();
-		}
+		long folderId =
+			JournalFolderLocalServiceUtil.getInheritedDDMStructuresFolderId(
+				article.getFolderId(),
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			article.getGroupId(),
@@ -88,6 +81,20 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
 				companyId, groupId, JournalFolder.class.getName(), folderId,
 				ddmStructure.getStructureId(), true);
+
+		if (workflowDefinitionLink == null) {
+			folderId =
+				JournalFolderLocalServiceUtil.getInheritedDDMStructuresFolderId(
+					article.getFolderId(),
+					JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW);
+
+			workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						companyId, groupId, JournalFolder.class.getName(),
+						folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+						true);
+		}
 
 		return workflowDefinitionLink;
 	}

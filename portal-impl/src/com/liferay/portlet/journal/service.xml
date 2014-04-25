@@ -449,7 +449,7 @@
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
-		<column name="overrideDDMStructures" type="boolean" />
+		<column name="restrictionType" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

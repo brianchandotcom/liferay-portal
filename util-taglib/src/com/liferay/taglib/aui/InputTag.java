@@ -236,7 +236,7 @@ public class InputTag extends BaseInputTag {
 		String label = getLabel();
 
 		if (label == null) {
-			label = TextFormatter.format(name, TextFormatter.K);
+			label = TextFormatter.format(name, TextFormatter.P);
 		}
 
 		String title = getTitle();
@@ -244,7 +244,7 @@ public class InputTag extends BaseInputTag {
 		if ((title == null) && (Validator.isNull(label) ||
 			 Validator.equals(type, "image"))) {
 
-			title = TextFormatter.format(name, TextFormatter.K);
+			title = TextFormatter.format(name, TextFormatter.P);
 		}
 
 		_inputName = getName();

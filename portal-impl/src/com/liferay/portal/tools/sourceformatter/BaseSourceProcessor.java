@@ -750,7 +750,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		else if (groupCount == 2) {
 			String languageKey = matcher.group(2);
 
-			languageKey = TextFormatter.format(languageKey, TextFormatter.K);
+			languageKey = TextFormatter.format(languageKey, TextFormatter.P);
 
 			return new String[] {languageKey};
 		}

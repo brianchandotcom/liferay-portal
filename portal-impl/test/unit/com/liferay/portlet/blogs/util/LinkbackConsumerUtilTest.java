@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -22,6 +21,8 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.IOException;
+
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +63,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			"__URLtoString_not_containing_entryURL__"
 		);
 
-		long messageId = RandomUtil.randomLong();
+		long messageId = _randomLong();
 
 		LinkbackConsumerUtil.addNewTrackback(
 			messageId, "__url__", "__entryUrl__");
@@ -92,7 +93,7 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			"__PROBLEM_URL__"
 		);
 
-		long messageId = RandomUtil.randomLong();
+		long messageId = _randomLong();
 
 		LinkbackConsumerUtil.addNewTrackback(
 			messageId, "__PROBLEM_URL__", "__entryUrl__");
@@ -122,10 +123,8 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			"__URLtoString_containing_**entryUrl**__"
 		);
 
-		long messageId = RandomUtil.randomLong();
-
 		LinkbackConsumerUtil.addNewTrackback(
-			messageId, "__url__", "**entryUrl**");
+			_randomLong(), "__url__", "**entryUrl**");
 
 		LinkbackConsumerUtil.verifyNewTrackbacks();
 
@@ -155,6 +154,22 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			_mbMessageLocalService
 		);
 	}
+
+	private static long _randomLong() {
+		long value = _random.nextLong();
+
+		if (value > 0) {
+			return value;
+		}
+		else if (value == 0) {
+			return _randomLong();
+		}
+		else {
+			return -value;
+		}
+	}
+
+	private static Random _random = new Random();
 
 	@Mock
 	private Http _http;

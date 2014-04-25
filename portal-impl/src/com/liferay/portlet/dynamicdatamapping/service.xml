@@ -231,7 +231,7 @@
 			<finder-column name="classPK" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

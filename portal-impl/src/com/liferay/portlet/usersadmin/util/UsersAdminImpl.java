@@ -1078,7 +1078,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(User, User, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1086,40 +1086,69 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(user, "emailAddress");
+		return hasUpdateFieldPermission(null, user, "emailAddress");
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasUpdateFieldPermission(User, User, String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
-		if (user == null) {
+		return hasUpdateFieldPermission(null, user, field);
+	}
+
+	@Override
+	public boolean hasUpdateFieldPermission(
+			User curUser, User selUser, String field)
+		throws PortalException, SystemException {
+
+		if (curUser != null) {
+			for (String roleName : PropsValues.FIELD_ALL_USERS_EDITABLE_ROLES) {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					curUser.getCompanyId(), roleName);
+
+				if ((role != null) &&
+					RoleLocalServiceUtil.hasUserRole(
+						curUser.getUserId(), role.getRoleId())) {
+
+					return true;
+				}
+			}
+
+			//return false;
+		}
+
+		if (selUser == null) {
 			return true;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {
-			if (userType.equals("user-with-mx") && user.hasCompanyMx()) {
+			if (userType.equals("user-with-mx") && selUser.hasCompanyMx()) {
 				return true;
 			}
 
-			if (userType.equals("user-without-mx") && !user.hasCompanyMx()) {
+			if (userType.equals("user-without-mx") && !selUser.hasCompanyMx()) {
 				return true;
 			}
 		}
 
 		for (String roleName : PropsValues.FIELD_EDITABLE_ROLES) {
 			Role role = RoleLocalServiceUtil.fetchRole(
-				user.getCompanyId(), roleName);
+				selUser.getCompanyId(), roleName);
 
 			if ((role != null) &&
 				RoleLocalServiceUtil.hasUserRole(
-					user.getUserId(), role.getRoleId())) {
+					selUser.getUserId(), role.getRoleId())) {
 
 				return true;
 			}
 		}
 
-		String emailAddress = user.getEmailAddress();
+		String emailAddress = selUser.getEmailAddress();
 
 		for (String domainName : PropsValues.FIELD_EDITABLE_DOMAINS) {
 			if (emailAddress.endsWith(domainName)) {
@@ -1141,7 +1170,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(User, User, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1149,7 +1178,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(user, "screenName");
+		return hasUpdateFieldPermission(null, user, "screenName");
 	}
 
 	@Override

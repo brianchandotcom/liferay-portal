@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
+	<td>//input[@id='_166_structure']</td>
 	<td></td>
 </tr>
 <tr>

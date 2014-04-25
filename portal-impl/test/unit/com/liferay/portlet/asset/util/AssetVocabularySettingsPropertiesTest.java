@@ -15,12 +15,12 @@
 package unit.com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author José Manuel Navarro
@@ -61,17 +61,17 @@ public class AssetVocabularySettingsPropertiesTest {
 	}
 
 	@Test
-	public void testIsMultiValuedWhenTrue() {
-		_settingProperties = getSettingProperties(true, 1L, 1L, true);
-
-		Assert.assertTrue(_settingProperties.isMultiValued());
-	}
-
-	@Test
 	public void testIsMultiValuedWhenFalse() {
 		_settingProperties = getSettingProperties(false, 1L, 1L, true);
 
 		Assert.assertFalse(_settingProperties.isMultiValued());
+	}
+
+	@Test
+	public void testIsMultiValuedWhenTrue() {
+		_settingProperties = getSettingProperties(true, 1L, 1L, true);
+
+		Assert.assertTrue(_settingProperties.isMultiValued());
 	}
 
 	@Test
@@ -134,19 +134,6 @@ public class AssetVocabularySettingsPropertiesTest {
 		Assert.assertFalse(_settingProperties.isRequired(2L, 1L));
 	}
 
-
-	protected AssetVocabularySettingsProperties getSettingProperties(
-			boolean multiValued, long assetClassName, long assetClassType,
-			boolean assetRequired) {
-
-		List<Long> classNames = ListUtil.toList(new long[]{assetClassName});
-		List<Long> classTypes = ListUtil.toList(new long[]{assetClassType});
-		List<Boolean> required = ListUtil.toList(new boolean[]{assetRequired});
-
-		return getSettingProperties(
-			multiValued, classNames, classTypes, required);
-	}
-
 	protected AssetVocabularySettingsProperties getSettingProperties(
 			boolean multiValued, List<Long> classNames, List<Long> classTypes,
 			List<Boolean> assetsRequired) {
@@ -160,6 +147,18 @@ public class AssetVocabularySettingsPropertiesTest {
 			classNames, classTypes, assetsRequired);
 
 		return settingsProperties;
+	}
+
+	protected AssetVocabularySettingsProperties getSettingProperties(
+			boolean multiValued, long assetClassName, long assetClassType,
+			boolean assetRequired) {
+
+		List<Long> classNames = ListUtil.toList(new long[]{assetClassName});
+		List<Long> classTypes = ListUtil.toList(new long[]{assetClassType});
+		List<Boolean> required = ListUtil.toList(new boolean[]{assetRequired});
+
+		return getSettingProperties(
+			multiValued, classNames, classTypes, required);
 	}
 
 	private AssetVocabularySettingsProperties _settingProperties;

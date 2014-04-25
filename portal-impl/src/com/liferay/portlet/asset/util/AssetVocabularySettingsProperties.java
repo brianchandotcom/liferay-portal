@@ -103,14 +103,14 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 
 	public boolean isAssociatedToAsset(long assetClassNameId) {
 		return _isSettingAssociatedToAsset(
-				KEY_SELECTED_CLASSNAMES, assetClassNameId);
+			KEY_SELECTED_CLASSNAMES, assetClassNameId);
 	}
 
 	public boolean isAssociatedToAsset(
 		long assetClassNameId, long assetClassTypeId) {
 
 		return _isSettingAssociatedToAsset(
-				KEY_SELECTED_CLASSNAMES, assetClassNameId, assetClassTypeId);
+			KEY_SELECTED_CLASSNAMES, assetClassNameId, assetClassTypeId);
 	}
 
 	public boolean isMultiValued() {
@@ -124,7 +124,7 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 
 	public boolean isRequired(long classNameId, long classTypeId) {
 		return _isSettingAssociatedToAsset(
-				KEY_REQUIRED_CLASSNAMES, classNameId, classTypeId);
+			KEY_REQUIRED_CLASSNAMES, classNameId, classTypeId);
 	}
 
 	public void setMultiValued(boolean multiValued) {

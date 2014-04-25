@@ -17,17 +17,10 @@ package com.liferay.portlet.asset.model.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.PrefixPredicateFilter;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
@@ -40,6 +33,16 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	public AssetVocabularyImpl() {
 		super();
+	}
+
+	@Override
+	public String[] getAssociatedAssetClassNameIds() {
+		return getSettingProperties().getAssociatedAssetIds();
+	}
+
+	@Override
+	public String[] getAssociatedRequiredAssetClassNameIds() {
+		return getSettingProperties().getAssociatedRequiredAssetIds();
 	}
 
 	@Override
@@ -119,9 +122,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			final long[] selectedCategoryIds)
 		throws SystemException {
 
-		if (_isSettingAssociatedToAsset(
-				"requiredClassNameIds", assetClassNameId, assetClassTypeId)) {
-
+		if (isRequired(classNameId, classTypeId)) {
 			List<AssetCategory> categories = getCategories();
 
 			if (ListUtil.isEmpty(categories)) {

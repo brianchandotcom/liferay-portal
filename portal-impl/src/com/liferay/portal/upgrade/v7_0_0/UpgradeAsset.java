@@ -19,17 +19,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
-import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,19 +42,6 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		doUpgradeAssetEntry();
 		doUpgradeAllAssetVocabularies();
-	}
-
-	protected void doUpgradeAssetEntry() throws Exception {
-		try {
-			runSQL("alter_column_type AssetEntry description TEXT null");
-			runSQL("alter_column_type AssetEntry summary TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
-				AssetEntryTable.TABLE_SQL_CREATE,
-				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
 	}
 
 	protected void doUpgradeAllAssetVocabularies() throws Exception {
@@ -87,10 +73,22 @@ public class UpgradeAsset extends UpgradeProcess {
 		}
 	}
 
+	protected void doUpgradeAssetEntry() throws Exception {
+		try {
+			runSQL("alter_column_type AssetEntry description TEXT null");
+			runSQL("alter_column_type AssetEntry summary TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
+				AssetEntryTable.TABLE_SQL_CREATE,
+				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
+		}
+	}
+
 	protected String doUpgradeVocabularySettings(String settings) {
 
-		UnicodeProperties properties =
-			new AssetVocabularySettingsProperties();
+		UnicodeProperties properties = new AssetVocabularySettingsProperties();
 		properties.fastLoad(settings);
 
 		AssetVocabularySettingsProperties newProperties =
@@ -105,8 +103,8 @@ public class UpgradeAsset extends UpgradeProcess {
 			properties.getProperty("requiredClassNameIds"), 0L);
 
 		List<Long> classIds = ListUtil.toList(associatedClassIds);
-		List<Long> classTypes =
-			Collections.nCopies(associatedClassIds.length, 0L);
+		List<Long> classTypes = Collections.nCopies(
+			associatedClassIds.length, 0L);
 		List<Boolean> required = new ArrayList<Boolean>();
 
 		for (long classId : associatedClassIds) {
@@ -117,6 +115,7 @@ public class UpgradeAsset extends UpgradeProcess {
 				required.add(Boolean.FALSE);
 			}
 		}
+
 		newProperties.addAssociatedAssets(classIds, classTypes, required);
 
 		return newProperties.toString();

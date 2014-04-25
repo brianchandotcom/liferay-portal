@@ -273,8 +273,8 @@ public class AssetUtil {
 
 			};
 
-		Collection<AssetVocabulary> filteredVocabularies =
-			ListUtil.filter(vocabularies, associatedVocabulariesFilter);
+		Collection<AssetVocabulary> filteredVocabularies = ListUtil.filter(
+			vocabularies, associatedVocabulariesFilter);
 
 		return ListUtil.fromCollection(filteredVocabularies);
 	}

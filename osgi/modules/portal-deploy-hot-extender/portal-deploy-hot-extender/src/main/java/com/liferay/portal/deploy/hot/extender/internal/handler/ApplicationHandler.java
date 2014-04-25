@@ -16,8 +16,9 @@ package com.liferay.portal.deploy.hot.extender.internal.handler;
 
 import com.liferay.portal.deploy.hot.JSONWebServiceHotDeployListener;
 import com.liferay.portal.deploy.hot.MessagingHotDeployListener;
-import com.liferay.portal.deploy.hot.PluginPackageHotDeployListener;
 import com.liferay.portal.deploy.hot.PortletHotDeployListener;
+import com.liferay.portal.deploy.hot.extender.internal.event.ModuleHotDeployEvent;
+import com.liferay.portal.deploy.hot.extender.internal.listeners.ServicesHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
@@ -45,25 +46,25 @@ public class ApplicationHandler {
 	public void registerApplication(
 		Bundle bundle, ServletContext servletContext) {
 
-		HotDeployEvent hotDeployEvent = _buildHotDeployEvent(
+		ModuleHotDeployEvent moduleHotDeployEvent = _buildHotDeployEvent(
 			bundle, servletContext);
 
-		_invokeDeploy(hotDeployEvent);
+		_invokeDeploy(moduleHotDeployEvent);
 	}
 
 	public void unregisterApplication(
 		Bundle bundle, ServletContext servletContext) {
 
-		HotDeployEvent hotDeployEvent = _buildHotDeployEvent(
+		ModuleHotDeployEvent moduleHotDeployEvent = _buildHotDeployEvent(
 			bundle, servletContext);
 
-		_invokeUndeploy(hotDeployEvent);
+		_invokeUndeploy(moduleHotDeployEvent);
 	}
 
 	private ApplicationHandler() {
 		_hotDeployListeners = new ArrayList<HotDeployListener>();
 
-		_hotDeployListeners.add(new PluginPackageHotDeployListener());
+		_hotDeployListeners.add(new ServicesHotDeployListener());
 
 		_hotDeployListeners.add(new JSONWebServiceHotDeployListener());
 		_hotDeployListeners.add(new PortletHotDeployListener());
@@ -71,15 +72,12 @@ public class ApplicationHandler {
 		_hotDeployListeners.add(new MessagingHotDeployListener());
 	}
 
-	private HotDeployEvent _buildHotDeployEvent(
+	private ModuleHotDeployEvent _buildHotDeployEvent(
 		Bundle bundle, ServletContext servletContext) {
 
 		ClassLoader classLoader = _getClassLoader(bundle);
 
-		HotDeployEvent hotDeployEvent = new HotDeployEvent(
-			servletContext, classLoader);
-
-		return hotDeployEvent;
+		return new ModuleHotDeployEvent(servletContext, classLoader, bundle);
 	}
 
 	private ClassLoader _getClassLoader(Bundle bundle) {
@@ -88,9 +86,9 @@ public class ApplicationHandler {
 		return bundleWiring.getClassLoader();
 	}
 
-	private void _invokeDeploy(HotDeployEvent hotDeployEvent) {
+	private void _invokeDeploy(ModuleHotDeployEvent moduleHotDeployEvent) {
 		for (HotDeployListener hotDeployListener : _hotDeployListeners) {
-			_invokeDeploy(hotDeployListener, hotDeployEvent);
+			_invokeDeploy(hotDeployListener, moduleHotDeployEvent);
 		}
 	}
 
@@ -111,9 +109,9 @@ public class ApplicationHandler {
 		}
 	}
 
-	private void _invokeUndeploy(HotDeployEvent hotDeployEvent) {
+	private void _invokeUndeploy(ModuleHotDeployEvent moduleHotDeployEvent) {
 		for (HotDeployListener hotDeployListener : _hotDeployListeners) {
-			_invokeUndeploy(hotDeployListener, hotDeployEvent);
+			_invokeUndeploy(hotDeployListener, moduleHotDeployEvent);
 		}
 	}
 

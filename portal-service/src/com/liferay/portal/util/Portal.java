@@ -560,6 +560,9 @@ public interface Portal {
 	public long[] getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException, SystemException;
 
+	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
+		throws PortalException, SystemException;
+
 	public String getCurrentCompleteURL(HttpServletRequest request);
 
 	public String getCurrentURL(HttpServletRequest request);

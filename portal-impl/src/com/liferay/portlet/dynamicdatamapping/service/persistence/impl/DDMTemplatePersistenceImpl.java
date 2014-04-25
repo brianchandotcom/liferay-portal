@@ -6938,6 +6938,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 	/**
 	 * Returns all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -7737,6 +7743,352 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
+	 * Returns all the d d m templates that the user has permission to view where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
+		long classNameId, long classPK) throws SystemException {
+		return filterFindByG_C_C(groupIds, classNameId, classPK,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m templates that the user has permission to view where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @return the range of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
+		long classNameId, long classPK, int start, int end)
+		throws SystemException {
+		return filterFindByG_C_C(groupIds, classNameId, classPK, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m templates that the user has permission to view where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return findByG_C_C(groupIds, classNameId, classPK, start, end,
+				orderByComparator);
+		}
+
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		if (groupIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
+
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(DDMTemplateModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			return (List<DDMTemplate>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns all the d d m templates where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
+		long classPK) throws SystemException {
+		return findByG_C_C(groupIds, classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m templates where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @return the range of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
+		long classPK, int start, int end) throws SystemException {
+		return findByG_C_C(groupIds, classNameId, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m templates where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @param start the lower bound of the range of d d m templates
+	 * @param end the upper bound of the range of d d m templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
+		long classPK, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
+		if (groupIds.length == 1) {
+			return findByG_C_C(groupIds[0], classNameId, classPK, start, end,
+				orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId, classPK
+				};
+		}
+		else {
+			finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId, classPK,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDMTemplate> list = (List<DDMTemplate>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMTemplate ddmTemplate : list) {
+				if (!ArrayUtil.contains(groupIds, ddmTemplate.getGroupId()) ||
+						(classNameId != ddmTemplate.getClassNameId()) ||
+						(classPK != ddmTemplate.getClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
+
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (!pagination) {
+					list = (List<DDMTemplate>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMTemplate>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -7818,6 +8170,92 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
+	 * Returns the number of d d m templates where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the number of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByG_C_C(long[] groupIds, long classNameId, long classPK)
+		throws SystemException {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
+		Object[] finderArgs = new Object[] {
+				StringUtil.merge(groupIds), classNameId, classPK
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
+
+			if (groupIds.length > 0) {
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				query.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -7877,7 +8315,88 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 	}
 
+	/**
+	 * Returns the number of d d m templates that the user has permission to view where groupId = any &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param classNameId the class name ID
+	 * @param classPK the class p k
+	 * @return the number of matching d d m templates that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int filterCountByG_C_C(long[] groupIds, long classNameId,
+		long classPK) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return countByG_C_C(groupIds, classNameId, classPK);
+		}
+
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
+
+		if (groupIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
+
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				DDMTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_GROUPID_7 = "ddmTemplate.groupId IN (";
 	private static final String _FINDER_COLUMN_G_C_C_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_CLASSPK_2 = "ddmTemplate.classPK = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,

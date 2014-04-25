@@ -744,6 +744,15 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMTemplate> getTemplates(
+			long[] groupIds, long classNameId, long classPK)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByG_C_C(
+			groupIds, classNameId, classPK);
+	}
+
+	@Override
 	public List<DDMTemplate> getTemplatesByClassPK(long groupId, long classPK)
 		throws SystemException {
 

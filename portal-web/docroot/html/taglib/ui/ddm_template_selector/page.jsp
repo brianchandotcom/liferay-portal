@@ -31,6 +31,10 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 DDMTemplate ddmTemplate = null;
+
+if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+	ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(displayStyleGroupId, displayStyle);
+}
 %>
 
 <aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
@@ -57,64 +61,22 @@ DDMTemplate ddmTemplate = null;
 	</c:if>
 
 	<%
-	Map<String,Object> data = new HashMap<String,Object>();
+	for (DDMTemplate curDDMTemplate : DDMTemplateLocalServiceUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
+		Map<String,Object> data = new HashMap<String,Object>();
 
-	if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-		ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(displayStyleGroupId, displayStyle);
-	}
+		data.put("displaystylegroupid", curDDMTemplate.getGroupId());
 
-	List<DDMTemplate> companyPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), classNameId, 0);
+		if (!DDMTemplatePermission.contains(permissionChecker, curDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATES, ActionKeys.VIEW)) {
+			continue;
+		}
 	%>
 
-	<c:if test="<%= (companyPortletDDMTemplates != null) && !companyPortletDDMTemplates.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="global" />">
-
-			<%
-			data.put("displaystylegroupid", themeDisplay.getCompanyGroupId());
-
-			for (DDMTemplate companyPortletDDMTemplate : companyPortletDDMTemplates) {
-				if (!DDMTemplatePermission.contains(permissionChecker, companyPortletDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATES, ActionKeys.VIEW)) {
-					continue;
-				}
-			%>
-
-				<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(companyPortletDDMTemplate.getName(locale)) %>" selected="<%= (ddmTemplate != null) && (companyPortletDDMTemplate.getTemplateId() == ddmTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + companyPortletDDMTemplate.getUuid() %>" />
-
-			<%
-			}
-			%>
-
-		</optgroup>
-	</c:if>
+		<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (ddmTemplate != null) && (curDDMTemplate.getTemplateId() == ddmTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + curDDMTemplate.getUuid() %>" />
 
 	<%
-	List<DDMTemplate> groupPortletDDMTemplates = null;
-
-	if (ddmTemplateGroupId != themeDisplay.getCompanyGroupId()) {
-		groupPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmTemplateGroupId, classNameId, 0);
-
-		data.put("displaystylegroupid", ddmTemplateGroupId);
 	}
 	%>
 
-	<c:if test="<%= (groupPortletDDMTemplates != null) && !groupPortletDDMTemplates.isEmpty() %>">
-		<optgroup label="<%= HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)) %>">
-
-		<%
-		for (DDMTemplate groupPortletDDMTemplate : groupPortletDDMTemplates) {
-			if (!DDMTemplatePermission.contains(permissionChecker, groupPortletDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATES, ActionKeys.VIEW)) {
-				continue;
-			}
-		%>
-
-			<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(groupPortletDDMTemplate.getName(locale)) %>" selected="<%= (ddmTemplate != null) && (groupPortletDDMTemplate.getTemplateId() == ddmTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + groupPortletDDMTemplate.getUuid() %>" />
-
-		<%
-		}
-		%>
-
-		</optgroup>
-	</c:if>
 </aui:select>
 
 <liferay-ui:icon

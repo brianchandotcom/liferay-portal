@@ -1834,15 +1834,7 @@ public class PortalImpl implements Portal {
 	public long[] getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = new UniqueList<Group>();
-
-		Group siteGroup = doGetCurrentSiteGroup(groupId);
-
-		if (siteGroup != null) {
-			groups.add(siteGroup);
-		}
-
-		groups.addAll(doGetAncestorSiteGroups(groupId, false));
+		List<Group> groups = getCurrentAndAncestorSiteGroups(groupId);
 
 		long[] groupIds = new long[groups.size()];
 
@@ -1853,6 +1845,23 @@ public class PortalImpl implements Portal {
 		}
 
 		return groupIds;
+	}
+
+	@Override
+	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = new UniqueList<Group>();
+
+		Group siteGroup = doGetCurrentSiteGroup(groupId);
+
+		if (siteGroup != null) {
+			groups.add(siteGroup);
+		}
+
+		groups.addAll(doGetAncestorSiteGroups(groupId, false));
+
+		return groups;
 	}
 
 	@Override

@@ -395,6 +395,17 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_CArrayable() {
+		try {
+			_persistence.countByG_C_C(new long[] { ServiceTestUtil.nextLong(), 0L },
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_C_T() {
 		try {
 			_persistence.countByG_C_T(ServiceTestUtil.nextLong(),

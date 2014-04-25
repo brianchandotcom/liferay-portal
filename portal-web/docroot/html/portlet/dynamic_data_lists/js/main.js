@@ -397,6 +397,7 @@ AUI.add(
 
 						var activeCell = instance.get('activeCell');
 						var boundingBox = instance.get('boundingBox');
+
 						var scrollableElement = boundingBox.one('.table-x-scroller');
 
 						var tableHighlightBorder = instance.highlight.get('activeBorderWidth')[0];
@@ -406,10 +407,13 @@ AUI.add(
 
 						var activeCellOffsetLeft = activeCell.get('offsetLeft');
 						var scrollLeft = scrollableElement.get('scrollLeft');
+
+						var activeCellOffsetRight = activeCellOffsetLeft + activeCellWidth;
+
 						var scrollTo = scrollLeft;
 
-						if ((scrollLeft + scrollableWidth) < (activeCellOffsetLeft + activeCellWidth)) {
-							scrollTo = (activeCellOffsetLeft + activeCellWidth) - scrollableWidth;
+						if ((scrollLeft + scrollableWidth) < activeCellOffsetRight) {
+							scrollTo = activeCellOffsetRight - scrollableWidth;
 						}
 						else if (activeCellOffsetLeft < scrollLeft) {
 							scrollTo = activeCellOffsetLeft;

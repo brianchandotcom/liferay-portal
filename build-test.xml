@@ -752,6 +752,22 @@ create database lportal2 character set utf8;</echo>
 					/>
 				</then>
 			</elseif>
+			<elseif>
+				<and>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<not>
+						<available file="${app.server.lib.global.dir}/${jdbc.postgresql.driver}" />
+					</not>
+				</and>
+				<then>
+					<copy todir="${todir}">
+						<fileset
+							dir="lib/development"
+							includes="${jdbc.postgresql.driver}"
+						/>
+					</copy>
+				</then>
+			</elseif>
 		</if>
 	</target>
 
@@ -2373,6 +2389,19 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 								<arg value="@create.sql" />
 								<arg value="${database.username}" />
 								<arg value="${database.password}" />
+							</exec>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="postgresql" />
+						<then>
+							<exec executable="${postgresql.executable}">
+								<arg value="-U" />
+								<arg value="${database.username}" />
+								<arg value="-w" />
+								<arg value="${database.password}" />
+								<arg value="-f" />
+								<arg value="create.sql" />
 							</exec>
 						</then>
 					</elseif>

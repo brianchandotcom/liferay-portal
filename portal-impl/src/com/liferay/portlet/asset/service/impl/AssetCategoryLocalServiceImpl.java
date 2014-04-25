@@ -218,15 +218,15 @@ public class AssetCategoryLocalServiceImpl
 			category.getCategoryId(), groupPermissions, guestPermissions);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetCategory deleteCategory(AssetCategory category)
 		throws PortalException, SystemException {
 
-		return deleteCategory(category, false);
+		return assetCategoryLocalService.deleteCategory(category, false);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetCategory deleteCategory(
 			AssetCategory category, boolean childCategory)
@@ -306,7 +306,7 @@ public class AssetCategoryLocalServiceImpl
 				new AssetCategoryLeftCategoryIdComparator(false));
 
 		for (AssetCategory category : categories) {
-			deleteCategory(category.getCategoryId());
+			assetCategoryLocalService.deleteCategory(category);
 		}
 	}
 

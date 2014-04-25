@@ -352,12 +352,12 @@ public class DDMStructureServiceSoap {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap[] getJournalFolderStructures(
-		long[] groupIds, long journalFolderId, boolean inherited)
+		long[] groupIds, long journalFolderId, int restrictionType)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> returnValue =
 				DDMStructureServiceUtil.getJournalFolderStructures(groupIds,
-					journalFolderId, inherited);
+					journalFolderId, restrictionType);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModels(returnValue);
 		}

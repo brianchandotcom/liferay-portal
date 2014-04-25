@@ -276,25 +276,18 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public void setDescription(String description);
 
 	/**
-	 * Returns the override d d m structures of this journal folder.
+	 * Returns the restriction type of this journal folder.
 	 *
-	 * @return the override d d m structures of this journal folder
+	 * @return the restriction type of this journal folder
 	 */
-	public boolean getOverrideDDMStructures();
+	public int getRestrictionType();
 
 	/**
-	 * Returns <code>true</code> if this journal folder is override d d m structures.
+	 * Sets the restriction type of this journal folder.
 	 *
-	 * @return <code>true</code> if this journal folder is override d d m structures; <code>false</code> otherwise
+	 * @param restrictionType the restriction type of this journal folder
 	 */
-	public boolean isOverrideDDMStructures();
-
-	/**
-	 * Sets whether this journal folder is override d d m structures.
-	 *
-	 * @param overrideDDMStructures the override d d m structures of this journal folder
-	 */
-	public void setOverrideDDMStructures(boolean overrideDDMStructures);
+	public void setRestrictionType(int restrictionType);
 
 	/**
 	 * Returns the status of this journal folder.

@@ -282,12 +282,12 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	@Override
 	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long journalFolderId, boolean inherited)
+			long[] groupIds, long journalFolderId, int restrictionType)
 		throws PortalException, SystemException {
 
 		return filterStructures(
 			ddmStructureLocalService.getJournalFolderStructures(
-				groupIds, journalFolderId, inherited));
+				groupIds, journalFolderId, restrictionType));
 	}
 
 	/**

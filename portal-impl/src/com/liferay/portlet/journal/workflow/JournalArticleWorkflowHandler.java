@@ -19,13 +19,21 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -48,6 +56,52 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	@Override
+	public WorkflowDefinitionLink getWorkflowDefinitionLink(
+			long companyId, long groupId, long classPK)
+		throws PortalException, SystemException {
+
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			classPK);
+
+		long folderId =
+			JournalFolderLocalServiceUtil.getInheritedDDMStructuresFolderId(
+				article.getFolderId(),
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			article.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			article.getStructureId(), true);
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
+				companyId, groupId, JournalFolder.class.getName(), folderId,
+				ddmStructure.getStructureId(), true);
+
+		if (workflowDefinitionLink == null) {
+			folderId =
+				JournalFolderLocalServiceUtil.getInheritedDDMStructuresFolderId(
+					article.getFolderId(),
+					JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW);
+
+			workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						companyId, groupId, JournalFolder.class.getName(),
+						folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+						true);
+		}
+
+		return workflowDefinitionLink;
+	}
+
+	@Override
+	public boolean isVisible() {
+		return _VISIBLE;
 	}
 
 	@Override
@@ -79,5 +133,7 @@ public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
+
+	private static final boolean _VISIBLE = false;
 
 }

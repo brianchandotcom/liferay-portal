@@ -132,6 +132,33 @@
 	<td>//label[@class='radio' and contains(.,'${key_pageTypeLayout}')]/input</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDIT-->
+<tr>
+	<td>EDIT_CUSTOMIZATION_SETTINGS</td>
+	<td>//div[@id='_145_customizationSettings']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOMIZATION_SETTINGS-->
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
+	<td>//div[@class='customization-settings']/button[contains(@id,'_145_manageCustomization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO</td>
+	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--Checkbox')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -26,37 +26,32 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_20_TabsBack']</td>
+	<td>//a[@id='_199_TabsBack']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_FOLDER</td>
-	<td>//div[contains(.,'Current Folder') and contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
+	<td>MOVE_FOLDER</td>
+	<td>//li[@class='move-folder']/span[@class='folder-title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_FOLDER</td>
-	<td>//input[@id='_20_parentFolderName']</td>
+	<td>NEW_FOLDER</td>
+	<td>//input[@id='_199_folderName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_PARENT_FOLDER_BUTTON</td>
-	<td>//button[@id='_20_selectFolderButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE_PARENT_FOLDER_BUTTON</td>
-	<td>//button[@id='_20_removeFolderButton']</td>
+	<td>SELECT_BUTTON</td>
+	<td>//button[@id='_199_selectFolderButton']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Move')]</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +73,7 @@
 <!--FOLDER_WINDOW-->
 <tr>
 	<td>FOLDER_WINDOW_ID</td>
-	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td>//iframe[@id='_199_selectFolder_iframe_']</td>
 	<td></td>
 </tr>
 <tr>

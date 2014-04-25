@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Lock;
@@ -218,18 +217,27 @@ public class PortletImporter {
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
+			String userIdStrategyString = MapUtil.getString(
+				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+			UserIdStrategy userIdStrategy =
+				ExportImportHelperUtil.getUserIdStrategy(
+					userId, userIdStrategyString);
+
 			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
 
 			PortletDataContext portletDataContext =
 				PortletDataContextFactoryUtil.createImportPortletDataContext(
-					layout.getCompanyId(), groupId, parameterMap, null,
-					zipReader);
+					layout.getCompanyId(), groupId, parameterMap,
+					userIdStrategy, zipReader);
 
-			validateFile(portletDataContext, portletId);
+			portletDataContext.setPrivateLayout(layout.isPrivateLayout());
 
 			MissingReferences missingReferences =
 				ExportImportHelperUtil.validateMissingReferences(
-					userId, groupId, parameterMap, file);
+					portletDataContext);
 
 			Map<String, MissingReference> dependencyMissingReferences =
 				missingReferences.getDependencyMissingReferences();
@@ -360,29 +368,28 @@ public class PortletImporter {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		UserIdStrategy userIdStrategy = getUserIdStrategy(
-			user, userIdStrategyString);
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				userId, userIdStrategyString);
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		// LAR validation
+
+		validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				layout.getCompanyId(), groupId, parameterMap, userIdStrategy,
 				zipReader);
 
-		portletDataContext.setPortetDataContextListener(
-			new PortletDataContextListenerImpl(portletDataContext));
-
 		portletDataContext.setPlid(plid);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());
 
 		// Manifest
 
-		validateFile(portletDataContext, portletId);
-
 		ManifestSummary manifestSummary =
-			ExportImportHelperUtil.getManifestSummary(
-				userId, groupId, parameterMap, file);
+			ExportImportHelperUtil.getManifestSummary(portletDataContext);
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
@@ -391,53 +398,14 @@ public class PortletImporter {
 
 		portletDataContext.setManifestSummary(manifestSummary);
 
-		// Company id
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		Element headerElement = rootElement.element("header");
-
-		long sourceCompanyId = GetterUtil.getLong(
-			headerElement.attributeValue("company-id"));
-
-		portletDataContext.setSourceCompanyId(sourceCompanyId);
-
-		// Company group id
-
-		long sourceCompanyGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("company-group-id"));
-
-		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
-
-		// Group id
-
-		long sourceGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("group-id"));
-
-		portletDataContext.setSourceGroupId(sourceGroupId);
-
-		// Source and target group id
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		groupIds.put(sourceGroupId, groupId);
-
-		// User personal site group id
-
-		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("user-personal-site-group-id"));
-
-		portletDataContext.setSourceUserPersonalSiteGroupId(
-			sourceUserPersonalSiteGroupId);
-
 		// Read asset tags, expando tables, locks and permissions to make them
 		// available to the data handlers through the context
 
 		Element portletElement = null;
 
 		try {
+			Element rootElement = portletDataContext.getImportDataRootElement();
+
 			portletElement = rootElement.element("portlet");
 
 			Document portletDocument = SAXReaderUtil.read(
@@ -1075,30 +1043,6 @@ public class PortletImporter {
 		}
 	}
 
-	protected void readXML(PortletDataContext portletDataContext)
-		throws Exception {
-
-		if (portletDataContext.getImportDataRootElement() != null) {
-			return;
-		}
-
-		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
-
-		if (xml == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
-		}
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			portletDataContext.setImportDataRootElement(
-				document.getRootElement());
-		}
-		catch (Exception e) {
-			throw new LARFileException(e);
-		}
-	}
-
 	protected void resetPortletScope(
 		PortletDataContext portletDataContext, long groupId) {
 
@@ -1200,8 +1144,6 @@ public class PortletImporter {
 		}
 
 		// Build compatibility
-
-		readXML(portletDataContext);
 
 		int buildNumber = ReleaseInfo.getBuildNumber();
 

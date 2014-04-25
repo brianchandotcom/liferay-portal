@@ -14,21 +14,36 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Edward Han
+ * @author Vilmos Papp
  */
 public class LDAPUserTransactionThreadLocal {
 
+	public static String getOriginalEmailAddress() {
+		return _originalEmailAddress.get();
+	}
+
 	public static boolean isOriginatesFromLDAP() {
 		return _originatesFromLDAP.get();
+	}
+
+	public static void setOriginalEmailAddress(String originalEmailAddress) {
+		_originalEmailAddress.set(originalEmailAddress);
 	}
 
 	public static void setOriginatesFromLDAP(boolean originatesFromLDAP) {
 		_originatesFromLDAP.set(originatesFromLDAP);
 	}
 
+	private static ThreadLocal<String> _originalEmailAddress =
+		new AutoResetThreadLocal<String>(
+			LDAPUserTransactionThreadLocal.class + "._originalEmailAddress",
+			StringPool.BLANK);
 	private static ThreadLocal<Boolean> _originatesFromLDAP =
 		new InitialThreadLocal<Boolean>(
 			LDAPUserTransactionThreadLocal.class + "._originatesFromLDAP",

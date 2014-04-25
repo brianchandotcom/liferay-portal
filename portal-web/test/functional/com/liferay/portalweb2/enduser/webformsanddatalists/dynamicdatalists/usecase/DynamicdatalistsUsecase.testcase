@@ -978,6 +978,7 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="This is a unique field" />
 			<var name="fieldName" value="This is a unique field" />
 		</execute>
 
@@ -991,6 +992,7 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="Separator" />
 			<var name="fieldName" value="Separator" />
 		</execute>
 

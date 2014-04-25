@@ -389,8 +389,8 @@
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
-			<var name="privateVirtualHosts" value="true" />
 			<var name="privatePageVirtualHostURL" value="www.able.com" />
+			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
@@ -403,8 +403,7 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="User#logoutPG">
-		</execute>
+		<execute macro="User#logoutPG" />
 
 		<execute macro="Page#openURL">
 			<var name="virtualHostsURL" value="http://www.able.com:8080/private-page" />

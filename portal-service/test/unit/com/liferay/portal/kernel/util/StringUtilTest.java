@@ -185,8 +185,8 @@ public class StringUtilTest {
 		Assert.assertEquals("true", StringUtil.merge(new boolean[] {true}));
 		Assert.assertEquals(
 			"1.1,2.2,3.3", StringUtil.merge(new double[] {1.1, 2.2, 3.3}));
-		Assert.assertEquals("1.1", new double[] {1.1});
-		Assert.assertEquals("1,2,3", new int[] {1, 2, 3});
+		Assert.assertEquals("1.1", StringUtil.merge(new double[] {1.1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new int[] {1, 2, 3}));
 		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
 		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
 		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));

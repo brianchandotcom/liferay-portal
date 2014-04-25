@@ -190,19 +190,19 @@ public class StringUtilTest {
 		s = StringUtil.merge(new boolean[] {true});
 		Assert.assertEquals("true", s);
 
-		s = StringUtil.merge(new double[] {1.1,2.2,3.3});
+		s = StringUtil.merge(new double[] {1.1, 2.2, 3.3});
 		Assert.assertEquals("1.1,2.2,3.3", s);
 
 		s = StringUtil.merge(new double[] {1.1});
 		Assert.assertEquals("1.1", s);
 
-		s = StringUtil.merge(new int[] {1,2,3});
+		s = StringUtil.merge(new int[] {1, 2, 3});
 		Assert.assertEquals("1,2,3", s);
 
 		s = StringUtil.merge(new int[] {1});
 		Assert.assertEquals("1", s);
 
-		s = StringUtil.merge(new long[] {1,2,3});
+		s = StringUtil.merge(new long[] {1, 2, 3});
 		Assert.assertEquals("1,2,3", s);
 
 		s = StringUtil.merge(new long[] {1});

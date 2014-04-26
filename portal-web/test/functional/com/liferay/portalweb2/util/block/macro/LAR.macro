@@ -83,6 +83,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />
 		</execute>
+
+		<execute action="BasePortletExport#selectFrame" locator-key1="EXPORT_IFRAME" />
 	</command>
 
 	<command name="gotoExportSiteCmd">

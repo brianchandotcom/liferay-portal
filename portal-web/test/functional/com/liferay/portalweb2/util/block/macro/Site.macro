@@ -739,6 +739,28 @@
 		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="selectParentSite">
+		<execute action="CPSitesettings#assertClick" locator-key1="PARENT_SITE_SELECT" value1="Select" />
+
+		<var name="key_parentSiteName" value="${parentSiteName}" />
+
+		<execute action="CPSitesAddSelectSite#selectFrame" locator-key1="SELECT_SITE_IFRAME" />
+		<execute action="CPSitesAddSelectSite#type" locator-key1="BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
+		<execute action="CPSitesAddSelectSite#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${chooseButtonAvailable}" arg2="false" />
+			<then>
+				<execute action="CPSitesAddSelectSite#assertTextNotPresent" locator-key1="SITES_TABLE_NAME" value1="${parentSiteName}" />
+				<execute action="CPSitesAddSelectSite#assertTextNotPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute action="CPSitesAddSelectSite#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+			</then>
+		</if>
+
+		<execute action="CPSitesAddSelectSite#close" locator1="null" />
+		<execute action="CPSitesAdd#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -887,6 +909,14 @@
 				<execute action="CPSitesettingsDisplaysettings#select" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewGlobalLandingDefault">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="SCOPE_SELECTOR_SITE_NAME" value1="${siteName}" />
+		<execute action="Home#assertTextNotPresent" value1="You do not have the roles required to access this portlet" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 	</command>
 
 	<command name="viewLimitMembershipParentSiteCP">

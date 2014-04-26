@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_SITES_SITES_SITE_PREVIEW_IN_DEVICE</td>
+	<td>//input[@value='com.liferay.portal.model.GroupPREVIEW_IN_DEVICE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTROL_PANEL_SITES_SITES_SITE_VIEW</td>
 	<td>//input[@value='com.liferay.portal.model.GroupVIEW']</td>
 	<td></td>

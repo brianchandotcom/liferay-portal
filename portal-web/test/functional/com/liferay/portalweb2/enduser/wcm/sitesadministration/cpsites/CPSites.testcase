@@ -455,6 +455,65 @@
 		</execute>
 	</command>
 
+	<command name="SiteCannotBeItsOwnParent" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#selectParentSite">
+			<var name="chooseButtonAvailable" value="false" />
+			<var name="parentSiteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="SiteCannotBeItsOwnParentStaging" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="Site Name" />
+			<var name="uncheckPropagation" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#viewStagingLocalLivePG" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#selectParentSite">
+			<var name="chooseButtonAvailable" value="false" />
+			<var name="parentSiteName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
 		<var name="childChildSiteName" value="Child ChildSiteName" />
 		<var name="childSiteName" value="Child SiteName" />

@@ -46,7 +46,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var name="larFileName" input="${valueName}"  pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" group="1" />
+		<var name="larFileName" input="${valueName}" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" group="1" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -61,13 +61,6 @@
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
-
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />

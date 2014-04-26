@@ -449,6 +449,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_SITES_SITE_NAME_1</td>
+	<td>xpath=(//span[@class='site-name'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES_SITE_NAME_2</td>
+	<td>xpath=(//span[@class='site-name'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES_SITE_NAME_2</td>
+	<td>xpath=(//span[@class='site-name'])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -518,6 +533,11 @@
 <tr>
 	<td>USER_SIGN_IN</td>
 	<td>//li[contains(@class,'sign-in')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES_SITE_NAME_1</td>
+	<td>//span[@class='site-name']</td>
 	<td></td>
 </tr>
 </tbody>

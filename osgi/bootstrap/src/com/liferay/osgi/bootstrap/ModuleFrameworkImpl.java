@@ -342,6 +342,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_checkPermission();
 		}
 
+		if ((bundle.getState() & Bundle.ACTIVE) == Bundle.ACTIVE) {
+			return;
+		}
+
 		try {
 			bundle.start(options);
 		}
@@ -671,8 +675,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private String _getFelixFileInstallDir() {
-		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
-			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+		return StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 	}
 
 	private String _getFelixFileInstallLogLevel() {
@@ -823,12 +826,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private boolean _hasLazyActivationPolicy(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-		if (fragmentHost != null) {
-			return false;
-		}
-
 		String activationPolicy = headers.get(
 			Constants.BUNDLE_ACTIVATIONPOLICY);
 
@@ -912,7 +909,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Bundle bundle = (Bundle)addBundle(
 				initialBundleURL.toString(), inputStream, false);
 
-			if (bundle == null) {
+			if ((bundle == null) || _isFragmentBundle(bundle)) {
 				return;
 			}
 
@@ -945,6 +942,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	private boolean _isFragmentBundle(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+		if (fragmentHost == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _processURL(
@@ -1120,6 +1129,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		List<Bundle> startBundles = new ArrayList<Bundle>();
 		List<Bundle> refreshBundles = new ArrayList<Bundle>();
 
+		File portalDir = new File(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
+
+		File[] portalBundles = portalDir.listFiles();
+
+		for (File initialBundle : portalBundles) {
+			if (initialBundle.isDirectory()) {
+				continue;
+			}
+
+			String canonicalLocation =
+				initialBundle.toURI().toString().concat("@start");
+
+			_installInitialBundle(
+				canonicalLocation, lazyActivationBundles, startBundles,
+				refreshBundles);
+		}
+
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
@@ -1159,6 +1185,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			for (Bundle bundle : _startBundles) {
+				if (_isFragmentBundle(bundle)) {
+					continue;
+				}
+
 				try {
 					startBundle(bundle, 0, false);
 				}
@@ -1168,6 +1198,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			for (Bundle bundle : _lazyActivationBundles) {
+				if (_isFragmentBundle(bundle)) {
+					continue;
+				}
+
 				try {
 					startBundle(bundle, Bundle.START_ACTIVATION_POLICY, false);
 				}

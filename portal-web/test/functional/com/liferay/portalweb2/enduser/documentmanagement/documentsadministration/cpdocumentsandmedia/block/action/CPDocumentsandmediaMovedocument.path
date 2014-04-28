@@ -30,33 +30,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_FOLDER</td>
-	<td>//div[contains(.,'Current Folder') and contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
+	<td>MOVE_FILE</td>
+	<td>//li[@class='move-file']/span[@class='file-title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_FOLDER</td>
+	<td>NEW_FOLDER</td>
 	<td>//input[@id='_20_folderName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_PARENT_FOLDER_BUTTON</td>
+	<td>SELECT_BUTTON</td>
 	<td>//button[@id='_20_selectFolderButton']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REMOVE_PARENT_FOLDER_BUTTON</td>
-	<td>//button[@id='_20_removeFolderButton']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MOVE_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Move')]</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>//div[contains(@class,'button-holder')]/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

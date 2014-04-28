@@ -28,16 +28,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <p>
- * This class is intended to handle setting properties for asset vocabulary
- * model.
- * </p>
- *
- * <p>
- * It handles specific setting keys for this model, so avoid to set your custom
- * keys using UnicodeProperties methods.
- * </p>
- *
  * @author José Manuel Navarro
  */
 public class AssetVocabularySettingsProperties extends UnicodeProperties {

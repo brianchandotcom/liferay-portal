@@ -543,15 +543,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String referenceKey = getReferenceKey(classedModel);
 
 		if (missing) {
+			referenceElement.addAttribute("missing", Boolean.TRUE.toString());
+
 			if (_references.contains(referenceKey)) {
 				return referenceElement;
 			}
 
 			if (!_missingReferences.contains(referenceKey)) {
 				_missingReferences.add(referenceKey);
-
-				referenceElement.addAttribute(
-					"missing", Boolean.TRUE.toString());
 
 				doAddReferenceElement(
 					referrerClassedModel, null, classedModel, className,

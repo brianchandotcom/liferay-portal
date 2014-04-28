@@ -105,8 +105,9 @@ public class JournalFolderServiceTest {
 		JournalFolderLocalServiceUtil.updateFolder(
 			TestPropsValues.getUserId(), folder.getFolderId(),
 			folder.getParentFolderId(), folder.getName(),
-			folder.getDescription(), ddmStructureIds, true, false,
-			serviceContext);
+			folder.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"Test Article");
@@ -142,6 +143,62 @@ public class JournalFolderServiceTest {
 		}
 		catch (InvalidDDMStructureException iddmse) {
 		}
+	}
+
+	@Test
+	public void testInheritedWorkflowFolder() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		JournalFolderServiceUtil.updateFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
+			new long[0], JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW,
+			false, serviceContext);
+
+		JournalFolder countries = JournalTestUtil.addFolder(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Countries");
+
+		Assert.assertEquals(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				countries.getFolderId()));
+
+		JournalFolder germany = JournalTestUtil.addFolder(
+			_group.getGroupId(), countries.getFolderId(), "Germany");
+
+		Assert.assertEquals(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				germany.getFolderId()));
+
+		JournalFolder spain = JournalTestUtil.addFolder(
+			_group.getGroupId(), countries.getFolderId(), "Spain");
+
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		long[] ddmStructureIds = new long[]{ddmStructure1.getStructureId()};
+
+		JournalFolderServiceUtil.updateFolder(
+			spain.getFolderId(), spain.getParentFolderId(), spain.getName(),
+			spain.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
+
+		Assert.assertEquals(
+			spain.getFolderId(),
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				spain.getFolderId()));
+
+		JournalFolder madrid = JournalTestUtil.addFolder(
+			_group.getGroupId(), spain.getFolderId(), "Madrid");
+
+		Assert.assertEquals(
+			spain.getFolderId(),
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				madrid.getFolderId()));
 	}
 
 	@Test
@@ -183,8 +240,9 @@ public class JournalFolderServiceTest {
 		JournalFolderLocalServiceUtil.updateFolder(
 			TestPropsValues.getUserId(), folder2.getFolderId(),
 			folder2.getParentFolderId(), folder2.getName(),
-			folder2.getDescription(), ddmStructureIds, true, false,
-			serviceContext);
+			folder2.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			JournalArticle.class.getName());
@@ -244,8 +302,9 @@ public class JournalFolderServiceTest {
 		JournalFolderLocalServiceUtil.updateFolder(
 			TestPropsValues.getUserId(), folder.getFolderId(),
 			folder.getParentFolderId(), folder.getName(),
-			folder.getDescription(), ddmStructureIds, true, false,
-			serviceContext);
+			folder.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
 
 		try {
 			JournalArticleLocalServiceUtil.moveArticle(
@@ -313,8 +372,9 @@ public class JournalFolderServiceTest {
 		JournalFolderLocalServiceUtil.updateFolder(
 			TestPropsValues.getUserId(), folder3.getFolderId(),
 			folder3.getParentFolderId(), folder3.getName(),
-			folder3.getDescription(), ddmStructureIds, true, false,
-			serviceContext);
+			folder3.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			JournalFolder.class.getName());
@@ -377,8 +437,9 @@ public class JournalFolderServiceTest {
 		JournalFolderLocalServiceUtil.updateFolder(
 			TestPropsValues.getUserId(), folder2.getFolderId(),
 			folder2.getParentFolderId(), folder2.getName(),
-			folder2.getDescription(), ddmStructureIds, true, false,
-			serviceContext);
+			folder2.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
 
 		try {
 			JournalFolderLocalServiceUtil.moveFolder(
@@ -456,8 +517,10 @@ public class JournalFolderServiceTest {
 			JournalFolderLocalServiceUtil.updateFolder(
 				TestPropsValues.getUserId(), folder.getFolderId(),
 				folder.getParentFolderId(), folder.getName(),
-				folder.getDescription(), ddmStructureIds, true, false,
-				serviceContext);
+				folder.getDescription(), ddmStructureIds,
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+				false, serviceContext);
 
 			Assert.fail();
 		}
@@ -476,8 +539,10 @@ public class JournalFolderServiceTest {
 			JournalFolderLocalServiceUtil.updateFolder(
 				TestPropsValues.getUserId(), folder.getFolderId(),
 				folder.getParentFolderId(), folder.getName(),
-				folder.getDescription(), ddmStructureIds, true, false,
-				serviceContext);
+				folder.getDescription(), ddmStructureIds,
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+				false, serviceContext);
 
 			Assert.fail();
 		}

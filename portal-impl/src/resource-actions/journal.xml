@@ -57,6 +57,7 @@
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
 				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -72,6 +73,7 @@
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
 				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

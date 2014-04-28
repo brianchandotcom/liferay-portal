@@ -275,12 +275,12 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.updateFolder(folderId, parentFolderId,
-			name, description, ddmStructureIds, overrideDDMStructures,
+			name, description, ddmStructureIds, restrictionType,
 			mergeWithParentFolder, serviceContext);
 	}
 

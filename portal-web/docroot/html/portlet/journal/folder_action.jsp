@@ -110,6 +110,26 @@ else {
 				</c:if>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
+				%>
+
+				<c:if test="<%= workflowEnabled && JournalFolderPermission.contains(permissionChecker, scopeGroupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, ActionKeys.UPDATE) %>">
+					<portlet:renderURL var="editURL">
+						<portlet:param name="struts_action" value="/journal/edit_folder" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+						<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
+						<portlet:param name="rootFolder" value="true" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						image="edit"
+						url="<%= editURL %>"
+					/>
+				</c:if>
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
 					<portlet:renderURL var="addFolderURL">
 						<portlet:param name="struts_action" value="/journal/edit_folder" />

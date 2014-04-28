@@ -21,13 +21,13 @@ JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-boolean inherited = true;
+int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
 if (folder != null) {
-	inherited = !folder.isOverrideDDMStructures();
+	restrictionType = folder.getRestrictionType();
 }
 
-List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
+List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">

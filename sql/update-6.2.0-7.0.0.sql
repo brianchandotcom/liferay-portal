@@ -17,7 +17,7 @@ create table ExportImportConfiguration (
 	statusDate DATE null
 );
 
-alter table JournalFolder add overrideDDMStructures BOOLEAN;
+alter table JournalFolder add restrictionType INTEGER;
 
 create table JournalFolders_DDMStructures (
 	structureId LONG not null,

@@ -334,7 +334,7 @@ public class DDMStructureServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
 		HttpPrincipal httpPrincipal, long[] groupIds, long journalFolderId,
-		boolean inherited)
+		int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -343,7 +343,7 @@ public class DDMStructureServiceHttp {
 					_getJournalFolderStructuresParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					groupIds, journalFolderId, inherited);
+					groupIds, journalFolderId, restrictionType);
 
 			Object returnObj = null;
 
@@ -868,7 +868,7 @@ public class DDMStructureServiceHttp {
 			long.class, long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getJournalFolderStructuresParameterTypes7 = new Class[] {
-			long[].class, long.class, boolean.class
+			long[].class, long.class, int.class
 		};
 	private static final Class<?>[] _getStructureParameterTypes8 = new Class[] {
 			long.class

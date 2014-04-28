@@ -15,9 +15,11 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -62,27 +64,52 @@ public class FileEntryStagedModelDataHandlerTest
 	@Test
 	@Transactional
 	public void testCompanyScopeDependencies() throws Exception {
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addCompanyDependencies();
 
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+	}
+
+	@Test
+	@Transactional
+	public void testFileExtensionExportImport() throws Exception {
+		String sourceFileName = "liferay.is.great.pdf";
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName);
+
+		// Export and import file entry
+
+		exportImportStagedModel(fileEntry);
+
+		FileEntry importedFileEntry =
+			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertTrue(importedFileEntry.getExtension().equals("pdf"));
+
+		// Update file entry title
+
+		String title = "liferay.is.awesome";
+
+		DLAppTestUtil.updateFileEntry(
+			stagingGroup.getGroupId(), fileEntry.getFileEntryId(),
+			StringPool.BLANK, title);
+
+		// Export and import again to propagate changes
+
+		exportImportStagedModel(fileEntry);
+
+		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertTrue(importedFileEntry.getExtension().equals("pdf"));
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
@@ -168,6 +195,24 @@ public class FileEntryStagedModelDataHandlerTest
 			group.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString(),
 			dlFileEntryType.getFileEntryTypeId());
+	}
+
+	protected void exportImportStagedModel(StagedModel stagedModel)
+		throws Exception {
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
 	}
 
 	@Override

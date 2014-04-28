@@ -182,10 +182,6 @@ catch (NoSuchFolderException nsfe) {
 	</aui:button-row>
 </aui:form>
 
-<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
-</liferay-portlet:renderURL>
-
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />openFolderSelectorButton').on(
 		'click',
@@ -199,6 +195,11 @@ catch (NoSuchFolderException nsfe) {
 					},
 					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+					<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
+					</liferay-portlet:renderURL>
+					
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

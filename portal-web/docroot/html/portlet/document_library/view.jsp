@@ -204,8 +204,6 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 </aui:script>
 
 <aui:script use="liferay-document-library">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
-
 	<%
 	String[] escapedEntryColumns = new String[entryColumns.length];
 
@@ -242,6 +240,9 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
 				},
 				'listViewConfig.useTransition': false,
+
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
+				
 				mainUrl: '<%= mainURL %>',
 				strutsAction: '/document_library/view'
 			},

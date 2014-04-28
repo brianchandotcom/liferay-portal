@@ -683,6 +683,9 @@ public class PortletExporter {
 			"root-portlet-id", PortletConstants.getRootPortletId(portletId));
 		portletElement.addAttribute("old-plid", String.valueOf(plid));
 		portletElement.addAttribute(
+			"scope-group-id",
+			String.valueOf(portletDataContext.getScopeGroupId()));
+		portletElement.addAttribute(
 			"scope-layout-type", portletDataContext.getScopeType());
 		portletElement.addAttribute(
 			"scope-layout-uuid", portletDataContext.getScopeLayoutUuid());

@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchWorkflowDefinitionLinkException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
+<%@ page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetNameException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecord" %><%@

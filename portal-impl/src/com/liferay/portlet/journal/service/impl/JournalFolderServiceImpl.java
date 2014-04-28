@@ -366,18 +366,17 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
-			long[] ddmStructureIds, boolean overrideDDMStructures,
+			long[] ddmStructureIds, int restrictionType,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
-
 		JournalFolderPermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
+			ActionKeys.UPDATE);
 
 		return journalFolderLocalService.updateFolder(
 			getUserId(), folderId, parentFolderId, name, description,
-			ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+			ddmStructureIds, restrictionType, mergeWithParentFolder,
 			serviceContext);
 	}
 

@@ -547,6 +547,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getInheritedWorkflowFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchFolderException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getNoAssetFolders()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -609,7 +614,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long[] ddmStructureIds,
-		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

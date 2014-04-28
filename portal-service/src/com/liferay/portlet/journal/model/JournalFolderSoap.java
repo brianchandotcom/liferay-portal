@@ -43,7 +43,7 @@ public class JournalFolderSoap implements Serializable {
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setOverrideDDMStructures(model.getOverrideDDMStructures());
+		soapModel.setRestrictionType(model.getRestrictionType());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -196,16 +196,12 @@ public class JournalFolderSoap implements Serializable {
 		_description = description;
 	}
 
-	public boolean getOverrideDDMStructures() {
-		return _overrideDDMStructures;
+	public int getRestrictionType() {
+		return _restrictionType;
 	}
 
-	public boolean isOverrideDDMStructures() {
-		return _overrideDDMStructures;
-	}
-
-	public void setOverrideDDMStructures(boolean overrideDDMStructures) {
-		_overrideDDMStructures = overrideDDMStructures;
+	public void setRestrictionType(int restrictionType) {
+		_restrictionType = restrictionType;
 	}
 
 	public int getStatus() {
@@ -252,7 +248,7 @@ public class JournalFolderSoap implements Serializable {
 	private String _treePath;
 	private String _name;
 	private String _description;
-	private boolean _overrideDDMStructures;
+	private int _restrictionType;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

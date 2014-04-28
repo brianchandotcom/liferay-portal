@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_MENULIST_PERMISSIONS</td>
-	<td>//a[@id='_166_ddmTemplatesSearchContainer_1_menu_permissions']</td>
+	<td>//a[contains(@id,'_166_ddmTemplatesSearchContainer') and contains(@id,'menu_permissions')]</td>
 	<td></td>
 </tr>
 <tr>

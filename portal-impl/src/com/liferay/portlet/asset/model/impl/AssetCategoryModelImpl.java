@@ -776,6 +776,26 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return _originalVocabularyId;
 	}
 
+	public long getNestedSetsLeft() {
+		return _leftCategoryId;
+	}
+
+	public long getNestedSetsRight() {
+		return _rightCategoryId;
+	}
+
+	public long getScopeId() {
+		return _groupId;
+	}
+
+	public void setNestedSetsLeft(long nestedSetsLeft) {
+		_leftCategoryId = nestedSetsLeft;
+	}
+
+	public void setNestedSetsRight(long nestedSetsRight) {
+		_rightCategoryId = nestedSetsRight;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(

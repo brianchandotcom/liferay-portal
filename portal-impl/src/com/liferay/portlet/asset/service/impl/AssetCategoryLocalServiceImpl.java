@@ -362,7 +362,16 @@ public class AssetCategoryLocalServiceImpl
 	public List<Long> getSubcategoryIds(long parentCategoryId)
 		throws SystemException {
 
-		return assetCategoryFinder.findByG_L(parentCategoryId);
+		AssetCategory parentAssetCategory =
+			assetCategoryPersistence.fetchByPrimaryKey(parentCategoryId);
+
+		if (parentAssetCategory == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.toList(
+			assetCategoryPersistence.getDescendants(parentAssetCategory),
+			AssetCategory.CATEGORY_ID_ACCESSOR);
 	}
 
 	@Override

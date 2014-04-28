@@ -61,15 +61,16 @@ public class ListUtil {
 	}
 
 	public static <E> int count(
-		Collection<? extends E> list, PredicateFilter<E> predicateFilter) {
+		Collection<? extends E> collection,
+		PredicateFilter<E> predicateFilter) {
 
-		if (isEmpty(list)) {
+		if (isEmpty(collection)) {
 			return 0;
 		}
 
 		int counter = 0;
 
-		for (E element : list) {
+		for (E element : collection) {
 			if (predicateFilter.filter(element)) {
 				++counter;
 			}
@@ -107,13 +108,14 @@ public class ListUtil {
 	}
 
 	public static <E> boolean exists(
-		Collection<? extends E> list, PredicateFilter<E> predicateFilter) {
+		Collection<? extends E> collection,
+		PredicateFilter<E> predicateFilter) {
 
-		if (isEmpty(list)) {
+		if (isEmpty(collection)) {
 			return false;
 		}
 
-		for (E element : list) {
+		for (E element : collection) {
 			if (predicateFilter.filter(element)) {
 				return true;
 			}
@@ -123,23 +125,25 @@ public class ListUtil {
 	}
 
 	public static <T> Collection<T> filter(
-		Collection<? extends T> inputList, Collection<T> outputList,
+		Collection<? extends T> inputCollection, Collection<T> outputCollection,
 		PredicateFilter<T> predicateFilter) {
 
-		for (T item : inputList) {
+		for (T item : inputCollection) {
 			if (predicateFilter.filter(item)) {
-				outputList.add(item);
+				outputCollection.add(item);
 			}
 		}
 
-		return outputList;
+		return outputCollection;
 	}
 
 	public static <T> Collection<T> filter(
-		Collection<? extends T> inputList, PredicateFilter<T> predicateFilter) {
+		Collection<? extends T> inputCollection,
+		PredicateFilter<T> predicateFilter) {
 
 		return filter(
-			inputList, new ArrayList<T>(inputList.size()), predicateFilter);
+			inputCollection, new ArrayList<T>(inputCollection.size()),
+			predicateFilter);
 	}
 
 	public static <E> List<E> fromArray(E[] array) {
@@ -240,16 +244,16 @@ public class ListUtil {
 		return fromArray(StringUtil.split(s, delimiter));
 	}
 
-	public static boolean isEmpty(Collection<?> list) {
-		if ((list == null) || list.isEmpty()) {
+	public static boolean isEmpty(Collection<?> collection) {
+		if ((collection == null) || collection.isEmpty()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static boolean isNotEmpty(Collection<?> list) {
-		return !isEmpty(list);
+	public static boolean isNotEmpty(Collection<?> collection) {
+		return !isEmpty(collection);
 	}
 
 	public static boolean isUnmodifiableList(List<?> list) {

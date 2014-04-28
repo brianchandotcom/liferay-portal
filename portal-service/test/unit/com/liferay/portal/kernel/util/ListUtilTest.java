@@ -30,7 +30,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testCountWithEmptyListReturnsZero() {
-		Collection<String> list = new ArrayList<String>();
+		Collection<String> collection = new ArrayList<String>();
 
 		PredicateFilter predicate = new PredicateFilter() {
 			@Override
@@ -39,12 +39,12 @@ public class ListUtilTest {
 			}
 		};
 
-		Assert.assertEquals(0, ListUtil.count(list, predicate));
+		Assert.assertEquals(0, ListUtil.count(collection, predicate));
 	}
 
 	@Test
 	public void testCountWithNullListReturnsZero() {
-		List<String> list = null;
+		List<String> collection = null;
 
 		PredicateFilter predicate = new PredicateFilter() {
 			@Override
@@ -53,7 +53,7 @@ public class ListUtilTest {
 			}
 		};
 
-		Assert.assertEquals(0, ListUtil.count(list, predicate));
+		Assert.assertEquals(0, ListUtil.count(collection, predicate));
 	}
 
 	@Test
@@ -162,10 +162,10 @@ public class ListUtilTest {
 		inputList.add("b");
 		inputList.add("c");
 
-		Collection<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputCollection = ListUtil.filter(
 			inputList, predicateFilter);
 
-		Assert.assertEquals(expectedOutputList, actualOutputList);
+		Assert.assertEquals(expectedOutputList, actualOutputCollection);
 	}
 
 	@Test
@@ -200,11 +200,11 @@ public class ListUtilTest {
 
 		};
 
-		Collection<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputCollection = ListUtil.filter(
 			inputList, outputList, predicateFilter);
 
-		Assert.assertSame(outputList, actualOutputList);
-		Assert.assertEquals(expectedOutputList, actualOutputList);
+		Assert.assertSame(outputList, actualOutputCollection);
+		Assert.assertEquals(expectedOutputList, actualOutputCollection);
 	}
 
 	@Test

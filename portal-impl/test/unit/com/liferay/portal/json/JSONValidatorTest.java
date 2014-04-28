@@ -1,0 +1,74 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+package com.liferay.portal.json;
+
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+
+/**
+ * @author Pablo Carvalho
+ */
+@RunWith(PowerMockRunner.class)
+public class JSONValidatorTest extends PowerMockito {
+	@Before
+	public void setUp () throws Exception {
+		String jsonSchema = readJSON("schema.json");
+		_jsonValidator = new JSONValidator(jsonSchema);
+	}
+
+	@Test
+	public void testInvalidAdditionalProperty() throws Exception {
+		String json = readJSON("invalid-additional-property.json");
+		Assert.assertFalse(_jsonValidator.isValid(json));
+	}
+
+	@Test
+	public void testInvalidDataType() throws Exception {
+		String json = readJSON("invalid-data-type.json");
+		Assert.assertFalse(_jsonValidator.isValid(json));
+	}
+
+	@Test
+	public void testMissingRequiredProperty() throws Exception {
+		String json = readJSON("missing-required-property.json");
+		Assert.assertFalse(_jsonValidator.isValid(json));
+	}
+
+	@Test
+	public void testValidJSON() throws Exception {
+		String json = readJSON("valid.json");
+		Assert.assertTrue(_jsonValidator.isValid(json));
+	}
+
+	protected String readJSON(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
+	}
+	private JSONValidator _jsonValidator;
+}

@@ -146,6 +146,62 @@ public class JournalFolderServiceTest {
 	}
 
 	@Test
+	public void testInheritedWorkflowFolder() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		JournalFolderServiceUtil.updateFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
+			new long[0], JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW,
+			false, serviceContext);
+
+		JournalFolder countries = JournalTestUtil.addFolder(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Countries");
+
+		Assert.assertEquals(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				countries.getFolderId()));
+
+		JournalFolder germany = JournalTestUtil.addFolder(
+			_group.getGroupId(), countries.getFolderId(), "Germany");
+
+		Assert.assertEquals(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				germany.getFolderId()));
+
+		JournalFolder spain = JournalTestUtil.addFolder(
+			_group.getGroupId(), countries.getFolderId(), "Spain");
+
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		long[] ddmStructureIds = new long[]{ddmStructure1.getStructureId()};
+
+		JournalFolderServiceUtil.updateFolder(
+			spain.getFolderId(), spain.getParentFolderId(), spain.getName(),
+			spain.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
+
+		Assert.assertEquals(
+			spain.getFolderId(),
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				spain.getFolderId()));
+
+		JournalFolder madrid = JournalTestUtil.addFolder(
+			_group.getGroupId(), spain.getFolderId(), "Madrid");
+
+		Assert.assertEquals(
+			spain.getFolderId(),
+			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
+				madrid.getFolderId()));
+	}
+
+	@Test
 	public void testMoveArticleFromTrashToFolder() throws Exception {
 		JournalFolder folder1 = JournalTestUtil.addFolder(
 			_group.getGroupId(),

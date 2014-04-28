@@ -1233,16 +1233,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				oldLinksToLayout.add(oldLinkToLayout);
 				newLinksToLayout.add(newLinkToLayout);
 
-				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, layout,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-				}
-				else {
-					portletDataContext.addReferenceElement(
-						entityStagedModel, entityElement, layout,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-				}
+				portletDataContext.addReferenceElement(
+					entityStagedModel, entityElement, layout,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {

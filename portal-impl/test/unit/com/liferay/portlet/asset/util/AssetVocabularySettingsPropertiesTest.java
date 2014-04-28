@@ -12,10 +12,9 @@
  * details.
  */
 
-package unit.com.liferay.portlet.asset.util;
+package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
 import java.util.List;
 

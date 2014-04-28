@@ -19,35 +19,32 @@ List<AssetRendererFactory> availableAssetFactories = ListUtil.filter(
 	AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()),
 	new PredicateFilter<AssetRendererFactory>() {
 
+		@Override
 		public boolean filter(AssetRendererFactory assetRendererFactory) {
 			return assetRendererFactory.isCategorizable();
 		}
+
 	});
 
 List<AssetRendererFactory> assetFactoriesWithClassTypes = ListUtil.filter(
 	availableAssetFactories,
-	new PredicateFilter() {
-		public boolean filter(Object object) {
-			AssetRendererFactory assetRendererFactory = (AssetRendererFactory)object;
+	new PredicateFilter<AssetRendererFactory>() {
 
+		@Override
+		public boolean filter(AssetRendererFactory assetRendererFactory) {
 			return assetRendererFactory.isSupportsClassTypes();
 		}
+
 	});
 
 String[] selectedClassNameIds = null;
-String[] requiredClassNameIds = null;
 
 if (vocabulary != null) {
 	selectedClassNameIds = vocabulary.getAssociatedAssetClassNameIds();
-	requiredClassNameIds = vocabulary.getAssociatedRequiredAssetClassNameIds();
 }
 
 if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 	selectedClassNameIds = new String[] {"0"};
-}
-
-if (ArrayUtil.isEmpty(requiredClassNameIds)) {
-	requiredClassNameIds = new String[] {"0"};
 }
 %>
 
@@ -84,25 +81,26 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 					for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
 					%>
 
-							<aui:select cssClass="hide subtype-select subtype-classNameId0" inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
-								<aui:option label="all-asset-subtypes" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
+						<aui:select cssClass="hide subtype-select subtype-classNameId0" inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
+							<aui:option label="all-asset-subtypes" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
-								<%
-								Map<Long, String> classTypes = factory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
-								if (classTypes.isEmpty()) {
-									continue;
-								}
+							<%
+							Map<Long, String> classTypes = factory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
 
-								for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
-								%>
+							if (classTypes.isEmpty()) {
+								continue;
+							}
 
-									<aui:option label="<%= classType.getValue() %>" selected="<%= false %>" value="<%= classType.getKey() %>" />
+							for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
+							%>
 
-								<%
-								}
-								%>
+								<aui:option label="<%= classType.getValue() %>" selected="<%= false %>" value="<%= classType.getKey() %>" />
 
-							</aui:select>
+							<%
+							}
+							%>
+
+						</aui:select>
 
 					<%
 					}
@@ -121,11 +119,11 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 				String rowClassNameId = "classNameId" + index;
 
 				String[] parts = StringUtil.split(selectedClassNameIds[index], CharPool.COLON);
-				Long classNameId = Long.valueOf(parts[0]);
-				Long classTypeId = Long.valueOf(parts[1]);
 
-				boolean requiredIndex =
-					vocabulary.isRequired(classNameId, classTypeId);
+				long classNameId = GetterUtil.getLong(parts[0]);
+				long classTypeId = GetterUtil.getLong(parts[1]);
+
+				boolean requiredIndex = vocabulary.isRequired(classNameId, classTypeId);
 		%>
 
 				<div class="lfr-form-row lfr-form-row-inline">
@@ -135,14 +133,9 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 							<%
 							for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
-								boolean selected = false;
-
-								if (classNameId.equals(assetRendererFactory.getClassNameId())) {
-									selected = true;
-								}
 							%>
 
-								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= selected %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
 
 							<%
 							}
@@ -151,30 +144,23 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 						</aui:select>
 
 						<%
-						for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
-							boolean hidden = true;
-							if (classNameId.equals(factory.getClassNameId())) {
-								hidden = false;
-							}
+						for (AssetRendererFactory assetRendererFactory : assetFactoriesWithClassTypes) {
 						%>
 
-							<aui:select cssClass='<%= (hidden ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-" + rowClassNameId %>'>
+							<aui:select cssClass='<%= (classNameId == assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
 								<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
-								Map<Long, String> classTypes = factory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+								Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+
 								if (classTypes.isEmpty()) {
 									continue;
 								}
 
 								for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
-									boolean selected = false;
-									if (classNameId.equals(factory.getClassNameId()) && classTypeId.equals(classType.getKey())) {
-										selected = true;
-									}
 								%>
 
-									<aui:option label="<%= classType.getValue() %>" selected="<%= selected %>" value="<%= classType.getKey() %>" />
+									<aui:option label="<%= classType.getValue() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypeId == (classType.getKey())) %>" value="<%= classType.getKey() %>" />
 
 								<%
 								}
@@ -225,7 +211,6 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 </aui:script>
 
 <aui:script use="aui-base">
-
 	var form = A.one('#<portlet:namespace /><%= formName %>');
 
 	form.delegate(
@@ -248,7 +233,6 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 		},
 		'.vocabulary-asset-type-select'
 	);
-
 </aui:script>
 
 <%!

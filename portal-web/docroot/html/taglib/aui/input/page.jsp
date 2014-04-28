@@ -55,11 +55,13 @@
 	<c:when test='<%= (model != null) && type.equals("assetCategories") %>'>
 
 		<%
-			long classTypePK = 0;
-			Object dynamicValue = dynamicAttributes.get("classTypePK");
-			if (dynamicValue != null) {
-				classTypePK = Long.valueOf(dynamicValue.toString());
-			}
+		long classTypePK = 0;
+
+		Object dynamicValue = dynamicAttributes.get("classTypePK");
+
+		if (dynamicValue != null) {
+			classTypePK = GetterUtil.getLong(dynamicValue.toString());
+		}
 		%>
 
 		<liferay-ui:asset-categories-selector

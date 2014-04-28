@@ -183,9 +183,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testDeleteTimestampFromDLReferenceURLs() throws Exception {
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
@@ -194,8 +191,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		String urlContent = StringUtil.merge(urls, StringPool.NEW_LINE);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), urlContent, true);
+			_portletDataContextExport, _referrerStagedModel, urlContent, true);
 
 		String[] exportedURLs = content.split(StringPool.NEW_LINE);
 
@@ -221,17 +217,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	public void testExportDLReferences() throws Exception {
 		_portletDataContextExport.setZipWriter(new TestReaderWriter());
 
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
 		List<String> urls = getURLs(content);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		for (String url : urls) {
 			Assert.assertFalse(content.contains(url));
@@ -281,15 +273,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				"_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en/");
 
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		Assert.assertFalse(
 			content.contains(
@@ -330,15 +318,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				"_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en/");
 
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		Assert.assertFalse(
 			content.contains(
@@ -363,16 +347,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testExportLinksToLayouts() throws Exception {
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
 		String content = replaceLinksToLayoutsParameters(
 			getContent("layout_links.txt"), _stagingPrivateLayout,
 			_stagingPublicLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		assertLinksToLayouts(content, _stagingPrivateLayout, 0);
 		assertLinksToLayouts(
@@ -413,8 +393,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			publicLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContextExport, journalArticle,
-			rootElement.element("entry"), content, true);
+			portletDataContextExport, journalArticle, content, true);
 
 		assertLinksToLayouts(content, privateLayout, 0);
 		assertLinksToLayouts(
@@ -439,34 +418,25 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			getContent("dl_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel,
-			referrerStagedModelElement, content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
 
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel,
-			referrerStagedModelElement, content, true);
+			_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertFalse(content.contains("[$dl-reference="));
 	}
 
 	@Test
 	public void testImportLayoutReferences() throws Exception {
-		Element rootElement =
-			_portletDataContextExport.getExportDataRootElement();
-
-		Element entryElement = rootElement.element("entry");
-
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertFalse(
 			content.contains("@data_handler_group_friendly_url@"));
@@ -481,11 +451,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testImportLinksToLayouts() throws Exception {
-		Element rootElement =
-			_portletDataContextImport.getImportDataRootElement();
-
-		Element entryElement = rootElement.element("entry");
-
 		String content = replaceLinksToLayoutsParameters(
 			getContent("layout_links.txt"), _stagingPrivateLayout,
 			_stagingPublicLayout);
@@ -493,13 +458,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		String originalContent = content;
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		String importedContent =
 			ExportImportHelperUtil.replaceImportContentReferences(
-				_portletDataContextImport, _referrerStagedModel, entryElement,
-				content, true);
+				_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertEquals(originalContent, importedContent);
 	}
@@ -526,22 +489,15 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		String expectedContent = replaceLinksToLayoutsParameters(
 			content, importedPrivateLayout, importedPublicLayout);
 
-		Element rootElement =
-			_portletDataContextImport.getImportDataRootElement();
-
-		Element entryElement = rootElement.element("entry");
-
 		content = replaceLinksToLayoutsParameters(
 			content, _stagingPrivateLayout, _stagingPublicLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel, content, true);
 
 		String importedContent =
 			ExportImportHelperUtil.replaceImportContentReferences(
-				_portletDataContextImport, _referrerStagedModel, entryElement,
-				content, true);
+				_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertEquals(expectedContent, importedContent);
 	}

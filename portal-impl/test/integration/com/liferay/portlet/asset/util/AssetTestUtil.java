@@ -102,9 +102,11 @@ public class AssetTestUtil {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+
 		titleMap.put(locale, ServiceTestUtil.randomString());
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
 		descriptionMap.put(locale, ServiceTestUtil.randomString());
 
 		long userId = TestPropsValues.getUserId();

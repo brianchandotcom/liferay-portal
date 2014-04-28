@@ -16,7 +16,7 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,22 +110,10 @@ public class SocialRelationConstants {
 		}
 	}
 
-	private static List<Integer> _allSocialRelationTypes =
-		new ArrayList<Integer>();
-
-	static {
-		_allSocialRelationTypes.add(TYPE_BI_CONNECTION);
-		_allSocialRelationTypes.add(TYPE_BI_COWORKER);
-		_allSocialRelationTypes.add(TYPE_BI_FRIEND);
-		_allSocialRelationTypes.add(TYPE_BI_ROMANTIC_PARTNER);
-		_allSocialRelationTypes.add(TYPE_BI_SIBLING);
-		_allSocialRelationTypes.add(TYPE_BI_SPOUSE);
-		_allSocialRelationTypes.add(TYPE_UNI_CHILD);
-		_allSocialRelationTypes.add(TYPE_UNI_ENEMY);
-		_allSocialRelationTypes.add(TYPE_UNI_FOLLOWER);
-		_allSocialRelationTypes.add(TYPE_UNI_PARENT);
-		_allSocialRelationTypes.add(TYPE_UNI_SUBORDINATE);
-		_allSocialRelationTypes.add(TYPE_UNI_SUPERVISOR);
-	}
+	private static List<Integer> _allSocialRelationTypes = Arrays.asList(
+		TYPE_BI_CONNECTION, TYPE_BI_COWORKER, TYPE_BI_FRIEND,
+		TYPE_BI_ROMANTIC_PARTNER, TYPE_BI_SIBLING, TYPE_BI_SPOUSE,
+		TYPE_UNI_CHILD, TYPE_UNI_ENEMY, TYPE_UNI_FOLLOWER, TYPE_UNI_PARENT,
+		TYPE_UNI_SUBORDINATE, TYPE_UNI_SUPERVISOR);
 
 }

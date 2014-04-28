@@ -1,4 +1,29 @@
 <definition>
+	<command name="addOrRemoveViewPermissionFromAllRoles">
+		<for list="${roleList}" param="roleName" >
+			<var name="roleName" value="${roleName}" />
+
+			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+			<if>
+				<equals arg1="${addOrRemoveViewPermission}" arg2="Add" />
+				<then>
+					<execute action="Permissions#check" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+				</then>
+				<elseif>
+					<equals arg1="${addOrRemoveViewPermission}" arg2="Remove" />
+					<then>
+						<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+					</then>
+				</elseif>
+			</if>
+		</for>
+
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="assertDefaultPG">
 		<for list="${roleList}" param="roleName" >
 			<var name="roleName" value="${roleName}" />
@@ -256,20 +281,6 @@
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
-	</command>
-
-	<command name="removeViewPermissionFromAllRoles">
-		<for list="${roleList}" param="roleName" >
-			<var name="roleName" value="${roleName}" />
-
-			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-			<var name="key_roleName" value="${key_roleName?lowercase()}" />
-
-			<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-		</for>
-
-		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewPermissionsRemoved">

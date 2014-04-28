@@ -151,22 +151,29 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
-			<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-			<then>
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-
-				<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
-			</then>
-		</if>
-
-		<if>
 			<not>
-				<contains string="${portletName}" substring="{portletName}" />
+				<isset var="nonAdminUser" />
 			</not>
 			<then>
-				<var name="key_portletName" value="${portletName}" />
+				<if>
+					<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+					<then>
+						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+						<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<contains string="${portletName}" substring="{portletName}" />
+					</not>
+					<then>
+						<var name="key_portletName" value="${portletName}" />
+
+						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</command>

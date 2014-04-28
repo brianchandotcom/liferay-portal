@@ -1571,22 +1571,16 @@
 				(socialRelation2.userId1 = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialMutualRelationType">
+	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelation">
 		<![CDATA[
 			INNER JOIN
-				SocialRelation socialRelation1 ON
-					(socialRelation1.userId2 = User_.userId)
-			INNER JOIN
-				SocialRelation socialRelation2 ON
-					(socialRelation2.userId2 = User_.userId)
+				SocialRelation ON
+					(SocialRelation.userId2 = User_.userId)
 			WHERE
-				(socialRelation1.userId1 = ?) AND
-				(socialRelation1.type_ = ?) AND
-				(socialRelation2.userId1 = ?) AND
-				(socialRelation2.type_ = ?)
+				(SocialRelation.userId1 = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelation">
+	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelationButEnemy">
 		<![CDATA[
 			INNER JOIN
 				SocialRelation ON
@@ -1594,16 +1588,6 @@
 			WHERE
 				(SocialRelation.userId1 = ?) AND
 				(SocialRelation.type_ != [$SOCIAL_RELATION_TYPE_UNI_ENEMY$])
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelationType">
-		<![CDATA[
-			INNER JOIN
-				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
-			WHERE
-				(SocialRelation.userId1 = ?) AND
-				(SocialRelation.type_ = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.countByC_N_D">

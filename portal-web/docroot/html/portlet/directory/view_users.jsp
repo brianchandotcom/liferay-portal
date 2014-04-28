@@ -91,7 +91,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	}
 
 	if (portletName.equals(PortletKeys.FRIENDS_DIRECTORY)) {
-		userParams.put("socialRelationType", new Long[] {themeDisplay.getUserId(), new Long(SocialRelationConstants.TYPE_BI_FRIEND)});
+		userParams.put("socialRelationQuery", SocialRelationQuery.getRelationsByType(themeDisplay.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND));
 	}
 	else if (portletName.equals(PortletKeys.MY_SITES_DIRECTORY) && (organizationId == 0) && (userGroupId == 0)) {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();

@@ -270,6 +270,21 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testIntArrayToLongArray() throws Exception {
+		int[] intArray = {1, 2, 3, 4};
+
+		Long[] longArray = ArrayUtil.toLongArray(intArray);
+
+		Assert.assertEquals(longArray.length, intArray.length);
+
+		for (int i = 0; i < longArray.length; i++) {
+			Long value = longArray[i];
+
+			Assert.assertEquals(value.intValue(), intArray[i]);
+		}
+	}
+
+	@Test
 	public void testIsEmptyBooleanArray() {
 		Assert.assertTrue(ArrayUtil.isEmpty((boolean[])null));
 		Assert.assertTrue(ArrayUtil.isEmpty(new boolean[0]));

@@ -18,6 +18,7 @@
 
 <%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.NoSuchUserGroupException" %><%@
+page import="com.liferay.portal.service.persistence.SocialRelationQuery" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>

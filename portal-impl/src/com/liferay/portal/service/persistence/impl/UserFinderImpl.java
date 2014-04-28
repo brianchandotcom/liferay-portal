@@ -37,6 +37,7 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupUtil;
 import com.liferay.portal.service.persistence.RoleUtil;
+import com.liferay.portal.service.persistence.SocialRelationQuery;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -109,18 +110,6 @@ public class UserFinderImpl
 
 	public static final String JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS =
 		UserFinder.class.getName() + ".joinByAnnouncementsDeliveryEmailOrSms";
-
-	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION =
-		UserFinder.class.getName() + ".joinBySocialMutualRelation";
-
-	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE =
-		UserFinder.class.getName() + ".joinBySocialMutualRelationType";
-
-	public static final String JOIN_BY_SOCIAL_RELATION =
-		UserFinder.class.getName() + ".joinBySocialRelation";
-
-	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
-		UserFinder.class.getName() + ".joinBySocialRelationType";
 
 	@Override
 	public int countByUser(long userId, LinkedHashMap<String, Object> params)
@@ -990,22 +979,16 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(
 				JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS);
 		}
-		else if (key.equals("socialMutualRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION);
-		}
-		else if (key.equals("socialMutualRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE);
-		}
-		else if (key.equals("socialRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
-		}
-		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
-		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;
 
 			join = customSQLParam.getSQL();
+		}
+		else if (value instanceof SocialRelationQuery) {
+			SocialRelationQuery socialRelationQuery =
+				(SocialRelationQuery)value;
+
+			join = socialRelationQuery.getJoin();
 		}
 
 		if (Validator.isNotNull(join)) {
@@ -1175,17 +1158,10 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(
 				JOIN_BY_ANNOUNCEMENTS_DELIVERY_EMAIL_OR_SMS);
 		}
-		else if (key.equals("socialMutualRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION);
-		}
-		else if (key.equals("socialMutualRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE);
-		}
-		else if (key.equals("socialRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
-		}
-		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+		else if (key.equals("socialRelationQuery")) {
+			SocialRelationQuery query = (SocialRelationQuery)value;
+
+			join = query.getWhere();
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;
@@ -1283,6 +1259,12 @@ public class UserFinderImpl
 				CustomSQLParam customSQLParam = (CustomSQLParam)value;
 
 				customSQLParam.process(qPos);
+			}
+			else if (value instanceof SocialRelationQuery) {
+				SocialRelationQuery socialRelationQuery =
+					(SocialRelationQuery)value;
+
+				socialRelationQuery.addParameters(qPos);
 			}
 		}
 	}

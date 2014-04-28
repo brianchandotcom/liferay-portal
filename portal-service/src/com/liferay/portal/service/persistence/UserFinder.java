@@ -62,6 +62,19 @@ public interface UserFinder {
 	public java.util.List<com.liferay.portal.model.User> findByNoGroups()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portal.model.User> findBySocialRelationTypes(
+		java.lang.String terms, long userId, int[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.User> findByUsersGroups(
+		java.lang.String terms, long userId, long[] groupIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.User> findBySocialRelationTypesGroups(
+		java.lang.String terms, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,

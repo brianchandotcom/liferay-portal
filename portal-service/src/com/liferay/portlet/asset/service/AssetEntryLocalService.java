@@ -726,7 +726,7 @@ public interface AssetEntryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void validate(long groupId, java.lang.String className,
-		long[] categoryIds, java.lang.String[] tagNames)
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

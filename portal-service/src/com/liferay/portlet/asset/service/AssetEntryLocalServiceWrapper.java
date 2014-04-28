@@ -974,11 +974,11 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public void validate(long groupId, java.lang.String className,
-		long[] categoryIds, java.lang.String[] tagNames)
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_assetEntryLocalService.validate(groupId, className, categoryIds,
-			tagNames);
+		_assetEntryLocalService.validate(groupId, className, classTypeId,
+			categoryIds, tagNames);
 	}
 
 	/**

@@ -48,6 +48,22 @@
 	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE_TABLE-->
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td//a[@title='Actions']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

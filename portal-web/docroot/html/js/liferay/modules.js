@@ -256,7 +256,7 @@
 							'aui-io-request',
 							'event-mouseenter',
 							'liferay-dockbar',
-							'liferay-dockbar-add-content-content-preview',
+							'liferay-dockbar-add-content-preview',
 							'liferay-dockbar-add-content-search',
 							'liferay-portlet-base'
 						]

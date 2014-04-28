@@ -49,13 +49,14 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,6 +80,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 			for (String[] model : _MODELS) {
 				verifyModel(role, model[0], model[1], model[2]);
+			}
+
+			for (ModelResource modelResource : _modelResources) {
+				verifyModel(
+					role, modelResource.getName(), modelResource.getModelName(),
+					modelResource.getPkColumnName());
 			}
 
 			verifyLayout(role);
@@ -268,9 +275,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			PasswordPolicy.class.getName(), "PasswordPolicy", "passwordPolicyId"
 		},
 		new String[] {
-			PollsQuestion.class.getName(), "PollsQuestion", "questionId"
-		},
-		new String[] {
 			SCFrameworkVersion.class.getName(), "SCFrameworkVersion",
 			"frameworkVersionId"
 		},
@@ -299,5 +303,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
+
+	private ServiceTrackerList<ModelResource> _modelResources =
+		ServiceTrackerCollections.list(ModelResource.class);
 
 }

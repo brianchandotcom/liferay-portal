@@ -1040,9 +1040,6 @@
 		<entry key="com.liferay.portlet.messageboards.model.MBMessage">
 			<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 		</entry>
-		<entry key="com.liferay.portlet.polls.model.PollsQuestion">
-			<bean class="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" />
-		</entry>
 		<entry key="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion">
 			<bean class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
 		</entry>

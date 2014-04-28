@@ -2,7 +2,16 @@ configurations {
 	servicebuilder
 }
 
+ext {
+        liferayProjectDir = "${rootDir}/../../.."
+        resourcesDir = "src/main/resources"
+        sourcesDir = "src/main/java"
+        targetEntityName = ""
+}
+
 dependencies {
+	servicebuilder files(["${resourcesDir}"])
+
 	servicebuilder files(["${liferayProjectDir}/osgi/modules/gradle/servicebuilder"])
 	servicebuilder files(["${liferayProjectDir}/portal-impl/classes"])
 	servicebuilder files(["${liferayProjectDir}/portal-service/classes"])
@@ -26,13 +35,6 @@ dependencies {
 	)
 }
 
-ext {
-	liferayProjectDir = "${rootDir}/../../.."
-	resourcesDir = "src/main/resources"
-	sourcesDir = "src/main/java"
-	targetEntityName = ""
-}
-
 task buildService(type: JavaExec) {
 	classpath = configurations.servicebuilder
 	main = "com.liferay.portal.tools.servicebuilder.ServiceBuilder"
@@ -48,7 +50,7 @@ task buildService(type: JavaExec) {
 	args "service.build.number=1"
 	args "service.build.number.increment=true"
 	args "service.hbm.file=${project.ext.resourcesDir}/META-INF/module-hbm.xml"
-	args "service.impl.dir=${project.ext.sourcesDir}
+	args "service.impl.dir=${project.ext.sourcesDir}"
 	args "service.input.file=${project.ext.resourcesDir}/service.xml"
 	args "service.model.hints.file=${project.ext.resourcesDir}/META-INF/portlet-model-hints.xml"
 	args "service.osgi.module=true"
@@ -63,5 +65,5 @@ task buildService(type: JavaExec) {
 	args "service.sql.indexes.file=indexes.sql"
 	args "service.sql.sequences.file=sequences.sql"
 	args "service.target.entity.name=${project.ext.targetEntityName}"
-	args "service.test.dir=src/test/java"
+	args "service.test.dir=${project.ext.testDir}/src/test/java"
 }

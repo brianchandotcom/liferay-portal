@@ -1,0 +1,16 @@
+evaluationDependsOn(':polls-api')
+
+project.ext {
+	apiDir = '../polls-api'
+	deployDir = project.hasProperty('appServerParentDir') ? project.appServerParentDir + "/osgi/core" : null
+	testDir = '../polls-tests'
+	webDir = '../polls-web'
+}
+
+apply from: '../../gradle/servicebuilder.gradle'
+
+dependencies {
+	compile files(["${liferayProjectDir}/portal-impl/classes"])
+
+	compile project(':polls-api')
+}

@@ -413,8 +413,8 @@ public class FileEntryStagedModelDataHandler
 						importedFileEntry =
 							DLAppLocalServiceUtil.updateFileEntry(
 								userId, existingFileEntry.getFileEntryId(),
-								DLUtil.getTitleWithExtension(fileEntry),
-								fileEntry.getMimeType(), fileEntry.getTitle(),
+								titleWithExtension, fileEntry.getMimeType(),
+								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, false, is,
 								fileEntry.getSize(), serviceContext);
 					}

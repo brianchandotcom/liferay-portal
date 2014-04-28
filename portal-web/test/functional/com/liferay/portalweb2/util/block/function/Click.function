@@ -68,6 +68,20 @@
 		<execute function="Click#clickAt" />
 	</command>
 
+	<command name="clickAtSidebarClickAtWaitForScript">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="Click#clickAt" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_page.js')]" />
+	</command>
+
 	<command name="clickWaitForInlineCKEditor">
 		<if>
 			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />

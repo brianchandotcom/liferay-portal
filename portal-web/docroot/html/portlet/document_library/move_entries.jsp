@@ -116,10 +116,15 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
 				for (Folder folder : validMoveFolders) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
@@ -142,10 +147,15 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
 				for (Folder folder : invalidMoveFolders) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
-					<li class="move-error move-folder">
+					<li class="icon-warning-sign move-error move-folder">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
@@ -181,10 +191,15 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
 				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(validMoveFileEntry.getFileEntryId());
 				%>
 
 					<li class="move-file">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveFileEntry.getTitle()) %>">
 							<%= HtmlUtil.escape(validMoveFileEntry.getTitle()) %>
 						</span>
@@ -207,11 +222,17 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
 				for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
+
 					Lock lock = invalidMoveFileEntry.getLock();
 				%>
 
-					<li class="move-error move-file">
+					<li class="icon-warning-sign move-error move-file">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveFileEntry.getTitle()) %>">
 							<%= HtmlUtil.escape(invalidMoveFileEntry.getTitle()) %>
 						</span>

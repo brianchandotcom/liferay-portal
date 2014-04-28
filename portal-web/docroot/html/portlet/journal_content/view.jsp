@@ -401,9 +401,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 
 						<liferay-ui:icon
 							cssClass="lfr-icon-action lfr-icon-action-add"
+							iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= ddmStructure.getName(locale) %>"
-							src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
 							url="<%= taglibAddArticleURL %>"
 						/>
 

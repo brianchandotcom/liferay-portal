@@ -79,6 +79,11 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-edit";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

@@ -34,6 +34,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -73,6 +74,41 @@ public class DLFolderAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
+	}
+
+	@Override
+	public String getIconCssClass() throws PortalException, SystemException {
+		try {
+			int foldersCount = 0;
+			int fileEntriesCount = 0;
+
+			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
+				_folder.getRepositoryId(), _folder.getFolderId(), false);
+
+			foldersCount = subfolderIds.size();
+
+			subfolderIds.clear();
+			subfolderIds.add(_folder.getFolderId());
+
+			fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(
+				_folder.getRepositoryId(), subfolderIds,
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (_folder.isMountPoint()) {
+				return "icon-drive";
+			}
+			else if ((foldersCount + fileEntriesCount) > 0) {
+				return "icon-folder-close";
+			}
+		}
+		catch (com.liferay.portal.kernel.repository.RepositoryException re) {
+			return "icon-remove";
+		}
+		catch (com.liferay.portal.security.auth.PrincipalException pe) {
+			return "icon-remove";
+		}
+
+		return super.getIconCssClass();
 	}
 
 	@Override

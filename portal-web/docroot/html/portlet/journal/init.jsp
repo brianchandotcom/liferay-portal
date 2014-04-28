@@ -51,6 +51,7 @@ page import="com.liferay.portlet.journal.FeedTargetPortletIdException" %><%@
 page import="com.liferay.portlet.journal.FolderNameException" %><%@
 page import="com.liferay.portlet.journal.InvalidDDMStructureException" %><%@
 page import="com.liferay.portlet.journal.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.journal.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticleResource" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@

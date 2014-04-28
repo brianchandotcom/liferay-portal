@@ -174,6 +174,11 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-tasks";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

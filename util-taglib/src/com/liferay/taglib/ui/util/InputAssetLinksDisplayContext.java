@@ -183,6 +183,9 @@ public class InputAssetLinksDisplayContext {
 				selectorEntry.put(
 					"data", _geSelectorEntryData(assetRendererFactory));
 				selectorEntry.put(
+					"iconCssClass",
+					_getSelectorEntryIconCssClass(assetRendererFactory));
+				selectorEntry.put(
 					"id", _getSelectorEntryId(assetRendererFactory));
 				selectorEntry.put(
 					"message", _getSelectorEntryMessage(assetRendererFactory));
@@ -358,6 +361,9 @@ public class InputAssetLinksDisplayContext {
 				"data",
 				_getSelectorEntryData(assetRendererFactory, classType));
 			selectorEntry.put(
+				"iconCssClass",
+				_getSelectorEntryIconCssClass(assetRendererFactory));
+			selectorEntry.put(
 				"id",
 				_getSelectorEntryId(assetRendererFactory, classType));
 			selectorEntry.put("message", _getSelectorEntryMessage(classType));
@@ -391,6 +397,13 @@ public class InputAssetLinksDisplayContext {
 		selectorEntryData.put("type", classType.getValue());
 
 		return selectorEntryData;
+	}
+
+	private String _getSelectorEntryIconCssClass(
+			AssetRendererFactory assetRendererFactory)
+		throws Exception {
+
+		return assetRendererFactory.getIconCssClass();
 	}
 
 	private String _getSelectorEntryId(

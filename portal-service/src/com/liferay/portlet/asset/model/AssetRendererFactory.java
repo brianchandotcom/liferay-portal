@@ -74,6 +74,8 @@ public interface AssetRendererFactory {
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
 		throws Exception;
 
+	public String getIconCssClass();
+
 	public String getIconPath(PortletRequest portletRequest);
 
 	public String getPortletId();

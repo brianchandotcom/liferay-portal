@@ -72,6 +72,11 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-user";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

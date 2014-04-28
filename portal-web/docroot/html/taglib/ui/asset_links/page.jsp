@@ -96,9 +96,9 @@ if (assetEntryId > 0) {
 
 					<li class="asset-links-list-item">
 						<liferay-ui:icon
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= asseLinktEntryTitle %>"
-							src="<%= assetRenderer.getIconPath(portletRequest) %>"
 							url="<%= urlViewInContext %>"
 						/>
 					</li>

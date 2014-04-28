@@ -656,6 +656,7 @@ if (Validator.isNotNull(content)) {
 					Liferay.Util.openWindow(
 						{
 							id: windowId,
+							refreshWindow: window,
 							title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
 
 							<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

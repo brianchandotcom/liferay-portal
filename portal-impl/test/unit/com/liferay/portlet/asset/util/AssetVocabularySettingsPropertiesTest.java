@@ -29,109 +29,109 @@ public class AssetVocabularySettingsPropertiesTest {
 
 	@Test
 	public void testIsAssociatedToAssetWhenAssociatedToAll() {
-		_settingProperties = getSettingProperties(true, 0L, 0L, true);
+		_settingProperties = getSettingProperties(true, 0, 0, true);
 
-		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1L, 0L));
-		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1L, 1L));
+		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 0));
+		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 1));
 	}
 
 	@Test
 	public void testIsAssociatedToAssetWhenAssociatedToClassName() {
 
-		_settingProperties = getSettingProperties(true, 1L, 0L, true);
+		_settingProperties = getSettingProperties(true, 1, 0, true);
 
-		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1L, 0L));
-		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1L, 1L));
+		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 0));
+		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 1));
 
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2L, 0L));
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2L, 2L));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2, 0));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2, 2));
 	}
 
 	@Test
 	public void testIsAssociatedToAssetWhenAssociatedToClassNameAndClassType() {
 
-		_settingProperties = getSettingProperties(true, 1L, 1L, true);
+		_settingProperties = getSettingProperties(true, 1, 1, true);
 
-		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1L, 1L));
+		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 1));
 
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(1L, 0L));
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(1L, 2L));
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2L, 0L));
-		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2L, 2L));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(1, 0));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(1, 2));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2, 0));
+		Assert.assertFalse(_settingProperties.isAssociatedToAsset(2, 2));
 	}
 
 	@Test
 	public void testIsMultiValuedWhenFalse() {
-		_settingProperties = getSettingProperties(false, 1L, 1L, true);
+		_settingProperties = getSettingProperties(false, 1, 1, true);
 
 		Assert.assertFalse(_settingProperties.isMultiValued());
 	}
 
 	@Test
 	public void testIsMultiValuedWhenTrue() {
-		_settingProperties = getSettingProperties(true, 1L, 1L, true);
+		_settingProperties = getSettingProperties(true, 1, 1, true);
 
 		Assert.assertTrue(_settingProperties.isMultiValued());
 	}
 
 	@Test
 	public void testIsRequiredReturnsFalseWhenAllIsNotRequired() {
-		_settingProperties = getSettingProperties(true, 0L, 0L, false);
+		_settingProperties = getSettingProperties(true, 0, 0, false);
 
-		Assert.assertFalse(_settingProperties.isRequired(1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L));
-		Assert.assertFalse(_settingProperties.isRequired(1L, 1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L, 1L));
+		Assert.assertFalse(_settingProperties.isRequired(1));
+		Assert.assertFalse(_settingProperties.isRequired(2));
+		Assert.assertFalse(_settingProperties.isRequired(1, 1));
+		Assert.assertFalse(_settingProperties.isRequired(2, 1));
 	}
 
 	@Test
 	public void testIsRequiredReturnsFalseWhenClassNameAndTypeIsNotRequired() {
-		_settingProperties = getSettingProperties(true, 1L, 1L, false);
+		_settingProperties = getSettingProperties(true, 1, 1, false);
 
-		Assert.assertFalse(_settingProperties.isRequired(1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L));
-		Assert.assertFalse(_settingProperties.isRequired(1L, 1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L, 1L));
+		Assert.assertFalse(_settingProperties.isRequired(1));
+		Assert.assertFalse(_settingProperties.isRequired(2));
+		Assert.assertFalse(_settingProperties.isRequired(1, 1));
+		Assert.assertFalse(_settingProperties.isRequired(2, 1));
 	}
 
 	@Test
 	public void testIsRequiredReturnsFalseWhenClassNameIsNotRequired() {
-		_settingProperties = getSettingProperties(true, 1L, 0L, false);
+		_settingProperties = getSettingProperties(true, 1, 0, false);
 
-		Assert.assertFalse(_settingProperties.isRequired(1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L));
-		Assert.assertFalse(_settingProperties.isRequired(1L, 0L));
-		Assert.assertFalse(_settingProperties.isRequired(2L, 0L));
+		Assert.assertFalse(_settingProperties.isRequired(1));
+		Assert.assertFalse(_settingProperties.isRequired(2));
+		Assert.assertFalse(_settingProperties.isRequired(1, 0));
+		Assert.assertFalse(_settingProperties.isRequired(2, 0));
 	}
 
 	@Test
 	public void testIsRequiredReturnsTrueWhenAllIsRequired() {
-		_settingProperties = getSettingProperties(true, 0L, 0L, true);
+		_settingProperties = getSettingProperties(true, 0, 0, true);
 
-		Assert.assertTrue(_settingProperties.isRequired(1L));
-		Assert.assertTrue(_settingProperties.isRequired(2L));
-		Assert.assertTrue(_settingProperties.isRequired(1L, 1L));
-		Assert.assertTrue(_settingProperties.isRequired(2L, 1L));
+		Assert.assertTrue(_settingProperties.isRequired(1));
+		Assert.assertTrue(_settingProperties.isRequired(2));
+		Assert.assertTrue(_settingProperties.isRequired(1, 1));
+		Assert.assertTrue(_settingProperties.isRequired(2, 1));
 	}
 
 	@Test
 	public void testIsRequiredReturnsTrueWhenClassNameAndTypeIsRequired() {
-		_settingProperties = getSettingProperties(true, 1L, 1L, true);
+		_settingProperties = getSettingProperties(true, 1, 1, true);
 
-		Assert.assertTrue(_settingProperties.isRequired(1L));
-		Assert.assertTrue(_settingProperties.isRequired(1L, 1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L));
-		Assert.assertFalse(_settingProperties.isRequired(2L, 1L));
+		Assert.assertTrue(_settingProperties.isRequired(1));
+		Assert.assertTrue(_settingProperties.isRequired(1, 1));
+		Assert.assertFalse(_settingProperties.isRequired(2));
+		Assert.assertFalse(_settingProperties.isRequired(2, 1));
 	}
 
 	@Test
 	public void testIsRequiredReturnsTrueWhenClassNameIsRequired() {
-		_settingProperties = getSettingProperties(true, 1L, 0L, true);
+		_settingProperties = getSettingProperties(true, 1, 0, true);
 
-		Assert.assertTrue(_settingProperties.isRequired(1L));
-		Assert.assertTrue(_settingProperties.isRequired(1L, 1L));
-		Assert.assertFalse(_settingProperties.isRequired(2L));
-		Assert.assertFalse(_settingProperties.isRequired(2L, 1L));
+		Assert.assertTrue(_settingProperties.isRequired(1));
+		Assert.assertTrue(_settingProperties.isRequired(1, 1));
+		Assert.assertFalse(_settingProperties.isRequired(2));
+		Assert.assertFalse(_settingProperties.isRequired(2, 1));
 	}
 
 	protected AssetVocabularySettingsProperties getSettingProperties(

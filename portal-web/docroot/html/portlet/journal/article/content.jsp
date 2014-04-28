@@ -73,61 +73,6 @@ else if (!ddmTemplates.isEmpty()) {
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
-
-String content = ParamUtil.getString(request, "articleContent");
-
-boolean preselectCurrentLayout = false;
-
-if (article != null) {
-	if (Validator.isNull(content)) {
-		content = article.getContent();
-	}
-
-	if (Validator.isNotNull(toLanguageId)) {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), toLanguageId);
-	}
-	else {
-		content = JournalArticleImpl.getContentByLocale(article.getDocument(), defaultLanguageId);
-	}
-}
-else {
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-	long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
-
-	if (refererPlid > 0) {
-		Layout refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
-
-		typeSettingsProperties = refererLayout.getTypeSettingsProperties();
-
-		String defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
-
-		if (Validator.isNotNull(defaultAssetPublisherPortletId)) {
-			preselectCurrentLayout = true;
-		}
-	}
-}
-
-Document contentDoc = null;
-
-String[] availableLocales = null;
-
-if (Validator.isNotNull(content)) {
-	try {
-		contentDoc = SAXReaderUtil.read(content);
-
-		Element contentEl = contentDoc.getRootElement();
-
-		availableLocales = StringUtil.split(contentEl.attributeValue("available-locales"));
-
-		if (!ArrayUtil.contains(availableLocales, defaultLanguageId)) {
-			availableLocales = ArrayUtil.append(availableLocales, defaultLanguageId);
-		}
-	}
-	catch (Exception e) {
-		contentDoc = null;
-	}
-}
 %>
 
 <liferay-ui:error-marker key="errorSection" value="content" />
@@ -410,8 +355,19 @@ if (Validator.isNotNull(content)) {
 			<%
 			Fields ddmFields = null;
 
-			if ((article != null) && Validator.isNotNull(content)) {
-				ddmFields = JournalConverterUtil.getDDMFields(ddmStructure, content);
+			if (article != null) {
+				String content = null;
+
+				if (Validator.isNotNull(toLanguageId)) {
+					content = JournalArticleImpl.getContentByLocale(article.getDocument(), toLanguageId);
+				}
+				else {
+					content = JournalArticleImpl.getContentByLocale(article.getDocument(), defaultLanguageId);
+				}
+
+				if (Validator.isNotNull(content)) {
+					ddmFields = JournalConverterUtil.getDDMFields(ddmStructure, content);
+				}
 			}
 
 			String requestedLanguageId = defaultLanguageId;
@@ -442,10 +398,6 @@ if (Validator.isNotNull(content)) {
 </div>
 
 <aui:script>
-	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(content) %>";
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />postProcessTranslation',

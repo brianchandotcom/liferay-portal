@@ -64,25 +64,13 @@ public class FileEntryStagedModelDataHandlerTest
 	@Test
 	@Transactional
 	public void testCompanyScopeDependencies() throws Exception {
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addCompanyDependencies();
 
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
 	}
@@ -98,19 +86,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		// Export and import file entry
 
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, fileEntry);
-
-		initImport();
-
-		StagedModel exportedFileEntry = readExportedStagedModel(fileEntry);
-
-		Assert.assertNotNull(exportedFileEntry);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedFileEntry);
+		exportImportStagedModel(fileEntry);
 
 		FileEntry importedFileEntry =
 			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
@@ -128,19 +104,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		// Export and import again to propagate changes
 
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, fileEntry);
-
-		initImport();
-
-		exportedFileEntry = readExportedStagedModel(fileEntry);
-
-		Assert.assertNotNull(exportedFileEntry);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedFileEntry);
+		exportImportStagedModel(fileEntry);
 
 		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 			fileEntry.getUuid(), liveGroup.getGroupId());
@@ -231,6 +195,24 @@ public class FileEntryStagedModelDataHandlerTest
 			group.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString(),
 			dlFileEntryType.getFileEntryTypeId());
+	}
+
+	protected void exportImportStagedModel(StagedModel stagedModel)
+		throws Exception {
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
 	}
 
 	@Override

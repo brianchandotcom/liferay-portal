@@ -17,7 +17,6 @@ package com.liferay.portlet.asset.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefixPredicateFilter;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -48,12 +47,8 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 			long classTypeId = assetClassTypeIds.get(i);
 			boolean required = areRequired.get(i);
 
-			StringBundler sb = new StringBundler(3);
-			sb.append(classNameId);
-			sb.append(StringPool.COLON);
-			sb.append(classTypeId);
-
-			String classNameAndType = sb.toString();
+			String classNameAndType =
+				classNameId + StringPool.COLON + classTypeId;
 
 			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
 				selectedClassNameIds.clear();
@@ -138,10 +133,7 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 			return true;
 		}
 
-		StringBundler sb = new StringBundler(2);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		String classNamePrefix = sb.toString();
+		String classNamePrefix = assetClassNameId + StringPool.COLON;
 
 		if (ArrayUtil.exists(
 				settingValueIds,
@@ -163,17 +155,12 @@ public class AssetVocabularySettingsProperties extends UnicodeProperties {
 			return false;
 		}
 
-		StringBundler sb = new StringBundler(3);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		sb.append(assetClassTypeId);
-		String classNameAndType = sb.toString();
+		String classNameAndType =
+			assetClassNameId + StringPool.COLON + assetClassTypeId;
 
-		sb = new StringBundler(3);
-		sb.append(assetClassNameId);
-		sb.append(StringPool.COLON);
-		sb.append(AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
-		String classNameOnly = sb.toString();
+		String classNameOnly =
+			assetClassNameId + StringPool.COLON +
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS;
 
 		String allClasses = AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS;
 

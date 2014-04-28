@@ -18,11 +18,6 @@
 boolean hasLock = fileEntry.hasLock();
 %>
 
-<portlet:renderURL var="viewFolderURL">
-	<portlet:param name="struts_action" value="/image_gallery_display/view" />
-	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-</portlet:renderURL>
-
 <%@ include file="/html/portlet/document_library/action/download.jspf" %>
 
 <%@ include file="/html/portlet/document_library/action/view.jspf" %>

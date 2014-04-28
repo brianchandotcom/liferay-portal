@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -28,8 +30,8 @@ import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -256,9 +258,11 @@ public class SocialRelationLocalServiceTest {
 		long[] dlc3GroupIds = dlc3.getGroupIds();
 		long[] dlc4GroupIds = dlc4.getGroupIds();
 
-		Arrays.sort(dlc4GroupIds);
+		Set<Long> groupIdsSet = SetUtil.fromArray(dlc3GroupIds);
 
-		long[] groupIds = intersection(dlc3GroupIds, dlc4GroupIds);
+		groupIdsSet.retainAll(SetUtil.fromArray(dlc4GroupIds));
+
+		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[]{}));
 
 		List<User> users = UserLocalServiceUtil.getUsersByGroups(
 			"dlc", dlc2.getUserId(), groupIds, QueryUtil.ALL_POS,
@@ -517,20 +521,6 @@ public class SocialRelationLocalServiceTest {
 			new UserScreenNameComparator(true));
 
 		Assert.assertEquals(0, users.size());
-	}
-
-	protected long[] intersection(long[] a, long[] b) {
-		long[] result = new long[Math.min(a.length, b.length)];
-
-		int max = 0;
-
-		for (int i = 0; i < a.length; i++) {
-			if (Arrays.binarySearch(b, a[i]) >= 0) {
-				result[max++] = a[i];
-			}
-		}
-
-		return Arrays.copyOfRange(result, 0, max);
 	}
 
 }

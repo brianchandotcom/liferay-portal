@@ -75,14 +75,12 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiPage page)
 		throws Exception {
 
-		Element pageElement = portletDataContext.getExportDataElement(page);
-
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, page, page.getNode(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, page, pageElement, page.getContent(),
+			portletDataContext, page, page.getContent(),
 			portletDataContext.getBooleanParameter(
 				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
 
@@ -95,6 +93,8 @@ public class WikiPageStagedModelDataHandler
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 		}
+
+		Element pageElement = portletDataContext.getExportDataElement(page);
 
 		portletDataContext.addClassedModel(
 			pageElement, ExportImportPathUtil.getModelPath(page), page);
@@ -131,9 +131,7 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, page, pageElement, page.getContent(),
-			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
+			portletDataContext, page, page.getContent());
 
 		page.setContent(content);
 

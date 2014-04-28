@@ -83,7 +83,7 @@ public class BlogsEntryStagedModelDataHandler
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL =
 					ExportImportHelperUtil.replaceExportContentReferences(
-						portletDataContext, entry, entryElement,
+						portletDataContext, entry,
 						entry.getSmallImageURL().concat(StringPool.SPACE),
 						true);
 
@@ -105,7 +105,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, entry, entryElement, entry.getContent(),
+			portletDataContext, entry, entry.getContent(),
 			portletDataContext.getBooleanParameter(
 				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
 
@@ -126,9 +126,7 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, entry, entryElement, entry.getContent(),
-			portletDataContext.getBooleanParameter(
-				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
+			portletDataContext, entry, entry.getContent());
 
 		entry.setContent(content);
 
@@ -161,8 +159,8 @@ public class BlogsEntryStagedModelDataHandler
 				if (Validator.isNotNull(entry.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, entry, entryElement,
-							entry.getSmallImageURL(), true);
+							portletDataContext, entry,
+							entry.getSmallImageURL());
 
 					entry.setSmallImageURL(smallImageURL);
 				}

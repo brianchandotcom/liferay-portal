@@ -319,7 +319,7 @@ public class JournalArticleStagedModelDataHandler
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
 					ExportImportHelperUtil.replaceExportContentReferences(
-						portletDataContext, article, articleElement,
+						portletDataContext, article,
 						article.getSmallImageURL().concat(StringPool.SPACE),
 						true);
 
@@ -353,7 +353,7 @@ public class JournalArticleStagedModelDataHandler
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, article, articleElement, article.getContent(),
+			portletDataContext, article, article.getContent(),
 			portletDataContext.getBooleanParameter(
 				JournalPortletDataHandler.NAMESPACE, "referenced-content"));
 
@@ -436,11 +436,8 @@ public class JournalArticleStagedModelDataHandler
 
 		String content = article.getContent();
 
-		Element articleElement =
-			portletDataContext.getImportDataStagedModelElement(article);
-
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, article, articleElement, content, true);
+			portletDataContext, article, content);
 
 		article.setContent(content);
 
@@ -564,6 +561,9 @@ public class JournalArticleStagedModelDataHandler
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, article, Layout.class);
 
+		Element articleElement =
+			portletDataContext.getImportDataStagedModelElement(article);
+
 		File smallFile = null;
 
 		try {
@@ -574,8 +574,8 @@ public class JournalArticleStagedModelDataHandler
 				if (Validator.isNotNull(article.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, article, articleElement,
-							article.getSmallImageURL(), true);
+							portletDataContext, article,
+							article.getSmallImageURL());
 
 					article.setSmallImageURL(smallImageURL);
 				}

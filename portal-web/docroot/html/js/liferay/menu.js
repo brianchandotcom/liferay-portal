@@ -545,36 +545,27 @@ AUI.add(
 				if (!liveSearch) {
 					var listNode = menu.one('ul');
 
-					var menuItems = A.all('#' + listNode.guid() + ' > li');
+					var results = [];
+
+					listNode.all('li').each(
+						function(node) {
+							results.push(
+								{
+									name: trim(node.one('.taglib-text-icon').text()),
+									node: node
+								}
+							);
+						}
+					);
 
 					liveSearch = new Liferay.MenuFilter(
 						{
 							content: listNode,
-
 							minQueryLength: 0,
-
-							resultTextLocator: 'name',
-
+							queryDelay: 0,
 							resultFilters: 'phraseMatch',
-
-							source: function() {
-								var results = [];
-
-								menuItems.each(
-									function(node) {
-										results.push(
-											{
-												name: trim(node.one('.taglib-text-icon').text()),
-												node: node
-											}
-										);
-									}
-								);
-
-								return results;
-							}(),
-
-							queryDelay: 0
+							resultTextLocator: 'name',
+							source: results
 						}
 					);
 

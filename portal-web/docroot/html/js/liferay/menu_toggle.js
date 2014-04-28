@@ -88,6 +88,8 @@ AUI.add(
 							if (itemsSize > instance.get('maxDisplayItems')) {
 								instance._createMenuFilter(menu, menuItems);
 							}
+
+							instance._inputFilterNode = A.one('.menu-item-filter');
 						}
 						else {
 							instance._menuFilter.reset();
@@ -112,34 +114,27 @@ AUI.add(
 					_createMenuFilter: function(menu, menuItems) {
 						var instance = this;
 
+						var results = [];
+
+						menuItems.each(
+							function(node) {
+								results.push(
+									{
+										name: trim(node.one('.nav-item-label').text()),
+										node: node
+									}
+								);
+							}
+						);
+
 						instance._menuFilter = new Liferay.MenuFilter(
 							{
 								content: menu,
-
 								minQueryLength: 0,
-
-								resultTextLocator: 'name',
-
+								queryDelay: 0,
 								resultFilters: 'phraseMatch',
-
-								source: function() {
-									var results = [];
-
-									menuItems.each(
-										function(node) {
-											results.push(
-												{
-													name: trim(node.one('.nav-item-label').text()),
-													node: node
-												}
-											);
-										}
-									);
-
-									return results;
-								}(),
-
-								queryDelay: 0
+								resultTextLocator: 'name',
+								source: results
 							}
 						);
 
@@ -185,6 +180,13 @@ AUI.add(
 
 						if (force) {
 							instance._addMenuFilter();
+
+							setTimeout(
+								function() {
+									instance._inputFilterNode.focus();
+								},
+								0
+							);
 						}
 					},
 

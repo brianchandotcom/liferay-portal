@@ -34,11 +34,6 @@ AUI.add(
 						value: '.menu-item-filter'
 					},
 
-					maxDisplayItems: {
-						validator: Lang.isNumber,
-						value: 10
-					},
-
 					strings: {
 						validator: Lang.isObject,
 						value: {

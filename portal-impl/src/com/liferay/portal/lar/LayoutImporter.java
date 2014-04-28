@@ -262,7 +262,7 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
-		UserIdStrategy strategy = _portletImporter.getUserIdStrategy(
+		UserIdStrategy strategy = PortletImporter.getUserIdStrategy(
 			user, userIdStrategy);
 
 		ManifestSummary manifestSummary =
@@ -446,7 +446,7 @@ public class LayoutImporter {
 			}
 		}
 
-		_themeImporter.importTheme(portletDataContext, layoutSet);
+		ThemeImporter.importTheme(portletDataContext, layoutSet);
 
 		if (importLayoutSetSettings) {
 			String settings = GetterUtil.getString(
@@ -470,17 +470,17 @@ public class LayoutImporter {
 				Document portletDocument = SAXReaderUtil.read(
 					portletDataContext.getZipEntryAsString(portletPath));
 
-				_permissionImporter.checkRoles(
+				PermissionImporter.checkRoles(
 					layoutCache, companyId, groupId, userId,
 					portletDocument.getRootElement());
 			}
 
-			_permissionImporter.readPortletDataPermissions(portletDataContext);
+			PermissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		_portletImporter.readAssetTags(portletDataContext);
-		_portletImporter.readExpandoTables(portletDataContext);
-		_portletImporter.readLocks(portletDataContext);
+		PortletImporter.readAssetTags(portletDataContext);
+		PortletImporter.readExpandoTables(portletDataContext);
+		PortletImporter.readLocks(portletDataContext);
 
 		// Layouts
 
@@ -561,7 +561,7 @@ public class LayoutImporter {
 
 				portletDataContext.setPlid(plid);
 
-				_portletImporter.deletePortletData(
+				PortletImporter.deletePortletData(
 					portletDataContext, portletId, plid);
 			}
 		}
@@ -632,7 +632,7 @@ public class LayoutImporter {
 
 				// Portlet preferences
 
-				_portletImporter.importPortletPreferences(
+				PortletImporter.importPortletPreferences(
 					portletDataContext, layoutSet.getCompanyId(),
 					portletPreferencesGroupId, layout, null, portletElement,
 					false,
@@ -650,27 +650,27 @@ public class LayoutImporter {
 				if (importPortletControlsMap.get(
 						PortletDataHandlerKeys.PORTLET_DATA)) {
 
-					_portletImporter.importPortletData(
+					PortletImporter.importPortletData(
 						portletDataContext, portletId, plid,
 						portletDataElement);
 				}
 			}
 			finally {
-				_portletImporter.resetPortletScope(
+				PortletImporter.resetPortletScope(
 					portletDataContext, portletPreferencesGroupId);
 			}
 
 			// Portlet permissions
 
 			if (importPermissions) {
-				_permissionImporter.importPortletPermissions(
+				PermissionImporter.importPortletPermissions(
 					layoutCache, companyId, groupId, userId, layout,
 					portletElement, portletId);
 			}
 
 			// Archived setups
 
-			_portletImporter.importPortletPreferences(
+			PortletImporter.importPortletPreferences(
 				portletDataContext, layoutSet.getCompanyId(), groupId, null,
 				null, portletElement, false,
 				importPortletControlsMap.get(
@@ -694,7 +694,7 @@ public class LayoutImporter {
 
 		// Asset links
 
-		_portletImporter.readAssetLinks(portletDataContext);
+		PortletImporter.readAssetLinks(portletDataContext);
 
 		// Delete missing layouts
 
@@ -768,7 +768,7 @@ public class LayoutImporter {
 
 		// Deletion system events
 
-		_deletionSystemEventImporter.importDeletionSystemEvents(
+		DeletionSystemEventImporter.importDeletionSystemEvents(
 			portletDataContext);
 
 		if (_log.isInfoEnabled()) {
@@ -1175,15 +1175,5 @@ public class LayoutImporter {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutImporter.class);
-
-	private DeletionSystemEventImporter _deletionSystemEventImporter =
-		new DeletionSystemEventImporter();
-	private Element _headerElement;
-	private List<Element> _layoutElements;
-	private Element _layoutsElement;
-	private PermissionImporter _permissionImporter = new PermissionImporter();
-	private PortletImporter _portletImporter = new PortletImporter();
-	private Element _rootElement;
-	private ThemeImporter _themeImporter = new ThemeImporter();
 
 }

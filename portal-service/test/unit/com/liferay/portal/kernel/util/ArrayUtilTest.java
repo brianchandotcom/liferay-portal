@@ -221,7 +221,7 @@ public class ArrayUtilTest {
 				public boolean filter(String string) {
 					return true;
 				}
-			};
+		};
 
 		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
 	}
@@ -238,7 +238,7 @@ public class ArrayUtilTest {
 					return true;
 				}
 
-			};
+		};
 
 		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
 	}

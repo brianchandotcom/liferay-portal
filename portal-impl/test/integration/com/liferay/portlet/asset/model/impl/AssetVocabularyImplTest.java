@@ -165,7 +165,7 @@ public class AssetVocabularyImplTest {
 	}
 
 	@Test
-	public void testIsMissingRequiredCategoryWhenNoMatchingAndButNoRequired()
+	public void testIsMissingRequiredCategoryWhenNotMatchingAndNotRequired()
 		throws Exception {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, false);
@@ -180,7 +180,7 @@ public class AssetVocabularyImplTest {
 	}
 
 	@Test
-	public void testIsMissingRequiredCategoryWhenNoMatchingAndRequired()
+	public void testIsMissingRequiredCategoryWhenNotMatchingAndRequired()
 		throws Exception {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, true);
@@ -195,7 +195,7 @@ public class AssetVocabularyImplTest {
 	}
 
 	@Test
-	public void testIsMissingRequiredCategoryWhenNoRelatedAtAll()
+	public void testIsMissingRequiredCategoryWhenNotRelatedAtAll()
 		throws Exception {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, true);
@@ -205,7 +205,7 @@ public class AssetVocabularyImplTest {
 	}
 
 	@Test
-	public void testIsMissingRequiredCategoryWhenNoRelatedClassType()
+	public void testIsMissingRequiredCategoryWhenNotRelatedClassType()
 		throws Exception {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1L, 1L, true);

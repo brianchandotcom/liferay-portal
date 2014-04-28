@@ -62,11 +62,6 @@ if (folder != null) {
 			modelVar="curFolder"
 		>
 
-			<portlet:renderURL var="viewFolderURL">
-				<portlet:param name="struts_action" value="/bookmarks/select_folder" />
-				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-			</portlet:renderURL>
-
 			<%
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksFolder.class.getName());
 
@@ -81,6 +76,11 @@ if (folder != null) {
 			int foldersCount = subfolderIds.size() - 1;
 			int entriesCount = BookmarksEntryServiceUtil.getFoldersEntriesCount(scopeGroupId, subfolderIds);
 			%>
+
+			<portlet:renderURL var="viewFolderURL">
+				<portlet:param name="struts_action" value="/bookmarks/select_folder" />
+				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
 				name="folder"

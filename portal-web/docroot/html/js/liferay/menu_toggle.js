@@ -78,21 +78,21 @@ AUI.add(
 					_addMenuFilter: function() {
 						var instance = this;
 
-						if (!instance._menuFilter) {
+						var menuFilter = instance._menuFilter;
+
+						if (!menuFilter) {
 							var menu = instance._content.one('.dropdown-menu');
 
 							var menuItems = menu.all('li');
 
-							var itemsSize = menuItems.size();
+							if (menuItems.size() > instance.get('maxDisplayItems')) {
+								menuFilter = instance._createMenuFilter(menu, menuItems);
 
-							if (itemsSize > instance.get('maxDisplayItems')) {
-								instance._createMenuFilter(menu, menuItems);
+								instance._inputFilterNode = menuFilter.get('inputNode');
 							}
-
-							instance._inputFilterNode = A.one('.menu-item-filter');
 						}
 						else {
-							instance._menuFilter.reset();
+							menuFilter.reset();
 						}
 					},
 
@@ -181,12 +181,16 @@ AUI.add(
 						if (force) {
 							instance._addMenuFilter();
 
-							setTimeout(
-								function() {
-									instance._inputFilterNode.focus();
-								},
-								0
-							);
+							var inputFilterNode = instance._inputFilterNode;
+
+							if (inputFilterNode) {
+								setTimeout(
+									function() {
+										Liferay.Util.focusFormField(inputFilterNode);
+									},
+									0
+								);
+							}
 						}
 					},
 
@@ -252,6 +256,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-store', 'liferay-menu-filter']
+		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-menu-filter', 'liferay-store']
 	}
 );

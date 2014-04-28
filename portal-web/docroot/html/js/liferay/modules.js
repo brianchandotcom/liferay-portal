@@ -536,6 +536,7 @@
 							'aui-node',
 							'event-move',
 							'event-outside',
+							'liferay-menu-filter',
 							'liferay-store'
 						]
 					},

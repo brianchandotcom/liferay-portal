@@ -10,11 +10,11 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
-		var TPL_INPUT_FILTER = '<div class="btn-toolbar search-panel">' +
+		var TPL_INPUT_FILTER = '<li class="btn-toolbar search-panel">' +
 			'<div class="control-group">' +
-				'<input class="field search-query span12 focus menu-item-filter" placeholder="{placeholder}" type="text">' +
+				'<input class="field focus menu-item-filter search-query span12" placeholder="{placeholder}" type="text">' +
 			'</div>' +
-		'</div>';
+		'</li>';
 
 		var MenuFilter = A.Component.create(
 			{

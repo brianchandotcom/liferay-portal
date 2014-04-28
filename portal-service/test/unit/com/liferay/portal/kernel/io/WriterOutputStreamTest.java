@@ -129,8 +129,19 @@ public class WriterOutputStreamTest {
 		Assert.assertEquals(32, _getOutputBufferSize(writerOutputStream));
 		Assert.assertTrue(_isAutoFlush(writerOutputStream));
 
+		writerOutputStream = new WriterOutputStream(
+			dummyWriter, encoding, 0, true);
+
+		Assert.assertSame(dummyWriter, _getWriter(writerOutputStream));
+		Assert.assertSame(encoding, writerOutputStream.getEncoding());
+		Assert.assertEquals(1, _getInputBufferSize(writerOutputStream));
+		Assert.assertEquals(
+			_getDefaultOutputBufferSize(),
+			_getOutputBufferSize(writerOutputStream));
+		Assert.assertTrue(_isAutoFlush(writerOutputStream));
+
 		try {
-			new WriterOutputStream(dummyWriter, encoding, 0, true);
+			new WriterOutputStream(dummyWriter, encoding, 0, false);
 
 			Assert.fail();
 		}

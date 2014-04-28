@@ -190,14 +190,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</div>
 				</c:if>
 
-				<liferay-security:permissionsURL
-					modelResource="<%= Layout.class.getName() %>"
-					modelResourceDescription="<%= selLayout.getName(locale) %>"
-					resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
-					var="permissionURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
 				<%
 				Group selLayoutGroup = selLayout.getGroup();
 				%>
@@ -271,19 +263,20 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 							Liferay.Util.focusFormField(content.one('input:text'));
 						}
 						else if (dataValue === 'permissions') {
-							<liferay-security:permissionsURL
-								modelResource="<%= Layout.class.getName() %>"
-								modelResourceDescription="<%= selLayout.getName(locale) %>"
-								resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
-								var="permissionURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
-
 							Liferay.Util.openWindow(
 								{
 									cache: false,
 									id: '<portlet:namespace /><%= HtmlUtil.escapeJS(selLayout.getFriendlyURL().substring(1)) %>_permissions',
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+
+									<liferay-security:permissionsURL
+										modelResource="<%= Layout.class.getName() %>"
+										modelResourceDescription="<%= selLayout.getName(locale) %>"
+										resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
+										var="permissionURL"
+										windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+									/>
+									
 									uri: '<%= permissionURL %>'
 								}
 							);

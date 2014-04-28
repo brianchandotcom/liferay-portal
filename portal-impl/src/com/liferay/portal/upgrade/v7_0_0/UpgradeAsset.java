@@ -58,7 +58,8 @@ public class UpgradeAsset extends UpgradeProcess {
 			result = statement.executeQuery();
 
 			while (result.next()) {
-				Long key = result.getLong("vocabularyId");
+				long key = result.getLong("vocabularyId");
+
 				String settings = result.getString("settings_");
 
 				String newSettings = doUpgradeVocabularySettings(settings);
@@ -89,6 +90,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected String doUpgradeVocabularySettings(String settings) {
 
 		UnicodeProperties properties = new AssetVocabularySettingsProperties();
+
 		properties.fastLoad(settings);
 
 		AssetVocabularySettingsProperties newProperties =

@@ -195,10 +195,12 @@ public class ArrayUtilTest {
 
 		PredicateFilter<Object> predicateFilter =
 			new PredicateFilter<Object>() {
+
 				@Override
 				public boolean filter(Object o) {
 					return true;
 				}
+
 			};
 
 		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
@@ -210,10 +212,12 @@ public class ArrayUtilTest {
 
 		PredicateFilter<Object> predicateFilter =
 			new PredicateFilter<Object>() {
+
 				@Override
 				public boolean filter(Object o) {
 					return true;
 				}
+
 			};
 
 		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
@@ -225,10 +229,12 @@ public class ArrayUtilTest {
 
 		PredicateFilter<Object> predicateFilter =
 			new PredicateFilter<Object>() {
+
 				@Override
 				public boolean filter(Object o) {
 					return o.toString().equals("b");
 				}
+
 			};
 
 		Assert.assertEquals(1, ArrayUtil.count(array, predicateFilter));

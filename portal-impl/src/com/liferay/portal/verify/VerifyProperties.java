@@ -472,6 +472,9 @@ public class VerifyProperties extends VerifyProcess {
 			"velocity.engine.restricted.variables"
 		},
 		new String[] {
+			"icon.menu.max.display.items", "menu.max.display.items"
+		},
+		new String[] {
 			"portal.instance.http.port",
 			"portal.instance.http.inet.socket.address"
 		},

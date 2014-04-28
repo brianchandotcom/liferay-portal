@@ -10,11 +10,6 @@
 	overflow-x: hidden;
 }
 
-.lfr-menu-list-search-container .lfr-menu-list-search {
-	margin-bottom: 0;
-	margin-top: 2px;
-	width: 215px;
-}
 
 .lfr-menu-list {
 	float: none;
@@ -37,6 +32,18 @@
 				img {
 					margin-bottom: 3px;
 				}
+			}
+		}
+
+		.search-panel {
+			margin-bottom: 0;
+
+			.control-group {
+				margin: 0 16px;
+			}
+
+			.menu-item-filter {
+				width: auto;
 			}
 		}
 	}

@@ -995,8 +995,6 @@ public interface PropsKeys {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
 
-	public static final String ICON_MENU_MAX_DISPLAY_ITEMS = "icon.menu.max.display.items";
-
 	public static final String ICQ_JAR = "icq.jar";
 
 	public static final String ICQ_LOGIN = "icq.login";
@@ -1648,6 +1646,8 @@ public interface PropsKeys {
 	public static final String MEMBERSHIP_POLICY_SITES = "membership.policy.sites";
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = "membership.policy.user.groups";
+
+	public static final String MENU_MAX_DISPLAY_ITEMS = "menu.max.display.items";
 
 	public static final String MESSAGE_BOARDS_ALLOW_ANONYMOUS_POSTING = "message.boards.anonymous.posting.enabled";
 

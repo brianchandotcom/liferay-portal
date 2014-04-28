@@ -70,6 +70,8 @@ if (Validator.isNull(title)) {
 				var toggleMenu = new Liferay.MenuToggle(
 					{
 						content: '#<%= id %>',
+						maxDisplayItems: <%= PropsValues.MENU_MAX_DISPLAY_ITEMS %>,
+						'strings.placeholder': '<%= LanguageUtil.get(pageContext, "search") %>',
 						toggle: <%= toggle %>,
 						toggleTouch: <%= toggleTouch %>,
 						trigger: '#<%= id %> a'

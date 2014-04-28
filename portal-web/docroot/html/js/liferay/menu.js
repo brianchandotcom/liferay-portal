@@ -75,8 +75,6 @@ AUI.add(
 
 		var SELECTOR_ANCHOR = 'a';
 
-		var SELECTOR_TEXT = 'a, span';
-
 		var SELECTOR_LIST_ITEM = 'li';
 
 		var SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
@@ -221,7 +219,7 @@ AUI.add(
 				var liveSearch = menu && MAP_LIVE_SEARCH[menu.guid()];
 
 				if (liveSearch) {
-					liveSearch.search(STR_BLANK);
+					liveSearch.reset();
 				}
 
 				var listItems;
@@ -538,61 +536,46 @@ AUI.add(
 			Menu,
 			'_getLiveSearch',
 			function(trigger, menu) {
-				var instance = Menu._INSTANCE;
+				var instance = this;
 
 				var id = menu.guid();
 
 				var liveSearch = MAP_LIVE_SEARCH[id];
 
 				if (!liveSearch) {
-					var searchId = A.guid();
-
 					var listNode = menu.one('ul');
 
-					var searchLabelNode = trigger.one(SELECTOR_ANCHOR) || trigger;
+					var results = [];
 
-					var searchBoxContent = Lang.sub(
-						TPL_SEARCH_BOX,
+					listNode.all('li').each(
+						function(node) {
+							results.push(
+								{
+									name: trim(node.one('.taglib-text-icon').text()),
+									node: node
+								}
+							);
+						}
+					);
+
+					liveSearch = new Liferay.MenuFilter(
 						{
-							searchId: searchId,
-							searchLabeledBy: searchLabelNode.guid(),
-							searchOwns: listNode.guid()
+							content: listNode,
+							minQueryLength: 0,
+							queryDelay: 0,
+							resultFilters: 'phraseMatch',
+							resultTextLocator: 'name',
+							source: results
 						}
 					);
 
-					var inputSearch = A.Node.create(searchBoxContent);
-
-					inputSearch.swallowEvent('click');
-
-					menu.prepend(inputSearch);
-
-					var options = {
-						data: function(node) {
-							return trim(node.one(SELECTOR_TEXT).text());
-						},
-						input: '#' + searchId,
-						nodes: '#' + listNode.guid() + ' > li'
-					};
-
-					liveSearch = new A.LiveSearch(options);
-
-					var bodyNode = instance._overlay.bodyNode;
-
-					liveSearch.after(
-						'search',
-						function(event) {
-							var focusManager = bodyNode.focusManager;
-
-							if (focusManager) {
-								focusManager.refresh();
-							}
-						}
-					);
+					liveSearch.get('inputNode').swallowEvent('click');
 
 					MAP_LIVE_SEARCH[id] = liveSearch;
 				}
+
 			},
-			['aui-live-search-deprecated'],
+			['liferay-menu-filter'],
 			true
 		);
 

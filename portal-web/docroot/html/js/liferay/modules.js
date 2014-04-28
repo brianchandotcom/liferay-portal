@@ -536,7 +536,16 @@
 							'aui-node',
 							'event-move',
 							'event-outside',
+							'liferay-menu-filter',
 							'liferay-store'
+						]
+					},
+					'liferay-menu-filter': {
+						path: 'menu_filter.js',
+						requires: [
+							'autocomplete-base',
+							'autocomplete-filters',
+							'autocomplete-highlighters'
 						]
 					},
 					'liferay-message': {

@@ -15,6 +15,50 @@
 			</then>
 		</if>
 
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl stop
+			call tcruntime-ctl uninstall
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl install
+			call tcruntime-ctl start
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.sh">
+			tcruntime-ctl.sh run
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.sh">
+			tcruntime-ctl.sh stop
+		</echo>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.tcserver.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

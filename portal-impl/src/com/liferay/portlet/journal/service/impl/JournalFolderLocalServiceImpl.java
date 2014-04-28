@@ -846,14 +846,23 @@ public class JournalFolderLocalServiceImpl
 	public void validateFolderDDMStructures(long folderId, long parentFolderId)
 		throws PortalException, SystemException {
 
+		JournalFolder folder = journalFolderLocalService.fetchFolder(folderId);
+
 		JournalFolder parentFolder = journalFolderLocalService.fetchFolder(
 			parentFolderId);
+
+		int restrictionType =
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW;
+
+		if (parentFolder != null) {
+			restrictionType = parentFolder.getRestrictionType();
+		}
 
 		List<DDMStructure> folderDDMStructures =
 			ddmStructureLocalService.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					parentFolder.getGroupId()),
-				parentFolder.getFolderId(), parentFolder.getRestrictionType());
+					folder.getGroupId()),
+				parentFolderId, restrictionType);
 
 		long[] ddmStructureIds = new long[folderDDMStructures.size()];
 

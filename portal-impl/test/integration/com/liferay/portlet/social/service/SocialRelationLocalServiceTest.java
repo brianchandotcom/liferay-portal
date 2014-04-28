@@ -15,8 +15,11 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -25,6 +28,7 @@ import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -46,6 +50,18 @@ public class SocialRelationLocalServiceTest {
 				UserTestUtil.addUser(screenNamePrefix + i, false, null);
 			}
 		}
+
+		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc3");
+
+		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc4");
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -222,6 +238,54 @@ public class SocialRelationLocalServiceTest {
 		SocialRelationLocalServiceUtil.addRelation(
 			fra5User.getUserId(), fra1User.getUserId(),
 			SocialRelationConstants.TYPE_UNI_CHILD);
+	}
+
+	@Test
+	public void testGetMultipleGroups()
+		throws PortalException, SystemException {
+
+		User dlc2 = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc2");
+
+		User dlc3 = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc3");
+
+		User dlc4 = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc4");
+
+		long[] dlc3GroupIds = dlc3.getGroupIds();
+		long[] dlc4GroupIds = dlc4.getGroupIds();
+
+		Arrays.sort(dlc4GroupIds);
+
+		long[] groupIds = intersection(dlc3GroupIds, dlc4GroupIds);
+
+		List<User> users = UserLocalServiceUtil.getUsersByGroups(
+			"dlc", dlc2.getUserId(), groupIds, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(2, users.size());
+	}
+
+	@Test
+	public void testGetMultipleRelations()
+		throws PortalException, SystemException {
+
+		User dlc2 = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc2");
+
+		int[] types = {
+			SocialRelationConstants.TYPE_BI_FRIEND,
+			SocialRelationConstants.TYPE_BI_COWORKER
+		};
+
+		List<User> users = UserLocalServiceUtil.getUsersBySocialRelationsTypes(
+			"dlc", dlc2.getUserId(), types, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		// dlc2 should have 1 coworker and 4 friends.
+
+		Assert.assertEquals(5, users.size());
 	}
 
 	@Test
@@ -453,6 +517,20 @@ public class SocialRelationLocalServiceTest {
 			new UserScreenNameComparator(true));
 
 		Assert.assertEquals(0, users.size());
+	}
+
+	protected long[] intersection(long[] a, long[] b) {
+		long[] result = new long[Math.min(a.length, b.length)];
+
+		int max = 0;
+
+		for (int i = 0; i < a.length; i++) {
+			if (Arrays.binarySearch(b, a[i]) >= 0) {
+				result[max++] = a[i];
+			}
+		}
+
+		return Arrays.copyOfRange(result, 0, max);
 	}
 
 }

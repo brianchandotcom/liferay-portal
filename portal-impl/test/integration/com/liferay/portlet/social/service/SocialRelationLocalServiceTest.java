@@ -246,17 +246,17 @@ public class SocialRelationLocalServiceTest {
 	public void testGetMultipleGroups()
 		throws PortalException, SystemException {
 
-		User dlc2 = UserLocalServiceUtil.getUserByScreenName(
+		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc2");
 
-		User dlc3 = UserLocalServiceUtil.getUserByScreenName(
+		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc3");
 
-		User dlc4 = UserLocalServiceUtil.getUserByScreenName(
+		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc4");
 
-		long[] dlc3GroupIds = dlc3.getGroupIds();
-		long[] dlc4GroupIds = dlc4.getGroupIds();
+		long[] dlc3GroupIds = dlc3User.getGroupIds();
+		long[] dlc4GroupIds = dlc4User.getGroupIds();
 
 		Set<Long> groupIdsSet = SetUtil.fromArray(dlc3GroupIds);
 
@@ -265,7 +265,7 @@ public class SocialRelationLocalServiceTest {
 		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[]{}));
 
 		List<User> users = UserLocalServiceUtil.getUsersByGroups(
-			"dlc", dlc2.getUserId(), groupIds, QueryUtil.ALL_POS,
+			"dlc", dlc2User.getUserId(), groupIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(2, users.size());
@@ -275,7 +275,7 @@ public class SocialRelationLocalServiceTest {
 	public void testGetMultipleRelations()
 		throws PortalException, SystemException {
 
-		User dlc2 = UserLocalServiceUtil.getUserByScreenName(
+		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc2");
 
 		int[] types = {
@@ -284,7 +284,7 @@ public class SocialRelationLocalServiceTest {
 		};
 
 		List<User> users = UserLocalServiceUtil.getUsersBySocialRelationsTypes(
-			"dlc", dlc2.getUserId(), types, null, QueryUtil.ALL_POS,
+			"dlc", dlc2User.getUserId(), types, null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		// dlc2 should have 1 coworker and 4 friends.

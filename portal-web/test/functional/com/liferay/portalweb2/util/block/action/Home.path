@@ -403,6 +403,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_NAVIGATION_TOOLTIP_ICON</td>
+	<td>//li[@role='presentation' and span/a[contains(.,'${key_portletName}')]]/span[@class='taglib-icon-help']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_NAVIGATION_TOOLTIP_MESSAGE</td>
+	<td>//div[contains(@class,'tooltip-help-content')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTROL_PANEL_PORTAL_SETTINGS</td>
 	<td>//a[@id='_190_controlPanelPortletLink_130']</td>
 	<td></td>

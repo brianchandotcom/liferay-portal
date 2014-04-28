@@ -35,23 +35,24 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 <aui:button href="<%= addPublishConfigurationURL %>" value="new" />
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-	<portlet:param name="tabs2" value="new-publication-process" />
-	<portlet:param name="publishConfigurationButtons" value="saved" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-</liferay-portlet:renderURL>
-
 <%
 int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
 %>
 
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-saved-publish-templates"
+
+	<liferay-portlet:renderURL varImpl="portletURL">
+		<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+		<portlet:param name="tabs2" value="new-publication-process" />
+		<portlet:param name="publishConfigurationButtons" value="saved" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+		<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	</liferay-portlet:renderURL>
+	
 	iteratorURL="<%= portletURL %>"
 	total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"
 >

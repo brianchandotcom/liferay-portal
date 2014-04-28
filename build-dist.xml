@@ -1133,14 +1133,14 @@ place it here: ${app.server.parent.dir}/${app.server.jboss.zip.name}. Then rerun
 this task.
 						</fail>
 					</then>
+					<else>
+						<get
+							dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+							src="${app.server.jboss.zip.url}"
+							verbose="true"
+						/>
+					</else>
 				</if>
-				<else>
-					<get
-						dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-						src="${app.server.jboss.zip.url}"
-						verbose="true"
-					/>
-				</else>
 			</then>
 		</if>
 

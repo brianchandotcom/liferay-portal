@@ -60,9 +60,14 @@ public class WriterOutputStream extends OutputStream {
 		boolean autoFlush) {
 
 		if (outputBufferSize <= 0) {
-			throw new IllegalArgumentException(
-				"Output buffer size " + outputBufferSize +
-					" must be a positive number");
+			if (autoFlush) {
+				outputBufferSize = _DEFAULT_OUTPUT_BUFFER_SIZE;
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Output buffer size " + outputBufferSize +
+						" must be a positive number");
+			}
 		}
 
 		if (charsetName == null) {

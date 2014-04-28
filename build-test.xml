@@ -1999,6 +1999,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.geronimo.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.geronimo}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=geronimo</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-geronimo" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2010,6 +2022,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-glassfish" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2021,6 +2045,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jboss}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2032,6 +2068,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jetty}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jetty" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2043,6 +2091,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jonas}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=jonas</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-jonas" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2054,6 +2114,18 @@ tck.url=true</echo>
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.resin}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-resin" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -2073,12 +2145,27 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+			<and>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
 					<param name="app.server.type" value="weblogic" />
 				</antcall>
 			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>

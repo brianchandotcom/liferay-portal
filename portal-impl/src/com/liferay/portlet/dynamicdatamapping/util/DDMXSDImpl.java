@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -152,7 +153,8 @@ public class DDMXSDImpl implements DDMXSD {
 		StringBundler sb = new StringBundler(fieldRepetition);
 
 		while (fieldRepetition > 0) {
-			fieldStructure.put("fieldNamespace", StringUtil.randomId());
+			fieldStructure.put(
+				"fieldNamespace", DeterminateKeyGenerator.generate(name));
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 			if (fieldDisplayable) {

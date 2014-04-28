@@ -149,6 +149,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['key-event', 'liferay-toggler-key-filter', 'node-focusmanager']
+		requires: ['event-key', 'liferay-toggler-key-filter', 'node-focusmanager']
 	}
 );

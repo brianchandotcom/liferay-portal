@@ -173,7 +173,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Control Panel" />
 			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
 			<var name="permissionNavigationValue" value="General Permissions" />
@@ -416,7 +416,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
 			<var name="permissionNavigationValue" value="Bookmarks" />

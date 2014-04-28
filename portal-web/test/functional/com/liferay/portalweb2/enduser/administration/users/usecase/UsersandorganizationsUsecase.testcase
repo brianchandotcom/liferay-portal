@@ -72,7 +72,7 @@
 
 		<execute macro="Role#editPermissionCmdCP">
 			<var name="define" value="true" />
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_VIEW,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_IMPERSONATE,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_VIEW" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_VIEW_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_IMPERSONATE_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX" />
 			<var name="roleName" value="Impersonating Role Name" />
 		</execute>
 
@@ -530,7 +530,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Control Panel" />
 			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
 			<var name="permissionNavigationValue" value="General Permissions" />

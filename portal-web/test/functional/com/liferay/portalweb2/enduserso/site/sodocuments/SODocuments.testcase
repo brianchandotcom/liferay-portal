@@ -680,9 +680,9 @@
 		<var name="dmDocumentVersionNumber" value="1.0" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey3" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey3" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_ACTION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Action" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
 		<var name="permissionNavigationValue" value="Documents and Media" />
@@ -1612,9 +1612,9 @@
 
 	<command name="ImportLARSODocumentVersioning" priority="5">
 		<var name="larFileName" value="SO_Documents_Versioning_LAR.portlet.lar" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey3" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey3" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_ACTION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Action" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
 		<var name="permissionNavigationValue" value="Documents and Media" />

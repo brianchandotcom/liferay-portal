@@ -762,7 +762,8 @@
 			<var name="portletName" value="${portlet1Name}" />
 		</execute>
 
-		<execute macro="PermissionsInline#removeViewPermissionFromAllRoles">
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
 			<var name="roleList" value="${roleList}" />
 		</execute>
 
@@ -776,7 +777,8 @@
 			<var name="portletName" value="${portlet2Name}" />
 		</execute>
 
-		<execute macro="PermissionsInline#removeViewPermissionFromAllRoles">
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
 			<var name="roleList" value="${roleList}" />
 		</execute>
 

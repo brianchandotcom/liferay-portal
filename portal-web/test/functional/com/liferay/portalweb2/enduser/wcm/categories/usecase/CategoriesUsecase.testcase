@@ -240,7 +240,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
@@ -252,7 +252,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Category" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
@@ -264,7 +264,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Vocabulary" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
@@ -276,7 +276,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_VOCABULARY_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
@@ -288,7 +288,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_ADD_CATEGORY_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Category" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />

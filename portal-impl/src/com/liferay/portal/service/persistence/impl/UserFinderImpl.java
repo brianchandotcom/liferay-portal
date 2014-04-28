@@ -75,6 +75,12 @@ public class UserFinderImpl
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
 
+	public static final String FIND_BY_SOCIAL_RELATION_TYPES =
+		UserFinder.class.getName() + ".findBySocialRelationTypes";
+
+	public static final String FIND_BY_USERS_GROUPS =
+		UserFinder.class.getName() + ".findByUsersGroups";
+
 	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
 
@@ -532,6 +538,330 @@ public class UserFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public List<User> findBySocialRelationTypes(
+			String terms, long userId, int[] types, int start, int end)
+		throws SystemException {
+
+		String sql = getFindBySocialRelationTypesSQL(types);
+
+		String[] keywords = removeLeadingPercent(
+			CustomSQLUtil.keywords(terms, true));
+
+		String[] firstName = keywords;
+		String[] middleName = keywords;
+		String[] lastName = keywords;
+		String[] screenName = keywords;
+		String[] emailAddress = keywords;
+
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
+			emailAddress);
+
+		sql = CustomSQLUtil.replaceAndOperator(sql, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery query = session.createSynchronizedSQLQuery(sql);
+
+			query.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(query);
+
+			qPos.add(userId);
+
+			for (int i = 0; i < types.length; i++) {
+				qPos.add(types[i]);
+			}
+
+			qPos.add(userId);
+			qPos.add(firstName, 2);
+			qPos.add(middleName, 2);
+			qPos.add(lastName, 2);
+			qPos.add(screenName, 2);
+			qPos.add(emailAddress, 2);
+
+			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<User> findByUsersGroups(
+			String terms, long userId, long[] groupIds, int start, int end)
+		throws SystemException {
+
+		String sql = getFindByUsersGroupsSQL(groupIds);
+
+		String[] keywords = removeLeadingPercent(
+			CustomSQLUtil.keywords(terms, true));
+
+		String[] firstName = keywords;
+		String[] middleName = keywords;
+		String[] lastName = keywords;
+		String[] screenName = keywords;
+		String[] emailAddress = keywords;
+
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
+			emailAddress);
+
+		sql = CustomSQLUtil.replaceAndOperator(sql, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery query = session.createSynchronizedSQLQuery(sql);
+
+			query.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(query);
+
+			qPos.add(userId);
+
+			for (int i = 0; i < groupIds.length; i++) {
+				qPos.add(groupIds[i]);
+			}
+
+			qPos.add(firstName, 2);
+			qPos.add(middleName, 2);
+			qPos.add(lastName, 2);
+			qPos.add(screenName, 2);
+			qPos.add(emailAddress, 2);
+
+			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<User> findBySocialRelationTypesGroups(
+			String terms, long userId, int[] types, long[] groupIds, int start,
+			int end)
+		throws SystemException {
+
+		String[] keywords = removeLeadingPercent(
+			CustomSQLUtil.keywords(terms, true));
+
+		String[] firstName = keywords;
+		String[] middleName = keywords;
+		String[] lastName = keywords;
+		String[] screenName = keywords;
+		String[] emailAddress = keywords;
+
+		// Groups
+
+		String byGroupsSQL = null;
+
+		if ((groupIds != null) && (groupIds.length > 0)) {
+			byGroupsSQL = getFindByUsersGroupsSQL(groupIds);
+
+			byGroupsSQL = CustomSQLUtil.replaceKeywords(
+				byGroupsSQL, "lower(User_.firstName)", StringPool.LIKE, false,
+				firstName);
+			byGroupsSQL = CustomSQLUtil.replaceKeywords(
+				byGroupsSQL, "lower(User_.middleName)", StringPool.LIKE, false,
+				middleName);
+			byGroupsSQL = CustomSQLUtil.replaceKeywords(
+				byGroupsSQL, "lower(User_.lastName)", StringPool.LIKE, false,
+				lastName);
+			byGroupsSQL = CustomSQLUtil.replaceKeywords(
+				byGroupsSQL, "lower(User_.screenName)", StringPool.LIKE, false,
+				screenName);
+			byGroupsSQL = CustomSQLUtil.replaceKeywords(
+				byGroupsSQL, "lower(User_.emailAddress)", StringPool.LIKE,
+				false, emailAddress);
+		}
+
+		// Social relations
+
+		String byRelationSQL = null;
+
+		if ((types != null) && (types.length > 0)) {
+			byRelationSQL = getFindBySocialRelationTypesSQL(types);
+
+			byRelationSQL = CustomSQLUtil.replaceKeywords(
+				byRelationSQL, "lower(User_.firstName)", StringPool.LIKE, false,
+				firstName);
+			byRelationSQL = CustomSQLUtil.replaceKeywords(
+				byRelationSQL, "lower(User_.middleName)", StringPool.LIKE,
+				false, middleName);
+			byRelationSQL = CustomSQLUtil.replaceKeywords(
+				byRelationSQL, "lower(User_.lastName)", StringPool.LIKE, false,
+				lastName);
+			byRelationSQL = CustomSQLUtil.replaceKeywords(
+				byRelationSQL, "lower(User_.screenName)", StringPool.LIKE,
+				false, screenName);
+			byRelationSQL = CustomSQLUtil.replaceKeywords(
+				byRelationSQL, "lower(User_.emailAddress)", StringPool.LIKE,
+				false, emailAddress);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		if ((groupIds != null) && (groupIds.length > 0)) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(byGroupsSQL);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (types.length > 0) {
+				sb.append(" UNION ");
+			}
+		}
+
+		if ((types != null) && (types.length > 0)) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(byRelationSQL);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		String sql = sb.toString();
+
+		sql = CustomSQLUtil.replaceAndOperator(sql, false);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery query = session.createSynchronizedSQLQuery(sql);
+
+			query.addEntity("User_", UserImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(query);
+
+			// Groups
+
+			if ((groupIds != null) && (groupIds.length > 0)) {
+				qPos.add(userId);
+
+				for (int i = 0; i < groupIds.length; i++) {
+					qPos.add(groupIds[i]);
+				}
+
+				qPos.add(firstName, 2);
+				qPos.add(middleName, 2);
+				qPos.add(lastName, 2);
+				qPos.add(screenName, 2);
+				qPos.add(emailAddress, 2);
+			}
+
+			// Relations
+
+			if ((types != null) && (types.length > 0)) {
+				qPos.add(userId);
+
+				for (int i = 0; i < types.length; i++) {
+					qPos.add(types[i]);
+				}
+
+				qPos.add(userId);
+				qPos.add(firstName, 2);
+				qPos.add(middleName, 2);
+				qPos.add(lastName, 2);
+				qPos.add(screenName, 2);
+				qPos.add(emailAddress, 2);
+			}
+
+			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected String getFindBySocialRelationTypesSQL(int[] types) {
+		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES);
+
+		if ((types == null) || (types.length == 0)) {
+			return StringUtil.replace(
+				sql, "[$SOCIAL_RELATION_TYPES$]", StringPool.BLANK);
+		}
+
+		StringBundler sb = new StringBundler(types.length * 2 - 1);
+
+		for (int i = 0; i < types.length; i++) {
+			sb.append(StringPool.QUESTION);
+
+			if ((i + 1) < types.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		if (types.length > 1) {
+			return StringUtil.replace(
+				sql, "[$SOCIAL_RELATION_TYPES$]",
+				"SocialRelation.type_ IN (" + sb.toString() + ") AND");
+		}
+
+		return StringUtil.replace(
+			sql, "[$SOCIAL_RELATION_TYPES$]",
+			"(SocialRelation.type_ = " + sb.toString() + ") AND");
+	}
+
+	protected String getFindByUsersGroupsSQL(long[] groupIds) {
+		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
+
+		if ((groupIds == null) || (groupIds.length == 0)) {
+			return StringUtil.replace(
+				sql, "[$USERS_GROUPS_WHERE$]", StringPool.BLANK);
+		}
+
+		StringBundler sb = new StringBundler(groupIds.length * 2 - 1);
+
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append(StringPool.QUESTION);
+
+			if ((i + 1) < groupIds.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		if (groupIds.length > 1) {
+			return StringUtil.replace(
+				sql, "[$USERS_GROUPS_WHERE$]",
+				"(Users_Groups.groupId IN (" + sb.toString() + ")) AND");
+		}
+
+		return StringUtil.replace(
+			sql, "[$USERS_GROUPS_WHERE$]",
+			"(Users_Groups.groupId = " + sb.toString() + ") AND");
 	}
 
 	@Override
@@ -1203,6 +1533,23 @@ public class UserFinderImpl
 		}
 
 		return join;
+	}
+
+	protected String[] removeLeadingPercent(String[] keywords) {
+		String[] result = new String[keywords.length];
+
+		for (int i = 0; i < keywords.length; i++) {
+			String keyword = keywords[i];
+
+			if (keyword.startsWith(StringPool.PERCENT)) {
+				result[i] = keyword.substring(1);
+			}
+			else {
+				result[i] = keyword;
+			}
+		}
+
+		return result;
 	}
 
 	protected String replaceJoinAndWhere(

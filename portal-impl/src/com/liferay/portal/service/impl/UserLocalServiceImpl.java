@@ -2900,6 +2900,35 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user.getUserId();
 	}
 
+	@Override
+	public List<User> getUsersByGroups(
+			String keywords, long userId, long[] groupIds, int start, int end)
+		throws PortalException, SystemException {
+
+		return userFinder.findByUsersGroups(
+			keywords, userId, groupIds, start, end);
+	}
+
+	@Override
+	public List<User> getUsersBySocialRelationsTypes(
+			String keywords, long userId, int[] types, long[] groupIds,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return userFinder.findBySocialRelationTypes(
+			keywords, userId, types, start, end);
+	}
+
+	@Override
+	public List<User> getUsersBySocialRelationsTypesGroups(
+			String keywords, long userId, int[] types, long[] groupIds,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return userFinder.findBySocialRelationTypesGroups(
+			keywords, userId, types, groupIds, start, end);
+	}
+
 	/**
 	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * user.

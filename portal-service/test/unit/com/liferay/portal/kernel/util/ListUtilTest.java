@@ -29,7 +29,7 @@ import org.junit.Test;
 public class ListUtilTest {
 
 	@Test
-	public void testCountWithEmptyListShouldReturnZero() {
+	public void testCountWithEmptyListReturnsZero() {
 		Collection<String> list = new ArrayList<String>();
 
 		PredicateFilter predicate = new PredicateFilter() {
@@ -43,7 +43,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testCountWithNullListShouldReturnZero() {
+	public void testCountWithNullListReturnsZero() {
 		List<String> list = null;
 
 		PredicateFilter predicate = new PredicateFilter() {
@@ -57,7 +57,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testCountWithPopulatedListShouldReturnRightCount() {
+	public void testCountWithPopulatedListReturnsRightCount() {
 		List<String> list = new ArrayList<String>();
 		list.add("a");
 		list.add("b");
@@ -74,7 +74,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testExistsWithEmptyListShouldReturnFalse() {
+	public void testExistsWithEmptyListReturnsFalse() {
 		List<String> list = new ArrayList<String>();
 
 		PredicateFilter predicate = new PredicateFilter() {
@@ -88,7 +88,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testExistsWithNullListShouldReturnFalse() {
+	public void testExistsWithNullListReturnsFalse() {
 		List<String> list = null;
 
 		PredicateFilter predicate = new PredicateFilter() {
@@ -102,7 +102,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testExistsWithPopulatedListShouldReturnFalseIfNotExists() {
+	public void testExistsWithPopulatedListReturnsFalseIfNotExists() {
 		List<String> list = new ArrayList<String>();
 		list.add("a");
 		list.add("bb");
@@ -119,7 +119,7 @@ public class ListUtilTest {
 	}
 
 	@Test
-	public void testExistsWithPopulatedListShouldReturnTrueIfExists() {
+	public void testExistsWithPopulatedListReturnsTrueIfExists() {
 		List<String> list = new ArrayList<String>();
 		list.add("a");
 		list.add("bb");

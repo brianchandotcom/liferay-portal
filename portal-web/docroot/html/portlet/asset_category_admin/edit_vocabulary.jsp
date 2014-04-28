@@ -17,23 +17,18 @@
 <%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
 
 <%
+String formName = PortalUtil.generateRandomKey(request, "portlet_asset_category_admin_edit_vocabulary") + StringPool.UNDERLINE + "fm";
+
 AssetVocabulary vocabulary = (AssetVocabulary)request.getAttribute(WebKeys.ASSET_VOCABULARY);
 
 long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
-
-String formName = PortalUtil.generateRandomKey(request, "portlet_asset_category_admin_edit_vocabulary") +
-		StringPool.UNDERLINE + "fm";
 %>
 
 <portlet:actionURL var="editVocabularyURL">
 	<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
 </portlet:actionURL>
 
-<aui:form action="<%= editVocabularyURL %>"
-		  cssClass="update-vocabulary-form"
-		  method="get"
-		name="<%= formName %>" id="<portlet:namespace /><%= formName %>">
-
+<aui:form action="<%= editVocabularyURL %>" cssClass="update-vocabulary-form" id="<portlet:namespace /><%= formName %>" method="get" name="<%= formName %>">
 	<div class="hide lfr-message-response" id="vocabularyMessagesEdit"></div>
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= vocabulary == null ? Constants.ADD : Constants.UPDATE %>" />

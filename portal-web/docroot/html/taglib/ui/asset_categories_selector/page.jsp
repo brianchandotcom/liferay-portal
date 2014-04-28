@@ -32,7 +32,6 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 
 if (Validator.isNotNull(className)) {
-
 	vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
 
 	long classNameId = PortalUtil.getClassNameId(className);

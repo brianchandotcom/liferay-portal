@@ -15,9 +15,11 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -83,6 +85,67 @@ public class FileEntryStagedModelDataHandlerTest
 			portletDataContext, exportedStagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+	}
+
+	@Test
+	@Transactional
+	public void testFileExtensionExportImport() throws Exception {
+		String sourceFileName = "liferay.is.great.pdf";
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName);
+
+		// Export and import file entry
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, fileEntry);
+
+		initImport();
+
+		StagedModel exportedFileEntry = readExportedStagedModel(fileEntry);
+
+		Assert.assertNotNull(exportedFileEntry);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedFileEntry);
+
+		FileEntry importedFileEntry =
+			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertTrue(importedFileEntry.getExtension().equals("pdf"));
+
+		// Update file entry title
+
+		String title = "liferay.is.awesome";
+
+		DLAppTestUtil.updateFileEntry(
+			stagingGroup.getGroupId(), fileEntry.getFileEntryId(),
+			StringPool.BLANK, title);
+
+		// Export and import again to propagate changes
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, fileEntry);
+
+		initImport();
+
+		exportedFileEntry = readExportedStagedModel(fileEntry);
+
+		Assert.assertNotNull(exportedFileEntry);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedFileEntry);
+
+		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertTrue(importedFileEntry.getExtension().equals("pdf"));
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()

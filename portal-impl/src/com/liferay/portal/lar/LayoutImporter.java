@@ -113,7 +113,7 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class LayoutImporter {
 
-	public void importLayouts(
+	public static void importLayouts(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
@@ -132,7 +132,7 @@ public class LayoutImporter {
 		}
 	}
 
-	public MissingReferences validateFile(
+	public static MissingReferences validateFile(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
@@ -170,7 +170,7 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void deleteMissingLayouts(
+	protected static void deleteMissingLayouts(
 			PortletDataContext portletDataContext,
 			List<String> sourceLayoutUuids, List<Layout> previousLayouts,
 			ServiceContext serviceContext)
@@ -198,7 +198,7 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void doImportLayouts(
+	protected static void doImportLayouts(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
@@ -778,7 +778,7 @@ public class LayoutImporter {
 		zipReader.close();
 	}
 
-	protected void importLayout(
+	protected static void importLayout(
 			PortletDataContext portletDataContext,
 			List<String> sourceLayoutsUuids, Element layoutElement)
 		throws Exception {
@@ -795,7 +795,7 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void readXML(PortletDataContext portletDataContext)
+	protected static void readXML(PortletDataContext portletDataContext)
 		throws Exception {
 
 		if (portletDataContext.getImportDataRootElement() != null) {
@@ -819,7 +819,7 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void setPortletScope(
+	protected static void setPortletScope(
 		PortletDataContext portletDataContext, Element portletElement) {
 
 		// Portlet data scope
@@ -909,7 +909,8 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void updateLayoutPriorities(PortletDataContext portletDataContext)
+	protected static void updateLayoutPriorities(
+			PortletDataContext portletDataContext, List<Element> layoutElements)
 		throws PortalException, SystemException {
 
 		Map<Long, Layout> layouts =
@@ -1006,7 +1007,7 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void validateFile(PortletDataContext portletDataContext)
+	protected static void validateFile(PortletDataContext portletDataContext)
 		throws Exception {
 
 		// Build compatibility
@@ -1112,9 +1113,8 @@ public class LayoutImporter {
 			portletDataContext.getImportDataGroupElement(Layout.class));
 	}
 
-	protected void validateLayoutPrototypes(
-			long companyId, Element layoutsElement,
-			List<Element> layoutElements)
+	protected static void validateLayoutPrototypes(
+			long companyId, Element layoutsElement)
 		throws Exception {
 
 		List<Tuple> missingLayoutPrototypes = new ArrayList<Tuple>();

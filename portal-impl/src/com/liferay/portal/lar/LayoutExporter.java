@@ -102,6 +102,23 @@ public class LayoutExporter {
 	public static final String SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
+	public static File exportLayoutsAsFile(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws Exception {
+
+		try {
+			ExportImportThreadLocal.setLayoutExportInProcess(true);
+
+			return doExportLayoutsAsFile(
+				groupId, privateLayout, layoutIds, parameterMap, startDate,
+				endDate);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutExportInProcess(false);
+		}
+	}
+
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
@@ -205,24 +222,7 @@ public class LayoutExporter {
 		}
 	}
 
-	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws Exception {
-
-		try {
-			ExportImportThreadLocal.setLayoutExportInProcess(true);
-
-			return doExportLayoutsAsFile(
-				groupId, privateLayout, layoutIds, parameterMap, startDate,
-				endDate);
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutExportInProcess(false);
-		}
-	}
-
-	protected File doExportLayoutsAsFile(
+	protected static File doExportLayoutsAsFile(
 			long groupId, boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
@@ -555,7 +555,7 @@ public class LayoutExporter {
 		return zipWriter.getFile();
 	}
 
-	protected void exportLayout(
+	protected static void exportLayout(
 			PortletDataContext portletDataContext, List<Portlet> portlets,
 			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout)
 		throws Exception {

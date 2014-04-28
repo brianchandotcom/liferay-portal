@@ -1500,7 +1500,7 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="location" type="String">

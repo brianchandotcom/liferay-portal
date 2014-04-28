@@ -58,12 +58,6 @@ else if (type.equals("assigned-to-my-roles")) {
 		WorkflowHandler workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 		%>
 
-		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-		</portlet:renderURL>
-
 		<c:if test="<%= allTasks %>">
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
@@ -85,6 +79,12 @@ else if (type.equals("assigned-to-my-roles")) {
 
 			</liferay-ui:search-container-column-text>
 		</c:if>
+
+		<portlet:renderURL var="rowURL">
+			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
 			buffer="buffer"

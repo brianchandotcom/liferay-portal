@@ -440,11 +440,7 @@ public class PortletImporter {
 		LayoutCache layoutCache = new LayoutCache();
 
 		if (importPermissions) {
-			_permissionImporter.checkRoles(
-				layoutCache, layout.getCompanyId(), groupId, userId,
-				portletElement);
 
-			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
 		readAssetTags(portletDataContext);
@@ -508,9 +504,6 @@ public class PortletImporter {
 				_log.debug("Importing portlet permissions");
 			}
 
-			_permissionImporter.importPortletPermissions(
-				layoutCache, layout.getCompanyId(), groupId, userId, layout,
-				portletElement, portletId);
 
 			if (userId > 0) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -530,8 +523,6 @@ public class PortletImporter {
 
 		// Deletion system events
 
-		_deletionSystemEventImporter.importDeletionSystemEvents(
-			portletDataContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing portlet takes " + stopWatch.getTime() + " ms");
@@ -924,9 +915,13 @@ public class PortletImporter {
 		String xml = portletDataContext.getZipEntryAsString(
 			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
 				"/tags.xml");
+			PermissionImporter.checkRoles(
+				layoutCache, layout.getCompanyId(), groupId, userId,
+				portletElement);
 
 		if (xml == null) {
 			return;
+			PermissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
 		Document document = SAXReaderUtil.read(xml);
@@ -977,6 +972,9 @@ public class PortletImporter {
 
 		if (xml == null) {
 			return;
+			PermissionImporter.importPortletPermissions(
+				layoutCache, layout.getCompanyId(), groupId, userId, layout,
+				portletElement, portletId);
 		}
 
 		Document document = SAXReaderUtil.read(xml);
@@ -990,6 +988,8 @@ public class PortletImporter {
 			String className = expandoTableElement.attributeValue("class-name");
 
 			ExpandoTable expandoTable = null;
+		DeletionSystemEventImporter.importDeletionSystemEvents(
+			portletDataContext);
 
 			try {
 				expandoTable = ExpandoTableLocalServiceUtil.getDefaultTable(
@@ -1251,9 +1251,5 @@ public class PortletImporter {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);
-
-	private DeletionSystemEventImporter _deletionSystemEventImporter =
-		new DeletionSystemEventImporter();
-	private PermissionImporter _permissionImporter = new PermissionImporter();
 
 }

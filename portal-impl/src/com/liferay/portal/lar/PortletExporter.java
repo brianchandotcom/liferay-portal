@@ -397,12 +397,8 @@ public class PortletExporter {
 		exportExpandoTables(portletDataContext);
 		exportLocks(portletDataContext);
 
-		_deletionSystemEventExporter.exportDeletionSystemEvents(
-			portletDataContext);
 
 		if (exportPermissions) {
-			_permissionExporter.exportPortletDataPermissions(
-				portletDataContext);
 		}
 
 		ExportImportHelperUtil.writeManifestSummary(
@@ -502,6 +498,9 @@ public class PortletExporter {
 
 			propertyElement.addAttribute("key", assetTagProperty.getKey());
 			propertyElement.addAttribute("value", assetTagProperty.getValue());
+			PermissionExporter.exportPortletPermissions(
+				portletDataContext, layoutCache, portletId, layout,
+				portletElement);
 		}
 
 		portletDataContext.addPermissions(AssetTag.class, assetTag.getTagId());
@@ -812,9 +811,6 @@ public class PortletExporter {
 		// Permissions
 
 		if (exportPermissions) {
-			_permissionExporter.exportPortletPermissions(
-				portletDataContext, layoutCache, portletId, layout,
-				portletElement);
 		}
 
 		// Zip
@@ -837,10 +833,13 @@ public class PortletExporter {
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
 
 		StringBundler configurationOptionsSB = new StringBundler(6);
+		DeletionSystemEventExporter.exportDeletionSystemEvents(
+			portletDataContext);
 
 		if (exportPortletSetup) {
 			configurationOptionsSB.append("setup");
 			configurationOptionsSB.append(StringPool.COMMA);
+			PermissionExporter.exportPortletDataPermissions(portletDataContext);
 		}
 
 		if (exportPortletArchivedSetups) {
@@ -1095,9 +1094,5 @@ public class PortletExporter {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletExporter.class);
-
-	private DeletionSystemEventExporter _deletionSystemEventExporter =
-		new DeletionSystemEventExporter();
-	private PermissionExporter _permissionExporter = new PermissionExporter();
 
 }

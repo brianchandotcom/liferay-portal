@@ -1921,15 +1921,14 @@ this task.
 			</else>
 		</if>
 
-		<replace file="${app.server.tcserver.dir}/liferay/conf/server.xml">
-			<replacetoken><![CDATA[redirectPort="${bio.https.port}"/>]]></replacetoken>
-			<replacevalue><![CDATA[redirectPort="${bio.https.port}"
-					URIEncoding="UTF-8"/>]]></replacevalue>
-		</replace>
-
 		<replace file="${app.server.tcserver.dir}/liferay/conf/catalina.properties">
 			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
 			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.tcserver.dir}/liferay/conf/server.xml">
+			<replacetoken><![CDATA[redirectPort="${bio.https.port}"/>]]></replacetoken>
+			<replacevalue><![CDATA[redirectPort="${bio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
 		</replace>
 	</target>
 

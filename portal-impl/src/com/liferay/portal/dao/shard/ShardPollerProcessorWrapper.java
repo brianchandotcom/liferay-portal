@@ -30,14 +30,13 @@ public class ShardPollerProcessorWrapper implements PollerProcessor {
 	}
 
 	@Override
-	public void receive(
-			PollerRequest pollerRequest, PollerResponse pollerResponse)
+	public PollerResponse receive(PollerRequest pollerRequest)
 		throws PollerException {
 
 		try {
 			ShardUtil.pushCompanyService(pollerRequest.getCompanyId());
 
-			_pollerProcessor.receive(pollerRequest, pollerResponse);
+			return _pollerProcessor.receive(pollerRequest);
 		}
 		finally {
 			ShardUtil.popCompanyService();

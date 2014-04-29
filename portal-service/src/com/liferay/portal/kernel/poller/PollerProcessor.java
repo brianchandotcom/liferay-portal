@@ -19,8 +19,7 @@ package com.liferay.portal.kernel.poller;
  */
 public interface PollerProcessor {
 
-	public void receive(
-			PollerRequest pollerRequest, PollerResponse pollerResponse)
+	public PollerResponse receive(PollerRequest pollerRequest)
 		throws PollerException;
 
 	public void send(PollerRequest pollerRequest) throws PollerException;

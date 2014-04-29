@@ -888,7 +888,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutExporter layoutExporter = new LayoutExporter();
+			LayoutExporter layoutExporter = LayoutExporter.getInstance();
 
 			return layoutExporter.exportLayoutsAsFile(
 				groupId, privateLayout, layoutIds, parameterMap, startDate,
@@ -1861,7 +1861,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutImporter layoutImporter = new LayoutImporter();
+			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
 			layoutImporter.importLayouts(
 				userId, groupId, privateLayout, parameterMap, file);
@@ -3119,7 +3119,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			LayoutImporter layoutImporter = new LayoutImporter();
+			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
 			return layoutImporter.validateFile(
 				userId, groupId, privateLayout, parameterMap, file);

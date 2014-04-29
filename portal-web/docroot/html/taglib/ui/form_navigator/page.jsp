@@ -205,7 +205,7 @@ if (Validator.isNotNull(historyKey)) {
 				</c:if>
 			</div>
 
-			<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">
+			<aui:script use="anim,aui-event-input,aui-tabview,aui-url,history,io-form,scrollview">
 				var formNode = A.one('#<portlet:namespace /><%= formName %>');
 
 				Liferay.component(
@@ -223,12 +223,32 @@ if (Validator.isNotNull(historyKey)) {
 
 				var tabview = Liferay.component('<portlet:namespace /><%= formName %>Tabview');
 
-				var history = new A.HistoryHash();
+				<c:if test='<%= displayStyle.equals("steps") %>'>
+					var listNode = tabview.get('listNode');
+
+					var scrollAnim = new A.Anim(
+						{
+							duration: 0.3,
+							node: listNode,
+							to: {
+								scrollLeft: function() {
+									var activeTabNode = tabview.getActiveTab();
+
+									var scrollLeft = listNode.get('scrollLeft');
+
+									return activeTabNode.getX() + scrollLeft - listNode.getX();
+								}
+							}
+						}
+					);
+				</c:if>
 
 				function selectTabBySectionId(sectionId) {
 					var instance = this;
 
-					var tab = A.Widget.getByNode('#' + sectionId + 'Tab');
+					var tabNode = A.one('#' + sectionId + 'Tab');
+
+					var tab = A.Widget.getByNode(tabNode);
 
 					var tabIndex = tabview.indexOf(tab);
 
@@ -237,6 +257,14 @@ if (Validator.isNotNull(historyKey)) {
 					}
 
 					updateRedirectForSectionId(sectionId);
+
+					<c:if test='<%= displayStyle.equals("steps") %>'>
+						var listNodeRegion = listNode.get('region');
+
+						if (tabNode && !tabNode.inRegion(listNodeRegion, true)) {
+							scrollAnim.run();
+						}
+					</c:if>
 
 					Liferay.fire('formNavigator:reveal' + sectionId);
 				};
@@ -280,6 +308,8 @@ if (Validator.isNotNull(historyKey)) {
 						redirect.val(url.toString());
 					}
 				}
+
+				var history = new A.HistoryHash();
 
 				tabview.after(
 					'selectionChange',

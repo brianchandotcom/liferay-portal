@@ -75,7 +75,7 @@
 
 .dockbar {
 	@include respond-to(phone, tablet) {
-		.navbar-inner .btn-navbar {
+		.navbar-inner .navbar-btn {
 			@include box-shadow(none);
 			@include text-shadow(none);
 		}
@@ -101,7 +101,7 @@
 }
 
 .dockbar .navbar-inner {
-	.container .nav-collapse > .nav {
+	.container .navbar-collapse > .nav {
 		@include respond-to(phone, tablet) {
 			&.nav-account-controls .info-link-container .info-link {
 				@include border-radius(3px);
@@ -124,7 +124,7 @@
 	}
 }
 
-.dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
+.dockbar-split .dockbar .navbar-inner .container .navbar-collapse > .nav {
 	&.nav-add-controls {
 		> li {
 			a {

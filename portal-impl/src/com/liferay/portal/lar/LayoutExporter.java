@@ -99,9 +99,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class LayoutExporter {
 
-	public static final String SAME_GROUP_FRIENDLY_URL =
-		"/[$SAME_GROUP_FRIENDLY_URL$]";
-
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 

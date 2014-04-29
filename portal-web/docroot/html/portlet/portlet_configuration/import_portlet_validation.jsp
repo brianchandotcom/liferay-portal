@@ -111,14 +111,6 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 		function(event) {
 			event.halt();
 
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
-				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="portletResource" value="<%= portletResource %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-			</liferay-portlet:resourceURL>
-
 			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
 
 			exportImportOptions.plug(
@@ -127,6 +119,15 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 					form: {
 						id: '<portlet:namespace />fm1'
 					},
+					
+					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPortletURL">
+						<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="portletResource" value="<%= portletResource %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+					</liferay-portlet:resourceURL>
+					
 					uri: '<%= importPortletURL %>'
 				}
 			);

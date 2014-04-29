@@ -37,13 +37,13 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 
 <liferay-ui:error key="duplicateMapping" message="several-shared-parameters-are-mapped-to-the-same-parameter" />
 
-<portlet:actionURL var="editPRPURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/edit_public_render_parameters" />
-</portlet:actionURL>
-
 <div class="alert alert-info">
 	<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
 </div>
+
+<portlet:actionURL var="editPRPURL">
+	<portlet:param name="struts_action" value="/portlet_configuration/edit_public_render_parameters" />
+</portlet:actionURL>
 
 <aui:form action="<%= editPRPURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />

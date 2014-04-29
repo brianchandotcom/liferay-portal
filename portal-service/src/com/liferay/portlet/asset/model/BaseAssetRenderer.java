@@ -150,6 +150,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public String[] getSupportedConversions() {
+		return null;
+	}
+
+	@Override
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception {
 

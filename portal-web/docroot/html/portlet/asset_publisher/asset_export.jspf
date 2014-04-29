@@ -23,7 +23,7 @@ exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 <liferay-ui:icon-list>
 
 	<%
-	for (String extension : assetPublisherDisplayContext.getExtensions()) {
+	for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
 		exportAssetURL.setParameter("targetExtension", extension);
 	%>
 

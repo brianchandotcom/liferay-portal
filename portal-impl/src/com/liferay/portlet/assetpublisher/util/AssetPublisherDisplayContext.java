@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
@@ -318,6 +320,25 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _extensions;
+	}
+
+	public String[] getExtensions(AssetRenderer assetRenderer) {
+		final String[] supportedConversions =
+			assetRenderer.getSupportedConversions();
+
+		if (supportedConversions == null) {
+			return getExtensions();
+		}
+
+		return ArrayUtil.filter(
+			getExtensions(),
+			new PredicateFilter<String>() {
+
+				public boolean filter(String extension) {
+					return ArrayUtil.contains(supportedConversions, extension);
+				}
+
+			});
 	}
 
 	public long[] getGroupIds() {

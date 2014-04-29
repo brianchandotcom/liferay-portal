@@ -117,13 +117,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		function(event) {
 			event.halt();
 
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-			</liferay-portlet:resourceURL>
-
 			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
 
 			exportImportOptions.plug(
@@ -132,6 +125,14 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 					form: {
 						id: '<portlet:namespace />fm1'
 					},
+					
+					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importPagesURL">
+						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+					</liferay-portlet:resourceURL>
+
 					uri: '<%= importPagesURL %>'
 				}
 			);

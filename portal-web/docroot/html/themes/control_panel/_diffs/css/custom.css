@@ -199,7 +199,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding-left: 0;
 			padding-right: 0;
 
-			.brand {
+			.navbar-brand {
 				letter-spacing: 1px;
 
 				&, h1, a {
@@ -303,7 +303,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				.nav-collapse {
+				.navbar-collapse {
 					@include respond-to(phone, tablet) {
 						float: right;
 					}
@@ -562,11 +562,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			border-right: 1px solid #D3D3D3;
 			padding: 15px 0 0;
 
-			.accordion {
+			.panel-group {
 				border-right-width: 0;
 				margin-bottom: 0;
 
-				.accordion-group .category-portlets {
+				.panel.panel-default .category-portlets {
 					list-style: none;
 					margin: 0;
 
@@ -622,7 +622,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.search-panels-bar {
-				.control-group {
+				.form-group {
 					margin: 0;
 
 					.search-panels-input {
@@ -661,14 +661,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.panel-page-menu {
 			width: 50px;
 
-			.accordion-group {
+			.panel.panel-default {
 				&.open {
 					.toggler-content {
 						border: 1px solid #DDD;
 						left: 48px;
 						margin-top: 0 !important;
 
-						.accordion-inner {
+						.panel-body {
 							border-top-width: 0;
 						}
 					}
@@ -708,14 +708,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.portlet-borderless-container {
 				padding: 0;
 
-				.accordion {
+				.panel-group {
 					border-bottom-width: 0;
 
 					.toggler-header .accordion-toggle {
 						background: none no-repeat right;
 					}
 
-					.accordion-group {
+					.panel.panel-default {
 						background: #FFF;
 						border: solid #D1D1D1;
 						border-width: 0;
@@ -733,7 +733,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						}
 					}
 
-					.accordion-heading {
+					.panel-heading {
 						border-bottom: 1px solid #D1D1D1;
 						border-top-width: 0;
 
@@ -774,7 +774,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.span9.panel-page-body {
+		.col-md-9.panel-page-body {
 			width: 90%;
 		}
 	}
@@ -908,7 +908,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin: 0 10px 0 0;
 		}
 
-		.control-group {
+		.form-group {
 			margin-bottom: 0;
 		}
 	}
@@ -979,11 +979,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			width: 1px;
 		}
 
-		.accordion .accordion-group {
+		.panel-group .panel.panel-default {
 			@include border-radius(0);
 			@include box-shadow(-3px 0 2px -2px #F5F5F5);
 
-			.accordion-heading {
+			.panel-heading {
 				&.toggler-header-collapsed, &.toggler-header-expanded {
 					@include border-radius(0);
 				}
@@ -1108,7 +1108,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.portlet-borderless-container {
-				&, .accordion .accordion-group {
+				&, .panel-group .panel.panel-default {
 					@include box-shadow(inset 1px 0 #DDD);
 				}
 			}
@@ -1155,7 +1155,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background-image: none;
 					}
 
-					.accordion {
+					.panel-group {
 						border-width: 0;
 						float: left;
 						width: 80%;
@@ -1165,7 +1165,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							right: auto;
 						}
 
-						.accordion-group {
+						.panel.panel-default {
 							@include box-shadow(none);
 
 							float: left;
@@ -1192,7 +1192,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 						}
 
-						.accordion-heading {
+						.panel-heading {
 							border-bottom-width: 0;
 							border-left-width: 1px;
 						}
@@ -1219,7 +1219,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 0;
 		}
 
-		.span6 {
+		.col-md-6 {
 			&.article-structure, &.article-template {
 				float: left;
 				width: 45%;

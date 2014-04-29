@@ -160,7 +160,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					var A = AUI();
 
 					if (document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value != event.groupid) {
-						<portlet:namespace />selectFileEntry("", "");
+						<portlet:namespace />selectFileEntry('', '');
 					}
 
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
@@ -209,7 +209,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	}
 
 	function <portlet:namespace />saveFileShortcut() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

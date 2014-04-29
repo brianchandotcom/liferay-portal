@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -131,7 +133,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
 				testReaderWriter);
 
-		Element rootElement = SAXReaderUtil.createElement("root");
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+		rootElement.addElement("header");
+
+		testReaderWriter.addEntry("/manifest.xml", document.asXML());
+
+		rootElement = SAXReaderUtil.createElement("root");
 
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
@@ -209,6 +218,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testExportDLReferences() throws Exception {
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
+
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();
 
@@ -543,10 +554,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+			zipWriter.getFile());
+
+		_portletDataContextImport.setZipReader(zipReader);
+
 		MissingReferences missingReferences =
 			ExportImportHelperUtil.validateMissingReferences(
-				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-				new HashMap<String, String[]>(), zipWriter.getFile());
+				_portletDataContextImport);
 
 		Map<String, MissingReference> dependencyMissingReferences =
 			missingReferences.getDependencyMissingReferences();
@@ -554,7 +569,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Map<String, MissingReference> weakMissingReferences =
 			missingReferences.getWeakMissingReferences();
 
-		Assert.assertEquals(2, dependencyMissingReferences.size());
+		Assert.assertEquals(3, dependencyMissingReferences.size());
 		Assert.assertEquals(1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());

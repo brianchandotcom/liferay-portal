@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -283,6 +284,18 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
 		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
+
+		String xml = zipReader.getEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			Document document = SAXReaderUtil.createDocument();
+
+			Element rootElement = document.addElement("root");
+			rootElement.addElement("header");
+
+			zipWriter.addEntry("/manifest.xml", document.asXML());
+			zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
+		}
 
 		portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(

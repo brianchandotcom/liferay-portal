@@ -14,12 +14,13 @@
 
 package com.liferay.portal.kernel.json;
 
+import java.io.Externalizable;
 import java.io.Writer;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface JSONArray {
+public interface JSONArray extends Externalizable {
 
 	public boolean getBoolean(int index);
 

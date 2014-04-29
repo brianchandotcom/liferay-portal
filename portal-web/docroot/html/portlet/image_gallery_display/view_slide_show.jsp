@@ -92,7 +92,7 @@ int defaultSpeed = 3000;
 		String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 	%>
 
-		<portlet:namespace />imgArray[<%= i %>] = "<%= largeSrc %>";
+		<portlet:namespace />imgArray[<%= i %>] = '<%= largeSrc %>';
 
 	<%
 	}
@@ -109,7 +109,7 @@ int defaultSpeed = 3000;
 
 	function <portlet:namespace />play() {
 		if (<portlet:namespace />timeout == 0) {
-			<portlet:namespace />timeout = setInterval("<portlet:namespace />showNext()", <portlet:namespace />speed);
+			<portlet:namespace />timeout = setInterval('<portlet:namespace />showNext()', <portlet:namespace />speed);
 		}
 	}
 

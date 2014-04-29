@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
@@ -228,7 +230,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	public Object[] getRepositoryEntryIds(String objectId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		boolean newRepositoryEntry = false;
 
@@ -236,15 +238,9 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			getRepositoryId(), objectId);
 
 		if (repositoryEntry == null) {
-			long repositoryEntryId = counterLocalService.increment();
-
-			repositoryEntry = RepositoryEntryUtil.create(repositoryEntryId);
-
-			repositoryEntry.setGroupId(getGroupId());
-			repositoryEntry.setRepositoryId(getRepositoryId());
-			repositoryEntry.setMappedId(objectId);
-
-			RepositoryEntryUtil.update(repositoryEntry);
+			repositoryEntry = repositoryEntryLocalService.addRepositoryEntry(
+				PrincipalThreadLocal.getUserId(), getGroupId(),
+				getRepositoryId(), objectId, new ServiceContext());
 
 			newRepositoryEntry = true;
 		}
@@ -382,6 +378,13 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	@Override
+	public void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		this.repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	@Override
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
 	}
@@ -493,6 +496,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	protected CompanyLocalService companyLocalService;
 	protected CounterLocalService counterLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
 
 	private long _companyId;

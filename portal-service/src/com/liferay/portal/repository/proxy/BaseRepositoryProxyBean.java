@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
@@ -705,6 +706,14 @@ public class BaseRepositoryProxyBean
 	@Override
 	public void setGroupId(long groupId) {
 		_baseRepository.setGroupId(groupId);
+	}
+
+	@Override
+	public void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		_baseRepository.setRepositoryEntryLocalService(
+			repositoryEntryLocalService);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDMTemplate template = (DDMTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>" triggerCssClass="btn">
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
@@ -34,7 +34,8 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -48,7 +49,8 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>
@@ -72,7 +74,8 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			image="copy"
+			iconCssClass="icon-copy"
+			message="copy"
 			url="<%= sb.toString() %>"
 		/>
 	</c:if>

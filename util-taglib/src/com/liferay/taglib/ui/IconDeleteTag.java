@@ -44,10 +44,14 @@ public class IconDeleteTag extends IconTag {
 
 		if (Validator.isNull(getImage())) {
 			if (_trash) {
-				setImage("trash");
+				setIconCssClass("icon-trash");
 			}
 			else {
-				setImage("delete");
+				setIconCssClass("icon-remove");
+
+				if (Validator.isNull(getMessage())) {
+					setMessage("delete");
+				}
 			}
 		}
 

@@ -148,7 +148,12 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									</span>
 
 									<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-										<liferay-ui:icon id="editDDMStructure" image="edit" url="javascript:;" />
+										<liferay-ui:icon
+											iconCssClass="icon-edit"
+											id="editDDMStructure"
+											message="edit"
+											url="javascript:;"
+										/>
 									</c:if>
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
@@ -181,7 +186,12 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 										</c:if>
 
 										<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-											<liferay-ui:icon id="editDDMTemplate" image="edit" url="javascript:;" />
+											<liferay-ui:icon
+												iconCssClass="icon-edit"
+												id="editDDMTemplate"
+												message="edit"
+												url="javascript:;"
+											/>
 										</c:if>
 									</c:if>
 
@@ -244,7 +254,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									<liferay-ui:icon-menu
 										cssClass="add-translations-menu"
 										direction="down"
-										icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
+										icon="../aui/plus"
 										message='<%= LanguageUtil.get(pageContext, "add-translation") %>'
 										showArrow="<%= true %>"
 										showWhenSingleIcon="<%= true %>"

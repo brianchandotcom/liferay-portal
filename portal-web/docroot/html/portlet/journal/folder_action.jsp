@@ -66,7 +66,8 @@ else {
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="edit"
+						iconCssClass="icon-edit"
+						message="edit"
 						url="<%= editURL %>"
 					/>
 
@@ -77,7 +78,7 @@ else {
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="submit"
+						iconCssClass="icon-move"
 						message="move"
 						url="<%= moveURL %>"
 					/>
@@ -103,7 +104,7 @@ else {
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="add_folder"
+						iconCssClass="icon-plus"
 						message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
 						url="<%= addFolderURL %>"
 					/>
@@ -143,7 +144,7 @@ else {
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="add_folder"
+						iconCssClass="icon-plus"
 						message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
 						url="<%= addFolderURL %>"
 					/>
@@ -162,7 +163,8 @@ else {
 			/>
 
 			<liferay-ui:icon
-				image="permissions"
+				iconCssClass="icon-lock"
+				message="permissions"
 				method="get"
 				url="<%= permissionsURL %>"
 				useDialog="<%= true %>"

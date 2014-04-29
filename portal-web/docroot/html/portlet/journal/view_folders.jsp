@@ -206,7 +206,7 @@ else {
 							cssClass="folder structure"
 							dataView="<%= dataView %>"
 							entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-structure") %>'
-							iconImage="icon-tasks"
+							iconImage="icon-th-large"
 							selected='<%= browseBy.equals("structure") %>'
 							viewURL="<%= filterDDMStructureArticlesURL.toString() %>"
 						/>
@@ -264,7 +264,7 @@ else {
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
 								entryTitle="<%= ddmStructure.getName(locale) %>"
-								iconImage="icon-tasks"
+								iconImage="icon-th-large"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
 							/>
@@ -301,6 +301,8 @@ else {
 					/>
 
 					<%
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
 					List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, searchContainer.getStart(), searchContainer.getEnd());
 
 					for (JournalFolder curFolder : folders) {
@@ -312,6 +314,8 @@ else {
 
 						dataView.put("folder-id", curFolder.getFolderId());
 						dataView.put("title", curFolder.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 					%>
 
 						<liferay-portlet:renderURL varImpl="viewURL">
@@ -327,7 +331,7 @@ else {
 							actionJsp="/html/portlet/journal/folder_action.jsp"
 							dataView="<%= dataView %>"
 							entryTitle="<%= curFolder.getName() %>"
-							iconImage='<%= (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
+							iconImage="<%= assetRenderer.getIconCssClass() %>"
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
 							viewURL="<%= viewURL.toString() %>"
 						/>

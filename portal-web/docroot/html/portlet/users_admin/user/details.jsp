@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-User curUser = themeDisplay.getUser();
 User selUser = (User)request.getAttribute("user.selUser");
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 
@@ -84,7 +83,7 @@ if (selContact != null) {
 
 		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
 			<c:choose>
-				<c:when test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || !UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "screenName") %>'>
+				<c:when test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || !UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "screenName") %>'>
 					<aui:input disabled="<%= true %>" name="screenName" />
 				</c:when>
 				<c:otherwise>
@@ -98,7 +97,7 @@ if (selContact != null) {
 		<liferay-ui:error exception="<%= UserEmailAddressException.class %>" focusField="emailAddress" message="please-enter-a-valid-email-address" />
 
 		<c:choose>
-			<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "emailAddress") %>'>
+			<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "emailAddress") %>'>
 				<aui:input disabled="<%= true %>" name="emailAddress" />
 			</c:when>
 			<c:otherwise>
@@ -128,7 +127,7 @@ if (selContact != null) {
 		<div>
 			<c:if test="<%= selUser != null %>">
 				<c:choose>
-					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "portrait") %>'>
+					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "portrait") %>'>
 						<liferay-ui:logo-selector
 							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 							defaultLogo="<%= selUser.getPortraitId() == 0 %>"
@@ -157,7 +156,7 @@ if (selContact != null) {
 			<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
 				<liferay-ui:error exception="<%= ContactBirthdayException.class %>" message="please-enter-a-valid-date" />
 
-				<aui:input bean="<%= selContact %>" cssClass="modify-link" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "birthday") %>' model="<%= Contact.class %>" name="birthday" value="<%= birthday %>" />
+				<aui:input bean="<%= selContact %>" cssClass="modify-link" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "birthday") %>' model="<%= Contact.class %>" name="birthday" value="<%= birthday %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />
@@ -167,12 +166,12 @@ if (selContact != null) {
 		</c:choose>
 
 		<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
-			<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "gender") %>' label="gender" model="<%= Contact.class %>" name="male">
+			<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "gender") %>' label="gender" model="<%= Contact.class %>" name="male">
 				<aui:option label="male" value="true" />
 				<aui:option label="female" value="false" />
 			</aui:select>
 		</c:if>
 
-		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(curUser, selUser, "jobTitle") %>' name="jobTitle" />
+		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(themeDisplay.getUser(), selUser, "jobTitle") %>' name="jobTitle" />
 	</aui:fieldset>
 </div>

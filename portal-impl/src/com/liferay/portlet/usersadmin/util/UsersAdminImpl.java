@@ -1106,7 +1106,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			User curUser, User selUser, String field)
 		throws PortalException, SystemException {
 
-		if (curUser != null) {
+		if ((curUser != null) && (curUser != selUser)) {
 			for (String roleName : PropsValues.FIELD_ALL_USERS_EDITABLE_ROLES) {
 				Role role = RoleLocalServiceUtil.fetchRole(
 					curUser.getCompanyId(), roleName);
@@ -1119,7 +1119,7 @@ public class UsersAdminImpl implements UsersAdmin {
 				}
 			}
 
-			//return false;
+			return false;
 		}
 
 		if (selUser == null) {

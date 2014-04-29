@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.LARFileException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -119,7 +118,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -655,6 +653,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return getLayoutIds(getLayoutIdMap(portletRequest), targetGroupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getManifestSummary(PortletDataContext)}
+	 */
+	@Deprecated
 	@Override
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
@@ -671,28 +674,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		final ManifestSummary manifestSummary = new ManifestSummary();
-
-		SAXParser saxParser = new SAXParser();
-
-		ElementHandler elementHandler = new ElementHandler(
-			new ManifestSummaryElementProcessor(group, manifestSummary),
-			new String[] {"header", "portlet", "staged-model"});
-
-		saxParser.setContentHandler(elementHandler);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(
-			"/manifest.xml");
-
-		if (is == null) {
-			throw new LARFileException("manifest.xml is not in the LAR");
-		}
-
-		String manifestXMLContent = StringUtil.read(is);
-
-		saxParser.parse(new InputSource(new StringReader(manifestXMLContent)));
-
-		return manifestSummary;
+		return getManifestSummary(portletDataContext);
 	}
 
 	@Override
@@ -710,14 +692,49 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		try {
 			FileUtil.write(file, inputStream);
 
-			manifestSummary = getManifestSummary(
-				userId, groupId, parameterMap, file);
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			String userIdStrategy = MapUtil.getString(
+				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+			UserIdStrategy strategy = getUserIdStrategy(userId, userIdStrategy);
+			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					group.getCompanyId(), groupId, parameterMap, strategy,
+					zipReader);
+
+			manifestSummary = getManifestSummary(portletDataContext);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 
 			FileUtil.delete(file);
 		}
+
+		return manifestSummary;
+	}
+
+	@Override
+	public ManifestSummary getManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		final Group group = GroupLocalServiceUtil.getGroup(
+			portletDataContext.getGroupId());
+
+		final ManifestSummary manifestSummary = new ManifestSummary();
+
+		ElementHandler elementHandler = new ElementHandler(
+			new ManifestSummaryElementProcessor(group, manifestSummary),
+			new String[] {"header", "portlet", "staged-model"});
+
+		SAXParser saxParser = new SAXParser();
+
+		saxParser.setContentHandler(elementHandler);
+
+		saxParser.parse(
+			new InputSource(
+				portletDataContext.getZipEntryAsInputStream("/manifest.xml")));
 
 		return manifestSummary;
 	}
@@ -1736,12 +1753,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+		UserIdStrategy strategy = getUserIdStrategy(userId, userIdStrategy);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap,
-				getUserIdStrategy(userId, userIdStrategy), zipReader);
+				group.getCompanyId(), groupId, parameterMap, strategy,
+				zipReader);
 
 		return validateMissingReferences(portletDataContext);
 	}

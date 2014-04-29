@@ -221,6 +221,11 @@ public class ExportImportHelperUtil {
 			portletRequest, targetGroupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getManifestSummary(PortletDataContext)}
+	 */
+	@Deprecated
 	public static ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -237,6 +242,13 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().getManifestSummary(
 			userId, groupId, parameterMap, fileEntry);
+	}
+
+	public static ManifestSummary getManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		return getExportImportHelper().getManifestSummary(portletDataContext);
 	}
 
 	public static List<Layout> getMissingParentLayouts(

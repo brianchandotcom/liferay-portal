@@ -183,6 +183,11 @@ public interface ExportImportHelper {
 			PortletRequest portletRequest, long targetGroupId)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getManifestSummary(PortletDataContext)}
+	 */
+	@Deprecated
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -191,6 +196,10 @@ public interface ExportImportHelper {
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			FileEntry fileEntry)
+		throws Exception;
+
+	public ManifestSummary getManifestSummary(
+			PortletDataContext portletDataContext)
 		throws Exception;
 
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)

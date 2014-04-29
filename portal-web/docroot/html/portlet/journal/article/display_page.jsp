@@ -114,38 +114,6 @@ Group parentGroup = themeDisplay.getSiteGroup();
 			var treePrivatePagesContainerId = '<portlet:namespace />treeContainerPrivatePagesOutput';
 			var treePublicPagesContainerId = '<portlet:namespace />treeContainerPublicPagesOutput';
 
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
-				<portlet:param name="struts_action" value="/journal/select_display_page" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-
-				<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">
-					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-				</c:if>
-
-				<portlet:param name="treeId" value="treeContainerPublicPages" />
-				<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="draggableTree" value="<%= Boolean.FALSE.toString() %>" />
-				<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
-			</liferay-portlet:resourceURL>
-
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPrivatePages">
-				<portlet:param name="struts_action" value="/journal/select_display_page" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
-				<portlet:param name="tabs1" value="private-pages" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-
-				<c:if test="<%= selLayout != null && selLayout.isPrivateLayout() %>">
-					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-				</c:if>
-
-				<portlet:param name="treeId" value="treeContainerPrivatePages" />
-				<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
-			</liferay-portlet:resourceURL>
-
 			var bindTreeUI = function(treeInstance) {
 				treeInstance.after(
 					'lastSelectedChange',
@@ -325,9 +293,41 @@ Group parentGroup = themeDisplay.getSiteGroup();
 				var publicPages = isPublicPagesTabSelected();
 
 				if (publicPages && !treeViewPublic) {
+					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
+						<portlet:param name="struts_action" value="/journal/select_display_page" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+
+						<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">
+							<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+						</c:if>
+
+						<portlet:param name="treeId" value="treeContainerPublicPages" />
+						<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="draggableTree" value="<%= Boolean.FALSE.toString() %>" />
+						<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
+					</liferay-portlet:resourceURL>
+
 					url = '<%= treeUrlPublicPages %>';
 				}
 				else if (!treeViewPrivate) {
+					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPrivatePages">
+						<portlet:param name="struts_action" value="/journal/select_display_page" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
+						<portlet:param name="tabs1" value="private-pages" />
+						<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+
+						<c:if test="<%= selLayout != null && selLayout.isPrivateLayout() %>">
+							<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+						</c:if>
+
+						<portlet:param name="treeId" value="treeContainerPrivatePages" />
+						<portlet:param name="checkContentDisplayPage" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="expandFirstNode" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="saveState" value="<%= Boolean.FALSE.toString() %>" />
+					</liferay-portlet:resourceURL>
+					
 					url = '<%= treeUrlPrivatePages %>';
 				}
 

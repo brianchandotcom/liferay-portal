@@ -86,18 +86,6 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	<portlet:param name="structureId" value="<%= structureId %>" />
 </portlet:renderURL>
 
-<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/journal/edit_article" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="portletResource" value="<%= portletResource %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="classPK" value="<%= classPK %>" />
-	<portlet:param name="structureId" value="<%= structureId %>" />
-	<portlet:param name="templateId" value="<%= templateId %>" />
-</portlet:renderURL>
-
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
 	<div class="journal-article-body-content">
 		<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
@@ -588,6 +576,18 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 			'change',
 			function(event) {
 				var defaultLanguageId = defaultLocaleSelector.get('value');
+
+				<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+					<portlet:param name="struts_action" value="/journal/edit_article" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="portletResource" value="<%= portletResource %>" />
+					<portlet:param name="articleId" value="<%= articleId %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+					<portlet:param name="classPK" value="<%= classPK %>" />
+					<portlet:param name="structureId" value="<%= structureId %>" />
+					<portlet:param name="templateId" value="<%= templateId %>" />
+				</portlet:renderURL>
 
 				var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + defaultLanguageId;
 

@@ -87,11 +87,6 @@ if (workflowEnabled) {
 				<div class="control-group">
 					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
-					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/journal/select_folder" />
-						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-					</portlet:renderURL>
-
 					<aui:button name="selecFolderButton" value="select" />
 
 					<aui:script use="aui-base">
@@ -107,6 +102,12 @@ if (workflowEnabled) {
 										},
 										id: '<portlet:namespace />selectFolder',
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+											<portlet:param name="struts_action" value="/journal/select_folder" />
+											<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+										</portlet:renderURL>
+
 										uri: '<%= selectFolderURL.toString() %>'
 									},
 									function(event) {

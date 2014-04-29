@@ -15,6 +15,8 @@
 
 		<execute macro="MessageboardsThread#tearDownCP" />
 
+		<execute macro="Site#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -1137,6 +1139,80 @@
 
 		<execute macro="MessageboardsThread#viewWaitingForAnswerPG">
 			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+	</command>
+
+	<command name="ViewSpecifiedViewPermissionsOfQuickReplyThread" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="membershipType" value="Private" />
+			<var name="siteName" value="Blank Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Blank Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Blank Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Blank Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Owner" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Blank Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#quickReplyPG">
+			<var name="threadReplyBody" value="MB Thread Message Subject Reply" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoMessageBoardsThreadReplyPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Blank Site Name" />
+			<var name="siteURL" value="true" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<for list="Guest,Power User,Site Member,User" param="roleName" >
+			<execute macro="PermissionsInline#viewPermissionsRemoved">
+				<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+				<var name="roleName" value="${roleName}" />
+			</execute>
+		</for>
+
+		<execute macro="PermissionsInline#viewPermissionsChecked">
+			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="Owner" />
 		</execute>
 	</command>
 </definition>

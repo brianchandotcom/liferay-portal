@@ -11,6 +11,61 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="PermissionCheckPortalInstances" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.able.com" />
+			<var name="virtualHost" value="www.able.com" />
+			<var name="webId" value="www.able.com" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.baker.com" />
+			<var name="virtualHost" value="www.baker.com" />
+			<var name="webId" value="www.baker.com" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@www.able.com" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="virtualHostsURL" value="www.able.com:8080" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<var name="documentURL" method="selenium#getLocation()" />
+
+		<var name="otherInstanceAccessAttempt" value="${documentURL?replace('able', 'baker')}" />
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@www.baker.com" />
+			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="virtualHostsURL" value="${otherInstanceAccessAttempt}" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+	</command>
+
 	<command name="ViewDeactivatedPortalInstance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />

@@ -2005,7 +2005,6 @@
 	<command name="ViewBack" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
-		<var name="searchToken" value="Organization" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -2017,6 +2016,8 @@
 		</execute>
 
 		<execute action="CPUsersandorganizationsAddorganization#assertElementPresent" locator-key1="BACK" />
+
+		<take-screenshot />
 	</command>
 
 	<command name="ViewOrganizationSiteViaSitesDirectory" priority="5">

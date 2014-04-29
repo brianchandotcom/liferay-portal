@@ -568,6 +568,15 @@
 		</for>
 	</command>
 
+	<command name="viewTooltipCP">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#mouseOver" locator-key1="CONTROL_PANEL_NAVIGATION_TOOLTIP_ICON" />
+		<execute action="Home#assertTextEquals" locator-key1="CONTROL_PANEL_NAVIGATION_TOOLTIP_MESSAGE" value1="${tooltipMessage}" />
+
+		<take-screenshot />
+	</command>
+
 	<command name="viewTranslationsPG">
 		<execute action="Home#open" locator1="${sitePageURL}" />
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />

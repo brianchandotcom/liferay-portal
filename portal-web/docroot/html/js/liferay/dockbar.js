@@ -404,7 +404,7 @@ AUI.add(
 					}
 				}
 				else if (themeDisplay.isSignedIn() && navAddControls) {
-					var brand = dockBar.one('.brand');
+					var brand = dockBar.one('.navbar-brand');
 
 					if (brand) {
 						brand.all('a').get('parentNode').addClass(CSS_DOCKBAR_ITEM);

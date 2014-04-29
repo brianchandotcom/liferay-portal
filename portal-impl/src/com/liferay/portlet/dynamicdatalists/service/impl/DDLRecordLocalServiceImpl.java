@@ -654,27 +654,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 				ddlRecordPersistence.update(record);
 			}
-
-			// Indexer
-
-			if (Validator.equals(
-					recordVersion.getVersion(),
-					DDLRecordConstants.VERSION_DEFAULT)) {
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DDLRecord.class);
-
-				indexer.delete(record);
-			}
-		}
-
-		// Indexer
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DDLRecord.class);
-
-			indexer.reindex(record);
 		}
 
 		return record;

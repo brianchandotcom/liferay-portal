@@ -165,9 +165,9 @@
 
 				<!-- Images -->
 
-				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
+				<!-- <copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 					<fileset dir="${alloy.build.dir}/aui-css/img" />
-				</copy>
+				</copy> -->
 
 				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
@@ -181,11 +181,11 @@
 	</target>
 
 	<target name="build-alloy-bootstrap">
-		<property name="alloy.bootstrap.version" value="2.3.2" />
+		<property name="alloy.bootstrap.version" value="3.1.1" />
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 
-		<property name="alloy.bootstrap.file" value="alloy-bootstrap-${alloy.bootstrap.version}.zip" />
+		<property name="alloy.bootstrap.file" value="bootstrap-sass-${alloy.bootstrap.version}.zip" />
 
 		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
 
@@ -207,9 +207,9 @@
 
 				<!-- CSS -->
 
-				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/lib" />
+				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/vendor/assets/stylesheets/bootstrap" />
 
-				<delete dir="${alloy.bootstrap.lib.dir}/tests" />
+				<!-- <delete dir="${alloy.bootstrap.lib.dir}/tests" /> -->
 
 				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
 					<fileset dir="${alloy.bootstrap.lib.dir}/" />

@@ -97,7 +97,17 @@ public class TableMapperTest {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {DataSource.class}, null);
+			classLoader, new Class<?>[] {DataSource.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args)
+					throws Throwable {
+
+					throw new UnsupportedOperationException();
+				}
+
+			});
 
 		_leftBasePersistence = new MockBasePersistence<Left>(Left.class);
 

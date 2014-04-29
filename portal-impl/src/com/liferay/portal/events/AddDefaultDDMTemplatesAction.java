@@ -68,14 +68,15 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 		}
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
-
-		nameMap.put(locale, LanguageUtil.get(locale, name));
-
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(locale, LanguageUtil.get(locale, description));
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
+
+		for (Locale curLocale : locales) {
+			nameMap.put(curLocale, LanguageUtil.get(curLocale, name));
+			descriptionMap.put(
+				curLocale, LanguageUtil.get(curLocale, description));
+		}
 
 		String script = ContentUtil.get(scriptFileName);
 

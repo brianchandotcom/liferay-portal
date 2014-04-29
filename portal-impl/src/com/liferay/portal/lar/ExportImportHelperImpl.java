@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -102,7 +103,6 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -1236,10 +1236,21 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			long importGroupId = MapUtil.getLong(
 				groupIds, groupId, portletDataContext.getScopeGroupId());
 
-			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
-				uuid, importGroupId);
+			FileEntry importedFileEntry;
 
-			if (importedFileEntry == null) {
+			try {
+				importedFileEntry =
+					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+						uuid, importGroupId);
+			}
+			catch (NoSuchModelException nsme) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsme, nsme);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(nsme.getMessage());
+				}
+
 				continue;
 			}
 

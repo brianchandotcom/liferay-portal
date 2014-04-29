@@ -27,9 +27,9 @@ public interface PollerResponse {
 	public static final String POLLER_HINT_HIGH_CONNECTIVITY =
 		"pollerHintHighConnectivity";
 
-	public void close();
-
-	public void createResponseMessage(Message message);
+	public void close(
+		Message message, PollerHeader pollerHeader, String portletId,
+		String chunkId);
 
 	public PollerHeader getPollerHeader();
 

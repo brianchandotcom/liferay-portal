@@ -29,11 +29,7 @@ public class PollerSession {
 	}
 
 	public synchronized boolean beginPortletProcessing(
-		PollerRequestResponsePair pollerRequestResponsePair,
-		String responseId) {
-
-		PollerRequest pollerRequest =
-			pollerRequestResponsePair.getPollerRequest();
+		PollerRequest pollerRequest, String responseId) {
 
 		String portletId = pollerRequest.getPortletId();
 
@@ -47,7 +43,7 @@ public class PollerSession {
 
 		_pendingResponseIds.put(portletId, responseId);
 
-		_pollerRequestResponsePairs.put(portletId, pollerRequestResponsePair);
+		_pollerRequests.put(portletId, pollerRequest);
 
 		return true;
 	}
@@ -60,7 +56,7 @@ public class PollerSession {
 		if (responseId.equals(pendingResponseId)) {
 			_pendingResponseIds.remove(portletId);
 
-			_pollerRequestResponsePairs.remove(portletId);
+			_pollerRequests.remove(portletId);
 		}
 
 		return _pendingResponseIds.isEmpty();
@@ -72,8 +68,8 @@ public class PollerSession {
 
 	private Map<String, String> _pendingResponseIds =
 		new HashMap<String, String>();
-	private Map<String, PollerRequestResponsePair> _pollerRequestResponsePairs =
-		new HashMap<String, PollerRequestResponsePair>();
+	private Map<String, PollerRequest> _pollerRequests =
+		new HashMap<String, PollerRequest>();
 	private String _pollerSessionId;
 
 }

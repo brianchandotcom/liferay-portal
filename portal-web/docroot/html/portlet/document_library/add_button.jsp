@@ -85,7 +85,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= editFileEntryURL %>" label="multiple-documents" />
+		<aui:nav-item href="<%= editFileEntryURL %>" iconCssClass="icon-copy" label="multiple-documents" />
 	</c:if>
 
 	<c:choose>

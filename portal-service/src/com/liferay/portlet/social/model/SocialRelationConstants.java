@@ -16,6 +16,9 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -45,6 +48,10 @@ public class SocialRelationConstants {
 	public static final int TYPE_UNI_SUBORDINATE = 10;
 
 	public static final int TYPE_UNI_SUPERVISOR = 11;
+
+	public static List<Integer> getAllSocialRelationTypes() {
+		return _allSocialRelationTypes;
+	}
 
 	public static String getTypeLabel(int type) {
 		if (type == TYPE_BI_CONNECTION) {
@@ -102,5 +109,11 @@ public class SocialRelationConstants {
 			return false;
 		}
 	}
+
+	private static List<Integer> _allSocialRelationTypes = Arrays.asList(
+		TYPE_BI_CONNECTION, TYPE_BI_COWORKER, TYPE_BI_FRIEND,
+		TYPE_BI_ROMANTIC_PARTNER, TYPE_BI_SIBLING, TYPE_BI_SPOUSE,
+		TYPE_UNI_CHILD, TYPE_UNI_ENEMY, TYPE_UNI_FOLLOWER, TYPE_UNI_PARENT,
+		TYPE_UNI_SUBORDINATE, TYPE_UNI_SUPERVISOR);
 
 }

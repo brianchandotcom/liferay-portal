@@ -27,7 +27,7 @@
 			background: #009AE5;
 		}
 
-		.dockbar .navbar-inner .container .nav-collapse .nav-add-controls ul.dropdown-menu {
+		.dockbar .navbar-inner .container .navbar-collapse .nav-add-controls ul.dropdown-menu {
 			background: transparent;
 			padding: 0;
 
@@ -60,7 +60,7 @@
 						background-color: #F5AF45;
 					}
 
-					.btn-navbar {
+					.navbar-btn {
 						background: transparent;
 						border-width: 0;
 						font-size: 24px;
@@ -70,7 +70,7 @@
 						}
 					}
 
-					.nav-collapse {
+					.navbar-collapse {
 						> .nav {
 							background: transparent;
 							border-width: 0;

@@ -164,7 +164,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.navbar-inner .container .nav-collapse > .nav.nav-add-controls ul.dropdown-menu > li > a {
+		.navbar-inner .container .navbar-collapse > .nav.nav-add-controls ul.dropdown-menu > li > a {
 			&:focus, &:hover {
 				color: #FFF;
 			}
@@ -235,7 +235,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.navbar-inner {
-			.container .nav-collapse > .nav {
+			.container .navbar-collapse > .nav {
 				&.nav-account-controls {
 					background-color: $dockbarGradientEnd;
 					border-top: 1px solid #00AEFF;
@@ -320,7 +320,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.brand {
+		.navbar-brand {
 			margin-left: 0;
 			padding: 0;
 			padding-right: 20px;
@@ -521,7 +521,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Set password reminder portlet ---------- */
 
 	.update-reminder-query {
-		.control-group {
+		.form-group {
 			max-width: 350px;
 		}
 
@@ -553,7 +553,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-staging-bar {
-		.row-fluid .layout-revision-info {
+		.row .layout-revision-info {
 			.layout-revision-version {
 				label {
 					color: #B6DDF5;

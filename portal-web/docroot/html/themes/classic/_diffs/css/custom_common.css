@@ -141,7 +141,7 @@
 		}
 	}
 
-	.control-group {
+	.form-group {
 		margin-bottom: 30px;
 
 		.input-resource-wrapper {
@@ -150,7 +150,7 @@
 	}
 
 	.lfr-ddm-container, .portlet-staging-bar {
-		.control-group {
+		.form-group {
 			margin-bottom: 15px;
 		}
 	}
@@ -232,7 +232,7 @@
 
 	.dockbar-split {
 		.dockbar {
-			.navbar-inner .container .nav-collapse > .nav {
+			.navbar-inner .container .navbar-collapse > .nav {
 				&.nav-add-controls ul.dropdown-menu > li > a {
 					background: #45CBF5;
 
@@ -281,7 +281,7 @@
 			background: #333;
 
 			.container {
-				.btn-navbar {
+				.navbar-btn {
 					color: #FFF;
 
 					&.active, &.open {
@@ -295,7 +295,7 @@
 					}
 				}
 
-				.nav-collapse {
+				.navbar-collapse {
 					> .nav {
 						&.nav-add-controls, &.nav-navigation {
 							> li.dropdown ul.dropdown-menu {
@@ -432,11 +432,11 @@
 			margin-top: 8px;
 		}
 
-		.btn-navbar {
+		.navbar-btn {
 			padding: 10px;
 		}
 
-		.container .btn-navbar {
+		.container .navbar-btn {
 			background: transparent;
 			border-color: #DDD;
 
@@ -660,8 +660,8 @@
 		@include ellipsis;
 	}
 
-	.accordion .accordion-group {
-		.accordion-heading .accordion-toggle {
+	.panel-group .accordion-group {
+		.panel-heading .accordion-toggle {
 			padding-left: 15px;
 		}
 
@@ -686,7 +686,7 @@
 	.accordion-group {
 		border-width: 0;
 
-		.accordion-heading {
+		.panel-heading {
 			background: none no-repeat 0 50%;
 			overflow: hidden;
 
@@ -726,7 +726,7 @@
 		.toggler-content-expanded {
 			border: 1px solid $borderColor;
 
-			.accordion-inner {
+			.panel-body {
 				border-width: 0;
 			}
 		}
@@ -734,7 +734,7 @@
 		&.lfr-panel-extended {
 			border-width: 1px;
 
-			.accordion-heading {
+			.panel-heading {
 				background: #F2F2F2;
 				overflow: hidden;
 				position: static;
@@ -752,7 +752,7 @@
 		}
 	}
 
-	.accordion-heading .accordion-toggle {
+	.panel-heading .accordion-toggle {
 		padding-left: 0;
 	}
 
@@ -773,7 +773,7 @@
 	}
 
 	&.ie6, &.ie7 {
-		.accordion-group .accordion-heading {
+		.accordion-group .panel-heading {
 			background: none no-repeat 0 50%;
 
 			&.toggler-header-collapsed {
@@ -811,7 +811,7 @@
 	/* ---------- Side accordion navigations ---------- */
 
 	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
-		.accordion {
+		.panel-group {
 			background: #FFF;
 			border: 1px solid #D3D3D3;
 			border-top-width: 0;
@@ -820,7 +820,7 @@
 				border-width: 0;
 				margin-bottom: 0;
 
-				.accordion-heading {
+				.panel-heading {
 					cursor: pointer;
 
 					.accordion-toggle {
@@ -830,7 +830,7 @@
 					}
 				}
 
-				.accordion-inner {
+				.panel-body {
 					background: #FCFCFC;
 					border-width: 0;
 					padding: 6px 0 15px;
@@ -952,7 +952,7 @@
 	}
 
 	@include respond-to(phone, tablet) {
-		#navigation.open .navbar-inner .nav-collapse li a {
+		#navigation.open .navbar-inner .navbar-collapse li a {
 			@include border-radius(0);
 		}
 	}

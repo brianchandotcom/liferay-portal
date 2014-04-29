@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
@@ -173,11 +175,20 @@ public class DDLIndexer extends BaseIndexer {
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
+		Document document = getDocument(record);
+
 		if (!recordVersion.isApproved()) {
+			if (Validator.equals(
+					recordVersion.getVersion(),
+					DDLRecordConstants.VERSION_DEFAULT)) {
+
+				SearchEngineUtil.deleteDocument(
+					getSearchEngineId(), record.getCompanyId(),
+					document.get(Field.UID));
+			}
+
 			return;
 		}
-
-		Document document = getDocument(record);
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(

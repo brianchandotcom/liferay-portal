@@ -83,7 +83,7 @@
 			@include respond-to(phone, tablet) {
 				margin: 0 5px;
 
-				.input-append {
+				.input-group {
 					margin: 6px 0 7px;
 					width: 100%;
 				}

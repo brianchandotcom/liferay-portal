@@ -1321,6 +1321,48 @@ public class DDMTemplateLocalServiceImpl
 		return template;
 	}
 
+	/**
+	 * Updates the template matching the ID.
+	 *
+	 * @param  templateId the primary key of the template
+	 * @param  classPK the primary key of the template's related entity
+	 * @param  nameMap the template's new locales and localized names
+	 * @param  descriptionMap the template's new locales and localized
+	 *         description
+	 * @param  type the template's type. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  mode the template's mode. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  language the template's script language. For more information,
+	 *         see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	 * @param  script the template's script
+	 * @param  cacheable whether the template is cacheable
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date.
+	 * @return the updated template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMTemplate updateTemplate(
+			long templateId, long classPK, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, boolean cacheable,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
+			templateId);
+
+		File smallImageFile = copySmallImage(template);
+
+		return updateTemplate(
+			templateId, classPK, nameMap, descriptionMap, type, mode, language,
+			script, cacheable, template.isSmallImage(),
+			template.getSmallImageURL(), smallImageFile, serviceContext);
+	}
+
 	protected File copySmallImage(DDMTemplate template) throws SystemException {
 		File smallImageFile = null;
 
@@ -1414,16 +1456,22 @@ public class DDMTemplateLocalServiceImpl
 			smallImageBytes);
 	}
 
-	protected void validate(
-			Map<Locale, String> nameMap, String script, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
-		throws PortalException, SystemException {
+	protected void validate(Map<Locale, String> nameMap, String script)
+		throws PortalException {
 
 		validateName(nameMap);
 
 		if (Validator.isNull(script)) {
 			throw new TemplateScriptException();
 		}
+	}
+
+	protected void validate(
+			Map<Locale, String> nameMap, String script, boolean smallImage,
+			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
+		throws PortalException, SystemException {
+
+		validate(nameMap, script);
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
 			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, StringPool.COMMA);

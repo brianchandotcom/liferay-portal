@@ -151,6 +151,7 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
+
 			<not>
 				<isset var="nonAdminUser" />
 			</not>
@@ -159,7 +160,6 @@
 					<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 					<then>
 						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-
 						<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 					</then>
 				</if>

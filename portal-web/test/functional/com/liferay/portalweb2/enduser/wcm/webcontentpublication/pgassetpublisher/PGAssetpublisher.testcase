@@ -185,7 +185,7 @@
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
-		<var name="roleName" value="${roleName1}" />
+			<var name="roleName" value="${roleName1}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -289,7 +289,7 @@
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
 			<var name="permissionNavigationValue" value="Web Content" />
-		<var name="roleName" value="${roleName2}" />
+			<var name="roleName" value="${roleName2}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

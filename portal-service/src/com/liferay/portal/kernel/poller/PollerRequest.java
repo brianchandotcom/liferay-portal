@@ -41,6 +41,10 @@ public class PollerRequest {
 		_receiveRequest = receiveRequest;
 	}
 
+	public PollerResponse createPollerResponse() {
+		return new DefaultPollerResponse();
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

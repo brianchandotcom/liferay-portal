@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.poller.DefaultPollerResponse;
 import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
@@ -282,22 +281,13 @@ public class PollerRequestHandlerImpl
 		PollerSession pollerSession, List<PollerRequest> pollerRequests) {
 
 		for (PollerRequest pollerRequest : pollerRequests) {
-			PollerRequestResponsePair pollerRequestResponsePair =
-				new PollerRequestResponsePair(pollerRequest);
-
 			String responseId = null;
 
 			if (pollerRequest.isReceiveRequest()) {
 				responseId = PortalUUIDUtil.generate();
 
-				PollerResponse pollerResponse = new DefaultPollerResponse(
-					pollerRequest.getPollerHeader(),
-					pollerRequest.getPortletId(), pollerRequest.getChunkId());
-
-				pollerRequestResponsePair.setPollerResponse(pollerResponse);
-
 				if (!pollerSession.beginPortletProcessing(
-						pollerRequestResponsePair, responseId)) {
+						pollerRequest, responseId)) {
 
 					continue;
 				}
@@ -305,7 +295,7 @@ public class PollerRequestHandlerImpl
 
 			Message message = new Message();
 
-			message.setPayload(pollerRequestResponsePair);
+			message.setPayload(pollerRequest);
 
 			if (pollerRequest.isReceiveRequest()) {
 				message.setResponseId(responseId);

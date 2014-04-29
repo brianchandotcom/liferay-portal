@@ -26,12 +26,6 @@ AUI.add(
 				prototype: {
 					ELEMENT_TEMPLATE: '<input type="hidden" />',
 
-					initializer: function() {
-						var instance = this;
-
-						window[Liferay.Util.getPortletNamespace('166') + 'selectDocumentLibrary'] = A.bind('_selectFileEntry', instance);
-					},
-
 					getElementsValue: function() {
 						var instance = this;
 
@@ -72,14 +66,24 @@ AUI.add(
 						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
 						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
 						portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
+						portletURL.setParameter('eventName', 'selectDocumentLibrary');
 						portletURL.setPortletId('166');
 						portletURL.setWindowState('pop_up');
 
-						Liferay.Util.openWindow(
+						Liferay.Util.selectEntity(
 							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: 'selectDocumentLibrary',
 								id: 'selectDocumentLibrary',
 								title: Liferay.Language.get('javax.portlet.title.20'),
 								uri: portletURL.toString()
+							},
+							function(event) {
+								instance._selectFileEntry(event.url, event.uuid, event.groupid, event.title, event.version);
 							}
 						);
 					},

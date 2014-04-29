@@ -694,6 +694,32 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(Hits hits) {
+		List<FileEntry> entries = new ArrayList<FileEntry>();
+
+		for (Document document : hits.getDocs()) {
+			long fileEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					fileEntryId);
+
+				entries.add(fileEntry);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Documents and Media search index is stale and " +
+							"contains file entry {" + fileEntryId + "}");
+				}
+			}
+		}
+
+		return entries;
+	}
+
+	@Override
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 

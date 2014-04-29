@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -747,7 +748,14 @@ public class LiferayRepository
 
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
-		Indexer indexer = DLSearcher.getInstance();
+		Indexer indexer = null;
+
+		if (searchContext.isIncludeFolders()) {
+			indexer = DLSearcher.getInstance();
+		}
+		else {
+			indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
+		}
 
 		searchContext.setSearchEngineId(indexer.getSearchEngineId());
 

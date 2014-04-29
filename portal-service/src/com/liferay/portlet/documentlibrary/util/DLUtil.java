@@ -208,6 +208,10 @@ public class DLUtil {
 		return getDL().getEntries(hits);
 	}
 
+	public static List<FileEntry> getFileEntries(Hits hits) {
+		return getDL().getFileEntries(hits);
+	}
+
 	public static String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay) {
 

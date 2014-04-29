@@ -77,6 +77,10 @@ jar {
 	}
 }
 
+processResources {
+	from ("src/main/webapp")
+}
+
 task baseline << {
 	ant.property(
 		name: "ant.project.name",

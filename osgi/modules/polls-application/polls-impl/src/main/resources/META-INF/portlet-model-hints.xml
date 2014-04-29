@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portlet.polls.model.PollsChoice">
+		<field name="uuid" type="String" />
+		<field name="choiceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="questionId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" localized="true">
+			<hint name="max-length">1000</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.polls.model.PollsQuestion">
+		<field name="uuid" type="String" />
+		<field name="questionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String" localized="true">
+			<hint name="max-length">500</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<validator name="required" />
+		</field>
+		<field name="expirationDate" type="Date">
+			<hint name="default-month-delta">1</hint>
+		</field>
+		<field name="lastVoteDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.polls.model.PollsVote">
+		<field name="uuid" type="String" />
+		<field name="voteId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="questionId" type="long" />
+		<field name="choiceId" type="long" />
+		<field name="voteDate" type="Date" />
+	</model>
+</model-hints>

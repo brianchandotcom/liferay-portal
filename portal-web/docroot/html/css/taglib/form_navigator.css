@@ -117,68 +117,61 @@
 	ul.form-navigator.well {
 	}
 
-	> .form-steps {
-		> ul.form-navigator.well {
-			background: transparent;
+	> .form-steps > ul.form-navigator.well {
+		background: transparent;
 
-			.tab {
-
-				&.active {
-					@include opacity(1);
-
-					.tab-label {
-						&:hover, &:focus {
-							background: transparent;
-						}
-
-						.message {
-							@include opacity(0.7);
-
-							color: #000;
-						}
-
-						.number {
-							@include opacity(1);
-
-							background: #60BFEF;
-							font-size: 18px;
-						}
-
-						.tab-icon {
-							color: #60BFEF;
-						}
-					}
-				}
-
-				&.section-error .tab-label .message {
-					color: #B50303;
-				}
+		.tab {
+			&.active {
+				@include opacity(1);
 
 				.tab-label {
-					background: transparent;
-
 					&:hover, &:focus {
-						text-decoration: none;
-
-						.number {
-							@include opacity(1);
-						}
-					}
-
-					.number {
-						@include opacity(0.6);
-
-						background: #CCC;
-						color: #FFF;
-						font-size: 14px;
-						font-weight: bold;
-						text-decoration: none;
+						background: transparent;
 					}
 
 					.message {
+						@include opacity(0.7);
+
 						color: #000;
-						font-size: 12px;
 					}
+
+					.number {
+						@include opacity(1);
+
+						background: #333;
+						font-size: 18px;
+					}
+
+					.tab-icon {
+						color: #333;
+					}
+				}
+			}
+
+			.tab-label {
+				background: transparent;
+
+				&:hover, &:focus {
+					text-decoration: none;
+
+					.number {
+						@include opacity(1);
+					}
+				}
+
+				.number {
+					@include opacity(0.6);
+
+					background: #CCC;
+					color: #FFF;
+					font-size: 14px;
+					font-weight: bold;
+					text-decoration: none;
+				}
+
+				.message {
+					color: #000;
+					font-size: 12px;
 				}
 			}
 		}

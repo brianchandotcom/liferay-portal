@@ -211,6 +211,22 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="gotoMessageBoardsThreadReplyPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_PERMISSIONS_1" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoPagePG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -281,6 +297,27 @@
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
+	</command>
+
+	<command name="removeViewPermissionFromAllRoles">
+		<for list="${roleList}" param="roleName" >
+			<var name="roleName" value="${roleName}" />
+
+			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+			<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		</for>
+
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewPermissionsChecked">
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="Permissions#assertChecked" locator-key1="${permissionDefinitionKey}" />
 	</command>
 
 	<command name="viewPermissionsRemoved">

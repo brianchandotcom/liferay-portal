@@ -303,6 +303,8 @@ public class DDLIndexer extends BaseIndexer {
 			getSearchEngineId(), companyId, documents);
 	}
 
+	private static final String _RECORD_SET_ID = "recordSetId";
+
 	private static Log _log = LogFactoryUtil.getLog(DDLIndexer.class);
 
 }

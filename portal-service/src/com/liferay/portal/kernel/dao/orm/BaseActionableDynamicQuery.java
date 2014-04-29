@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.BaseLocalService;
 
@@ -346,6 +347,10 @@ public abstract class BaseActionableDynamicQuery
 	protected void indexInterval() throws PortalException {
 		if ((_documents == null) || _documents.isEmpty()) {
 			return;
+		}
+
+		if (Validator.isNull(_searchEngineId)) {
+			_searchEngineId = SearchEngineUtil.getSearchEngineId(_documents);
 		}
 
 		SearchEngineUtil.updateDocuments(

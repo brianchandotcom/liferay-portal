@@ -3,8 +3,8 @@
 <root>
 	<template>
 		<template-key>documentlibrary-carousel-ftl</template-key>
-		<name>Carousel</name>
-		<description>Displays images in a carousel.</description>
+		<name>carousel</name>
+		<description>carousel-description</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portlet/documentlibrary/dependencies/portlet_display_template_carousel.ftl</script-file>
 		<cacheable>false</cacheable>

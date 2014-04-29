@@ -194,8 +194,8 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
-			document.<portlet:namespace />fm.<portlet:namespace />displayDDMTemplateId.value = "";
-			document.<portlet:namespace />fm.<portlet:namespace />formDDMTemplateId.value = "";
+			document.<portlet:namespace />fm.<portlet:namespace />displayDDMTemplateId.value = '';
+			document.<portlet:namespace />fm.<portlet:namespace />formDDMTemplateId.value = '';
 
 			A.one('.displaying-record-set-id-holder').show();
 			A.one('.displaying-help-message-holder').hide();

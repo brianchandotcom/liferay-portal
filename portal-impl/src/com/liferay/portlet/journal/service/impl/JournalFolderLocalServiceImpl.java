@@ -715,7 +715,7 @@ public class JournalFolderLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return updateFolder(
-			userId, folderId, parentFolderId, name, description, null,
+			userId, folderId, parentFolderId, name, description, new long[0],
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT,
 			mergeWithParentFolder, serviceContext);
 	}

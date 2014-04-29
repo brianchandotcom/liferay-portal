@@ -118,6 +118,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 
 					<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName()) %>">
 						<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_PENDING) %>" value="<%= WorkflowConstants.STATUS_PENDING %>" />
+						<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DENIED) %>" value="<%= WorkflowConstants.STATUS_DENIED %>" />
 					</c:if>
 
 					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_SCHEDULED) %>" value="<%= WorkflowConstants.STATUS_SCHEDULED %>" />

@@ -92,10 +92,10 @@ public class DDLIndexer extends BaseIndexer {
 		}
 
 		long recordSetId = GetterUtil.getLong(
-			searchContext.getAttribute("recordSetId"));
+			searchContext.getAttribute(_RECORD_SET_ID));
 
 		if (recordSetId > 0) {
-			contextQuery.addRequiredTerm("recordSetId", recordSetId);
+			contextQuery.addRequiredTerm(_RECORD_SET_ID, recordSetId);
 		}
 	}
 
@@ -104,9 +104,8 @@ public class DDLIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		addSearchTerm(searchQuery, searchContext, Field.DDM_CONTENT, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
-
-		addSearchTerm(searchQuery, searchContext, "ddmContent", false);
 	}
 
 	@Override
@@ -124,13 +123,13 @@ public class DDLIndexer extends BaseIndexer {
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
+		document.addText(
+			Field.DDM_CONTENT,
+			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
 		document.addKeyword(Field.STATUS, recordVersion.getStatus());
 		document.addKeyword(Field.VERSION, recordVersion.getVersion());
 
-		document.addText(
-			"ddmContent",
-			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
-		document.addKeyword("recordSetId", recordVersion.getRecordSetId());
+		document.addKeyword(_RECORD_SET_ID, recordVersion.getRecordSetId());
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
@@ -149,7 +148,7 @@ public class DDLIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet, PortletURL portletURL,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		long recordSetId = GetterUtil.getLong(document.get("recordSetId"));
+		long recordSetId = GetterUtil.getLong(document.get(_RECORD_SET_ID));
 
 		String title = getTitle(recordSetId, locale);
 

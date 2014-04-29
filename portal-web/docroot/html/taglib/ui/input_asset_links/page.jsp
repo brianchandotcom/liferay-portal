@@ -18,7 +18,7 @@
 
 <liferay-ui:icon-menu
 	cssClass="select-existing-selector"
-	icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>'
+	icon="../aui/search"
 	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
 	message="select"
 	showWhenSingleIcon="<%= true %>"
@@ -31,9 +31,9 @@
 		<liferay-ui:icon
 			cssClass="asset-selector"
 			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
+			iconCssClass='<%= (String)selectorEntry.get("iconCssClass") %>'
 			id='<%= (String)selectorEntry.get("id") %>'
 			message='<%= (String)selectorEntry.get("message") %>'
-			src='<%= (String)selectorEntry.get("src") %>'
 			url="javascript:;"
 		/>
 

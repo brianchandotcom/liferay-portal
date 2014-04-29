@@ -68,7 +68,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 					%>
 
 					<liferay-ui:search-container-column-text name="title">
-						<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /><%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
+						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -104,7 +106,12 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 				<div class="select-asset-selector">
 					<div class="lfr-meta-actions edit-controls">
-						<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>' showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu
+							cssClass="select-existing-selector"
+							direction="right" icon="../aui/plus"
+							message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
+							showWhenSingleIcon="<%= true %>"
+						>
 
 							<%
 							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
@@ -141,9 +148,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 									<liferay-ui:icon
 										cssClass="asset-selector"
 										data="<%= data %>"
+										iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
 										id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 										message="<%= type %>"
-										src="<%= curRendererFactory.getIconPath(renderRequest) %>"
 										url="javascript:;"
 									/>
 
@@ -166,9 +173,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 										<liferay-ui:icon
 											cssClass="asset-selector"
 											data="<%= data %>"
+											iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
 											id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 											message="<%= type %>"
-											src="<%= curRendererFactory.getIconPath(renderRequest) %>"
 											url="javascript:;"
 										/>
 

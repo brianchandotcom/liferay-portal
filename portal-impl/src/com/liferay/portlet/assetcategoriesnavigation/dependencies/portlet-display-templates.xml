@@ -3,8 +3,8 @@
 <root>
 	<template>
 		<template-key>asset-categories-navigation-multi-column-layout-ftl</template-key>
-		<name>Multi Column Layout</name>
-		<description>Displays a column for each vocabulary. Each column includes the name of a vocabulary with the vocabulary's top level categories listed underneath.</description>
+		<name>multi-column-layout</name>
+		<description>multi-column-layout-description</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portlet/assetcategoriesnavigation/dependencies/portlet_display_template_multi_column_layout.ftl</script-file>
 		<cacheable>false</cacheable>

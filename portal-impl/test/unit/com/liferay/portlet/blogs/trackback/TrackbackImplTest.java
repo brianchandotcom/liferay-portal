@@ -24,11 +24,9 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.LinkbackConsumer;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
-import java.util.Arrays;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,13 +47,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({LinkbackConsumerUtil.class, UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackImplTest extends PowerMockito {
-
-	public static void addNewTrackback(
-		long messageId, String url, String entryURL) {
-
-		_linkback = String.valueOf(
-			Arrays.<Object>asList(messageId, url, entryURL));
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -142,21 +133,20 @@ public class TrackbackImplTest extends PowerMockito {
 			Matchers.same(_serviceContextFunction)
 		);
 
-		Assert.assertEquals(
-			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
-			_linkback);
+		Mockito.verify(
+			_linkbackConsumer
+		).addNewTrackback(
+			messageId, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
+		);
 	}
 
 	protected void setUpLinkbackConsumer() throws Exception {
-		mockStatic(LinkbackConsumerUtil.class, new CallsRealMethods());
+		mockStatic(LinkbackConsumerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		Class<?> clazz = getClass();
-
-		replace(
-			method(LinkbackConsumerUtil.class, "addNewTrackback")
-		).with(
-			clazz.getMethod(
-				"addNewTrackback", Long.TYPE,String.class, String.class)
+		when(
+			LinkbackConsumerUtil.getLinkbackConsumer()
+		).thenReturn(
+			_linkbackConsumer
 		);
 	}
 
@@ -180,13 +170,14 @@ public class TrackbackImplTest extends PowerMockito {
 		);
 	}
 
-	private static String _linkback;
-
 	@Mock
 	private BlogsEntry _blogsEntry;
 
 	@Mock
 	private Comments _comments;
+
+	@Mock
+	private LinkbackConsumer _linkbackConsumer;
 
 	@Mock
 	private Portal _portal;

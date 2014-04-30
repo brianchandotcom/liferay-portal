@@ -1333,6 +1333,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			checkInefficientStringMethods(line, fileName, lineCount);
 
+			checkStandardLibs(line, fileName, lineCount);
+
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
 				processErrorMessage(
 					fileName, "line break: " + fileName + " " + lineCount);

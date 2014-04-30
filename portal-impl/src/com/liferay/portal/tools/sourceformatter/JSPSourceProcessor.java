@@ -505,6 +505,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				checkInefficientStringMethods(line, fileName, lineCount);
 			}
 
+			checkStandardLibs(line, fileName, lineCount);
+
 			if (javaSource && portalSource &&
 				!isExcluded(_unusedVariablesExclusions, fileName, lineCount) &&
 				!_jspContents.isEmpty() &&

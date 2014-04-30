@@ -295,6 +295,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected void checkStandardLibs(
+		String line, String fileName, int lineCount) {
+
+		// LPS-46445
+
+		if (mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+			line.contains("ListUtil.fromArray(")) {
+
+			processErrorMessage(
+				fileName, "Use Arrays.asList: " + fileName + " " + lineCount);
+		}
+	}
+
 	protected void checkStringBundler(
 		String line, String fileName, int lineCount) {
 

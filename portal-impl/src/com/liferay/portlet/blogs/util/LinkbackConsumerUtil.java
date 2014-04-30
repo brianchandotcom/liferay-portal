@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,9 +35,9 @@ import java.util.List;
 public class LinkbackConsumerUtil {
 
 	public static void addNewTrackback(
-		long messageId, String url, String entryUrl) {
+		long commentId, String url, String entryUrl) {
 
-		_trackbacks.add(new Tuple(messageId, url, entryUrl));
+		_trackbacks.add(new Tuple(commentId, url, entryUrl));
 	}
 
 	public static void verifyNewTrackbacks() {
@@ -48,11 +48,11 @@ public class LinkbackConsumerUtil {
 				tuple = _trackbacks.remove(0);
 			}
 
-			long messageId = (Long)tuple.getObject(0);
+			long commentId = (Long)tuple.getObject(0);
 			String url = (String)tuple.getObject(1);
 			String entryUrl = (String)tuple.getObject(2);
 
-			_verifyTrackback(messageId, url, entryUrl);
+			_verifyTrackback(commentId, url, entryUrl);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class LinkbackConsumerUtil {
 	}
 
 	private static void _verifyTrackback(
-		long messageId, String url, String entryURL) {
+		long commentId, String url, String entryURL) {
 
 		try {
 			String result = HttpUtil.URLtoString(url);
@@ -103,11 +103,11 @@ public class LinkbackConsumerUtil {
 		}
 
 		try {
-			MBMessageLocalServiceUtil.deleteDiscussionMessage(messageId);
+			new CommentsImpl().deleteComment(commentId);
 		}
 		catch (Exception e) {
 			_log.error(
-				"Error trying to delete trackback message " + messageId, e);
+				"Error trying to delete trackback comment " + commentId, e);
 		}
 	}
 

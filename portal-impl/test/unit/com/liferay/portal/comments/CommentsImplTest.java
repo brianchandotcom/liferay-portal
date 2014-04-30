@@ -111,6 +111,19 @@ public class CommentsImplTest extends PowerMockito {
 		);
 	}
 
+	@Test
+	public void testDeleteComment() throws Exception {
+		long commentId = RandomTestUtil.randomLong();
+
+		_comments.deleteComment(commentId);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).deleteDiscussionMessage(
+			commentId
+		);
+	}
+
 	protected void setUpMessageBoards() throws Exception {
 		when(
 			_mbMessageDisplay.getThread()

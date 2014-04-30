@@ -30,4 +30,7 @@ public interface Comments {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException, SystemException;
 
+	public void deleteComment(long commentId)
+		throws PortalException, SystemException;
+
 }

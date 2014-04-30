@@ -167,7 +167,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-paper-clip";
+		return "icon-file-alt";
 	}
 
 	@Override

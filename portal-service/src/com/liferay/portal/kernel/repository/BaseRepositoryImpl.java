@@ -359,13 +359,6 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	@Override
-	public void setCounterLocalService(
-		CounterLocalService counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	@Override
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 
@@ -494,7 +487,6 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	protected AssetEntryLocalService assetEntryLocalService;
 	protected CompanyLocalService companyLocalService;
-	protected CounterLocalService counterLocalService;
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;

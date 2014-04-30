@@ -25,6 +25,51 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="4">
+		<var name="ddlDataDefinitionName" value="DDL Definition" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
+		<var name="fieldName" value="Text" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator-key1="NAME_FIELD_ALERT" value1="This field is required." />
+	</command>
+
+	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="4">
+		<var name="ddlDataDefinitionName" value="To Do" />
+		<var name="ddlListName" value="List Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+
+		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${ddlListName}" />
+
+		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid definition." />
+	</command>
+
 	<command name="AddRecord" priority="5">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
@@ -193,6 +238,74 @@
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+	</command>
+
+	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
+		<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
+		<var name="ddlInvalidRecordFieldData" value="0.987a" />
+		<var name="ddlListName" value="List Name" />
+		<var name="field" value="Decimal" />
+		<var name="fieldFieldLabel" value="Decimal" />
+		<var name="fieldName" value="Decimal" />
+		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#addPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DECIMAL_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
 	<command name="AssertGuestCannotEditRecord" priority="4">
@@ -364,6 +477,142 @@
 
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+	</command>
+
+	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
+		<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
+		<var name="ddlInvalidRecordFieldData" value="aaaa" />
+		<var name="ddlListName" value="List Name" />
+		<var name="field" value="Integer" />
+		<var name="fieldFieldLabel" value="Integer" />
+		<var name="fieldName" value="Integer" />
+		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#addPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="INTEGER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter only digits." />
+	</command>
+
+	<command name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
+		<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
+		<var name="ddlInvalidRecordFieldData" value="555b" />
+		<var name="ddlListName" value="List Name" />
+		<var name="field" value="Number" />
+		<var name="fieldFieldLabel" value="Number" />
+		<var name="fieldName" value="Number" />
+		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#addPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="NUMBER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
 	<command name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">

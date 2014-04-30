@@ -364,11 +364,11 @@ public class DDLRecordLocalServiceUtil {
 			fieldsMap, serviceContext);
 	}
 
-	public static void deleteRecord(
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecord(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord record)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteRecord(record);
+		return getService().deleteRecord(record);
 	}
 
 	public static void deleteRecord(long recordId)

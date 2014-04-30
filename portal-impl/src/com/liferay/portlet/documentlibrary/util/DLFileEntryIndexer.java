@@ -257,6 +257,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		addSearchTerm(searchQuery, searchContext, Field.DDM_CONTENT, false);
+
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
@@ -265,7 +267,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		}
 
-		addSearchTerm(searchQuery, searchContext, "ddmContent", false);
 		addSearchTerm(searchQuery, searchContext, "extension", false);
 		addSearchTerm(searchQuery, searchContext, "fileEntryTypeId", false);
 		addSearchTerm(searchQuery, searchContext, "path", false);
@@ -394,6 +395,9 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
+			document.addText(
+				Field.DDM_CONTENT,
+				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
@@ -406,9 +410,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 			document.addKeyword(
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
-			document.addText(
-				"ddmContent",
-				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());

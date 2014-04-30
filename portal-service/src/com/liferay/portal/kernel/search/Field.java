@@ -70,6 +70,8 @@ public class Field implements Serializable {
 
 	public static final String CREATE_DATE = "createDate";
 
+	public static final String DDM_CONTENT = "ddmContent";
+
 	public static final String DEFAULT_LANGUAGE_ID = "defaultLanguageId";
 
 	public static final String DESCRIPTION = "description";
@@ -123,6 +125,8 @@ public class Field implements Serializable {
 	public static final String PUBLISH_DATE = "publishDate";
 
 	public static final String RATINGS = "ratings";
+
+	public static final String RECORD_SET_ID = "recordSetId";
 
 	public static final String RELATED_ENTRY = "relatedEntry";
 

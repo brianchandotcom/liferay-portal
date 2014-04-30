@@ -1218,15 +1218,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout with ID " + layoutId +
-							" in group " + portletDataContext.getScopeGroupId();
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Unable to get layout with ID ");
+					sb.append(layoutId);
+					sb.append(" in group ");
+					sb.append(portletDataContext.getScopeGroupId());
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(message, e);
+						_log.debug(sb.toString(), e);
 					}
 					else if (_log.isWarnEnabled()) {
-						_log.warn(message);
+						_log.warn(sb.toString());
 					}
 				}
 			}

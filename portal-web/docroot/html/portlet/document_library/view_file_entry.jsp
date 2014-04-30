@@ -284,7 +284,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 
 		<aui:col cssClass="context-pane lfr-asset-column-details" last="<%= true %>" width="<%= 30 %>">
 			<div class="asset-details body-row">
-				<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() %>">
+				<c:if test="<%= showAssetMetadata %>">
 					<div class="asset-details-content">
 						<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
@@ -354,7 +354,12 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						</span>
 
 						<div class="hide lfr-asset-field url-file-container">
-							<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
+							<aui:field-wrapper name="url">
+								<liferay-ui:input-resource
+									id="url"
+									url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
+								/>
+							</aui:field-wrapper>
 						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">

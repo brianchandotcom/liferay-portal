@@ -348,11 +348,6 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 	</aui:fieldset>
 </aui:form>
 
-<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/document_library/select_folder" />
-	<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-</portlet:renderURL>
-
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />selectFolderButton').on(
 		'click',
@@ -366,6 +361,12 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 					},
 					id: '<portlet:namespace />selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/document_library/select_folder" />
+						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
+					</portlet:renderURL>
+					
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

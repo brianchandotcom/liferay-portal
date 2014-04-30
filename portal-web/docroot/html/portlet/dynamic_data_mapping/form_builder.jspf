@@ -30,7 +30,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
 
 <div class="separator"><!-- --></div>
 
-<div class="hide lfr-message-response alert alert-error" id="<portlet:namespace />messageContainer"></div>
+<div class="alert alert-error hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(pageContext, "view[action]") + "," + LanguageUtil.get(pageContext, "source") %>'

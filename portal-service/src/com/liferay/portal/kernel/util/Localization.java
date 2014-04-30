@@ -121,7 +121,7 @@ public interface Localization {
 	/**
 	 * Returns the localized string from the localizations XML in the language,
 	 * optionally using the default language if no localization exists for the
-	 * requested language.
+	 * requested language. If no localization exists, returns the default value.
 	 *
 	 * @param  xml the localizations XML
 	 * @param  requestedLanguageId the ID of the language
@@ -164,16 +164,17 @@ public interface Localization {
 
 	/**
 	 * Returns a map of locales and localized strings for the preference in the
-	 * preferences container. If no localization exists for the preference in
-	 * the default locale, the value of the property is assigned as the
-	 * localized string for the default locale.
+	 * preferences container. If no localization exists for the preference,
+	 * returns the property name.
 	 *
 	 * @param  preferences the preferences container
 	 * @param  preferenceName the prefix of the preference containing the
 	 *         localized strings. Each localization is loaded from a preference
 	 *         with this prefix, followed by an underscore, and the language ID.
 	 * @param  propertyName the name of the property
-	 * @return the locales and localized strings
+	 * @return the locales and localized strings, or the
+	 *         <code>propertyName</code> if no localization exists for the
+	 *         preference
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName,
@@ -220,8 +221,8 @@ public interface Localization {
 		String[] languageIds, String[] values);
 
 	/**
-	 * Returns the localizations XML for the parameter from the portlet request,
-	 * attempting to get data from the preferences container if it is not
+	 * Returns the localizations XML for the parameter in the portlet request,
+	 * attempting to get data from the preferences container when it is not
 	 * available in the portlet request.
 	 *
 	 * @param  preferences the preferences container
@@ -236,11 +237,10 @@ public interface Localization {
 		String parameter);
 
 	/**
-	 * Returns the localizations XML for the parameter from the portlet request,
-	 * attempting to get data from the preferences container if it is not
-	 * available in the portlet request. If no localization exists in the
-	 * default locale, the default value is assigned as the localized value for
-	 * the default locale.
+	 * Returns the localizations XML for the parameter in the portlet request,
+	 * attempting to get data from the preferences container when it is not
+	 * available in the portlet request. If no localization exists, returns the
+	 * default value.
 	 *
 	 * @param  preferences the preferences container
 	 * @param  portletRequest the portlet request
@@ -248,18 +248,18 @@ public interface Localization {
 	 *         strings. Each localization is loaded from a parameter with this
 	 *         prefix, followed by an underscore, and the language ID.
 	 * @param  defaultValue the return value if no localization exists
-	 * @return the locales and localized strings
+	 * @return the locales and localized strings, or the
+	 *         <code>defaultValue</code> if no localization exists
 	 */
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String defaultValue);
 
 	/**
-	 * Returns the localizations XML for the prefixed parameter from the portlet
-	 * request, attempting to get data from the preferences container if it is
-	 * not available in the portlet request. If no localization exists in the
-	 * default locale, the default value is assigned as the localized value for
-	 * the default locale.
+	 * Returns the localizations XML for the prefixed parameter in the portlet
+	 * request, attempting to get data from the preferences container when it is
+	 * not available in the portlet request. If no localization exists, returns
+	 * the default value.
 	 *
 	 * @param  preferences the preferences container
 	 * @param  portletRequest the portlet request
@@ -349,8 +349,8 @@ public interface Localization {
 
 	/**
 	 * Returns the localized preferences values for the key in the language,
-	 * optionally using the default language if no localization exists for the
-	 * requested language.
+	 * optionally using the default language if the no localization exists for
+	 * the requested language.
 	 *
 	 * @param  preferences the preferences container
 	 * @param  key the preferences key

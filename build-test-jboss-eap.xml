@@ -17,16 +17,16 @@
 
 	<target name="run-selenium-jboss-eap">
 		<echo file="app.server.${user.name}.properties">app.server.type=jboss
-app.server.jboss.version=6.1.0
-app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-app.server.jboss.zip.name=jboss-eap-6.1.0.zip</echo>
+app.server.jboss.version=${app.server.jboss.version}
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.major.version}
+app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip</echo>
 
 		<if>
 			<not>
 				<isset property="build.app.server" />
 			</not>
 			<then>
-				<ant antfile="build-dist.xml" target="build-dist-jboss-eap" />
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-${app.server.jboss.major.version}" />
 			</then>
 		</if>
 

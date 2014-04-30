@@ -110,13 +110,36 @@
 		</if>
 	</target>
 
-	<target name="build-dist-jboss-eap">
+	<target name="build-dist-jboss-eap-6.0">
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.0.1
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0
+app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.server.jboss.zip.name}</echo>
+
+		<antcall target="unzip-jboss" inheritAll="false" />
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant target="deploy" inheritAll="false" />
+
+		<delete file="app.server.${user.name}.properties" />
+
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
+			<param name="deployer.app.server.type" value="jboss" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.jboss.portal.dir}/WEB-INF/lib" />
+		</antcall>
+	</target>
+
+	<target name="build-dist-jboss-eap-6.1">
 		<echo file="app.server.${user.name}.properties">app.server.type=jboss
 app.server.jboss.version=6.1.0
 app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
+app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.server.jboss.zip.name}</echo>
 
-		<antcall target="unzip-jboss-eap" inheritAll="false" />
+		<antcall target="unzip-jboss" inheritAll="false" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
@@ -1122,25 +1145,11 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<if>
-					<contains string="${app.server.jboss.zip.name}" substring="jboss-eap" />
-					<then>
-						<fail>
-.
-
-Please download the JBoss EAP zip file from ${app.server.jboss.zip.url} and
-place it here: ${app.server.parent.dir}/${app.server.jboss.zip.name}. Then rerun
-this task.
-						</fail>
-					</then>
-					<else>
-						<get
-							dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-							src="${app.server.jboss.zip.url}"
-							verbose="true"
-						/>
-					</else>
-				</if>
+				<get
+					dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+					src="${app.server.jboss.zip.url}"
+					verbose="true"
+				/>
 			</then>
 		</if>
 
@@ -1239,7 +1248,10 @@ this task.
 					</if>
 
 					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+						<or>
+							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+							<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
+						</or>
 						<then>
 							<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
 
@@ -1271,10 +1283,15 @@ this task.
 					</if>
 
 					<if>
-						<or>
-							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-							<equals arg1="${app.server.jboss.major.version}" arg2="8" />
-						</or>
+						<and>
+							<or>
+								<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+								<equals arg1="${app.server.jboss.major.version}" arg2="8" />
+							</or>
+							<not>
+								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
+							</not>
+						</and>
 						<then>
 							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml" />
 						</then>
@@ -1370,7 +1387,12 @@ this task.
 					</if>
 
 					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<and>
+							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+							<not>
+								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
+							</not>
+						</and>
 						<then>
 							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
 								<![CDATA[
@@ -1393,7 +1415,12 @@ this task.
 					</replace>
 
 					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<and>
+							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+							<not>
+								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
+							</not>
+						</and>
 						<then>
 							<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
 								<replacefilter token="@java.security.config@" value="${java.security.config}" />

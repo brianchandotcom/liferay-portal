@@ -31,7 +31,6 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.bridges.alloy.AlloyPortlet;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.io.File;
@@ -121,8 +120,6 @@ public class PortletDeployer extends BaseDeployer {
 
 		sb.append(getServletContent(portletXML, webXML));
 
-		setupAlloy(srcFile, portletXML);
-
 		String extraContent = super.getExtraContent(
 			webXmlVersion, srcFile, displayName);
 
@@ -209,40 +206,6 @@ public class PortletDeployer extends BaseDeployer {
 		}
 
 		return sb.toString();
-	}
-
-	public void setupAlloy(File srcFile, File portletXML) throws Exception {
-		Document document = SAXReaderUtil.read(portletXML);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> portletElements = rootElement.elements("portlet");
-
-		for (Element portletElement : portletElements) {
-			String portletClassName = portletElement.elementText(
-				"portlet-class");
-
-			if (!portletClassName.contains(
-					AlloyPortlet.class.getSimpleName())) {
-
-				continue;
-			}
-
-			String[] dirNames = FileUtil.listDirs(srcFile + "/WEB-INF/jsp");
-
-			for (String dirName : dirNames) {
-				File dir = new File(
-					srcFile + "/WEB-INF/jsp/" + dirName + "/views");
-
-				if (!dir.exists() || !dir.isDirectory()) {
-					continue;
-				}
-
-				copyDependencyXml("touch.jsp", dir.toString());
-			}
-
-			break;
-		}
 	}
 
 	@Override

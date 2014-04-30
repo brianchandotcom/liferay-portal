@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.util;
 
 import com.liferay.portal.comments.CommentsImpl;
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -40,7 +41,7 @@ public class LinkbackConsumerUtil {
 		_trackbacks.add(new Tuple(commentId, url, entryUrl));
 	}
 
-	public static void verifyNewTrackbacks() {
+	public static void verifyNewTrackbacks(Comments comments) {
 		Tuple tuple = null;
 
 		while (!_trackbacks.isEmpty()) {
@@ -52,7 +53,7 @@ public class LinkbackConsumerUtil {
 			String url = (String)tuple.getObject(1);
 			String entryUrl = (String)tuple.getObject(2);
 
-			_verifyTrackback(commentId, url, entryUrl);
+			_verifyTrackback(commentId, url, entryUrl, comments);
 		}
 	}
 
@@ -84,13 +85,13 @@ public class LinkbackConsumerUtil {
 				companyId);
 
 			if (userId == defaultUserId) {
-				_verifyTrackback(messageId, url, entryURL);
+				_verifyTrackback(messageId, url, entryURL, new CommentsImpl());
 			}
 		}
 	}
 
 	private static void _verifyTrackback(
-		long commentId, String url, String entryURL) {
+		long commentId, String url, String entryURL, Comments comments) {
 
 		try {
 			String result = HttpUtil.URLtoString(url);
@@ -103,7 +104,7 @@ public class LinkbackConsumerUtil {
 		}
 
 		try {
-			new CommentsImpl().deleteComment(commentId);
+			comments.deleteComment(commentId);
 		}
 		catch (Exception e) {
 			_log.error(

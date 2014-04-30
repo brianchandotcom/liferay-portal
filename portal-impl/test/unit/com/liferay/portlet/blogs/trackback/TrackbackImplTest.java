@@ -23,9 +23,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumer;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +44,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({LinkbackConsumerUtil.class, UserLocalServiceUtil.class})
+@PrepareForTest({UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackImplTest extends PowerMockito {
 
@@ -52,7 +52,6 @@ public class TrackbackImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpLinkbackConsumer();
 		setUpPortal();
 		setUpThemeDisplay();
 		setUpUserLocalService();
@@ -115,7 +114,7 @@ public class TrackbackImplTest extends PowerMockito {
 			commentId
 		);
 
-		Trackback trackback = new TrackbackImpl(_comments);
+		Trackback trackback = new TrackbackImpl(_comments, _linkbackConsumer);
 
 		trackback.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",

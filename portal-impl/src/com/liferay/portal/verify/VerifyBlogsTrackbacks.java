@@ -17,10 +17,10 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.LinkbackConsumer;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -37,6 +37,10 @@ import java.util.List;
  * @author Alexander Chow
  */
 public class VerifyBlogsTrackbacks extends VerifyProcess {
+
+	public VerifyBlogsTrackbacks() {
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
+	}
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -57,10 +61,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 						threadId, WorkflowConstants.STATUS_APPROVED);
 
 				for (MBMessage message : messages) {
-					LinkbackConsumer linkbackConsumer =
-						LinkbackConsumerUtil.getLinkbackConsumer();
-
-					linkbackConsumer.verifyPost(entry, message);
+					_linkbackConsumer.verifyPost(entry, message);
 				}
 			}
 			catch (Exception e) {
@@ -71,5 +72,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyBlogsTrackbacks.class);
+
+	private LinkbackConsumer _linkbackConsumer;
 
 }

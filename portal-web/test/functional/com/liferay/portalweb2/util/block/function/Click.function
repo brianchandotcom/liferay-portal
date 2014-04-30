@@ -79,7 +79,7 @@
 
 		<execute function="Click#clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_page.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" />
 	</command>
 
 	<command name="clickWaitForInlineCKEditor">

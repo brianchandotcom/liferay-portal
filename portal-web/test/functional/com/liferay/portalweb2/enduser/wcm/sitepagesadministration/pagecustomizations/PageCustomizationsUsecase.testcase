@@ -36,7 +36,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="PageCustomizations#addPageColumnCustomizations">
+		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
+
+		<execute macro="PageCustomizations#enableSectionCustomizablePG">
 			<var name="columnId" value="1" />
 		</execute>
 
@@ -97,8 +99,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="WikiPortlet#viewAllowUsersToAddWikiToAnyWebSiteCheckbox">
-			<var name="checkboxUncheck" value="true" />
+		<execute macro="WikiPortlet#configureSharingAllowUsersToAddWikiToAnyWebsite">
+			<var name="enabled" value="true" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -117,7 +119,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="WikiPortlet#viewAllowUsersToAddWikiToAnyWebSiteCheckbox" />
+		<execute macro="WikiPortlet#viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
+			<var name="enabled" value="false" />
+		</execute>
 	</command>
 
 	<command name="SiteMembershouldAddAndRemovePortletFromHisCustomizableView" priority="4">
@@ -145,7 +149,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="PageCustomizations#addPageColumnCustomizations">
+		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
+
+		<execute macro="PageCustomizations#enableSectionCustomizablePG">
 			<var name="columnId" value="1" />
 		</execute>
 

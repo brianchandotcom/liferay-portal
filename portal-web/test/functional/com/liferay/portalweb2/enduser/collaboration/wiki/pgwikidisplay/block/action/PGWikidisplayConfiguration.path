@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOWUSERSTOADDWIKITOANYWEBSITECHECKBOX</td>
-	<td>//input[@id='_86_widgetShowAddAppLinkCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

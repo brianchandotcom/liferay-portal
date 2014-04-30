@@ -1,19 +1,36 @@
 <definition>
-	<command name="viewAllowUsersToAddWikiToAnyWebSiteCheckbox">
+	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_SHARING" value1="Sharing" />
 
 		<if>
-			<isset var="checkboxUncheck" />
+			<equals arg1="${enabled}" arg2="true" />
 			<then>
-				<execute action="PGWikidisplayConfiguration#check" locator-key1="ALLOWUSERSTOADDWIKITOANYWEBSITECHECKBOX" />
+				<execute action="PGWikidisplayConfigurationSharing#check" locator-key1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGWikidisplayConfiguration#uncheck" locator-key1="ALLOWUSERSTOADDWIKITOANYWEBSITECHECKBOX" />
+				<execute action="PGWikidisplayConfigurationSharing#uncheck" locator-key1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</else>
 		</if>
 
 		<execute action="PGWikidisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_SHARING" value1="Sharing" />
+
+		<if>
+			<equals arg1="${enabled}" arg2="true" />
+			<then>
+				<execute action="PGWikidisplayConfigurationSharing#assertChecked" locator-key1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGWikidisplayConfigurationSharing#assertNotChecked" locator-key1="ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+			</else>
+		</if>
 
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>

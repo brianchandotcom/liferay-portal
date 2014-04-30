@@ -58,4 +58,11 @@ public class CommentsImpl implements Comments {
 		return message.getMessageId();
 	}
 
+	@Override
+	public void deleteComment(long messageId)
+		throws PortalException, SystemException {
+
+		MBMessageLocalServiceUtil.deleteDiscussionMessage(messageId);
+	}
+
 }

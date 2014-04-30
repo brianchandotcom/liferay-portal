@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,7 +103,7 @@ public class LinkbackConsumerUtil {
 		}
 
 		try {
-			MBMessageLocalServiceUtil.deleteDiscussionMessage(messageId);
+			new CommentsImpl().deleteComment(messageId);
 		}
 		catch (Exception e) {
 			_log.error(

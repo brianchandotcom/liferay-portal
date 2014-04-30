@@ -4115,6 +4115,12 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(long, long, List,
+	 *             long, String, String, String, String, String, int, String,
+	 *             String, LinkedHashMap, boolean, int, int, Sort)}
+	 */
+	@Deprecated
 	@Override
 	public Hits search(
 			long companyId, long groupId, List<Long> folderIds,
@@ -5221,8 +5227,6 @@ public class JournalArticleLocalServiceImpl
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
 	 * @param  articleURL the web content article's accessible URL
-	 * @param  workflowContext the web content article's configured workflow
-	 *         context
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, status date, and portlet preferences. With
 	 *         respect to social activities, by setting the service context's
@@ -5230,6 +5234,8 @@ public class JournalArticleLocalServiceImpl
 	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	 *         is considered a web content update activity; otherwise it is
 	 *         considered a web content add activity.
+	 * @param  workflowContext the web content article's configured workflow
+	 *         context
 	 * @return the updated web content article
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred

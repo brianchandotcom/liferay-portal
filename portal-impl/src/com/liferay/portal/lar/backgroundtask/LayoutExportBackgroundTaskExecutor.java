@@ -17,8 +17,10 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -33,7 +35,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -74,8 +75,8 @@ public class LayoutExportBackgroundTaskExecutor
 			settingsMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-		Date startDate = (Date)settingsMap.get("startDate");
-		Date endDate = (Date)settingsMap.get("endDate");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
 		String fileName = exportImportConfiguration.getName();
 
 		StringBundler sb = new StringBundler(4);
@@ -86,8 +87,8 @@ public class LayoutExportBackgroundTaskExecutor
 		sb.append(".lar");
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
+			groupId, privateLayout, layoutIds, parameterMap,
+			dateRange.getStartDate(), dateRange.getEndDate());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
@@ -97,7 +98,8 @@ public class LayoutExportBackgroundTaskExecutor
 			parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (updateLastPublishDate) {
-			StagingUtil.updateLastPublishDate(groupId, privateLayout, endDate);
+			StagingUtil.updateLastPublishDate(
+				groupId, privateLayout, dateRange.getEndDate());
 		}
 
 		return BackgroundTaskResult.SUCCESS;

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>URL_FIELD_REQUIRED</td>
-	<td>//div[@class='control-group error']</td>
+	<td>//div[contains(@class,'error')]</td>
 	<td></td>
 </tr>
 <tr>

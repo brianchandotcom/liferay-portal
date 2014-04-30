@@ -30,7 +30,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
 
 <div class="separator"><!-- --></div>
 
-<div class="hide lfr-message-response alert alert-error" id="<portlet:namespace />messageContainer"></div>
+<div class="alert alert-error hide lfr-message-response" id="<portlet:namespace />messageContainer"></div>
 
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(pageContext, "view[action]") + "," + LanguageUtil.get(pageContext, "source") %>'
@@ -203,7 +203,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				data: {
 					xsd: content
 				},
-				dataType: 'json',
+				dataType: 'JSON',
 				on: {
 					failure: function(message) {
 						displayMessage(MESSAGE_FAILURE, '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>');

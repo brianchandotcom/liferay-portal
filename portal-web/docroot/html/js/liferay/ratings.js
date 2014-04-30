@@ -125,7 +125,7 @@ AUI.add(
 									p_l_id: themeDisplay.getPlid(),
 									score: score
 								},
-								dataType: 'json',
+								dataType: 'JSON',
 								on: {
 									success: A.bind(callback, instance)
 								}

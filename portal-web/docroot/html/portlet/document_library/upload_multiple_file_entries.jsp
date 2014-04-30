@@ -137,7 +137,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 							A.io.request(
 								document.<portlet:namespace />fm2.action,
 								{
-									dataType: 'json',
+									dataType: 'JSON',
 									form: {
 										id: document.<portlet:namespace />fm2
 									},

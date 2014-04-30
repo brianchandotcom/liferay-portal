@@ -731,7 +731,7 @@ AUI.add(
 						instance._updateURL,
 						{
 							data: data,
-							dataType: 'json',
+							dataType: 'JSON',
 							on: {
 								failure: function() {
 									processRemovePageFailure(
@@ -830,7 +830,7 @@ AUI.add(
 							instance._updateURL,
 							{
 								data: data,
-								dataType: 'json',
+								dataType: 'JSON',
 								on: {
 									success: onSuccess
 								}
@@ -896,7 +896,7 @@ AUI.add(
 					instance._updateURL,
 					{
 						data: data,
-						dataType: 'json',
+						dataType: 'JSON',
 						on: {
 							failure: function() {
 								processMovePageFailure(

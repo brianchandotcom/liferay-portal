@@ -664,7 +664,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				A.io.request(
 					form.attr('action'),
 					{
-						dataType: 'json',
+						dataType: 'JSON',
 						form: {
 							id: form
 						},

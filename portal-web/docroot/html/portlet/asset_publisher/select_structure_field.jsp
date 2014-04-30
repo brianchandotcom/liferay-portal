@@ -142,7 +142,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		A.io.request(
 			form.attr('action'),
 			{
-				dataType: 'json',
+				dataType: 'JSON',
 				form: {
 					id: form
 				},

@@ -124,7 +124,7 @@ AUI.add(
 								A.io.request(
 									addForm.get('action'),
 									{
-										dataType: 'json',
+										dataType: 'JSON',
 										form: {
 											id: addForm.get(STR_ID)
 										},

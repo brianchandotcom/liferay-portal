@@ -682,7 +682,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'json',
+									dataType: 'JSON',
 									on: {
 										failure: function(event, id, obj) {
 											instance._onTagUpdateFailure(obj);
@@ -712,7 +712,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'html',
+									dataType: 'HTML',
 									on: {
 										success: function(event, id, obj) {
 											var response = this.get('responseData');

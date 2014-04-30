@@ -129,7 +129,7 @@ AUI.add(
 										trashEntryId: event.trashEntryId
 									}
 								),
-								dataType: 'json'
+								dataType: 'JSON'
 							}
 						);
 					},
@@ -216,7 +216,7 @@ AUI.add(
 											newName: newName.val()
 										}
 									),
-									dataType: 'json'
+									dataType: 'JSON'
 								}
 							);
 						}

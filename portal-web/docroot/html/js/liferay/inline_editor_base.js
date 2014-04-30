@@ -185,7 +185,7 @@ AUI.add(
 								content: instance.get(EDITOR).getData()
 							}
 						),
-						dataType: 'json'
+						dataType: 'JSON'
 					}
 				);
 			},

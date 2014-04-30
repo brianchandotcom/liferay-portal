@@ -724,14 +724,14 @@
 		<if>
 			<equals arg1="${soDocument}" arg2="true" />
 			<then>
-				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_SOCIAL_OFFICE" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG" />
 			</then>
 			<else>
-				<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_RATING_PORTAL" />
+				<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="AVERAGE_RATING_STAR_ICON_PNG" />
 			</else>
 		</if>
 
-		<execute action="Sikuli#click" locator-key1="DOCUMENTS_AND_MEDIA_STATUS" />
+		<execute action="PGDocumentsandmediaDocument#sikuliClick" locator-key1="DOCUMENT_DETAILS_WORKFLOW_PNG" />
 	</command>
 
 	<command name="removeDocumentViewPermissionsPG">

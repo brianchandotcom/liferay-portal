@@ -520,10 +520,10 @@
 		<execute action="CPSites#selectFrame" locator-key1="IMPORT_FRAME" />
 		<execute action="CPSites#assertClick" locator-key1="SELECT_FILE" value1="Select File" />
 
-		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
-		<execute action="Sikuli#type" locator-key1="FILE_DIALOG" value1="${fileName}" />
-		<execute action="Sikuli#click" locator-key1="TESTLAR_FILE" />
-		<execute action="Sikuli#click" locator-key1="OPEN" />
+		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+		<execute action="OS#sikuliType" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TEST_LAR_FILE_ICON_PNG" />
+		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_OPEN_BUTTON_PNG" />
 
 		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE" value1="Continue" />
 		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE_2" value1="Continue" />

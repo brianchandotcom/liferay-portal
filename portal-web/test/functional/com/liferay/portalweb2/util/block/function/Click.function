@@ -143,12 +143,6 @@
 		<execute function="Click#textClickAtAndWait" />
 	</command>
 
-	<command name="sikuliClick">
-		<execute selenium="sikuliClick" />
-
-		<execute selenium="pause" argument1="2000" />
-	</command>
-
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 

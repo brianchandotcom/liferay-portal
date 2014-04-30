@@ -16,7 +16,7 @@
 		<execute action="PGWikiWikipageAttachments#assertClick" locator-key1="ADD_ATTACHMENTS_BUTTON" value1="Add Attachments" />
 		<execute action="PGWikiWikipageAttachments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
 
-		<execute action="Sikuli#uploadCommonFile" locator-key1="FILE_DIALOG" value1="${attachmentFileName}" />
+		<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${attachmentFileName}" />
 
 		<execute action="PGWikiWikipageAttachments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
 		<execute action="PGWikiWikipageAttachments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${attachmentFileName}" />

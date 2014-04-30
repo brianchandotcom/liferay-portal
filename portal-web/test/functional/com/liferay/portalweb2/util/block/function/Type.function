@@ -41,12 +41,6 @@
 		<execute selenium="sendKeys" />
 	</command>
 
-	<command name="sikuliType">
-		<execute selenium="sikuliType" />
-
-		<execute selenium="pause" argument1="2000" />
-	</command>
-
 	<command name="type">
 		<execute selenium="waitForVisible" />
 

@@ -1,8 +1,4 @@
 <definition>
-	<command name="sikuliUploadCommonFile">
-		<execute selenium="sikuliUploadCommonFile" />
-	</command>
-
 	<command name="uploadCommonFile">
 		<execute selenium="waitForVisible" />
 

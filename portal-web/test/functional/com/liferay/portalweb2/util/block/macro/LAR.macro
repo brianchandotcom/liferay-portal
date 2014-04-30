@@ -169,8 +169,8 @@
 		<execute action="BasePortletImport#assertClick" locator-key1="NAVIGATION_IMPORT" value1="Import" />
 		<execute action="BasePortletImport#assertClick" locator-key1="SELECT_FILE_BUTTON" value1="Select File" />
 
-		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
-		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
+		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+		<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
 		<execute action="Home#pause" locator1="5000" />
 
 		<execute action="BasePortletImport#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />
@@ -182,8 +182,8 @@
 		<execute action="CPSitepagesImport#assertClick" locator-key1="NEW_IMPORT_PROCESS_NAVIGATION" value1="New Import Process" />
 		<execute action="CPSitepagesImport#assertClick" locator-key1="SELECT_FILE_BUTTON" value1="Select File" />
 
-		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
-		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
+		<execute action="OS#sikuliClick" locator-key1="FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+		<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
 		<execute action="Home#pause" locator1="5000" />
 
 		<execute action="CPSitepagesImport#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />

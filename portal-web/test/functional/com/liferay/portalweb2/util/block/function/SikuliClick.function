@@ -1,0 +1,7 @@
+<definition>
+	<command name="sikuliClick">
+		<execute selenium="sikuliClick" />
+
+		<execute selenium="pause" argument1="2000" />
+	</command>
+</definition>

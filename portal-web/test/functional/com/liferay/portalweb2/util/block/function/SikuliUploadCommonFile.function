@@ -1,0 +1,5 @@
+<definition>
+	<command name="sikuliUploadCommonFile">
+		<execute selenium="sikuliUploadCommonFile" />
+	</command>
+</definition>

@@ -1,0 +1,5 @@
+<definition>
+	<command name="sikuliUploadTempFile">
+		<execute selenium="sikuliUploadTempFile" />
+	</command>
+</definition>

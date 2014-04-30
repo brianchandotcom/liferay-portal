@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>OS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>OS</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILE_DIALOG_BOX-->
+<tr>
+	<td>FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG</td>
+	<td>os/fields/file_dialog_box_file_name_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG</td>
+	<td>os/icons/file_dialog_box_type_file_name_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_TEST_LAR_FILE_ICON_PNG</td>
+	<td>os/icons/file_dialog_box_test_lar_file_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_OPEN_BUTTON_PNG</td>
+	<td>os/buttons/file_dialog_box_open_button.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

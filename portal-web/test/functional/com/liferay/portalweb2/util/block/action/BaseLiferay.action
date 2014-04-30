@@ -335,6 +335,34 @@
 		</default>
 	</command>
 
+	<command name="sikuliClick">
+		<default>
+			<description message="Click on the ${locator1}." />
+
+			<execute function="SikuliClick#sikuliClick" />
+		</default>
+	</command>
+
+	<command name="sikuliType">
+		<default>
+			<description message="Uses Sikuli to type into the ${locator1} with the value ${value1}." />
+
+			<execute function="SikuliType#sikuliType" />
+		</default>
+	</command>
+
+	<command name="sikuliUploadCommonFile">
+		<default>
+			<execute function="SikuliUploadCommonFile#sikuliUploadCommonFile" />
+		</default>
+	</command>
+
+	<command name="sikuliUploadTempFile">
+		<default>
+			<execute function="SikuliUploadTempFile#sikuliUploadTempFile" />
+		</default>
+	</command>
+
 	<command name="type">
 		<default>
 			<description message="Type into the ${locator1} with the value ${value1}." />

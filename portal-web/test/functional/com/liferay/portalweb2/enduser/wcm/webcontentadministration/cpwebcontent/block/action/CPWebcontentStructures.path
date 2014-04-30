@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_PERMISSIONS</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_permissions']</td>
+	<td>//a[contains(@id,'_166_ddmStructuresSearchContainer') and contains(@id,'menu_permissions')]</td>
 	<td></td>
 </tr>
 <tr>

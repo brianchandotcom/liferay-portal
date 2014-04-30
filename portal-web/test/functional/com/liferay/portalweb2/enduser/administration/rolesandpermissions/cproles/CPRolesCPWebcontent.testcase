@@ -89,7 +89,7 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -185,7 +185,7 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -277,7 +277,7 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -369,7 +369,7 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -431,7 +431,7 @@
 		<execute macro="WebContentPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -504,7 +504,7 @@
 		<execute macro="WebContentPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

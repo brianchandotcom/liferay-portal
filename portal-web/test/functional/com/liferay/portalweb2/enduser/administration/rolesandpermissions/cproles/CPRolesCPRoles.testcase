@@ -19,11 +19,11 @@
 	</tear-down>
 
 	<command name="AddOrganizationRoleRegRole" priority="5">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_ROLE_VIEW" />
+		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
 		<var name="permissionDefinition3Value" value="View" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="roleName1" value="Orgrole1 Name" />
@@ -100,11 +100,11 @@
 	</command>
 
 	<command name="AddRegularRoleRegRole" priority="5">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_ROLE_VIEW" />
+		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
 		<var name="permissionDefinition3Value" value="View" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="roleName1" value="Regrole1 Name" />
@@ -179,11 +179,11 @@
 	</command>
 
 	<command name="AddSiteRoleRegRole" priority="5">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_ROLE_VIEW" />
+		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX" />
 		<var name="permissionDefinition3Value" value="View" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="roleName1" value="Siterole1 Name" />

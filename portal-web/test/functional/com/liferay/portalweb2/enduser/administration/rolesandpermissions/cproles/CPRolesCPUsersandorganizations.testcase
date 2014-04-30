@@ -23,9 +23,9 @@
 	<command name="AddOrganizationRegRole" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Organization" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -85,9 +85,9 @@
 	</command>
 
 	<command name="AddUserRegRole" priority="5">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add User" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="user1EmailAddress" value="userea1@liferay.com" />

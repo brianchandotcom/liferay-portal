@@ -21,11 +21,11 @@
 	</tear-down>
 
 	<command name="AddUserGroupRegRole" priority="5">
-		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add User Group" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USER_GROUPS_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_USER_GROUPS_USER_GROUP_VIEW" />
+		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_USER_GROUPS_RESOURCE_PERMISSIONS_USER_GROUP_VIEW_CHECKBOX" />
 		<var name="permissionDefinition3Value" value="View" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

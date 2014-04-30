@@ -49,7 +49,7 @@
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
@@ -237,7 +237,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -396,7 +396,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -724,7 +724,7 @@
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
@@ -966,7 +966,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
-		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -1068,7 +1068,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -1264,7 +1264,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -1632,7 +1632,7 @@
 		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
-		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -1817,7 +1817,7 @@
 
 	<command name="SubcribeBlogsSiteRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -1995,7 +1995,7 @@
 
 	<command name="SubscribeBlogsRegRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -2061,7 +2061,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -2159,7 +2159,7 @@
 
 	<command name="ViewBlogsPermissionsRegRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -2306,7 +2306,7 @@
 
 	<command name="ViewBlogsPermissionsSiteRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />

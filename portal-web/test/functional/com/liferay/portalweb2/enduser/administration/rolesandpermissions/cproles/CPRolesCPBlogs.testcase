@@ -28,7 +28,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -121,7 +121,7 @@
 	</command>
 
 	<command name="ViewBlogsPortletRegRole" priority="5">
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
@@ -158,7 +158,7 @@
 		<execute macro="BlogsPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -180,7 +180,7 @@
 
 	<command name="ViewBlogsPortletSiteRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -231,7 +231,7 @@
 		<execute macro="BlogsPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

@@ -265,8 +265,8 @@
 	<command name="AddSOBlogsEntrySOUser" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ACTION_CHECKBOX" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="roleName" value="Blogs Site Role Name" />
@@ -535,8 +535,8 @@
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ACTION_CHECKBOX" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="roleName" value="Blogs Site Role Name" />
@@ -953,8 +953,8 @@
 	<command name="MoveToRecycleBinSOBlogsEntrySOUser" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ACTION_CHECKBOX" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="roleName" value="Blogs Site Role Name" />
@@ -1381,8 +1381,8 @@
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle1" value="Blogs Entry1 Title" />
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ACTION_CHECKBOX" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />

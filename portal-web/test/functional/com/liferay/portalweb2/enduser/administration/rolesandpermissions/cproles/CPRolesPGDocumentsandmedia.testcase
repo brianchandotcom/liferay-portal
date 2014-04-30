@@ -26,7 +26,7 @@
 	<command name="AddDMDocumentRegRole" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Document" />
 		<var name="portletName" value="Documents and Media" />
 		<var name="roleName" value="Regrole Name" />
@@ -196,7 +196,7 @@
 	<command name="AddDMDocumentSiteRole" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Document" />
 		<var name="portletName" value="Documents and Media" />
 		<var name="roleName" value="Roles Siterole Name" />

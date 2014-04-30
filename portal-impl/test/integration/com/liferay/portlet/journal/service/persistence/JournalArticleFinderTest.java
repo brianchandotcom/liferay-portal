@@ -99,6 +99,7 @@ public class JournalArticleFinderTest {
 			"<title>Article 1</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
 			basicWebContentTemplate.getTemplateKey());
+
 		_articles.add(addedArticle);
 
 		JournalFolder folder = JournalTestUtil.addFolder(
@@ -120,6 +121,7 @@ public class JournalArticleFinderTest {
 			"<title>Article 3</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
 			basicWebContentTemplate.getTemplateKey());
+
 		_articles.add(addedArticle);
 
 		addedArticle.setUserId(_USER_ID);
@@ -141,6 +143,7 @@ public class JournalArticleFinderTest {
 			PortalUtil.getClassNameId(JournalStructure.class),
 			"<title>Article 4</title>", _ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
+
 		_articles.add(addedArticle);
 
 		_folderIds.clear();

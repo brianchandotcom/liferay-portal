@@ -690,13 +690,6 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public void setCounterLocalService(
-		CounterLocalService counterLocalService) {
-
-		_baseRepository.setCounterLocalService(counterLocalService);
-	}
-
-	@Override
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.repository;
 
-import com.liferay.counter.service.CounterLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -43,8 +42,6 @@ public interface BaseRepository extends Repository {
 	public void setCompanyId(long companyId);
 
 	public void setCompanyLocalService(CompanyLocalService companyLocalService);
-
-	public void setCounterLocalService(CounterLocalService counterLocalService);
 
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService);

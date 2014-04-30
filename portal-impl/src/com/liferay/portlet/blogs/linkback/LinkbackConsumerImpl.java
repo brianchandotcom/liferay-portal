@@ -16,17 +16,10 @@ package com.liferay.portlet.blogs.linkback;
 
 import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.comments.Comments;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.Portal;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,45 +57,12 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 			String url = (String)tuple.getObject(1);
 			String entryUrl = (String)tuple.getObject(2);
 
-			_verifyTrackback(messageId, url, entryUrl);
+			verifyTrackback(messageId, url, entryUrl);
 		}
 	}
 
 	@Override
-	public void verifyPost(BlogsEntry entry, MBMessage message)
-		throws PortalException, SystemException {
-
-		long messageId = message.getMessageId();
-		String entryURL =
-			Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
-		String body = message.getBody();
-		String url = null;
-
-		int start = body.indexOf("[url=");
-
-		if (start > -1) {
-			start += "[url=".length();
-
-			int end = body.indexOf("]", start);
-
-			if (end > -1) {
-				url = body.substring(start, end);
-			}
-		}
-
-		if (Validator.isNotNull(url)) {
-			long companyId = message.getCompanyId();
-			long userId = message.getUserId();
-			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-				companyId);
-
-			if (userId == defaultUserId) {
-				_verifyTrackback(messageId, url, entryURL);
-			}
-		}
-	}
-
-	private void _verifyTrackback(long messageId, String url, String entryURL) {
+	public void verifyTrackback(long messageId, String url, String entryURL) {
 		try {
 			String result = HttpUtil.URLtoString(url);
 

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_FIELD_ALERT</td>
+	<td>//div[@role='alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>

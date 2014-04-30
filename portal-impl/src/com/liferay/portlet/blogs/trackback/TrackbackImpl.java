@@ -26,6 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.LinkbackConsumer;
 import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 /**
@@ -59,7 +60,10 @@ public class TrackbackImpl implements Trackback {
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		LinkbackConsumerUtil.addNewTrackback(commentId, url, entryURL);
+		LinkbackConsumer linkbackConsumer =
+			LinkbackConsumerUtil.getLinkbackConsumer();
+
+		linkbackConsumer.addNewTrackback(commentId, url, entryURL);
 	}
 
 	protected TrackbackImpl(Comments comments) {

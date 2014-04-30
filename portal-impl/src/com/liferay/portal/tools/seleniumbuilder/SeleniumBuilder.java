@@ -61,15 +61,35 @@ public class SeleniumBuilder {
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
+		Set<String> actionNames = _seleniumBuilderContext.getActionNames();
+
+		for (String actionName : actionNames) {
+			_seleniumBuilderContext.validateActionElements(actionName);
+		}
+
+		Set<String> functionNames = _seleniumBuilderContext.getFunctionNames();
+
+		for (String functionName : functionNames) {
+			_seleniumBuilderContext.validateFunctionElements(functionName);
+		}
+
+		Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
+
+		for (String macroName : macroNames) {
+			_seleniumBuilderContext.validateMacroElements(macroName);
+		}
+
+		Set<String> testCaseNames = _seleniumBuilderContext.getTestCaseNames();
+
+		for (String testCaseName : testCaseNames) {
+			_seleniumBuilderContext.validateTestCaseElements(testCaseName);
+		}
+
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
 				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
-			Set<String> actionNames = _seleniumBuilderContext.getActionNames();
-
 			for (String actionName : actionNames) {
-				_seleniumBuilderContext.validateActionElements(actionName);
-
 				actionConverter.convert(actionName);
 			}
 		}
@@ -78,12 +98,7 @@ public class SeleniumBuilder {
 			FunctionConverter functionConverter = new FunctionConverter(
 				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
-			Set<String> functionNames =
-				_seleniumBuilderContext.getFunctionNames();
-
 			for (String functionName : functionNames) {
-				_seleniumBuilderContext.validateFunctionElements(functionName);
-
 				functionConverter.convert(functionName);
 			}
 		}
@@ -92,11 +107,7 @@ public class SeleniumBuilder {
 			MacroConverter macroConverter = new MacroConverter(
 				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
-			Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
-
 			for (String macroName : macroNames) {
-				_seleniumBuilderContext.validateMacroElements(macroName);
-
 				macroConverter.convert(macroName);
 			}
 		}
@@ -115,13 +126,6 @@ public class SeleniumBuilder {
 		if (types.contains("testcase")) {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
 				_seleniumBuilderContext, _seleniumBuilderFileUtil);
-
-			Set<String> testCaseNames =
-				_seleniumBuilderContext.getTestCaseNames();
-
-			for (String testCaseName : testCaseNames) {
-				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
-			}
 
 			String testClass = arguments.get("test.class");
 

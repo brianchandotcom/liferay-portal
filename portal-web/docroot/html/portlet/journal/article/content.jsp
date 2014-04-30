@@ -144,17 +144,15 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructureDescription %>" />
 
 									<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
-										<%= HtmlUtil.escape(ddmStructureName) %>
+										<c:choose>
+											<c:when test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+												<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructureName) %>" />
+											</c:when>
+											<c:otherwise>
+												<%= HtmlUtil.escape(ddmStructureName) %>
+											</c:otherwise>
+										</c:choose>
 									</span>
-
-									<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-										<liferay-ui:icon
-											iconCssClass="icon-edit"
-											id="editDDMStructure"
-											message="edit"
-											url="javascript:;"
-										/>
-									</c:if>
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<liferay-ui:icon
@@ -177,23 +175,19 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
-										<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(pageContext, "none") %>
-									</span>
-
-									<c:if test="<%= ddmTemplate != null %>">
-										<c:if test="<%= ddmTemplate.isSmallImage() %>">
+										<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
 											<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(_getTemplateImage(themeDisplay, ddmTemplate)) %>" />
 										</c:if>
 
-										<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-											<liferay-ui:icon
-												iconCssClass="icon-edit"
-												id="editDDMTemplate"
-												message="edit"
-												url="javascript:;"
-											/>
-										</c:if>
-									</c:if>
+										<c:choose>
+											<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+												<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
+											</c:when>
+											<c:otherwise>
+												<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(pageContext, "none") %>
+											</c:otherwise>
+										</c:choose>
+									</span>
 
 									<c:if test="<%= ddmStructure != null %>">
 										<liferay-ui:icon

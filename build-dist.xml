@@ -508,6 +508,39 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 		</copy>
 	</target>
 
+	<target name="build-dist-tcserver">
+		<if>
+			<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
+			<then>
+				<antcall target="unzip-tomcat" inheritAll="false" />
+			</then>
+			<else>
+				<antcall target="unzip-tomcat" />
+
+				<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
+			</else>
+		</if>
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant target="deploy" inheritAll="false" />
+
+		<if>
+			<not>
+				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
+			</not>
+			<then>
+				<delete file="app.server.${user.name}.properties" />
+			</then>
+		</if>
+
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
+			<param name="deployer.app.server.type" value="tomcat" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
+		</antcall>
+	</target>
+
 	<target name="build-dist-tomcat">
 		<if>
 			<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
@@ -1852,6 +1885,81 @@ release was successful.</echo>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+	</target>
+
+	<target name="unzip-tcserver">
+		<delete dir="${app.server.tomcat.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.tomcat.zip.name}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<get
+					dest="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
+					src="${app.server.tomcat.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<basename file="${app.server.tomcat.dir}" property="app.server.tomcat.dir.name" />
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
+		>
+			<patternset
+				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**"
+			/>
+			<mapper
+				type="glob"
+				from="apache-tomcat-${app.server.tomcat.version}/*"
+				to="${app.server.tomcat.dir.name}/*"
+			/>
+		</unzip>
+
+		<mkdir dir="${app.server.tomcat.dir}/webapps" />
+
+		<echo file="${app.server.tomcat.dir}/conf/catalina.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
+
+		<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
+			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
+			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.tomcat.dir}/conf/server.xml">
+			<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
+			<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
+		</replace>
+
+		<!--<replace file="${app.server.tomcat.dir}/conf/server.xml">
+			<replacetoken><![CDATA[xmlValidation="false" xmlNamespaceAware="false">]]></replacetoken>
+			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
+		</replace>-->
+
+		<if>
+			<available file="${jdk.windows.home}/jre/bin/java.exe" />
+			<then>
+				<copy todir="${app.server.tomcat.dir}/jre${jdk.windows.version}/win">
+					<fileset dir="${jdk.windows.home}/jre" />
+				</copy>
+			</then>
+		</if>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.tomcat.bin.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</chmod>
+
+		<antcall target="update-java-security-tomcat" />
 	</target>
 
 	<target name="unzip-tomcat">

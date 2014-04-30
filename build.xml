@@ -476,6 +476,39 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</if>
 
 		<if>
+			<equals arg1="${app.server.type}" arg2="tcserver" />
+			<then>
+				<copy todir="${app.server.tcserver.dir}/liferay/lib">
+					<fileset
+						dir="lib/development"
+						includes="activation.jar,hsql.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.dir}/liferay/lib">
+					<fileset
+						dir="lib/global"
+						includes="portlet.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.dir}/liferay/lib">
+					<fileset
+						dir="lib/portal"
+						includes="ccpp.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.dir}/liferay/lib">
+					<fileset
+						dir="portal-service"
+						includes="portal-service.jar"
+					/>
+				</copy>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<if>

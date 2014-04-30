@@ -542,13 +542,14 @@ create database lportal2 character set utf8;</echo>
 					<equals arg1="${app.server.type}" arg2="jetty" />
 					<equals arg1="${app.server.type}" arg2="jonas" />
 					<equals arg1="${app.server.type}" arg2="resin" />
+					<equals arg1="${app.server.type}" arg2="tcserver" />
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<equals arg1="${app.server.type}" arg2="weblogic" />
 					<equals arg1="${app.server.type}" arg2="websphere" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tomcat, weblogic, or websphere.</fail>
+				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
 			</then>
 		</if>
 
@@ -2146,6 +2147,30 @@ tck.url=true</echo>
 
 		<if>
 			<and>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tcserver" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<then>
+					<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
+
+					<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<delete file="app.server.${user.name}.properties" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<and>
 				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
 				<isset property="test.build.portal.war.url" />
 			</and>
@@ -2206,9 +2231,9 @@ tck.url=true</echo>
 
 	<target name="prepare-test-bundle">
 		<if>
-			<equals arg1="${app.server.type}" arg2="weblogic" />
+			<equals arg1="${app.server.type}" arg2="tcserver" />
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+				<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
 
 				<get
 					dest="liferay-portal.war"
@@ -2216,7 +2241,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.portal.dir}"
+					dest="${app.server.tcserver.portal.dir}"
 					src="liferay-portal.war"
 				/>
 
@@ -2228,7 +2253,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.lib.global.dir}"
+					dest="${app.server.tcserver.lib.global.dir}"
 					src="liferay-portal-dependencies.zip"
 				>
 					<mapper
@@ -2239,7 +2264,57 @@ tck.url=true</echo>
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/development"
+						includes="activation.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/portal"
+						includes="ccpp.jar"
+					/>
+				</copy>
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+					<get
+						dest="liferay-portal.war"
+						src="${test.build.portal.war.url}"
+					/>
+
+					<unzip
+						dest="${app.server.weblogic.portal.dir}"
+						src="liferay-portal.war"
+					/>
+
+					<delete file="liferay-portal.war" />
+
+					<get
+						dest="liferay-portal-dependencies.zip"
+						src="${test.build.portal.dependencies.zip.url}"
+					/>
+
+					<unzip
+						dest="${app.server.weblogic.lib.global.dir}"
+						src="liferay-portal-dependencies.zip"
+					>
+						<mapper
+							from="[^/]+/(.*)"
+							to="\1"
+							type="regexp"
+						/>
+					</unzip>
+
+					<delete file="liferay-portal-dependencies.zip" />
+				</then>
+			</elseif>
 			<else>
 				<mkdir dir="${app.server.parent.dir}" />
 

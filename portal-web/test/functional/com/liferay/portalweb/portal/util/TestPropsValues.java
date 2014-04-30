@@ -22,6 +22,12 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
+	public static final String APP_SERVER_ADMIN = TestPropsUtil.get(
+		"app.server.admin");
+
+	public static final String APP_SERVER_TCAT_DIR = TestPropsUtil.get(
+		"app.server.tcat.dir");
+
 	public static final String BROWSER_COMMANDS_DIR_NAME = TestPropsUtil.get(
 		"browser.commands.dir");
 

@@ -356,6 +356,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public String getAdminPropertyValue() {
+		return LiferaySeleniumHelper.getAdminPropertyValue();
+	}
+
+	@Override
 	public String getCurrentDay() {
 		Calendar calendar = Calendar.getInstance();
 

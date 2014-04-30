@@ -316,7 +316,7 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 			project.setProperty("lp.version.tcat", lpVersionTcat);
 		</script>
 
-		<echo append="true" file="release.${user.name}.properties">
+		<echo file="release.${user.name}.properties">
 			lp.version.tcat=${lp.version.tcat}
 		</echo>
 
@@ -355,7 +355,16 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 			<param name="app.server.tcat.zip.name" value="${app.server.tcat.zip.name}" />
 		</antcall>
 
+		<replace file="${app.server.parent.dir}/tcat-7.0.2/admin/bin/startup.bat"
+			     token="CATALINA_HOME=%CURRENT_DIR%"
+			     value="CATALINA_HOME=${app.server.parent.dir}\tcat-7.0.2\admin" />
+
+		<replace file="${app.server.parent.dir}/tcat-7.0.2/agent/bin/startup.bat"
+			     token="CATALINA_HOME=%CURRENT_DIR%"
+			     value="CATALINA_HOME=${app.server.parent.dir}\tcat-7.0.2\agent" />
+
 		<delete file="app.server.${user.name}.properties" />
+		<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
 	</target>
 
 	<target name="build-dist-tcat-admin">
@@ -396,8 +405,10 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 	</target>
 
 	<target name="build-dist-tcat-admin-webapps-plugins">
-		<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">
 			plugins.war.excludes=**/WEB-INF/service/**,**/WEB-INF/src/**
+			app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
+			plugins.includes=marketplace-portlet
 		</echo>
 
 		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />

@@ -103,6 +103,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void fail(String message);
 
+	public String getAdminPropertyValue();
+
 	public String getCurrentDay();
 
 	public String getCurrentMonth();

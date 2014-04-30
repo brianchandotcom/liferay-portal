@@ -264,6 +264,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public String getAdminPropertyValue() {
+		return LiferaySeleniumHelper.getAdminPropertyValue();
+	}
+
+	@Override
 	public String getCurrentDay() {
 		return _commandProcessor.getString("getCurrentDay", new String[0]);
 	}

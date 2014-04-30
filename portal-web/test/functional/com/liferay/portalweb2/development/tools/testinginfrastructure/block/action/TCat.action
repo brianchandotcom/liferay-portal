@@ -1,0 +1,67 @@
+<definition>
+	<command name="click">
+		<case locator-key1="LOG_IN_BUTTON">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="NEW_WORKSPACE_BUTTON">
+			<execute function="Click#click" />
+		</case>
+
+		<case locator-key1="NEW_ARTIFACT_BUTTON">
+			<execute function="Click#click" />
+		</case>
+
+		<case locator-key1="NEW_DEPLOYMENT_BUTTON">
+			<execute function="Click#click" />
+		</case>
+
+		<case locator-key1="ADD_BUTTON">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="BROWSE_BUTTON">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="OPEN">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="ADD_BUTTON">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="ADD_WEB_APPLICATION">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="LIFERAY_ROOT">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="OK_BUTTON">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="SELECT_SERVER">
+			<execute function="Click#sikuliClick" />
+		</case>
+
+		<case locator-key1="TOMCAT_SERVER">
+			<execute function="Click#sikuliClick" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="NEW_WORKSPACE_NAME_FIELD">
+			<execute function="Type#sikuliType" />
+		</case>
+	</command>
+
+	<command name="uploadCommonFile">
+		<case locator-key1="TYPE_FILE_NAME">
+			<execute function="UploadCommonFile#sikuliUploadCommonFile" />
+		</case>
+	</command>
+</definition>

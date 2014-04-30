@@ -450,6 +450,14 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
+	public static String getAdminPropertyValue() {
+		if (TestPropsValues.APP_SERVER_ADMIN == null) {
+			return "";
+		}
+
+		return TestPropsValues.APP_SERVER_ADMIN;
+	}
+
 	public static String getEmailBody(String index) throws Exception {
 		return EmailCommands.getEmailBody(GetterUtil.getInteger(index));
 	}
@@ -817,12 +825,27 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		sikuliType(
-			liferaySelenium, image,
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getDependenciesDirName() + value);
+		if ((TestPropsValues.APP_SERVER_ADMIN != null) &&
+			TestPropsValues.APP_SERVER_ADMIN.equals("tcat")) {
 
-		_screen.type(Key.ENTER);
+			String tcatDir = TestPropsValues.APP_SERVER_TCAT_DIR + value;
+
+			if (OSDetector.isWindows()) {
+				tcatDir = tcatDir.replace("/", "\\");
+			}
+
+			sikuliType(liferaySelenium, image, tcatDir);
+
+			_screen.type(Key.ENTER);
+		}
+		else {
+			sikuliType(
+				liferaySelenium, image,
+				liferaySelenium.getProjectDirName() +
+					liferaySelenium.getDependenciesDirName() + value);
+
+			_screen.type(Key.ENTER);
+		}
 	}
 
 	public static void sikuliUploadTempFile(

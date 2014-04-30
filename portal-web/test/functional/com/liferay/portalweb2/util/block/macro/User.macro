@@ -954,6 +954,59 @@
 	</command>
 
 	<command name="firstLoginPG">
+		<echo message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}, if not logged in as ${userEmailAddress} log out first." />
+
+		<var name="appServerAdmin" method="selenium#getAdminPropertyValue()" />
+
+		<if>
+			<equals arg1="${appServerAdmin}" arg2="tcat" />
+			<then>
+				<execute action="TCat#type" locator-key1="USER_NAME_FIELD" value1="admin" />
+				<execute action="TCat#type" locator-key1="PASSWORD_FIELD" value1="admin" />
+
+				<execute action="TCat#click" locator-key1="LOG_IN_BUTTON" value1="Login" />
+				<execute action="TCat#click" locator-key1="SERVER_TAB" />
+				<execute action="TCat#click" locator-key1="UNREGISTERED" />
+				<execute action="TCat#click" locator-key1="UNREGISTERED_CHECK" />
+				<execute action="TCat#click" locator-key1="REGISTER_BUTTON" />
+				<execute action="TCat#click" locator-key1="REPOSITORY_TAB" />
+				<execute action="TCat#click" locator-key1="APPLICATION_FOLDER" />
+				<execute action="TCat#click" locator-key1="NEW_WORKSPACE_BUTTON" />
+
+				<execute action="TCat#type" locator-key1="NEW_WORKSPACE_NAME_FIELD" value1="Liferay" />
+				<execute action="TCat#click" locator-key1="ADD_BUTTON" />
+
+				<execute action="TCat#click" locator-key1="NEW_ARTIFACT_BUTTON" />
+
+				<execute action="TCat#click" locator-key1="BROWSE_BUTTON" />
+
+				<execute action="TCat#uploadCommonFile" locator-key1="TYPE_FILE_NAME" value1="/admin/tcat_init/webapps/7_0_0/ROOT.war" />
+
+				<execute action="TCat#click" locator-key1="ADD_BUTTON" />
+
+				<execute action="TCat#pause" locator1="5000" />
+
+				<execute action="TCat#click" locator-key1="DEPLOYMENT_TAB" />
+				<execute action="TCat#click" locator-key1="NEW_DEPLOYMENT_BUTTON" />
+
+				<execute action="TCat#type" locator-key1="NEW_DEPLOYMENT_NAME_FIELD" value1="Liferay" />
+
+				<execute action="TCat#click" locator-key1="ADD_FROM_REPOSITORY_BUTTON" />
+
+				<execute action="TCat#click" locator-key1="ADD_WEB_APPLICATION" />
+				<execute action="TCat#click" locator-key1="LIFERAY_ROOT" />
+				<execute action="TCat#click" locator-key1="OK_BUTTON" />
+				<execute action="TCat#click" locator-key1="SELECT_SERVER" />
+				<execute action="TCat#click" locator-key1="TOMCAT_SERVER" />
+
+				<execute action="TCat#click" locator-key1="DEPLOY_BUTTON" />
+
+				<execute action="TCat#pause" locator1="160000" />
+
+				<execute action="TCat#open" locator1="http://localhost:8080" />
+			</then>
+		</if>
+
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}, if not logged in as ${userEmailAddress} log out first." />
 
 		<execute macro="Page#openURL" />

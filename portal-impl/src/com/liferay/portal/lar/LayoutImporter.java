@@ -1024,16 +1024,35 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void validateFile(PortletDataContext portletDataContext)
+	protected void validateFile(
+			long companyId, long groupId, Map<String, String[]> parameterMap,
+			ZipReader zipReader)
 		throws Exception {
+
+		// XML
+
+		String xml = zipReader.getEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		Element rootElement = null;
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			rootElement = document.getRootElement();
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
 
 		// Build compatibility
 
 		readXML(portletDataContext);
 
 		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element headerElement = rootElement.element("header");
 
@@ -1057,12 +1076,10 @@ public class LayoutImporter {
 			throw new LARTypeException(larType);
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			portletDataContext.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		String layoutsImportMode = MapUtil.getString(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
+			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
 
 		if (larType.equals("layout-prototype") && !group.isLayoutPrototype() &&
 			!layoutsImportMode.equals(
@@ -1107,7 +1124,7 @@ public class LayoutImporter {
 				headerElement.attributeValue("available-locales")));
 
 		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
-			portletDataContext.getScopeGroupId());
+			groupId);
 
 		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
 			if (!ArrayUtil.contains(
@@ -1125,9 +1142,10 @@ public class LayoutImporter {
 
 		// Layout prototypes validity
 
-		validateLayoutPrototypes(
-			portletDataContext.getCompanyId(),
-			portletDataContext.getImportDataGroupElement(Layout.class));
+		Element layoutsElement = rootElement.element(
+			Layout.class.getSimpleName());
+
+		validateLayoutPrototypes(companyId, layoutsElement);
 	}
 
 	protected void validateLayoutPrototypes(

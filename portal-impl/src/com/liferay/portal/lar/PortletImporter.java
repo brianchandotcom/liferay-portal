@@ -1177,16 +1177,33 @@ public class PortletImporter {
 	}
 
 	protected void validateFile(
-			PortletDataContext portletDataContext, String portletId)
+			long companyId, long groupId, String portletId, ZipReader zipReader)
 		throws Exception {
+
+		// XML
+
+		String xml = zipReader.getEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		Element rootElement = null;
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			rootElement = document.getRootElement();
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
 
 		// Build compatibility
 
 		readXML(portletDataContext);
 
 		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element headerElement = rootElement.element("header");
 
@@ -1220,7 +1237,7 @@ public class PortletImporter {
 		// Available locales
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
+			companyId, portletId);
 
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
@@ -1231,8 +1248,7 @@ public class PortletImporter {
 					headerElement.attributeValue("available-locales")));
 
 			Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
-				PortalUtil.getSiteGroupId(
-					portletDataContext.getScopeGroupId()));
+				PortalUtil.getSiteGroupId(groupId));
 
 			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
 				if (!ArrayUtil.contains(
@@ -1241,8 +1257,7 @@ public class PortletImporter {
 					LocaleException le = new LocaleException(
 						LocaleException.TYPE_EXPORT_IMPORT,
 						"Locale " + sourceAvailableLocale + " is not " +
-							"available in company " +
-								portletDataContext.getCompanyId());
+							"available in company " + companyId);
 
 					le.setSourceAvailableLocales(sourceAvailableLocales);
 					le.setTargetAvailableLocales(targetAvailableLocales);

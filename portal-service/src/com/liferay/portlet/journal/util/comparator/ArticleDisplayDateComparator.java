@@ -16,16 +16,14 @@ package com.liferay.portlet.journal.util.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ArticleDisplayDateComparator extends OrderByComparator {
-
-	public static final String ORDER_BY_ASC = "displayDate ASC, version ASC";
-
-	public static final String ORDER_BY_DESC = "displayDate DESC, version DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate", "version"};
 
@@ -64,12 +62,27 @@ public class ArticleDisplayDateComparator extends OrderByComparator {
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		StringBundler orderBy = new StringBundler(
+			ORDER_BY_FIELDS.length * 5 - 1);
+
+		boolean first = true;
+
+		for (String field : ORDER_BY_FIELDS) {
+			if (getTableName() != null) {
+				orderBy.append(getTableName());
+				orderBy.append(StringPool.PERIOD);
+			}
+
+			orderBy.append(field);
+			orderBy.append(_ascending ? " ASC" : " DESC");
+
+			if (first) {
+				orderBy.append(StringPool.COMMA);
+				first = false;
+			}
 		}
-		else {
-			return ORDER_BY_DESC;
-		}
+
+		return orderBy.toString();
 	}
 
 	@Override

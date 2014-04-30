@@ -16,6 +16,8 @@ package com.liferay.portlet.journal.util.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
@@ -55,12 +57,19 @@ public class ArticleModifiedDateComparator extends OrderByComparator {
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		String orderBy = _ascending ? ORDER_BY_ASC : ORDER_BY_DESC;
+
+		if (getTableName() != null) {
+			StringBundler bundler = new StringBundler(3);
+
+			bundler.append(getTableName());
+			bundler.append(StringPool.PERIOD);
+			bundler.append(orderBy);
+
+			orderBy = bundler.toString();
 		}
-		else {
-			return ORDER_BY_DESC;
-		}
+
+		return orderBy;
 	}
 
 	@Override

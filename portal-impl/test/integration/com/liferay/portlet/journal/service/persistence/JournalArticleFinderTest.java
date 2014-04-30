@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -37,6 +40,13 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleReviewDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleTitleComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,6 +77,8 @@ public class JournalArticleFinderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		JournalArticle addedArticle;
+
 		_group = GroupTestUtil.addGroup();
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
@@ -81,12 +93,14 @@ public class JournalArticleFinderTest {
 		DDMTemplate basicWebContentTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), _basicWebContentDDMStructure.getStructureId());
 
-		_article = JournalTestUtil.addArticleWithXMLContent(
+		addedArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), _folder.getFolderId(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 1</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
 			basicWebContentTemplate.getTemplateKey());
+
+		_articles.add(addedArticle);
 
 		JournalFolder folder = JournalTestUtil.addFolder(
 			_group.getGroupId(), "Folder 2");
@@ -94,43 +108,50 @@ public class JournalArticleFinderTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), _ddmStructure.getStructureId());
 
-		JournalTestUtil.addArticleWithXMLContent(
+		addedArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), folder.getFolderId(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 2</title>", _ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
+		_articles.add(addedArticle);
 
-		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+		addedArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), folder.getFolderId(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 3</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
 			basicWebContentTemplate.getTemplateKey());
 
-		article.setUserId(_USER_ID);
+		_articles.add(addedArticle);
+
+		addedArticle.setUserId(_USER_ID);
 
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.add(Calendar.DATE, -1);
 
-		article.setExpirationDate(calendar.getTime());
-		article.setReviewDate(calendar.getTime());
+		addedArticle.setExpirationDate(calendar.getTime());
+		addedArticle.setReviewDate(calendar.getTime());
 
-		JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		JournalArticleLocalServiceUtil.updateJournalArticle(addedArticle);
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
-			TestPropsValues.getUserId(), article);
+			TestPropsValues.getUserId(), addedArticle);
 
-		JournalTestUtil.addArticleWithXMLContent(
+		addedArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), folder.getFolderId(),
 			PortalUtil.getClassNameId(JournalStructure.class),
 			"<title>Article 4</title>", _ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
 
+		_articles.add(addedArticle);
+
 		_folderIds.clear();
 
 		_folderIds.add(_folder.getFolderId());
 		_folderIds.add(folder.getFolderId());
+
+		_article = _articles.get(0);
 	}
 
 	@Test
@@ -274,20 +295,130 @@ public class JournalArticleFinderTest {
 	}
 
 	@Test
+	public void testQueryByG_C_S_WithComparatorCreateDateAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleCreateDateComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorCreateDateDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleCreateDateComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorDisplayDateAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleDisplayDateComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorDisplayDateDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleDisplayDateComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorIDAscending() throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleIDComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorIDDescending() throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleIDComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorModifiedDateAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleModifiedDateComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorModifiedDateDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleModifiedDateComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorReviewDateAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleReviewDateComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorReviewDateDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleReviewDateComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorTitleAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleTitleComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorTitleDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleTitleComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorVersionAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleVersionComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorVersionDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleVersionComparator(false));
+	}
+
+	@Test
 	public void testQueryByG_F() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		doQueryByG_F(_group.getGroupId(), _folderIds, queryDefinition, 4);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 4);
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-		doQueryByG_F(_group.getGroupId(), _folderIds, queryDefinition, 1);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 1);
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		doQueryByG_F(_group.getGroupId(), _folderIds, queryDefinition, 3);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 3);
 	}
 
 	@Test
@@ -362,7 +493,7 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(expectedCount, actualCount);
 	}
 
-	protected void doQueryByG_F(
+	protected void doQueryByG_F_CheckingCount(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition,
 			int expectedCount)
 		throws Exception {
@@ -378,6 +509,28 @@ public class JournalArticleFinderTest {
 		actualCount = articles.size();
 
 		Assert.assertEquals(expectedCount, actualCount);
+	}
+
+	protected void doQueryByG_F_CheckingOrder(OrderByComparator comparator)
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+		queryDefinition.setOrderByComparator(comparator);
+
+		List<JournalArticle> expectedArticles;
+
+		if (comparator.isAscending()) {
+			expectedArticles = _articles;
+		}
+		else {
+			expectedArticles = Lists.reverse(_articles);
+		}
+
+		List<JournalArticle> actualArticles =
+			JournalArticleFinderUtil.findByG_F(
+				_group.getGroupId(), _folderIds, queryDefinition);
+
+		Assert.assertEquals(expectedArticles, actualArticles);
 	}
 
 	protected void doQueryByG_U_C(
@@ -398,9 +551,36 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(expectedCount, actualCount);
 	}
 
+	protected void prepareSortedArticles() throws Exception {
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.set(Calendar.YEAR, 2014);
+		calendar.set(Calendar.MONTH, 1);
+		calendar.set(Calendar.DATE, 1);
+
+		for (int i = 0; i < _articles.size(); ++i) {
+			calendar.add(Calendar.DATE, 1);
+			Date sequenceDate = calendar.getTime();
+			String sequenceString = String.valueOf((char) ('a' + i));
+
+			JournalArticle article = _articles.get(i);
+
+			article.setCreateDate(sequenceDate);
+			article.setDisplayDate(sequenceDate);
+			article.setModifiedDate(sequenceDate);
+			article.setReviewDate(sequenceDate);
+			article.setArticleId(sequenceString);
+			article.setTitle(sequenceString);
+			article.setVersion((double)i);
+
+			JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		}
+	}
+
 	private static final long _USER_ID = 1234L;
 
 	private JournalArticle _article;
+	private List<JournalArticle> _articles = new ArrayList<JournalArticle>();
 	private DDMStructure _basicWebContentDDMStructure;
 	private DDMStructure _ddmStructure;
 	private JournalFolder _folder;

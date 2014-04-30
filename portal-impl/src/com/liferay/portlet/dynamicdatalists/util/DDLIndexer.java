@@ -92,10 +92,10 @@ public class DDLIndexer extends BaseIndexer {
 		}
 
 		long recordSetId = GetterUtil.getLong(
-			searchContext.getAttribute(_RECORD_SET_ID));
+			searchContext.getAttribute(Field.RECORD_SET_ID));
 
 		if (recordSetId > 0) {
-			contextQuery.addRequiredTerm(_RECORD_SET_ID, recordSetId);
+			contextQuery.addRequiredTerm(Field.RECORD_SET_ID, recordSetId);
 		}
 	}
 
@@ -126,10 +126,10 @@ public class DDLIndexer extends BaseIndexer {
 		document.addText(
 			Field.DDM_CONTENT,
 			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
+		document.addKeyword(
+			Field.RECORD_SET_ID, recordVersion.getRecordSetId());
 		document.addKeyword(Field.STATUS, recordVersion.getStatus());
 		document.addKeyword(Field.VERSION, recordVersion.getVersion());
-
-		document.addKeyword(_RECORD_SET_ID, recordVersion.getRecordSetId());
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
@@ -148,7 +148,8 @@ public class DDLIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet, PortletURL portletURL,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		long recordSetId = GetterUtil.getLong(document.get(_RECORD_SET_ID));
+		long recordSetId = GetterUtil.getLong(
+			document.get(Field.RECORD_SET_ID));
 
 		String title = getTitle(recordSetId, locale);
 
@@ -301,8 +302,6 @@ public class DDLIndexer extends BaseIndexer {
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
 	}
-
-	private static final String _RECORD_SET_ID = "recordSetId";
 
 	private static Log _log = LogFactoryUtil.getLog(DDLIndexer.class);
 

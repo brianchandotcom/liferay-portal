@@ -126,6 +126,8 @@ public class Field implements Serializable {
 
 	public static final String RATINGS = "ratings";
 
+	public static final String RECORD_SET_ID = "recordSetId";
+
 	public static final String RELATED_ENTRY = "relatedEntry";
 
 	public static final String REMOVED_BY_USER_NAME = "removedByUserName";

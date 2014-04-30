@@ -178,7 +178,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 		function() {
 			var A = AUI();
 
-			document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = "";
+			document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = '';
 
 			A.one('#<portlet:namespace />structure').val('<%= UnicodeLanguageUtil.get(pageContext, "any") %>');
 		},

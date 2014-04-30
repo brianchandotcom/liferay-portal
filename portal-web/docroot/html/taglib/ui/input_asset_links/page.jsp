@@ -16,37 +16,32 @@
 
 <%@ include file="/html/taglib/ui/input_asset_links/init.jsp" %>
 
-<aui:nav-bar>
-	<aui:nav>
-		<aui:nav-item
-			cssClass="select-existing-selector"
-			dropdown="<%= true %>"
-			iconCssClass="icon-search"
-			id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
-			label="select"
-		>
+<liferay-ui:icon-menu
+	cssClass="select-existing-selector"
+	icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>'
+	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
+	message="select"
+	showWhenSingleIcon="<%= true %>"
+>
 
-			<%
-			for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {
-			%>
+	<%
+	for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {
+	%>
 
-				<aui:nav-item
-					cssClass="asset-selector"
-					data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
-					href="javascript:;"
-					iconCssClass='<%= (String)selectorEntry.get("iconCssClass") %>'
-					iconSrc='<%= (String)selectorEntry.get("src") %>'
-					id='<%= (String)selectorEntry.get("id") %>'
-					label='<%= (String)selectorEntry.get("message") %>'
-				/>
+		<liferay-ui:icon
+			cssClass="asset-selector"
+			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
+			id='<%= (String)selectorEntry.get("id") %>'
+			message='<%= (String)selectorEntry.get("message") %>'
+			src='<%= (String)selectorEntry.get("src") %>'
+			url="javascript:;"
+		/>
 
-			<%
-			}
-			%>
+	<%
+	}
+	%>
 
-		</aui:nav-item>
-	</aui:nav>
-</aui:nav-bar>
+</liferay-ui:icon-menu>
 
 <br />
 
@@ -133,7 +128,7 @@
 				}
 			);
 		},
-		'.asset-selector'
+		'.asset-selector a'
 	);
 </aui:script>
 

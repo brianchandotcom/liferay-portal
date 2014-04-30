@@ -68,9 +68,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 					%>
 
 					<liferay-ui:search-container-column-text name="title">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
-						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+						<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /><%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -104,13 +102,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 			for (long groupId : groupIds) {
 			%>
 
-				<aui:nav-bar>
-					<aui:nav>
-						<aui:nav-item
-							dropdown="<%= true %>"
-							iconCssClass="icon-plus"
-							label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
-						>
+				<div class="select-asset-selector">
+					<div class="lfr-meta-actions edit-controls">
+						<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
@@ -144,14 +138,13 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 									data.put("type", type);
 							%>
 
-									<aui:nav-item
+									<liferay-ui:icon
 										cssClass="asset-selector"
 										data="<%= data %>"
-										href="javascript:;"
-										iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
-										iconSrc="<%= curRendererFactory.getIconPath(renderRequest) %>"
 										id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-										label="<%= type %>"
+										message="<%= type %>"
+										src="<%= curRendererFactory.getIconPath(renderRequest) %>"
+										url="javascript:;"
 									/>
 
 							<%
@@ -170,14 +163,13 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 										data.put("type", type);
 							%>
 
-										<aui:nav-item
+										<liferay-ui:icon
 											cssClass="asset-selector"
 											data="<%= data %>"
-											href="javascript:;"
-											iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
-											iconSrc="<%= curRendererFactory.getIconPath(renderRequest) %>"
 											id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-											label="<%= type %>"
+											message="<%= type %>"
+											src="<%= curRendererFactory.getIconPath(renderRequest) %>"
+											url="javascript:;"
 										/>
 
 							<%
@@ -186,9 +178,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 							}
 							%>
 
-						</aui:nav-item>
-					</aui:nav>
-				</aui:nav-bar>
+						</liferay-ui:icon-menu>
+					</div>
+				</div>
 
 			<%
 			}
@@ -245,6 +237,6 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 				}
 			);
 		},
-		'.asset-selector'
+		'.asset-selector a'
 	);
 </aui:script>

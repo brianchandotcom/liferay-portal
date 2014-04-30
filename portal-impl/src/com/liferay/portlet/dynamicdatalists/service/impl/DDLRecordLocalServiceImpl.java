@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -68,6 +70,7 @@ import java.util.Map;
  */
 public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,
@@ -144,15 +147,16 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(ddmStructure.getStructureId(), fieldsMap);
 
-		return addRecord(
+		return ddlRecordLocalService.addRecord(
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE)
-	public void deleteRecord(DDLRecord record)
+	public DDLRecord deleteRecord(DDLRecord record)
 		throws PortalException, SystemException {
 
 		// Record
@@ -178,12 +182,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
 		}
 
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			DDLRecord.class);
-
-		indexer.delete(record);
+		return record;
 	}
 
 	@Override
@@ -210,7 +209,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			valuesMap.remove(locale);
 		}
 
-		return updateRecord(
+		return ddlRecordLocalService.updateRecord(
 			serviceContext.getUserId(), recordId, false,
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, false,
 			serviceContext);
@@ -397,7 +396,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		Fields fields = StorageEngineUtil.getFields(
 			recordVersion.getDDMStorageId());
 
-		updateRecord(
+		ddlRecordLocalService.updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
 			false, serviceContext);
 	}
@@ -497,6 +496,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord updateRecord(
 			long userId, long recordId, boolean majorVersion, int displayIndex,
@@ -589,11 +589,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = toFields(ddmStructure.getStructureId(), fieldsMap);
 
-		return updateRecord(
+		return ddlRecordLocalService.updateRecord(
 			userId, recordId, false, displayIndex, fields, mergeFields,
 			serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDLRecord updateStatus(
 			long userId, long recordVersionId, int status,
@@ -654,27 +655,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 				ddlRecordPersistence.update(record);
 			}
-
-			// Indexer
-
-			if (Validator.equals(
-					recordVersion.getVersion(),
-					DDLRecordConstants.VERSION_DEFAULT)) {
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DDLRecord.class);
-
-				indexer.delete(record);
-			}
-		}
-
-		// Indexer
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DDLRecord.class);
-
-			indexer.reindex(record);
 		}
 
 		return record;

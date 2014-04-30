@@ -185,7 +185,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 			<div class="journal-article-wrapper-content">
 				<c:if test="<%= Validator.isNull(toLanguageId) %>">
 					<c:if test="<%= (article != null) && !article.isNew() %>">
-						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
+						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
 						<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
 					</c:if>

@@ -550,13 +550,6 @@
 				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_FIELD" value1="${fieldPredefinedValue}" />
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${field}" arg2="Text Box" />
-			<then>
-				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_TEXT_AREA" value1="${fieldPredefinedValue}" />
-			</then>
-		</if>
 	</command>
 
 	<command name="viewFieldReadOnlyCmd">

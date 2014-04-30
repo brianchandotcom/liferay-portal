@@ -1217,7 +1217,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 			}
 			catch (Exception e) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
+				if (_log.isWarnEnabled()) {
 					String message =
 						"Unable to get layout with ID " + layoutId +
 							" in group " + portletDataContext.getScopeGroupId();
@@ -1518,7 +1518,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 			}
 			catch (SystemException se) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
+				if (_log.isWarnEnabled()) {
 					String message =
 						"Unable to get layout in group " +
 							portletDataContext.getScopeGroupId();

@@ -505,9 +505,9 @@
 		</execute>
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
-			<var name="languageKey" value="${localization1NameKey}" />
 			<var name="localizedText" value="${localizedText}" />
 			<var name="localizedTitle" value="${localizedTitle}" />
+			<var name="lowercaseLanguageCode" value="fr" />
 			<var name="structureLocalizationName" value="${structureNameLocalization1}" />
 			<var name="templateLocalizationName" value="${templateNameLocalization1}" />
 			<var name="webContentTranslationLanguage" value="français (France)" />

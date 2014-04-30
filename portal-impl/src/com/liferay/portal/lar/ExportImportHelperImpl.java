@@ -1217,17 +1217,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 			}
 			catch (Exception e) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout with ID " + layoutId +
-							" in group " + portletDataContext.getScopeGroupId();
+				StringBundler sb = new StringBundler(4);
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(message);
-					}
-					else {
-						_log.debug(message, e);
-					}
+				sb.append("Unable to get layout with ID ");
+				sb.append(layoutId);
+				sb.append(" in group ");
+				sb.append(portletDataContext.getScopeGroupId());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(sb.toString(), e);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(sb.toString());
 				}
 			}
 		}
@@ -1518,17 +1519,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 			}
 			catch (SystemException se) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout in group " +
-							portletDataContext.getScopeGroupId();
+				String message =
+					"Unable to get layout in group " +
+						portletDataContext.getScopeGroupId();
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(message);
-					}
-					else {
-						_log.debug(message, se);
-					}
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, se);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 			}
 

@@ -38,13 +38,21 @@ import java.util.List;
  */
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
+	public LinkbackConsumerImpl() {
+		_comments = new CommentsImpl();
+	}
+
+	public LinkbackConsumerImpl(Comments comments) {
+		_comments = comments;
+	}
+
 	@Override
 	public void addNewTrackback(long messageId, String url, String entryURL) {
 		_trackbacks.add(new Tuple(messageId, url, entryURL));
 	}
 
 	@Override
-	public void verifyNewTrackbacks(Comments comments) {
+	public void verifyNewTrackbacks() {
 		Tuple tuple = null;
 
 		while (!_trackbacks.isEmpty()) {
@@ -56,7 +64,7 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 			String url = (String)tuple.getObject(1);
 			String entryUrl = (String)tuple.getObject(2);
 
-			_verifyTrackback(messageId, url, entryUrl, comments);
+			_verifyTrackback(messageId, url, entryUrl);
 		}
 	}
 
@@ -89,14 +97,12 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 				companyId);
 
 			if (userId == defaultUserId) {
-				_verifyTrackback(messageId, url, entryURL, new CommentsImpl());
+				_verifyTrackback(messageId, url, entryURL);
 			}
 		}
 	}
 
-	private static void _verifyTrackback(
-		long messageId, String url, String entryURL, Comments comments) {
-
+	private void _verifyTrackback(long messageId, String url, String entryURL) {
 		try {
 			String result = HttpUtil.URLtoString(url);
 
@@ -108,7 +114,7 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 
 		try {
-			comments.deleteComment(messageId);
+			_comments.deleteComment(messageId);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -118,6 +124,7 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);
 
+	private Comments _comments;
 	private List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 

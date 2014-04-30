@@ -126,7 +126,13 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 				</span>
 			</c:if>
 
-			<liferay-ui:icon cssClass="close-search" id="closeSearch" image="../aui/remove" url="javascript:;" />
+			<liferay-ui:icon
+				cssClass="close-search"
+				iconCssClass="icon-remove"
+				id="closeSearch"
+				message="remove"
+				url="javascript:;"
+			/>
 		</div>
 
 		<aui:script use="aui-base">

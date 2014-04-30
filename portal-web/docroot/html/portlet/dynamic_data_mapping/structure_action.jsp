@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDMStructure structure = (DDMStructure)row.getObject();
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>" triggerCssClass="btn">
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
@@ -32,7 +32,8 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -43,7 +44,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 
 	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
 			message="edit-default-values"
 			url="<%= editStructureDefaultValuesURL %>"
 		/>
@@ -57,7 +58,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view"
+			iconCssClass="icon-search"
 			message="manage-templates"
 			url="<%= manageViewURL %>"
 		/>
@@ -72,7 +73,8 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>
@@ -97,7 +99,8 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			image="copy"
+			iconCssClass="icon-copy"
+			message="copy"
 			url="<%= sb.toString() %>"
 		/>
 	</c:if>

@@ -16,6 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,12 +43,20 @@ public class IconDeleteTag extends IconTag {
 			return _PAGE;
 		}
 
+		String cssClass = GetterUtil.getString(getCssClass());
+
+		setCssClass(cssClass.concat(" item-remove"));
+
 		if (Validator.isNull(getImage())) {
 			if (_trash) {
-				setImage("trash");
+				setIconCssClass("icon-trash");
 			}
 			else {
-				setImage("delete");
+				setIconCssClass("icon-remove");
+
+				if (Validator.isNull(getMessage())) {
+					setMessage("delete");
+				}
 			}
 		}
 

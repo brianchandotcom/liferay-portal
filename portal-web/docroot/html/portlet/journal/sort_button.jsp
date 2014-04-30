@@ -38,13 +38,13 @@ if (orderByType.equals("asc")) {
 	String taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'display-date','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="display-date" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="display-date" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modified-date','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="modified-date" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="modified-date" />
 </aui:nav-item>
 
 <aui:script>

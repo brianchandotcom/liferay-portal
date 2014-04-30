@@ -23,7 +23,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 <aui:nav-bar>
 	<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
 		<aui:nav-item>
-			<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+			<span class="display-style-buttons-container pull-left" id="<portlet:namespace />displayStyleButtonsContainer">
 				<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
 					<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
 				</c:if>
@@ -38,19 +38,19 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'}); void(0);";
 			%>
 
-			<aui:nav-item href="<%= taglibURL %>" label="expire" />
+			<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-time" label="expire" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 			%>
 
-			<aui:nav-item href="<%= taglibURL %>" label="move" />
+			<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
 
 			<%
 			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 			%>
 
-			<aui:nav-item href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
+			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 		</aui:nav-item>
 
 		<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
@@ -64,7 +64,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-tasks" label="structures" />
+				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-th-large" label="structures" />
 
 				<%
 				taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";

@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 JournalFeed feed = (JournalFeed)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFeedURL">
 			<portlet:param name="struts_action" value="/journal/edit_feed" />
@@ -31,7 +31,11 @@ JournalFeed feed = (JournalFeed)row.getObject();
 			<portlet:param name="feedId" value="<%= feed.getFeedId() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="edit" url="<%= editFeedURL %>" />
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= editFeedURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.PERMISSIONS) %>">
@@ -42,7 +46,11 @@ JournalFeed feed = (JournalFeed)row.getObject();
 			var="permissionsFeedURL"
 		/>
 
-		<liferay-ui:icon image="permissions" url="<%= permissionsFeedURL %>" />
+		<liferay-ui:icon
+			iconCssClass="icon-lock"
+			message="permissions"
+			url="<%= permissionsFeedURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= JournalFeedPermission.contains(permissionChecker, feed, ActionKeys.DELETE) %>">
@@ -54,6 +62,8 @@ JournalFeed feed = (JournalFeed)row.getObject();
 			<portlet:param name="deleteFeedIds" value="<%= feed.getFeedId() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteFeedURL %>" />
+		<liferay-ui:icon-delete
+			url="<%= deleteFeedURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

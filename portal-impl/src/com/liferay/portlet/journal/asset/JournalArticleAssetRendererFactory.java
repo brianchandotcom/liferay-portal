@@ -175,7 +175,7 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-tasks";
+		return "icon-file-2";
 	}
 
 	@Override

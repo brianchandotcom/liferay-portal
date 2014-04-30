@@ -246,14 +246,15 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-remove-sign"
 							label="<%= true %>"
+							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-remove-sign"
 							label="<%= true %>"
 							message="subscribed-to-a-parent-folder"
 						/>
@@ -277,8 +278,9 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>
@@ -287,7 +289,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 </div>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="entries-empty alert alert-info">
+	<div class="alert alert-info entries-empty">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 				<c:if test="<%= total == 0 %>">

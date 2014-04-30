@@ -37,6 +37,10 @@ public class IconTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	public void setAlt(String alt) {
 		_alt = alt;
 	}

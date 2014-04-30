@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.trackback;
 
+import com.liferay.portal.comments.CommentsImpl;
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
@@ -33,7 +35,7 @@ import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 public class TrackbackImpl implements Trackback {
 
 	public TrackbackImpl() {
-		_trackbackComments = new TrackbackCommentsImpl();
+		_comments = new CommentsImpl();
 	}
 
 	@Override
@@ -51,17 +53,17 @@ public class TrackbackImpl implements Trackback {
 
 		String body = buildBody(themeDisplay, excerpt, url);
 
-		long messageId = _trackbackComments.addTrackbackComment(
+		long commentId = _comments.addComment(
 			userId, groupId, className, classPK, blogName, title, body,
 			serviceContextFunction);
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+		LinkbackConsumerUtil.addNewTrackback(commentId, url, entryURL);
 	}
 
-	protected TrackbackImpl(TrackbackComments trackbackComments) {
-		_trackbackComments = trackbackComments;
+	protected TrackbackImpl(Comments comments) {
+		_comments = comments;
 	}
 
 	protected String buildBody(
@@ -93,6 +95,6 @@ public class TrackbackImpl implements Trackback {
 		return sb.toString();
 	}
 
-	private TrackbackComments _trackbackComments;
+	private Comments _comments;
 
 }

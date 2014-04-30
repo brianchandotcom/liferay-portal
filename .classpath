@@ -204,6 +204,7 @@
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jruby.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-java.jar"/>
+	<classpathentry kind="lib" path="lib/portal/json-schema-validator.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jsonrpc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jspwiki.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jsqlparser.jar"/>

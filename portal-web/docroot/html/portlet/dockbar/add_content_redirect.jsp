@@ -46,14 +46,14 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 	<c:if test="<%= assetRenderer != null %>">
 		var Util = Liferay.Util;
 
-	   <c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
 			Util.getOpener().Liferay.fire(
 				'AddContent:addPortlet',
 				{
 					node: A.one('.portlet-item')
 				}
 			);
-	   </c:if>
+		</c:if>
 
 		Util.getOpener().Liferay.fire('AddContent:refreshContentList');
 	</c:if>

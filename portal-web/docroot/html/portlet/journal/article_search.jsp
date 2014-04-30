@@ -113,11 +113,17 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 
 			<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) %>">
 				<aui:select inlineField="<%= true %>" name="<%= displayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
-					<aui:option value=""></aui:option>
-					<aui:option label="draft" />
-					<aui:option label="pending" />
-					<aui:option label="approved" />
-					<aui:option label="expired" />
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_ANY) %>" value="<%= WorkflowConstants.STATUS_ANY %>" />
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT) %>" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
+
+					<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) %>">
+						<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_PENDING) %>" value="<%= WorkflowConstants.STATUS_PENDING %>" />
+						<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DENIED) %>" value="<%= WorkflowConstants.STATUS_DENIED %>" />
+					</c:if>
+
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_SCHEDULED) %>" value="<%= WorkflowConstants.STATUS_SCHEDULED %>" />
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED) %>" value="<%= WorkflowConstants.STATUS_APPROVED %>" />
+					<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_EXPIRED) %>" value="<%= WorkflowConstants.STATUS_EXPIRED %>" />
 				</aui:select>
 			</c:if>
 		</aui:fieldset>

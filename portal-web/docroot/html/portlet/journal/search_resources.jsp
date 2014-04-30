@@ -201,7 +201,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 							searchContext.setAttribute(Field.ARTICLE_ID, searchTerms.getArticleId());
 							searchContext.setAttribute(Field.CONTENT, searchTerms.getContent());
 							searchContext.setAttribute(Field.DESCRIPTION, searchTerms.getDescription());
-							searchContext.setAttribute(Field.STATUS, searchTerms.getStatusCode());
+							searchContext.setAttribute(Field.STATUS, searchTerms.getStatus());
 							searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
 							searchContext.setAttribute(Field.TYPE, searchTerms.getType());
 						}

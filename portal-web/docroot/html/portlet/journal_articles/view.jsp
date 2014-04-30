@@ -31,8 +31,6 @@ double version = ParamUtil.getDouble(request, "version");
 			type = null;
 		}
 
-		String status = "approved";
-
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/journal_articles/view");
@@ -75,7 +73,7 @@ double version = ParamUtil.getDouble(request, "version");
 		}
 
 		searchTerms.setDisplayDateLT(new Date());
-		searchTerms.setStatus(status);
+		searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 		searchTerms.setVersion(version);
 		searchTerms.setAdvancedSearch(true);
 

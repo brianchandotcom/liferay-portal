@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
@@ -54,7 +55,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -101,12 +102,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					sourceGroup, serviceContext);
 			}
 
-			if (t instanceof Exception) {
-				throw (Exception)t;
-			}
-			else {
-				throw new SystemException(t);
-			}
+			throw new SystemException(t);
 		}
 		finally {
 			StagingUtil.unlockGroup(targetGroupId);
@@ -118,7 +114,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 	protected void initLayoutSetBranches(
 			long userId, long sourceGroupId, long targetGroupId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
 
@@ -167,7 +163,9 @@ public class LayoutStagingBackgroundTaskExecutor
 		}
 
 		@Override
-		public MissingReferences call() throws Exception {
+		public MissingReferences call()
+			throws PortalException, SystemException {
+
 			File file = null;
 			MissingReferences missingReferences = null;
 

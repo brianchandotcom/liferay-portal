@@ -17,6 +17,8 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
@@ -39,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -147,6 +150,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					sourceGroupId, privateLayout, dateRange.getEndDate());
 			}
 		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 		finally {
 			StreamUtil.cleanUp(fileInputStream);
 
@@ -167,7 +173,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			long remoteGroupId, Date startDate, Date endDate,
 			HttpPrincipal httpPrincipal)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		if ((layoutIdMap == null) || layoutIdMap.isEmpty()) {
 			return LayoutLocalServiceUtil.exportLayoutsAsFile(
@@ -224,7 +230,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	 */
 	protected List<Layout> getMissingRemoteParentLayouts(
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
 

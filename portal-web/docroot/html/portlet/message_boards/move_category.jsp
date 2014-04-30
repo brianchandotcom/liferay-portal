@@ -57,7 +57,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		}
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
 			<aui:button name="selectCategoryButton" value="select" />

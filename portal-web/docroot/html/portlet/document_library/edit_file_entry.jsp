@@ -139,7 +139,7 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 			</div>
 		</c:otherwise>
@@ -261,7 +261,7 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 		}
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
 			<c:if test="<%= referringPortletResourceRootPortletId.equals(PortletKeys.ASSET_PUBLISHER) && (fileEntryId == 0) %>">

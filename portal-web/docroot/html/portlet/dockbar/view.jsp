@@ -86,7 +86,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		%>
 
 		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-			<div class="brand">
+			<div class="navbar-brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
 
@@ -246,7 +246,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 <c:if test="<%= !layoutPrototypes.isEmpty() %>">
 	<div class="html-template" id="layoutPrototypeTemplate">
-		<ul class="unstyled">
+		<ul class="list-unstyled">
 
 			<%
 			for (LayoutPrototype layoutPrototype : layoutPrototypes) {

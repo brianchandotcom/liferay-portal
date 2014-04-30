@@ -93,7 +93,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			}
 			%>
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />

@@ -84,7 +84,7 @@ if (workflowEnabled) {
 				}
 				%>
 
-				<div class="control-group">
+				<div class="form-group">
 					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
 					<aui:button name="selecFolderButton" value="select" />
@@ -247,7 +247,7 @@ if (workflowEnabled) {
 							cssClass="modify-link select-structure"
 							iconCssClass="icon-search"
 							label="<%= true %>"
-							linkCssClass="btn"
+							linkCssClass="btn btn-default"
 							message="choose-structure"
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 						/>

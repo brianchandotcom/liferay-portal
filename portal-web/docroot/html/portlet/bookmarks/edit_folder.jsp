@@ -87,7 +87,7 @@ else {
 			}
 			%>
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />

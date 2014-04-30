@@ -134,7 +134,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				cssClass="modify-link select-metadata"
 				iconCssClass="icon-search"
 				label="<%= true %>"
-				linkCssClass="btn"
+				linkCssClass="btn btn-default"
 				message="select-metadata-set"
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 			/>

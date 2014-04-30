@@ -22,7 +22,7 @@
 			<i class="icon-search"></i>
 
 			<div class="search-panels-bar">
-				<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" />
+				<aui:input cssClass="search-panels-input search-query col-md-12" label="" name="searchPanel" />
 			</div>
 		</div>
 	</div>
@@ -61,7 +61,7 @@
 			}
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(pageContext, "category." + siteAdministrationCategory) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category list-unstyled" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(pageContext, "category." + siteAdministrationCategory) %>'>
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%

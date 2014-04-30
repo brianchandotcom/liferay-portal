@@ -48,7 +48,7 @@ catch (Exception e) {
 	}
 %>
 
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="an-error-occurred-while-retrieving-the-list-of-instances" />
 	</div>
 

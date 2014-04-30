@@ -157,7 +157,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<aui:option label="right" selected='<%= feedImageAlignment.equals("right") %>' />
 						</aui:select>
 
-						<div class="control-group">
+						<div class="form-group">
 
 							<%
 							JournalArticle headerArticle = null;
@@ -178,7 +178,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForHeader();" %>' value="remove" />
 						</div>
 
-						<div class="control-group">
+						<div class="form-group">
 
 							<%
 							JournalArticle footerArticle = null;

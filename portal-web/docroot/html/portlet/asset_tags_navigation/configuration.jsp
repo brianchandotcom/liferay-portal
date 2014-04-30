@@ -25,7 +25,7 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<aui:fieldset>
-		<ul class="lfr-tree unstyled">
+		<ul class="lfr-tree list-unstyled">
 			<li class="tree-item">
 				<aui:input label="show-unused-tags" name="preferences--showZeroAssetCount--" type="checkbox" value="<%= showZeroAssetCount %>" />
 			</li>
@@ -33,7 +33,7 @@
 			<li class="tree-item">
 				<aui:input name="preferences--showAssetCount--" type="checkbox" value="<%= showAssetCount %>" />
 
-				<ul class="lfr-tree hide unstyled" id="<portlet:namespace />assetCountOptions">
+				<ul class="lfr-tree hide list-unstyled" id="<portlet:namespace />assetCountOptions">
 					<li class="tree-item">
 						<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">
 							<aui:option label="any" value="<%= classNameId == 0 %>" />
@@ -56,7 +56,7 @@
 			</li>
 
 			<li class="tree-item">
-				<ul class="lfr-tree unstyled" id="<portlet:namespace />displayTemplateSettings">
+				<ul class="lfr-tree list-unstyled" id="<portlet:namespace />displayTemplateSettings">
 					<div class="display-template">
 
 						<%

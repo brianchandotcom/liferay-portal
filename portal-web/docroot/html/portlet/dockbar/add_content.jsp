@@ -32,7 +32,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 </portlet:resourceURL>
 
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
-	<div class="row-fluid">
+	<div class="row">
 		<div class="btn-toolbar">
 			<aui:input cssClass="search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
 

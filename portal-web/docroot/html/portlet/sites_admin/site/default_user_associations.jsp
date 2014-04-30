@@ -101,7 +101,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	iconCssClass="icon-search"
 	id="selectSiteRoleLink"
 	label="<%= true %>"
-	linkCssClass="btn"
+	linkCssClass="btn btn-default"
 	message="select"
 	url="javascript:;"
 />
@@ -142,7 +142,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	iconCssClass="icon-search"
 	id="selectTeamLink"
 	label="<%= true %>"
-	linkCssClass="btn"
+	linkCssClass="btn btn-default"
 	message="select"
 	url="javascript:;"
 />

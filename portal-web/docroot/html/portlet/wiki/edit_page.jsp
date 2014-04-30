@@ -220,7 +220,7 @@ if (Validator.isNull(redirect)) {
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<liferay-ui:message key="this-page-does-not-exist-yet-and-the-title-is-not-valid" />
 				</div>
 

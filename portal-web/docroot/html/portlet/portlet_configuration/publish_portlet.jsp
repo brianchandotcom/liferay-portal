@@ -123,7 +123,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 						<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
 							<aui:fieldset cssClass="options-group" label="application">
-								<ul class="lfr-tree select-options unstyled">
+								<ul class="lfr-tree select-options list-unstyled">
 									<li class="options">
 										<ul class="portlet-list">
 											<li class="tree-item">
@@ -132,10 +132,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 												<aui:input label="configuration" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 												<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
-													<ul class="lfr-tree unstyled">
+													<ul class="lfr-tree list-unstyled">
 														<li class="tree-item">
 															<aui:fieldset cssClass="portlet-type-data-section" label="configuration">
-																<ul class="lfr-tree unstyled">
+																<ul class="lfr-tree list-unstyled">
 
 																	<%
 																	request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
@@ -195,7 +195,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 							<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
 								<aui:fieldset cssClass="options-group" label="content">
-									<ul class="lfr-tree select-options unstyled">
+									<ul class="lfr-tree select-options list-unstyled">
 										<li class="tree-item">
 											<div class="hide" id="<portlet:namespace />range">
 												<aui:fieldset cssClass="date-range-options" label="date-range">
@@ -222,7 +222,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 													}
 													%>
 
-													<ul class="date-range-options hide unstyled" id="<portlet:namespace />startEndDate">
+													<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
 														<li>
 															<aui:fieldset label="start-date">
 																<liferay-ui:input-date
@@ -288,7 +288,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 													<aui:input id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
 
-													<ul class="hide unstyled" id="<portlet:namespace />rangeLastInputs">
+													<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 														<li>
 															<aui:select cssClass="relative-range" label="" name="last">
 																<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' value="12" />
@@ -337,11 +337,11 @@ portletURL.setParameter("tabs3", "current-and-previous");
 														%>
 
 															<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-																<ul class="lfr-tree unstyled">
+																<ul class="lfr-tree list-unstyled">
 																	<li class="tree-item">
 																		<aui:fieldset cssClass="portlet-type-data-section" label="content">
 																			<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
-																				<ul class="lfr-tree unstyled">
+																				<ul class="lfr-tree list-unstyled">
 																					<li class="tree-item">
 																						<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
@@ -368,7 +368,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 																					%>
 
-																					<ul class="lfr-tree unstyled">
+																					<ul class="lfr-tree list-unstyled">
 																						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																					</ul>
 																				</c:if>
@@ -387,7 +387,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																					%>
 
 																						<aui:field-wrapper label="content-metadata">
-																							<ul class="lfr-tree unstyled">
+																							<ul class="lfr-tree list-unstyled">
 																								<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																							</ul>
 																						</aui:field-wrapper>
@@ -435,7 +435,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 														<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
 														<div class="hide" id="<portlet:namespace />contentOptions">
-															<ul class="lfr-tree unstyled">
+															<ul class="lfr-tree list-unstyled">
 																<li class="tree-item">
 																	<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 

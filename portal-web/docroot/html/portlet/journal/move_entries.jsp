@@ -89,7 +89,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
@@ -120,7 +120,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
@@ -157,7 +157,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
@@ -188,7 +188,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
@@ -236,7 +236,7 @@ for (JournalArticle curArticle : articles) {
 		}
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= folderName %>" />
 
 			<aui:button name="selectFolderButton" value="select" />

@@ -68,8 +68,8 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 		<liferay-util:param name="tabs1" value="cart" />
 	</liferay-util:include>
 
-	<div class="row-fluid">
-		<div class="span6">
+	<div class="row">
+		<div class="col-md-6">
 			<div class="well">
 				<h4><liferay-ui:message key="billing-address" /></h4>
 
@@ -77,7 +77,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 			</div>
 		</div>
 
-		<div class="span6">
+		<div class="col-md-6">
 			<div class="well">
 				<h4><liferay-ui:message key="shipping-address" /></h4>
 

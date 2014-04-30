@@ -65,7 +65,7 @@
 						<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "available") %></h3>
 					</div>
 
-					<div class="tags-admin-list unstyled"></div>
+					<div class="tags-admin-list list-unstyled"></div>
 
 					<div class="tags-pagination"></div>
 				</aui:col>

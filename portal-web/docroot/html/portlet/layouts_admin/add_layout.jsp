@@ -95,8 +95,8 @@ else {
 	<aui:model-context model="<%= Layout.class %>" />
 
 	<aui:fieldset>
-		<div class="row-fluid">
-			<div class="span12">
+		<div class="row">
+			<div class="col-md-12">
 				<aui:input id="addLayoutName" name="name" />
 
 				<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />

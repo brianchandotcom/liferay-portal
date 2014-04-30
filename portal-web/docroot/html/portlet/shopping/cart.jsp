@@ -432,7 +432,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		<c:if test="<%= subtotal != actualSubtotal %>">
 			<aui:field-wrapper label="you-save">
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<%= currencyFormat.format(discountSubtotal) %> (<%= percentFormat.format(ShoppingUtil.calculateDiscountPercent(items)) %>)
 				</div>
 			</aui:field-wrapper>
@@ -492,7 +492,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			<aui:a href='<%= "javascript:" + taglibOpenCouponWindow %>' label='<%= "(" + LanguageUtil.get(pageContext, "description") + ")" %>' style="font-size: xx-small;" />
 
 			<aui:field-wrapper label="coupon-discount">
-				<div class="alert alert-error">
+				<div class="alert alert-danger">
 					<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, coupon)) %>
 				</div>
 			</aui:field-wrapper>

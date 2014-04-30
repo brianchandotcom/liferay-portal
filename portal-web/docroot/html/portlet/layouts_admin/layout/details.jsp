@@ -90,14 +90,14 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		<c:when test="<%= !group.isLayoutPrototype() %>">
 			<aui:input name="name" />
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />
 			</div>
 
 			<c:choose>
 				<c:when test="<%= PortalUtil.isLayoutFriendliable(selLayout) %>">
-					<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>", false) %>' label="friendly-url" name="friendlyURL">
-						<span class="add-on" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+					<aui:field-wrapper cssClass="input-flex-add-on input-group" helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>", false) %>' label="friendly-url" name="friendlyURL">
+						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 
 						<liferay-ui:input-localized availableLocales="<%= LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) %>" cssClass="input-medium" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
 					</aui:field-wrapper>

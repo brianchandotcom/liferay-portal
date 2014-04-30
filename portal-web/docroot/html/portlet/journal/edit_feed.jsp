@@ -185,7 +185,7 @@ if (feed != null) {
 
 				</aui:select>
 
-				<div class="control-group">
+				<div class="form-group">
 					<aui:input name="structureId" required="<%= true %>" type="hidden" value="<%= structureId %>" />
 
 					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />

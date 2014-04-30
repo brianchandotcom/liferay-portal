@@ -51,7 +51,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 		<h3><liferay-ui:message key="current-theme" /></h3>
 
 		<div class="lfr-current-theme-body">
-			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-polaroid theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 
 			<div class="theme-details">
 				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="SelTheme" label="<%= selTheme.getName() %>" name="themeId" type="radio" value="<%= selTheme.getThemeId() %>" />
@@ -92,7 +92,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 				<c:if test="<%= !colorSchemes.isEmpty() %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mobileDeviceRulesColorSchemesPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size(), false) %>'>
 						<aui:fieldset cssClass="color-schemes">
-							<div class="lfr-theme-list unstyled">
+							<div class="lfr-theme-list list-unstyled">
 
 								<%
 								for (int i = 0; i < colorSchemes.size(); i++) {
@@ -136,7 +136,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 		</h3>
 
 		<c:if test="<%= themes.size() > 1 %>">
-			<ul class="lfr-theme-list unstyled">
+			<ul class="lfr-theme-list list-unstyled">
 
 				<%
 				for (int i = 0; i < themes.size(); i++) {

@@ -32,10 +32,10 @@ refererURL.setParameter("updateLayout", "true");
 		<span class="alert-success message"><liferay-ui:icon iconCssClass="icon-ok-sign" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" /></span>
 	</span>
 
-	<div class="row-fluid" id="<portlet:namespace />applicationList">
+	<div class="row" id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="btn-toolbar search-panel">
-				<aui:input cssClass="search-query span12" label="" name="searchApplication" type="text" />
+				<aui:input cssClass="search-query col-md-12" label="" name="searchApplication" type="text" />
 			</div>
 		</c:if>
 
@@ -150,7 +150,7 @@ refererURL.setParameter("updateLayout", "true");
 		</liferay-ui:panel-container>
 
 		<c:if test="<%= layout.isTypePortlet() %>">
-			<ul class="lfr-add-apps-legend nav-list unstyled">
+			<ul class="lfr-add-apps-legend nav-list list-unstyled">
 				<li>
 					<aui:icon image="stop" label="can-be-added-once" />
 				</li>
@@ -173,7 +173,7 @@ refererURL.setParameter("updateLayout", "true");
 			%>
 
 			<p class="lfr-install-more">
-				<aui:a cssClass="btn btn-primary" href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' label="install-more-applications" />
+				<aui:a cssClass="btn btn-default btn-primary" href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' label="install-more-applications" />
 			</p>
 		</c:if>
 	</div>

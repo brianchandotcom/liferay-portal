@@ -62,9 +62,9 @@
 
 			<h3 class="vocabularies-header"><%= LanguageUtil.get(pageContext, "vocabularies") %></h3>
 
-					<div class="unstyled vocabulary-message"></div>
+					<div class="list-unstyled vocabulary-message"></div>
 
-					<div class="unstyled vocabulary-list"></div>
+					<div class="list-unstyled vocabulary-list"></div>
 
 			<div class="vocabularies-pagination"></div>
 		</aui:col>

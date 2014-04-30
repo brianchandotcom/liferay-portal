@@ -74,7 +74,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		iconCssClass="icon-search"
 		id="openUserGroupsLink"
 		label="<%= true %>"
-		linkCssClass="btn"
+		linkCssClass="btn btn-default"
 		message="select"
 		url="javascript:;"
 	/>

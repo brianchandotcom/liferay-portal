@@ -242,7 +242,7 @@ if (workflowEnabled) {
 							cssClass="modify-link select-file-entry-type"
 							iconCssClass="icon-search"
 							label="<%= true %>"
-							linkCssClass="btn"
+							linkCssClass="btn btn-default"
 							message="select-document-type"
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>

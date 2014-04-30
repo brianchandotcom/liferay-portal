@@ -273,7 +273,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<div class="separator"><!-- --></div>
 		</c:if>
 
-		<div class="control-group user-table">
+		<div class="form-group user-table">
 			<c:if test="<%= showDeleteButton %>">
 
 				<%

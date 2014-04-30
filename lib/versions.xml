@@ -2362,6 +2362,22 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>lib/portal/json-schema-validator-lib.jar</file-name>
+		<version>3.0.0 alpha1</version>
+		<project-name>json-schema-validator</project-name>
+		<project-url>https://github.com/fge/json-schema-validator</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+			<license>
+				<license-name>LGPL 3.0</license-name>
+				<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/jsonrpc.jar</file-name>
 		<version>1.0</version>
 		<project-name>JSON-RPC-Java</project-name>

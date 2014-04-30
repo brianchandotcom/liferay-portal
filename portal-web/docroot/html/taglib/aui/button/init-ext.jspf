@@ -18,43 +18,31 @@
 String escapedHREF = StringPool.BLANK;
 
 if (Validator.isNotNull(href)) {
-	escapedHREF = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
-
-	if (Validator.isNotNull(escapedHREF)) {
-		escapedHREF = "'" + escapedHREF + "'";
-	}
-	else {
-		escapedHREF = "location.href.replace(location.hash, '');";
-	}
+	escapedHREF = HtmlUtil.escapeAttribute(PortalUtil.escapeRedirect(href));
 }
 else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
 	href = onClick;
 
-	escapedHREF = "'" + HtmlUtil.escape(PortalUtil.escapeRedirect(href)) + "'";
+	escapedHREF = HtmlUtil.escapeAttribute(PortalUtil.escapeRedirect(href));
 }
 else if (onClick.startsWith("wsrp_rewrite?")) {
 	href = onClick;
 
-	escapedHREF = "'" + HtmlUtil.escape(href) + "'";
+	escapedHREF = HtmlUtil.escapeAttribute(href);
 }
 
-if (Validator.isNotNull(escapedHREF)) {
-	if (useDialog) {
-		if (data == null) {
-			data = new HashMap<String, Object>();
-		}
-
-		data.put("href", href);
-		data.put("title", LanguageUtil.get(pageContext, value));
-
-		onClick = StringPool.BLANK;
-
-		if (Validator.isNull(name)) {
-			name = StringUtil.randomId();
-		}
+if (useDialog && Validator.isNotNull(escapedHREF)) {
+	if (data == null) {
+		data = new HashMap<String, Object>();
 	}
-	else {
-		onClick = "location.href = " + escapedHREF + ";";
+
+	data.put("href", href);
+	data.put("title", LanguageUtil.get(pageContext, value));
+
+	onClick = StringPool.BLANK;
+
+	if (Validator.isNull(name)) {
+		name = StringUtil.randomId();
 	}
 }
 

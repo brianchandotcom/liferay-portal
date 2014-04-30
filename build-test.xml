@@ -2152,15 +2152,15 @@ tck.url=true</echo>
 			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
-					<param name="app.server.type" value="weblogic" />
+					<param name="app.server.type" value="tcserver" />
 				</antcall>
 			</then>
 			<elseif>
 				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+					<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
-					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+					<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
 
 					<antcall target="deploy" inheritAll="false" />
 
@@ -2233,7 +2233,7 @@ tck.url=true</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="tcserver" />
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+				<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
 
 				<get
 					dest="liferay-portal.war"
@@ -2241,7 +2241,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.portal.dir}"
+					dest="${app.server.tcserver.portal.dir}"
 					src="liferay-portal.war"
 				/>
 
@@ -2253,7 +2253,7 @@ tck.url=true</echo>
 				/>
 
 				<unzip
-					dest="${app.server.weblogic.lib.global.dir}"
+					dest="${app.server.tcserver.lib.global.dir}"
 					src="liferay-portal-dependencies.zip"
 				>
 					<mapper
@@ -2264,6 +2264,20 @@ tck.url=true</echo>
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/development"
+						includes="activation.jar,jms.jar,jta.jar,jutf7.jar,mail.jar,mysql.jar,persistence.jar,script-10.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.tcserver.lib.global.dir}">
+					<fileset
+						dir="lib/portal"
+						includes="ccpp.jar"
+					/>
+				</copy>
 			</then>
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="weblogic" />

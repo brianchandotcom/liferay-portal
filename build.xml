@@ -476,6 +476,68 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</if>
 
 		<if>
+			<equals arg1="${app.server.type}" arg2="tcserver" />
+			<then>
+				<if>
+					<not>
+						<available file="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
+							tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
+							overwrite="true"
+						/>
+					</then>
+				</if>
+
+				<ant dir="support-tomcat" target="deploy" inheritAll="false" />
+
+				<copy todir="${app.server.lib.endorsed.dir}" flatten="true">
+					<fileset
+						dir="lib"
+						includes="${endorsed.libraries}"
+					/>
+				</copy>
+
+				<if>
+					<not>
+						<equals arg1="${app.server.tomcat.lib.portal.dir}" arg2="${app.server.tomcat.lib.global.dir}" />
+					</not>
+					<then>
+						<delete failonerror="false">
+							<fileset
+								dir="${app.server.lib.portal.dir}"
+								includes="ccpp.jar"
+							/>
+						</delete>
+					</then>
+				</if>
+
+				<copy todir="${app.server.lib.global.dir}">
+					<fileset
+						dir="lib/development"
+						includes="activation.jar,jms.jar,jta.jar,mail.jar,persistence.jar"
+					/>
+				</copy>
+
+				<copy todir="${app.server.temp.dir}/liferay/com/liferay/portal/deploy/dependencies">
+					<fileset
+						dir="lib/development"
+						includes="resin.jar,script-10.jar"
+					/>
+				</copy>
+
+				<delete>
+					<fileset
+						dir="${app.server.lib.portal.dir}"
+						includes="tomcat-juli.jar"
+					/>
+				</delete>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<if>

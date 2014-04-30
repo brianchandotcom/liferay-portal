@@ -151,7 +151,6 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
-
 			<not>
 				<isset var="nonAdminUser" />
 			</not>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
 import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;

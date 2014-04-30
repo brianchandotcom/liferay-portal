@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
 import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.comments.Comments;
@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author André de Oliveira
  */
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 

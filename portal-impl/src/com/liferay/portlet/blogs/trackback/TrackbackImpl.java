@@ -25,9 +25,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumer;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 /**
  * @author Alexander Chow
@@ -37,6 +37,7 @@ public class TrackbackImpl implements Trackback {
 
 	public TrackbackImpl() {
 		_comments = new CommentsImpl();
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
 	}
 
 	@Override
@@ -60,14 +61,14 @@ public class TrackbackImpl implements Trackback {
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		LinkbackConsumer linkbackConsumer =
-			LinkbackConsumerUtil.getLinkbackConsumer();
-
-		linkbackConsumer.addNewTrackback(messageId, url, entryURL);
+		_linkbackConsumer.addNewTrackback(messageId, url, entryURL);
 	}
 
-	protected TrackbackImpl(Comments comments) {
+	protected TrackbackImpl(
+		Comments comments, LinkbackConsumer linkbackConsumer) {
+
 		_comments = comments;
+		_linkbackConsumer = linkbackConsumer;
 	}
 
 	protected String buildBody(
@@ -100,5 +101,6 @@ public class TrackbackImpl implements Trackback {
 	}
 
 	private Comments _comments;
+	private LinkbackConsumer _linkbackConsumer;
 
 }

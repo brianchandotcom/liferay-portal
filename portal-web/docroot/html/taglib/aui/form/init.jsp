@@ -21,7 +21,6 @@
 <%
 java.lang.String action = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:action"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:cssClass"));
-boolean escapeXml = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:escapeXml")), true);
 boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:inlineLabels")));
 java.lang.String method = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:method"), "post");
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:name"), "fm");

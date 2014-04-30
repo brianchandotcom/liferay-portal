@@ -14,10 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.Arrays;
-import java.util.List;
+import com.liferay.portlet.social.util.SocialRelationTypesUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,71 +46,28 @@ public class SocialRelationConstants {
 
 	public static final int TYPE_UNI_SUPERVISOR = 11;
 
-	public static List<Integer> getAllSocialRelationTypes() {
-		return _allSocialRelationTypes;
-	}
-
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#getTypeLabel(int)}
+	 */
 	public static String getTypeLabel(int type) {
-		if (type == TYPE_BI_CONNECTION) {
-			return "connection";
-		}
-		else if (type == TYPE_BI_COWORKER) {
-			return "coworker";
-		}
-		else if (type == TYPE_BI_FRIEND) {
-			return "friend";
-		}
-		else if (type == TYPE_BI_ROMANTIC_PARTNER) {
-			return "romantic-partner";
-		}
-		else if (type == TYPE_BI_SIBLING) {
-			return "sibling";
-		}
-		else if (type == TYPE_BI_SPOUSE) {
-			return "spouse";
-		}
-		else if (type == TYPE_UNI_CHILD) {
-			return "child";
-		}
-		else if (type == TYPE_UNI_ENEMY) {
-			return "enemy";
-		}
-		else if (type == TYPE_UNI_FOLLOWER) {
-			return "follower";
-		}
-		else if (type == TYPE_UNI_PARENT) {
-			return "parent";
-		}
-		else if (type == TYPE_UNI_SUBORDINATE) {
-			return "subordinate";
-		}
-		else if (type == TYPE_UNI_SUPERVISOR) {
-			return "supervisor";
-		}
-
-		return StringPool.BLANK;
+		return SocialRelationTypesUtil.getTypeLabel(type);
 	}
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeBi(int)}
+	 */
 	public static boolean isTypeBi(int type) {
-		return !isTypeUni(type);
+		return SocialRelationTypesUtil.isTypeBi(type);
 	}
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeUni(int)}
+	 */
 	public static boolean isTypeUni(int type) {
-		if ((type == TYPE_UNI_CHILD) || (type == TYPE_UNI_ENEMY) ||
-			(type == TYPE_UNI_FOLLOWER) || (type == TYPE_UNI_PARENT) ||
-			(type == TYPE_UNI_SUBORDINATE) || (type == TYPE_UNI_SUPERVISOR)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
+		return SocialRelationTypesUtil.isTypeUni(type);
 	}
-
-	private static List<Integer> _allSocialRelationTypes = Arrays.asList(
-		TYPE_BI_CONNECTION, TYPE_BI_COWORKER, TYPE_BI_FRIEND,
-		TYPE_BI_ROMANTIC_PARTNER, TYPE_BI_SIBLING, TYPE_BI_SPOUSE,
-		TYPE_UNI_CHILD, TYPE_UNI_ENEMY, TYPE_UNI_FOLLOWER, TYPE_UNI_PARENT,
-		TYPE_UNI_SUBORDINATE, TYPE_UNI_SUPERVISOR);
 
 }

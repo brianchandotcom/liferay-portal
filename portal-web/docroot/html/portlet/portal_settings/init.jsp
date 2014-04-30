@@ -30,6 +30,7 @@ page import="com.liferay.portal.servlet.filters.sso.opensso.OpenSSOUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.social.util.SocialRelationConfiguration" %><%@
 page import="com.liferay.portlet.social.util.SocialRelationConfigurationUtil" %><%@
+page import="com.liferay.portlet.social.util.SocialRelationTypesUtil" %><%@
 page import="com.liferay.util.ldap.LDAPUtil" %>
 
 <%@ page import="java.net.HttpURLConnection" %><%@

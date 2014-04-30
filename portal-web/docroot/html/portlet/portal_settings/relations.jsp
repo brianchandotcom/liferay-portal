@@ -41,7 +41,7 @@ SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigur
 		<aui:input name="settings--interactionsSocialRelationTypes--" type="hidden" value="<%= socialRelationConfiguration.getInteractionsSocialRelationTypes() %>" />
 
 		<%
-		List<Integer> allSocialRelationTypes = SocialRelationConstants.getAllSocialRelationTypes();
+		List<Integer> allSocialRelationTypes = SocialRelationTypesUtil.getAllSocialRelationTypes();
 		%>
 
 		<div class="social-relations" id="<portlet:namespace />socialRelations">
@@ -56,7 +56,7 @@ SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigur
 				int[] socialRelationTypesArray = socialRelationConfiguration.getInteractionsSocialRelationTypesArray();
 
 				for (int socialRelationType : socialRelationTypesArray) {
-					leftList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationConstants.getTypeLabel(socialRelationType))));
+					leftList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialRelationType))));
 				}
 
 				// Right list
@@ -65,7 +65,7 @@ SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigur
 
 				for (int socialRelationType : allSocialRelationTypes) {
 					if (Arrays.binarySearch(socialRelationTypesArray, socialRelationType) < 0) {
-						rightList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationConstants.getTypeLabel(socialRelationType))));
+						rightList.add(new KeyValuePair(Integer.toString(socialRelationType), LanguageUtil.get(pageContext, SocialRelationTypesUtil.getTypeLabel(socialRelationType))));
 					}
 				}
 				%>

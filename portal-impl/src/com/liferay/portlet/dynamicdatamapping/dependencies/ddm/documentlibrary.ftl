@@ -86,8 +86,9 @@
 				portletURL.setDoAsGroupId(${scopeGroupId?c});
 				portletURL.setParameter('eventName', '${portletNamespace}selectDocumentLibrary');
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
-				portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
-				portletURL.setPortletId('166');
+				portletURL.setParameter('struts_action', '/document_selector/view');
+				portletURL.setParameter('refererPortletName', '${themeDisplay.getPortletDisplay().getId()}');
+				portletURL.setPortletId('200');
 				portletURL.setWindowState('pop_up');
 
 				Liferay.Util.selectEntity(

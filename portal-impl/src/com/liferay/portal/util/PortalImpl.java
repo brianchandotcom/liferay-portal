@@ -148,6 +148,7 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -1290,6 +1291,62 @@ public class PortalImpl implements Portal {
 		}
 
 		return userId;
+	}
+
+	@Override
+	public List<Group> getBrowsableScopeGroups(
+			long userId, long companyId, long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = new UniqueList<Group>();
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("usersGroups", new Long(userId));
+
+		groups.addAll(
+			0,
+			GroupLocalServiceUtil.search(
+				companyId, null, null, groupParams, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS));
+
+		List<Organization> userOrgs =
+			OrganizationLocalServiceUtil.getUserOrganizations(userId);
+
+		for (Organization organization : userOrgs) {
+			groups.add(0, organization.getGroup());
+		}
+
+		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+
+			groups.add(
+				0, GroupLocalServiceUtil.getUserGroup(companyId, userId));
+		}
+
+		groups.addAll(0, getCurrentAndAncestorSiteGroups(groupId));
+
+		List<Group> filteredGroups = new ArrayList<Group>();
+
+		for (Group group : groups) {
+			if (group.hasStagingGroup()) {
+				Group stagingGroup = group.getStagingGroup();
+
+				if ((stagingGroup.getGroupId() == groupId) &&
+					group.isStagedPortlet(portletId) &&
+					!group.isStagedRemotely() &&
+					group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
+
+					filteredGroups.add(stagingGroup);
+				}
+			}
+			else {
+				filteredGroups.add(group);
+			}
+		}
+
+		return filteredGroups;
 	}
 
 	@Override

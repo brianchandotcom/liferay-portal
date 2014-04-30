@@ -581,6 +581,10 @@
 			<forward name="portlet.document_library.view" path="portlet.document_library_display.view" />
 		</action>
 
+		<!-- Document Selector -->
+
+		<action path="/document_selector/view" forward="portlet.document_selector.view" />
+
 		<!-- Dynamic Data List Display -->
 
 		<action path="/dynamic_data_list_display/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">

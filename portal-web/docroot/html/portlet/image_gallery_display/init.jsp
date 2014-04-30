@@ -16,17 +16,13 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
-page import="com.liferay.portal.kernel.search.Document" %><%@
+<%@ page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolder" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@

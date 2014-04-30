@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library_display/init.jsp" %>
+<%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, FileEntryDisplayTerms.SELECTED_GROUP_ID);
@@ -69,10 +69,46 @@ String eventName = ParamUtil.getString(request, "eventName");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
+portletURL.setParameter("struts_action", "/document_selector/view");
+portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
+
+boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 %>
+
+<c:if test="<%= showGroupsSelector %>">
+
+	<%
+	Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+	%>
+
+	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
+
+		<%
+		String refererPortletName = ParamUtil.getString(request, "refererPortletName");
+
+		PortletURL selectGroupURL = renderResponse.createRenderURL();
+
+		selectGroupURL.setParameter("struts_action", "/document_selector/view");
+		selectGroupURL.setParameter("eventName", eventName);
+
+		for (Group group : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {
+			selectGroupURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+		%>
+
+			<liferay-ui:icon
+				message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				src="<%= group.getIconURL(themeDisplay) %>"
+				url="<%= selectGroupURL.toString() %>"
+			/>
+
+		<%
+		}
+		%>
+
+	</liferay-ui:icon-menu>
+</c:if>
 
 <aui:form method="post" name="selectDocumentFm">
 
@@ -173,7 +209,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right"
-			file="/html/portlet/dynamic_data_mapping/file_entry_search.jsp"
+			file="/html/portlet/document_selector/search.jsp"
 			searchContainer="<%= fileEntrySearchContainer %>"
 		/>
 	</aui:nav-bar>
@@ -200,7 +236,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				modelVar="curFolder"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="struts_action" value="/dynamic_data_mapping/select_document_library" />
+					<portlet:param name="struts_action" value="/document_selector/view" />
+					<portlet:param name="eventName" value="<%= eventName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
@@ -254,7 +291,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	<%
 	PortletURL backURL = renderResponse.createRenderURL();
 
-	backURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
+	backURL.setParameter("struts_action", "/document_selector/view");
+	backURL.setParameter("eventName", eventName);
 	backURL.setParameter("groupId", String.valueOf(groupId));
 	%>
 
@@ -267,7 +305,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	<%
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 
-	iteratorURL.setParameter("struts_action", "/dynamic_data_mapping/select_document_library");
+	iteratorURL.setParameter("struts_action", "/document_selector/view");
+	iteratorURL.setParameter("eventName", eventName);
 	iteratorURL.setParameter("groupId", String.valueOf(groupId));
 	iteratorURL.setParameter("folderId", String.valueOf(folderId));
 	%>
@@ -318,7 +357,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="size"
-				value='<%= TextFormatter.formatKB(fileEntry.getSize(), locale) + "k" %>'
+				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">

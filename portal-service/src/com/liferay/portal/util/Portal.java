@@ -394,6 +394,10 @@ public interface Portal {
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException;
 
+	public List<Group> getBrowsableScopeGroups(
+			long userId, long companyId, long groupId, String portletId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the canonical URL of the page, to distinguish it among its
 	 * translations.

@@ -17,24 +17,16 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
-page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolder" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
-page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
-page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %><%@
-page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
-page import="com.liferay.portlet.journal.search.FileEntrySearch" %>
+page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

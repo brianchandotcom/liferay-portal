@@ -286,13 +286,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	}
 
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(content) %>";
+		return '<%= UnicodeFormatter.toString(content) %>';
 	}
 
 	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
-		document.<portlet:namespace />fm.<portlet:namespace />preview.value = "true";
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_SAVE_DRAFT %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
+		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 
 		if (window.<portlet:namespace />editor) {
 			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
@@ -423,7 +423,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			else {
 				<portlet:namespace />clearSaveDraftIntervalId();
 
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
 				document.<portlet:namespace />fm.<portlet:namespace />content.value = content;
 
 				if (draft) {

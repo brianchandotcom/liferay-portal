@@ -712,7 +712,7 @@ AUI.add(
 								null,
 								{
 									autoLoad: false,
-									dataType: 'html',
+									dataType: 'HTML',
 									on: {
 										success: function(event, id, obj) {
 											var response = this.get('responseData');

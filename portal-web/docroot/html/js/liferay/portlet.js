@@ -249,7 +249,7 @@
 
 			var beforePortletLoaded = options.beforePortletLoaded;
 			var data = options.data;
-			var dataType = 'html';
+			var dataType = 'HTML';
 			var onComplete = options.onComplete;
 			var placeHolder = options.placeHolder;
 			var url = options.url;
@@ -257,6 +257,8 @@
 			if (data && data.dataType) {
 				dataType = data.dataType;
 			}
+
+			dataType = dataType.toUpperCase();
 
 			var addPortletReturn = function(html) {
 				var container = placeHolder.get('parentNode');
@@ -337,7 +339,7 @@
 
 							var response = instance.get('responseData');
 
-							if (dataType == 'html') {
+							if (dataType == 'HTML') {
 								addPortletReturn(response);
 							}
 							else if (response.refresh) {

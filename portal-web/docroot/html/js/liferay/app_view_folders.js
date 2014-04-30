@@ -262,7 +262,7 @@ AUI.add(
 							instance.get('mainUrl'),
 							{
 								autoLoad: false,
-								method: 'get'
+								method: 'GET'
 							}
 						);
 

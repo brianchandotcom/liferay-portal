@@ -260,7 +260,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {
-					method: 'POST',
+					method: 'post',
 					node: A.one(document.<portlet:namespace />fm2)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',

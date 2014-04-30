@@ -4135,8 +4135,8 @@ public class JournalArticleLocalServiceImpl
 
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, title,
-			description, content, type, status, ddmStructureKey,
-			ddmTemplateKey, params, andSearch, start, end, sort);
+			description, content, type, status, ddmStructureKey, ddmTemplateKey,
+			params, andSearch, start, end, sort);
 	}
 
 	@Override

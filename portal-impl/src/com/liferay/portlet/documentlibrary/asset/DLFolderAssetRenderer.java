@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -36,6 +35,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +95,7 @@ public class DLFolderAssetRenderer
 
 			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
 				_folder.getRepositoryId(),
-				ListUtil.fromArray(new Long[] {_folder.getFolderId()}),
+				Arrays.asList(new Long[] {_folder.getFolderId()}),
 				WorkflowConstants.STATUS_APPROVED);
 
 			if (count > 0) {

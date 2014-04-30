@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
@@ -58,6 +57,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -710,7 +710,7 @@ public class ResourceBlockLocalServiceImpl
 					roleIdsToActionIds.entrySet()) {
 
 				long roleId = entry.getKey();
-				List<String> actionIds = ListUtil.fromArray(entry.getValue());
+				List<String> actionIds = Arrays.asList(entry.getValue());
 
 				checkGuestSupportedPermission(
 					companyId, name, roleId, actionIds);

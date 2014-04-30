@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -67,6 +66,7 @@ import java.io.IOException;
 
 import java.sql.Connection;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -172,7 +172,7 @@ public class SetupWizardUtil {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		List<Locale> availableLocales = ListUtil.fromArray(
+		List<Locale> availableLocales = Arrays.asList(
 			LanguageUtil.getAvailableLocales());
 
 		if (!availableLocales.contains(locale)) {

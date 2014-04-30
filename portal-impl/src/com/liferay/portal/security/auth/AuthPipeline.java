@@ -17,12 +17,12 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -300,7 +300,7 @@ public class AuthPipeline {
 	private void _registerAuthenticator(
 		String key, Authenticator authenticator) {
 
-		List<Authenticator> authenticators = ListUtil.fromArray(
+		List<Authenticator> authenticators = Arrays.asList(
 			_authenticators.get(key));
 
 		authenticators.add(authenticator);
@@ -311,8 +311,7 @@ public class AuthPipeline {
 	}
 
 	private void _registerAuthFailure(String key, AuthFailure authFailure) {
-		List<AuthFailure> authFailures = ListUtil.fromArray(
-			_authFailures.get(key));
+		List<AuthFailure> authFailures = Arrays.asList(_authFailures.get(key));
 
 		authFailures.add(authFailure);
 
@@ -323,7 +322,7 @@ public class AuthPipeline {
 	private void _unregisterAuthenticator(
 		String key, Authenticator authenticator) {
 
-		List<Authenticator> authenticators = ListUtil.fromArray(
+		List<Authenticator> authenticators = Arrays.asList(
 			_authenticators.get(key));
 
 		if (authenticators.remove(authenticator)) {
@@ -335,8 +334,7 @@ public class AuthPipeline {
 	}
 
 	private void _unregisterAuthFailure(String key, AuthFailure authFailure) {
-		List<AuthFailure> authFailures = ListUtil.fromArray(
-			_authFailures.get(key));
+		List<AuthFailure> authFailures = Arrays.asList(_authFailures.get(key));
 
 		if (authFailures.remove(authFailure)) {
 			_authFailures.put(

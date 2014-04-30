@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -28,6 +27,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -98,7 +98,7 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 		long igImageClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 
-		List<String> classNameIdsList = ListUtil.fromArray(classNameIds);
+		List<String> classNameIdsList = Arrays.asList(classNameIds);
 
 		int index = classNameIdsList.indexOf(
 			String.valueOf(igImageClassNameId));

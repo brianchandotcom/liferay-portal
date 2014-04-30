@@ -86,6 +86,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -430,8 +431,8 @@ public abstract class BaseIndexer implements Indexer {
 	public void registerIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 
-		List<IndexerPostProcessor> indexerPostProcessorsList =
-			ListUtil.fromArray(_indexerPostProcessors);
+		List<IndexerPostProcessor> indexerPostProcessorsList = Arrays.asList(
+			_indexerPostProcessors);
 
 		indexerPostProcessorsList.add(indexerPostProcessor);
 
@@ -575,8 +576,8 @@ public abstract class BaseIndexer implements Indexer {
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 
-		List<IndexerPostProcessor> indexerPostProcessorsList =
-			ListUtil.fromArray(_indexerPostProcessors);
+		List<IndexerPostProcessor> indexerPostProcessorsList = Arrays.asList(
+			_indexerPostProcessors);
 
 		indexerPostProcessorsList.remove(indexerPostProcessor);
 

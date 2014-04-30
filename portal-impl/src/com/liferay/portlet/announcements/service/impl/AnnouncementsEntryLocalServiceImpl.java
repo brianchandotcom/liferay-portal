@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
@@ -49,6 +48,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalServiceBaseImpl;
 import com.liferay.util.ContentUtil;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -431,7 +431,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				params.put(
 					"usersOrgsTree",
-					ListUtil.fromArray(new Organization[] {organization}));
+					Arrays.asList(new Organization[] {organization}));
 			}
 			else if (className.equals(Role.class.getName())) {
 				Role role = rolePersistence.findByPrimaryKey(classPK);
@@ -468,7 +468,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			}
 
 			notifyUsers(
-				ListUtil.fromArray(new User[] {user}), entry,
+				Arrays.asList(new User[] {user}), entry,
 				company.getLocale(), user.getEmailAddress(),
 				user.getFullName());
 		}

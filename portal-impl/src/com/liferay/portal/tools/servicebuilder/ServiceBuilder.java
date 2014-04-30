@@ -1963,7 +1963,7 @@ public class ServiceBuilder {
 		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		List<JavaMethod> methods = ListUtil.fromArray(
+		List<JavaMethod> methods = Arrays.asList(
 			_getMethods(modelImplJavaClass));
 
 		Iterator<JavaMethod> itr = methods.iterator();

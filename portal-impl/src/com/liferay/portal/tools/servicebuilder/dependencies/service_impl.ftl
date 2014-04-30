@@ -40,9 +40,9 @@ public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}$
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if sessionTypeName == "Local">
-	 * Never reference this interface directly. Always use {@link ${packagePath}.service.${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service.
+	 * Never reference this class directly. Always use {@link ${packagePath}.service.${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service.
 <#else>
-	 * Never reference this interface directly. Always use {@link ${packagePath}.service.${entity.name}ServiceUtil} to access the ${entity.humanName} remote service.
+	 * Never reference this class directly. Always use {@link ${packagePath}.service.${entity.name}ServiceUtil} to access the ${entity.humanName} remote service.
 </#if>
 	 */
 }

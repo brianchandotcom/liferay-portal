@@ -1222,11 +1222,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						"Unable to get layout with ID " + layoutId +
 							" in group " + portletDataContext.getScopeGroupId();
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(message);
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, e);
 					}
 					else {
-						_log.debug(message, e);
+						_log.warn(message);
 					}
 				}
 			}
@@ -1523,11 +1523,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						"Unable to get layout in group " +
 							portletDataContext.getScopeGroupId();
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(message);
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, se);
 					}
 					else {
-						_log.debug(message, se);
+						_log.warn(message);
 					}
 				}
 			}

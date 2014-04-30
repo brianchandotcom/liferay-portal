@@ -287,7 +287,7 @@ catch (NoSuchArticleException nsae) {
 
 			document.<portlet:namespace />fm.<portlet:namespace />groupId.value = articleGroupId;
 			document.<portlet:namespace />fm.<portlet:namespace />articleId.value = articleId;
-			document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = "";
+			document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = '';
 
 			A.one('.displaying-article-id-holder').show();
 			A.one('.displaying-help-message-holder').hide();

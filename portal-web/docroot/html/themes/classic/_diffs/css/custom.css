@@ -517,17 +517,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-size: 11px;
 	}
 
-	.dropdown-menu > li.portlet-close > a {
-		color: #C00;
-		font-weight: bold;
-
-		&:focus, &:hover {
-			background-color: #C00;
-			background-image: none;
-			color: #FFF;
-		}
-	}
-
 	/* ---------- Set password reminder portlet ---------- */
 
 	.update-reminder-query {

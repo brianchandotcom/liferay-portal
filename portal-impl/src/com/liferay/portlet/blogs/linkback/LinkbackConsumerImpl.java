@@ -38,13 +38,21 @@ import java.util.List;
  */
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
-	@Override
-	public void addNewTrackback(long messageId, String url, String entryURL) {
-		_trackbacks.add(new Tuple(messageId, url, entryURL));
+	public LinkbackConsumerImpl() {
+		_comments = new CommentsImpl();
+	}
+
+	public LinkbackConsumerImpl(Comments comments) {
+		_comments = comments;
 	}
 
 	@Override
-	public void verifyNewTrackbacks(Comments comments) {
+	public void addNewTrackback(long commentId, String url, String entryURL) {
+		_trackbacks.add(new Tuple(commentId, url, entryURL));
+	}
+
+	@Override
+	public void verifyNewTrackbacks() {
 		Tuple tuple = null;
 
 		while (!_trackbacks.isEmpty()) {
@@ -52,11 +60,11 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 				tuple = _trackbacks.remove(0);
 			}
 
-			long messageId = (Long)tuple.getObject(0);
+			long commentId = (Long)tuple.getObject(0);
 			String url = (String)tuple.getObject(1);
 			String entryUrl = (String)tuple.getObject(2);
 
-			_verifyTrackback(messageId, url, entryUrl, comments);
+			_verifyTrackback(commentId, url, entryUrl);
 		}
 	}
 
@@ -89,14 +97,12 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 				companyId);
 
 			if (userId == defaultUserId) {
-				_verifyTrackback(messageId, url, entryURL, new CommentsImpl());
+				_verifyTrackback(messageId, url, entryURL);
 			}
 		}
 	}
 
-	private static void _verifyTrackback(
-		long messageId, String url, String entryURL, Comments comments) {
-
+	private void _verifyTrackback(long commentId, String url, String entryURL) {
 		try {
 			String result = HttpUtil.URLtoString(url);
 
@@ -108,16 +114,17 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 
 		try {
-			comments.deleteComment(messageId);
+			_comments.deleteComment(commentId);
 		}
 		catch (Exception e) {
 			_log.error(
-				"Error trying to delete trackback message " + messageId, e);
+				"Error trying to delete trackback comment " + commentId, e);
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);
 
+	private Comments _comments;
 	private List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 

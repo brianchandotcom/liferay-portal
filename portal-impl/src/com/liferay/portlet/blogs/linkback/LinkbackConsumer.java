@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -25,9 +24,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
  */
 public interface LinkbackConsumer {
 
-	public void addNewTrackback(long messageId, String url, String entryURL);
+	public void addNewTrackback(long commentId, String url, String entryURL);
 
-	public void verifyNewTrackbacks(Comments comments);
+	public void verifyNewTrackbacks();
 
 	public void verifyPost(BlogsEntry entry, MBMessage message)
 		throws PortalException, SystemException;

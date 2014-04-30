@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.messaging;
 
-import com.liferay.portal.comments.CommentsImpl;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
@@ -33,8 +32,7 @@ public class LinkbackMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_linkbackConsumer.verifyNewTrackbacks(new CommentsImpl());
-
+		_linkbackConsumer.verifyNewTrackbacks();
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 

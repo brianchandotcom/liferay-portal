@@ -49,6 +49,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import com.opensymphony.oscache.util.StringUtil;
+
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -80,6 +82,7 @@ public class EditCompanyAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				validateCAS(actionRequest);
 				validateLDAP(actionRequest);
+				validateInteractions(actionRequest);
 
 				if (!SessionErrors.isEmpty(actionRequest)) {
 					setForward(
@@ -257,6 +260,46 @@ public class EditCompanyAction extends PortletAction {
 
 			SessionErrors.add(actionRequest, "casNoSuchUserURLInvalid");
 		}
+	}
+
+	protected void validateInteractions(ActionRequest actionRequest)
+		throws Exception {
+
+		boolean interactionsEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsEnabled--");
+
+		if (!interactionsEnabled) {
+			return;
+		}
+
+		boolean interactionsAnyUserEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsAnyUserEnabled--");
+
+		if (interactionsAnyUserEnabled) {
+			return;
+		}
+
+		boolean interactionsSocialRelationTypesEnabled = ParamUtil.getBoolean(
+			actionRequest,
+			"settings--interactionsSocialRelationTypesEnabled--");
+		boolean interactionsSitesEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--interactionsSitesEnabled--");
+		String interactionsSocialRelationTypes = ParamUtil.getString(
+			actionRequest, "settings--interactionsSocialRelationTypes--", null);
+
+		if (interactionsSocialRelationTypesEnabled &&
+			StringUtil.isEmpty(interactionsSocialRelationTypes)) {
+
+			SessionErrors.add(actionRequest, "selectAtLeastOneRelation");
+		}
+
+		if (interactionsSocialRelationTypesEnabled ||
+			interactionsSitesEnabled) {
+
+			return;
+		}
+
+		SessionErrors.add(actionRequest, "restrictedRelationInvalid");
 	}
 
 	protected void validateLDAP(ActionRequest actionRequest) throws Exception {

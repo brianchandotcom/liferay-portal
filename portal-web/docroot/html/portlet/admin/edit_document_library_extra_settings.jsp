@@ -128,7 +128,7 @@ if (!dlFileEntries.isEmpty()) {
 
 <aui:script>
 	function <portlet:namespace />convertDocumentLibraryExtraSettings(options) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "convert";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'convert';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

@@ -112,9 +112,7 @@ public class PollerProcessorUtil {
 			PollerProcessor pollerProcessor = registry.getService(
 				serviceReference);
 
-			if (ShardUtil.isEnabled() &&
-				!(pollerProcessor instanceof ShardPollerProcessorWrapper)) {
-
+			if (ShardUtil.isEnabled()) {
 				pollerProcessor = new ShardPollerProcessorWrapper(
 					pollerProcessor);
 			}

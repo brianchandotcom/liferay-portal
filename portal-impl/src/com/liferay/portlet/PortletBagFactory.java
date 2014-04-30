@@ -14,9 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.log.Log;
@@ -849,11 +847,6 @@ public class PortletBagFactory {
 			PollerProcessor pollerProcessorInstance =
 				(PollerProcessor)newInstance(
 					PollerProcessor.class, portlet.getPollerProcessorClass());
-
-			if (ShardUtil.isEnabled()) {
-				pollerProcessorInstance = new ShardPollerProcessorWrapper(
-					pollerProcessorInstance);
-			}
 
 			pollerProcessorInstances.add(pollerProcessorInstance);
 		}

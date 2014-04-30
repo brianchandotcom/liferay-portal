@@ -30,7 +30,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeShoppingPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWiki;
-import com.liferay.portlet.calendar.model.CalEvent;
 
 /**
  * @author Julio Camarero
@@ -46,7 +45,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
 		upgrade(UpgradeAsset.class);
-		upgrade(CalEvent.class);
+		upgrade(UpgradeCalEvent.class);
 		upgrade(UpgradeEmailNotificationPreferences.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeLanguagePreferences.class);

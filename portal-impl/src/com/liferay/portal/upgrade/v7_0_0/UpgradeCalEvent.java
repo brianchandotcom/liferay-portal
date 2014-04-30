@@ -31,8 +31,7 @@ public class UpgradeCalEvent extends UpgradeProcess {
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
-					CalEventTable.TABLE_NAME,
-					CalEventTable.TABLE_COLUMNS,
+					CalEventTable.TABLE_NAME, CalEventTable.TABLE_COLUMNS,
 					CalEventTable.TABLE_SQL_CREATE,
 					CalEventTable.TABLE_SQL_ADD_INDEXES);
 		}

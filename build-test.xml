@@ -29,8 +29,18 @@
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
-	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
-	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
+	<if>
+	    <isset property="mobile.device.type" />
+	    <then>
+	        <var name="mobile.device.type" unset="true" />
+
+	        <property file="${basedir}/test.run.properties" />
+	        <property file="${project.dir}/test.properties" />
+
+	        <propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
+	        <propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
+	    </then>
+	</if>
 
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 

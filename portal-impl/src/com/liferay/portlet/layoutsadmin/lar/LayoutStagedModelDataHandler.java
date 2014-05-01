@@ -483,6 +483,11 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
 
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layout);
+
+		importedLayout.setExpandoBridgeAttributes(serviceContext);
+
 		StagingUtil.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
 

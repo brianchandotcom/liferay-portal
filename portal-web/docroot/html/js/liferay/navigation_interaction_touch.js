@@ -54,20 +54,22 @@ AUI.add(
 				_initChildMenuHandlers: function(navigation) {
 					var instance = this;
 
-					var android = A.UA.android;
-
-					var delay = 0;
-
-					if (android && android < 4.4) {
-						delay = 400;
-					}
-
-					instance._handleShowNavigationMenuFn = A.throttle(A.bind('_handleShowNavigationMenu', instance), delay);
-
 					if (navigation) {
 						A.Event.defineOutside('touchstart');
 
-						navigation.delegate(['click', 'touchstart'], instance._onTouchClick, '> li > a', instance);
+						navigation.delegate('tap', instance._onTouchClick, '.lfr-nav-child-toggle', instance);
+
+						var android = A.UA.android;
+
+						if (android && android < 4.4) {
+							navigation.delegate(
+								'click',
+								function(event) {
+									event.preventDefault();
+								},
+								'.lfr-nav-child-toggle'
+							);
+						}
 					}
 				},
 
@@ -76,14 +78,12 @@ AUI.add(
 				_onTouchClick: function(event) {
 					var instance = this;
 
-					var target = event.target;
-
 					var menuNew = event.currentTarget.ancestor(instance._directChildLi);
 
-					if (menuNew.one('.child-menu') && target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-item')) {
+					if (menuNew.one('.child-menu')) {
 						event.preventDefault();
 
-						instance._handleShowNavigationMenuFn(menuNew, instance.MAP_HOVER.menu, event);
+						instance._handleShowNavigationMenu(menuNew, instance.MAP_HOVER.menu, event);
 					}
 				}
 			},
@@ -92,6 +92,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-touch', 'liferay-navigation-interaction']
+		requires: ['event-tap', 'event-touch', 'liferay-navigation-interaction']
 	}
 );

@@ -730,6 +730,10 @@ body.html-editor {
 }
 
 .ie {
+	& input.cke_dialog_ui_input_text {
+		height: auto;
+	}
+
 	.proxy.not-intersecting .forbidden-action {
 		right: 2px;
 		top: 2px;

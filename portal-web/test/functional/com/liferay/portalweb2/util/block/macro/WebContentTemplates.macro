@@ -203,7 +203,7 @@
 			</then>
 		</while>
 
-		<execute action="CPWebcontentTemplates#type" locator-key1="SEARCH_FIELD" value1="structure" />
+		<execute action="CPWebcontentTemplates#type" locator-key1="SEARCH_FIELD" value1="template" />
 		<execute action="CPWebcontentTemplates#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
 		<while>

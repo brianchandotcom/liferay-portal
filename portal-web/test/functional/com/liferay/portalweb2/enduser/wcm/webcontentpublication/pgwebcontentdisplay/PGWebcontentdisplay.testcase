@@ -310,7 +310,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${languageKey}" />
+			<var name="lowercaseLanguageCode" value="zh" />
 			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
 			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />
@@ -480,7 +480,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${languageKey}" />
+			<var name="lowercaseLanguageCode" value="zh" />
 			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
 			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />

@@ -251,7 +251,7 @@
 
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
 
-		<var name="key_languageKey" value="${languageKey}" />
+		<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
@@ -1075,7 +1075,7 @@
 
 				<execute action="PGWebcontentdisplayEditwebcontentTranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
 
-				<var name="key_languageKey" value="${languageKey}" />
+				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
 				<if>
 					<isset var="localizedTitle" />

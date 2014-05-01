@@ -355,7 +355,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${localization1NameKey}" />
+			<var name="lowercaseLanguageCode" value="de" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 			<var name="webContentTranslationContent" value="Netz Content1 Inhalt" />
@@ -364,7 +364,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="${localization2NameKey}" />
+			<var name="lowercaseLanguageCode" value="fr" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 			<var name="webContentTranslationContent" value="Contenu de Contenu Web1" />

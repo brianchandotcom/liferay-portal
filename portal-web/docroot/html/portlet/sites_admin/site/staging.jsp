@@ -71,16 +71,6 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 </c:if>
 
 <c:if test="<%= stagedLocally && (BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), false) > 0) %>">
-	<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
-		<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
-		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
-	</liferay-portlet:renderURL>
-
 	<div class="alert alert-block">
 		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 
@@ -97,6 +87,17 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 					{
 						id: 'publishProcesses',
 						title: Liferay.Language.get('initial-publication'),
+
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
+							<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+							<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+							<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+							<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+							<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+							<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
+						</liferay-portlet:renderURL>
+
 						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
 					}
 				);

@@ -119,13 +119,13 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 					%>
 
 					<c:if test="<%= pendingRequests > 0 %>">
+						<br />
+
 						<portlet:renderURL var="viewMembershipRequestsURL">
 							<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 						</portlet:renderURL>
-
-						<br />
 
 						<liferay-ui:icon
 							image="manage_task"

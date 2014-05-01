@@ -16,7 +16,4 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.util.bridges.alloy.AlloyPortlet" %><%@
-page import="com.liferay.util.bridges.alloy.BaseAlloyControllerImpl" %>
-
 <%@ include file="/html/portlet/control_panel_menu/init-ext.jsp" %>

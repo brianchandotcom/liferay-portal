@@ -147,30 +147,6 @@
 							</a>
 						</li>
 
-						<c:if test="<%= !ppid.equals(portletId) %>">
-
-							<%
-							String portletClassName = portlet.getPortletClass();
-							%>
-
-							<%
-							if (portletClassName.equals(AlloyPortlet.class.getName())) {
-								PortletConfig alloyPortletConfig = PortletConfigFactoryUtil.create(portlet, application);
-
-								PortletContext alloyPortletContext = alloyPortletConfig.getPortletContext();
-
-								if (alloyPortletContext.getAttribute(BaseAlloyControllerImpl.TOUCH + portlet.getRootPortletId()) != Boolean.FALSE) {
-							%>
-
-								<iframe height="0" src="<%= portletURL %>" style="display: none; visibility: hidden;" width="0"></iframe>
-
-							<%
-								}
-							}
-							%>
-
-						</c:if>
-
 					<%
 					}
 					%>

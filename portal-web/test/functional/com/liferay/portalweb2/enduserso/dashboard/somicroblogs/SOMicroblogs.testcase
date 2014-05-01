@@ -450,11 +450,6 @@
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
-
-		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
-			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		</execute>
 	</command>
 
 	<command name="AddMicroblogsEntryViewableByConnectionsCommentTag" priority="4">
@@ -551,11 +546,6 @@
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 			<var name="microblogsEntryCommentTagValue" value="${microblogsEntryCommentTagValue}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
-
-		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
-			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="#${microblogsEntryCommentContent}" />
 		</execute>
 	</command>
 
@@ -675,11 +665,6 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
-			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
@@ -767,11 +752,6 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
-			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
-			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent} [@${adminScreenName}]" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />

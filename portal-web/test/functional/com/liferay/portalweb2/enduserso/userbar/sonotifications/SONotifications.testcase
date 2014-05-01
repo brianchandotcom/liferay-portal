@@ -1,0 +1,1148 @@
+<definition component-name="social-office-user-bar">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="testray.main.component.name" value="Social Office" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="adminFirstName" value="Test" />
+	<var name="adminListName" value="Test, Test" />
+	<var name="adminName" value="Test Test" />
+	<var name="adminScreenName" value="test" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOMicroblogs#tearDownMicroblogsEntry" />
+
+		<execute macro="SOTasks#tearDownTask" />
+
+		<execute macro="SOMessages#tearDownPG" />
+
+		<execute macro="SOAnnouncementsEntry#tearDownPG" />
+
+		<execute macro="SOUser#tearDownCP" />
+
+		<execute macro="SOSite#tearDownCP" />
+	</tear-down>
+
+	<command name="ViewContactsCenterNotifications" known-issues="SOS-2143" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userEmailAddress4" value="socialoffice04@liferay.com" />
+		<var name="userEmailAddress5" value="socialoffice05@liferay.com" />
+		<var name="userEmailAddress6" value="socialoffice06@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userFirstName4" value="Social04" />
+		<var name="userFirstName5" value="Social05" />
+		<var name="userFirstName6" value="Social06" />
+		<var name="userLastName" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userLastName4" value="User04" />
+		<var name="userLastName5" value="User05" />
+		<var name="userLastName6" value="User06" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userListName4" value="User04, Social04" />
+		<var name="userListName5" value="User05, Social05" />
+		<var name="userListName6" value="User06, Social06" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userMiddleName4" value="Office04" />
+		<var name="userMiddleName5" value="Office05" />
+		<var name="userMiddleName6" value="Office06" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userName4" value="Social04 Office04 User04" />
+		<var name="userName5" value="Social05 Office05 User05" />
+		<var name="userName6" value="Social06 Office06 User06" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+		<var name="userScreenName4" value="socialoffice04" />
+		<var name="userScreenName5" value="socialoffice05" />
+		<var name="userScreenName6" value="socialoffice06" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userFirstName" value="${userFirstName4}" />
+			<var name="userLastName" value="${userLastName4}" />
+			<var name="userMiddleName" value="${userMiddleName4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="userFirstName" value="${userFirstName5}" />
+			<var name="userLastName" value="${userLastName5}" />
+			<var name="userMiddleName" value="${userMiddleName5}" />
+			<var name="userScreenName" value="${userScreenName5}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress6}" />
+			<var name="userFirstName" value="${userFirstName6}" />
+			<var name="userLastName" value="${userLastName6}" />
+			<var name="userMiddleName" value="${userMiddleName6}" />
+			<var name="userScreenName" value="${userScreenName6}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
+			<var name="userLoginFullName" value="${userName4}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress5}" />
+			<var name="userLoginFullName" value="${userName5}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress6}" />
+			<var name="userLoginFullName" value="${userName6}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_VIEW_ALL" value1="View All" />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+
+		<var name="key_row" value="4" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
+
+		<var name="key_row" value="5" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+
+		<var name="key_row" value="6" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
+
+		<var name="key_row" value="7" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
+
+		<var name="key_row" value="8" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} would like to add you as a connection." />
+
+		<var name="key_row" value="9" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
+
+		<var name="key_row" value="10" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} would like to add you as a connection." />
+
+		<var name="key_row" value="11" />
+
+		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 10 of 12 results." />
+		<execute action="SONotifications#click" locator-key1="NEXT_BUTTON" />
+		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 11 - 12 of 12 results." />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
+	</command>
+
+	<command name="ViewMicroblogsEntryViewableByConnectionsCommentNotification" priority="5">
+		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="pageName" value="Microblogs" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryViewableBy" value="Connections" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
+			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		</execute>
+	</command>
+
+	<command name="ViewMicroblogsEntryViewableByConnectionsCommentTagNotification" priority="4">
+		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryCommentTagValue" value="Microblogs" />
+		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="pageName" value="Microblogs" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryViewableBy" value="Connections" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryCommentHashtag">
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
+			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
+			<var name="microblogsEntryCommentContent" value="#${microblogsEntryCommentContent}" />
+		</execute>
+	</command>
+
+	<command name="ViewMicroblogsEntryViewableByEveryoneCommentMentionNotification" priority="4">
+		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="pageName" value="Microblogs" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryCommentMention">
+			<var name="mentionUserEmailAddress" value="${adminEmailAddress}" />
+			<var name="mentionUserFirstName" value="${adminFirstName}" />
+			<var name="mentionUserName" value="${adminName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
+			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent} [@${adminScreenName}]" />
+		</execute>
+	</command>
+
+	<command name="ViewMicroblogsEntryViewableByEveryoneCommentNotification" priority="4">
+		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
+		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="pageName" value="Microblogs" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentNotification">
+			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		</execute>
+	</command>
+
+	<command name="ViewReplyMessageAttachmentNotification" priority="5">
+		<var name="messageAttachmentFile" value="Document_1.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
+			<var name="messageReplyBody" value="${messageReplyBody}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="ViewReplyMessageAttachmentPortalNotification" priority="5">
+		<var name="messageAttachmentFile1" value="Document_1.jpg" />
+		<var name="messageAttachmentFile2" value="Document_2.jpg" />
+		<var name="messageAttachmentFile3" value="Document_3.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody1" value="Message Reply1 Body" />
+		<var name="messageReplyBody2" value="Message Reply2 Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Private Messaging Page" />
+		<var name="portletName" value="Private Messaging" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientName" value="${adminName}" />
+			<var name="recipientScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="ViewReplyMessageNotification" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyBody" value="${messageReplyBody}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryNotification" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryNotificationSOUser" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewSOSiteAnnouncementsEntryNotification" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUserBar#joinSOSite">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<var name="entryAuthor" value="${adminName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+	</command>
+
+	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="Open Site Name" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
+			<var name="entryAuthor" value="${userName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewTaskAssignedToConnectionNotification" priority="5">
+		<var name="pageName" value="Tasks" />
+		<var name="soPage" value="true" />
+		<var name="taskDescription" value="Task Description" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOTasks#viewTaskNotification">
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#resolveTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOTasks#viewResolveTaskNotification">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+</definition>

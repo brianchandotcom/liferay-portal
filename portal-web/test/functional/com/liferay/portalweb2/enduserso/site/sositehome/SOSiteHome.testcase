@@ -244,16 +244,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
-			<var name="entryAuthor" value="${adminName}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="General" />
 			<var name="entryAuthor" value="${adminName}" />
@@ -306,16 +296,6 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
-		</execute>
-
-		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
-			<var name="entryAuthor" value="${userName}" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -1941,85 +1921,5 @@
 			<var name="eventTitle" value="${eventTitle3Edit}" />
 			<var name="startDateTime" value="${startDateTimeEdit}" />
 		</execute>
-	</command>
-
-	<command name="ViewSOAnnouncementsEntryNotificationSOUser" priority="5">
-		<var name="entryContent" value="Announcements Entry Content" />
-		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryURL" value="http://www.liferay.com" />
-		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-		<var name="userFirstName" value="Social01" />
-		<var name="userLastName" value="User01" />
-		<var name="userListName" value="User01, Social01" />
-		<var name="userMiddleName" value="Office01" />
-		<var name="userName" value="Social01 Office01 User01" />
-		<var name="userScreenName" value="socialoffice01" />
-
-		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="test@liferay.com" />
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="SOUserBar#addSOSite">
-			<var name="siteDescription" value="${siteDescription}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteType" value="${siteType}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOUserBar#joinSOSite">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteType" value="${siteType}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryURL" value="${entryURL}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
-			<var name="entryAuthor" value="${adminName}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<var name="entryAuthor" value="${adminName}" />
-
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
-		<execute action="SOUserBar#mouseOver" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 </definition>

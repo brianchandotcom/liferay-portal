@@ -1293,11 +1293,6 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="senderName" value="${adminName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
@@ -1331,11 +1326,6 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageReplyBody}" />
-			<var name="senderName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1393,11 +1383,6 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="senderName" value="${adminName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
@@ -1433,11 +1418,6 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageReplyBody}" />
-			<var name="senderName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1535,11 +1515,6 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="senderName" value="${userName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
@@ -1578,11 +1553,6 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageReplyBody1}" />
-			<var name="senderName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1627,11 +1597,6 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageReplyBody2}" />
-			<var name="senderName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

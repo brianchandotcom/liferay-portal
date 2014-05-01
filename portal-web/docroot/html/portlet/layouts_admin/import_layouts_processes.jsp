@@ -96,16 +96,15 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 				Date completionDate = backgroundTask.getCompletionDate();
 				%>
 
+				<portlet:actionURL var="deleteBackgroundTaskURL">
+					<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+				</portlet:actionURL>
+
 				<liferay-ui:icon-delete
 					label="true"
 					message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-
-					<portlet:actionURL var="deleteBackgroundTaskURL">
-						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
-					
 					url="<%= deleteBackgroundTaskURL %>"
 				/>
 			</c:if>

@@ -712,42 +712,8 @@ public class HookHotDeployListener
 		initIndexerPostProcessors(
 			servletContextName, portletClassLoader, rootElement);
 
-		List<Element> serviceElements = rootElement.elements("service");
-
-		for (Element serviceElement : serviceElements) {
-			String serviceType = serviceElement.elementText("service-type");
-			String serviceImpl = serviceElement.elementText("service-impl");
-
-			if (!checkPermission(
-					PACLConstants.PORTAL_HOOK_PERMISSION_SERVICE,
-					portletClassLoader, serviceType,
-					"Rejecting service " + serviceImpl)) {
-
-				continue;
-			}
-
-			Class<?> serviceTypeClass = portletClassLoader.loadClass(
-				serviceType);
-			Class<?> serviceImplClass = portletClassLoader.loadClass(
-				serviceImpl);
-
-			Constructor<?> serviceImplConstructor =
-				serviceImplClass.getConstructor(
-					new Class<?>[] {serviceTypeClass});
-
-			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
-
-			if (ProxyUtil.isProxyClass(serviceProxy.getClass())) {
-				initServices(
-					servletContextName, portletClassLoader, serviceType,
-					serviceTypeClass, serviceImplConstructor, serviceProxy);
-			}
-			else {
-				_log.error(
-					"Service hooks require Spring to be configured to use " +
-						"JdkDynamicProxy and will not work with CGLIB");
-			}
-		}
+		initServices(
+			servletContextName, portletClassLoader, rootElement);
 
 		initServletFilters(
 			servletContext, servletContextName, portletClassLoader,
@@ -2197,8 +2163,50 @@ public class HookHotDeployListener
 
 	protected void initServices(
 			String servletContextName, ClassLoader portletClassLoader,
-			String serviceType, Class<?> serviceTypeClass,
-			Constructor<?> serviceImplConstructor, Object serviceProxy)
+			Element rootElement)
+		throws Exception {
+
+		List<Element> serviceElements = rootElement.elements("service");
+
+		for (Element serviceElement : serviceElements) {
+			String serviceType = serviceElement.elementText("service-type");
+			String serviceImpl = serviceElement.elementText("service-impl");
+
+			if (!checkPermission(
+					PACLConstants.PORTAL_HOOK_PERMISSION_SERVICE,
+					portletClassLoader, serviceType,
+					"Rejecting service " + serviceImpl)) {
+
+				continue;
+			}
+
+			Class<?> serviceTypeClass = portletClassLoader.loadClass(
+				serviceType);
+			Class<?> serviceImplClass = portletClassLoader.loadClass(
+				serviceImpl);
+
+			Constructor<?> serviceImplConstructor =
+				serviceImplClass.getConstructor(
+					new Class<?>[] {serviceTypeClass});
+
+			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
+
+			if (ProxyUtil.isProxyClass(serviceProxy.getClass())) {
+				initServices(
+					servletContextName, portletClassLoader, serviceType,
+					serviceTypeClass, serviceImplConstructor, serviceProxy);
+			}
+			else {
+				_log.error(
+					"Service hooks require Spring to be configured to use " +
+						"JdkDynamicProxy and will not work with CGLIB");
+			}
+		}
+	}
+
+	protected void initServices(
+			String servletContextName, ClassLoader portletClassLoader,
+			Element rootElement)
 		throws Exception {
 
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(

@@ -193,7 +193,6 @@ import javax.servlet.ServletContext;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
-import org.springframework.aop.target.SingletonTargetSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -3432,83 +3431,6 @@ public class HookHotDeployListener
 		}
 
 		private List<Sanitizer> _sanitizers = new ArrayList<Sanitizer>();
-
-	}
-
-	private class ServiceBag {
-
-		public ServiceBag(
-			AdvisedSupport advisedSupport, ClassLoader classLoader,
-			Class<?> serviceTypeClass, ServiceWrapper<?> serviceWrapper) {
-
-			_advisedSupport = advisedSupport;
-
-			Object nextTarget = ProxyUtil.newProxyInstance(
-				classLoader,
-				new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
-				new ClassLoaderBeanHandler(serviceWrapper, classLoader));
-
-			TargetSource nextTargetSource = new SingletonTargetSource(nextTarget);
-
-			_advisedSupport.setTargetSource(nextTargetSource);
-
-			_serviceWrapper = (ServiceWrapper<?>)nextTarget;
-		}
-
-		@SuppressWarnings("unchecked")
-		public <T> void replace() throws Exception {
-			TargetSource targetSource = _advisedSupport.getTargetSource();
-
-			Object currentService = targetSource.getTarget();
-			ServiceWrapper<T> previousService = null;
-
-			// loop through the chain
-
-			while (true) {
-
-				// stop if we match
-
-				if (currentService == _serviceWrapper) {
-					Object wrappedService = _serviceWrapper.getWrappedService();
-
-					if (previousService == null) {
-
-						// we're at the root, we need to change the target source
-
-						TargetSource previousTargetSource =
-							new SingletonTargetSource(wrappedService);
-
-						_advisedSupport.setTargetSource(previousTargetSource);
-					}
-					else {
-
-						// take ourselves out of the chain, by setting our
-						// wrapped service into the previous, no need to change the
-						// target source
-
-						previousService.setWrappedService((T)wrappedService);
-					}
-
-					break;
-				}
-
-				// every item in the chain is a ServiceWrapper except the original
-				// service
-
-				if (!(currentService instanceof ServiceWrapper)) {
-					break;
-				}
-
-				// we didn't match, check the next
-
-				previousService = (ServiceWrapper<T>)currentService;
-
-				currentService = previousService.getWrappedService();
-			}
-		}
-
-		private AdvisedSupport _advisedSupport;
-		private ServiceWrapper<?> _serviceWrapper;
 
 	}
 

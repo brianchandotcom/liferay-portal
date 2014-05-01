@@ -1,32 +1,31 @@
 <html>
 <head>
-<title>CPWebcontentTemplatesEdittemplate</title>
+<title>PGWebcontentdisplayEdittemplate</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPWebcontentTemplatesEdittemplate</td></tr>
+<tr><td rowspan="1" colspan="3">PGWebcontentdisplayEdittemplate</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPWebcontentTemplatesEdittemplate</td>
+	<td>PGWebcontentdisplayEdittemplate</td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>TEMPLATES_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Templates')]</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'edit_template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLOSE_BUTTON</td>
 	<td>portal/buttons/close_button.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_WINDOW</td>
-	<td>//button[contains(@class,'close-content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,8 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE</td>
-	<td>//input[@id='_166_structure']</td>
+	<td>STRUCTURE_FIELD</td>
+	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,7 +73,11 @@
 	<td>//button[contains(., 'Cancel')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCRIPT-->
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>

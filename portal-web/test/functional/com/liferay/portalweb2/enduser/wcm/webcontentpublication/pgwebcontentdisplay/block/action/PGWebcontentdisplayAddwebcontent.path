@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD</td>
 	<td>//body</td>
 	<td></td>

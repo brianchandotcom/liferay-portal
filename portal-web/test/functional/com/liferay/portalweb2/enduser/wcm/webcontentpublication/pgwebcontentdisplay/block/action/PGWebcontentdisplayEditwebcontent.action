@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
+			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 
 		<case comparator="startsWith" locator-key1="ADD_TRANSLATION_MENULIST">

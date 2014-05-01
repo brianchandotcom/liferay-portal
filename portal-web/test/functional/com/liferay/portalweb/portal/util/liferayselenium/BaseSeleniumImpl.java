@@ -264,11 +264,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public String getAdminPropertyValue() {
-		return LiferaySeleniumHelper.getAdminPropertyValue();
-	}
-
-	@Override
 	public String getCurrentDay() {
 		return _commandProcessor.getString("getCurrentDay", new String[0]);
 	}
@@ -344,6 +339,11 @@ public abstract class BaseSeleniumImpl
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public boolean isAppServerTcatAdminEnabled() {
+		return LiferaySeleniumHelper.isAppServerTcatAdminEnabled();
 	}
 
 	@Override
@@ -599,6 +599,13 @@ public abstract class BaseSeleniumImpl
 		throws Exception {
 
 		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTcatFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTcatFile(this, image, value);
 	}
 
 	@Override

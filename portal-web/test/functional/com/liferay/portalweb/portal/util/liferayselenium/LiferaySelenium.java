@@ -103,8 +103,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public void fail(String message);
 
-	public String getAdminPropertyValue();
-
 	public String getCurrentDay();
 
 	public String getCurrentMonth();
@@ -134,6 +132,8 @@ public interface LiferaySelenium extends Selenium {
 	public String getSikuliImagesDirName();
 
 	public void goBackAndWait();
+
+	public boolean isAppServerTcatAdminEnabled();
 
 	public boolean isConfirmation(String pattern);
 
@@ -219,6 +219,9 @@ public interface LiferaySelenium extends Selenium {
 	public void sikuliType(String image, String value) throws Exception;
 
 	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception;
+
+	public void sikuliUploadTcatFile(String image, String value)
 		throws Exception;
 
 	public void sikuliUploadTempFile(String image, String value)

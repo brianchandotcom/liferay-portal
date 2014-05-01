@@ -450,14 +450,6 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
-	public static String getAdminPropertyValue() {
-		if (TestPropsValues.APP_SERVER_ADMIN == null) {
-			return "";
-		}
-
-		return TestPropsValues.APP_SERVER_ADMIN;
-	}
-
 	public static String getEmailBody(String index) throws Exception {
 		return EmailCommands.getEmailBody(GetterUtil.getInteger(index));
 	}
@@ -472,6 +464,10 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static boolean isAppServerTcatAdminEnabled() {
+		return TestPropsValues.APP_SERVER_TCATADMIN_ENABLED;
 	}
 
 	public static boolean isConfirmation(
@@ -825,27 +821,28 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		if ((TestPropsValues.APP_SERVER_ADMIN != null) &&
-			TestPropsValues.APP_SERVER_ADMIN.equals("tcat")) {
+		sikuliType(
+			liferaySelenium, image,
+			liferaySelenium.getProjectDirName() +
+				liferaySelenium.getDependenciesDirName() + value);
 
-			String tcatDir = TestPropsValues.APP_SERVER_TCAT_DIR + value;
+		_screen.type(Key.ENTER);
+	}
 
-			if (OSDetector.isWindows()) {
-				tcatDir = tcatDir.replace("/", "\\");
-			}
+	public static void sikuliUploadTcatFile(
+			LiferaySelenium liferaySelenium, String image, String value)
+		throws Exception {
 
-			sikuliType(liferaySelenium, image, tcatDir);
+		String tcatFile =
+			TestPropsValues.APP_SERVER_TCATADMIN_REPOSITORY + "/" + value;
 
-			_screen.type(Key.ENTER);
+		if (OSDetector.isWindows()) {
+			tcatFile = tcatFile.replace("/", "\\");
 		}
-		else {
-			sikuliType(
-				liferaySelenium, image,
-				liferaySelenium.getProjectDirName() +
-					liferaySelenium.getDependenciesDirName() + value);
 
-			_screen.type(Key.ENTER);
-		}
+		sikuliType(liferaySelenium, image, tcatFile);
+
+		_screen.type(Key.ENTER);
 	}
 
 	public static void sikuliUploadTempFile(

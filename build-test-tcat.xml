@@ -20,7 +20,7 @@
 		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
 
 		<echo file="test.${user.name}.properties" append="true">
-			app.server.tomcat.admin=tcat
+			app.server.tcatadmin.enabled=true
 		</echo>
 
 		<if>
@@ -28,11 +28,27 @@
 				<isset property="build.app.server" />
 			</not>
 			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
+
+plugins.includes=marketplace-portlet</echo>
+
 				<antcall target="zip-portal-war" />
 
 				<ant antfile="build-dist.xml" target="build-dist-tcat" />
 			</then>
 		</if>
+
+		<replace
+			file="${app.server.tcatadmin.bin.dir}/startup.bat"
+			token="CATALINA_HOME=%CURRENT_DIR%"
+			value="CATALINA_HOME=${app.server.tcatadmin.dir}"
+		/>
+
+		<replace
+			file="${app.server.tcatagent.bin.dir}/startup.bat"
+			token="CATALINA_HOME=%CURRENT_DIR%"
+			value="CATALINA_HOME=${app.server.tcatagent.dir}"
+		/>
 
 		<antcall target="revert-test-properties" />
 

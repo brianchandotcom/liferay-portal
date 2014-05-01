@@ -356,11 +356,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getAdminPropertyValue() {
-		return LiferaySeleniumHelper.getAdminPropertyValue();
-	}
-
-	@Override
 	public String getCurrentDay() {
 		Calendar calendar = Calendar.getInstance();
 
@@ -470,6 +465,11 @@ public abstract class BaseWebDriverImpl
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public boolean isAppServerTcatAdminEnabled() {
+		return LiferaySeleniumHelper.isAppServerTcatAdminEnabled();
 	}
 
 	@Override
@@ -723,6 +723,13 @@ public abstract class BaseWebDriverImpl
 		throws Exception {
 
 		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTcatFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTcatFile(this, image, value);
 	}
 
 	@Override

@@ -78,7 +78,7 @@ public class SeleniumUtil extends TestPropsValues {
 
 		String portalURL = PORTAL_URL;
 
-		if ((APP_SERVER_ADMIN != null) && APP_SERVER_ADMIN.equals("tcat")) {
+		if (APP_SERVER_TCATADMIN_ENABLED) {
 			portalURL = "http://localhost:8180/console";
 		}
 

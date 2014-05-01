@@ -142,6 +142,7 @@ import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.Toolkit;
 import com.liferay.portal.security.pwd.ToolkitWrapper;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -173,7 +174,6 @@ import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
 
 import java.net.URL;
 
@@ -642,30 +642,19 @@ public class HookHotDeployListener
 	}
 
 	protected void destroyServices(String servletContextName) throws Exception {
-		Map<String, ServiceBag> serviceBags = _servicesContainer._serviceBags;
+		synchronized (_servicesContainer) {
+			Map<String, ServiceBag> serviceBags =
+				_servicesContainer._serviceBags.remove(servletContextName);
 
-		for (Map.Entry<String, ServiceBag> entry : serviceBags.entrySet()) {
-			String serviceType = entry.getKey();
-			ServiceBag serviceBag = entry.getValue();
-
-			Map<String, List<ServiceConstructor>> serviceConstructors =
-				serviceBag._serviceConstructors;
-
-			if (serviceConstructors.remove(servletContextName) == null) {
-				continue;
+			if (serviceBags == null) {
+				return;
 			}
 
-			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
+			for (ServiceBag serviceBag : serviceBags.values()) {
+				serviceBag.replace();
+			}
 
-			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(serviceProxy);
-
-			Object previousService = serviceBag.getCustomService();
-
-			TargetSource previousTargetSource = new SingletonTargetSource(
-				previousService);
-
-			advisedSupport.setTargetSource(previousTargetSource);
+			ServiceBeanAopCacheManagerUtil.reset();
 		}
 	}
 
@@ -2206,7 +2195,8 @@ public class HookHotDeployListener
 
 	protected void initServices(
 			String servletContextName, ClassLoader portletClassLoader,
-			Element rootElement)
+			String serviceType, Class<?> serviceTypeClass,
+			Constructor<?> serviceImplConstructor, Object serviceProxy)
 		throws Exception {
 
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
@@ -2216,32 +2206,15 @@ public class HookHotDeployListener
 
 		Object previousService = targetSource.getTarget();
 
-		if (ProxyUtil.isProxyClass(previousService.getClass())) {
-			InvocationHandler invocationHandler =
-				ProxyUtil.getInvocationHandler(previousService);
+		ServiceWrapper<?> serviceWrapper =
+			(ServiceWrapper<?>)serviceImplConstructor.newInstance(
+				previousService);
 
-			if (invocationHandler instanceof ClassLoaderBeanHandler) {
-				ClassLoaderBeanHandler classLoaderBeanHandler =
-					(ClassLoaderBeanHandler)invocationHandler;
-
-				previousService = classLoaderBeanHandler.getBean();
-			}
+		synchronized (_servicesContainer) {
+			_servicesContainer.addServiceBag(
+				servletContextName, portletClassLoader, advisedSupport,
+				serviceType, serviceTypeClass, serviceWrapper);
 		}
-
-		Object nextService = serviceImplConstructor.newInstance(
-			previousService);
-
-		Object nextTarget = ProxyUtil.newProxyInstance(
-			portletClassLoader, new Class<?>[] {serviceTypeClass},
-			new ClassLoaderBeanHandler(nextService, portletClassLoader));
-
-		TargetSource nextTargetSource = new SingletonTargetSource(nextTarget);
-
-		advisedSupport.setTargetSource(nextTargetSource);
-
-		_servicesContainer.addServiceBag(
-			servletContextName, portletClassLoader, serviceType,
-			serviceTypeClass, serviceImplConstructor, previousService);
 
 		ServiceBeanAopCacheManagerUtil.reset();
 	}
@@ -3464,82 +3437,78 @@ public class HookHotDeployListener
 
 	private class ServiceBag {
 
-		public ServiceBag(Object originalService) {
-			_originalService = originalService;
+		public ServiceBag(
+			AdvisedSupport advisedSupport, ClassLoader classLoader,
+			Class<?> serviceTypeClass, ServiceWrapper<?> serviceWrapper) {
+
+			_advisedSupport = advisedSupport;
+
+			Object nextTarget = ProxyUtil.newProxyInstance(
+				classLoader,
+				new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
+				new ClassLoaderBeanHandler(serviceWrapper, classLoader));
+
+			TargetSource nextTargetSource = new SingletonTargetSource(nextTarget);
+
+			_advisedSupport.setTargetSource(nextTargetSource);
+
+			_serviceWrapper = (ServiceWrapper<?>)nextTarget;
 		}
 
-		public void addCustomServiceConstructor(
-			String servletContextName, ClassLoader portletClassLoader,
-			Class<?> serviceTypeClass, Constructor<?> serviceImplConstructor) {
+		@SuppressWarnings("unchecked")
+		public <T> void replace() throws Exception {
+			TargetSource targetSource = _advisedSupport.getTargetSource();
 
-			List<ServiceConstructor> serviceConstructors =
-				_serviceConstructors.get(servletContextName);
+			Object currentService = targetSource.getTarget();
+			ServiceWrapper<T> previousService = null;
 
-			if (serviceConstructors == null) {
-				serviceConstructors = new ArrayList<ServiceConstructor>();
+			// loop through the chain
 
-				_serviceConstructors.put(
-					servletContextName, serviceConstructors);
+			while (true) {
+
+				// stop if we match
+
+				if (currentService == _serviceWrapper) {
+					Object wrappedService = _serviceWrapper.getWrappedService();
+
+					if (previousService == null) {
+
+						// we're at the root, we need to change the target source
+
+						TargetSource previousTargetSource =
+							new SingletonTargetSource(wrappedService);
+
+						_advisedSupport.setTargetSource(previousTargetSource);
+					}
+					else {
+
+						// take ourselves out of the chain, by setting our
+						// wrapped service into the previous, no need to change the
+						// target source
+
+						previousService.setWrappedService((T)wrappedService);
+					}
+
+					break;
+				}
+
+				// every item in the chain is a ServiceWrapper except the original
+				// service
+
+				if (!(currentService instanceof ServiceWrapper)) {
+					break;
+				}
+
+				// we didn't match, check the next
+
+				previousService = (ServiceWrapper<T>)currentService;
+
+				currentService = previousService.getWrappedService();
 			}
-
-			ServiceConstructor serviceConstructor = new ServiceConstructor(
-				portletClassLoader, serviceTypeClass, serviceImplConstructor);
-
-			serviceConstructors.add(serviceConstructor);
 		}
 
-		public Object getCustomService() throws Exception {
-			List<ServiceConstructor> serviceConstructors =
-				new ArrayList<ServiceConstructor>();
-
-			for (Map.Entry<String, List<ServiceConstructor>> entry :
-					_serviceConstructors.entrySet()) {
-
-				serviceConstructors.addAll(entry.getValue());
-			}
-
-			Object customService = _originalService;
-
-			for (ServiceConstructor serviceConstructor : serviceConstructors) {
-				ClassLoader portletClassLoader =
-					serviceConstructor._portletClassLoader;
-				Class<?> serviceTypeClass =
-					serviceConstructor._serviceTypeClass;
-				Constructor<?> serviceImplConstructor =
-					serviceConstructor._serviceImplConstructor;
-
-				customService = serviceImplConstructor.newInstance(
-					customService);
-
-				customService = ProxyUtil.newProxyInstance(
-					portletClassLoader, new Class<?>[] {serviceTypeClass},
-					new ClassLoaderBeanHandler(
-						customService, portletClassLoader));
-			}
-
-			return customService;
-		}
-
-		private Object _originalService;
-		private Map<String, List<ServiceConstructor>> _serviceConstructors =
-			new HashMap<String, List<ServiceConstructor>>();
-
-	}
-
-	private class ServiceConstructor {
-
-		public ServiceConstructor(
-			ClassLoader portletClassLoader, Class<?> serviceTypeClass,
-			Constructor<?> serviceImplConstructor) {
-
-			_portletClassLoader = portletClassLoader;
-			_serviceTypeClass = serviceTypeClass;
-			_serviceImplConstructor = serviceImplConstructor;
-		}
-
-		private ClassLoader _portletClassLoader;
-		private Constructor<?> _serviceImplConstructor;
-		private Class<?> _serviceTypeClass;
+		private AdvisedSupport _advisedSupport;
+		private ServiceWrapper<?> _serviceWrapper;
 
 	}
 
@@ -3547,24 +3516,27 @@ public class HookHotDeployListener
 
 		public void addServiceBag(
 			String servletContextName, ClassLoader portletClassLoader,
-			String serviceType, Class<?> serviceTypeClass,
-			Constructor<?> serviceImplConstructor, Object wrappedService) {
+			AdvisedSupport advisedSupport, String serviceType,
+			Class<?> serviceTypeClass, ServiceWrapper<?> serviceWrapper) {
 
-			ServiceBag serviceBag = _serviceBags.get(serviceType);
+			Map<String, ServiceBag> serviceBags = _serviceBags.get(
+				servletContextName);
 
-			if (serviceBag == null) {
-				serviceBag = new ServiceBag(wrappedService);
+			if (serviceBags == null) {
+				serviceBags = new HashMap<String, ServiceBag>();
 
-				_serviceBags.put(serviceType, serviceBag);
+				_serviceBags.put(servletContextName, serviceBags);
 			}
 
-			serviceBag.addCustomServiceConstructor(
-				servletContextName, portletClassLoader, serviceTypeClass,
-				serviceImplConstructor);
+			serviceBags.put(
+				serviceType,
+				new ServiceBag(
+					advisedSupport, portletClassLoader, serviceTypeClass,
+					serviceWrapper));
 		}
 
-		private Map<String, ServiceBag> _serviceBags =
-			new HashMap<String, ServiceBag>();
+		private Map<String, Map<String, ServiceBag>> _serviceBags =
+			new HashMap<String, Map<String, ServiceBag>>();
 
 	}
 

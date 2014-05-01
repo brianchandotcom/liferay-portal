@@ -888,6 +888,17 @@ public class SeleniumBuilderFileUtil {
 					1006, fileName, executeElement, "action");
 			}
 
+			if (action.contains("sikuliMouseDown") ||
+				action.contains("sikuliMouseUp")) {
+
+				String locator1 = executeElement.attributeValue("locator1");
+
+				if (!locator1.equals("LEFT") && !locator1.equals("RIGHT")) {
+					throwValidationException(
+						1006, fileName, executeElement, "locator1");
+				}
+			}
+
 			for (Attribute attribute : attributes) {
 				String attributeName = attribute.getName();
 

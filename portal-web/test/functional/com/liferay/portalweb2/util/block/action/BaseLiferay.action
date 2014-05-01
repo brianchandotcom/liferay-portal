@@ -355,6 +355,30 @@
 		</default>
 	</command>
 
+	<command name="sikuliMouseDown">
+		<default>
+			<description message="Click left mouse down." />
+
+			<execute function="SikuliMouseDown#sikuliMouseDown" />
+		</default>
+	</command>
+
+	<command name="sikuliMouseMove">
+		<default>
+			<description message="Moves the mouse on top of ${locator1}." />
+
+			<execute function="SikuliMouseMove#sikuliMouseMove" />
+		</default>
+	</command>
+
+	<command name="sikuliMouseUp">
+		<default>
+			<description message="Click left mouse up." />
+
+			<execute function="SikuliMouseUp#sikuliMouseUp" />
+		</default>
+	</command>
+
 	<command name="sikuliType">
 		<default>
 			<description message="Uses Sikuli to type into the ${locator1} with the value ${value1}." />

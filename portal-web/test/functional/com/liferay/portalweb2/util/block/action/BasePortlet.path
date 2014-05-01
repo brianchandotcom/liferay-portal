@@ -216,6 +216,21 @@
 	<td>//button[contains(.,'Reset')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SIGN_IN_PORTLET</td>
+	<td>/portal/portlets/sign_in_portlet.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HELLO_WORLD_PORTLET</td>
+	<td>/portal/portlets/hello_world_portlet.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_2_SIGN_IN_PORTLET</td>
+	<td>//div[@id='column-2']/div/div/section/header/h1[contains(.,'Sign In')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

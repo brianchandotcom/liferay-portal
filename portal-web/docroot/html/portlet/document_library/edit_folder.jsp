@@ -42,10 +42,6 @@ if (workflowEnabled) {
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
-<portlet:actionURL var="editFolderURL">
-	<portlet:param name="struts_action" value="/document_library/edit_folder" />
-</portlet:actionURL>
-
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon
 		image="unlink"
@@ -53,6 +49,10 @@ if (workflowEnabled) {
 		message="remove"
 	/>
 </liferay-util:buffer>
+
+<portlet:actionURL var="editFolderURL">
+	<portlet:param name="struts_action" value="/document_library/edit_folder" />
+</portlet:actionURL>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />

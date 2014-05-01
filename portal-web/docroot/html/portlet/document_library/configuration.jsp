@@ -113,10 +113,6 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 
-			<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/document_library/select_folder" />
-			</liferay-portlet:renderURL>
-
 			<aui:script use="aui-base">
 				A.one('#<portlet:namespace />selectFolderButton').on(
 					'click',
@@ -130,6 +126,11 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 								},
 								id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 								title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+								<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+									<portlet:param name="struts_action" value="/document_library/select_folder" />
+								</liferay-portlet:renderURL>
+
 								uri: '<%= selectFolderURL.toString() %>'
 							},
 							function(event) {

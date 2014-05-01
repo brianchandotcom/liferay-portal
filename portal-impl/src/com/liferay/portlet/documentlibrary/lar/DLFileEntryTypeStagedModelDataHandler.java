@@ -84,13 +84,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 		if (fileEntryType.getCompanyId() !=
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
 
-				try {
-					defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-						fileEntryType.getCompanyId());
-				}
-				catch (Exception e) {
-					return referenceAttributes;
-				}
+			try {
+				defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+					fileEntryType.getCompanyId());
+			}
+			catch (Exception e) {
+				return referenceAttributes;
+			}
 
 			if (defaultUserId == fileEntryType.getUserId()) {
 				preloaded = true;

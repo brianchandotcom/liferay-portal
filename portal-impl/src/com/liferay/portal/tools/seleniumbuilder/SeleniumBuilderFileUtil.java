@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +38,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -75,9 +75,9 @@ public class SeleniumBuilderFileUtil {
 			e.printStackTrace();
 		}
 
-		_componentNames = Arrays.asList(
+		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
-		_testrayAvailableComponentNames = Arrays.asList(
+		_testrayAvailableComponentNames = ListUtil.fromArray(
 			StringUtil.split(
 				properties.getProperty("testray.available.component.names")));
 	}
@@ -1716,7 +1716,7 @@ public class SeleniumBuilderFileUtil {
 			String value = element.attributeValue("value");
 
 			if (name.equals("testray.component.names")) {
-				List<String> testrayComponentNames = Arrays.asList(
+				List<String> testrayComponentNames = ListUtil.fromArray(
 					StringUtil.split(value));
 
 				for (String testrayComponentName : testrayComponentNames) {
@@ -1927,22 +1927,22 @@ public class SeleniumBuilderFileUtil {
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
-	private static List<String> _allowedNullAttributes = Arrays.asList(
+	private static List<String> _allowedNullAttributes = ListUtil.fromArray(
 		new String[] {
 			"arg1", "arg2", "message", "string", "substring", "value"
 		});
-	private static List<String> _allowedVarAttributes = Arrays.asList(
+	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
 			"attribute", "group", "input", "line-number", "locator",
 			"locator-key", "method", "name", "path", "pattern", "value"
 		});
 	private static List<String> _componentNames;
-	private static List<String> _methodNames = Arrays.asList(
+	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
 			"getFirstNumber", "getIPAddress", "increment", "length",
 			"lowercase", "replace", "uppercase"
 		});
-	private static List<String> _reservedTags = Arrays.asList(
+	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "description", "echo", "else", "elseif", "equals",

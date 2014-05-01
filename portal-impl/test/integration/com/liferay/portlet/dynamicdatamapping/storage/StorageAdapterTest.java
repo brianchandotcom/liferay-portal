@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -71,12 +72,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {true, true, true});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {false, false, false});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -105,7 +106,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Date date1 = PortalUtil.getDate(0, 1, 2013);
 		Date date2 = PortalUtil.getDate(0, 2, 2013);
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {date1, date2});
 
 		dataMap.put(_enLocale, enValues);
@@ -113,7 +114,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Date date3 = PortalUtil.getDate(0, 3, 2013);
 		Date date4 = PortalUtil.getDate(0, 4, 2013);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {date3, date4});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -139,12 +140,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1.1, 1.2, 1.3});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {2.1, 2.2, 2.3});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -182,12 +183,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		String file2Value = getDocLibraryFieldValue(file2);
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {file1Value, file2Value});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {file1Value});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -213,12 +214,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1, 2, 3});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {3, 4, 5});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -244,13 +245,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {
 				"{\"layoutId\":\"1\",\"privateLayout\":false}"});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {
 				"{\"layoutId\":\"2\",\"privateLayout\":true}"});
 
@@ -277,12 +278,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1, 1.5f, 2});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {3, 3.5f, 4});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -308,12 +309,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 1\"]", "[\"value 2\"]"});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 2\"]", "[\"value 3\"]"});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -339,12 +340,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 1\",\"value 2\"]", "[\"value 3\"]"});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 2\"]", "[\"value 3\"]"});
 
 		dataMap.put(_ptLocale, ptValues);
@@ -370,12 +371,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap =
 			new HashMap<Locale, List<Serializable>>();
 
-		List<Serializable> enValues = Arrays.asList(
+		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"one", "two", "three"});
 
 		dataMap.put(_enLocale, enValues);
 
-		List<Serializable> ptValues = Arrays.asList(
+		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {"um", "dois", "tres"});
 
 		dataMap.put(_ptLocale, ptValues);

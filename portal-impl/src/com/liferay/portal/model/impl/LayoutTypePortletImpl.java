@@ -66,7 +66,6 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -440,7 +439,8 @@ public class LayoutTypePortletImpl
 
 			String columnValue = getColumnValue(columnId);
 
-			portletIds.addAll(Arrays.asList(StringUtil.split(columnValue)));
+			portletIds.addAll(
+				ListUtil.fromArray(StringUtil.split(columnValue)));
 		}
 
 		return portletIds;
@@ -1297,7 +1297,7 @@ public class LayoutTypePortletImpl
 		}
 
 		if (columnPos >= 0) {
-			List<String> portletIds = Arrays.asList(
+			List<String> portletIds = ListUtil.fromArray(
 				StringUtil.split(columnValue));
 
 			if (columnPos <= portletIds.size()) {
@@ -1518,7 +1518,7 @@ public class LayoutTypePortletImpl
 		String nestedColumnIds = getTypeSettingsProperty(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
 
-		return Arrays.asList(StringUtil.split(nestedColumnIds));
+		return ListUtil.fromArray(StringUtil.split(nestedColumnIds));
 	}
 
 	protected long getPlid() {

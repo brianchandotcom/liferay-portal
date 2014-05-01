@@ -85,7 +85,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1310,7 +1309,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
 
-		List<String> assetEntryXmlsList = Arrays.asList(assetEntryXmls);
+		List<String> assetEntryXmlsList = ListUtil.fromArray(assetEntryXmls);
 
 		Iterator<String> itr = assetEntryXmlsList.iterator();
 

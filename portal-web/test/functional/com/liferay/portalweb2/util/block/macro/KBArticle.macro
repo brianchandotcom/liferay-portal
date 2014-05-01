@@ -24,7 +24,7 @@
 	<command name="deleteCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_ARTICLE_CHECKBOX" />
+		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -60,7 +60,7 @@
 	</command>
 
 	<command name="selectPGViaKBArticle">
-		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="PORTLET_CONFIGURATION_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
@@ -107,5 +107,20 @@
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewDefaultCP">
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+		<execute action="CPKnowledgebaseadmin#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
+	</command>
+
+	<command name="viewDefaultPGViaKBArticle">
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute action="PGKnowledgebasearticle#assertElementNotPresent" locator-key1="KB_ARTICLE_TITLE" />
+	</command>
+
+	<command name="viewDefaultPGViaKBDisplay">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
 	</command>
 </definition>

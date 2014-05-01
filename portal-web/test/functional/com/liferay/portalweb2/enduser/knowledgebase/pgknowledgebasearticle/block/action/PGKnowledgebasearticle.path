@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURE_INFO_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
+	<td>PORTLET_CONFIGURATION_INFO_MESSAGE</td>
+	<td>//div[contains(@class,'portlet-configuration') and contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>

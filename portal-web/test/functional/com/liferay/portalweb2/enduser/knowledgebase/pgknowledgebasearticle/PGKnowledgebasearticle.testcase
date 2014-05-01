@@ -1,8 +1,24 @@
 <definition component-name="portal-knowledge-base">
+	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
+
+	<var name="pageName" value="Knowledge Base Article Page" />
+	<var name="portletName" value="Knowledge Base Article" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -12,20 +28,6 @@
 	</tear-down>
 
 	<command name="DeleteKBArticleViaKBArticle" priority="4">
-		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Article" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
@@ -60,5 +62,7 @@
 		<execute macro="KBArticle#deletePGViaKBArticle">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
+
+		<execute macro="KBArticle#viewDefaultPGViaKBArticle" />
 	</command>
 </definition>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//section[contains(.,'Knowledge Base (Display)')]//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,6 +52,11 @@
 <tr>
 	<td>ARTICLE_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_TITLE_GENERIC</td>
+	<td>//tr[1]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>

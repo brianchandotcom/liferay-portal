@@ -79,17 +79,17 @@
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES</td>
-	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='en_US']/a</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='en_US']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_URL_SPANISH_SPAIN</td>
-	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='es_ES']/a</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='es_ES']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_URL_PORTUGUESE_BRAZIL</td>
-	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='pt_BR']/a</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='pt_BR']/a</td>
 	<td></td>
 </tr>
 <tr>

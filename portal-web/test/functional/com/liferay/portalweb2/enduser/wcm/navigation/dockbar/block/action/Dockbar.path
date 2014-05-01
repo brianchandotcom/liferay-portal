@@ -394,12 +394,12 @@
 <!--EDIT_SEO-->
 <tr>
 	<td>EDIT_SEO_HTML_TITLE</td>
-	<td>//div[@id='_145_titleContentBox']//td[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td>//div[@id='_145_titleContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT_SEO_META_TAGS_DESCRIPTION</td>
-	<td>//div[@id='_145_descriptionSEOContentBox']//td[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td>//div[@id='_145_descriptionSEOContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
 	<td></td>
 </tr>
 <tr>

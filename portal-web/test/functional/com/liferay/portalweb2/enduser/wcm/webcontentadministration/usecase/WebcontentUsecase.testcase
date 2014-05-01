@@ -102,11 +102,13 @@
 	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="structureDescription" value="Global WC Structure Description" />
-		<var name="structureFieldNames" value="Text,Image,Text Box" />
+		<var name="structureFieldNames" value="Text" />
 		<var name="structureName" value="Global WC Structure Name" />
 		<var name="templateDescription" value="Local WC Template Description" />
 		<var name="templateLanguage" value="ftl" />
 		<var name="templateName" value="Local WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -147,10 +149,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#selectWebContentGlobalStructure">
+		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+			<var name="fieldName" value="${structureFieldNames}" />
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateName" value="Local WC Template Name" />
+			<var name="webContentContent" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
@@ -212,6 +217,151 @@
 		<execute macro="WebContentStructures#deleteCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentHasReference" value="true" />
+		</execute>
+	</command>
+
+	<command name="EditArticleMadeFromGlobalStructure" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="structureDescription" value="Global WC Structure Description" />
+		<var name="structureFieldNames" value="Text" />
+		<var name="structureName" value="Global WC Structure Name" />
+		<var name="templateDescription" value="Global WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="Global WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+			<var name="fieldName" value="${structureFieldNames}" />
+			<var name="selectStructureName" value="Basic Web Content" />
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentContent" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#editPGViaWCD">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="WC Template2 Name" />
+			<var name="webContentContentEdit" value="WC WebContent Text Edit" />
+			<var name="webContentText" value="WC WebContent Text Edit" />
+			<var name="webContentTitle" value="WC WebContent Title Edit" />
+		</execute>
+	</command>
+
+	<command name="EditGlobalWebContentTemplate" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="structureDescription" value="Global WC Structure Description" />
+		<var name="structureFieldNames" value="Text" />
+		<var name="structureName" value="Global WC Structure Name" />
+		<var name="templateDescription" value="Global WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="Global WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+			<var name="fieldName" value="${structureFieldNames}" />
+			<var name="selectStructureName" value="Basic Web Content" />
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentContent" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#editTemplatePGViaWCD">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="Template Edit" />
+			<var name="webContentContent" value="${webContentText}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 

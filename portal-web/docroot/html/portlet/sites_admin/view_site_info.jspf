@@ -102,17 +102,16 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 			</dt>
 
 			<dd class="membership-requests">
+				<portlet:renderURL var="viewMembershipRequestsURL">
+					<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:icon
 					image="manage_task"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(pageContext, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>'
-			
-					<portlet:renderURL var="viewMembershipRequestsURL">
-						<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-					</portlet:renderURL>
-
 					url="<%= viewMembershipRequestsURL %>"
 				/>
 			</dd>

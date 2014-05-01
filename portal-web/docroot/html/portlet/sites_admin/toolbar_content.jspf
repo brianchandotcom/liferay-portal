@@ -24,18 +24,18 @@
 	boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 	%>
 
+	<portlet:renderURL var="viewSitesURL">
+		<portlet:param name="struts_action" value="/sites_admin/view" />
+		<portlet:param name="sitesListView" value="<%= sitesListView %>" />
+	</portlet:renderURL>
+
+	<liferay-portlet:renderURL varImpl="addSiteURL">
+		<portlet:param name="struts_action" value="/sites_admin/edit_site" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+		<portlet:param name="redirect" value="<%= viewSitesURL %>" />
+	</liferay-portlet:renderURL>
+
 	<c:choose>
-		<portlet:renderURL var="viewSitesURL">
-			<portlet:param name="struts_action" value="/sites_admin/view" />
-			<portlet:param name="sitesListView" value="<%= sitesListView %>" />
-		</portlet:renderURL>
-
-		<liferay-portlet:renderURL varImpl="addSiteURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-			<portlet:param name="redirect" value="<%= viewSitesURL %>" />
-		</liferay-portlet:renderURL>
-
 		<c:when test="<%= layoutSetPrototypes.isEmpty() && !hasAddLayoutSetPrototypePermission %>">
 			<aui:nav-item href="<%= addSiteURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
 		</c:when>

@@ -112,9 +112,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 <aui:script>
 	function <portlet:namespace />saveLayoutSetPrototype() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (layoutSetPrototype.isNew()) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (layoutSetPrototype.isNew()) ? Constants.ADD : Constants.UPDATE %>';
 
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" /></portlet:actionURL>');
 	}
 </aui:script>
 

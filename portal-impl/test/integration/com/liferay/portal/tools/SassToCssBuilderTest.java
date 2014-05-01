@@ -15,8 +15,8 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -35,7 +35,7 @@ public class SassToCssBuilderTest {
 
 	@Test
 	public void testSassToCssBuilder() throws Exception {
-		List<String> dirNames = Arrays.asList(new String[]{ _DIR_NAME});
+		List<String> dirNames = ListUtil.fromArray(new String[]{ _DIR_NAME});
 		String docrootDirName = _DOCROOT_DIR_NAME;
 		String portalCommonDirName = _DOCROOT_DIR_NAME;
 

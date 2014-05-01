@@ -16,6 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -64,7 +64,7 @@ public class TLDFormatter {
 
 		ds.scan();
 
-		list.addAll(Arrays.asList(ds.getIncludedFiles()));
+		list.addAll(ListUtil.fromArray(ds.getIncludedFiles()));
 
 		String[] files = list.toArray(new String[list.size()]);
 

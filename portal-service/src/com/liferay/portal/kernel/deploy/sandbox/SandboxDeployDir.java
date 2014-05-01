@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.io.DirectoryFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -80,7 +80,7 @@ public class SandboxDeployDir {
 		}
 
 		if (_interval > 0) {
-			_existingDirs = Arrays.asList(
+			_existingDirs = ListUtil.fromArray(
 				_deployDir.listFiles(_directoryFilter));
 
 			Iterator<File> itr = _existingDirs.iterator();

@@ -108,10 +108,6 @@ public class ListUtil {
 			inputList, new ArrayList<T>(inputList.size()), predicateFilter);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link Arrays#asList(Object...)}
-	 */
-	@Deprecated
 	public static <E> List<E> fromArray(E[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<E>();

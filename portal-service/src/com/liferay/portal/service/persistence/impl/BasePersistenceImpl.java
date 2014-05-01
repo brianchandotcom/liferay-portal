@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -43,7 +44,6 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -255,7 +255,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public void registerListener(ModelListener<T> listener) {
-		List<ModelListener<T>> listenersList = Arrays.asList(listeners);
+		List<ModelListener<T>> listenersList = ListUtil.fromArray(listeners);
 
 		listenersList.add(listener);
 
@@ -305,7 +305,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public void unregisterListener(ModelListener<T> listener) {
-		List<ModelListener<T>> listenersList = Arrays.asList(listeners);
+		List<ModelListener<T>> listenersList = ListUtil.fromArray(listeners);
 
 		listenersList.remove(listener);
 

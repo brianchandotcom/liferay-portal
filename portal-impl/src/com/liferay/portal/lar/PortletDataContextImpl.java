@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -95,7 +96,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2376,7 +2376,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
-		return Arrays.asList(nodes.toArray(new Element[nodes.size()]));
+		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
 	}
 
 	protected List<Element> getReferenceElements(

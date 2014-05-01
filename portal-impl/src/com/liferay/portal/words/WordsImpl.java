@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jazzy.InvalidWord;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.words.Words;
 import com.liferay.util.ContentUtil;
@@ -30,7 +31,6 @@ import com.swabunga.spell.event.StringWordTokenizer;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -61,7 +61,7 @@ public class WordsImpl implements Words {
 	@Override
 	public List<String> getDictionaryList() {
 		if (_dictionaryList == null) {
-			_dictionaryList = Arrays.asList(
+			_dictionaryList = ListUtil.fromArray(
 				StringUtil.splitLines(
 					ContentUtil.get(
 						"com/liferay/portal/words/dependencies/words.txt")));

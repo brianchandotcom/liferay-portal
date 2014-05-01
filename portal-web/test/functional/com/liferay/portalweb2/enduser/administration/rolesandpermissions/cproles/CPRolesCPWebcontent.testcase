@@ -25,9 +25,9 @@
 		<var name="folderDescription" value="WC Folder Description" />
 		<var name="folderName" value="WC Folder Name" />
 		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_FOLDER" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Add Folder" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -115,7 +115,7 @@
 
 	<command name="AddStructureSiteRole" priority="5">
 		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_STRUCTURE" />
 		<var name="permissionDefinition2Value" value="Add Structure" />
@@ -211,9 +211,9 @@
 
 	<command name="AddTemplateSiteRole" priority="5">
 		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_TEMPLATE" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Add Template" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -303,9 +303,9 @@
 
 	<command name="AddWebContentSiteRole" priority="5">
 		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_WEB_CONTENT" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
 		<var name="permissionDefinition2Value" value="Add Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
@@ -394,7 +394,7 @@
 	</command>
 
 	<command name="ViewWebContentPortletRegRole" priority="5">
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Regrole Name" />
@@ -453,7 +453,7 @@
 
 	<command name="ViewWebContentPortletSiteRole" priority="5">
 		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />

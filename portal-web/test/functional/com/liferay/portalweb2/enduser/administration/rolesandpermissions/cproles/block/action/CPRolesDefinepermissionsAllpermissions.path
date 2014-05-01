@@ -412,7 +412,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='20ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[@value='199ACCESS_IN_CONTROL_PANEL']</td>
 	<td></td>
 </tr>
 <tr>

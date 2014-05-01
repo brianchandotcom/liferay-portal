@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_TEAM_BUTTON</td>
-	<td>//button[contains(.,'Add Team')]</td>
+	<td>//a[contains(.,'Add Team')]</td>
 	<td></td>
 </tr>
 <tr>

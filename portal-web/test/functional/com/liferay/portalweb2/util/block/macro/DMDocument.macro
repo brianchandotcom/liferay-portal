@@ -1326,6 +1326,17 @@
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_EMPTY_2" />
 	</command>
 
+	<command name="viewPGViaAP">
+		<var name="key_assetTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${dmDocumentDescription}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${dmDocumentDescription}" />
+	</command>
+
 	<command name="viewPGViaMG">
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 

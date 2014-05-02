@@ -396,7 +396,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertEditWebContentStaging" priority="5">
+	<command name="AssertEditWebContentStaging" known-issues="LPS-46378" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 		<var name="siteName" value="${siteName}" />
 

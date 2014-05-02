@@ -64,7 +64,6 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 
 		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${ddlListName}" />
-
 		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
 		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid definition." />
@@ -304,6 +303,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DECIMAL_FIELD" value1="${ddlInvalidRecordFieldData}" />
+
 		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
@@ -543,6 +543,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="INTEGER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+
 		<execute action="PGDynamicdatalistsAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter only digits." />
 	</command>

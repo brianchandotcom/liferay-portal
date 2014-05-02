@@ -201,7 +201,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		window,
 		'<portlet:namespace />addSearchProvider',
 		function() {
-			window.external.AddSearchProvider("<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>");
+			window.external.AddSearchProvider('<%= themeDisplay.getPortalURL() %><%= PortalUtil.getPathMain() %>/search/open_search_description.xml?p_l_id=<%= themeDisplay.getPlid() %>&groupId=<%= groupId %>');
 		},
 		['aui-base']
 	);

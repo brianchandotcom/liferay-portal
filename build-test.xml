@@ -1146,23 +1146,11 @@ create database lportal2 character set utf8;</echo>
 
 		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
 
-		<if>
-			<os family="unix" />
-			<then>
-				<execute dir="${env.JENKINS_HOME}/userContent/jobs">
-					mkdir -p ${jenkins.test.results.dir}
-
-					find ${env.JENKINS_HOME}/userContent/jobs -name TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml | xargs cp -t ${jenkins.test.results.dir}
-				</execute>
-			</then>
-			<else>
-				<copy flatten="true" todir="${jenkins.test.results.dir}">
-					<fileset dir="${env.JENKINS_HOME}/userContent/jobs/" erroronmissingdir="false">
-						<include name="**/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml" />
-					</fileset>
-				</copy>
-			</else>
-		</if>
+		<copy flatten="true" todir="${jenkins.test.results.dir}">
+			<fileset dir="${env.JENKINS_HOME}/userContent/jobs/" erroronmissingdir="false">
+				<include name="**/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml" />
+			</fileset>
+		</copy>
 
 		<first id="first">
 			<fileset dir="${jenkins.test.results.dir}" includes="*.xml" />

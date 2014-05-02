@@ -112,7 +112,7 @@ for (int i = 0 ; i < userMappingArray.length ; i++) {
 		userMappingUuid = mapping[1];
 	}
 
-	mapping[1] = '';
+	mapping[1] = "";
 }
 
 String ldapGroupMappings = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUP_MAPPINGS + postfix);

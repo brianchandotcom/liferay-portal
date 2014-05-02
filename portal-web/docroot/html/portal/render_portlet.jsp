@@ -964,7 +964,7 @@ else {
 %>
 
 <c:if test="<%= renderPortletBoundary %>">
-		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+		<aui:script position='<%= themeDisplay.isIsolated() ? "list-inline" : "auto" %>'>
 			Liferay.Portlet.onLoad(
 				{
 					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,

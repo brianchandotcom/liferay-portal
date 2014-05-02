@@ -81,7 +81,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 <form class="license-form" method="post" name="license_fm" <%= (clusterNodes.size() > 1) ? "onsubmit=\"return validateForm();\"" : "" %>>
 
 <c:if test="<%= Validator.isNotNull(errorMessage) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<%= errorMessage %>
 	</div>
 </c:if>
@@ -323,7 +323,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<c:if test="<%= Validator.isNotNull(curErrorMessage) %>">
 				<tr>
 					<td colspan="3">
-						<div class="alert alert-error">
+						<div class="alert alert-danger">
 							<%= curErrorMessage %>
 						</div>
 					</td>
@@ -439,7 +439,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 										errorMessage += ':' + port;
 									}
 
-									A.one('#node_' + clusterNodeId + '_' + cmd).html('<div class="alert alert-error">' + errorMessage + '</div>');
+									A.one('#node_' + clusterNodeId + '_' + cmd).html('<div class="alert alert-danger">' + errorMessage + '</div>');
 								},
 								success: function(event, id, obj) {
 									var instance = this;
@@ -673,12 +673,12 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 <c:choose>
 	<c:when test="<%= orderProducts != null %>">
-		<input class="btn" type="submit" value="<liferay-ui:message key="register" />" />
+		<input class="btn btn-default" type="submit" value="<liferay-ui:message key="register" />" />
 
 		<input onClick="location.href='<%= themeDisplay.getURLCurrent() %>';" type="button" value="<liferay-ui:message key="cancel" />" />
 	</c:when>
 	<c:otherwise>
-		<input class="btn" type="submit" value="<liferay-ui:message key="query" />" />
+		<input class="btn btn-default" type="submit" value="<liferay-ui:message key="query" />" />
 	</c:otherwise>
 </c:choose>
 

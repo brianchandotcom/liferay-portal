@@ -20,6 +20,6 @@
 request.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 
-<div class="alert alert-error">
+<div class="alert alert-danger">
 	<liferay-ui:message key="this-portlet-is-inactive" />
 </div>

@@ -678,7 +678,7 @@ private String _getTemplateImage(ThemeDisplay themeDisplay, DDMTemplate ddmTempl
 			imageURL = ddmTemplate.getSmallImageURL();
 		}
 		else {
-			imageURL = themeDisplay.getPathImage() + '/journal/template?img_id=' + ddmTemplate.getSmallImageId() + '&t=' + WebServerServletTokenUtil.getToken(ddmTemplate.getSmallImageId());
+			imageURL = themeDisplay.getPathImage() + "/journal/template?img_id=" + ddmTemplate.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(ddmTemplate.getSmallImageId());
 		}
 	}
 

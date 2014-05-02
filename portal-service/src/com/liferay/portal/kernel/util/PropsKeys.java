@@ -1995,8 +1995,6 @@ public interface PropsKeys {
 
 	public static final String PERMISSIONS_INLINE_SQL_RESOURCE_BLOCK_QUERY_THRESHHOLD = "permissions.inline.sql.resource.block.query.threshhold";
 
-	public static final String PERMISSIONS_LIST_FILTER = "permissions.list.filter";
-
 	public static final String PERMISSIONS_OBJECT_BLOCKING_CACHE = "permissions.object.blocking.cache";
 
 	public static final String PERMISSIONS_PROPAGATION_ENABLED = "permissions.propagation.enabled";

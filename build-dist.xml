@@ -509,35 +509,20 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 	</target>
 
 	<target name="build-dist-tcserver">
-		<if>
-			<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
-			<then>
-				<antcall target="unzip-tomcat" inheritAll="false" />
-			</then>
-			<else>
-				<antcall target="unzip-tomcat" />
+		<antcall target="unzip-tcserver" />
 
-				<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
-			</else>
-		</if>
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<antcall target="all" inheritAll="false" />
 
-		<if>
-			<not>
-				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
-			</not>
-			<then>
-				<delete file="app.server.${user.name}.properties" />
-			</then>
-		</if>
+		<delete file="app.server.${user.name}.properties" />
 
 		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
+			<param name="deployer.dest.dir" value="${app.server.tcserver.deploy.dir}" />
 			<param name="deployer.app.server.type" value="tomcat" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.tcserver.lib.portal.dir}" />
 		</antcall>
 	</target>
 
@@ -1888,68 +1873,93 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-tcserver">
-		<delete dir="${app.server.tomcat.dir}" />
+		<delete dir="${app.server.tcserver.dir}" />
 
 		<if>
 			<not>
-				<available file="${app.server.parent.dir}/${app.server.tomcat.zip.name}" />
+				<available file="${app.server.parent.dir}/${app.server.tcserver.zip.name}" />
 			</not>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<get
-					dest="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
-					src="${app.server.tomcat.zip.url}"
+					dest="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
+					src="${app.server.tcserver.zip.url}"
 					verbose="true"
 				/>
 			</then>
 		</if>
 
-		<basename file="${app.server.tomcat.dir}" property="app.server.tomcat.dir.name" />
-
 		<unzip
 			dest="${app.server.parent.dir}"
-			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
+			src="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
 		>
-			<patternset
-				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**"
-			/>
 			<mapper
 				type="glob"
-				from="apache-tomcat-${app.server.tomcat.version}/*"
-				to="${app.server.tomcat.dir.name}/*"
+				from="${app.server.tcserver.zip.name}"
+				to="tcserver-${app.server.tcserver.version}/*"
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.tomcat.dir}/webapps" />
+		<chmod perm="a+x">
+			<fileset dir="${app.server.tcserver.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
 
-		<echo file="${app.server.tomcat.dir}/conf/catalina.policy">
-			grant {
-				permission java.security.AllPermission;
-			};
-		</echo>
+		<if>
+			<os family="windows" />
+			<then>
+				<exec dir="${app.server.tcserver.dir}" executable="cmd">
+					<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay" />
+				</exec>
+			</then>
+			<else>
+				<exec dir="${app.server.tcserver.dir}" executable="${app.server.tcserver.dir}/tcruntime-instance.sh">
+					<arg line="create liferay" />
+				</exec>
+			</else>
+		</if>
 
-		<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
+		<if>
+			<os family="windows" />
+			<then>
+				<replace file="${app.server.tcserver.bin.dir}/setenv.bat">
+					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss192K]]></replacetoken>
+					<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=512m]]></replacevalue>
+				</replace>
+			</then>
+			<else>
+				<replace file="${app.server.tcserver.bin.dir}/setenv.sh">
+					<replacetoken><![CDATA[JVM_OPTS="-Xmx512M -Xss192K"]]></replacetoken>
+					<replacevalue><![CDATA[JVM_OPTS="-Xmx1024M -Xss512K -XX:MaxPermSize=512m"]]></replacevalue>
+				</replace>
+			</else>
+		</if>
+
+		<replace file="${app.server.tcserver.dir}/liferay/conf/catalina.properties">
 			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
 			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
 		</replace>
 
-		<replace file="${app.server.tomcat.dir}/conf/server.xml">
-			<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
-			<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
+		<replace file="${app.server.tcserver.dir}/liferay/conf/server.xml">
+			<replacetoken><![CDATA[redirectPort="${bio.https.port}"/>]]></replacetoken>
+			<replacevalue><![CDATA[redirectPort="${bio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
 		</replace>
 
-		<!--<replace file="${app.server.tomcat.dir}/conf/server.xml">
-			<replacetoken><![CDATA[xmlValidation="false" xmlNamespaceAware="false">]]></replacetoken>
-			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
-		</replace>-->
-
 		<if>
-			<available file="${jdk.windows.home}/jre/bin/java.exe" />
+			<os family="windows" />
 			<then>
-				<copy todir="${app.server.tomcat.dir}/jre${jdk.windows.version}/win">
-					<fileset dir="${jdk.windows.home}/jre" />
-				</copy>
+				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+					<replacetoken><![CDATA[wrapper.java.additional.8="-Xmx512M"]]></replacetoken>
+					<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
+				</replace>
+
+				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+					<replacetoken><![CDATA[wrapper.java.additional.9="-Xss192K"]]></replacetoken>
+					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
+						wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
+				</replace>
 			</then>
 		</if>
 
@@ -1958,8 +1968,6 @@ release was successful.</echo>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
-
-		<antcall target="update-java-security-tomcat" />
 	</target>
 
 	<target name="unzip-tomcat">

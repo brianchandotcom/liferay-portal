@@ -1,19 +1,63 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tomcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-tcserver" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-selenium-tomcat">
-		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
+	<target name="run-selenium-tcserver">
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
 		<if>
 			<not>
 				<isset property="build.app.server" />
 			</not>
 			<then>
-				<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+				<ant antfile="build-dist.xml" target="build-dist-tcserver" />
 			</then>
 		</if>
+
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl stop
+			call tcruntime-ctl uninstall
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.sh">
+			./tcruntime-ctl.sh stop
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl install
+			call tcruntime-ctl start
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.sh">
+			./tcruntime-ctl.sh run
+		</echo>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.tcserver.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
 
 		<antcall target="revert-test-properties" />
 
@@ -32,14 +76,14 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-tomcat" inheritAll="false">
+		<antcall target="run-tcserver" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
 	</target>
 
-	<target name="run-tomcat">
+	<target name="run-tcserver">
 		<antcall target="clean-up-logs" />
 
 		<record action="start" name="log" />

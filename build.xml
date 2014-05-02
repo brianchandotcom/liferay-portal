@@ -476,22 +476,30 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<or>
+				<equals arg1="${app.server.type}" arg2="tcserver" />
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</or>
 			<then>
 				<if>
-					<not>
-						<available file="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml" />
-					</not>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>
-						<copy
-							file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
-							tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
-							overwrite="true"
-						/>
+						<if>
+							<not>
+								<available file="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml" />
+							</not>
+							<then>
+								<copy
+									file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
+									tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
+									overwrite="true"
+								/>
+							</then>
+						</if>
+
+						<ant dir="support-tomcat" target="deploy" inheritAll="false" />
 					</then>
 				</if>
-
-				<ant dir="support-tomcat" target="deploy" inheritAll="false" />
 
 				<copy todir="${app.server.lib.endorsed.dir}" flatten="true">
 					<fileset
@@ -502,7 +510,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 
 				<if>
 					<not>
-						<equals arg1="${app.server.tomcat.lib.portal.dir}" arg2="${app.server.tomcat.lib.global.dir}" />
+						<equals arg1="${app.server.lib.portal.dir}" arg2="${app.server.lib.global.dir}" />
 					</not>
 					<then>
 						<delete failonerror="false">
@@ -528,12 +536,17 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 					/>
 				</copy>
 
-				<delete>
-					<fileset
-						dir="${app.server.lib.portal.dir}"
-						includes="tomcat-juli.jar"
-					/>
-				</delete>
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<delete>
+							<fileset
+								dir="${app.server.lib.portal.dir}"
+								includes="tomcat-juli.jar"
+							/>
+						</delete>
+					</then>
+				</if>
 			</then>
 		</if>
 

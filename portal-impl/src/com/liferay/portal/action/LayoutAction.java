@@ -105,10 +105,10 @@ public class LayoutAction extends Action {
 		Boolean layoutDefault = (Boolean)request.getAttribute(
 			WebKeys.LAYOUT_DEFAULT);
 
-		if (Boolean.TRUE.equals(layoutDefault)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		if (Boolean.TRUE.equals(layoutDefault)) {
 			Layout requestedLayout = (Layout)request.getAttribute(
 				WebKeys.REQUESTED_LAYOUT);
 
@@ -181,6 +181,12 @@ public class LayoutAction extends Action {
 		}
 
 		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout != null) {
+			plid = layout.getPlid();
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("p_l_id is " + plid);

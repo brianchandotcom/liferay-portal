@@ -23,8 +23,8 @@ $theme.include($body_top_include)
 #end
 
 <div class="container-fluid" id="wrapper">
-	<div class="row-fluid">
-		<div class="span12" id="content-wrapper">
+	<div class="row">
+		<div class="col-md-12" id="content-wrapper">
 			<div id="content">
 				#if ($selectable)
 					$theme.include($content_include)

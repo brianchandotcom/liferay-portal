@@ -2714,6 +2714,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="defaultUser" />
 		</finder>
+		<finder name="C_DU_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="defaultUser" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_SN" return-type="User" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="screenName" />

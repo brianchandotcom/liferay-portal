@@ -466,6 +466,10 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
+	public static boolean isAppServerTcatAdminEnabled() {
+		return TestPropsValues.APP_SERVER_TCATADMIN_ENABLED;
+	}
+
 	public static boolean isConfirmation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
@@ -821,6 +825,22 @@ public class LiferaySeleniumHelper {
 			liferaySelenium, image,
 			liferaySelenium.getProjectDirName() +
 				liferaySelenium.getDependenciesDirName() + value);
+
+		_screen.type(Key.ENTER);
+	}
+
+	public static void sikuliUploadTcatFile(
+			LiferaySelenium liferaySelenium, String image, String value)
+		throws Exception {
+
+		String tcatFile =
+			TestPropsValues.APP_SERVER_TCATADMIN_REPOSITORY + "/" + value;
+
+		if (OSDetector.isWindows()) {
+			tcatFile = tcatFile.replace("/", "\\");
+		}
+
+		sikuliType(liferaySelenium, image, tcatFile);
 
 		_screen.type(Key.ENTER);
 	}

@@ -133,6 +133,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void goBackAndWait();
 
+	public boolean isAppServerTcatAdminEnabled();
+
 	public boolean isConfirmation(String pattern);
 
 	public boolean isElementNotPresent(String locator);
@@ -217,6 +219,9 @@ public interface LiferaySelenium extends Selenium {
 	public void sikuliType(String image, String value) throws Exception;
 
 	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception;
+
+	public void sikuliUploadTcatFile(String image, String value)
 		throws Exception;
 
 	public void sikuliUploadTempFile(String image, String value)

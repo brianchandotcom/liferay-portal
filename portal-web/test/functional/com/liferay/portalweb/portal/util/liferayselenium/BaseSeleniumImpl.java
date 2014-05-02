@@ -342,6 +342,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public boolean isAppServerTcatAdminEnabled() {
+		return LiferaySeleniumHelper.isAppServerTcatAdminEnabled();
+	}
+
+	@Override
 	public boolean isConfirmation(String pattern) {
 		return LiferaySeleniumHelper.isConfirmation(this, pattern);
 	}
@@ -594,6 +599,13 @@ public abstract class BaseSeleniumImpl
 		throws Exception {
 
 		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTcatFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTcatFile(this, image, value);
 	}
 
 	@Override

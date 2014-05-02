@@ -2048,6 +2048,31 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCasePropertyElementInvalidAttributeName()
+		throws Exception {
+
+		test(
+			"TestCasePropertyElementInvalidAttributeName_1.testcase",
+			"Error 1005: Invalid delimiter attribute in " + _DIR_NAME +
+				"/TestCasePropertyElementInvalidAttributeName_1.testcase:2");
+
+		test(
+			"TestCasePropertyElementInvalidAttributeName_2.testcase",
+			"Error 1005: Invalid test-case attribute in " + _DIR_NAME +
+				"/TestCasePropertyElementInvalidAttributeName_2.testcase:2");
+	}
+
+	@Test
+	public void testTestCasePropertyElementInvalidAttributeValue()
+		throws Exception {
+
+		test(
+			"TestCasePropertyElementInvalidAttributeValue.testcase",
+			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
+				"/TestCasePropertyElementInvalidAttributeValue.testcase:2");
+	}
+
+	@Test
 	public void testTestCaseSetUpElement1001() throws Exception {
 		test(
 			"TestCaseSetUpElement1001.testcase",

@@ -429,8 +429,13 @@ AUI.add(
 					_onSizeInput: function(event) {
 						var instance = this;
 
-						var height = Lang.toInt(instance.get(STR_INPUT_HEIGHT).val());
-						var width = Lang.toInt(instance.get(STR_INPUT_WIDTH).val());
+						var inputHeight = instance.get(STR_INPUT_HEIGHT).val();
+						var inputWidth = instance.get(STR_INPUT_WIDTH).val();
+
+						var height = Lang.toInt(inputHeight);
+						var width = Lang.toInt(inputWidth);
+
+						var dialog = Liferay.Util.getWindow(instance._dialogId);
 
 						instance._openDeviceDialog(
 							{
@@ -439,8 +444,6 @@ AUI.add(
 								width: width
 							}
 						);
-
-						var dialog = Liferay.Util.getWindow(instance._dialogId);
 
 						dialog.iframe.node.setStyles(
 							{

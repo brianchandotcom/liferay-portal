@@ -79,7 +79,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		long defaultUserId = 0;
 
-		boolean preloaded = false;
+		boolean preloaded = true;
 
 		if (fileEntryType.getCompanyId() !=
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
@@ -92,12 +92,9 @@ public class DLFileEntryTypeStagedModelDataHandler
 				return referenceAttributes;
 			}
 
-			if (defaultUserId == fileEntryType.getUserId()) {
-				preloaded = true;
+			if (defaultUserId != fileEntryType.getUserId()) {
+				preloaded = false;
 			}
-		}
-		else {
-			preloaded = true;
 		}
 
 		referenceAttributes.put("preloaded", String.valueOf(preloaded));

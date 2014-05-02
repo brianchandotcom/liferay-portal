@@ -38,6 +38,11 @@
 	<td>//div/ul[contains(@class,'breadcrumb')]/li/a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BREADCRUMB_PAGE_LINK</td>
+	<td>//div/ul[contains(@class,'breadcrumb')]/li/a[contains(@href,'http://localhost:8080')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

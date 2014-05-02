@@ -1,0 +1,26 @@
+<definition>
+	<command name="enableSectionCustomizablePG">
+		<var name="key_columnId" value="${columnId}" />
+
+		<execute action="DockbarEdit#check" locator-key1="CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO" value1="Customizable" />
+		<execute action="DockbarEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_CUSTOMIZATION_MESSAGE_INFO" value1="You can customize this page." />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+	</command>
+
+	<command name="gotoCustomizationSettingsPG">
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
+		<execute action="DockbarEdit#assertTextEquals" locator-key1="EDIT_CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
+
+		<if>
+			<condition action="DockbarEdit#isElementNotPresent" locator-key1="CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
+			<then>
+				<execute action="DockbarEdit#assertClick" locator-key1="EDIT_CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
+			</then>
+		</if>
+
+		<execute action="DockbarEdit#assertClick" locator-key1="CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" value1="Show Customizable Sections" />
+	</command>
+</definition>

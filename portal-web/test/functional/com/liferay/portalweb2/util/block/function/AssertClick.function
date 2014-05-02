@@ -46,7 +46,7 @@
 	</command>
 
 	<command name="assertTextClickAtAddApplication">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_page.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" />
 
 		<execute selenium="pause" argument1="1000" />
 

@@ -1,5 +1,6 @@
-<definition component-name="portal-util-misc">
-	<property name="testray.main.component.name" value="Util" />
+<definition component-name="portal-knowledge-base">
+	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -12,8 +13,6 @@
 	</tear-down>
 
 	<command name="Demo" priority="5">
-		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
-
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
 
 		<execute macro="Page#gotoContentCP">

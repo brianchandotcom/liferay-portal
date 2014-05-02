@@ -1,4 +1,15 @@
 <definition>
+	<command name="addCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPGViaKBDisplay">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
 
@@ -6,6 +17,37 @@
 		<execute action="PGKnowledgebasedisplayAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
 		<execute action="PGKnowledgebasedisplayAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute action="PGKnowledgebasedisplayAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deleteCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deletePGViaKBArticle">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="KB_ARTICLE_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasearticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="The selected article no longer exists." />
+	</command>
+
+	<command name="deletePGViaKBDisplay">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplayArticle#assertClick" locator-key1="KB_ARTICLE_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasedisplayArticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchPGViaKBSearch">
@@ -18,7 +60,7 @@
 	</command>
 
 	<command name="selectPGViaKBArticle">
-		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="PORTLET_CONFIGURATION_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 
 		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
@@ -55,10 +97,30 @@
 			<var name="portletName" value="Knowledge Base (Admin)" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
-		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<condition action="CPKnowledgebaseadmin#isElementPresent" locator-key1="SELECT_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
+				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewDefaultCP">
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+		<execute action="CPKnowledgebaseadmin#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
+	</command>
+
+	<command name="viewDefaultPGViaKBArticle">
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+		<execute action="PGKnowledgebasearticle#assertElementNotPresent" locator-key1="KB_ARTICLE_TITLE" />
+	</command>
+
+	<command name="viewDefaultPGViaKBDisplay">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_TABLE_TITLE_GENERIC" />
 	</command>
 </definition>

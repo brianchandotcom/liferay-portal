@@ -114,8 +114,8 @@
 		<echo file="app.server.${user.name}.properties">app.server.type=jboss
 app.server.jboss.version=6.0.1
 app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0
-app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
-app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.server.jboss.zip.name}</echo>
+app.server.jboss.zip.name=jboss-eap-6.0.1.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.0.1.zip</echo>
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -136,8 +136,8 @@ app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.se
 		<echo file="app.server.${user.name}.properties">app.server.type=jboss
 app.server.jboss.version=6.1.0
 app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
-app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/${app.server.jboss.zip.name}</echo>
+app.server.jboss.zip.name=jboss-eap-6.1.0.zip
+app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip</echo>
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -1163,11 +1163,36 @@ release was successful.</echo>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
-				<get
-					dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-					src="${app.server.jboss.zip.url}"
-					verbose="true"
-				/>
+				<if>
+					<contains string="${app.server.jboss.zip.name}" substring="jboss-eap" />
+					<then>
+						<trycatch>
+							<try>
+								<get
+									dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+									src="${app.server.jboss.zip.url}"
+									verbose="true"
+								/>
+							</try>
+							<catch>
+								<fail>
+.
+
+Please download the JBoss EAP zip file from ${app.server.jboss.zip.url} and
+place it here: ${app.server.parent.dir}/${app.server.jboss.zip.name}. Then rerun
+this task.
+								</fail>
+							</catch>
+						</trycatch>
+					</then>
+					<else>
+						<get
+							dest="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+							src="${app.server.jboss.zip.url}"
+							verbose="true"
+						/>
+					</else>
+				</if>
 			</then>
 		</if>
 
@@ -1307,7 +1332,7 @@ release was successful.</echo>
 								<equals arg1="${app.server.jboss.major.version}" arg2="8" />
 							</or>
 							<not>
-								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
+								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6.0" />
 							</not>
 						</and>
 						<then>

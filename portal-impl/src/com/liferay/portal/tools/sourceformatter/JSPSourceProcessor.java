@@ -572,9 +572,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);
 
-						if (!trimmedLine.endsWith(StringPool.QUOTE) &&
-							!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
-							!trimmedLine.endsWith(StringPool.GREATER_THAN)) {
+						if (!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
+							!trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+							!trimmedLine.endsWith(StringPool.QUOTE)) {
 
 							processErrorMessage(
 								fileName,

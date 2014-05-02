@@ -4,29 +4,11 @@
 	<import file="build-test.xml" />
 
 	<target name="deploy-simple-server-plugins">
-		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=websphere
-app.server.dir=${app.server.dir}
-app.server.deploy.dir=${app.server.dir}/profiles/liferay/wsadmin-deploy
-app.server.lib.global.dir=${app.server.dir}/lib/ext
-app.server.portal.dir=${app.server.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=${app.server.type}
 
 auto.deploy.dir=${liferay.home}/deploy
 
 plugins.includes=${plugins.includes}</echo>
-			</then>
-			<else>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${app.server.dir}
-app.server.lib.global.dir=${app.server.lib.global.dir}
-app.server.portal.dir=${app.server.portal.dir}
-
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugins.includes}</echo>
-			</else>
-		</if>
 
 		<if>
 			<equals arg1="${java.security}" arg2="true" />

@@ -134,11 +134,11 @@ if (!selectableTree) {
 			}
 
 			if (!data.uuid) {
-				data.uuid = "";
+				data.uuid = '';
 			}
 
 			if (!data.id) {
-				data.id = "";
+				data.id = '';
 			}
 
 			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {

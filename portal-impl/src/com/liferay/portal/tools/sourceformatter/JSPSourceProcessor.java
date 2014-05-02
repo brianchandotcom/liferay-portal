@@ -572,8 +572,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);
 
-						if (!trimmedLine.endsWith(StringPool.QUOTE) &&
-							!trimmedLine.endsWith(StringPool.APOSTROPHE)) {
+						if (!trimmedLine.endsWith(StringPool.APOSTROPHE) &&
+							!trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+							!trimmedLine.endsWith(StringPool.QUOTE)) {
 
 							processErrorMessage(
 								fileName,
@@ -590,7 +591,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							readAttributes = false;
 						}
 						else if (Validator.isNotNull(previousAttribute)) {
-							if (!isJSPAttributName(attribute)) {
+							if (!isJSPAttributName(attribute) &&
+								!attribute.startsWith(StringPool.LESS_THAN)) {
+
 								processErrorMessage(
 									fileName,
 									"attribute: " + fileName + " " + lineCount);

@@ -53,6 +53,7 @@
 			</c:if>
 
 			type="<%= type.equals("cancel") ? "button" : type %>"
+
 			<%= AUIUtil.buildData(data) %>
 			<%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>
 		>

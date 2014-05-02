@@ -94,6 +94,12 @@
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewLinkPG">
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+
+		<execute action="PGBreadcrumb#assertElementNotPresent" locator-key1="BREADCRUMB_PAGE_LINK" value1="http://localhost:8080" />
+	</command>
+
 	<command name="viewPG">
 		<if>
 			<isset var="breadcrumbListVisible" />

@@ -48,20 +48,16 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-
-import com.opensymphony.oscache.util.StringUtil;
-
-import java.util.List;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -288,7 +284,7 @@ public class EditCompanyAction extends PortletAction {
 			actionRequest, "settings--interactionsSocialRelationTypes--", null);
 
 		if (interactionsSocialRelationTypesEnabled &&
-			StringUtil.isEmpty(interactionsSocialRelationTypes)) {
+			Validator.isBlank(interactionsSocialRelationTypes)) {
 
 			SessionErrors.add(actionRequest, "selectAtLeastOneRelation");
 		}

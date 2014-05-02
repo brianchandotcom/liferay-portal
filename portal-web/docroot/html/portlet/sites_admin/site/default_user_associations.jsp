@@ -239,11 +239,6 @@ for (long defaultTeamId : defaultTeamIds) {
 	);
 </aui:script>
 
-<portlet:renderURL var="selectTeamURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/sites_admin/select_team" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-</portlet:renderURL>
-
 <aui:script use="liferay-search-container,escape">
 	A.one('#<portlet:namespace />selectSiteRoleLink').on(
 		'click',
@@ -303,6 +298,12 @@ for (long defaultTeamId : defaultTeamIds) {
 					},
 					id: '<portlet:namespace />selectTeam',
 					title: '<liferay-ui:message arguments="team" key="select-x" />',
+
+					<portlet:renderURL var="selectTeamURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/sites_admin/select_team" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					</portlet:renderURL>
+
 					uri: '<%= selectTeamURL.toString() %>'
 				},
 				function(event) {

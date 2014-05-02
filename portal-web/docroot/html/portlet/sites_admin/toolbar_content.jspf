@@ -20,6 +20,10 @@
 	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 	%>
 
+	<%
+	boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
+	%>
+
 	<portlet:renderURL var="viewSitesURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="sitesListView" value="<%= sitesListView %>" />
@@ -30,10 +34,6 @@
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 		<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 	</liferay-portlet:renderURL>
-
-	<%
-	boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
-	%>
 
 	<c:choose>
 		<c:when test="<%= layoutSetPrototypes.isEmpty() && !hasAddLayoutSetPrototypePermission %>">
@@ -62,13 +62,13 @@
 				%>
 
 				<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
+					<aui:nav-item cssClass="divider" />
+
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>" varImpl="manageSiteTemplateURL">
 						<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 						<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 						<portlet:param name="backURL" value="<%= viewSitesURL %>" />
 					</liferay-portlet:renderURL>
-
-					<aui:nav-item cssClass="divider" />
 
 					<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
 				</c:if>

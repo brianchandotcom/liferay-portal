@@ -14,10 +14,6 @@
  */
 --%>
 
-<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="assignMembersURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</liferay-portlet:renderURL>
-
 <%
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
@@ -68,6 +64,10 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 				<liferay-ui:message key="none" />
 			</c:if>
 
+			<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="assignMembersURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</liferay-portlet:renderURL>
+
 			<c:if test="<%= usersCount > 0 %>">
 				<liferay-ui:icon
 					image="user_icon"
@@ -97,17 +97,17 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 		</dd>
 
 		<c:if test="<%= pendingRequests > 0 %>">
-			<portlet:renderURL var="viewMembershipRequestsURL">
-				<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			</portlet:renderURL>
-
 			<dt class="hide-accessible">
 				<liferay-ui:message key="request-pending" />
 			</dt>
 
 			<dd class="membership-requests">
+				<portlet:renderURL var="viewMembershipRequestsURL">
+					<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:icon
 					image="manage_task"
 					label="<%= true %>"

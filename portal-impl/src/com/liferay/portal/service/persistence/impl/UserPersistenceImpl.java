@@ -4231,6 +4231,575 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	private static final String _FINDER_COLUMN_C_DU_COMPANYID_2 = "user.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_DU_DEFAULTUSER_2 = "user.defaultUser = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_DU_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_DU_S =
+		new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.DEFAULTUSER_COLUMN_BITMASK |
+			UserModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_DU_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @return the matching users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
+		int status) throws SystemException {
+		return findByC_DU_S(companyId, defaultUser, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
+		int status, int start, int end) throws SystemException {
+		return findByC_DU_S(companyId, defaultUser, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_DU_S;
+			finderArgs = new Object[] { companyId, defaultUser, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_DU_S;
+			finderArgs = new Object[] {
+					companyId, defaultUser, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<User> list = (List<User>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (User user : list) {
+				if ((companyId != user.getCompanyId()) ||
+						(defaultUser != user.getDefaultUser()) ||
+						(status != user.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_DU_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_DU_S_DEFAULTUSER_2);
+
+			query.append(_FINDER_COLUMN_C_DU_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(UserModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(defaultUser);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<User>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<User>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
+	 * @throws com.liferay.portal.NoSuchUserException if a matching user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User findByC_DU_S_First(long companyId, boolean defaultUser,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchUserException, SystemException {
+		User user = fetchByC_DU_S_First(companyId, defaultUser, status,
+				orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", defaultUser=");
+		msg.append(defaultUser);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User fetchByC_DU_S_First(long companyId, boolean defaultUser,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<User> list = findByC_DU_S(companyId, defaultUser, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws com.liferay.portal.NoSuchUserException if a matching user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User findByC_DU_S_Last(long companyId, boolean defaultUser,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchUserException, SystemException {
+		User user = fetchByC_DU_S_Last(companyId, defaultUser, status,
+				orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", defaultUser=");
+		msg.append(defaultUser);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User fetchByC_DU_S_Last(long companyId, boolean defaultUser,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByC_DU_S(companyId, defaultUser, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<User> list = findByC_DU_S(companyId, defaultUser, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws com.liferay.portal.NoSuchUserException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User[] findByC_DU_S_PrevAndNext(long userId, long companyId,
+		boolean defaultUser, int status, OrderByComparator orderByComparator)
+		throws NoSuchUserException, SystemException {
+		User user = findByPrimaryKey(userId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			User[] array = new UserImpl[3];
+
+			array[0] = getByC_DU_S_PrevAndNext(session, user, companyId,
+					defaultUser, status, orderByComparator, true);
+
+			array[1] = user;
+
+			array[2] = getByC_DU_S_PrevAndNext(session, user, companyId,
+					defaultUser, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected User getByC_DU_S_PrevAndNext(Session session, User user,
+		long companyId, boolean defaultUser, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_USER_WHERE);
+
+		query.append(_FINDER_COLUMN_C_DU_S_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_DU_S_DEFAULTUSER_2);
+
+		query.append(_FINDER_COLUMN_C_DU_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(UserModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(defaultUser);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(user);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<User> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the users where companyId = &#63; and defaultUser = &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByC_DU_S(long companyId, boolean defaultUser, int status)
+		throws SystemException {
+		for (User user : findByC_DU_S(companyId, defaultUser, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(user);
+		}
+	}
+
+	/**
+	 * Returns the number of users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param status the status
+	 * @return the number of matching users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByC_DU_S(long companyId, boolean defaultUser, int status)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_DU_S;
+
+		Object[] finderArgs = new Object[] { companyId, defaultUser, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_USER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_DU_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_DU_S_DEFAULTUSER_2);
+
+			query.append(_FINDER_COLUMN_C_DU_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(defaultUser);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_DU_S_COMPANYID_2 = "user.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_DU_S_DEFAULTUSER_2 = "user.defaultUser = ? AND ";
+	private static final String _FINDER_COLUMN_C_DU_S_STATUS_2 = "user.status = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_SN = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_SN",
@@ -7072,6 +7641,29 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_MD, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_MD,
+					args);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_DU_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						userModelImpl.getOriginalCompanyId(),
+						userModelImpl.getOriginalDefaultUser(),
+						userModelImpl.getOriginalStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DU_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_DU_S,
+					args);
+
+				args = new Object[] {
+						userModelImpl.getCompanyId(),
+						userModelImpl.getDefaultUser(),
+						userModelImpl.getStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_DU_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_DU_S,
 					args);
 			}
 

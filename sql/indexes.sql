@@ -696,7 +696,7 @@ create index IX_E4EFBA8D on UserTracker (userId);
 create index IX_14D8BCC0 on UserTrackerPath (userTrackerId);
 
 create index IX_BCFDA257 on User_ (companyId, createDate, modifiedDate);
-create index IX_6EF03E4E on User_ (companyId, defaultUser);
+create index IX_C6EA4F34 on User_ (companyId, defaultUser, status);
 create unique index IX_615E9F7A on User_ (companyId, emailAddress);
 create index IX_1D731F03 on User_ (companyId, facebookId);
 create index IX_EE8ABD19 on User_ (companyId, modifiedDate);

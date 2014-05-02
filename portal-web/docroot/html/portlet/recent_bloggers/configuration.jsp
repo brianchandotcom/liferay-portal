@@ -110,9 +110,9 @@ if (organizationId > 0) {
 
 <aui:script>
 	function <portlet:namespace />removeOrganization() {
-		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = "";
+		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = '';
 
-		document.getElementById('<portlet:namespace />organizationName').value = "";
+		document.getElementById('<portlet:namespace />organizationName').value = '';
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
 	}

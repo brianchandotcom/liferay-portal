@@ -33,7 +33,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 	</c:when>
 	<c:when test="<%= key == null %>">
 		<c:if test="<%= !SessionErrors.isEmpty(portletRequest) %>">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<liferay-ui:message key="your-request-failed-to-complete" />
 			</div>
 
@@ -42,7 +42,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 
 			<c:choose>
 				<c:when test="<%= translateMessage %>">

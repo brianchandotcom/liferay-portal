@@ -76,7 +76,7 @@ if (Validator.isNotNull(historyKey)) {
 		<c:otherwise>
 
 			<%
-			String wrapperCssClass = "row-fluid";
+			String wrapperCssClass = "row";
 
 			if (displayStyle.equals("steps")) {
 				wrapperCssClass = wrapperCssClass.concat(" form-steps");
@@ -102,7 +102,7 @@ if (Validator.isNotNull(historyKey)) {
 					String contentCssClass = "form-navigator-content";
 
 					if (!displayStyle.equals("steps")) {
-						contentCssClass += " span8";
+						contentCssClass += " col-md-8";
 					}
 					%>
 
@@ -111,7 +111,7 @@ if (Validator.isNotNull(historyKey)) {
 					</div>
 				</liferay-util:buffer>
 
-				<ul class="form-navigator nav nav-list span4 well">
+				<ul class="form-navigator nav nav-list col-md-4 well">
 					<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
 					<%

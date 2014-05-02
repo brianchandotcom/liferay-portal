@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/aui/col/init.jsp" %>
 
-<div class="span<%= span %> <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<div class="col-md-<%= span %> <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>

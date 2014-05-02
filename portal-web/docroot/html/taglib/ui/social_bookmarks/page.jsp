@@ -52,7 +52,7 @@
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<ul class="unstyled">
+				<ul class="list-unstyled">
 
 					<%
 					for (int i = 0; i < typesArray.length; i++) {

@@ -65,6 +65,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRITPION</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRITPION_1</td>
+	<td>xpath=(//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_2</td>
+	<td>xpath=(//tr/td[2])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_3</td>
+	<td>xpath=(//tr/td[2])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_TABLE_ACTIVE</td>
 	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[3]</td>
 	<td></td>

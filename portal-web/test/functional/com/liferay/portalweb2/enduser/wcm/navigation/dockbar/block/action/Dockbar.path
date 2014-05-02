@@ -577,6 +577,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_MY_ACCOUNT_LOCALIZATION</td>
+	<td>//a[@title='${key_myAccount}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SIGN_OUT</td>
 	<td>//li[contains(@class,'sign-out')]/a</td>
 	<td></td>

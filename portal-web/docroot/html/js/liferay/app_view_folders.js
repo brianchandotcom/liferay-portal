@@ -180,7 +180,7 @@ AUI.add(
 
 						var output = instance._portletMessageContainer;
 
-						output.removeClass('alert-error').removeClass('alert-success');
+						output.removeClass('alert-danger').removeClass('alert-success');
 
 						output.addClass('alert alert-' + type);
 

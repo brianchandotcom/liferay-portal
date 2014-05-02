@@ -88,7 +88,7 @@ AUI.add(
 			}
 
 			if (instance._noticeType == 'warning') {
-				instance._noticeClass = 'alert-error popup-alert-warning';
+				instance._noticeClass = 'alert-danger popup-alert-warning';
 			}
 
 			if (options.noticeClass) {
@@ -149,7 +149,7 @@ AUI.add(
 				}
 
 				if (instance._useCloseButton) {
-					var html =  '<button class="btn submit popup-alert-close">' +
+					var html =  '<button class="btn btn-default submit popup-alert-close">' +
 									instance._closeText +
 								'</button>';
 

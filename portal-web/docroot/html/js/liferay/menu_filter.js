@@ -11,8 +11,8 @@ AUI.add(
 		var STR_EMPTY = '';
 
 		var TPL_INPUT_FILTER = '<li class="btn-toolbar search-panel">' +
-			'<div class="control-group">' +
-				'<input class="field focus menu-item-filter search-query span12" placeholder="{placeholder}" type="text">' +
+			'<div class="form-group">' +
+				'<input class="field focus menu-item-filter search-query col-md-12" placeholder="{placeholder}" type="text">' +
 			'</div>' +
 		'</li>';
 

@@ -108,7 +108,7 @@ AUI.add(
 
 						if (Lang.isObject(responseText)) {
 							if (responseText.errorMessage) {
-								var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-error');
+								var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-danger');
 
 								instance._formNode.prepend(messageNode);
 							}
@@ -172,7 +172,7 @@ AUI.add(
 						}
 
 						if (cssClass) {
-							messageNode.removeClass('alert-error').removeClass('alert-success');
+							messageNode.removeClass('alert-danger').removeClass('alert-success');
 
 							messageNode.addClass(cssClass);
 						}

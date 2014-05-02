@@ -15,7 +15,7 @@ AUI.add(
 
 		var CSS_CHANGE_DEFAULT_LOCALE = 'lfr-translation-manager-change-default-locale';
 
-		var CSS_COMPONENT = 'unstyled';
+		var CSS_COMPONENT = 'list-unstyled';
 
 		var CSS_DEFAULT_LOCALE = 'lfr-translation-manager-default-locale';
 

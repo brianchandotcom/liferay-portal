@@ -15,7 +15,7 @@ AUI.add(
 
 		var STRINGS = 'strings';
 
-		var TPL_ERROR_MESSAGE = '<div class="alert alert-error">{0}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="alert alert-danger">{0}</div>';
 
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
@@ -48,7 +48,7 @@ AUI.add(
 					'</li>',
 				'</tpl>',
 				'<tpl if="values.error && !this.multipleFiles">',
-					'<li class="alert alert-error upload-error" data-fileId="{id}" id="{id}">',
+					'<li class="alert alert-danger upload-error" data-fileId="{id}" id="{id}">',
 						'<h4 class="upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [Liferay.Util.escapeHTML(values.name)]) ]}</h4>',
 						'<span class="error-message" title="{[ Liferay.Util.escapeHTML(values.error) ]}">{[ Liferay.Util.escapeHTML(values.error) ]}</span>',
 						'<tpl if="values.messageListItems && (values.messageListItems.length > 0)">',
@@ -88,7 +88,7 @@ AUI.add(
 						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span class="or-text">{[ this.strings.orText ]}</span></h4>',
 					'</tpl>',
 					'<span class="select-files-container" id="{$ns}selectFilesButton">',
-						'<button class="btn" type="button">{[ this.selectFilesText ]}</button>',
+						'<button class="btn btn-default" type="button">{[ this.selectFilesText ]}</button>',
 					'</span>',
 				'</div>',
 			'</div>',
@@ -115,7 +115,7 @@ AUI.add(
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
-				'<ul class="unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
+				'<ul class="list-unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
 			'</div>'
 		];
 

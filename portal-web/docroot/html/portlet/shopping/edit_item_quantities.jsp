@@ -122,13 +122,13 @@ for (String[] vArray : values) {
 
 <aui:script>
 	function <portlet:namespace />updateItemQuantities() {
-		var itemQuantities = "";
+		var itemQuantities = '';
 
 		<%
 		for (int i = 0; i < rowsCount; i++) {
 		%>
 
-			itemQuantities = itemQuantities + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value + ",";
+			itemQuantities = itemQuantities + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value + ',';
 
 		<%
 		}

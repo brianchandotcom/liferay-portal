@@ -1520,12 +1520,39 @@ public class SeleniumBuilderFileUtil {
 
 		List<Attribute> attributes = propertyElement.attributes();
 
+		String propertyName = propertyElement.attributeValue("name");
+
+		if (propertyName.equals("ignore.errors")) {
+			String propertyDelimiter = propertyElement.attributeValue(
+				"delimiter");
+
+			if (propertyDelimiter != null) {
+				if (propertyDelimiter.equals("")) {
+					throwValidationException(
+						1006, fileName, propertyElement, "delimiter");
+				}
+			}
+
+			String propertyValue = propertyElement.attributeValue("value");
+
+			if (Validator.isNull(propertyValue)) {
+				throwValidationException(
+					1006, fileName, propertyElement, "value");
+			}
+		}
+
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
+			String attributeValue = attribute.getValue();
 
-			if (attributeName.equals("line-number") ||
-				attributeName.equals("name") ||
-				attributeName.equals("value")) {
+			if (attributeName.equals("delimiter") &&
+				propertyName.equals("ignore.errors")) {
+
+				continue;
+			}
+			else if (attributeName.equals("line-number") ||
+					 attributeName.equals("name") ||
+					 attributeName.equals("value")) {
 
 				continue;
 			}
@@ -1929,7 +1956,8 @@ public class SeleniumBuilderFileUtil {
 
 	private static List<String> _allowedNullAttributes = ListUtil.fromArray(
 		new String[] {
-			"arg1", "arg2", "message", "string", "substring", "value"
+			"arg1", "arg2", "delimiter", "message", "string", "substring",
+			"value"
 		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
@@ -1945,10 +1973,10 @@ public class SeleniumBuilderFileUtil {
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
-			"definition", "description", "echo", "else", "elseif", "equals",
-			"execute", "fail", "for", "if", "isset", "not", "or", "property",
-			"set-up", "take-screenshot", "td", "tear-down", "then", "tr",
-			"while", "var"
+			"definition", "delimiter", "description", "echo", "else", "elseif",
+			"equals", "execute", "fail", "for", "if", "isset", "not", "or",
+			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
+			"tr", "while", "var"
 		});
 	private static List<String> _testrayAvailableComponentNames;
 

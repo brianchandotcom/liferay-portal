@@ -1338,7 +1338,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
+	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" known-issues="LIFERAYQA-6795" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

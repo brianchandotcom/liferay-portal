@@ -122,7 +122,7 @@
 		<if>
 			<equals arg1="${localizedTitle}" arg2="true" />
 			<then>
-				<var name="key_languageKey" value="${defaultSiteLanguageKey}" />
+				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD_LOCALIZED" value1="${webContentTitle}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />

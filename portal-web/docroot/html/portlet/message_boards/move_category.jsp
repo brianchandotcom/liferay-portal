@@ -77,9 +77,9 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 <aui:script>
 	function <portlet:namespace />removeCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = "<%= MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>";
+		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = '<%= MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>';
 
-		document.getElementById('<portlet:namespace />parentCategoryName').value = "";
+		document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', true);
 	}

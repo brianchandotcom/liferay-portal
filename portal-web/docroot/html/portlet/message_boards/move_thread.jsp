@@ -102,10 +102,10 @@ boolean splitThread = false;
 
 	function <portlet:namespace />toggleExplanationPost() {
 		if (document.getElementById('<portlet:namespace />addExplanationPostCheckbox').checked) {
-			document.getElementById('<portlet:namespace />explanationPost').style.display = "";
+			document.getElementById('<portlet:namespace />explanationPost').style.display = '';
 		}
 		else {
-			document.getElementById('<portlet:namespace />explanationPost').style.display = "none";
+			document.getElementById('<portlet:namespace />explanationPost').style.display = 'none';
 		}
 	}
 </aui:script>

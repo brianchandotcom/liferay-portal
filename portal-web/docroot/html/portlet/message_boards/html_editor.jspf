@@ -49,7 +49,7 @@ if (Validator.isNull(body)) {
 	}
 
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(body) %>";
+		return '<%= UnicodeFormatter.toString(body) %>';
 	}
 </aui:script>
 

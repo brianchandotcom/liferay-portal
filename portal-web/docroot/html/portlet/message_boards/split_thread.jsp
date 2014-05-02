@@ -140,18 +140,18 @@ boolean splitThread = true;
 	function <portlet:namespace />selectCategory(categoryId, categoryName) {
 		document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = categoryId;
 
-		var nameEl = document.getElementById("<portlet:namespace />categoryName");
+		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
-		nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + categoryId;
-		nameEl.innerHTML = categoryName + "&nbsp;";
+		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+		nameEl.innerHTML = categoryName + '&nbsp;';
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		if (document.getElementById("<portlet:namespace />addExplanationPostCheckbox").checked) {
-			document.getElementById("<portlet:namespace />explanationPost").style.display = "";
+		if (document.getElementById('<portlet:namespace />addExplanationPostCheckbox').checked) {
+			document.getElementById('<portlet:namespace />explanationPost').style.display = '';
 		}
 		else {
-			document.getElementById("<portlet:namespace />explanationPost").style.display = "none";
+			document.getElementById('<portlet:namespace />explanationPost').style.display = 'none';
 		}
 	}
 </aui:script>

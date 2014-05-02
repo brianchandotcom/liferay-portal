@@ -154,12 +154,12 @@
 							%>
 
 							<%
-							if (portletClassName.equals(AlloyPortlet.class.getName())) {
+							if (portletClassName.equals("com.liferay.alloy.mvc.AlloyPortlet")) {
 								PortletConfig alloyPortletConfig = PortletConfigFactoryUtil.create(portlet, application);
 
 								PortletContext alloyPortletContext = alloyPortletConfig.getPortletContext();
 
-								if (alloyPortletContext.getAttribute(BaseAlloyControllerImpl.TOUCH + portlet.getRootPortletId()) != Boolean.FALSE) {
+								if (alloyPortletContext.getAttribute("com.liferay.alloy.mvc.BaseAlloyControllerImpl#TOUCH#" + portlet.getRootPortletId()) != Boolean.FALSE) {
 							%>
 
 								<iframe height="0" src="<%= portletURL %>" style="display: none; visibility: hidden;" width="0"></iframe>

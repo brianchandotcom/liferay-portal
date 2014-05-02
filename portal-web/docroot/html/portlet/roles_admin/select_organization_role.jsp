@@ -170,7 +170,7 @@ if (step == 1) {
 						portletURL.setParameter("step", "2");
 						%>
 
-						submitForm(document.<portlet:namespace />selectOrganizationRoleFm, "<%= portletURL.toString() %>");
+						submitForm(document.<portlet:namespace />selectOrganizationRoleFm, '<%= portletURL.toString() %>');
 					},
 					'.organization-selector-button'
 				);

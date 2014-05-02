@@ -123,7 +123,7 @@ if (step == 1) {
 						portletURL.setParameter("step", "2");
 						%>
 
-						submitForm(document.<portlet:namespace />selectSiteRoleFm, "<%= portletURL.toString() %>");
+						submitForm(document.<portlet:namespace />selectSiteRoleFm, '<%= portletURL.toString() %>');
 					},
 					'.group-selector-button'
 				);

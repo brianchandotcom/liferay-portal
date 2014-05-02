@@ -112,8 +112,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 <aui:script>
 	function <portlet:namespace />removeGroup(pos, target) {
-		var selectedGroupIds = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value.split(",");
-		var selectedGroupNames = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value.split("@@");
+		var selectedGroupIds = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value.split(',');
+		var selectedGroupNames = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value.split('@@');
 
 		selectedGroupIds.splice(pos, 1);
 		selectedGroupNames.splice(pos, 1);
@@ -129,7 +129,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value = selectedGroupIds.join(',');
 		document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value = selectedGroupNames.join('@@');
 
-		var nameEl = document.getElementById("<portlet:namespace />groupHTML" + target);
+		var nameEl = document.getElementById('<portlet:namespace />groupHTML' + target);
 
 		var groupsHTML = '';
 
@@ -397,8 +397,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		function() {
 			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "actions";
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= portletURL.toString() %>";
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'actions';
+			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= portletURL.toString() %>';
 			document.<portlet:namespace />fm.<portlet:namespace />selectedTargets.value = selectedTargets;
 
 			submitForm(document.<portlet:namespace />fm);

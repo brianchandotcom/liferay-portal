@@ -199,7 +199,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_ADD_BUTTON</td>
-	<td>//button[contains(.,'Add')]</td>
+	<td>//a[@id='_130_addButton']</td>
 	<td></td>
 </tr>
 <tr>

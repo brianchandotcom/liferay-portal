@@ -6,6 +6,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Page#tearDownPG" />
+
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
@@ -200,6 +202,53 @@
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+		</execute>
+	</command>
+
+	<command name="BreadcrumbLinkPointsToLocalhost" priority="4">
+		<property name="custom.properties" value="breadcrumb.show.guest.group=true" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://127.0.0.1:8080/web/site-name" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Site Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewLinkPG">
+			<var name="sitePageURL" value="http://127.0.0.1:8080/web/site-name/site-page-name" />
 		</execute>
 	</command>
 </definition>

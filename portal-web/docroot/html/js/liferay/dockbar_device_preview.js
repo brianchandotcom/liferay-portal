@@ -128,11 +128,6 @@ AUI.add(
 
 						var eventHandles = instance._eventHandles;
 
-						eventHandles.push(
-							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
-							instance._devicePreviewContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
-						);
-
 						var resizeHandle = A.getWin().on(
 							'resize',
 							function(event) {
@@ -142,6 +137,12 @@ AUI.add(
 									resizeHandle.detach();
 								}
 							}
+						);
+
+						eventHandles.push(
+							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
+							instance._devicePreviewContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance),
+							resizeHandle
 						);
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);

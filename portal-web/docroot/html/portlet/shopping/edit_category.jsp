@@ -66,11 +66,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 			%>
 
-			<portlet:renderURL var="viewCategoryURL">
-				<portlet:param name="struts_action" value="/shopping/view" />
-				<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-			</portlet:renderURL>
-
 			<div class="control-group">
 				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 

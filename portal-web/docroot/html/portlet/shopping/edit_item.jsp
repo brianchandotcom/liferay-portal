@@ -121,21 +121,16 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			}
 			%>
 
-			<portlet:renderURL var="viewCategoryURL">
-				<portlet:param name="struts_action" value="/shopping/view" />
-				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-			</portlet:renderURL>
-
 			<div class="control-group">
 				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
 
-				<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="struts_action" value="/shopping/select_category" />
 					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 				</portlet:renderURL>
 
 				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
+				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
 				%>
 
 				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />

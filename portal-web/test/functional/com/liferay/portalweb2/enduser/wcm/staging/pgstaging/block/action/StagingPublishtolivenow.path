@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_BUTTON</td>
+	<td>//a[@title='Custom']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_BUTTON</td>
+	<td>//a[@title='Publish Templates']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -164,7 +174,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
-	<td>//label[contains(.,'1 Deletions')]/input[2]</td>
+	<td>//label[contains(.,'Deletions')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -261,6 +271,63 @@
 <tr>
 	<td>SCHEDULED_TABLE_END_DATE</td>
 	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PUBLISH_TEMPLATES-->
+<tr>
+	<td>PUBLISH_TEMPLATES_NEW_BUTTON</td>
+	<td>//button[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
+	<td>//input[@id='_88_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_88_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PUBLISH_TEMPLATES_TABLE_NAME-->
+<tr>
+	<td>PUBLISH_TEMPLATES_TABLE_NAME</td>
+	<td>//div[@id='_88_savedConfigurations']//tr[contains(.,'${key_publishTemplateName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_TABLE_DESCRIPTION</td>
+	<td>//div[@id='_88_savedConfigurations']//tr[contains(.,'${key_publishTemplateName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_BUTTON</td>
+	<td>//div[@id='_88_savedConfigurations']//tr[contains(.,'${key_publishTemplateName}')]/td/span/a[contains(.,'Publish to Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
+	<td>//div[@id='_88_savedConfigurations']//tr[contains(.,'${key_publishTemplateName}')]//a/span[contains(.,'Recycle Bin')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -447,7 +447,6 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertClick" locator-key1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 
 		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />

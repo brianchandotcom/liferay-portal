@@ -51,32 +51,32 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_FOLDER</td>
-	<td>//a[contains(@id,'_menu_folder')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
-	<td>//a[contains(@id,'_menu_basic-document')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_CONTRACT</td>
-	<td>//a[contains(@id,'_menu_contract')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_MARKETING_BANNER</td>
-	<td>//a[contains(@id,'_menu_marketing-banner')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ONLINE_TRAINING</td>
-	<td>//a[contains(@id,'_menu_online-training')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Online Training')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SALES_PRESENTATION</td>
-	<td>//a[contains(@id,'_menu_sales-presentation')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_documentTitle}')]/td/input[@value='Choose']</td>
+	<td>//tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

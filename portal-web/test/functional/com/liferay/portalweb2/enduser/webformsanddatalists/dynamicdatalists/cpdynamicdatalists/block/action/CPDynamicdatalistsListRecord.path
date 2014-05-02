@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>EDIT_BUTTON</td>
-	<td>//button[contains(.,'Edit')]</td>
+	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -95,6 +95,15 @@
 		<execute action="CPPagetemplates#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
 
+	<command name="viewDefaultDataTranslationCP">
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_1" value1="${blogTranslation}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_2" value1="${contentDisplayPageTranslation}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_3" value1="${wikiTranslation}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRITPION_1" value1="${blogDescriptionTranslation}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${contentDisplayPageDescriptionTranslation}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRIPTION_3" value1="${wikiDescripionTranslation}" />
+	</command>
+
 	<command name="viewDefaultPortletPG">
 		<if>
 			<equals arg1="${pageTemplateName}" arg2="Blog" />

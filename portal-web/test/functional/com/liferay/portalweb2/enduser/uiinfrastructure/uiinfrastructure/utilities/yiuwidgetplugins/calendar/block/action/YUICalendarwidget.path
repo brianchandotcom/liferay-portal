@@ -13,6 +13,41 @@
 	<td></td>
 	<td>YUICalendarwidget</td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_POPUP</td>
+	<td>//div[contains(@class,'datepicker-popover')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_MONTH_ARROW</td>
+	<td>//div[contains(@class,'datepicker-popover')]//a[contains(@class,'yui3-calendarnav-prevmonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_MONTH_ARROW</td>
+	<td>//div[contains(@class,'datepicker-popover')]//a[contains(@class,'yui3-calendarnav-nextmonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_SPECIFIC_MONTH_YEAR</td>
+	<td>//div[contains(@class,'datepicker-popover')]//div[contains(@class,'calendar-header-label') and contains(.,'${key_month} ${key_year}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_SPECIFIC_DATE</td>
+	<td>//div[contains(@class,'datepicker-popover')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day') and contains(.,'${key_date}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_SPECIFIC_DATE_SELECTED</td>
+	<td>//div[contains(@class,'datepicker-popover')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day-selected') and contains(.,'${key_date}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

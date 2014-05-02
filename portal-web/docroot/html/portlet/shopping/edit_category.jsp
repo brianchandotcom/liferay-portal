@@ -114,7 +114,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 <aui:script>
 	function <portlet:namespace />saveCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (category == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (category == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}
@@ -125,7 +125,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		function() {
 			var A = AUI();
 
-			document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = "<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>";
+			document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = '<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>';
 
 			document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 

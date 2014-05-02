@@ -108,40 +108,42 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 	<aui:fieldset>
 		<c:if test="<%= item != null %>">
+			<aui:field-wrapper label="category">
 
-			<%
-			String categoryName = "";
+				<%
+				String categoryName = "";
 
-			if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-				ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
+				if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+					ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
 
-				category = category.toEscapedModel();
+					category = category.toEscapedModel();
 
-				categoryName = category.getName();
-			}
-			%>
+					categoryName = category.getName();
+				}
+				%>
 
-			<portlet:renderURL var="viewCategoryURL">
-				<portlet:param name="struts_action" value="/shopping/view" />
-				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-			</portlet:renderURL>
-
-			<div class="control-group">
-				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
-
-				<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/shopping/select_category" />
+				<portlet:renderURL var="viewCategoryURL">
+					<portlet:param name="struts_action" value="/shopping/view" />
 					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 				</portlet:renderURL>
 
-				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-				%>
+				<div class="input-append">
+					<liferay-ui:input-resource id="categoryName" url="<%= categoryName %>" />
 
-				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+					<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/shopping/select_category" />
+						<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+					</portlet:renderURL>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
-			</div>
+					<%
+					String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
+					%>
+
+					<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+
+					<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+				</div>
+			</aui:field-wrapper>
 		</c:if>
 
 		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />
@@ -512,21 +514,21 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 <aui:script>
 	function <portlet:namespace />addField() {
-		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />fields";
+		document.<portlet:namespace />fm.scroll.value = '<portlet:namespace />fields';
 		document.<portlet:namespace />fm.<portlet:namespace />fieldsCount.value = <%= fieldsCount + 1 %>;
 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />addPrice() {
-		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />prices";
+		document.<portlet:namespace />fm.scroll.value = '<portlet:namespace />prices';
 		document.<portlet:namespace />fm.<portlet:namespace />pricesCount.value = <%= pricesCount + 1 %>;
 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />deleteField(i) {
-		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />fields";
+		document.<portlet:namespace />fm.scroll.value = '<portlet:namespace />fields';
 		document.<portlet:namespace />fm.<portlet:namespace />fieldsCount.value = <%= fieldsCount - 1 %>;
 		document.<portlet:namespace />fm.<portlet:namespace />fieldId.value = i;
 
@@ -538,7 +540,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			alert("<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-or-deactivate-a-default-price") %>");
 		}
 		else if (document.<portlet:namespace />fm.<portlet:namespace />pricesCount.value > 1) {
-			document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />prices";
+			document.<portlet:namespace />fm.scroll.value = '<portlet:namespace />prices';
 			document.<portlet:namespace />fm.<portlet:namespace />pricesCount.value = <%= pricesCount - 1 %>;
 			document.<portlet:namespace />fm.<portlet:namespace />priceId.value = i;
 
@@ -547,34 +549,34 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	}
 
 	function <portlet:namespace />editItemQuantities() {
-		var itemQuantitiesURL = "<liferay-portlet:renderURL anchor="false" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>&<portlet:namespace />fieldsQuantities=" + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
+		var itemQuantitiesURL = '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" anchor="false"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>&<portlet:namespace />fieldsQuantities=' + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
 
 		<%
 		for (int i = 0; i < fieldsCount; i++) {
 		%>
 
-			itemQuantitiesURL += "&<portlet:namespace />n<%= i %>=" + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />fieldName<%= i %>.value);
-			itemQuantitiesURL += "&<portlet:namespace />v<%= i %>=" + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />fieldValues<%= i %>.value);
+			itemQuantitiesURL += '&<portlet:namespace />n<%= i %>=' + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />fieldName<%= i %>.value);
+			itemQuantitiesURL += '&<portlet:namespace />v<%= i %>=' + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />fieldValues<%= i %>.value);
 
 		<%
 		}
 		%>
 
-		var itemQuantitiesWindow = window.open(itemQuantitiesURL, "itemQuantities", "directories=no,height=400,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=300");
+		var itemQuantitiesWindow = window.open(itemQuantitiesURL, 'itemQuantities', 'directories=no,height=400,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=300');
 
-		void("");
+		void('');
 
 		itemQuantitiesWindow.focus();
 	}
 
 	function <portlet:namespace />removeCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = "<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>";
+		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = '<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>';
 
 		document.getElementById('<portlet:namespace />categoryName').value = '';
 	}
 
 	function <portlet:namespace />saveItem() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (item == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (item == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

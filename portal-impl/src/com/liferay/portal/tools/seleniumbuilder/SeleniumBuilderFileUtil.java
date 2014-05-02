@@ -1521,34 +1521,41 @@ public class SeleniumBuilderFileUtil {
 		List<Attribute> attributes = propertyElement.attributes();
 
 		String propertyName = propertyElement.attributeValue("name");
-		String valueString = propertyElement.attributeValue("value");
+
+		if (propertyName.equals("ignore.errors")) {
+			String propertyDelimiter = propertyElement.attributeValue(
+				"delimiter");
+
+			if (propertyDelimiter != null) {
+				if (propertyDelimiter.equals("")) {
+					throwValidationException(
+						1006, fileName, propertyElement, "delimiter");
+				}
+			}
+
+			String propertyValue = propertyElement.attributeValue("value");
+
+			if (Validator.isNull(propertyValue)) {
+				throwValidationException(
+					1006, fileName, propertyElement, "value");
+			}
+		}
 
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
 			String attributeValue = attribute.getValue();
 
 			if (attributeName.equals("delimiter") &&
-				propertyName.equals("ignore.errors") &&
-				!valueString.isEmpty()) {
-
-				continue;
-			}
-
-			else if (attributeName.equals("value") &&
-				attributeValue.isEmpty() &&
 				propertyName.equals("ignore.errors")) {
 
-				throwValidationException(
-					1006, fileName, propertyElement, attributeName);
+				continue;
 			}
-
 			else if (attributeName.equals("line-number") ||
-				attributeName.equals("name") ||
-				attributeName.equals("value")){
+					 attributeName.equals("name") ||
+					 attributeName.equals("value")) {
 
 				continue;
 			}
-
 			else {
 				throwValidationException(
 					1005, fileName, propertyElement, attributeName);

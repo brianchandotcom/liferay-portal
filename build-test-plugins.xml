@@ -4,11 +4,26 @@
 	<import file="build-test.xml" />
 
 	<target name="deploy-simple-server-plugins">
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=${app.server.type}
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+app.server.jboss.dir=${app.server.dir}
 
 auto.deploy.dir=${liferay.home}/deploy
 
 plugins.includes=${plugins.includes}</echo>
+			</then>
+			<else>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+
+auto.deploy.dir=${liferay.home}/deploy
+
+plugins.includes=${plugins.includes}</echo>
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${java.security}" arg2="true" />

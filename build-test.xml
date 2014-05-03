@@ -29,9 +29,6 @@
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
-	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
-	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
-
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
@@ -1077,6 +1074,10 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="generate-test-properties" depends="check-config">
+		<property file="${project.dir}/test.generated.properties" />
+
+		<var name="mobile.device.type" unset="true" />
+
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
@@ -1139,6 +1140,15 @@ create database lportal2 character set utf8;</echo>
 		</loadfile>
 
 		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
+
+		<property file="${project.dir}/test.${user.name}.properties" />
+		<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
+		<property file="${project.dir}/test.${env.HOST}.properties" />
+		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
+		<property file="${project.dir}/test.properties" />
+
+		<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
+		<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
 	</target>
 
 	<target name="merge-jenkins-test-results">
@@ -1734,9 +1744,7 @@ tck.url=true</echo>
 		</replace>
 	</target>
 
-	<target name="prepare-selenium">
-		<ant dir="portal-impl" target="build-selenium-new-test-case" />
-
+	<target name="prepare-selenium" depends="generate-test-properties">
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
 		<if>

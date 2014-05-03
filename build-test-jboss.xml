@@ -29,6 +29,8 @@
 
 		<antcall target="revert-test-properties" />
 
+		<ant dir="portal-impl" target="build-selenium-new-test-case" />
+
 		<antcall target="prepare-virtual-host-name-properties" />
 
 		<antcall target="start-selenium" />

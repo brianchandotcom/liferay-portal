@@ -60,7 +60,7 @@
 
 		<execute action="PGCalendar#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 
-		<execute action="PGCalendarDeleteRecurringEvent#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
+		<execute action="PGCalendarRecurringEventDialogBox#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -90,7 +90,7 @@
 		<execute action="PGCalendar#type" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
 		<execute action="PGCalendar#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" />
 
-		<execute action="PGCalendarDeleteRecurringEvent#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
+		<execute action="PGCalendarRecurringEventDialogBox#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 

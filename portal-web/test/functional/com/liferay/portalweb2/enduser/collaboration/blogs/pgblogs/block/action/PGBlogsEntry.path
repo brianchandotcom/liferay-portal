@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>ENTRY_RELATED_ASSETS_LINK_IMAGE</td>
-	<td>//div[@class='entry-links']//a/img</td>
+	<td>//div[@class='entry-links']//a/i</td>
 	<td></td>
 </tr>
 <tr>

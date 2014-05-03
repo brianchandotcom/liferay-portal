@@ -317,7 +317,7 @@
 </tr>
 <tr>
 	<td>ENTRY_RELATED_ASSETS_LINK_IMAGE</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/img</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/i</td>
 	<td></td>
 </tr>
 <tr>

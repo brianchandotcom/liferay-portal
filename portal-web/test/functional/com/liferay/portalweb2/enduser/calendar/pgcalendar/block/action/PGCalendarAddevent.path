@@ -362,6 +362,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIZATION_ADD_TAGS_BUTTON</td>
+	<td>//button[contains(@type,'button') and contains(@title,'Add Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_SELECT_BUTTON</td>
+	<td>//button[contains(@type,'button') and contains(@title,'Select Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_SUGGESTIONS_BUTTON</td>
+	<td>//button[contains(@type,'button') and contains(@title,'Suggestions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAG_SPECIFIC</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_REMOVE_TAG_BUTTON_SPECIFIC</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]/..//i[@class='icon icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

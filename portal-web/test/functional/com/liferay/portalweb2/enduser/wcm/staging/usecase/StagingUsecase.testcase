@@ -2878,7 +2878,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="StagingRemoteDMViaGlobalScope" priority="5">
+	<command name="StagingRemoteDMViaGlobalScope" known-issues="LIFERAYQA-8936" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
@@ -3006,7 +3006,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingRemoteLiveWebContent" priority="5">
+	<command name="StagingRemoteLiveWebContent" known-issues="LPS-46086" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">

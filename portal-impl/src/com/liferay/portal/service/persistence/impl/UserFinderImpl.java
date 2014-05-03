@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,9 +62,6 @@ public class UserFinderImpl
 
 	public static final String COUNT_BY_USER =
 		UserFinder.class.getName() + ".countByUser";
-
-	public static final String COUNT_BY_C_FN_MN_LN_SN_EA_S =
-		UserFinder.class.getName() + ".countByC_FN_MN_LN_SN_EA_S";
 
 	public static final String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
 		UserFinder.class.getName() + ".findByNoAnnouncementsDeliveries";
@@ -856,8 +854,8 @@ public class UserFinderImpl
 				}
 			}
 
-			List<Long> userIds = (List<Long>)QueryUtil.list(
-				q, getDialect(), start, end);
+			Set<Long> userIds = new LinkedHashSet<Long>(
+				(List<Long>)QueryUtil.list(q, getDialect(), start, end));
 
 			List<User> users = new ArrayList<User>(userIds.size());
 
@@ -883,7 +881,7 @@ public class UserFinderImpl
 		String[] emailAddresses, int status,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		String sql = CustomSQLUtil.get(COUNT_BY_C_FN_MN_LN_SN_EA_S);
+		String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
 
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);

@@ -1355,26 +1355,6 @@
 				(User_.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.countByC_FN_MN_LN_SN_EA_S">
-		<![CDATA[
-			SELECT
-				DISTINCT User_.userId AS userId
-			FROM
-				User_
-			[$JOIN$]
-			WHERE
-				[$WHERE$]
-				(User_.companyId = ?) AND
-				(User_.defaultUser = ?) AND
-				(
-					(lower(User_.firstName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(User_.middleName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(User_.lastName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(User_.emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
-				) AND (User_.status = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoAnnouncementsDeliveries">
 		<![CDATA[
 			SELECT
@@ -1435,7 +1415,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT
-				DISTINCT User_.userId AS userId, User_.screenName AS screenName, User_.emailAddress AS emailAddress, User_.firstName AS firstName, User_.middleName AS middleName, User_.lastName AS lastName, User_.jobTitle AS jobTitle, User_.loginDate AS loginDate
+				DISTINCT User_.userId AS userId
 			FROM
 				User_
 			[$JOIN$]

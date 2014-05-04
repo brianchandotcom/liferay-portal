@@ -150,7 +150,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							else {
 								var message = null;
 
-								if (id && (id.toString().split(",").length > 1)) {
+								if (id && (id.toString().split(',').length > 1)) {
 									message = '<%= UnicodeLanguageUtil.get(pageContext, "one-or-more-organizations-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organizations-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 								else {
@@ -174,17 +174,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	}
 
 	function <portlet:namespace />doDeleteOrganizations(organizationIds) {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />organizationsRedirect.value;
 		document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = organizationIds;
 
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />search() {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "";
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
 
 		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
 	}
@@ -227,13 +227,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		window,
 		'<portlet:namespace />deleteUsers',
 		function(cmd) {
-			if (((cmd == "<%= Constants.DEACTIVATE %>") && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == "<%= Constants.DELETE %>") && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == "<%= Constants.RESTORE %>")) {
-				document.<portlet:namespace />fm.method = "post";
+			if (((cmd == '<%= Constants.DEACTIVATE %>') && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == '<%= Constants.DELETE %>') && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == '<%= Constants.RESTORE %>')) {
+				document.<portlet:namespace />fm.method = 'post';
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />usersRedirect.value;
 				document.<portlet:namespace />fm.<portlet:namespace />deleteUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUserCheckbox');
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']

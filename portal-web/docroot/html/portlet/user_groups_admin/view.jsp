@@ -79,7 +79,7 @@ String portletURLString = portletURL.toString();
 							else {
 								var message = null;
 
-								if (id && (id.toString().split(",").length > 1)) {
+								if (id && (id.toString().split(',').length > 1)) {
 									message = '<%= UnicodeLanguageUtil.get(pageContext, "one-or-more-user-groups-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-groups-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 								else {

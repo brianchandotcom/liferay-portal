@@ -16,8 +16,6 @@ package com.liferay.portlet.journal.util.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**

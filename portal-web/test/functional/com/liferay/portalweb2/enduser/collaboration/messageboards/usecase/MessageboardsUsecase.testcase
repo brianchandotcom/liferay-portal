@@ -1142,7 +1142,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSpecifiedViewPermissionsOfQuickReplyThread" priority="4">
+	<command name="ViewCorrectViewPermissionsInMessageBoardsQuickReplyInPrivateSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

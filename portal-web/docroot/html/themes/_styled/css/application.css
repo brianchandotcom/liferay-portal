@@ -77,6 +77,10 @@
 	margin: 2px 0;
 }
 
+.yui3-dd-proxy {
+	z-index: 1110 !important;
+}
+
 /* ---------- Portal tool tips ---------- */
 
 .tooltip {

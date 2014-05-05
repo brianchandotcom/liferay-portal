@@ -64,12 +64,10 @@ catch (NoSuchArticleException nsae) {
 
 		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
-		if (ddmStructure != null) {
-			ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+		ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-			if (article.getGroupId() != ddmStructure.getGroupId()) {
-				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-			}
+		if (article.getGroupId() != ddmStructure.getGroupId()) {
+			ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 		}
 
 		if (!ddmTemplates.isEmpty()) {

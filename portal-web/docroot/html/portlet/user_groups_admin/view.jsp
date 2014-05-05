@@ -79,7 +79,7 @@ String portletURLString = portletURL.toString();
 							else {
 								var message = null;
 
-								if (id && (id.toString().split(",").length > 1)) {
+								if (id && (id.toString().split(',').length > 1)) {
 									message = '<%= UnicodeLanguageUtil.get(pageContext, "one-or-more-user-groups-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-groups-by-automatically-unassociating-the-deactivated-users") %>';
 								}
 								else {
@@ -103,12 +103,12 @@ String portletURLString = portletURL.toString();
 	}
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />userGroupsRedirect.value;
 		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = userGroupIds;
 
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
 	}
 
 	Liferay.provide(

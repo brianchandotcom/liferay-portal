@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NullSafeStringComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TableNameOrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -432,39 +435,65 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		StringBundler query, String entityAlias,
 		OrderByComparator orderByComparator, boolean sqlQuery) {
 
+		TableNameOrderByComparator tableNameOrderByComparator;
+
+		if (orderByComparator instanceof TableNameOrderByComparator) {
+			tableNameOrderByComparator =
+				(TableNameOrderByComparator)orderByComparator;
+
+			tableNameOrderByComparator =
+				new TableNameOrderByComparator(
+					tableNameOrderByComparator.getDecoratedComparator(),
+					entityAlias);
+		}
+		else {
+			tableNameOrderByComparator =
+				new TableNameOrderByComparator(orderByComparator, entityAlias);
+		}
+
+		String orderByContent = tableNameOrderByComparator.getOrderBy();
+
+		if (sqlQuery) {
+			orderByContent = fixBadColumnNames(orderByContent);
+		}
+
 		query.append(ORDER_BY_CLAUSE);
+		query.append(orderByContent);
+	}
 
-		String[] orderByFields = orderByComparator.getOrderByFields();
+	protected String fixBadColumnNames(String orderBy) {
+		Set<String> badColumnNames = getBadColumnNames();
+		String[] fields = StringUtil.split(orderBy, CharPool.COMMA);
+		StringBundler fixedOrderBy = new StringBundler(fields.length * 1);
 
-		for (int i = 0; i < orderByFields.length; i++) {
-			query.append(entityAlias);
-			query.append(orderByFields[i]);
+		for (int i = 0; i < fields.length; ++i) {
+			String field = fields[i];
 
-			if (sqlQuery) {
-				Set<String> badColumnNames = getBadColumnNames();
+			String[] components = StringUtil.split(field, CharPool.SPACE);
+			String orderByField = components[0];
+			String orderByDirection = components[1];
 
-				if (badColumnNames.contains(orderByFields[i])) {
-					query.append(StringPool.UNDERLINE);
-				}
+			components = StringUtil.split(orderByField, CharPool.PERIOD);
+			String orderByTableName = components[0];
+			String orderByFieldName = components[1];
+
+			fixedOrderBy.append(orderByTableName);
+			fixedOrderBy.append(StringPool.PERIOD);
+			fixedOrderBy.append(orderByFieldName);
+
+			if (badColumnNames.contains(orderByFieldName)) {
+				fixedOrderBy.append(StringPool.UNDERLINE);
 			}
 
-			if ((i + 1) < orderByFields.length) {
-				if (orderByComparator.isAscending(orderByFields[i])) {
-					query.append(ORDER_BY_ASC_HAS_NEXT);
-				}
-				else {
-					query.append(ORDER_BY_DESC_HAS_NEXT);
-				}
-			}
-			else {
-				if (orderByComparator.isAscending(orderByFields[i])) {
-					query.append(ORDER_BY_ASC);
-				}
-				else {
-					query.append(ORDER_BY_DESC);
-				}
+			fixedOrderBy.append(StringPool.SPACE);
+			fixedOrderBy.append(orderByDirection);
+
+			if (i <  (fields.length - 1)) {
+				fixedOrderBy.append(StringPool.COMMA);
 			}
 		}
+
+		return fixedOrderBy.toString();
 	}
 
 	protected Set<String> getBadColumnNames() {

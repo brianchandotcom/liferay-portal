@@ -78,6 +78,17 @@ public class TableNameOrderByComparatorTest {
 	}
 
 	@Test
+	public void testOrderByTableNameWithPeriodReturnsDecoratedTableName() {
+		_tableNameOrderByComparator = new TableNameOrderByComparator(
+			new TestableOrderByComparator("field"), "table.");
+
+		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
+		String expectedOrderBy = "table.field";
+
+		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+	}
+
+	@Test
 	public void testOrderByWithSingleTableNameReturnsOriginalTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new TestableOrderByComparator("table1.field1"), "table2");

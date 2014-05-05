@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.resiliency.spi;
 
-import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
-
 import java.rmi.RemoteException;
 
 import java.util.Set;
@@ -31,10 +29,9 @@ public interface SPIRegistry {
 
 	public Set<String> getExcludedPortletIds();
 
-	public SPI getPortletSPI(String portletId) throws PortalResiliencyException;
+	public SPI getPortletSPI(String portletId);
 
-	public SPI getServletContextSPI(String servletContextName)
-		throws PortalResiliencyException;
+	public SPI getServletContextSPI(String servletContextName);
 
 	public void registerSPI(SPI spi) throws RemoteException;
 

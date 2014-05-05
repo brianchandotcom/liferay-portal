@@ -96,7 +96,7 @@ catch (Exception e) {
 
 			<c:if test="<%= (feedImage != null) && showFeedImage %>">
 				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= feedImageLink %>" target="_new" title="<%= feedImage.getTitle() %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= feedImageURL %>" /></aui:a>
+					<aui:a href="<%= HtmlUtil.escape(feedImageLink) %>" target="_new"  title="<%= feedImage.getTitle() %>">><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escape(feedImageURL) %>" /></aui:a>
 				</div>
 			</c:if>
 
@@ -163,7 +163,7 @@ catch (Exception e) {
 							</c:if>
 
 							<c:if test="<%= showFeedItemAuthor && Validator.isNotNull(author) %>">
-								<span class="feed-entry-author"><%= author %></span>
+								<span class="feed-entry-author"><%= HtmlUtil.escape(author) %></span>
 							</c:if>
 
 							<c:if test="<%= Validator.isNotNull(enclosureLink) %>">

@@ -590,6 +590,7 @@
 		<action path="/dynamic_data_list_display/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
 			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
+			<forward name="portlet.dynamic_data_lists.update_translation_redirect" path="portlet.dynamic_data_lists.update_translation_redirect" />
 		</action>
 
 		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
@@ -614,6 +615,7 @@
 		<action path="/dynamic_data_lists/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
 			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
+			<forward name="portlet.dynamic_data_lists.update_translation_redirect" path="portlet.dynamic_data_lists.update_translation_redirect" />
 		</action>
 
 		<action path="/dynamic_data_lists/edit_record_file" type="com.liferay.portlet.dynamicdatalists.action.EditRecordFileAction" />

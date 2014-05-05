@@ -176,7 +176,7 @@ if (translating) {
 								Liferay.Util.openWindow(
 									{
 										cache: false,
-										id: event.newVal,
+										id: '<portlet:namespace />' + event.newVal,
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "record-translation") %>',
 
 										<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="translateRecordURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -240,9 +240,17 @@ if (translating) {
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= translating %>">
-					<aui:button name="saveTranslationButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="add-translation" />
+					<aui:button name="saveTranslationButton" onClick='<%= renderResponse.getNamespace() + "saveTranslation(event);" %>' type="submit" value="add-translation" />
 
 					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+
+					<aui:script>
+						function <portlet:namespace />saveTranslation (event) {
+							<portlet:namespace />setWorkflowAction(false);
+
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.TRANSLATE %>";
+						}
+					</aui:script>
 				</c:when>
 				<c:otherwise>
 
@@ -282,6 +290,19 @@ if (translating) {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
 		}
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />postProcessTranslation',
+		function(languageId) {
+			if (<%= !translating %>) {
+				var A = AUI();
+
+				A.one('#<portlet:namespace />translationsMessage').show();
+			}
+		},
+		['aui-base']
+	);
 </aui:script>
 
 <%

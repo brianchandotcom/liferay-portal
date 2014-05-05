@@ -114,9 +114,6 @@
 /* Skin */
 
 .taglib-form-navigator {
-	ul.form-navigator.well {
-	}
-
 	> .form-steps > ul.form-navigator.well {
 		background: transparent;
 
@@ -130,16 +127,16 @@
 					}
 
 					.message {
-						@include opacity(0.7);
-
 						color: #000;
+
+						@include opacity(0.7);
 					}
 
 					.number {
-						@include opacity(1);
-
 						background: #333;
 						font-size: 18px;
+
+						@include opacity(1);
 					}
 
 					.tab-icon {
@@ -160,12 +157,13 @@
 				}
 
 				.number {
-					@include opacity(0.6);
-
 					background: #CCC;
 					color: #FFF;
 					font-size: 14px;
 					font-weight: bold;
+
+					@include opacity(0.6);
+
 					text-decoration: none;
 				}
 

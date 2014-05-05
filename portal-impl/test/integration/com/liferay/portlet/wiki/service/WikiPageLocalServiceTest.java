@@ -139,7 +139,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithExplicitTrashedRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = pages[0];
@@ -164,7 +164,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithImplicitTrashedRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
 			_group.getGroupId(), _node.getNodeId(), false);
 
 		WikiPage page = pages[0];
@@ -184,7 +184,7 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testDeleteTrashedPageWithRestoredChildPage() throws Exception {
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedChildPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithChildPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage parentPage = pages[0];
@@ -214,7 +214,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithRestoredRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = pages[0];
@@ -244,7 +244,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedParentPageWithExplicitTrashedChildPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedChildPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithChildPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage parentPage = pages[0];
@@ -269,7 +269,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedParentPageWithImplicitTrashedChildPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithTrashedChildPage(
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithChildPage(
 			_group.getGroupId(), _node.getNodeId(), false);
 
 		WikiPage parentPage = pages[0];

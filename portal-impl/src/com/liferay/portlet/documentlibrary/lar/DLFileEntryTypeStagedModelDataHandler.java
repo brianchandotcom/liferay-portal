@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -77,24 +78,22 @@ public class DLFileEntryTypeStagedModelDataHandler
 		referenceAttributes.put(
 			"file-entry-type-key", fileEntryType.getFileEntryTypeKey());
 
-		long defaultUserId = 0;
+		long defaultUserId = UserConstants.USER_ID_DEFAULT;
 
-		boolean preloaded = true;
+		try {
+			defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				fileEntryType.getCompanyId());
+		}
+		catch (Exception e) {
+		}
 
-		if (fileEntryType.getCompanyId() !=
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+		boolean preloaded = false;
 
-			try {
-				defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-					fileEntryType.getCompanyId());
-			}
-			catch (Exception e) {
-				return referenceAttributes;
-			}
+		if ((fileEntryType.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) ||
+			(defaultUserId == fileEntryType.getUserId())) {
 
-			if (defaultUserId != fileEntryType.getUserId()) {
-				preloaded = false;
-			}
+			preloaded = true;
 		}
 
 		referenceAttributes.put("preloaded", String.valueOf(preloaded));

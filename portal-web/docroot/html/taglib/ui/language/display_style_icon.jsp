@@ -16,4 +16,25 @@
 
 <%@ include file="/html/taglib/ui/language/init.jsp" %>
 
-<liferay-util:include page='<%= "/html/taglib/ui/language/display_style_" + TextFormatter.format(displayStyle, TextFormatter.N) + ".jsp" %>' />
+<%
+for (int i = 0; i < locales.length; i++) {
+	String currentLanguageId = LocaleUtil.toLanguageId(locales[i]);
+
+	if (!displayCurrentLocale && languageId.equals(currentLanguageId)) {
+		continue;
+	}
+
+	boolean currentLanguage = languageId.equals(currentLanguageId);
+%>
+
+	<liferay-ui:icon
+		cssClass='<%= currentLanguage ? "current-language" : "" %>'
+		image='<%= "../language/" + currentLanguageId %>'
+		lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
+		message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
+		url="<%= currentLanguage ? null : HttpUtil.setParameter(formAction, namespace + name, currentLanguageId) %>"
+	/>
+
+<%
+}
+%>

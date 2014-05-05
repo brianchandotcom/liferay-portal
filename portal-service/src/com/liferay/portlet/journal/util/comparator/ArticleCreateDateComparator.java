@@ -57,19 +57,12 @@ public class ArticleCreateDateComparator extends OrderByComparator {
 
 	@Override
 	public String getOrderBy() {
-		String orderBy = _ascending ? ORDER_BY_ASC : ORDER_BY_DESC;
-
-		if (getTableName() != null) {
-			StringBundler bundler = new StringBundler(3);
-
-			bundler.append(getTableName());
-			bundler.append(StringPool.PERIOD);
-			bundler.append(orderBy);
-
-			orderBy = bundler.toString();
+		if (_ascending) {
+			return ORDER_BY_ASC;
 		}
-
-		return orderBy;
+		else {
+			return ORDER_BY_DESC;
+		}
 	}
 
 	@Override

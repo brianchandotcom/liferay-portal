@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NullSafeStringComparator;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TableNameOrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TableNameOrderByComparator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ModelWrapper;
@@ -447,8 +447,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					entityAlias);
 		}
 		else {
-			tableNameOrderByComparator =
-				new TableNameOrderByComparator(orderByComparator, entityAlias);
+			tableNameOrderByComparator = new TableNameOrderByComparator(
+				orderByComparator, entityAlias);
 		}
 
 		String orderByContent = tableNameOrderByComparator.getOrderBy();
@@ -488,7 +488,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			fixedOrderBy.append(StringPool.SPACE);
 			fixedOrderBy.append(orderByDirection);
 
-			if (i <  (fields.length - 1)) {
+			if (i < (fields.length - 1)) {
 				fixedOrderBy.append(StringPool.COMMA);
 			}
 		}

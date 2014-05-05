@@ -234,6 +234,12 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
+	public void destroy() {
+		MultiVMPoolUtil.removeCache(leftToRightPortalCache.getName());
+		MultiVMPoolUtil.removeCache(rightToLeftPortalCache.getName());
+	}
+
+	@Override
 	public List<L> getLeftBaseModels(
 			long rightPrimaryKey, int start, int end, OrderByComparator obc)
 		throws SystemException {

@@ -41,6 +41,8 @@ public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 	public boolean deleteTableMapping(long leftPrimaryKey, long rightPrimaryKey)
 		throws SystemException;
 
+	public void destroy();
+
 	public List<L> getLeftBaseModels(
 			long rightPrimaryKey, int start, int end, OrderByComparator obc)
 		throws SystemException;

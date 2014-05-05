@@ -68,6 +68,11 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
+	public void destroy() {
+		_tableMapper.destroy();
+	}
+
+	@Override
 	public List<L> getLeftBaseModels(
 			long rightPrimaryKey, int start, int end, OrderByComparator obc)
 		throws SystemException {

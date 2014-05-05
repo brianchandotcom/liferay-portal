@@ -8,8 +8,13 @@
 <#assign defaultLatitude = -3.6833 />
 
 <#if apiKey = "">
+	<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId)>
+	<#assign apiKey = companyPrefs.getValue("googleMapsKey", "")>
+</#if>
+
+<#if apiKey = "">
 	<div class="alert alert-warning">
-		${languageUtil.get(locale, "please-configure-your-google-maps-key-in-the-site-settings")}
+		${languageUtil.get(locale, "please-configure-your-google-maps-key-in-the-site-or-portal-settings")}
 	</div>
 <#else>
 	<#assign minHeight = "400px" />

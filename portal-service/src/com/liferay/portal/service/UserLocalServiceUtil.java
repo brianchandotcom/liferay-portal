@@ -2296,6 +2296,35 @@ public class UserLocalServiceUtil {
 		return getService().getUserIdByScreenName(companyId, screenName);
 	}
 
+	public static java.util.List<com.liferay.portal.model.User> getUsersByGroups(
+		java.lang.String keywords, long userId, long[] groupIds, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUsersByGroups(keywords, userId, groupIds, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypes(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUsersBySocialRelationsTypes(keywords, userId, types,
+			groupIds, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypesGroups(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUsersBySocialRelationsTypesGroups(keywords, userId,
+			types, groupIds, start, end);
+	}
+
 	/**
 	* Returns <code>true</code> if the password policy has been assigned to the
 	* user.

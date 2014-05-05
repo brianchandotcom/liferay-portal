@@ -84,9 +84,16 @@
 				/>
 			</unzip>
 
-			<echo file="${project.dir}/tools/sdk/build.${user.name}.properties">
-				app.server.parent.dir=${app.server.parent.dir}
-				app.server.type=${app.server.type}
+			<copy
+				file="app.server.${user.name}.properties"
+				overwrite="true"
+				tofile="${project.dir}/tools/sdk/build.${user.name}.properties"
+			/>
+
+			<echo
+				append="true"
+				file="${project.dir}/tools/sdk/build.${user.name}.properties"
+			>
 				clean.delete.ivy.md5=true
 				clean.delete.lib=true
 				liferay.home=${liferay.home}

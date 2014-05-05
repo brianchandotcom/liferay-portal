@@ -116,7 +116,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 			<aui:script>
 				function <portlet:namespace /><%= randomNamespace %>InitEditor() {
-					return "<%= UnicodeFormatter.toString(mainLanguageValue) %>";
+					return '<%= UnicodeFormatter.toString(mainLanguageValue) %>';
 				}
 
 				function <portlet:namespace /><%= randomNamespace %>OnBlurEditor() {

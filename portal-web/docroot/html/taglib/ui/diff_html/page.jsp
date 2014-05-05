@@ -26,7 +26,7 @@ String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-html:diff
 
 <aui:script>
 	function updateOverlays() {
-		var images = document.getElementsByTagName("img");
+		var images = document.getElementsByTagName('img');
 
 		for (var i = 0; i < images.length; i++) {
 			var image = images[i];
@@ -45,20 +45,20 @@ String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-html:diff
 					filter = existingDivs[0];
 				}
 				else {
-					filter = document.createElement("div");
+					filter = document.createElement('div');
 
-					filter.className= image.getAttribute("changeType");
+					filter.className= image.getAttribute('changeType');
 				}
 
-				filter.style.height = image.offsetHeight - 4 + "px";
-				filter.style.width = image.offsetWidth - 4 + "px";
+				filter.style.height = image.offsetHeight - 4 + 'px';
+				filter.style.width = image.offsetWidth - 4 + 'px';
 
 				if (image.y && image.x) {
 
 					// Workaround for IE
 
-					filter.style.top = image.y + "px";
-					filter.style.left = image.x - 1 + "px";
+					filter.style.top = image.y + 'px';
+					filter.style.left = image.x - 1 + 'px';
 				}
 
 				if (existingDivs.length == 0) {

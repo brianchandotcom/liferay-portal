@@ -88,13 +88,13 @@
 
 <aui:script>
 	function <portlet:namespace />showTable(id) {
-		document.getElementById("<portlet:namespace />neverTable").style.display = "none";
-		document.getElementById("<portlet:namespace />dailyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />weeklyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />monthlyTable").style.display = "none";
-		document.getElementById("<portlet:namespace />yearlyTable").style.display = "none";
+		document.getElementById('<portlet:namespace />neverTable').style.display = 'none';
+		document.getElementById('<portlet:namespace />dailyTable').style.display = 'none';
+		document.getElementById('<portlet:namespace />weeklyTable').style.display = 'none';
+		document.getElementById('<portlet:namespace />monthlyTable').style.display = 'none';
+		document.getElementById('<portlet:namespace />yearlyTable').style.display = 'none';
 
-		document.getElementById(id).style.display = "block";
+		document.getElementById(id).style.display = 'block';
 	}
 
 	Liferay.Util.toggleRadio('<portlet:namespace />schedulerEndBy', '<portlet:namespace />schedulerEndDateType');

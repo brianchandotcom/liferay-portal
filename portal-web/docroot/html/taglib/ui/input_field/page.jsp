@@ -446,7 +446,7 @@ if (hints != null) {
 
 							<aui:script>
 								function <portlet:namespace /><%= fieldParam %>InitEditor() {
-									return "<%= UnicodeFormatter.toString(value) %>";
+									return '<%= UnicodeFormatter.toString(value) %>';
 								}
 							</aui:script>
 						</c:otherwise>

@@ -224,6 +224,25 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-bottom-right-radius(4px);
 }
 
+.taglib-form-navigator > .form-steps > ul.form-navigator.well {
+	@include box-shadow(none);
+
+	.tab .tab-label {
+		&:hover, &:focus {
+			.number {
+				@include box-shadow(0 0 5px 0 #333);
+				@include transition-duration(0.25s);
+				@include transition-property(box-shadow);
+				@include transition-timing-function(ease-out);
+			}
+		}
+
+		.number {
+			@include border-radius(50%);
+		}
+	}
+}
+
 .underlay-content {
 	@include border-bottom-left-radius(8px);
 	@include border-bottom-right-radius(8px);

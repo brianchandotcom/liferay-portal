@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .taglib-form-navigator {
 	ul.form-navigator.well {
 		float: right;
@@ -7,11 +10,94 @@
 		display: none;
 	}
 
-	.form-navigator-content{
+	> .form-steps {
+		position: relative;
+
+		> ul.form-navigator.well {
+			border-width: 0;
+			clear: both;
+			float: none;
+			overflow: visible;
+			padding: 0;
+			width: 100%;
+
+			@include respond-to(phone, tablet) {
+				overflow: auto;
+				white-space: nowrap;
+			}
+
+			.tab {
+				display: inline-block;
+				overflow: visible;
+				position: relative;
+				text-align: center;
+				white-space: nowrap;
+				z-index: 50;
+
+				&.active {
+					&:last-child .tab-label .tab-icon {
+						display: none;
+					}
+
+					.tab-label {
+						position: relative;
+
+						.message {
+							display: inline-block;
+						}
+
+						.tab-icon {
+							display: inline-block;
+						}
+					}
+				}
+
+				.tab-label {
+					display: block;
+					margin: 0 5px 0 -5px;
+					outline: 0;
+					padding: 0;
+
+					.error-notice {
+						display: none;
+					}
+
+					.number {
+						clear: both;
+						display: inline-block;
+						margin: 5px;
+						width: 30px;
+					}
+
+					.message {
+						margin-left: -5px;
+					}
+
+					.modified-notice {
+						display: none;
+					}
+
+					.tab-icon {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	.form-navigator-content {
 		overflow: visible;
 
 		&[class*="span"] {
 			margin-left: 0;
+		}
+
+		.form-section {
+			display: none;
+
+			&.active {
+				display: block;
+			}
 		}
 	}
 
@@ -22,5 +108,70 @@
 	.section-error .error-notice {
 		display: inline-block;
 		margin-right: 5px;
+	}
+}
+
+/* Skin */
+
+.taglib-form-navigator {
+	> .form-steps > ul.form-navigator.well {
+		background: transparent;
+
+		.tab {
+			&.active {
+				@include opacity(1);
+
+				.tab-label {
+					&:hover, &:focus {
+						background: transparent;
+					}
+
+					.message {
+						color: #000;
+
+						@include opacity(0.7);
+					}
+
+					.number {
+						background: #333;
+						font-size: 18px;
+
+						@include opacity(1);
+					}
+
+					.tab-icon {
+						color: #333;
+					}
+				}
+			}
+
+			.tab-label {
+				background: transparent;
+
+				&:hover, &:focus {
+					text-decoration: none;
+
+					.number {
+						@include opacity(1);
+					}
+				}
+
+				.number {
+					background: #CCC;
+					color: #FFF;
+					font-size: 14px;
+					font-weight: bold;
+
+					@include opacity(0.6);
+
+					text-decoration: none;
+				}
+
+				.message {
+					color: #000;
+					font-size: 12px;
+				}
+			}
+		}
 	}
 }

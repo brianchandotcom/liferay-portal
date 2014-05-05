@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -76,19 +78,21 @@ public class DLFileEntryTypeStagedModelDataHandler
 		referenceAttributes.put(
 			"file-entry-type-key", fileEntryType.getFileEntryTypeKey());
 
-		long defaultUserId = 0;
+		long defaultUserId = UserConstants.USER_ID_DEFAULT;
 
 		try {
 			defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 				fileEntryType.getCompanyId());
 		}
 		catch (Exception e) {
-			return referenceAttributes;
 		}
 
 		boolean preloaded = false;
 
-		if (defaultUserId == fileEntryType.getUserId()) {
+		if ((fileEntryType.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) ||
+			(defaultUserId == fileEntryType.getUserId())) {
+
 			preloaded = true;
 		}
 

@@ -84,6 +84,16 @@ if (Validator.isNotNull(historyKey)) {
 			%>
 
 			<div class="<%= wrapperCssClass %>" id="<portlet:namespace />tabs">
+				<liferay-util:buffer var="formNavigatorBottom">
+					<aui:button-row>
+						<aui:button primary="<%= true %>" type="submit" />
+
+						<aui:button href="<%= backURL %>" type="cancel" />
+					</aui:button-row>
+
+					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+				</liferay-util:buffer>
+
 				<liferay-util:buffer var="formSectionsBuffer">
 					<div class="form-navigator-content span8">
 						<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
@@ -182,26 +192,14 @@ if (Validator.isNotNull(historyKey)) {
 					%>
 
 					<c:if test='<%= showButtons && !displayStyle.equals("steps") %>'>
-						<aui:button-row>
-							<aui:button primary="<%= true %>" type="submit" />
-
-							<aui:button href="<%= backURL %>" type="cancel" />
-						</aui:button-row>
-
-						<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+						<%= formNavigatorBottom %>
 					</c:if>
 				</ul>
 
 				<%= formSectionsBuffer %>
 
 				<c:if test='<%= showButtons && displayStyle.equals("steps") %>'>
-					<aui:button-row>
-						<aui:button primary="<%= true %>" type="submit" />
-
-						<aui:button href="<%= backURL %>" type="cancel" />
-					</aui:button-row>
-
-					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
+					<%= formNavigatorBottom %>
 				</c:if>
 			</div>
 
@@ -236,7 +234,7 @@ if (Validator.isNotNull(historyKey)) {
 
 									var scrollLeft = listNode.get('scrollLeft');
 
-									return activeTabNode.getX() + scrollLeft - listNode.getX();
+									return (activeTabNode.getX() + scrollLeft) - listNode.getX();
 								}
 							}
 						}

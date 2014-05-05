@@ -248,7 +248,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 							</tr>
 							<tr>
 								<td colspan="2">
-									<liferay-ui:message key="use-existing-images" /> <liferay-ui:input-checkbox param='<%= "preserveScreenshot" + i %>' defaultValue="<%= true %>" />
+									<liferay-ui:message key="use-existing-images" /> <liferay-ui:input-checkbox defaultValue="<%= true %>" param='<%= "preserveScreenshot" + i %>' />
 								</td>
 							</tr>
 						</table>
@@ -309,19 +309,19 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <aui:script>
 	function <portlet:namespace />addScreenShot() {
-		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = "<%= screenshotsCount + 1 %>";
+		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = '<%= screenshotsCount + 1 %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />removeScreenShot() {
-		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = "<%= screenshotsCount - 1 %>";
+		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = '<%= screenshotsCount - 1 %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />saveProductEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (productEntry == null) ? Constants.ADD : Constants.UPDATE %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (productEntry == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

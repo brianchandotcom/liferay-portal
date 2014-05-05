@@ -61,7 +61,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 			finalOrderBy.append(StringUtil.trim(field));
 
 			if (i < (sortedFields.length - 1)) {
-				finalOrderBy.append(ORDER_BY_SEPARATOR);
+				finalOrderBy.append(_ORDER_BY_SEPARATOR);
 			}
 		}
 
@@ -112,7 +112,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _decoratedComparator.toString();
 	}
 
-	private static final String ORDER_BY_SEPARATOR = ", ";
+	private static final String _ORDER_BY_SEPARATOR = ", ";
 
 	private OrderByComparator _decoratedComparator;
 	private String _tableName;

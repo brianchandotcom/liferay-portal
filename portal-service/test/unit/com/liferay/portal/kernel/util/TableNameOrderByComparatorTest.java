@@ -23,6 +23,17 @@ import org.junit.Test;
 public class TableNameOrderByComparatorTest {
 
 	@Test
+	public void testOrderByTableNameWithPeriodReturnsDecoratedTableName() {
+		_tableNameOrderByComparator = new TableNameOrderByComparator(
+			new TestableOrderByComparator("field"), "table.");
+
+		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
+		String expectedOrderBy = "table.field";
+
+		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+	}
+
+	@Test
 	public void testOrderByWithBlankTableNameReturnsUndecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new TestableOrderByComparator("field1, field2"), "");
@@ -70,17 +81,6 @@ public class TableNameOrderByComparatorTest {
 	public void testOrderByWithSingleFieldReturnsDecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new TestableOrderByComparator("field"), "table");
-
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
-	}
-
-	@Test
-	public void testOrderByTableNameWithPeriodReturnsDecoratedTableName() {
-		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new TestableOrderByComparator("field"), "table.");
 
 		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
 		String expectedOrderBy = "table.field";

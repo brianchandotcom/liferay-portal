@@ -810,6 +810,8 @@ public class LiferaySeleniumHelper {
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
 
+		liferaySelenium.pause("1000");
+
 		_screen.type(value);
 	}
 

@@ -17,7 +17,7 @@
 <c:if test="<%= dlActionsDisplayContext.isShowActions() && dlFileEntryActionsDisplayContext.isMoveButtonVisible() %>">
 
 	<%
-	PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);
+	PortletURL moveURL = liferayPortletResponse.createRenderURL();
 
 	if (fileShortcut != null) {
 		moveURL.setParameter("struts_action", "/document_library/move_entry");

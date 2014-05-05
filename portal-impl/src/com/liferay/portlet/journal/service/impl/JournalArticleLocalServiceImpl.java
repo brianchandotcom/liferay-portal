@@ -6218,34 +6218,16 @@ public class JournalArticleLocalServiceImpl
 		return articleVersionStatusOVPs;
 	}
 
-	protected long getClassTypeId(JournalArticle article) {
-		long classTypeId = 0;
+	protected long getClassTypeId(JournalArticle article)
+		throws PortalException, SystemException {
 
-		try {
-			long classNameId = classNameLocalService.getClassNameId(
-				JournalArticle.class);
+		long classNameId = classNameLocalService.getClassNameId(
+			JournalArticle.class);
 
-			DDMStructure ddmStructure = ddmStructurePersistence.fetchByG_C_S(
-				article.getGroupId(), classNameId, article.getStructureId());
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			article.getGroupId(), classNameId, article.getStructureId(), true);
 
-			if (ddmStructure == null) {
-				Group companyGroup = groupLocalService.getCompanyGroup(
-					article.getCompanyId());
-
-				ddmStructure = ddmStructurePersistence.fetchByG_C_S(
-					companyGroup.getGroupId(), classNameId,
-					article.getStructureId());
-			}
-
-			if (ddmStructure != null) {
-				classTypeId = ddmStructure.getStructureId();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return classTypeId;
+		return ddmStructure.getStructureId();
 	}
 
 	protected Date[] getDateInterval(

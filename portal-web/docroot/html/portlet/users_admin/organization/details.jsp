@@ -285,7 +285,7 @@ if (parentOrganization != null) {
 					function(event) {
 						var rowColumns = [];
 
-						var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + event.organizationid;
+						var href = '<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.organizationid;
 
 						rowColumns.push(<portlet:namespace />createURL(href, event.name));
 						rowColumns.push(<portlet:namespace />createURL(href, event.type));

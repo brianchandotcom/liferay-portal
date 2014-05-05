@@ -332,7 +332,7 @@ $editLayoutPanelWidth: 460px;
 								> li {
 									display: inline-block;
 									float: left;
-									margin: 0;
+									margin-right: 5px;
 
 									@include respond-to(phone, tablet) {
 										display: block;

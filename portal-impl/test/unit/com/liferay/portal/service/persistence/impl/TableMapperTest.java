@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -787,6 +788,16 @@ public class TableMapperTest {
 	}
 
 	@Test
+	public void testDestroy() throws Exception {
+		_doTestDestroy(_tableMapperImpl);
+	}
+
+	@Test
+	public void testDestroyReverse() throws Exception {
+		_doTestDestroy(new ReverseTableMapper<Right, Left>(_tableMapperImpl));
+	}
+
+	@Test
 	public void testGetLeftBaseModels() throws SystemException {
 
 		// Get 0 result
@@ -1293,6 +1304,63 @@ public class TableMapperTest {
 			TableMapperFactory.getTableMapper(
 				_tableName, _rightColumnName, _leftColumnName,
 				_rightBasePersistence, _leftBasePersistence));
+
+		// Remove
+
+		TableMapperFactory.removeTableMapper(_tableName);
+
+		Assert.assertTrue(tableMappers.isEmpty());
+
+		TableMapperFactory.removeTableMapper(_tableName);
+
+		Assert.assertTrue(tableMappers.isEmpty());
+	}
+
+	private void _doTestDestroy(TableMapper<?, ?> tableMapper)
+		throws Exception {
+
+		MockMultiVMPool mockMultiVMPool =
+			(MockMultiVMPool)MultiVMPoolUtil.getMultiVMPool();
+
+		Map<String, PortalCache<?, ?>> portalCaches =
+			mockMultiVMPool.getPortalCaches();
+
+		Assert.assertEquals(2, portalCaches.size());
+
+		if (tableMapper instanceof ReverseTableMapper) {
+			Assert.assertSame(
+				ReflectionTestUtil.getFieldValue(
+					tableMapper.getReverseTableMapper(),
+					"leftToRightPortalCache"),
+				portalCaches.get(
+					TableMapper.class.getName() + "-" + _tableName +
+						"-LeftToRight"));
+			Assert.assertSame(
+				ReflectionTestUtil.getFieldValue(
+					tableMapper.getReverseTableMapper(),
+					"rightToLeftPortalCache"),
+				portalCaches.get(
+					TableMapper.class.getName() + "-" + _tableName +
+						"-RightToLeft"));
+		}
+		else {
+			Assert.assertSame(
+				ReflectionTestUtil.getFieldValue(
+					tableMapper, "leftToRightPortalCache"),
+				portalCaches.get(
+					TableMapper.class.getName() + "-" + _tableName +
+						"-LeftToRight"));
+			Assert.assertSame(
+				ReflectionTestUtil.getFieldValue(
+					tableMapper, "rightToLeftPortalCache"),
+				portalCaches.get(
+					TableMapper.class.getName() + "-" + _tableName +
+						"-RightToLeft"));
+		}
+
+		tableMapper.destroy();
+
+		Assert.assertTrue(portalCaches.isEmpty());
 	}
 
 	private DataSource _dataSource;
@@ -1714,6 +1782,10 @@ public class TableMapperTest {
 			getCache(String name, boolean blocking) {
 
 			return getCache(name);
+		}
+
+		public Map<String, PortalCache<?, ?>> getPortalCaches() {
+			return _portalCaches;
 		}
 
 		@Override

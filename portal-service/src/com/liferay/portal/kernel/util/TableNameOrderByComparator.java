@@ -95,7 +95,12 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	public void setTableName(String tableName) {
 		if ((tableName != null) && (tableName.length() > 0)) {
-			_tableName = tableName + CharPool.PERIOD;
+			if (tableName.endsWith(StringPool.PERIOD)) {
+				_tableName = tableName;
+			}
+			else {
+				_tableName = tableName + CharPool.PERIOD;
+			}
 		}
 		else {
 			_tableName = null;

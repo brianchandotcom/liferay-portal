@@ -220,7 +220,7 @@ public class LayoutStagedModelDataHandler
 
 		boolean privateLayout = portletDataContext.isPrivateLayout();
 
-		String action = layoutElement.attributeValue("action");
+		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (action.equals(Constants.DELETE)) {
 			Layout deletingLayout =
@@ -482,6 +482,11 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layout);
+
+		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
 		StagingUtil.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);

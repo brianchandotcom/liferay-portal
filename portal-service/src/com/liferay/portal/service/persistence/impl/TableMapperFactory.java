@@ -54,6 +54,14 @@ public class TableMapperFactory {
 		return (TableMapper<L, R>)tableMapper;
 	}
 
+	public static void removeTableMapper(String tableName) {
+		TableMapper<?, ?> tableMapper = tableMappers.remove(tableName);
+
+		if (tableMapper != null) {
+			tableMapper.destroy();
+		}
+	}
+
 	protected static Map<String, TableMapper<?, ?>> tableMappers =
 		new ConcurrentHashMap<String, TableMapper<?, ?>>();
 

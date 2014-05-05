@@ -211,10 +211,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void checkInefficientStringMethods(
-		String line, String fileName, int lineCount) {
+		String line, String fileName, String absolutePath, int lineCount) {
 
 		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			isRunsOutsidePortal(fileName)) {
+			isRunsOutsidePortal(absolutePath)) {
 
 			return;
 		}
@@ -358,10 +358,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String fixCompatClassImports(File file, String content)
+	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
-
-		String absolutePath = fileUtil.getAbsolutePath(file);
 
 		if (portalSource ||
 			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
@@ -951,8 +949,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected boolean isRunsOutsidePortal(String fileName) {
-		if (fileName.contains("/sync-engine-shared/")) {
+	protected boolean isRunsOutsidePortal(String absolutePath) {
+		if (absolutePath.contains("/sync-engine-shared/")) {
 			return true;
 		}
 		else {

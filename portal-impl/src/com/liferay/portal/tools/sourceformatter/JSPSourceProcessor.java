@@ -322,13 +322,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
 		String content = fileUtil.read(file);
 
 		String oldContent = content;
 		String newContent = StringPool.BLANK;
 
 		while (true) {
-			newContent = formatJSP(fileName, oldContent);
+			newContent = formatJSP(fileName, absolutePath, oldContent);
 
 			if (oldContent.equals(newContent)) {
 				break;
@@ -350,7 +352,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"while (", ") {\n", "\n\n"
 			});
 
-		newContent = fixCompatClassImports(file, newContent);
+		newContent = fixCompatClassImports(absolutePath, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
@@ -439,7 +441,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String formatJSP(String fileName, String content)
+	protected String formatJSP(
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -502,7 +505,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (javaSource || trimmedLine.contains("<%= ")) {
-				checkInefficientStringMethods(line, fileName, lineCount);
+				checkInefficientStringMethods(
+					line, fileName, absolutePath, lineCount);
 			}
 
 			if (javaSource && portalSource &&

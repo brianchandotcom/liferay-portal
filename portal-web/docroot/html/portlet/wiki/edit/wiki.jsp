@@ -82,7 +82,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(content) %>";
+		return '<%= UnicodeFormatter.toString(content) %>';
 	}
 </aui:script>
 

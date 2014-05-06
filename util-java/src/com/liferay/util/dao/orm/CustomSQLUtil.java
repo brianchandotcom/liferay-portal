@@ -78,6 +78,16 @@ public class CustomSQLUtil {
 		return _instance._customSQL.keywords(keywords, lowerCase);
 	}
 
+	public static String[] keywords(
+		String keywords, boolean lowerCase, int wildcardMode) {
+
+		return _instance._customSQL.keywords(keywords, lowerCase, wildcardMode);
+	}
+
+	public static String[] keywords(String keywords, int wildcardMode) {
+		return _instance._customSQL.keywords(keywords, wildcardMode);
+	}
+
 	public static String[] keywords(String[] keywordsArray) {
 		return _instance._customSQL.keywords(keywordsArray);
 	}

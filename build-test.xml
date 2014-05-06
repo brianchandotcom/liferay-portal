@@ -2102,20 +2102,6 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle">
-					<param name="app.server.type" value="tomcat" />
-					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
-				</antcall>
-			</then>
-			<else>
-				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
-			</else>
-		</if>
-
-		<if>
 			<and>
 				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
 				<isset property="test.build.portal.war.url" />
@@ -2131,6 +2117,20 @@ tck.url=true</echo>
 					<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tomcat" />
+					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
+				</antcall>
+			</then>
+			<else>
+				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+			</else>
 		</if>
 
 		<if>

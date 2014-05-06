@@ -360,7 +360,7 @@
 
 				while (length--) {
 					var attr = attrs[length];
-					var name = attr.nodeName;
+					var name = attr.nodeName.toLowerCase();
 					var value = attr.nodeValue;
 
 					if (isGetterString) {

@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -67,6 +67,7 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -130,14 +131,15 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String name = element.attributeValue("name");
 
-		boolean fieldDisplayable = isFieldDisplayable(fields, name);
+		String fieldDisplayValue = getFieldsDisplayValue(pageContext, fields);
+
+		String[] fieldsDisplayValues = getFieldsDisplayValues(
+			fieldDisplayValue);
+
+		boolean fieldDisplayable = ArrayUtil.contains(
+			fieldsDisplayValues, name);
 
 		if (fieldDisplayable) {
-			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
-				fieldsDisplayField);
-
 			Map<String, Object> parentFieldStructure =
 				(Map<String, Object>)freeMarkerContext.get(
 					"parentFieldStructure");
@@ -153,8 +155,14 @@ public class DDMXSDImpl implements DDMXSD {
 		StringBundler sb = new StringBundler(fieldRepetition);
 
 		while (fieldRepetition > 0) {
-			fieldStructure.put(
-				"fieldNamespace", DeterminateKeyGenerator.generate(name));
+			String fieldNamespace = StringUtil.randomId();
+
+			if (fieldDisplayable) {
+				fieldNamespace = getFieldNamespace(
+					fieldDisplayValue, ddmFieldsCounter);
+			}
+
+			fieldStructure.put("fieldNamespace", fieldNamespace);
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 			if (fieldDisplayable) {
@@ -672,6 +680,19 @@ public class DDMXSDImpl implements DDMXSD {
 		return fieldContext;
 	}
 
+	protected String getFieldNamespace(
+		String fieldDisplayValue, DDMFieldsCounter ddmFieldsCounter) {
+
+		String[] fieldsDisplayValues = StringUtil.split(fieldDisplayValue);
+
+		int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String fieldsDisplayValue = fieldsDisplayValues[offset];
+
+		return StringUtil.extractLast(
+			fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+	}
+
 	protected Map<String, Map<String, Object>> getFieldsContext(
 		PageContext pageContext, String portletNamespace, String namespace) {
 
@@ -707,6 +728,42 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return ddmFieldsCounter;
+	}
+
+	protected String getFieldsDisplayValue(
+		PageContext pageContext, Fields fields) {
+
+		String defaultFieldsDisplayValue = null;
+
+		if (fields != null) {
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+			if (fieldsDisplayField != null) {
+				defaultFieldsDisplayValue =
+					(String)fieldsDisplayField.getValue();
+			}
+		}
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)pageContext.getRequest();
+
+		return ParamUtil.getString(
+			httpServletRequest, DDMImpl.FIELDS_DISPLAY_NAME,
+			defaultFieldsDisplayValue);
+	}
+
+	protected String[] getFieldsDisplayValues(String fieldDisplayValue) {
+		List<String> fieldsDisplayValues = new ArrayList<String>();
+
+		for (String value : StringUtil.split(fieldDisplayValue)) {
+			String fieldName = StringUtil.extractFirst(
+				value, DDMImpl.INSTANCE_SEPARATOR);
+
+			fieldsDisplayValues.add(fieldName);
+		}
+
+		return fieldsDisplayValues.toArray(
+			new String[fieldsDisplayValues.size()]);
 	}
 
 	protected Map<String, Object> getFreeMarkerContext(
@@ -764,25 +821,6 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return jsonArray;
-	}
-
-	protected boolean isFieldDisplayable(Fields fields, String fieldName)
-		throws Exception {
-
-		if (fields == null) {
-			return false;
-		}
-
-		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-		if (fieldsDisplayField == null) {
-			return false;
-		}
-
-		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
-			fieldsDisplayField);
-
-		return ArrayUtil.contains(fieldsDisplayValues, fieldName);
 	}
 
 	protected String processFTL(

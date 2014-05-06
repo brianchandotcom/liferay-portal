@@ -46,6 +46,7 @@ java.lang.String suffix = GetterUtil.getString((java.lang.String)request.getAttr
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:title"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:useNamespace")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:select:value");
+java.lang.String wrapperCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:wrapperCssClass"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:select:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:select:scopedAttributes");
 %>

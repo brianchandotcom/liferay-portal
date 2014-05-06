@@ -43,7 +43,7 @@ if (Validator.isNull(formAction)) {
 }
 
 boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
-int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:language:displayStyle"));
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));
 String languageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:languageId"), LocaleUtil.toLanguageId(locale));
 Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
 String name = (String)request.getAttribute("liferay-ui:language:name");
@@ -75,7 +75,7 @@ for (int i = 0; i < locales.length; i++) {
 %>
 
 <c:choose>
-	<c:when test="<%= displayStyle == LanguageTag.SELECT_BOX %>">
+	<c:when test='<%= displayStyle.equals("select-box") %>'>
 		<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 			<aui:select changesContext="<%= true %>" label="" name="<%= name %>" onChange='<%= "submitForm(document." + namespace + formName + ");" %>' title="language">
 
@@ -124,7 +124,7 @@ for (int i = 0; i < locales.length; i++) {
 
 			String localeDisplayName = null;
 
-			if (displayStyle == LanguageTag.LIST_SHORT_TEXT) {
+			if (displayStyle.equals("short-text")) {
 				localeDisplayName = LocaleUtil.getShortDisplayName(locales[i], duplicateLanguages);
 			}
 			else {
@@ -133,7 +133,7 @@ for (int i = 0; i < locales.length; i++) {
 		%>
 
 			<c:choose>
-				<c:when test="<%= (displayStyle == LanguageTag.LIST_LONG_TEXT) || (displayStyle == LanguageTag.LIST_SHORT_TEXT) %>">
+				<c:when test='<%= displayStyle.equals("long-text") || displayStyle.equals("long-text") %>'>
 					<c:choose>
 						<c:when test="<%= languageId.equals(currentLanguageId) %>">
 							<span class="<%= cssClassName %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></span>

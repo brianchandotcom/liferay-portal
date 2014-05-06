@@ -1152,15 +1152,9 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="merge-jenkins-test-results">
-		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
+		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
 
 		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
-
-		<copy flatten="true" todir="${jenkins.test.results.dir}">
-			<fileset dir="${env.JENKINS_HOME}/userContent/jobs/" erroronmissingdir="false">
-				<include name="**/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_*.xml" />
-			</fileset>
-		</copy>
 
 		<first id="first">
 			<fileset dir="${jenkins.test.results.dir}" includes="*.xml" />
@@ -2774,7 +2768,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="screenshots">
+						<copy todir="${env.JOB_NAME}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset
 								dir="portal-web/test-results/functional/screenshots"
 							/>
@@ -2790,7 +2784,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<then>
 						<copy
 							file="portal-web/test-results/functional/report.html"
-							tofile="report.html"
+							tofile="${env.JOB_NAME}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
 				</if>
@@ -2817,7 +2811,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 						<copy
 							file="${jenkins.results.xml.file}"
-							tofile="test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
+							tofile="${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
 						/>
 					</then>
 				</if>

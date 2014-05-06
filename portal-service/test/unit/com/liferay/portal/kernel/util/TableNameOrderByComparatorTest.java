@@ -36,10 +36,8 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("field1, field2"), "");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "field1, field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals(
+			"field1, field2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -47,10 +45,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("field1, field2"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field1, table.field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("table.field1, table.field2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -58,10 +53,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("table1.field1, field2"), "table2");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table1.field1, table2.field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("table1.field1, table2.field2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -69,10 +61,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("field1, field2"), null);
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "field1, field2";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("field1, field2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -80,10 +69,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("field"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("table.field", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -91,10 +77,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("table1.field1"), "table2");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table1.field1";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("table1.field1", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
@@ -102,10 +85,7 @@ public class TableNameOrderByComparatorTest {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
 			new testGetOrderByComparator("field ASC"), "table");
 
-		String actualOrderBy = _tableNameOrderByComparator.getOrderBy();
-		String expectedOrderBy = "table.field ASC";
-
-		Assert.assertEquals(expectedOrderBy, actualOrderBy);
+		Assert.assertEquals("table.field ASC", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	private TableNameOrderByComparator _tableNameOrderByComparator;

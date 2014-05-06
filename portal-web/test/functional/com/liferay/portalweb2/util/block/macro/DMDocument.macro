@@ -126,6 +126,16 @@
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 
 		<if>
+			<isset var="dmDocumentRelatedAsset" />
+			<then>
+				<execute macro="DMDocument#addRelatedAssetPG">
+					<var name="assetTitle" value="${assetTitle}" />
+					<var name="assetType" value="${assetType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
@@ -164,6 +174,27 @@
 		<execute action="PGMediagalleryAddmedia#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGMediagallery#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addRelatedAssetPG">
+		<if>
+			<condition action="PGDocumentsandmediaAdddocument#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT_MENULIST" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
+				<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator-key1="RELATED_ASSETS_DROPDOWN" />
+			</then>
+		</if>
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST" value1="Select" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGRelatedassetsSelect#selectFrame" locator-key1="IFRAME" />
+		<execute action="PGRelatedassetsSelect#assertClick" locator-key1="ASSET_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="cancelCheckoutPG">
@@ -476,6 +507,19 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="gotoRelatedAssetPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<var name="key_assetTitle" value="${key_assetTitle}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
 	</command>
 
 	<command name="moveToFolderCP">

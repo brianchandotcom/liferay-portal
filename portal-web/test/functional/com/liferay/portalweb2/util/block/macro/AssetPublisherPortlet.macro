@@ -725,6 +725,36 @@
 		</if>
 	</command>
 
+	<command name="viewPG">
+		<var name="key_assetContent" value="${assetContent}" />
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${assetContent}" />
+
+		<if>
+			<isset var="relatedAssetTitle" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_RELATED_ASSET_HEADER" value1="Related Assets:" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="ASSET_RELATED_ASSET_IMAGE" />
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_RELATED_ASSET_TITLE" value1="${relatedAssetTitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="relatedAssetTitleHidden" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_RELATED_ASSET_HEADER" value1="Related Assets:" />
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="ASSET_RELATED_ASSET_IMAGE" />
+				<execute action="PGAssetpublisherAsset#assertTextNotPresent" locator-key1="ASSET_RELATED_ASSET_TITLE" value1="${relatedAssetTitleHidden}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewRate4StarsPG">
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="AVERAGE" value1="Average (1 Vote)" />
 

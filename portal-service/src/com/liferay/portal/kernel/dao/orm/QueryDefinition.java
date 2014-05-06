@@ -42,17 +42,18 @@ public class QueryDefinition {
 
 	public QueryDefinition(
 		int status, boolean excludeStatus, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator orderByComparator) {
 
 		_status = status;
 		_excludeStatus = excludeStatus;
 		_start = start;
 		_end = end;
-		setOrderByComparator(obc);
+
+		setOrderByComparator(orderByComparator);
 	}
 
 	public QueryDefinition(
-		int status, int start, int end, OrderByComparator obc) {
+		int status, int start, int end, OrderByComparator orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -63,7 +64,8 @@ public class QueryDefinition {
 
 		_start = start;
 		_end = end;
-		setOrderByComparator(obc);
+
+		setOrderByComparator(orderByComparator);
 	}
 
 	public Serializable getAttribute(String name) {
@@ -83,7 +85,7 @@ public class QueryDefinition {
 	}
 
 	public OrderByComparator getOrderByComparator() {
-		return _orderByComparator;
+		return _tableNameOrderByComparator;
 	}
 
 	public int getStart() {
@@ -114,22 +116,22 @@ public class QueryDefinition {
 		_end = end;
 	}
 
-	public void setOrderByComparator(OrderByComparator obc) {
-		if (obc == null) {
-			_orderByComparator = null;
+	public void setOrderByComparator(OrderByComparator orderByComparator) {
+		if (orderByComparator == null) {
+			_tableNameOrderByComparator = null;
 		}
 		else {
-			_orderByComparator =
+			_tableNameOrderByComparator =
 				new TableNameOrderByComparator(
-					obc, _orderByComparatorTableName);
+					orderByComparator, _orderByComparatorTableName);
 		}
 	}
 
 	public void setOrderByComparatorTableName(String tableName) {
 		_orderByComparatorTableName = tableName;
 
-		if (_orderByComparator != null) {
-			_orderByComparator.setTableName(tableName);
+		if (_tableNameOrderByComparator != null) {
+			_tableNameOrderByComparator.setTableName(tableName);
 		}
 	}
 
@@ -149,9 +151,9 @@ public class QueryDefinition {
 	private Map<String, Serializable> _attributes;
 	private int _end = QueryUtil.ALL_POS;
 	private boolean _excludeStatus;
-	private TableNameOrderByComparator _orderByComparator;
 	private String _orderByComparatorTableName;
 	private int _start = QueryUtil.ALL_POS;
 	private int _status = WorkflowConstants.STATUS_ANY;
+	private TableNameOrderByComparator _tableNameOrderByComparator;
 
 }

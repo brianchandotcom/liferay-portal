@@ -20,25 +20,25 @@ package com.liferay.portal.kernel.util;
 public class TableNameOrderByComparator extends OrderByComparator {
 
 	public TableNameOrderByComparator(
-		OrderByComparator decoratedComparator, String tableName) {
+		OrderByComparator orderByComparator, String tableName) {
 
-		_decoratedComparator = decoratedComparator;
+		_orderByComparator = orderByComparator;
 
 		setTableName(tableName);
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		return _decoratedComparator.compare(obj1, obj2);
+		return _orderByComparator.compare(obj1, obj2);
 	}
 
 	public OrderByComparator getDecoratedComparator() {
-		return _decoratedComparator;
+		return _orderByComparator;
 	}
 
 	@Override
 	public String getOrderBy() {
-		String originalOrderBy = _decoratedComparator.getOrderBy();
+		String originalOrderBy = _orderByComparator.getOrderBy();
 
 		if (_tableName == null) {
 			return originalOrderBy;
@@ -68,27 +68,27 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	@Override
 	public String[] getOrderByConditionFields() {
-		return _decoratedComparator.getOrderByConditionFields();
+		return _orderByComparator.getOrderByConditionFields();
 	}
 
 	@Override
 	public Object[] getOrderByConditionValues(Object obj) {
-		return _decoratedComparator.getOrderByConditionValues(obj);
+		return _orderByComparator.getOrderByConditionValues(obj);
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return _decoratedComparator.getOrderByFields();
+		return _orderByComparator.getOrderByFields();
 	}
 
 	@Override
 	public boolean isAscending() {
-		return _decoratedComparator.isAscending();
+		return _orderByComparator.isAscending();
 	}
 
 	@Override
 	public boolean isAscending(String field) {
-		return _decoratedComparator.isAscending(field);
+		return _orderByComparator.isAscending(field);
 	}
 
 	public void setTableName(String tableName) {
@@ -107,12 +107,12 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	@Override
 	public String toString() {
-		return _decoratedComparator.toString();
+		return _orderByComparator.toString();
 	}
 
 	private static final String _ORDER_BY_SEPARATOR = ", ";
 
-	private OrderByComparator _decoratedComparator;
+	private OrderByComparator _orderByComparator;
 	private String _tableName;
 
 }

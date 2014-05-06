@@ -291,9 +291,11 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Document document = SAXReaderUtil.createDocument();
 
 			Element rootElement = document.addElement("root");
+
 			rootElement.addElement("header");
 
 			zipWriter.addEntry("/manifest.xml", document.asXML());
+
 			zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
 		}
 

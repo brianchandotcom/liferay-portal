@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CURRENT_PARENT_FIELD</td>
-	<td>//div[@class='control-group field-wrapper']//input[@value='(None)']</td>
+	<td>//div[@class='control-group field-wrapper']//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_NEW_PARENT_SELECT</td>
-	<td>//select[@name='_36_newParentTitle']//option[@value='${key_wikiPageTitle}']</td>
+	<td>//select[@name='_36_newParentTitle']</td>
 	<td></td>
 </tr>
 <tr>

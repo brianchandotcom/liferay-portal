@@ -20,6 +20,7 @@ import flexjson.JSONContext;
 import flexjson.Path;
 import flexjson.PathExpression;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,8 @@ public class FlexjsonBeanAnalyzerTransformer
 		_pathExpressions = pathExpressions;
 	}
 
-	public Map<String, Map<String, String>> getPropertiesMap() {
-		return _propertiesMap;
+	public List<Map<String, String>> getPropertiesList() {
+		return _propertiesList;
 	}
 
 	@Override
@@ -74,10 +75,12 @@ public class FlexjsonBeanAnalyzerTransformer
 				Map<String, String> properties =
 					new LinkedHashMap<String, String>();
 
+				properties.put("name", name);
+
 				properties.put(
 					"type", getTypeName(beanProperty.getPropertyType()));
 
-				_propertiesMap.put(name, properties);
+				_propertiesList.add(properties);
 			}
 
 			path.pop();
@@ -89,7 +92,7 @@ public class FlexjsonBeanAnalyzerTransformer
 	}
 
 	private final List<PathExpression> _pathExpressions;
-	private final Map<String, Map<String, String>> _propertiesMap =
-		new LinkedHashMap<String, Map<String, String>>();
+	private final List<Map<String, String>> _propertiesList =
+		new ArrayList<Map<String, String>>();
 
 }

@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -213,29 +214,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return jsonWebServiceActionMappingMaps;
 	}
 
-	private Map<String, Map<String, String>> _buildPropertiesMap(
-		Class<?> type) {
-
-		if (type.isInterface()) {
-			try {
-				Class<?> clazz = getClass();
-
-				ClassLoader classLoader = clazz.getClassLoader();
-
-				String modelImplClassName = type.getName();
-
-				modelImplClassName =
-					StringUtil.replace(
-						modelImplClassName, ".model.", ".model.impl.");
-
-				modelImplClassName += "ModelImpl";
-
-				type = classLoader.loadClass(modelImplClassName);
-			}
-			catch (ClassNotFoundException cnfe) {
-			}
-		}
-
+	private List<Map<String, String>> _buildPropertiesList(Class<?> type) {
 		try {
 			JSONContext jsonContext = JSONContext.get();
 
@@ -256,8 +235,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			flexjsonBeanAnalyzerTransformer.transform(type);
 
-			Map<String, Map<String, String>> propertiesMap =
-				flexjsonBeanAnalyzerTransformer.getPropertiesMap();
+			List<Map<String, String>> propertiesMap =
+				flexjsonBeanAnalyzerTransformer.getPropertiesList();
 
 			return propertiesMap;
 		}
@@ -276,11 +255,39 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			types.add(map);
 
-			Map<String, Map<String, String>> propertiesMap =
-				_buildPropertiesMap(type);
+			Class modelType = type;
 
-			if (propertiesMap != null) {
-				map.put("properties", propertiesMap);
+			if (type.isInterface()) {
+				try {
+					Class<?> clazz = getClass();
+
+					ClassLoader classLoader = clazz.getClassLoader();
+
+					String modelImplClassName = type.getName();
+
+					modelImplClassName =
+						StringUtil.replace(
+							modelImplClassName, ".model.", ".model.impl.");
+
+					modelImplClassName += "ModelImpl";
+
+					modelType = classLoader.loadClass(modelImplClassName);
+				}
+				catch (ClassNotFoundException cnfe) {
+				}
+			}
+
+			if (modelType.isInterface() ||
+				Modifier.isAbstract(modelType.getModifiers())) {
+
+				map.put("interface", "true");
+			}
+
+			List<Map<String, String>> propertiesList = _buildPropertiesList(
+				modelType);
+
+			if (propertiesList != null) {
+				map.put("properties", propertiesList);
 			}
 
 			map.put("type", type.getName());

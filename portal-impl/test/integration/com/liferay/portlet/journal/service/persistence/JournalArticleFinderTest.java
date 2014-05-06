@@ -570,7 +570,7 @@ public class JournalArticleFinderTest {
 			article.setReviewDate(sequenceDate);
 			article.setArticleId(sequenceString);
 			article.setTitle(sequenceString);
-			article.setVersion((double)i);
+			article.setVersion(i);
 
 			JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		}

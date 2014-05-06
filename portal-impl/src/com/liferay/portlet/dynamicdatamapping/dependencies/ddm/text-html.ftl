@@ -1,6 +1,7 @@
 <#include "../init.ftl">
 
 <#assign fieldValue = paramUtil.getString(request, "${namespacedFieldName}Editor", fieldValue)>
+
 <#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>

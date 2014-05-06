@@ -57,8 +57,8 @@ public class TableNameOrderByComparatorTest {
 	public void testGetOrderByWithMultipleTableNameReturnsOriginalTableName() {
 		TableNameOrderByComparator tableNameOrderByComparator =
 			new TableNameOrderByComparator(
-				new TestGetOrderByComparator(
-					"table1.column1, column2"), "table2");
+				new TestGetOrderByComparator("table1.column1, column2"),
+				"table2");
 
 		Assert.assertEquals(
 			"table1.column1, table2.column2",

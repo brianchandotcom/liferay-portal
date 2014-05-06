@@ -135,12 +135,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Document document = SAXReaderUtil.createDocument();
 
-		Element rootElement = document.addElement("root");
-		rootElement.addElement("header");
+		Element manifestRootElement = document.addElement("root");
+
+		manifestRootElement.addElement("header");
 
 		testReaderWriter.addEntry("/manifest.xml", document.asXML());
 
-		rootElement = SAXReaderUtil.createElement("root");
+		Element rootElement = SAXReaderUtil.createElement("root");
 
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 

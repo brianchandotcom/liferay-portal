@@ -58,6 +58,8 @@ public interface AssetRenderer {
 
 	public long getClassPK();
 
+	public DDMFieldReader getDDMFieldReader();
+
 	public String getDiscussionPath();
 
 	public Date getDisplayDate();

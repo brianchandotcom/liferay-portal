@@ -35,6 +35,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.DDMFieldReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -86,6 +87,11 @@ public class DLFileEntryAssetRenderer
 		else {
 			return _fileEntry.getFileEntryId();
 		}
+	}
+
+	@Override
+	public DDMFieldReader getDDMFieldReader() {
+		return new DLFileEntryDDMFieldReader(_fileEntry, _fileVersion);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -90,6 +91,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	@Override
 	public String[] getAvailableLocales() {
 		return getAvailableLanguageIds();
+	}
+
+	@Override
+	public DDMFieldReader getDDMFieldReader() {
+		return _NULL_DDM_FIELD_READER;
 	}
 
 	@Override
@@ -411,7 +417,26 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
+	private static final class NullDDMFieldReader implements DDMFieldReader {
+
+		@Override
+		public Fields getFields() {
+			return new Fields();
+		}
+
+		@Override
+		public Fields getFields(String ddmType)
+			throws PortalException, SystemException {
+
+			return getFields();
+		}
+
+	}
+
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
+
+	private static final DDMFieldReader _NULL_DDM_FIELD_READER =
+		new NullDDMFieldReader();
 
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;

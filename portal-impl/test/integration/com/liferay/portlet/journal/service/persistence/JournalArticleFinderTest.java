@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import com.google.common.collect.Lists;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -523,7 +521,8 @@ public class JournalArticleFinderTest {
 			expectedArticles = _articles;
 		}
 		else {
-			expectedArticles = Lists.reverse(_articles);
+			expectedArticles = new ArrayList<JournalArticle>(_articles);
+			Collections.reverse(expectedArticles);
 		}
 
 		List<JournalArticle> actualArticles =

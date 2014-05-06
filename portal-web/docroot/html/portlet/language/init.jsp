@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.LanguageTag" %>
-
 <%
 Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
@@ -25,7 +23,8 @@ String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
 
 String[] languageIds = StringUtil.split(portletPreferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
 boolean displayCurrentLocale = GetterUtil.getBoolean(portletPreferences.getValue("displayCurrentLocale", null), true);
-int displayStyle = GetterUtil.getInteger(portletPreferences.getValue("displayStyle", StringPool.BLANK));
+String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), scopeGroupId);
 %>
 
 <%@ include file="/html/portlet/language/init-ext.jsp" %>

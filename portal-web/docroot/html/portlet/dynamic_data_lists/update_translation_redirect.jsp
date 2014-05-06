@@ -20,7 +20,7 @@
 String languageId = ParamUtil.getString(request, "languageId");
 %>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.Util.getOpener().<portlet:namespace />postProcessTranslation('<%= HtmlUtil.escapeJS(languageId) %>');
 
 	Liferay.fire(

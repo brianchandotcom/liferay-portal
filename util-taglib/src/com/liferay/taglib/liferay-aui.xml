@@ -1162,6 +1162,11 @@
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
+			<attribute>
+				<name>wrapperCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.TagSupport" writeBaseClass="false" writeJSP="false" />

@@ -121,6 +121,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_RELATED_ASSETS_HEADER</td>
+	<td>//h2[@class='asset-links-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_RELATED_ASSETS_TITLE</td>
+	<td>//li[@class='asset-links-list-item']//a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_LINKS</td>
 	<td>//div[@class='document-info']//div[@class='links']</td>
 	<td></td>
@@ -468,12 +478,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_UPLOADER</td>
-	<td>//div[@class='asset-details-content']//div[@class='lfr-asset-icon lfr-asset-author']</td>
+	<td>//div[@class='asset-details-content']/div[contains(@class,'lfr-asset-icon') and contains(@class,'lfr-asset-author')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_DATE</td>
-	<td>//div[@class='asset-details-content']//div[@class='lfr-asset-icon lfr-asset-date']</td>
+	<td>//div[@class='asset-details-content']//div[contains(@class,'lfr-asset-icon') and contains(@class,'lfr-asset-date')]</td>
 	<td></td>
 </tr>
 <tr>

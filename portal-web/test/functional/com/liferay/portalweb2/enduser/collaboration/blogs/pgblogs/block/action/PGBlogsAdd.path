@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
-	<td>//li[@class='asset-selector' and contains(.,'${key_assetType}')]/a/span</td>
+	<td>//li[contains(@class,'asset-selector') and contains(.,'${key_assetType}')]/a/span</td>
 	<td></td>
 </tr>
 </tbody>

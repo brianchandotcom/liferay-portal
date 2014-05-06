@@ -8,6 +8,10 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
+		<case locator-key1="RELATED_ASSETS_MENULIST_SELECTION">
+			<execute function="AssertClick#assertTextClickAndWait" />
+		</case>
+
 		<case locator-key1="SAVE_AS_DRAFT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

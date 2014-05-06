@@ -225,6 +225,22 @@
 	<td>//a[@id='_15_customFieldsLink']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_MENULIST</td>
+	<td>//a[contains(@id,'inputAssetLinks')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
+	<td>//li[contains(@class,'asset-selector')]/a/span[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

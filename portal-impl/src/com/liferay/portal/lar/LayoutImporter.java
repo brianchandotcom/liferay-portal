@@ -227,7 +227,7 @@ public class LayoutImporter {
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
-		String userIdStrategy = MapUtil.getString(
+		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -269,8 +269,9 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
-		UserIdStrategy strategy = ExportImportHelperUtil.getUserIdStrategy(
-			userId, userIdStrategy);
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				userId, userIdStrategyString);
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
@@ -282,7 +283,7 @@ public class LayoutImporter {
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				companyId, groupId, parameterMap, strategy, zipReader);
+				companyId, groupId, parameterMap, userIdStrategy, zipReader);
 
 		portletDataContext.setPrivateLayout(privateLayout);
 

@@ -31,8 +31,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -87,6 +91,25 @@ public class FolderStagedModelDataHandler
 
 		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
+		if (!folder.isDefaultRepository()) {
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
+				folder.getRepositoryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, folder, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
+
+			portletDataContext.addClassedModel(
+				folderElement, folderPath, folder);
+
+			long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
+				LiferayRepository.class.getName());
+
+			if (repository.getClassNameId() != liferayRepositoryClassNameId) {
+				return;
+			}
+		}
+
 		if (folder.getParentFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
@@ -120,6 +143,14 @@ public class FolderStagedModelDataHandler
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {
+
+		if (!folder.isDefaultRepository()) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, folder, Repository.class,
+				folder.getRepositoryId());
+
+			return;
+		}
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 

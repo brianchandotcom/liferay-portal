@@ -47,10 +47,11 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		for (int i = 0; i < columnNames.length; ++i) {
 			String columnName = columnNames[i];
 
-			if (columnName.indexOf(CharPool.PERIOD) == -1) {
-				sb.append(_tableName);
+			if (columnName.indexOf(CharPool.PERIOD) != -1) {
+				columnName = StringUtil.split(columnName, CharPool.PERIOD)[1];
 			}
 
+			sb.append(_tableName);
 			sb.append(StringUtil.trim(columnName));
 
 			if (i < (columnNames.length - 1)) {

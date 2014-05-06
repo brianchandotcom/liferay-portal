@@ -54,14 +54,14 @@ public class TableNameOrderByComparatorTest {
 	}
 
 	@Test
-	public void testGetOrderByWithMultipleTableNameReturnsOriginalTableName() {
+	public void testGetOrderByWithMultipleTableNameReturnsNewTableName() {
 		TableNameOrderByComparator tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("table1.column1, column2"),
 				"table2");
 
 		Assert.assertEquals(
-			"table1.column1, table2.column2",
+			"table2.column1, table2.column2",
 			tableNameOrderByComparator.getOrderBy());
 	}
 
@@ -86,13 +86,13 @@ public class TableNameOrderByComparatorTest {
 	}
 
 	@Test
-	public void testGetOrderByWithSingleTableNameReturnsOriginalTableName() {
+	public void testGetOrderByWithSingleTableNameReturnsNewTableName() {
 		TableNameOrderByComparator tableNameOrderByComparator =
 			new TableNameOrderByComparator(
 				new TestGetOrderByComparator("table1.column1"), "table2");
 
 		Assert.assertEquals(
-			"table1.column1", tableNameOrderByComparator.getOrderBy());
+			"table2.column1", tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test

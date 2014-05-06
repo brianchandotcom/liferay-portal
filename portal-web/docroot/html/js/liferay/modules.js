@@ -142,14 +142,19 @@
 							'sortable'
 						]
 					},
-					'liferay-autocomplete-input': {
-						path: 'autocomplete_input.js',
+					'liferay-autocomplete-input-base': {
+						path: 'autocomplete_input_base.js',
 						requires: [
 							'aui-base',
 							'autocomplete',
-							'autocomplete',
 							'autocomplete-filters',
 							'autocomplete-highlighters'
+						]
+					},
+					'liferay-autocomplete-input': {
+						path: 'autocomplete_input.js',
+						requires: [
+							'liferay-autocomplete-input-base'
 						]
 					},
 					'liferay-autocomplete-input-caretindex': {

@@ -22,8 +22,6 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	public TableNameOrderByComparator(
 		OrderByComparator decoratedComparator, String tableName) {
 
-		super();
-
 		_decoratedComparator = decoratedComparator;
 
 		setTableName(tableName);

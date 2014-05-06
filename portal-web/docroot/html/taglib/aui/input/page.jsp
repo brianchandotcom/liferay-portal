@@ -173,7 +173,7 @@
 		if (type.equals("hidden") && (value == null)) {
 			valueString = BeanPropertiesUtil.getStringSilent(bean, name);
 		}
-		else if (!ignoreRequestValue && (Validator.isNull(type) || type.equals("text") || type.equals("textarea"))) {
+		else if (!ignoreRequestValue && (Validator.isNull(type) || type.equals("email") || type.equals("text") || type.equals("textarea"))) {
 			valueString = BeanParamUtil.getStringSilent(bean, request, name, valueString);
 
 			if (Validator.isNotNull(fieldParam)) {

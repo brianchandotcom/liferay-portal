@@ -42,8 +42,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 		String[] columnNames = StringUtil.split(orderBy);
 
-		StringBundler sb = new StringBundler(
-			(3 * columnNames.length) - 1);
+		StringBundler sb = new StringBundler((3 * columnNames.length) - 1);
 
 		for (int i = 0; i < columnNames.length; ++i) {
 			String columnName = columnNames[i];

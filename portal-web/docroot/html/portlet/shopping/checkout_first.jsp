@@ -258,12 +258,12 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			Country country = address.getCountry();
 		%>
 
-			if ("<%= address.getAddressId() %>" == addressId) {
-				document.getElementById("<portlet:namespace />" + type + "Street").value = "<%= HtmlUtil.escapeJS(address.getStreet1()) %>";
-				document.getElementById("<portlet:namespace />" + type + "City").value = "<%= HtmlUtil.escapeJS(address.getCity()) %>";
+			if ('<%= address.getAddressId() %>' == addressId) {
+				document.getElementById('<portlet:namespace />' + type + 'Street').value = '<%= HtmlUtil.escapeJS(address.getStreet1()) %>';
+				document.getElementById('<portlet:namespace />' + type + 'City').value = '<%= HtmlUtil.escapeJS(address.getCity()) %>';
 
-				var stateSel = document.getElementById("<portlet:namespace />" + type + "StateSel");
-				var stateSelValue = "<%= HtmlUtil.escapeJS(region.getRegionCode()) %>";
+				var stateSel = document.getElementById('<portlet:namespace />' + type + 'StateSel');
+				var stateSelValue = '<%= HtmlUtil.escapeJS(region.getRegionCode()) %>';
 
 				for (var i = 0; i < stateSel.length; i++) {
 					if (stateSel[i].value == stateSelValue) {
@@ -273,8 +273,8 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					}
 				}
 
-				document.getElementById("<portlet:namespace />" + type + "Zip").value = "<%= HtmlUtil.escapeJS(address.getZip()) %>";
-				document.getElementById("<portlet:namespace />" + type + "Country").value = "<%= HtmlUtil.escapeJS(country.getName()) %>";
+				document.getElementById('<portlet:namespace />' + type + 'Zip').value = '<%= HtmlUtil.escapeJS(address.getZip()) %>';
+				document.getElementById('<portlet:namespace />' + type + 'Country').value = '<%= HtmlUtil.escapeJS(country.getName()) %>';
 			}
 
 		<%

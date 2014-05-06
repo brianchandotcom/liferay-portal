@@ -85,13 +85,56 @@
 			</unzip>
 
 			<if>
-				<available file="app.server.${user.name}.properties" />
+				<or>
+					<available file="app.server.${user.name}.properties" />
+					<available file="app.server.${env.COMPUTERNAME}.properties" />
+					<available file="app.server.${env.HOST}.properties" />
+					<available file="app.server.${env.HOSTNAME}.properties" />
+				</or>
 				<then>
-					<copy
-						file="app.server.${user.name}.properties"
-						overwrite="true"
-						tofile="${project.dir}/tools/sdk/build.${user.name}.properties"
-					/>
+					<if>
+						<available file="app.server.${user.name}.properties" />
+						<then>
+							<copy
+								file="app.server.${user.name}.properties"
+								overwrite="true"
+								tofile="${project.dir}/tools/sdk/build.${user.name}.properties"
+							/>
+						</then>
+					</if>
+
+					<if>
+						<available file="app.server.${env.COMPUTERNAME}.properties" />
+						<then>
+							<copy
+								file="app.server.${env.COMPUTERNAME}.properties"
+								overwrite="true"
+								tofile="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+							/>
+						</then>
+					</if>
+
+					<if>
+						<available file="app.server.${env.HOST}.properties" />
+						<then>
+							<copy
+								file="app.server.${env.HOST}.properties"
+								overwrite="true"
+								tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties"
+							/>
+						</then>
+					</if>
+
+					<if>
+						<available file="app.server.${env.HOSTNAME}.properties" />
+						<then>
+							<copy
+								file="app.server.${env.HOSTNAME}.properties"
+								overwrite="true"
+								tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties"
+							/>
+						</then>
+					</if>
 				</then>
 				<else>
 					<echo file="${project.dir}/tools/sdk/build.${user.name}.properties">

@@ -180,12 +180,15 @@ public class LayoutAction extends Action {
 			return null;
 		}
 
-		long plid = ParamUtil.getLong(request, "p_l_id");
+		long plid = 0;
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout != null) {
 			plid = layout.getPlid();
+		}
+		else {
+			plid = ParamUtil.getLong(request, "p_l_id");
 		}
 
 		if (_log.isDebugEnabled()) {

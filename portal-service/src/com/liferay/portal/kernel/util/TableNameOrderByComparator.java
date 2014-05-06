@@ -38,32 +38,32 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	@Override
 	public String getOrderBy() {
-		String originalOrderBy = _orderByComparator.getOrderBy();
+		String orderBy = _orderByComparator.getOrderBy();
 
 		if (_tableName == null) {
-			return originalOrderBy;
+			return orderBy;
 		}
 
-		String[] sortedFields = StringUtil.split(originalOrderBy);
+		String[] columnNames = StringUtil.split(orderBy);
 
-		StringBundler finalOrderBy = new StringBundler(
-			(3 * sortedFields.length) - 1);
+		StringBundler sb = new StringBundler(
+			(3 * columnNames.length) - 1);
 
-		for (int i = 0; i < sortedFields.length; ++i) {
-			String field = sortedFields[i];
+		for (int i = 0; i < columnNames.length; ++i) {
+			String columnName = columnNames[i];
 
-			if (field.indexOf(CharPool.PERIOD) == -1) {
-				finalOrderBy.append(_tableName);
+			if (columnName.indexOf(CharPool.PERIOD) == -1) {
+				sb.append(_tableName);
 			}
 
-			finalOrderBy.append(StringUtil.trim(field));
+			sb.append(StringUtil.trim(columnName));
 
-			if (i < (sortedFields.length - 1)) {
-				finalOrderBy.append(_ORDER_BY_SEPARATOR);
+			if (i < (columnNames.length - 1)) {
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 		}
 
-		return finalOrderBy.toString();
+		return sb.toString();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	}
 
 	public void setTableName(String tableName) {
-		if ((tableName != null) && (tableName.length() > 0)) {
+		if (Validator.isNotNull(tableName)) {
 			if (tableName.endsWith(StringPool.PERIOD)) {
 				_tableName = tableName;
 			}
@@ -109,8 +109,6 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	public String toString() {
 		return _orderByComparator.toString();
 	}
-
-	private static final String _ORDER_BY_SEPARATOR = ", ";
 
 	private OrderByComparator _orderByComparator;
 	private String _tableName;

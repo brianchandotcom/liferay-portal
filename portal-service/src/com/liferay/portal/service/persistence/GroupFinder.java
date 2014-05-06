@@ -38,6 +38,11 @@ public interface GroupFinder {
 		long companyId, long parentGroupId, boolean site, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.Group> findByLiveGroups()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

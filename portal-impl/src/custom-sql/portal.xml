@@ -191,7 +191,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*, Group_.name AS groupName
 			FROM
 				Group_
 			INNER JOIN

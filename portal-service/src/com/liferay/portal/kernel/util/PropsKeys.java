@@ -1283,9 +1283,11 @@ public interface PropsKeys {
 
 	public static final String JSP_WRITER_BUFFER_SIZE = "jsp.writer.buffer.size";
 
-	public static final String LANGUAGE_DISPLAY_STYLE_DEFAULT= "language.display.style.default";
+	public static final String LANGUAGE_DISPLAY_STYLE_DEFAULT = "language.display.style.default";
 
-	public static final String LANGUAGE_DISPLAY_STYLE_OPTIONS= "language.display.style.options";
+	public static final String LANGUAGE_DISPLAY_STYLE_OPTIONS = "language.display.style.options";
+
+	public static final String LANGUAGE_DISPLAY_TEMPLATES_CONFIG = "language.display.templates.config";
 
 	public static final String LAYOUT_AJAX_RENDER_ENABLE = "layout.ajax.render.enable";
 

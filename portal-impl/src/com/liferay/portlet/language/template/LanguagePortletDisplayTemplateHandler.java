@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -80,6 +81,11 @@ public class LanguagePortletDisplayTemplateHandler
 			documentServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
+	}
+
+	@Override
+	protected String getTemplatesConfigPath() {
+		return PropsValues.LANGUAGE_DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

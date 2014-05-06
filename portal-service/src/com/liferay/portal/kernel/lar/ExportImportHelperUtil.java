@@ -221,6 +221,11 @@ public class ExportImportHelperUtil {
 			portletRequest, targetGroupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getManifestSummary(PortletDataContext)}
+	 */
+	@Deprecated
 	public static ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -237,6 +242,13 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().getManifestSummary(
 			userId, groupId, parameterMap, fileEntry);
+	}
+
+	public static ManifestSummary getManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		return getExportImportHelper().getManifestSummary(portletDataContext);
 	}
 
 	public static List<Layout> getMissingParentLayouts(
@@ -262,6 +274,14 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().getTempFileEntry(
 			groupId, userId, folderName);
+	}
+
+	public static UserIdStrategy getUserIdStrategy(
+			long userId, String userIdStrategy)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getUserIdStrategy(
+			userId, userIdStrategy);
 	}
 
 	public static boolean isReferenceWithinExportScope(
@@ -421,6 +441,19 @@ public class ExportImportHelperUtil {
 			portletDataContext, portletPreferences, key, clazz, companyGroupId);
 	}
 
+	public static MissingReferences validateMissingReferences(
+			final PortletDataContext portletDataContext)
+		throws Exception {
+
+		return getExportImportHelper().validateMissingReferences(
+			portletDataContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
 	public static MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)

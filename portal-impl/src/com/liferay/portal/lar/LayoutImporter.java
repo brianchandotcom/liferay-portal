@@ -76,7 +76,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
-import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
@@ -143,18 +142,28 @@ public class LayoutImporter {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, privateLayout);
 
+			String userIdStrategyString = MapUtil.getString(
+				parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+			UserIdStrategy userIdStrategy =
+				ExportImportHelperUtil.getUserIdStrategy(
+					userId, userIdStrategyString);
+
 			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			validateFile(
+				layoutSet.getCompanyId(), groupId, parameterMap, zipReader);
 
 			PortletDataContext portletDataContext =
 				PortletDataContextFactoryUtil.createImportPortletDataContext(
-					layoutSet.getCompanyId(), groupId, parameterMap, null,
-					zipReader);
+					layoutSet.getCompanyId(), groupId, parameterMap,
+					userIdStrategy, zipReader);
 
-			validateFile(portletDataContext);
+			portletDataContext.setPrivateLayout(privateLayout);
 
 			MissingReferences missingReferences =
 				ExportImportHelperUtil.validateMissingReferences(
-					userId, groupId, parameterMap, file);
+					portletDataContext);
 
 			Map<String, MissingReference> dependencyMissingReferences =
 				missingReferences.getDependencyMissingReferences();
@@ -218,6 +227,8 @@ public class LayoutImporter {
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
+		String userIdStrategyString = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -228,8 +239,6 @@ public class LayoutImporter {
 		String layoutsImportMode = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
-		String userIdStrategy = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete portlet data " + deletePortletData);
@@ -247,8 +256,6 @@ public class LayoutImporter {
 
 		long companyId = layoutSet.getCompanyId();
 
-		User user = UserUtil.findByPrimaryKey(userId);
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -262,74 +269,35 @@ public class LayoutImporter {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
-		UserIdStrategy strategy = _portletImporter.getUserIdStrategy(
-			user, userIdStrategy);
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				userId, userIdStrategyString);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		// LAR validation
+
+		validateFile(companyId, groupId, parameterMap, zipReader);
+
+		// PortletDataContext
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				companyId, groupId, parameterMap, userIdStrategy, zipReader);
+
+		portletDataContext.setPrivateLayout(privateLayout);
+
+		// Manifest
 
 		ManifestSummary manifestSummary =
-			ExportImportHelperUtil.getManifestSummary(
-				userId, groupId, parameterMap, file);
+			ExportImportHelperUtil.getManifestSummary(portletDataContext);
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"layout", manifestSummary);
 		}
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				companyId, groupId, parameterMap, strategy, zipReader);
-
 		portletDataContext.setManifestSummary(manifestSummary);
-		portletDataContext.setPortetDataContextListener(
-			new PortletDataContextListenerImpl(portletDataContext));
-
-		portletDataContext.setPrivateLayout(privateLayout);
-
-		// Zip
-
-		validateFile(portletDataContext);
-
-		// Company id
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		Element headerElement = rootElement.element("header");
-
-		long sourceCompanyId = GetterUtil.getLong(
-			headerElement.attributeValue("company-id"));
-
-		portletDataContext.setSourceCompanyId(sourceCompanyId);
-
-		// Company group id
-
-		long sourceCompanyGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("company-group-id"));
-
-		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
-
-		// Group id
-
-		long sourceGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("group-id"));
-
-		portletDataContext.setSourceGroupId(sourceGroupId);
-
-		// Source and target group id
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		groupIds.put(sourceGroupId, groupId);
-
-		// User personal site group id
-
-		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("user-personal-site-group-id"));
-
-		portletDataContext.setSourceUserPersonalSiteGroupId(
-			sourceUserPersonalSiteGroupId);
 
 		// Layout and layout set prototype
 
@@ -338,6 +306,10 @@ public class LayoutImporter {
 
 		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");
+
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		Element headerElement = rootElement.element("header");
 
 		String larType = headerElement.attributeValue("type");
 
@@ -803,30 +775,6 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void readXML(PortletDataContext portletDataContext)
-		throws Exception {
-
-		if (portletDataContext.getImportDataRootElement() != null) {
-			return;
-		}
-
-		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
-
-		if (xml == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
-		}
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			portletDataContext.setImportDataRootElement(
-				document.getRootElement());
-		}
-		catch (Exception e) {
-			throw new LARFileException(e);
-		}
-	}
-
 	protected void setPortletScope(
 		PortletDataContext portletDataContext, Element portletElement) {
 
@@ -1024,16 +972,33 @@ public class LayoutImporter {
 		}
 	}
 
-	protected void validateFile(PortletDataContext portletDataContext)
+	protected void validateFile(
+			long companyId, long groupId, Map<String, String[]> parameterMap,
+			ZipReader zipReader)
 		throws Exception {
+
+		// XML
+
+		String xml = zipReader.getEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		Element rootElement = null;
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			rootElement = document.getRootElement();
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
 
 		// Build compatibility
 
-		readXML(portletDataContext);
-
 		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element headerElement = rootElement.element("header");
 
@@ -1057,12 +1022,10 @@ public class LayoutImporter {
 			throw new LARTypeException(larType);
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			portletDataContext.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		String layoutsImportMode = MapUtil.getString(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
+			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
 
 		if (larType.equals("layout-prototype") && !group.isLayoutPrototype() &&
 			!layoutsImportMode.equals(
@@ -1107,7 +1070,7 @@ public class LayoutImporter {
 				headerElement.attributeValue("available-locales")));
 
 		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
-			portletDataContext.getScopeGroupId());
+			groupId);
 
 		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
 			if (!ArrayUtil.contains(
@@ -1125,9 +1088,10 @@ public class LayoutImporter {
 
 		// Layout prototypes validity
 
-		validateLayoutPrototypes(
-			portletDataContext.getCompanyId(),
-			portletDataContext.getImportDataGroupElement(Layout.class));
+		Element layoutsElement = rootElement.element(
+			Layout.class.getSimpleName());
+
+		validateLayoutPrototypes(companyId, layoutsElement);
 	}
 
 	protected void validateLayoutPrototypes(

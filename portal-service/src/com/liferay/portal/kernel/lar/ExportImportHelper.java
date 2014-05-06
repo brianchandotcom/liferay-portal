@@ -183,6 +183,11 @@ public interface ExportImportHelper {
 			PortletRequest portletRequest, long targetGroupId)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getManifestSummary(PortletDataContext)}
+	 */
+	@Deprecated
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -191,6 +196,10 @@ public interface ExportImportHelper {
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			FileEntry fileEntry)
+		throws Exception;
+
+	public ManifestSummary getManifestSummary(
+			PortletDataContext portletDataContext)
 		throws Exception;
 
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
@@ -203,6 +212,9 @@ public interface ExportImportHelper {
 
 	public FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
+		throws PortalException, SystemException;
+
+	public UserIdStrategy getUserIdStrategy(long userId, String userIdStrategy)
 		throws PortalException, SystemException;
 
 	public boolean isReferenceWithinExportScope(
@@ -298,6 +310,15 @@ public interface ExportImportHelper {
 			long companyGroupId)
 		throws Exception;
 
+	public MissingReferences validateMissingReferences(
+			final PortletDataContext portletDataContext)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
 	public MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)

@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.lar.PortletDataContextFactory;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Group;
@@ -64,6 +68,14 @@ public class PortletDataContextFactoryImpl
 			portletDataContext.getParameterMap());
 		clonePortletDataContext.setScopeGroupId(
 			portletDataContext.getScopeGroupId());
+		clonePortletDataContext.setSourceCompanyId(
+			portletDataContext.getSourceCompanyId());
+		clonePortletDataContext.setSourceCompanyGroupId(
+			portletDataContext.getSourceCompanyGroupId());
+		clonePortletDataContext.setSourceGroupId(
+			portletDataContext.getSourceGroupId());
+		clonePortletDataContext.setSourceUserPersonalSiteGroupId(
+			portletDataContext.getSourceUserPersonalSiteGroupId());
 		clonePortletDataContext.setStartDate(portletDataContext.getStartDate());
 		clonePortletDataContext.setUserIdStrategy(
 			portletDataContext.getUserIdStrategy());
@@ -94,8 +106,9 @@ public class PortletDataContextFactoryImpl
 
 	@Override
 	public PortletDataContext createImportPortletDataContext(
-		long companyId, long groupId, Map<String, String[]> parameterMap,
-		UserIdStrategy userIdStrategy, ZipReader zipReader) {
+			long companyId, long groupId, Map<String, String[]> parameterMap,
+			UserIdStrategy userIdStrategy, ZipReader zipReader)
+		throws PortletDataException {
 
 		PortletDataContext portletDataContext = createPortletDataContext(
 			companyId, groupId);
@@ -110,6 +123,15 @@ public class PortletDataContextFactoryImpl
 		portletDataContext.setParameterMap(parameterMap);
 		portletDataContext.setUserIdStrategy(userIdStrategy);
 		portletDataContext.setZipReader(zipReader);
+
+		// Portlet data context listener
+
+		portletDataContext.setPortetDataContextListener(
+			new PortletDataContextListenerImpl(portletDataContext));
+
+		// XML
+
+		readXML(portletDataContext);
 
 		return portletDataContext;
 	}
@@ -179,6 +201,58 @@ public class PortletDataContextFactoryImpl
 		}
 
 		return portletDataContext;
+	}
+
+	protected void readXML(PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
+
+		Element rootElement = null;
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			rootElement = document.getRootElement();
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+
+		// Elements
+
+		portletDataContext.setImportDataRootElement(rootElement);
+
+		Element headerElement = rootElement.element("header");
+
+		// Company id
+
+		long sourceCompanyId = GetterUtil.getLong(
+			headerElement.attributeValue("company-id"));
+
+		portletDataContext.setSourceCompanyId(sourceCompanyId);
+
+		// Company group id
+
+		long sourceCompanyGroupId = GetterUtil.getLong(
+			headerElement.attributeValue("company-group-id"));
+
+		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
+
+		// Group id
+
+		long sourceGroupId = GetterUtil.getLong(
+			headerElement.attributeValue("group-id"));
+
+		portletDataContext.setSourceGroupId(sourceGroupId);
+
+		// User personal site group id
+
+		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
+			headerElement.attributeValue("user-personal-site-group-id"));
+
+		portletDataContext.setSourceUserPersonalSiteGroupId(
+			sourceUserPersonalSiteGroupId);
 	}
 
 	protected void validateDateRange(Date startDate, Date endDate)

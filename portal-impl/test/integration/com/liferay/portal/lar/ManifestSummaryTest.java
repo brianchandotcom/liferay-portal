@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -111,9 +110,7 @@ public class ManifestSummaryTest
 		throws Exception {
 
 		ManifestSummary manifestSummary =
-			ExportImportHelperUtil.getManifestSummary(
-				TestPropsValues.getUserId(), liveGroup.getGroupId(),
-				getParameterMap(), zipWriter.getFile());
+			ExportImportHelperUtil.getManifestSummary(portletDataContext);
 
 		Map<String, LongWrapper> modelAdditionCounters =
 			manifestSummary.getModelAdditionCounters();

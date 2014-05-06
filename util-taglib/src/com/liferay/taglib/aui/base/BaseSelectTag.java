@@ -141,6 +141,10 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		return _value;
 	}
 
+	public java.lang.String getWrapperCssClass() {
+		return _wrapperCssClass;
+	}
+
 	public void setBean(java.lang.Object bean) {
 		_bean = bean;
 
@@ -303,6 +307,12 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("value", value);
 	}
 
+	public void setWrapperCssClass(java.lang.String wrapperCssClass) {
+		_wrapperCssClass = wrapperCssClass;
+
+		setScopedAttribute("wrapperCssClass", wrapperCssClass);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_bean = null;
@@ -332,6 +342,7 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		_title = null;
 		_useNamespace = true;
 		_value = null;
+		_wrapperCssClass = null;
 	}
 
 	@Override
@@ -373,6 +384,7 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "title", _title);
 		setNamespacedAttribute(request, "useNamespace", _useNamespace);
 		setNamespacedAttribute(request, "value", _value);
+		setNamespacedAttribute(request, "wrapperCssClass", _wrapperCssClass);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:select:";
@@ -410,5 +422,6 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _title = null;
 	private boolean _useNamespace = true;
 	private java.lang.Object _value = null;
+	private java.lang.String _wrapperCssClass = null;
 
 }

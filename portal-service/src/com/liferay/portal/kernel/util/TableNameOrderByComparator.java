@@ -32,7 +32,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _orderByComparator.compare(obj1, obj2);
 	}
 
-	public OrderByComparator getDecoratedComparator() {
+	public OrderByComparator getWrappedOrderByComparator() {
 		return _orderByComparator;
 	}
 

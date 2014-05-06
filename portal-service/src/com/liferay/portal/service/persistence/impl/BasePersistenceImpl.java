@@ -443,7 +443,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			tableNameOrderByComparator =
 				new TableNameOrderByComparator(
-					tableNameOrderByComparator.getDecoratedComparator(),
+					tableNameOrderByComparator.getWrappedOrderByComparator(),
 					entityAlias);
 		}
 		else {

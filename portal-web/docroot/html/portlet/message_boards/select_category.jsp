@@ -113,7 +113,7 @@ else {
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("categoryid", curCategory.getCategoryId());
+				data.put("categoryId", curCategory.getCategoryId());
 				data.put("name", curCategory.getName());
 				%>
 
@@ -126,7 +126,7 @@ else {
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("categoryid", categoryId);
+			data.put("categoryId", categoryId);
 			data.put("name", categoryName);
 			%>
 

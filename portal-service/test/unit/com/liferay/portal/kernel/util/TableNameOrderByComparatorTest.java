@@ -25,67 +25,75 @@ public class TableNameOrderByComparatorTest {
 	@Test
 	public void testGetOrderByTableNameWithPeriodReturnsDecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field"), "table.");
+			new testGetOrderByComparator("column"), "table.");
 
 		Assert.assertEquals(
-			"table.field", _tableNameOrderByComparator.getOrderBy());
+			"table.column", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
 	public void testGetOrderByWithBlankTableNameReturnsUndecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field1, field2"), "");
+			new testGetOrderByComparator("column1, column2"), "");
 
 		Assert.assertEquals(
-			"field1, field2", _tableNameOrderByComparator.getOrderBy());
+			"column1, column2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testGetOrderByWithMultipleFieldsReturnsDecoratedTableName() {
+	public void testGetOrderByWithMultiplecolumnsReturnsDecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field1, field2"), "table");
+			new testGetOrderByComparator("column1, column2"), "table");
 
-		Assert.assertEquals("table.field1, table.field2", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"table.column1, table.column2",
+			_tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
 	public void testGetOrderByWithMultipleTableNameReturnsOriginalTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("table1.field1, field2"), "table2");
+			new testGetOrderByComparator("table1.column1, column2"), "table2");
 
-		Assert.assertEquals("table1.field1, table2.field2", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"table1.column1, table2.column2",
+			_tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
 	public void testGetOrderByWithNullTableNameReturnsUndecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field1, field2"), null);
+			new testGetOrderByComparator("column1, column2"), null);
 
-		Assert.assertEquals("field1, field2", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"column1, column2", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
-	public void testGetOrderByWithSingleFieldReturnsDecoratedTableName() {
+	public void testGetOrderByWithSinglecolumnReturnsDecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field"), "table");
+			new testGetOrderByComparator("column"), "table");
 
-		Assert.assertEquals("table.field", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"table.column", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
 	public void testGetOrderByWithSingleTableNameReturnsOriginalTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("table1.field1"), "table2");
+			new testGetOrderByComparator("table1.column1"), "table2");
 
-		Assert.assertEquals("table1.field1", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"table1.column1", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	@Test
 	public void testGetOrderByWithSortDirectionReturnsDecoratedTableName() {
 		_tableNameOrderByComparator = new TableNameOrderByComparator(
-			new testGetOrderByComparator("field ASC"), "table");
+			new testGetOrderByComparator("column ASC"), "table");
 
-		Assert.assertEquals("table.field ASC", _tableNameOrderByComparator.getOrderBy());
+		Assert.assertEquals(
+			"table.column ASC", _tableNameOrderByComparator.getOrderBy());
 	}
 
 	private TableNameOrderByComparator _tableNameOrderByComparator;

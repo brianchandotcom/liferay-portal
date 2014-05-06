@@ -32,10 +32,6 @@ public class TableNameOrderByComparator extends OrderByComparator {
 		return _orderByComparator.compare(obj1, obj2);
 	}
 
-	public OrderByComparator getWrappedOrderByComparator() {
-		return _orderByComparator;
-	}
-
 	@Override
 	public String getOrderBy() {
 		String orderBy = _orderByComparator.getOrderBy();
@@ -79,6 +75,10 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	@Override
 	public String[] getOrderByFields() {
 		return _orderByComparator.getOrderByFields();
+	}
+
+	public OrderByComparator getWrappedOrderByComparator() {
+		return _orderByComparator;
 	}
 
 	@Override

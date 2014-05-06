@@ -20,6 +20,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeJournal;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeLanguagePreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
@@ -45,6 +46,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeEmailNotificationPreferences.class);
 		upgrade(UpgradeExpando.class);
+		upgrade(UpgradeLanguagePreferences.class);
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeRepositoryEntry.class);

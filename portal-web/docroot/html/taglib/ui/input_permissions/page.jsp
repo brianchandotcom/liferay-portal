@@ -230,11 +230,11 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				function() {
 					var A = AUI();
 
-					A.one("#<%= uniqueNamespace %>inputPermissionsHideOptionsLink").show();
-					A.one("#<%= uniqueNamespace %>inputPermissionsTable").show();
+					A.one('#<%= uniqueNamespace %>inputPermissionsHideOptionsLink').show();
+					A.one('#<%= uniqueNamespace %>inputPermissionsTable').show();
 
-					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptionsLink").hide();
-					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptions").val("true");
+					A.one('#<%= uniqueNamespace %>inputPermissionsShowOptionsLink').hide();
+					A.one('#<%= uniqueNamespace %>inputPermissionsShowOptions').val("true");
 				},
 				['aui-base']
 			);
@@ -245,11 +245,11 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				function() {
 					var A = AUI();
 
-					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptionsLink").show();
-					A.one("#<%= uniqueNamespace %>inputPermissionsTable").hide();
+					A.one('#<%= uniqueNamespace %>inputPermissionsShowOptionsLink').show();
+					A.one('#<%= uniqueNamespace %>inputPermissionsTable').hide();
 
-					A.one("#<%= uniqueNamespace %>inputPermissionsHideOptionsLink").hide();
-					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptions").val("false");
+					A.one('#<%= uniqueNamespace %>inputPermissionsHideOptionsLink').hide();
+					A.one('#<%= uniqueNamespace %>inputPermissionsShowOptions').val("false");
 				},
 				['aui-base']
 			);
@@ -260,21 +260,21 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				function() {
 					var A = AUI();
 
-					var viewableBySelect = A.one("#<%= uniqueNamespace %>inputPermissionsViewRole");
-					var guestViewCheckbox = A.one("#<%= uniqueNamespace %>guestPermissions_VIEW");
-					var groupViewCheckbox = A.one("#<%= uniqueNamespace %>groupPermissions_VIEW");
+					var viewableBySelect = A.one('#<%= uniqueNamespace %>inputPermissionsViewRole');
+					var guestViewCheckbox = A.one('#<%= uniqueNamespace %>guestPermissions_VIEW');
+					var groupViewCheckbox = A.one('#<%= uniqueNamespace %>groupPermissions_VIEW');
 
 					if (viewableBySelect.val() == '<%= RoleConstants.GUEST %>') {
-						guestViewCheckbox.set("checked", true);
-						groupViewCheckbox.set("checked", false);
+						guestViewCheckbox.set('checked', true);
+						groupViewCheckbox.set('checked', false);
 					}
 					else if (viewableBySelect.val() == '<%= defaultGroupRole.getName() %>') {
-						guestViewCheckbox.set("checked", false);
-						groupViewCheckbox.set("checked", true);
+						guestViewCheckbox.set('checked', false);
+						groupViewCheckbox.set('checked', true);
 					}
 					else {
-						guestViewCheckbox.set("checked", false);
-						groupViewCheckbox.set("checked", false);
+						guestViewCheckbox.set('checked', false);
+						groupViewCheckbox.set('checked', false);
 					}
 				},
 				['aui-base']

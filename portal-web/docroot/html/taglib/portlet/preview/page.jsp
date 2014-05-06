@@ -49,5 +49,5 @@ if (Validator.isNull(width)) {
 </div>
 
 <aui:script>
-	Liferay.Util.disableElements("#<%= randomNamespace %>");
+	Liferay.Util.disableElements('#<%= randomNamespace %>');
 </aui:script>

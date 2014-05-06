@@ -262,16 +262,16 @@ if (hints != null) {
 						function(event) {
 							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
 
-							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>"].disabled = checked;
-							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Month"].disabled = checked;
-							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Day"].disabled = checked;
-							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Year"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>'].disabled = checked;
+							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Month'].disabled = checked;
+							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Day'].disabled = checked;
+							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Year'].disabled = checked;
 
 							<c:if test="<%= showTime %>">
-								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Time"].disabled = checked;
-								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Hour"].disabled = checked;
-								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Minute"].disabled = checked;
-								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>AmPm"].disabled = checked;
+								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Tim'].disabled = checked;
+								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Hour'].disabled = checked;
+								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Minute'].disabled = checked;
+								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>AmPm'].disabled = checked;
 							</c:if>
 						}
 					);
@@ -446,7 +446,7 @@ if (hints != null) {
 
 							<aui:script>
 								function <portlet:namespace /><%= fieldParam %>InitEditor() {
-									return "<%= UnicodeFormatter.toString(value) %>";
+									return '<%= UnicodeFormatter.toString(value) %>';
 								}
 							</aui:script>
 						</c:otherwise>

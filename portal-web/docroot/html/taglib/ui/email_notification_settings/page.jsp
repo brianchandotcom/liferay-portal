@@ -71,7 +71,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:ema
 
 				<aui:script>
 					function <portlet:namespace />init<%= emailParam %>BodyEditor() {
-						return "<%= UnicodeFormatter.toString(emailBody) %>";
+						return '<%= UnicodeFormatter.toString(emailBody) %>';
 					}
 				</aui:script>
 			</c:otherwise>

@@ -540,16 +540,16 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 	<aui:script>
 		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
-			document.getElementById(rowId).style.display = "none";
+			document.getElementById(rowId).style.display = 'none';
 			document.getElementById(textAreaId).value = textAreaValue;
 		}
 
 		function <%= randomNamespace %>scrollIntoView(messageId) {
-			document.getElementById("<%= randomNamespace %>messageScroll" + messageId).scrollIntoView();
+			document.getElementById('<%= randomNamespace %>messageScroll' + messageId).scrollIntoView();
 		}
 
 		function <%= randomNamespace %>showForm(rowId, textAreaId) {
-			document.getElementById(rowId).style.display = "block";
+			document.getElementById(rowId).style.display = 'block';
 			document.getElementById(textAreaId).focus();
 		}
 

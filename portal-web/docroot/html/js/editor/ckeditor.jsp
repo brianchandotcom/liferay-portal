@@ -218,9 +218,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 </script>
 
 <aui:script use="<%= modules %>">
-	window['<%= name %>']._setStyles = function() {
-		var iframe = A.one('#cke_<%= name %> iframe');
-
+	var addAUIClass = function(iframe) {
 		if (iframe) {
 			var iframeWin = iframe.getDOM().contentWindow;
 
@@ -228,6 +226,36 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				var iframeDoc = iframeWin.document.documentElement;
 
 				A.one(iframeDoc).addClass('aui');
+			}
+		}
+	};
+
+	window['<%= name %>']._setStyles = function() {
+		var ckEditor = A.one('#cke_<%= name %>');
+
+		if (ckEditor) {
+			var iframe = ckEditor.one('iframe');
+
+			addAUIClass(iframe);
+
+			var ckePanelDelegate = Liferay.Data['<%= name %>Handle'];
+
+			if (!ckePanelDelegate) {
+				var ckePanelDelegate = ckEditor.delegate(
+					'click',
+					function(event) {
+						var iframe = A.one('.cke_combopanel .cke_panel_frame');
+
+						addAUIClass(iframe);
+
+						ckePanelDelegate.detach();
+
+						Liferay.Data['<%= name %>Handle'] = null;
+					},
+					'.cke_combo'
+				);
+
+				Liferay.Data['<%= name %>Handle'] = ckePanelDelegate;
 			}
 		}
 	};

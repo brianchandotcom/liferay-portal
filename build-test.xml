@@ -2037,6 +2037,20 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 			<then>
 				<antcall target="prepare-test-bundle">

@@ -1,0 +1,88 @@
+<definition>
+	<command name="addPG">
+		<description message="Add a page called ${pageName}." />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
+		<execute action="Mobiledockbar#click" locator-key1="ADD" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Mobiledockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+	</command>
+
+	<command name="gotoCmdCP">
+		<execute macro="Page#openURL" />
+
+		<execute action="Mobiledockbar#click" locator-key1="COG_ICON" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="${portletCategoryKey}" value1="${portletCategoryName}" />
+
+		<if>
+			<not>
+				<contains string="${portletName}" substring="{portletName}" />
+			</not>
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoConfigurationCP">
+		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
+
+		<execute macro="MobilePage#gotoCmdCP">
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" />
+			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="gotoContentCP">
+		<description message="Navigate to Site Administration > Content > ${portletName}." />
+
+		<execute macro="MobilePage#gotoCmdCP">
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONTENT" />
+			<var name="portletCategoryName" value="Content" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="gotoPagesCP">
+		<description message="Navigate to Site Administration > Content > ${portletName}." />
+
+		<execute macro="MobilePage#gotoCmdCP">
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
+			<var name="portletCategoryName" value="Pages" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="gotoPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Mobiledockbar#click" locator-key1="REORDER_ICON" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Mobiledockbar#assertClick" locator-key1="REORDER_MENULIST_PAGE_NAME" value1="${pageName}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="MobilePage#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<while>
+			<condition action="MobileCPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			<then>
+				<execute action="MobileCPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+				<execute action="MobileCPSitepages#click" locator-key1="REORDER_ICON" />
+				<execute action="MobileCPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="MobileCPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="MobileCPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</while>
+	</command>
+</definition>

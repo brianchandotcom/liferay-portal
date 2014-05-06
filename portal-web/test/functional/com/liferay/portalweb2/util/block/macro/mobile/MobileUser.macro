@@ -1,0 +1,39 @@
+<definition>
+	<command name="loginPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGLogin#sikuliType" locator-key1="EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
+		<execute action="PGLogin#mouseMove" locator-key1="EMAIL_ADDRESS_FIELD" />
+		<execute action="PGLogin#sikuliType" locator-key1="PASSWORD_FIELD_PNG" value1="test" />
+
+		<take-screenshot />
+
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute action="Dockbar#assertElementPresent" locator-key1="USER_AVATAR_IMAGE" />
+
+		<if>
+			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			<then>
+				<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="PGLoginNewpassword#isElementPresent" locator-key1="PASSWORD_FIELD" />
+			<then>
+				<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test" />
+				<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test" />
+				<execute action="PGLoginNewpassword#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="PGLoginPasswordreminder#isElementPresent" locator-key1="ANSWER_FIELD" />
+			<then>
+				<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
+				<execute action="PGLoginPasswordreminder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+		</if>
+	</command>
+</definition>

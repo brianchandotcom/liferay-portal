@@ -96,7 +96,7 @@ catch (Exception e) {
 
 			<c:if test="<%= (feedImage != null) && showFeedImage %>">
 				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= HtmlUtil.escape(feedImageLink) %>" target="_new"  title="<%= feedImage.getTitle() %>">><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escape(feedImageURL) %>" /></aui:a>
+					<aui:a href="<%= HtmlUtil.escape(feedImageLink) %>" target="_new" title="<%= feedImage.getTitle() %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escape(feedImageURL) %>" /></aui:a>
 				</div>
 			</c:if>
 

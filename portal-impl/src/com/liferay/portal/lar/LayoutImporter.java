@@ -279,7 +279,7 @@ public class LayoutImporter {
 
 		validateFile(companyId, groupId, parameterMap, zipReader);
 
-		// PDC
+		// PortletDataContext
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(

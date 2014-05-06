@@ -378,6 +378,8 @@ public class PortletImporter {
 
 		validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
 
+		// PortletDataContext
+
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				layout.getCompanyId(), groupId, parameterMap, userIdStrategy,

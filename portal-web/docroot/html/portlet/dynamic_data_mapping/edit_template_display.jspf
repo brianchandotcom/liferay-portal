@@ -499,7 +499,15 @@ private String[] _getDataContentArray(TemplateVariableDefinition templateVariabl
 
 	String dataType = templateVariableDefinition.getDataType();
 
-	if (Validator.isNull(dataType)) {
+	if (templateVariableDefinition.isCollection()) {
+		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
+
+		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
+
+		dataContentArray[0] = listCodeArray[0];
+		dataContentArray[1] = listCodeArray[1];
+	}
+	else if (Validator.isNull(dataType)) {
 		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
 	}
 	else if (dataType.equals("service-locator")) {
@@ -509,14 +517,6 @@ private String[] _getDataContentArray(TemplateVariableDefinition templateVariabl
 
 		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language);
 		dataContentArray[1] = _getVariableReferenceCode(variableName, null, language);
-	}
-	else if (templateVariableDefinition.isCollection()) {
-		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
-
-		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
-
-		dataContentArray[0] = listCodeArray[0];
-		dataContentArray[1] = listCodeArray[1];
 	}
 	else {
 		try {

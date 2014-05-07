@@ -34,14 +34,6 @@ String instanceIdKey = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
-List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
-
-ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-if (groupId != ddmStructure.getGroupId()) {
-	ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-}
-
 String templateId = StringPool.BLANK;
 
 DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
@@ -49,10 +41,20 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 if (ddmTemplate != null) {
 	templateId = ddmTemplate.getTemplateKey();
 }
-else if (!ddmTemplates.isEmpty()) {
-	ddmTemplate = ddmTemplates.get(0);
+else {
+	List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
-	templateId = ddmTemplate.getTemplateKey();
+	ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+
+	if (groupId != ddmStructure.getGroupId()) {
+		ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+	}
+
+	if (!ddmTemplates.isEmpty()) {
+		ddmTemplate = ddmTemplates.get(0);
+
+		templateId = ddmTemplate.getTemplateKey();
+	}
 }
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");

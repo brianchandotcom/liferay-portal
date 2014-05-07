@@ -14,18 +14,19 @@
 
 package com.liferay.portal.messaging;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -33,7 +34,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -41,7 +41,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public class LayoutsRemotePublisherMessageListener
 
 	@Override
 	protected void doReceive(Message message, MessageStatus messageStatus)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		long exportImportConfigurationId = GetterUtil.getLong(
 			message.getPayload());
@@ -88,36 +87,8 @@ public class LayoutsRemotePublisherMessageListener
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
-		Date startDate = (Date)settingsMap.get("startDate");
-		Date endDate = (Date)settingsMap.get("endDate");
-
-		String range = MapUtil.getString(parameterMap, "range");
-
-		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				sourceGroupId, privateLayout);
-
-			long lastPublishDate = GetterUtil.getLong(
-				layoutSet.getSettingsProperty("last-publish-date"));
-
-			if (lastPublishDate > 0) {
-				endDate = new Date();
-
-				startDate = new Date(lastPublishDate);
-			}
-		}
-		else if (range.equals(ExportImportDateUtil.RANGE_LAST)) {
-			int last = MapUtil.getInteger(parameterMap, "last");
-
-			if (last > 0) {
-				Date scheduledFireTime = new Date();
-
-				startDate = new Date(
-					scheduledFireTime.getTime() - (last * Time.HOUR));
-
-				endDate = scheduledFireTime;
-			}
-		}
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
 
 		initThreadLocals(userId, parameterMap);
 
@@ -125,7 +96,8 @@ public class LayoutsRemotePublisherMessageListener
 			StagingUtil.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, startDate, endDate);
+				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
+				dateRange.getEndDate());
 		}
 		finally {
 			resetThreadLocals();
@@ -134,14 +106,20 @@ public class LayoutsRemotePublisherMessageListener
 
 	protected void initThreadLocals(
 			long userId, Map<String, String[]> parameterMap)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
+		PermissionChecker permissionChecker = null;
+
+		try {
+			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 

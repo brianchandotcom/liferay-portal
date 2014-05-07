@@ -907,6 +907,32 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public long exportLayoutsAsFileInBackground(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		if (!DLStoreUtil.isValidName(exportImportConfiguration.getName())) {
+			throw new LARFileNameException(exportImportConfiguration.getName());
+		}
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		BackgroundTask backgroundTask =
+			backgroundTaskLocalService.addBackgroundTask(
+				userId, exportImportConfiguration.getGroupId(),
+				exportImportConfiguration.getName(), null,
+				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
+				new ServiceContext());
+
+		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
+	public long exportLayoutsAsFileInBackground(
 			long userId, String taskName, long groupId, boolean privateLayout,
 			long[] layoutIds, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate, String fileName)

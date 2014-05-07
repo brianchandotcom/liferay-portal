@@ -81,23 +81,8 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		boolean privateLayout = GetterUtil.getBoolean(
-			settingsMap.get("privateLayout"));
-		long[] layoutIds = GetterUtil.getLongValues(
-			settingsMap.get("layoutIds"));
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
-		String fileName = exportImportConfiguration.getName();
-
 		LayoutServiceUtil.exportLayoutsAsFileInBackground(
-			fileName, groupId, privateLayout, layoutIds, parameterMap,
-			dateRange.getStartDate(), dateRange.getEndDate(), fileName);
+			exportImportConfiguration);
 	}
 
 	public static void exportLayoutsByExportImportConfiguration(

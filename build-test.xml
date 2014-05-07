@@ -1674,18 +1674,18 @@ tck.url=true</echo>
 		<if>
 			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 			<then>
-				<property name="app.server.liferay.portal.war" value="${app.server.portal.dir}" />
+				<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 			</then>
 			<elseif>
 				<equals arg1="${tcat.enabled}" arg2="true" />
 				<then>
-					<property name="app.server.liferay.portal.war" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
+					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
 				</then>
 			</elseif>
 		</if>
 
 		<if>
-			<isset property="app.server.liferay.portal.war" />
+			<isset property="test.build.liferay.portal.zip.file.name" />
 			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -1695,7 +1695,7 @@ tck.url=true</echo>
 
 				<unzip
 					dest="${tstamp.value}"
-					src="${app.server.liferay.portal.war}"
+					src="${test.build.liferay.portal.zip.file.name}"
 				/>
 
 				<copy
@@ -1705,7 +1705,7 @@ tck.url=true</echo>
 
 				<zip
 					basedir="${tstamp.value}"
-					destfile="${app.server.liferay.portal.war}"
+					destfile="${test.build.liferay.portal.zip.file.name}"
 					update="yes"
 				/>
 

@@ -95,7 +95,7 @@
 		<execute action="CPPagetemplates#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
 
-	<command name="viewDefaultDataTranslationCP">
+	<command name="viewDefaultLocalizedCP">
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_1" value1="${blogTranslation}" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_2" value1="${contentDisplayPageTranslation}" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_3" value1="${wikiTranslation}" />

@@ -54,7 +54,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON_LOCALIZATION</td>
+	<td>SAVE_BUTTON_LOCALIZED</td>
 	<td>//button[contains(.,'${key_saveButton}')]</td>
 	<td></td>
 </tr>

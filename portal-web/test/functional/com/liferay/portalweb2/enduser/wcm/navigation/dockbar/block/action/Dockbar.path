@@ -577,7 +577,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_MY_ACCOUNT_LOCALIZATION</td>
+	<td>USER_MY_ACCOUNT_LOCALIZED</td>
 	<td>//a[@title='${key_myAccount}']</td>
 	<td></td>
 </tr>

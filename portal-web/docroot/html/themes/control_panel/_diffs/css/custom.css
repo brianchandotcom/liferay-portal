@@ -98,7 +98,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.control-panel-home-menu {
 		margin-top: 40px;
 
-		a {
+		.control-panel-home-link a {
 			color: #009AE5;
 			font-size: 16px;
 			text-decoration: none;
@@ -110,20 +110,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			&:hover {
 				color: #009AE5;
 				text-decoration: underline;
-			}
-
-			&.btn {
-				color: #333;
-				font-size: 14px;
-				font-weight: normal;
-
-				&:hover {
-					text-decoration: none;
-				}
-
-				&.btn-primary {
-					color: #FFF;
-				}
 			}
 
 			&.taglib-icon .taglib-text {

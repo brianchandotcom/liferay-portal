@@ -81,7 +81,7 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 					for (AssetRendererFactory factory : assetFactoriesWithClassTypes) {
 					%>
 
-						<aui:select cssClass="hide subtype-select subtype-classNameId0" inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
+						<aui:select wrapperCssClass="hide subtype-select" inlineField="<%= true %>" label="" name='<%= "subtype" + factory.getClassNameId() + "-classNameId0" %>'>
 							<aui:option label="all-asset-subtypes" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 							<%
@@ -147,7 +147,7 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 						for (AssetRendererFactory assetRendererFactory : assetFactoriesWithClassTypes) {
 						%>
 
-							<aui:select cssClass='<%= (classNameId == assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select " + "subtype-" + rowClassNameId %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
+							<aui:select wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
 								<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
@@ -192,43 +192,32 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 		{
 			contentBox: '#<portlet:namespace />extraFields',
 			fieldIndexes: '<portlet:namespace />indexes',
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
+			on: {
+				clone: function(event) {
+					event.row.all('.subtype-select').hide();
+				}
+			}
 		}
 	).render();
 
 	extraFields.setData('autoFieldsInstance', autoFields);
 
-	autoFields.on(
-		'clone',
-		function(event) {
-			event.row.all(".subtype-select").each(
-				function(item) {
-					item.hide();
-				}
-			);
-		}
-	);
-</aui:script>
-
-<aui:script use="aui-base">
 	var form = A.one('#<portlet:namespace /><%= formName %>');
 
 	form.delegate(
 		'change',
 		function(event) {
-			var currentName = event.currentTarget.attr('name').replace("<portlet:namespace />", "");
-			var rowNode = event.currentTarget.ancestor(".lfr-form-row");
+			var target = event.currentTarget;
 
-			rowNode.all(".subtype-select").each(
-				function(item) {
-					item.hide();
-				}
-			);
+			var row = target.ancestor('.lfr-form-row');
 
-			var selectToShow = "<portlet:namespace />subtype" + event.currentTarget.val() + "-" + currentName;
-			var select = rowNode.one('#' + selectToShow);
-			if (select !== null) {
-				select.show();
+			row.all('.subtype-select').hide();
+
+			var select = row.one('[name*=subtype' + target.val() + ']');
+
+			if (select) {
+				select.ancestor('.subtype-select').show();
 			}
 		},
 		'.vocabulary-asset-type-select'

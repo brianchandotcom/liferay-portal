@@ -14,19 +14,18 @@
 
 package com.liferay.portlet.blogs.pingback;
 
-import java.io.IOException;
-
 /**
  * @author André de Oliveira
  */
 public interface PingbackExcerptExtractor {
 
-	public String getExcerpt() throws IOException;
+	public String getExcerpt() throws UnavailableSourceURIException;
 
 	public void setSourceUri(String sourceUri);
 
 	public void setTargetUri(String targetUri);
 
-	public void validateSource();
+	public void validateSource()
+		throws InvalidSourceURIException, UnavailableSourceURIException;
 
 }

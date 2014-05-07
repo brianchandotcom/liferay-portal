@@ -74,7 +74,8 @@ public class PingbackMethodImpl implements Method {
 
 	public PingbackMethodImpl() {
 		_pingbackComments = new PingbackCommentsImpl();
-		_pingbackExcerptExtractor = new PingbackExcerptExtractorImpl();
+		_pingbackExcerptExtractor = new PingbackExcerptExtractorImpl(
+			PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH);
 	}
 
 	@Override
@@ -140,7 +141,7 @@ public class PingbackMethodImpl implements Method {
 			"[...] " + _pingbackExcerptExtractor.getExcerpt() +
 				" [...] [url=" + _sourceUri + "]" +
 				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
-				"[/url]";
+					"[/url]";
 
 		_pingbackComments.addComment(
 			userId, groupId, className, classPK, body,
@@ -160,11 +161,8 @@ public class PingbackMethodImpl implements Method {
 	@Override
 	public boolean setArguments(Object[] arguments) {
 		try {
-			_sourceUri = (String)arguments[0];
-			_targetUri = (String)arguments[1];
-
-			_pingbackExcerptExtractor.setSourceUri(_sourceUri);
-			_pingbackExcerptExtractor.setTargetUri(_targetUri);
+			_pingbackExcerptExtractor.setSourceUri((String)arguments[0]);
+			_pingbackExcerptExtractor.setTargetUri((String)arguments[1]);
 
 			return true;
 		}

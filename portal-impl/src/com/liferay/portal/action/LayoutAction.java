@@ -102,11 +102,11 @@ public class LayoutAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		Boolean layoutDefault = (Boolean)request.getAttribute(
-			WebKeys.LAYOUT_DEFAULT);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Boolean layoutDefault = (Boolean)request.getAttribute(
+			WebKeys.LAYOUT_DEFAULT);
 
 		if (Boolean.TRUE.equals(layoutDefault)) {
 			Layout requestedLayout = (Layout)request.getAttribute(

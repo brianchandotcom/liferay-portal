@@ -16,17 +16,10 @@ package com.liferay.portlet.blogs.pingback;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -43,7 +36,8 @@ public class PingbackCommentsImpl implements PingbackComments {
 	@Override
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException, SystemException {
 
 		MBMessageDisplay messageDisplay =
@@ -66,32 +60,7 @@ public class PingbackCommentsImpl implements PingbackComments {
 			}
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		String pingbackUserName = LanguageUtil.get(
-			LocaleUtil.getSiteDefault(), "pingback");
-
-		serviceContext.setAttribute("pingbackUserName", pingbackUserName);
-
-		StringBundler sb = new StringBundler(5);
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			groupId, PortletKeys.BLOGS);
-
-		sb.append(layoutFullURL);
-
-		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, PortletKeys.BLOGS);
-
-		sb.append(portlet.getFriendlyURLMapping());
-		sb.append(StringPool.SLASH);
-		sb.append(entry.getUrlTitle());
-
-		serviceContext.setAttribute("redirect", sb.toString());
-
-		serviceContext.setLayoutFullURL(layoutFullURL);
+		ServiceContext serviceContext = serviceContextFunction.apply(null);
 
 		MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK, threadId,

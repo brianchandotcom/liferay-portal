@@ -43,6 +43,7 @@ import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
 import com.liferay.portlet.blogs.pingback.PingbackComments;
 import com.liferay.portlet.blogs.pingback.PingbackCommentsImpl;
 import com.liferay.portlet.blogs.pingback.PingbackDisabledException;
+import com.liferay.portlet.blogs.pingback.PingbackServiceContextFunction;
 import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -141,12 +142,16 @@ public class PingbackMethodImpl implements Method {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
+		String urlTitle = entry.getUrlTitle();
+
 		String body =
 			"[...] " + getExcerpt() + " [...] [url=" + _sourceUri + "]" +
 				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
 					"[/url]";
 
-		_pingbackComments.addComment(userId, groupId, className, classPK, body);
+		_pingbackComments.addComment(
+			userId, groupId, className, classPK, body,
+			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
 	}
 
 	@Override

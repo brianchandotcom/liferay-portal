@@ -696,6 +696,32 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, classPK);
 	}
 
+	@Override
+	public List<DDMTemplate> getTemplates(
+			long groupId, long classNameId, long classPK,
+			boolean includeAncestorTemplates)
+		throws PortalException, SystemException {
+
+		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+
+		ddmTemplates.addAll(
+			ddmTemplatePersistence.findByG_C_C(groupId, classNameId, classPK));
+
+		if (!includeAncestorTemplates) {
+			return ddmTemplates;
+		}
+
+		for (long ancestorSiteGroupId :
+				PortalUtil.getAncestorSiteGroupIds(groupId)) {
+
+			ddmTemplates.addAll(
+				ddmTemplatePersistence.findByG_C_C(
+					ancestorSiteGroupId, classNameId, classPK));
+		}
+
+		return ddmTemplates;
+	}
+
 	/**
 	 * Returns all the templates matching the group, class name ID, class PK,
 	 * and type.

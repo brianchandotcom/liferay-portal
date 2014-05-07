@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
@@ -28,6 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -406,6 +408,33 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplatePersistence.filterFindByG_C_C(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public List<DDMTemplate> getTemplates(
+			long groupId, long classNameId, long classPK,
+			boolean includeAncestorTemplates)
+		throws PortalException, SystemException {
+
+		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+
+		ddmTemplates.addAll(
+			ddmTemplatePersistence.filterFindByG_C_C(
+				groupId, classNameId, classPK));
+
+		if (!includeAncestorTemplates) {
+			return ddmTemplates;
+		}
+
+		for (long ancestorSiteGroupId :
+				PortalUtil.getAncestorSiteGroupIds(groupId)) {
+
+			ddmTemplates.addAll(
+				ddmTemplatePersistence.filterFindByG_C_C(
+					ancestorSiteGroupId, classNameId, classPK));
+		}
+
+		return ddmTemplates;
 	}
 
 	/**

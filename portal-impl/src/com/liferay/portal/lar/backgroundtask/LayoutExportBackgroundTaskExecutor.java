@@ -82,9 +82,10 @@ public class LayoutExportBackgroundTaskExecutor
 
 		StringBundler sb = new StringBundler(4);
 
-		String fileName = exportImportConfiguration.getName();
-
-		sb.append(fileName.replace(StringPool.SPACE, StringPool.UNDERLINE));
+		sb.append(
+			StringUtil.replace(
+				exportImportConfiguration.getName(), StringPool.SPACE,
+				StringPool.UNDERLINE));
 		sb.append(StringPool.DASH);
 		sb.append(Time.getShortTimestamp());
 		sb.append(".lar");

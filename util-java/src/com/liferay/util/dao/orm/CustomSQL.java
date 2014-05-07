@@ -227,10 +227,18 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(String keywords) {
-		return keywords(keywords, true);
+		return keywords(
+			keywords, true, CustomSQLConstants.SURROUND_WILDCARD_MODE);
 	}
 
 	public String[] keywords(String keywords, boolean lowerCase) {
+		return keywords(
+			keywords, lowerCase, CustomSQLConstants.SURROUND_WILDCARD_MODE);
+	}
+
+	public String[] keywords(
+			String keywords, boolean lowerCase, int wildcardMode) {
+
 		if (Validator.isNull(keywords)) {
 			return new String[] {null};
 		}
@@ -262,8 +270,7 @@ public class CustomSQL {
 				if (i > pos) {
 					String keyword = keywords.substring(pos, i);
 
-					keywordsList.add(
-						StringUtil.quote(keyword, StringPool.PERCENT));
+					keywordsList.add(insertWildcard(keyword, wildcardMode));
 				}
 			}
 			else {
@@ -287,11 +294,15 @@ public class CustomSQL {
 
 				String keyword = keywords.substring(pos, i);
 
-				keywordsList.add(StringUtil.quote(keyword, StringPool.PERCENT));
+				keywordsList.add(insertWildcard(keyword, wildcardMode));
 			}
 		}
 
 		return keywordsList.toArray(new String[keywordsList.size()]);
+	}
+
+	public String[] keywords(String keywords, int wildcardMode) {
+		return keywords(keywords, true, wildcardMode);
 	}
 
 	public String[] keywords(String[] keywordsArray) {
@@ -730,6 +741,26 @@ public class CustomSQL {
 		}
 		else {
 			return new String[] {"custom-sql/default.xml"};
+		}
+	}
+
+	protected String insertWildcard(String keyword, int quoteMode) {
+		if (quoteMode ==
+				CustomSQLConstants.SURROUND_WILDCARD_MODE) {
+
+			return StringUtil.quote(keyword, StringPool.PERCENT);
+		}
+		else if (quoteMode ==
+					CustomSQLConstants.TRAILING_WILDCARD_MODE) {
+
+			return keyword + StringPool.PERCENT;
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Expected one of: " +
+				CustomSQLConstants.SURROUND_WILDCARD_MODE + ", " +
+				CustomSQLConstants.TRAILING_WILDCARD_MODE +
+				"; found: " + quoteMode);
 		}
 	}
 

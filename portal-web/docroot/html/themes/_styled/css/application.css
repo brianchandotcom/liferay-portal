@@ -575,27 +575,33 @@
 	padding: 0;
 }
 
-/* ---------- CKEditor panel menu ---------- */
+/* ---------- CKEditor menu ---------- */
 
-.cke_panel.cke_combopanel {
-	width: 220px;
-}
-
-.cke_panel_block {
-	.cke_panel_grouptitle {
-		font-size: 20px;
-		line-height: 20px;
-		margin-top: 0;
+.aui {
+	.cke_dialog .cke_dialog_ui_input_text {
+		height: auto;
 	}
 
-	.cke_panel_list {
-		margin-left: 0;
+	.cke_panel.cke_combopanel {
+		width: 220px;
+	}
 
-		.cke_panel_listItem {
-			line-height: initial;
+	.cke_panel_block {
+		.cke_panel_grouptitle {
+			font-size: 20px;
+			line-height: 20px;
+			margin-top: 0;
+		}
 
-			a:hover {
-				text-decoration: none;
+		.cke_panel_list {
+			margin-left: 0;
+
+			.cke_panel_listItem {
+				line-height: initial;
+
+				a:hover {
+					text-decoration: none;
+				}
 			}
 		}
 	}

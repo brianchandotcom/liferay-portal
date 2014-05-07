@@ -1507,6 +1507,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (<#if pluginName != "">_SPRING_HIBERNATE_SESSION_DELEGATED<#else>com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED</#if>) {
 				Session session = getCurrentSession();
 
+				session.flush();
+
 				session.clear();
 			}
 		}

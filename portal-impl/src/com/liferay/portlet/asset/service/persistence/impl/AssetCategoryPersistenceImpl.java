@@ -11896,6 +11896,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
 			Session session = getCurrentSession();
 
+			session.flush();
+
 			session.clear();
 		}
 	}

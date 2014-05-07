@@ -328,6 +328,12 @@ public class ResourceActionLocalServiceWrapper
 		return _resourceActionLocalService.getResourceActions(name);
 	}
 
+	@Override
+	public int getResourceActionsCount(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _resourceActionLocalService.getResourceActionsCount(name);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

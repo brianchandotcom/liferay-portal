@@ -232,7 +232,7 @@
 </tr>
 <!--RELATED_ASSETS-->
 <tr>
-	<td>RELATED_ASSETS_MENULIST</td>
+	<td>RELATED_ASSETS_SELECT</td>
 	<td>//a[contains(@id,'inputAssetLinks')]/span</td>
 	<td></td>
 </tr>

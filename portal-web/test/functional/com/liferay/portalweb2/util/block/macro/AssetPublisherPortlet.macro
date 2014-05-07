@@ -12,7 +12,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="configureAddSiteScopes">
@@ -424,14 +424,14 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${assetContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 	</command>
 
 	<command name="viewAssetPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${assetContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 
 		<if>
 			<equals arg1="${addMetadata}" arg2="true" />
@@ -464,14 +464,14 @@
 	<command name="viewConfigureAPDisplayTemplateTableBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${bookmarkDescription}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${bookmarkDescription}" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_STAR_ICON" />
 	</command>
 
 	<command name="viewConfigureAPDisplayTemplateTitleListBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${bookmarkDescription}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${bookmarkDescription}" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_STAR_ICON" />
 	</command>
 
@@ -579,7 +579,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${assetContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">
@@ -645,7 +645,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_EDIT" />
 	</command>
 
@@ -698,7 +698,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_EDIT" />
 	</command>
 
@@ -750,7 +750,7 @@
 			<then>
 				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_RELATED_ASSET_HEADER" value1="Related Assets:" />
 				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="ASSET_RELATED_ASSET_IMAGE" />
-				<execute action="PGAssetpublisherAsset#assertTextNotPresent" locator-key1="ASSET_RELATED_ASSET_TITLE" value1="${relatedAssetTitleHidden}" />
+				<execute action="PGAssetpublisherAsset#assertTextNotPresent" value1="${relatedAssetTitleHidden}" />
 			</then>
 		</if>
 	</command>

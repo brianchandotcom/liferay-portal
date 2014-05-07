@@ -1587,7 +1587,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="RelatedAssets#viewWithoutAssetsPG" />
+		<execute macro="RelatedAssets#viewDefaultPG" />
 
 		<execute macro="AssetPublisherPortlet#viewPG">
 			<var name="assetContent" value="WC WebContent Content" />
@@ -1603,7 +1603,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="RelatedAssets#viewWithoutAssetsPG" />
+		<execute macro="RelatedAssets#viewDefaultPG" />
 
 		<execute macro="AssetPublisherPortlet#viewPG">
 			<var name="assetContent" value="Blogs Entry Content" />

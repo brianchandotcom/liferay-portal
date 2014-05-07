@@ -264,7 +264,7 @@
 </tr>
 <!--RELATED_ASSETS-->
 <tr>
-	<td>RELATED_ASSETS_SELECT_MENULIST</td>
+	<td>RELATED_ASSETS_SELECT</td>
 	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
 	<td></td>
 </tr>

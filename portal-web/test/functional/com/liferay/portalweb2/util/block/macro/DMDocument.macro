@@ -178,7 +178,7 @@
 
 	<command name="addRelatedAssetPG">
 		<if>
-			<condition action="PGDocumentsandmediaAdddocument#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT_MENULIST" />
+			<condition action="PGDocumentsandmediaAdddocument#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT" />
 			<then>
 				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
 				<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator-key1="RELATED_ASSETS_DROPDOWN" />
@@ -187,7 +187,7 @@
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST" value1="Select" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
 		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
@@ -1374,7 +1374,7 @@
 		<var name="key_assetTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${dmDocumentDescription}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${dmDocumentDescription}" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${dmDocumentTitle}" />

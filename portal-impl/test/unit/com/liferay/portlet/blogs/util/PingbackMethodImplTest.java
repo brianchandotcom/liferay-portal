@@ -14,212 +14,44 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.XmlRpc;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.blogs.pingback.DuplicateCommentException;
+import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
+import com.liferay.portlet.blogs.pingback.Pingback;
+import com.liferay.portlet.blogs.pingback.PingbackDisabledException;
+import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
 
-import java.io.IOException;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
-import org.mockito.internal.stubbing.answers.DoesNothing;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	PropsValues.class, PortalSocketPermission.class,
-	PortletLocalServiceUtil.class, BlogsEntryLocalServiceUtil.class,
-	UserLocalServiceUtil.class, MBMessageLocalServiceUtil.class
-})
-@RunWith(PowerMockRunner.class)
 public class PingbackMethodImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpBlogsEntry();
-		setUpHttp();
-		setUpLanguage();
-		setUpMessageBoards();
-		setUpPortal();
-		setUpPortlet();
-		setUpUser();
 		setUpXmlRpc();
-	}
-
-	@Test
-	public void testAddPingbackWhenBlogEntryDisablesPingbacks()
-		throws Exception {
-
-		when(
-			_blogsEntry.isAllowPingbacks()
-		).thenReturn(
-			false
-		);
-
-		execute();
-
-		verifyFault(
-			XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
-			"Pingbacks are disabled");
-	}
-
-	@Test
-	public void testAddPingbackWhenPortalPropertyDisablesPingbacks()
-		throws Exception {
-
-		boolean previous = PropsValues.BLOGS_PINGBACK_ENABLED;
-
-		Whitebox.setInternalState(
-			PropsValues.class, "BLOGS_PINGBACK_ENABLED", false);
-
-		try {
-			execute();
-
-			verifyFault(
-				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
-				"Pingbacks are disabled");
-		}
-		finally {
-			Whitebox.setInternalState(
-				PropsValues.class, "BLOGS_PINGBACK_ENABLED", previous);
-		}
-	}
-
-	@Test
-	public void testAddPingbackWithFriendlyURL() throws Exception {
-		long plid = ServiceTestUtil.randomLong();
-
-		when(
-			_portal.getPlidFromFriendlyURL(COMPANY_ID, "/__blogs__")
-		).thenReturn(
-			plid
-		);
-
-		long groupId = ServiceTestUtil.randomLong();
-
-		when(
-			_portal.getScopeGroupId(plid)
-		).thenReturn(
-			groupId
-		);
-
-		whenFriendlyURLMapperPopulateParamsPut(
-			"/__remainder-of-the-friendly-url__", "urlTitle", "__urlTitle__");
-
-		String friendlyURL =
-			"http://liferay.com/__blogs__/-/__remainder-of-the-friendly-url__";
-
-		whenURLToStringSourceURIThenReturn(
-			"<body><a href='" + friendlyURL + "'>Liferay</a></body>");
-
-		execute(friendlyURL);
-
-		verifySuccess();
-
-		Mockito.verify(
-			_blogsEntryLocalService
-		).getEntry(
-			groupId, "__urlTitle__"
-		);
-	}
-
-	@Test
-	public void testAddPingbackWithFriendlyURLParameterEntryId()
-		throws Exception {
-
-		doTestAddPingbackWithFriendlyURLParameterEntryId(null);
-	}
-
-	@Test
-	public void testAddPingbackWithFriendlyURLParameterEntryIdInNamespace()
-		throws Exception {
-
-		String namespace = "__namespace__.";
-
-		when(
-			_portal.getPortletNamespace(PortletKeys.BLOGS)
-		).thenReturn(
-			namespace
-		);
-
-		doTestAddPingbackWithFriendlyURLParameterEntryId(namespace);
 	}
 
 	@Test
 	public void testConvertDuplicateCommentExceptionToXmlRpcFault()
 		throws Exception {
 
-		MBMessage message = Mockito.mock(MBMessage.class);
-
-		when(
-			message.getBody()
-		).thenReturn(
-			"[...] Liferay [...] [url=__sourceUri__]__read_more__[/url]"
-		);
-
-		List<MBMessage> messages = Collections.singletonList(message);
-
-		when(
-			_mbMessageLocalService.getThreadMessages(
-				THREAD_ID, WorkflowConstants.STATUS_APPROVED)
-		).thenReturn(
-			messages
-		);
+		whenAddPingbackThrow(new DuplicateCommentException());
 
 		execute();
 
@@ -229,120 +61,12 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testExecuteWithSuccess() throws Exception {
-		execute();
+	public void testConvertInvalidSourceURIExceptionToXmlRpcFault()
+		throws Exception {
 
-		verifySuccess();
-
-		Mockito.verify(
-			_mbMessageLocalService
-		).getDiscussionMessageDisplay(
-			USER_ID, GROUP_ID, BlogsEntry.class.getName(), ENTRY_ID,
-			WorkflowConstants.STATUS_APPROVED
-		);
-
-		Mockito.verify(
-			_mbMessageLocalService
-		).getThreadMessages(
-			THREAD_ID, WorkflowConstants.STATUS_APPROVED
-		);
-
-		Mockito.verify(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			Matchers.eq(USER_ID), Matchers.eq(StringPool.BLANK),
-			Matchers.eq(GROUP_ID), Matchers.eq(BlogsEntry.class.getName()),
-			Matchers.eq(ENTRY_ID), Matchers.eq(THREAD_ID),
-			Matchers.eq(PARENT_MESSAGE_ID), Matchers.eq(StringPool.BLANK),
-			Matchers.eq(
-				"[...] Liferay [...] [url=__sourceUri__]__read_more__[/url]"),
-			_serviceContextCaptor.capture()
-		);
-
-		ServiceContext serviceContext = _serviceContextCaptor.getValue();
-
-		Assert.assertEquals(
-			"__pingbackUserName__",
-			serviceContext.getAttribute("pingbackUserName"));
-
-		Assert.assertEquals(
-			"__LayoutFullURL__/-/__FriendlyURLMapping__/__UrlTitle__",
-			serviceContext.getAttribute("redirect"));
-
-		Assert.assertEquals(
-			"__LayoutFullURL__", serviceContext.getLayoutFullURL());
-	}
-
-	@Test
-	public void testGetExcerpt() throws Exception {
-		int previous = PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH;
-
-		Whitebox.setInternalState(
-			PropsValues.class, "BLOGS_LINKBACK_EXCERPT_LENGTH", 4);
-
-		try {
-			whenURLToStringSourceURIThenReturn(
-				"<body><a href='http://liferay.com'>12345</a></body>");
-
-			execute();
-
-			verifyExcerpt("1...");
-		}
-		finally {
-			Whitebox.setInternalState(
-				PropsValues.class, "BLOGS_LINKBACK_EXCERPT_LENGTH", previous);
-		}
-	}
-
-	@Test
-	public void testGetExcerptWhenAnchorHasParent() throws Exception {
-		whenURLToStringSourceURIThenReturn(
-			"<body><p>" +
-			"Visit <a href='http://liferay.com'>Liferay</a> to learn more" +
-			"</p></body>");
-
-		execute();
-
-		verifyExcerpt("Visit Liferay to learn more");
-	}
-
-	@Test
-	public void testGetExcerptWhenAnchorHasTwoParents() throws Exception {
-		int previous = PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH;
-
-		Whitebox.setInternalState(
-			PropsValues.class, "BLOGS_LINKBACK_EXCERPT_LENGTH",
-			"Liferay".length() + 11);
-
-		try {
-			whenURLToStringSourceURIThenReturn(
-				"<body>_____<p>12345<span>67890" +
-				"<a href='http://liferay.com'>Liferay</a>" +
-				"12345</span>67890</p>_____</body>");
-
-			execute();
-
-			verifyExcerpt("1234567890Lifer...");
-		}
-		finally {
-			Whitebox.setInternalState(
-				PropsValues.class, "BLOGS_LINKBACK_EXCERPT_LENGTH", previous);
-		}
-	}
-
-	@Test
-	public void testGetExcerptWhenAnchorIsMalformed() throws Exception {
-		whenURLToStringSourceURIThenReturn("<a href='MALFORMED' />");
-
-		execute("MALFORMED");
-
-		verifyFault(
-			PingbackMethodImpl.TARGET_URI_INVALID, "Error parsing target URI");
-	}
-
-	@Test
-	public void testGetExcerptWhenAnchorIsMissing() throws Exception {
-		whenURLToStringSourceURIThenReturn("");
+		whenAddPingbackThrow(
+			new InvalidSourceURIException(
+				"Could not find target URI in source"));
 
 		execute();
 
@@ -352,14 +76,38 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetExcerptWhenReferrerIsUnavailable() throws Exception {
-		Mockito.doThrow(
-			IOException.class
-		).when(
-			_http
-		).URLtoString(
-			"__sourceUri__"
-		);
+	public void testConvertNullPointerExceptionToXmlRpcFault()
+		throws Exception {
+
+		whenAddPingbackThrow(new NullPointerException());
+
+		execute();
+
+		verifyFault(
+			PingbackMethodImpl.TARGET_URI_INVALID, "Error parsing target URI");
+	}
+
+	@Test
+	public void testConvertPingbackDisabledExceptionToXmlRpcFault()
+		throws Exception {
+
+		whenAddPingbackThrow(
+			new PingbackDisabledException("Pingbacks are disabled"));
+
+		execute();
+
+		verifyFault(
+			XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND,
+			"Pingbacks are disabled");
+	}
+
+	@Test
+	public void testConvertUnavailableSourceURIExceptionToXmlRpcFault()
+		throws Exception {
+
+		whenAddPingbackThrow(
+			new UnavailableSourceURIException(
+				"Error accessing source URI", new NullPointerException()));
 
 		execute();
 
@@ -368,234 +116,39 @@ public class PingbackMethodImplTest extends PowerMockito {
 			"Error accessing source URI");
 	}
 
-	protected void doTestAddPingbackWithFriendlyURLParameterEntryId(
-			String namespace)
-		throws Exception {
-
-		when(
-			_blogsEntryLocalService.getEntry(Matchers.anyLong())
-		).thenReturn(
-			_blogsEntry
-		);
-
-		String name;
-
-		if (namespace == null) {
-			name = "entryId";
-		}
-		else {
-			name = namespace + "entryId";
-		}
-
-		long entryId = ServiceTestUtil.randomLong();
-
-		whenFriendlyURLMapperPopulateParamsPut(
-			"", name, String.valueOf(entryId));
-
+	@Test
+	public void testExecuteWithSuccess() throws Exception {
 		execute();
 
-		verifySuccess();
+		Mockito.verify(
+			_xmlRpc
+		).createSuccess(
+			"Pingback accepted"
+		);
+	}
+
+	@Test
+	public void testSetArgumentsConvertsArrayToSetters() throws Exception {
+		PingbackMethodImpl method = new PingbackMethodImpl(_pingback);
+
+		method.setArguments(new Object[]{"__sourceURI__", "__targetURI__"});
 
 		Mockito.verify(
-			_blogsEntryLocalService
-		).getEntry(
-			entryId
+			_pingback
+		).setSourceURI(
+			"__sourceURI__"
+		);
+		Mockito.verify(
+			_pingback
+		).setTargetURI(
+			"__targetURI__"
 		);
 	}
 
-	protected void execute() {
-		execute("http://liferay.com");
-	}
+	protected void execute() throws Exception {
+		PingbackMethodImpl pingbackMethod = new PingbackMethodImpl(_pingback);
 
-	protected void execute(String targetURI) {
-		PingbackMethodImpl method = new PingbackMethodImpl();
-
-		method.setArguments(new Object[]{"__sourceUri__", targetURI});
-
-		method.execute(COMPANY_ID);
-	}
-
-	protected void setUpBlogsEntry() throws Exception {
-		when(
-			_blogsEntry.getEntryId()
-		).thenReturn(
-			ENTRY_ID
-		);
-
-		when(
-			_blogsEntry.getGroupId()
-		).thenReturn(
-			GROUP_ID
-		);
-
-		when(
-			_blogsEntry.getUrlTitle()
-		).thenReturn(
-			"__UrlTitle__"
-		);
-
-		when(
-			_blogsEntry.isAllowPingbacks()
-		).thenReturn(
-			true
-		);
-
-		when(
-			_blogsEntryLocalService.getEntry(
-				Matchers.anyLong(), Matchers.anyString())
-		).thenReturn(
-			_blogsEntry
-		);
-
-		mockStatic(BlogsEntryLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(BlogsEntryLocalServiceUtil.class, "getService")
-		).toReturn(
-			_blogsEntryLocalService
-		);
-	}
-
-	protected void setUpHttp() throws Exception {
-		whenURLToStringSourceURIThenReturn(
-			"<body><a href='http://liferay.com'>Liferay</a></body>");
-
-		mockStatic(PortalSocketPermission.class, new DoesNothing());
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(_http);
-	}
-
-	protected void setUpLanguage() {
-		whenLanguageGetThenReturn("pingback", "__pingbackUserName__");
-		whenLanguageGetThenReturn("read-more", "__read_more__");
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpMessageBoards() throws Exception {
-		when(
-			_mbMessageDisplay.getThread()
-		).thenReturn(
-			_mbThread
-		);
-
-		when(
-			_mbMessageLocalService.getDiscussionMessageDisplay(
-				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.eq(BlogsEntry.class.getName()), Matchers.anyLong(),
-				Matchers.eq(WorkflowConstants.STATUS_APPROVED))
-		).thenReturn(
-			_mbMessageDisplay
-		);
-
-		when(
-			_mbThread.getRootMessageId()
-		).thenReturn(
-			PARENT_MESSAGE_ID
-		);
-
-		when(
-			_mbThread.getThreadId()
-		).thenReturn(
-			THREAD_ID
-		);
-
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
-		);
-	}
-
-	protected void setUpPortal() throws PortalException, SystemException {
-		when(
-			_portal.getLayoutFullURL(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
-		).thenReturn(
-			"__LayoutFullURL__"
-		);
-
-		when(
-			_portal.getPlidFromFriendlyURL(
-				Matchers.eq(COMPANY_ID), Matchers.anyString())
-		).thenReturn(
-			ServiceTestUtil.randomLong()
-		);
-
-		when(
-			_portal.getScopeGroupId(Matchers.anyLong())
-		).thenReturn(
-			ServiceTestUtil.randomLong()
-		);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(_portal);
-	}
-
-	protected void setUpPortlet() throws SystemException {
-		Portlet portlet = Mockito.mock(Portlet.class);
-
-		when(
-			portlet.getFriendlyURLMapperInstance()
-		).thenReturn(
-			_friendlyURLMapper
-		);
-
-		when(
-			portlet.getFriendlyURLMapping()
-		).thenReturn(
-			"__FriendlyURLMapping__"
-		);
-
-		PortletLocalService portletLocalService = Mockito.mock(
-			PortletLocalService.class);
-
-		when(
-			portletLocalService.getPortletById(PortletKeys.BLOGS)
-		).thenReturn(
-			portlet
-		);
-
-		when(
-			portletLocalService.getPortletById(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
-		).thenReturn(
-			portlet
-		);
-
-		mockStatic(PortletLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(PortletLocalServiceUtil.class, "getService")
-		).toReturn(
-			portletLocalService
-		);
-	}
-
-	protected void setUpUser() throws PortalException, SystemException {
-		UserLocalService userLocalService = Mockito.mock(
-			UserLocalService.class);
-
-		when(
-			userLocalService.getDefaultUserId(Matchers.anyLong())
-		).thenReturn(
-			USER_ID
-		);
-
-		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(UserLocalServiceUtil.class, "getService")
-		).toReturn(
-			userLocalService
-		);
+		pingbackMethod.execute(ServiceTestUtil.randomLong());
 	}
 
 	protected void setUpXmlRpc() {
@@ -612,22 +165,6 @@ public class PingbackMethodImplTest extends PowerMockito {
 		xmlRpcUtil.setXmlRpc(_xmlRpc);
 	}
 
-	protected void verifyExcerpt(String excerpt) throws Exception {
-		verifySuccess();
-
-		Mockito.verify(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
-			Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
-			Matchers.anyLong(), Matchers.anyString(),
-			Matchers.eq(
-				"[...] " + excerpt +
-					" [...] [url=__sourceUri__]__read_more__[/url]"),
-			(ServiceContext)Matchers.any()
-		);
-	}
-
 	protected void verifyFault(int code, String description) {
 		Mockito.verify(
 			_xmlRpc
@@ -636,97 +173,18 @@ public class PingbackMethodImplTest extends PowerMockito {
 		);
 	}
 
-	protected void verifySuccess() {
-		Mockito.verify(
-			_xmlRpc
-		).createSuccess(
-			"Pingback accepted"
-		);
-	}
-
-	protected void whenFriendlyURLMapperPopulateParamsPut(
-		String friendlyURLPath, final String name, final String value) {
-
-		Mockito.doAnswer(
-			new Answer<Void>() {
-				@Override
-				public Void answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Map<String, String[]> params = (Map<String, String[]>)
-						invocationOnMock.getArguments()[1];
-
-					params.put(name, new String[]{value});
-
-					return null;
-				}
-			}
+	protected void whenAddPingbackThrow(Throwable toBeThrown) throws Exception {
+		Mockito.doThrow(
+			toBeThrown
 		).when(
-			_friendlyURLMapper
-		).populateParams(
-			Matchers.eq(friendlyURLPath), Matchers.anyMap(), Matchers.anyMap()
+			_pingback
+		).addPingback(
+			Matchers.anyLong()
 		);
 	}
 
-	protected void whenLanguageGetThenReturn(String key, String toBeReturned) {
-		when(
-			_language.get((Locale)Matchers.any(), Matchers.eq(key))
-		).thenReturn(
-			toBeReturned
-		);
-	}
-
-	protected void whenURLToStringSourceURIThenReturn(String toBeReturned)
-		throws Exception {
-
-		when(
-			_http.URLtoString("__sourceUri__")
-		).thenReturn(
-			toBeReturned
-		);
-	}
-
-	private static final long COMPANY_ID = ServiceTestUtil.randomLong();
-
-	private static final long ENTRY_ID = ServiceTestUtil.randomLong();
-
-	private static final long GROUP_ID = ServiceTestUtil.randomLong();
-
-	private static final long PARENT_MESSAGE_ID = ServiceTestUtil.randomLong();
-
-	private static final long THREAD_ID = ServiceTestUtil.randomLong();
-
-	private static final long USER_ID = ServiceTestUtil.randomLong();
-
 	@Mock
-	private BlogsEntry _blogsEntry;
-
-	@Mock
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Mock
-	private FriendlyURLMapper _friendlyURLMapper;
-
-	@Mock
-	private Http _http;
-
-	@Mock
-	private Language _language;
-
-	@Mock
-	private MBMessageDisplay _mbMessageDisplay;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
-
-	@Mock
-	private MBThread _mbThread;
-
-	@Mock
-	private Portal _portal;
-
-	@Captor
-	private ArgumentCaptor<ServiceContext> _serviceContextCaptor;
+	private Pingback _pingback;
 
 	@Mock
 	private XmlRpc _xmlRpc;

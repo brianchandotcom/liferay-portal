@@ -112,6 +112,10 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
+	protected PingbackMethodImpl(Pingback pingback) {
+		_pingback = pingback;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PingbackMethodImpl.class);
 
 	private Pingback _pingback;

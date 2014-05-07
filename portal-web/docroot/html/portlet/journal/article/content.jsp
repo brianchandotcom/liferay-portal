@@ -32,44 +32,9 @@ String articleId = BeanParamUtil.getString(article, request, "articleId");
 String newArticleId = ParamUtil.getString(request, "newArticleId");
 String instanceIdKey = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3;
 
-String structureId = StringPool.BLANK;
-
-long ddmStructureGroupId = groupId;
-String ddmStructureName = LanguageUtil.get(pageContext, "default");
-String ddmStructureDescription = StringPool.BLANK;
-
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
-if (ddmStructure != null) {
-	structureId = ddmStructure.getStructureKey();
-
-	ddmStructureGroupId = ddmStructure.getGroupId();
-	ddmStructureName = ddmStructure.getName(locale);
-	ddmStructureDescription = ddmStructure.getDescription(locale);
-}
-
-List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
-
-if (ddmStructure != null) {
-	ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-	if (groupId != ddmStructureGroupId) {
-		ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-	}
-}
-
-String templateId = StringPool.BLANK;
-
 DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
-
-if (ddmTemplate != null) {
-	templateId = ddmTemplate.getTemplateKey();
-}
-else if (!ddmTemplates.isEmpty()) {
-	ddmTemplate = ddmTemplates.get(0);
-
-	templateId = ddmTemplate.getTemplateKey();
-}
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
@@ -83,7 +48,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	<portlet:param name="struts_action" value="/journal/edit_article" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="structureId" value="<%= structureId %>" />
+	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 </portlet:renderURL>
 
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
@@ -139,17 +104,17 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 							<aui:fieldset cssClass="article-structure-toolbar">
 								<div class="journal-form-presentation-label">
 									<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-									<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
-									<aui:input name="structureName" type="hidden" value="<%= ddmStructureName %>" />
-									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructureDescription %>" />
+									<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
+									<aui:input name="structureName" type="hidden" value="<%= ddmStructure.getName(locale) %>" />
+									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructure.getDescription(locale) %>" />
 
 									<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
 										<c:choose>
-											<c:when test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
-												<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructureName) %>" />
+											<c:when test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+												<aui:a href="javascript:;" id="editDDMStructure" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
 											</c:when>
 											<c:otherwise>
-												<%= HtmlUtil.escape(ddmStructureName) %>
+												<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 											</c:otherwise>
 										</c:choose>
 									</span>
@@ -172,7 +137,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 							<aui:fieldset cssClass="article-template-toolbar">
 								<div class="journal-form-presentation-label">
-									<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
+									<aui:input name="templateId" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
 										<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
@@ -189,15 +154,13 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 										</c:choose>
 									</span>
 
-									<c:if test="<%= ddmStructure != null %>">
-										<liferay-ui:icon
-											iconCssClass="icon-search"
-											label="<%= true %>"
-											linkCssClass="btn"
-											message="select"
-											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMTemplateSelector();" %>'
-										/>
-									</c:if>
+									<liferay-ui:icon
+										iconCssClass="icon-search"
+										label="<%= true %>"
+										linkCssClass="btn"
+										message="select"
+										url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMTemplateSelector();" %>'
+									/>
 								</div>
 							</aui:fieldset>
 						</aui:col>
@@ -385,7 +348,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	</div>
 
 	<c:if test="<%= Validator.isNotNull(toLanguageId) %>">
-		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+		<aui:input name="structureId" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
 	</c:if>
 </div>
 
@@ -495,7 +458,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 		Liferay.Util.openDDMPortlet(
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
+				classPK: <%= ddmStructure.getPrimaryKey() %>,
 				dialog: {
 					destroyOnHide: true
 				},
@@ -523,7 +486,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
+				classPK: <%= ddmStructure.getPrimaryKey() %>,
 				dialog: {
 					destroyOnHide: true
 				},
@@ -532,7 +495,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_template',
-				templateId: <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
+				templateId: <%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			},
 			function(event) {
@@ -589,8 +552,8 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= classPK %>" />
-					<portlet:param name="structureId" value="<%= structureId %>" />
-					<portlet:param name="templateId" value="<%= templateId %>" />
+					<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
+					<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
 				</portlet:renderURL>
 
 				var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + defaultLanguageId;
@@ -633,7 +596,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 		);
 	}
 
-	<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 		var editDDMStructure = A.one('#<portlet:namespace />editDDMStructure');
 
 		if (editDDMStructure) {

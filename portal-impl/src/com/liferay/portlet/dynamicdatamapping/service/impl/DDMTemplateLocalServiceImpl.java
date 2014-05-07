@@ -500,7 +500,7 @@ public class DDMTemplateLocalServiceImpl
 	 *
 	 * <p>
 	 * This method first searches in the given group. If the template is still
-	 * not found and <code>includeGlobalTemplates</code> is set to
+	 * not found and <code>includeAncestorTemplates</code> is set to
 	 * <code>true</code>, this method searches the global group.
 	 * </p>
 	 *
@@ -694,6 +694,29 @@ public class DDMTemplateLocalServiceImpl
 
 		return ddmTemplatePersistence.findByG_C_C(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public List<DDMTemplate> getTemplates(
+			long groupId, long classNameId, long classPK,
+			boolean includeAncestorTemplates)
+		throws PortalException, SystemException {
+
+		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+
+		ddmTemplates.addAll(
+			ddmTemplatePersistence.findByG_C_C(groupId, classNameId, classPK));
+
+		if (!includeAncestorTemplates) {
+			return ddmTemplates;
+		}
+
+		ddmTemplates.addAll(
+			ddmTemplatePersistence.findByG_C_C(
+				PortalUtil.getAncestorSiteGroupIds(groupId), classNameId,
+				classPK));
+
+		return ddmTemplates;
 	}
 
 	/**

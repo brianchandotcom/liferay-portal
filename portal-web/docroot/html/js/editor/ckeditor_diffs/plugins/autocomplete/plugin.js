@@ -21,7 +21,7 @@
 									A.merge(
 										editor.config.autocomplete,
 										{
-											inputNode: editor
+											editor: editor
 										}
 									)
 								);

@@ -207,6 +207,7 @@ AUI.add(
 			},
 
 			inputNode: {
+				setter: A.one,
 				writeOnce: true
 			},
 

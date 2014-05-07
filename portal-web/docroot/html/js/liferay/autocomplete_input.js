@@ -89,7 +89,7 @@ AUI.add(
 
 										instance._setACVal(resultText + restText);
 
-										instance._setCaretIndex(instance._getInputElement(), resultEndPos);
+										instance._setCaretIndex(instance.get(STR_INPUT_NODE), resultEndPos);
 									}
 								}
 							}

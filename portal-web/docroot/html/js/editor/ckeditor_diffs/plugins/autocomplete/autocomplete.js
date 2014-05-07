@@ -2,9 +2,11 @@ var A = AUI();
 
 var KeyMap = A.Event.KeyMap;
 
-var STR_EMPTY = '';
+var Lang = A.Lang;
 
-var STR_INPUT_NODE = 'inputNode';
+var STR_EDITOR = 'editor';
+
+var STR_EMPTY = '';
 
 var STR_SPACE = ' ';
 
@@ -19,8 +21,13 @@ var AutoCompleteCKEditor = A.Component.create(
 		NAME: 'liferay-autocomplete-ckeditor',
 
 		ATTRS: {
+			editor: {
+				validator: Lang.isObject,
+				writeOnce: true
+			},
+
 			inputNode: {
-				getter: '_getInputElement',
+				valueFn: '_getInputElement',
 				writeOnce: true
 			}
 		},
@@ -37,11 +44,11 @@ var AutoCompleteCKEditor = A.Component.create(
 
 				instance._processCaret = A.bind('_processCaretPosition', instance);
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				var editor = instance.get(STR_EDITOR);
 
 				instance._eventHandles = [
-					inputNode.on('key', '_onEditorKey', instance),
-					inputNode.on('selectionChange', instance._processCaret)
+					editor.on('key', A.bind('_onEditorKey', instance)),
+					editor.on('selectionChange', instance._processCaret)
 				];
 			},
 
@@ -130,9 +137,9 @@ var AutoCompleteCKEditor = A.Component.create(
 						}
 
 						prevNode = node;
-
-						node = updateWalker.next();
 					}
+
+					node = updateWalker.next();
 				}
 
 				if (remainingChars.length) {
@@ -164,8 +171,8 @@ var AutoCompleteCKEditor = A.Component.create(
 			_getCaretOffset: function() {
 				var instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
-				var bookmarks = inputNode.getSelection().createBookmarks();
+				var editor = instance.get(STR_EDITOR);
+				var bookmarks = editor.getSelection().createBookmarks();
 				var bookmarkNodeEl = bookmarks[0].startNode.$;
 
 				bookmarkNodeEl.style.setProperty('display', 'inline-block');
@@ -184,13 +191,15 @@ var AutoCompleteCKEditor = A.Component.create(
 			_getCaretRange: function() {
 				var instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				var editor = instance.get(STR_EDITOR);
 
-				return inputNode.getSelection().getRanges()[0];
+				return editor.getSelection().getRanges()[0];
 			},
 
 			_getInputElement: function(value) {
-				return A.one(value.element.$);
+				var instance = this;
+
+				return A.one(instance.get(STR_EDITOR).element.$);
 			},
 
 			_getPrevTermPosition: function() {
@@ -308,9 +317,9 @@ var AutoCompleteCKEditor = A.Component.create(
 			_isEmptySelection: function() {
 				var instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				var editor = instance.get(STR_EDITOR);
 
-				var selection = inputNode.getSelection();
+				var selection = editor.getSelection();
 
 				var ranges = selection.getRanges();
 
@@ -339,9 +348,9 @@ var AutoCompleteCKEditor = A.Component.create(
 					var acVisible = ac.get('visible');
 
 					if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
-						var inputNode = instance.get(STR_INPUT_NODE);
+						var editor = instance.get(STR_EDITOR);
 
-						var inlineEditor = inputNode.editable().isInline();
+						var inlineEditor = editor.editable().isInline();
 
 						if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
 							ac._onInputKey(event);
@@ -364,15 +373,15 @@ var AutoCompleteCKEditor = A.Component.create(
 			_setCaretIndex: function(node, caretIndex) {
 				var instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				var editor = instance.get(STR_EDITOR);
 
-				var caretRange = inputNode.createRange();
+				var caretRange = editor.createRange();
 
 				caretRange.setStart(node, caretIndex);
 				caretRange.setEnd(node, caretIndex);
 
-				inputNode.getSelection().selectRanges([caretRange]);
-				inputNode.focus();
+				editor.getSelection().selectRanges([caretRange]);
+				editor.focus();
 			}
 		}
 	}

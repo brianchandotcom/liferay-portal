@@ -155,6 +155,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isSelectedLabel(String selectLocator, String pattern);
 
+	public boolean isTCatEnabled();
+
 	public boolean isText(String locator, String value);
 
 	public boolean isTextNotPresent(String pattern);
@@ -217,6 +219,9 @@ public interface LiferaySelenium extends Selenium {
 	public void sikuliType(String image, String value) throws Exception;
 
 	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception;
+
+	public void sikuliUploadTCatFile(String image, String value)
 		throws Exception;
 
 	public void sikuliUploadTempFile(String image, String value)

@@ -112,6 +112,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 				text-decoration: underline;
 			}
 
+			&.btn {
+				color: rgb(51, 51, 51);
+				font-size: 14px;
+				font-weight: normal;
+
+				&:hover {
+					text-decoration: none;
+				}
+
+				&.btn-primary {
+					color: white;
+				}
+			}
+
 			&.taglib-icon .taglib-text {
 				text-decoration: none;
 			}

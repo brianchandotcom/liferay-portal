@@ -167,13 +167,17 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						>
 
 							<%
-							User curUser = UserLocalServiceUtil.getUserById(curLayoutRevision.getUserId());
+							try {
+								User curUser = UserLocalServiceUtil.getUserById(curLayoutRevision.getUserId());
 
-							buffer.append("<a class=\"user-handle\" href=\"");
-							buffer.append(curUser.getDisplayURL(themeDisplay));
-							buffer.append("\">");
-							buffer.append(HtmlUtil.escape(curUser.getFullName()));
-							buffer.append("</a>");
+								buffer.append("<a class=\"user-handle\" href=\"");
+								buffer.append(curUser.getDisplayURL(themeDisplay));
+								buffer.append("\">");
+								buffer.append(HtmlUtil.escape(curUser.getFullName()));
+								buffer.append("</a>");
+							}
+							catch (NoSuchUserException nsue) {
+							}
 							%>
 
 						</liferay-ui:search-container-column-text>

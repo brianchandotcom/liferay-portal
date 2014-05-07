@@ -244,9 +244,9 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				var ckePanelDelegate = ckEditor.delegate(
 					'click',
 					function(event) {
-						var iframe = A.one('.cke_combopanel .cke_panel_frame');
+						var panelFrame = A.one('.cke_combopanel .cke_panel_frame');
 
-						addAUIClass(iframe);
+						addAUIClass(panelFrame);
 
 						ckePanelDelegate.detach();
 

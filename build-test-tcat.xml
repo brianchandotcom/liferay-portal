@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-tcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-selenium-tcat">
+		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
+
+		<echo file="test.${user.name}.properties" append="true">
+			tcat.enabled=true
+		</echo>
+
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
+
+plugins.includes=marketplace-portlet</echo>
+
+				<antcall target="zip-portal-war" />
+
+				<ant antfile="build-dist.xml" target="build-dist-tcat" />
+			</then>
+		</if>
+
+		<replace
+			file="${app.server.tcat.admin.bin.dir}/startup.bat"
+			token="CATALINA_HOME=%CURRENT_DIR%"
+			value="CATALINA_HOME=${app.server.tcat.admin.dir}"
+		/>
+
+		<replace
+			file="${app.server.tcat.agent.bin.dir}/startup.bat"
+			token="CATALINA_HOME=%CURRENT_DIR%"
+			value="CATALINA_HOME=${app.server.tcat.agent.dir}"
+		/>
+
+		<antcall target="revert-test-properties" />
+
+		<ant dir="portal-impl" target="build-selenium-new-test-case" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-tcat" inheritAll="false">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+
+	<target name="run-tcat">
+		<antcall target="clean-up-logs" />
+
+		<record action="start" name="log" />
+
+		<antcall target="run-simple-server" />
+
+		<record action="stop" name="log" />
+
+		<antcall target="evaluate-logs" />
+	</target>
+</project>

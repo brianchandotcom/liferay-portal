@@ -67,7 +67,21 @@ var AutoCompleteCKEditor = A.Component.create(
 			_getACPositionOffset: function() {
 				var instance = this;
 
-				return [0, 0];
+				var caretContainer = instance._getCaretContainer();
+
+				var containerAscendantElement = instance._getContainerAscendant(caretContainer);
+
+				var containerAscendantNode = A.one(containerAscendantElement.$);
+
+				return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
+			},
+
+			_getContainerAscendant: function(container, ascendant) {
+				if (!ascendant) {
+					ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
+				}
+
+				return container.getAscendant(ascendant, true);
 			},
 
 			_acUpdateValue: function(text) {
@@ -77,7 +91,7 @@ var AutoCompleteCKEditor = A.Component.create(
 
 				var prevTermContainer = prevTermPosition.container;
 
-				var containerAscendant = prevTermContainer.getAscendant('p', true);
+				var containerAscendant = instance._getContainerAscendant(prevTermContainer);
 
 				var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
 
@@ -147,6 +161,10 @@ var AutoCompleteCKEditor = A.Component.create(
 				}
 
 				var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
+
+				if (!caretIndex || caretIndex <= prevTermPosition.index) {
+					caretIndex = prevNode.getText().length;
+				}
 
 				instance._setCaretIndex(prevNode, caretIndex);
 			},
@@ -228,7 +246,7 @@ var AutoCompleteCKEditor = A.Component.create(
 						if (node.type === CKEDITOR.NODE_TEXT && node.getUniqueId() !== caretContainerId) {
 							var nodeText = node.getText();
 
-							termIndex = nodeText.indexOf(term);
+							termIndex = nodeText.lastIndexOf(term);
 
 							hasTerm = (termIndex !== -1);
 
@@ -283,7 +301,7 @@ var AutoCompleteCKEditor = A.Component.create(
 
 				endContainer = endContainer || instance._getCaretContainer();
 
-				startContainer = startContainer || endContainer.getAscendant('p', true);
+				startContainer = startContainer || instance._getContainerAscendant(endContainer);
 
 				var range = new CKEDITOR.dom.range(startContainer);
 
@@ -367,5 +385,17 @@ var AutoCompleteCKEditor = A.Component.create(
 		}
 	}
 );
+
+AutoCompleteCKEditor.CONTAINER_ASCENDANT = {
+	body: 1,
+	div: 1,
+	h1: 1,
+	h2: 1,
+	h3: 1,
+	h4: 1,
+	p: 1,
+	pre: 1,
+	span: 1
+};
 
 Liferay.AutoCompleteCKEditor = AutoCompleteCKEditor;

@@ -11877,9 +11877,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	protected long rebuildTree(Session session, SQLQuery selectQuery,
 		SQLQuery updateQuery, long groupId, long parentCategoryId,
 		long leftCategoryId) throws SystemException {
-		List<Long> categoryIds = selectQuery.list();
-
 		long rightCategoryId = leftCategoryId + 1;
+
+		QueryPos qPos = QueryPos.getInstance(selectQuery);
+
+		qPos.add(groupId);
+		qPos.add(parentCategoryId);
+
+		List<Long> categoryIds = selectQuery.list();
 
 		for (long categoryId : categoryIds) {
 			rightCategoryId = rebuildTree(session, selectQuery, updateQuery,
@@ -11887,7 +11892,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		if (parentCategoryId > 0) {
-			QueryPos qPos = QueryPos.getInstance(updateQuery);
+			qPos = QueryPos.getInstance(updateQuery);
 
 			qPos.add(leftCategoryId);
 			qPos.add(rightCategoryId);

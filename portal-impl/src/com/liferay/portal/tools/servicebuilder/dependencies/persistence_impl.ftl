@@ -1485,16 +1485,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 
 		protected long rebuildTree(Session session, SQLQuery selectQuery, SQLQuery updateQuery, long ${scopeColumn.name}, long parent${pkColumn.methodName}, long left${pkColumn.methodName}) throws SystemException {
-			List<Long> ${pkColumn.names} = selectQuery.list();
-
 			long right${pkColumn.methodName} = left${pkColumn.methodName} + 1;
+
+			QueryPos qPos = QueryPos.getInstance(selectQuery);
+
+			qPos.add(${scopeColumn.name});
+			qPos.add(parent${pkColumn.methodName});
+
+			List<Long> ${pkColumn.names} = selectQuery.list();
 
 			for (long ${pkColumn.name} : ${pkColumn.names}) {
 				right${pkColumn.methodName} = rebuildTree(session, selectQuery, updateQuery, ${scopeColumn.name}, ${pkColumn.name}, right${pkColumn.methodName});
 			}
 
 			if (parent${pkColumn.methodName} > 0) {
-				QueryPos qPos = QueryPos.getInstance(updateQuery);
+				qPos = QueryPos.getInstance(updateQuery);
 
 				qPos.add(left${pkColumn.methodName});
 				qPos.add(right${pkColumn.methodName});

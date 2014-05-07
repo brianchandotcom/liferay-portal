@@ -42,13 +42,7 @@ if (ddmTemplate != null) {
 	templateId = ddmTemplate.getTemplateKey();
 }
 else {
-	List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
-
-	ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-	if (groupId != ddmStructure.getGroupId()) {
-		ddmTemplates.addAll(DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-	}
+	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
 
 	if (!ddmTemplates.isEmpty()) {
 		ddmTemplate = ddmTemplates.get(0);

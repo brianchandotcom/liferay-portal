@@ -45,8 +45,7 @@ if (Validator.isNotNull(structureId)) {
 List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
 if (ddmStructure != null) {
-	ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-	ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+	ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
 }
 
 String templateId = BeanParamUtil.getString(feed, request, "templateId");

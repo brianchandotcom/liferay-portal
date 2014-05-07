@@ -62,13 +62,7 @@ catch (NoSuchArticleException nsae) {
 		<%
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
 
-		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
-
-		ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-		if (article.getGroupId() != ddmStructure.getGroupId()) {
-			ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-		}
+		List<DDMTemplate> ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
 
 		if (!ddmTemplates.isEmpty()) {
 			if (Validator.isNull(ddmTemplateKey)) {

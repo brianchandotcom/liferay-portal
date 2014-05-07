@@ -1,0 +1,174 @@
+<html>
+<head>
+<title>Gmail</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Gmail</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Gmail</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOGIN-->
+<tr>
+	<td>LOGIN_EMAIL_FIELD</td>
+	<td>//input[contains(@id,'Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PASSWORD_FIELD</td>
+	<td>//input[contains(@id,'Passwd')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_STAY_SIGNED_IN_CHECKBOX</td>
+	<td>//label[@class='remember']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_SIGN_IN_BUTTON</td>
+	<td>//input[@id='signIn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GMAIL_NORMAL_MODE-->
+<tr>
+	<td>GMAIL_NORMAL_MODE_USER_SCREENNAME</td>
+	<td>//div/a[@title='${key_userEmailAddress}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GMAIL_HTML_MODE-->
+<tr>
+	<td>GMAIL_HTML_MODE_USER_SCREENNAME</td>
+	<td>//div[@id='guser']/nobr/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_SIGN_OUT</td>
+	<td>//div[@id='guser']/nobr/a[contains(.,'Sign out')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_SEARCH_FIELD</td>
+	<td>//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_SEARCH_BUTTON</td>
+	<td>//input[@type='submit' and @value='Search Mail']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_COMPOSE_MAIL_LINK</td>
+	<td>//a[contains(.,'Compose') and contains(.,'Mail')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GMAIL_HTML_MODE_MAIL_TABLE-->
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON</td>
+	<td>//form[@method='POST']//input[@type='submit' and @value='Delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_CHECKBOX</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[1]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_GENERIC</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr/td[1]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GMAIL_HTML_MODE_MESSAGE-->
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_FROM</td>
+	<td>//table[4]//table[1]//tr[1]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_REPLY_TO</td>
+	<td>//table[4]//table[1]//tr[2]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_TO</td>
+	<td>//table[4]//table[1]//tr[3]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_TITLE</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//h2/font/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_GREETING</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_LINK</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']/a[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING</td>
+	<td>//tr[contains(.,'${key_gmailAssetType}')]//td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD</td>
+	<td>//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON</td>
+	<td>//input[@value='Send']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

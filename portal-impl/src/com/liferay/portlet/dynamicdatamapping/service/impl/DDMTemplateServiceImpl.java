@@ -345,7 +345,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * <p>
 	 * This method first searches in the group. If the template is still not
-	 * found and <code>includeGlobalTemplates</code> is set to
+	 * found and <code>includeAncestorTemplates</code> is set to
 	 * <code>true</code>, this method searches the global group.
 	 * </p>
 	 *
@@ -353,7 +353,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
-	 * @param  includeGlobalTemplates whether to include the global scope in the
+	 * @param  includeAncestorTemplates whether to include the global scope in the
 	 *         search
 	 * @return the matching template
 	 * @throws PortalException if a matching template could not be found
@@ -362,11 +362,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	@Override
 	public DDMTemplate getTemplate(
 			long groupId, long classNameId, String templateKey,
-			boolean includeGlobalTemplates)
+			boolean includeAncestorTemplates)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-			groupId, classNameId, templateKey, includeGlobalTemplates);
+			groupId, classNameId, templateKey, includeAncestorTemplates);
 
 		DDMTemplatePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
@@ -426,13 +426,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			return ddmTemplates;
 		}
 
-		for (long ancestorSiteGroupId :
-				PortalUtil.getAncestorSiteGroupIds(groupId)) {
-
-			ddmTemplates.addAll(
-				ddmTemplatePersistence.filterFindByG_C_C(
-					ancestorSiteGroupId, classNameId, classPK));
-		}
+		ddmTemplates.addAll(
+			ddmTemplatePersistence.filterFindByG_C_C(
+				PortalUtil.getAncestorSiteGroupIds(
+					groupId), classNameId, classPK));
 
 		return ddmTemplates;
 	}

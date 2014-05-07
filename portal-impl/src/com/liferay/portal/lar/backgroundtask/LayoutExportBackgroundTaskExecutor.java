@@ -79,9 +79,10 @@ public class LayoutExportBackgroundTaskExecutor
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
-		String fileName = exportImportConfiguration.getName();
 
 		StringBundler sb = new StringBundler(4);
+
+		String fileName = exportImportConfiguration.getName();
 
 		sb.append(fileName.replace(StringPool.SPACE, StringPool.UNDERLINE));
 		sb.append(StringPool.DASH);

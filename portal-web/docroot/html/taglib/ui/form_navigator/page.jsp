@@ -97,7 +97,16 @@ if (Validator.isNotNull(historyKey)) {
 				</liferay-util:buffer>
 
 				<liferay-util:buffer var="formSectionsBuffer">
-					<div class="form-navigator-content span8">
+
+					<%
+					String contentCssClass = "form-navigator-content";
+
+					if (!displayStyle.equals("steps")) {
+						contentCssClass += " span8";
+					}
+					%>
+
+					<div class="<%= contentCssClass %>">
 						<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
 					</div>
 				</liferay-util:buffer>

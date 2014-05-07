@@ -180,7 +180,7 @@
 		</if>
 	</command>
 
-	<command name="editTemplatePGViaWCD">
+	<command name="editPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
@@ -193,7 +193,7 @@
 		<execute action="PGWebcontentdisplayEdittemplate#type" locator-key1="NAME_FIELD" value1="Template Edit" />
 		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGWebcontentdisplayEdittemplate#pause" locator1="2000" />
-		<execute action="PGWebcontentdisplayEdittemplate#sikuliClick" locator-key1="CLOSE_BUTTON" />
+		<execute action="PGWebcontentdisplayEdittemplate#sikuliClick" locator-key1="CLOSE_BUTTON_PNG" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />

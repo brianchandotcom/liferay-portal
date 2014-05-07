@@ -149,7 +149,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
 			<var name="fieldName" value="${structureFieldNames}" />
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="Global WC Structure Name" />
@@ -271,7 +271,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
 			<var name="fieldName" value="${structureFieldNames}" />
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="${structureName}" />
@@ -289,7 +289,7 @@
 			<var name="templateName" value="WC Template2 Name" />
 			<var name="webContentContentEdit" value="WC WebContent Text Edit" />
 			<var name="webContentText" value="WC WebContent Text Edit" />
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
+			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>
 	</command>
 
@@ -344,7 +344,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#addWebContentGlobalStructure">
+		<execute macro="WebContent#addWithGlobalStructurePGViaWCD">
 			<var name="fieldName" value="${structureFieldNames}" />
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="${structureName}" />
@@ -357,7 +357,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContentTemplates#editTemplatePGViaWCD">
+		<execute macro="WebContentTemplates#editPGViaWCD">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateName" value="Template Edit" />
 			<var name="webContentContent" value="${webContentText}" />

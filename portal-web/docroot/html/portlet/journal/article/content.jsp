@@ -34,22 +34,7 @@ String instanceIdKey = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
-String templateId = StringPool.BLANK;
-
 DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
-
-if (ddmTemplate != null) {
-	templateId = ddmTemplate.getTemplateKey();
-}
-else {
-	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
-
-	if (!ddmTemplates.isEmpty()) {
-		ddmTemplate = ddmTemplates.get(0);
-
-		templateId = ddmTemplate.getTemplateKey();
-	}
-}
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
@@ -152,7 +137,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 							<aui:fieldset cssClass="article-template-toolbar">
 								<div class="journal-form-presentation-label">
-									<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
+									<aui:input name="templateId" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
 										<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
@@ -510,7 +495,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
 				showAncestorScopes: true,
 				struts_action: '/dynamic_data_mapping/select_template',
-				templateId: <%= ddmTemplate.getTemplateId() %>,
+				templateId: <%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			},
 			function(event) {
@@ -568,7 +553,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= classPK %>" />
 					<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
-					<portlet:param name="templateId" value="<%= templateId %>" />
+					<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
 				</portlet:renderURL>
 
 				var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + defaultLanguageId;

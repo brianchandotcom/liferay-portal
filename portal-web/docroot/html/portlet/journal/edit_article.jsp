@@ -97,6 +97,14 @@ else if (Validator.isNotNull(templateId)) {
 	}
 }
 
+if (ddmTemplate == null) {
+	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), true);
+
+	if (!ddmTemplates.isEmpty()) {
+		ddmTemplate = ddmTemplates.get(0);
+	}
+}
+
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
 
 String toLanguageId = ParamUtil.getString(request, "toLanguageId");

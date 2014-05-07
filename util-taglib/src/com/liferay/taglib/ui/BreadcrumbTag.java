@@ -47,6 +47,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.breadcrumb.util.BreadcrumbUtil;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -89,47 +90,34 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = showPortletBreadcrumb;
 	}
 
-	protected void buildGroupsBreadcrumb(
-			LayoutSet layoutSet, ThemeDisplay themeDisplay,
-			boolean includeParentGroups, StringBundler sb)
+	protected void buildParentGroupsBreadcrumb(
+		ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		Group group = layoutSet.getGroup();
+		List<BreadcrumbEntry> parentGroupEntries =
+			BreadcrumbUtil.getParentGroupEntries(themeDisplay);
 
-		if (group.isControlPanel()) {
-			return;
-		}
-
-		if (includeParentGroups) {
-			LayoutSet parentLayoutSet = getParentLayoutSet(layoutSet);
-
-			if (parentLayoutSet != null) {
-				buildGroupsBreadcrumb(parentLayoutSet, themeDisplay, true, sb);
-			}
-		}
-
-		int layoutsPageCount = 0;
-
-		if (layoutSet.isPrivateLayout()) {
-			layoutsPageCount = group.getPrivateLayoutsPageCount();
-		}
-		else {
-			layoutsPageCount = group.getPublicLayoutsPageCount();
-		}
-
-		if ((layoutsPageCount > 0) && !group.isGuest()) {
-			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
-				layoutSet, themeDisplay);
-
-			if (themeDisplay.isAddSessionIdToURL()) {
-				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-					layoutSetFriendlyURL, themeDisplay.getSessionId());
-			}
-
+		for (BreadcrumbEntry parentGroupEntry : parentGroupEntries) {
 			sb.append("<li><a href=\"");
-			sb.append(layoutSetFriendlyURL);
+			sb.append(parentGroupEntry.getURL());
 			sb.append("\">");
-			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+			sb.append(HtmlUtil.escape(parentGroupEntry.getTitle()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
+		}
+	}
+
+	protected void buildCurrentGroupBreadcrumb(
+			ThemeDisplay themeDisplay, StringBundler sb)
+		throws Exception {
+
+		BreadcrumbEntry currentGroupEntry =
+			BreadcrumbUtil.getCurrentGroupEntry(themeDisplay);
+
+		if (currentGroupEntry != null) {
+			sb.append("<li><a href=\"");
+			sb.append(currentGroupEntry.getURL());
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(currentGroupEntry.getTitle()));
 			sb.append("</a><span class=\"divider\">/</span></li>");
 		}
 	}
@@ -138,88 +126,46 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			themeDisplay.getCompanyId(), GroupConstants.GUEST);
+		BreadcrumbEntry guestGroupEntry =
+			BreadcrumbUtil.getGuestGroupEntry(themeDisplay);
 
-		if (group.getPublicLayoutsPageCount() == 0) {
-			return;
+		if (guestGroupEntry != null) {
+			sb.append("<li><a href=\"");
+			sb.append(guestGroupEntry.getURL());
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(guestGroupEntry.getTitle()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
 		}
-
-		sb.append("<li><a href=\"");
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-
-		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
-			layoutSet, themeDisplay);
-
-		if (themeDisplay.isAddSessionIdToURL()) {
-			layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-				layoutSetFriendlyURL, themeDisplay.getSessionId());
-		}
-
-		sb.append(layoutSetFriendlyURL);
-
-		sb.append("\">");
-
-		Account account = themeDisplay.getAccount();
-
-		sb.append(HtmlUtil.escape(account.getName()));
-
-		sb.append("</a><span class=\"divider\">/</span></li>");
 	}
 
 	protected void buildLayoutBreadcrumb(
-			Layout layout, boolean selectedLayout, ThemeDisplay themeDisplay,
-			StringBundler sb)
+			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		if (layout.getParentLayoutId() !=
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+		List<BreadcrumbEntry> layoutEntries =
+			BreadcrumbUtil.getLayoutEntries(themeDisplay);
 
-			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
-				layout);
+		for (BreadcrumbEntry layoutEntry : layoutEntries) {
+			sb.append("<li><a href=\"");
+			sb.append(layoutEntry.getURL());
+			sb.append("\" ");
 
-			buildLayoutBreadcrumb(parentLayout, false, themeDisplay, sb);
-		}
+			Layout layout = (Layout)layoutEntry.getData().get("entity");
+			String target;
 
-		sb.append("<li><a href=\"");
-
-		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
-
-		if (themeDisplay.isAddSessionIdToURL()) {
-			layoutURL = PortalUtil.getURLWithSessionId(
-				layoutURL, themeDisplay.getSessionId());
-		}
-
-		if (layout.isTypeControlPanel()) {
-			layoutURL = HttpUtil.removeParameter(
-				layoutURL, "controlPanelCategory");
-		}
-
-		sb.append(layoutURL);
-
-		sb.append("\" ");
-
-		String layoutName = layout.getName(themeDisplay.getLocale());
-
-		if (layout.isTypeControlPanel()) {
-			sb.append("target=\"_top\"");
-
-			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
-				layoutName = LanguageUtil.get(
-					themeDisplay.getLocale(), "control-panel");
+			if (layout.isTypeControlPanel()) {
+				target = "target=\"_top\"";
 			}
-		}
-		else {
-			String target = PortalUtil.getLayoutTarget(layout);
+			else {
+				target = PortalUtil.getLayoutTarget(layout);
+			}
 
 			sb.append(target);
-		}
 
-		sb.append(StringPool.GREATER_THAN);
-		sb.append(HtmlUtil.escape(layoutName));
-		sb.append("</a><span class=\"divider\">/</span></li>");
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(HtmlUtil.escape(layoutEntry.getTitle()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
+		}
 	}
 
 	protected void buildPortletBreadcrumb(
@@ -227,25 +173,15 @@ public class BreadcrumbTag extends IncludeTag {
 			StringBundler sb)
 		throws Exception {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			PortalUtil.getPortletBreadcrumbs(request);
+		List<BreadcrumbEntry> portletEntries =
+			BreadcrumbUtil.getPortletEntries(request);
 
-		if (breadcrumbEntries == null) {
-			return;
-		}
-
-		for (int i = 0; i < breadcrumbEntries.size(); i++) {
-			BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(i);
-
-			Map<String, Object> data = breadcrumbEntry.getData();
-
-			String breadcrumbTitle = breadcrumbEntry.getTitle();
-			String breadcrumbURL = breadcrumbEntry.getURL();
+		for (BreadcrumbEntry portletEntry : portletEntries) {
 
 			if (!_showCurrentGroup) {
 				String siteGroupName = themeDisplay.getSiteGroupName();
 
-				if (siteGroupName.equals(breadcrumbTitle)) {
+				if (siteGroupName.equals(portletEntry.getTitle())) {
 					continue;
 				}
 			}
@@ -257,44 +193,28 @@ public class BreadcrumbTag extends IncludeTag {
 				String portletTitle = PortalUtil.getPortletTitle(
 					portletDisplay.getId(), themeDisplay.getUser());
 
-				if (portletTitle.equals(breadcrumbTitle)) {
+				if (portletTitle.equals(portletEntry.getTitle())) {
 					continue;
 				}
 			}
 
-			if (!CookieKeys.hasSessionId(request) &&
-				Validator.isNotNull(breadcrumbURL)) {
-
-				HttpSession session = request.getSession();
-
-				breadcrumbURL = PortalUtil.getURLWithSessionId(
-					breadcrumbURL, session.getId());
-			}
-
 			sb.append("<li>");
+			if (Validator.isNotNull(portletEntry.getURL())) {
+				sb.append("<a href=\"");
+				sb.append(HtmlUtil.escape(portletEntry.getURL()));
+				sb.append("\"");
+				sb.append(AUIUtil.buildData(portletEntry.getData()));
+				sb.append(StringPool.GREATER_THAN);
 
-			if (i < (breadcrumbEntries.size() - 1)) {
-				if (Validator.isNotNull(breadcrumbURL)) {
-					sb.append("<a href=\"");
-					sb.append(HtmlUtil.escape(breadcrumbURL));
-					sb.append("\"");
-					sb.append(AUIUtil.buildData(data));
-					sb.append(">");
-				}
+				sb.append(HtmlUtil.escape(portletEntry.getTitle()));
 
-				sb.append(HtmlUtil.escape(breadcrumbTitle));
-
-				if (Validator.isNotNull(breadcrumbURL)) {
-					sb.append("</a>");
-				}
-
-				sb.append("<span class=\"divider\">/</span>");
+				sb.append("</a>");
 			}
 			else {
-				sb.append(HtmlUtil.escape(breadcrumbTitle));
+				sb.append(HtmlUtil.escape(portletEntry.getTitle()));
 			}
 
-			sb.append("</li>");
+			sb.append("<span class=\"divider\">/</span></li>");
 		}
 	}
 
@@ -325,22 +245,15 @@ public class BreadcrumbTag extends IncludeTag {
 			}
 
 			if (_showParentGroups) {
-				LayoutSet parentLayoutSet = getParentLayoutSet(
-					layout.getLayoutSet());
-
-				if (parentLayoutSet != null) {
-					buildGroupsBreadcrumb(
-						parentLayoutSet, themeDisplay, true, sb);
-				}
+				buildParentGroupsBreadcrumb(themeDisplay, sb);
 			}
 
 			if (_showCurrentGroup) {
-				buildGroupsBreadcrumb(
-					layout.getLayoutSet(), themeDisplay, false, sb);
+				buildCurrentGroupBreadcrumb(themeDisplay, sb);
 			}
 
-			if (_showLayout && !group.isLayoutPrototype()) {
-				buildLayoutBreadcrumb(layout, true, themeDisplay, sb);
+			if (_showLayout) {
+				buildLayoutBreadcrumb(themeDisplay, sb);
 			}
 
 			if (_showPortletBreadcrumb) {
@@ -351,8 +264,10 @@ public class BreadcrumbTag extends IncludeTag {
 			_log.error(e, e);
 		}
 
-		String breadcrumbString = sb.toString();
+		return modifyBreadcrumbClasses(sb.toString());
+	}
 
+	protected String modifyBreadcrumbClasses(String breadcrumbString) {
 		if (Validator.isNull(breadcrumbString)) {
 			return StringPool.BLANK;
 		}
@@ -405,39 +320,6 @@ public class BreadcrumbTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
-	}
-
-	protected LayoutSet getParentLayoutSet(LayoutSet layoutSet)
-		throws Exception {
-
-		Group group = layoutSet.getGroup();
-
-		if (group.isSite()) {
-			Group parentGroup = group.getParentGroup();
-
-			if (parentGroup != null) {
-				return LayoutSetLocalServiceUtil.getLayoutSet(
-					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
-			}
-		}
-		else if (group.isUser()) {
-			User user = UserLocalServiceUtil.getUser(group.getClassPK());
-
-			List<Organization> organizations =
-				OrganizationLocalServiceUtil.getUserOrganizations(
-					user.getUserId());
-
-			if (!organizations.isEmpty()) {
-				Organization organization = organizations.get(0);
-
-				Group parentGroup = organization.getGroup();
-
-				return LayoutSetLocalServiceUtil.getLayoutSet(
-					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
-			}
-		}
-
-		return null;
 	}
 
 	protected void initShowParentGroups(HttpServletRequest request) {

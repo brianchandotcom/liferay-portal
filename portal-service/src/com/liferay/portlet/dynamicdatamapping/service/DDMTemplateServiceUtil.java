@@ -349,6 +349,16 @@ public class DDMTemplateServiceUtil {
 		return getService().getTemplates(groupId, classNameId, classPK);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK,
+		boolean includeAncestorTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTemplates(groupId, classNameId, classPK,
+			includeAncestorTemplates);
+	}
+
 	/**
 	* Returns all the templates matching the class name ID, class PK, type, and
 	* mode.

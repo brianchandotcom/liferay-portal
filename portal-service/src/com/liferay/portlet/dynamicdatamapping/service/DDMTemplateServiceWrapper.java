@@ -351,6 +351,16 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK,
+		boolean includeAncestorTemplates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK,
+			includeAncestorTemplates);
+	}
+
 	/**
 	* Returns all the templates matching the class name ID, class PK, type, and
 	* mode.

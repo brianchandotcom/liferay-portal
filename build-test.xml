@@ -2561,6 +2561,17 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 							</exec>
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="sybase" />
+						<then>
+							<exec executable="${oracle.sqlplus.executable}">
+								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+								<arg value="@create.sql" />
+								<arg value="${database.username}" />
+								<arg value="${database.password}" />
+							</exec>
+						</then>
+					</elseif>
 					<else>
 						<exec executable="${plink.executable}">
 							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\temporary" />

@@ -2456,9 +2456,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
-			layout.getPlid(), layout.isPrivateLayout(), friendlyURLMap,
-			serviceContext);
+			serviceContext.getUserId(), layout.getCompanyId(),
+			layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
+			friendlyURLMap, serviceContext);
 
 		// Asset
 

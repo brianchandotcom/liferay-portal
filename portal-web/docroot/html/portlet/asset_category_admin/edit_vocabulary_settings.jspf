@@ -42,10 +42,6 @@ String[] selectedClassNameIds = null;
 if (vocabulary != null) {
 	selectedClassNameIds = vocabulary.getAssociatedAssetClassNameIds();
 }
-
-if (ArrayUtil.isEmpty(selectedClassNameIds)) {
-	selectedClassNameIds = new String[] {"0"};
-}
 %>
 
 <aui:input cssClass="vocabulary-checkbox" helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
@@ -56,7 +52,7 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 		<%
 		List<String> indexes = new ArrayList<String>();
 
-		if (_isDefaultClassNameIds(selectedClassNameIds)) {
+		if (selectedClassNameIds == null) {
 			indexes.add("0");
 		%>
 
@@ -147,7 +143,7 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 						for (AssetRendererFactory assetRendererFactory : assetFactoriesWithClassTypes) {
 						%>
 
-							<aui:select wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
+							<aui:select wrapperCssClass='<%= (classNameId == assetRendererFactory.getClassNameId() ? "" : "hide ") + "subtype-select" %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
 								<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 								<%
@@ -157,10 +153,11 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 									continue;
 								}
 
-								for (Map.Entry<Long,String> classType : classTypes.entrySet()) {
+								for (long currentClassTypeId : classTypes.keySet()) {
+									String currentClassTypeName = classTypes.get(currentClassTypeId);
 								%>
 
-									<aui:option label="<%= classType.getValue() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypeId == (classType.getKey())) %>" value="<%= classType.getKey() %>" />
+									<aui:option label="<%= currentClassTypeName %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypeId == currentClassTypeId) %>" value="<%= currentClassTypeId %>" />
 
 								<%
 								}
@@ -223,14 +220,3 @@ if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 		'.vocabulary-asset-type-select'
 	);
 </aui:script>
-
-<%!
-private boolean _isDefaultClassNameIds(String[] classNameIds) {
-	if ((classNameIds.length == 1) && classNameIds[0].equals("0")) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-%>

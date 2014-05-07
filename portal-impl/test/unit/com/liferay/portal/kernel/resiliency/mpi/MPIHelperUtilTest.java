@@ -428,7 +428,7 @@ public class MPIHelperUtilTest {
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider1));
 			Assert.assertTrue(logRecords.isEmpty());
 
-			// Unregister SPI provider, with SPI, fail on destroy, with log
+			// Unregister SPI provider, with SPI, fail on stop, with log
 
 			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
@@ -444,20 +444,24 @@ public class MPIHelperUtilTest {
 
 			MockSPI mockSPI1 = new MockSPI();
 
-			mockSPI1.failOnDestroy = true;
+			mockSPI1.failOnStop = true;
 			mockSPI1.spiProviderName = name1;
 
 			_directResigterSPI("spi1", mockSPI1);
 
 			MockSPI mockSPI2 = new MockSPI();
 
-			mockSPI2.failOnDestroy = true;
+			mockSPI2.failOnStop = true;
 			mockSPI2.spiProviderName = name2;
 
 			_directResigterSPI("spi2", mockSPI2);
 
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider1));
+			Assert.assertFalse(mockSPI1.destroyed);
+			Assert.assertFalse(mockSPI1.stopped);
+			Assert.assertFalse(mockSPI2.destroyed);
+			Assert.assertFalse(mockSPI2.stopped);
 			Assert.assertEquals(1, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
@@ -475,8 +479,17 @@ public class MPIHelperUtilTest {
 
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
+			mockSPI1.failOnStop = false;
+			mockSPI2.failOnStop = false;
+			mockSPI1.failOnDestroy = true;
+			mockSPI2.failOnDestroy = true;
+
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider2));
+			Assert.assertFalse(mockSPI1.destroyed);
+			Assert.assertFalse(mockSPI1.stopped);
+			Assert.assertFalse(mockSPI2.destroyed);
+			Assert.assertTrue(mockSPI2.stopped);
 			Assert.assertTrue(logRecords.isEmpty());
 
 			// Unregister SPI provider, with SPI, success, with log
@@ -509,6 +522,10 @@ public class MPIHelperUtilTest {
 
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider1));
+			Assert.assertTrue(mockSPI1.destroyed);
+			Assert.assertTrue(mockSPI1.stopped);
+			Assert.assertFalse(mockSPI2.destroyed);
+			Assert.assertFalse(mockSPI2.stopped);
 			Assert.assertEquals(2, logRecords.size());
 
 			logRecord1 = logRecords.get(0);
@@ -530,6 +547,10 @@ public class MPIHelperUtilTest {
 
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider2));
+			Assert.assertTrue(mockSPI1.destroyed);
+			Assert.assertTrue(mockSPI1.stopped);
+			Assert.assertTrue(mockSPI2.destroyed);
+			Assert.assertTrue(mockSPI2.stopped);
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {

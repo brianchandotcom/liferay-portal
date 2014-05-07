@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
@@ -104,10 +105,11 @@ public class EditVocabularyAction extends PortletAction {
 
 			classNameIds.add(classNameId);
 
-			classTypeIds.add(
-				ParamUtil.getLong(
-					actionRequest,
-					"subtype" + classNameId + "-classNameId" + index));
+			Long classTypeId = ParamUtil.getLong(
+				actionRequest, "subtype" + classNameId + "-classNameId" + index,
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+
+			classTypeIds.add(classTypeId);
 
 			required.add(
 				ParamUtil.getBoolean(actionRequest, "required" + index));

@@ -357,6 +357,12 @@
 		</default>
 	</command>
 
+	<command name="sikuliUploadTCatFile">
+		<default>
+			<execute function="SikuliUploadTCatFile#sikuliUploadTCatFile" />
+		</default>
+	</command>
+
 	<command name="sikuliUploadTempFile">
 		<default>
 			<execute function="SikuliUploadTempFile#sikuliUploadTempFile" />

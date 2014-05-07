@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>TCat</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TCat</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Portlet Sign In</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME_FIELD</td>
+	<td>//input[@name='j_username']</td>
+	<td>User Name Field</td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@name='j_password']</td>
+	<td>Password Field</td>
+</tr>
+<tr>
+	<td>LOG_IN_BUTTON</td>
+	<td>//input[@value='Login']</td>
+	<td>Log In Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEPLOYMENT_TAB</td>
+	<td>//span[contains(@class,'x-tab-strip-text') and contains(.,'Deployments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPOSITORY_TAB</td>
+	<td>//span[contains(@class,'x-tab-strip-text') and contains(.,'Repository')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVER_TAB</td>
+	<td>//span[contains(@class,'x-tab-strip-text') and contains(.,'Servers')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREGISTERED</td>
+	<td>//span[contains(@class,'x-tree3-node-text') and contains(.,'Unregistered (1)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREGISTERED_CHECK</td>
+	<td>//div[@class='x-grid3-row-checker']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REGISTER_BUTTON</td>
+	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'Register')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_FOLDER</td>
+	<td>//div[@id='x-auto-209']/span[contains(.,'Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_WORKSPACE_BUTTON</td>
+	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'New Workspace')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_WORKSPACE_NAME_FIELD</td>
+	<td>tcat/fields/new_workspace_name_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_WORKSPACE_ADD_BUTTON</td>
+	<td>tcat/buttons/new_workspace_add_button.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_ARTIFACT_BUTTON</td>
+	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'New Artifact')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_ARTIFACT_BROWSE_BUTTON</td>
+	<td>tcat/buttons/new_artifact_browse_button.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_ARTIFACT_ADD_BUTTON</td>
+	<td>tcat/buttons/new_artifact_add_button.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_FILE_NAME_FIELD</td>
+	<td>os/fields/file_dialog_box_file_name_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_DEPLOYMENT_BUTTON</td>
+	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'New Deployment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_DEPLOYMENT_NAME_FIELD</td>
+	<td>//html/body/div/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div[2]/div[2]/table/tbody/tr[4]/td/div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FROM_REPOSITORY_BUTTON</td>
+	<td>//button[contains(@class,'x-btn-text') and contains(.,'Add From Repository')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_APPLICATION_FIELD</td>
+	<td>tcat/fields/select_web_application_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIFERAY_ROOT_OPTION</td>
+	<td>tcat/options/liferay_root_option.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_APPLICATION_BUTTON</td>
+	<td>tcat/buttons/select_web_application_button.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_SERVER_DROPDOWN</td>
+	<td>tcat/dropdowns/select_server_dropdown.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOMCAT_SERVER_OPTION</td>
+	<td>tcat/options/tomcat_server_option.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVER_DEPLOY_BUTTON</td>
+	<td>//button[contains(@class,'x-btn-text') and contains(.,'Deploy')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

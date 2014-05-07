@@ -55,8 +55,8 @@
 		"isElementNotPresent", "isElementPresent", "isElementPresentAfterWait",
 		"isIgnorableErrorLine", "isLowerCase", "isNotChecked",
 		"isNotPartialText", "isNotText", "isNotValue", "isNotVisible",
-		"isTextNotPresent", "isTextPresent", "isVisible", "isUpperCase",
-		"matches", "matchesIgnoreCase", "startsWith"
+		"isTcatEnabled", "isTextNotPresent", "isTextPresent", "isVisible",
+		"isUpperCase", "matches", "matchesIgnoreCase", "startsWith"
 	]>
 
 	<#assign methodName = method?substring(x + 1, y)>

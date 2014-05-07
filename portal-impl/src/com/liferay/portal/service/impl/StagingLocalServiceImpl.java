@@ -69,8 +69,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,8 +88,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	@Override
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
-			boolean branchingPrivate, boolean branchedPublic,
-			boolean branchedPrivate, boolean remote,
+			boolean branchingPrivate, boolean remote,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -110,47 +107,37 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			targetGroupId = stagingGroup.getGroupId();
 		}
 
-		if (branchingPublic) {
-			LayoutSetBranch layoutSetBranch =
-				layoutSetBranchLocalService.fetchLayoutSetBranch(
-					targetGroupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
+		LayoutSetBranch layoutSetBranch =
+			layoutSetBranchLocalService.fetchLayoutSetBranch(
+				targetGroupId, false,
+				LayoutSetBranchConstants.MASTER_BRANCH_NAME);
 
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(),
-					false, serviceContext);
-			}
+		if (branchingPublic && (layoutSetBranch == null)) {
+			addDefaultLayoutSetBranch(
+				userId, targetGroupId, liveGroup.getDescriptiveName(), false,
+				serviceContext);
+		}
+		else if (!branchingPublic && (layoutSetBranch != null)) {
+			deleteLayoutSetBranches(targetGroupId, false);
+		}
+		else if (layoutSetBranch != null) {
+			clearLastPublishDate(targetGroupId, false);
 		}
 
-		if (branchingPrivate) {
-			LayoutSetBranch layoutSetBranch =
-				layoutSetBranchLocalService.fetchLayoutSetBranch(
-					targetGroupId, true,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
+		layoutSetBranch = layoutSetBranchLocalService.fetchLayoutSetBranch(
+			targetGroupId, true, LayoutSetBranchConstants.MASTER_BRANCH_NAME);
 
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
-					serviceContext);
-			}
+		if (branchingPrivate && (layoutSetBranch == null)) {
+			addDefaultLayoutSetBranch(
+				userId, targetGroupId, liveGroup.getDescriptiveName(), true,
+				serviceContext);
 		}
-
-		updatePageVersioning(
-			targetGroupId, branchingPublic, branchingPrivate, branchedPublic,
-			branchedPrivate);
-	}
-
-	@Override
-	public void checkDefaultLayoutSetBranches(
-			long userId, Group liveGroup, boolean branchingPublic,
-			boolean branchingPrivate, boolean remote,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate, false, false,
-			remote, serviceContext);
+		else if (!branchingPrivate && (layoutSetBranch != null)) {
+			deleteLayoutSetBranches(targetGroupId, true);
+		}
+		else if (layoutSetBranch != null) {
+			clearLastPublishDate(targetGroupId, false);
+		}
 	}
 
 	@Override
@@ -241,8 +228,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		StagingUtil.deleteLastImportSettings(liveGroup, false);
 
 		checkDefaultLayoutSetBranches(
-			serviceContext.getUserId(), liveGroup, false, false, true, true,
-			stagedRemotely, serviceContext);
+			serviceContext.getUserId(), liveGroup, false, false, stagedRemotely,
+			serviceContext);
 
 		if (liveGroup.hasStagingGroup()) {
 			Group stagingGroup = liveGroup.getStagingGroup();
@@ -268,11 +255,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
-
-		boolean branchedPrivate = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPrivate"));
-		boolean branchedPublic = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPublic"));
 
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
@@ -313,8 +295,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 
 		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate,
-			branchedPublic, branchedPrivate, false, serviceContext);
+			userId, liveGroup, branchingPublic, branchingPrivate, false,
+			serviceContext);
 	}
 
 	@Override
@@ -363,11 +345,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			enableRemoteStaging(remoteURL, remoteGroupId);
 		}
 
-		boolean branchedPrivate = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPrivate"));
-		boolean branchedPublic = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPublic"));
-
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
 		typeSettingsProperties.setProperty(
@@ -394,8 +371,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
 
 		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate,
-			branchedPublic, branchedPrivate, true, serviceContext);
+			userId, liveGroup, branchingPublic, branchingPrivate, true,
+			serviceContext);
 	}
 
 	@Override
@@ -464,6 +441,53 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 	}
 
+	protected void addDefaultLayoutSetBranch(
+			long userId, long groupId, String groupName, boolean privateLayout,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String masterBranchDescription =
+			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
+
+		if (privateLayout) {
+			masterBranchDescription =
+				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE;
+		}
+
+		String description = LanguageUtil.format(
+			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
+			groupName, false);
+
+		try {
+			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
+
+			LayoutSetBranch layoutSetBranch =
+				layoutSetBranchLocalService.addLayoutSetBranch(
+					userId, groupId, privateLayout,
+					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
+					true, LayoutSetBranchConstants.ALL_BRANCHES,
+					serviceContext);
+
+			List<LayoutRevision> layoutRevisions =
+				layoutRevisionLocalService.getLayoutRevisions(
+					layoutSetBranch.getLayoutSetBranchId(), false);
+
+			for (LayoutRevision layoutRevision : layoutRevisions) {
+				layoutRevisionLocalService.updateStatus(
+					userId, layoutRevision.getLayoutRevisionId(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to create master branch for " +
+						(privateLayout ? "private" : "public") + " layouts",
+					pe);
+			}
+		}
+	}
+
 	protected Group addStagingGroup(
 			long userId, Group liveGroup, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -516,53 +540,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			stagingTypeSettingsProperties.toString());
 	}
 
-	protected void addDefaultLayoutSetBranch(
-			long userId, long groupId, String groupName, boolean privateLayout,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String masterBranchDescription =
-			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
-
-		if (privateLayout) {
-			masterBranchDescription =
-				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE;
-		}
-
-		String description = LanguageUtil.format(
-			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
-			groupName, false);
-
-		try {
-			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
-
-			LayoutSetBranch layoutSetBranch =
-				layoutSetBranchLocalService.addLayoutSetBranch(
-					userId, groupId, privateLayout,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
-					true, LayoutSetBranchConstants.ALL_BRANCHES,
-					serviceContext);
-
-			List<LayoutRevision> layoutRevisions =
-				layoutRevisionLocalService.getLayoutRevisions(
-					layoutSetBranch.getLayoutSetBranchId(), false);
-
-			for (LayoutRevision layoutRevision : layoutRevisions) {
-				layoutRevisionLocalService.updateStatus(
-					userId, layoutRevision.getLayoutRevisionId(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create master branch for " +
-						(privateLayout ? "private" : "public") + " layouts",
-					pe);
-			}
-		}
-	}
-
 	protected void clearLastPublishDate(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -576,6 +553,69 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		layoutSetLocalService.updateSettings(
 			groupId, privateLayout, settingsProperties.toString());
+	}
+
+	protected void deleteLayoutSetBranches(long groupId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		List<LayoutSetBranch> layoutSetBranches =
+			layoutSetBranchLocalService.getLayoutSetBranches(
+				groupId, privateLayout);
+
+		Map<Long, LayoutRevision> publishedLayoutRevisions =
+			new HashMap<Long, LayoutRevision>();
+
+		// Find the latest layout revision for all the published layouts
+
+		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+			String lastPublishDateString = layoutSetBranch.getSettingsProperty(
+				"last-publish-date");
+
+			if (Validator.isNull(lastPublishDateString)) {
+				continue;
+			}
+
+			Date lastPublishDate = new Date(
+				GetterUtil.getLong(lastPublishDateString));
+
+			List<LayoutRevision> headRevisions =
+				layoutRevisionLocalService.getLayoutRevisions(
+					layoutSetBranch.getLayoutSetBranchId(), true);
+
+			for (LayoutRevision layoutRevision : headRevisions) {
+				LayoutRevision latestPublishedLayoutRevision =
+					publishedLayoutRevisions.get(layoutRevision.getPlid());
+
+				if (latestPublishedLayoutRevision == null) {
+					publishedLayoutRevisions.put(
+						layoutRevision.getPlid(), layoutRevision);
+
+					continue;
+				}
+
+				Date statusDate = layoutRevision.getStatusDate();
+				Date lastStatusDate =
+					latestPublishedLayoutRevision.getStatusDate();
+
+				if (statusDate.after(lastStatusDate) &&
+					lastPublishDate.after(statusDate)) {
+
+					publishedLayoutRevisions.put(
+						layoutRevision.getPlid(), layoutRevision);
+				}
+			}
+		}
+
+		// Update all layouts based on their latest published revision
+
+		for (LayoutRevision layoutRevision :
+				publishedLayoutRevisions.values()) {
+
+			updateLayoutWithLayoutRevision(layoutRevision);
+		}
+
+		layoutSetBranchLocalService.deleteLayoutSetBranches(
+			groupId, privateLayout, true);
 	}
 
 	protected void disableRemoteStaging(String remoteURL, long remoteGroupId)
@@ -689,39 +729,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			".lar";
 	}
 
-	protected Map<Long, Long> getPublishedLayoutRevisions(
-			List<Long> lastPublishDates,
-			Map<Long, Long> publishedLayoutSetBranches)
-		throws PortalException, SystemException {
-
-		Map<Long, Long> publishedLayoutRevisions = new HashMap<Long, Long>();
-
-		for (Long lastPublishDate : lastPublishDates) {
-			Long layoutSetBranchId = publishedLayoutSetBranches.get(
-				lastPublishDate);
-
-			LayoutSetBranch layoutSetBranch =
-				layoutSetBranchLocalService.getLayoutSetBranch(
-					layoutSetBranchId);
-
-			List<LayoutRevision> headRevisions =
-				layoutRevisionLocalService.getLayoutRevisions(
-					layoutSetBranch.getLayoutSetBranchId(), true);
-
-			for (LayoutRevision layoutRevision : headRevisions) {
-				Date statusDate = layoutRevision.getStatusDate();
-
-				if (statusDate.getTime() <= lastPublishDate) {
-					publishedLayoutRevisions.put(
-						layoutRevision.getPlid(),
-						layoutRevision.getLayoutRevisionId());
-				}
-			}
-		}
-
-		return publishedLayoutRevisions;
-	}
-
 	protected FileEntry getStagingRequestFileEntry(
 			long userId, long stagingRequestId, Folder folder)
 		throws PortalException, SystemException {
@@ -816,61 +823,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 	}
 
-	protected void updateLayoutsWithLatestRevisions(
-			long groupId, boolean privateLayout)
-		throws PortalException, SystemException {
-
-		List<LayoutSetBranch> layoutSetBranches =
-			layoutSetBranchLocalService.getLayoutSetBranches(
-				groupId, privateLayout);
-
-		List<Long> lastPublishDates = new ArrayList<Long>();
-
-		Map<Long, Long> publishedLayoutSetBranches = new HashMap<Long, Long>();
-
-		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-			String lastPublishDate = layoutSetBranch.getSettingsProperty(
-				"last-publish-date");
-
-			if (Validator.isNotNull(lastPublishDate)) {
-				Long lastPublishTime = new Long(lastPublishDate);
-
-				lastPublishDates.add(lastPublishTime);
-
-				publishedLayoutSetBranches.put(
-					lastPublishTime, layoutSetBranch.getLayoutSetBranchId());
-			}
-		}
-
-		Collections.sort(lastPublishDates);
-
-		Map<Long, Long> publishedLayoutRevisions =
-			getPublishedLayoutRevisions(
-				lastPublishDates, publishedLayoutSetBranches);
-
-		Set<Long> publishedLayoutPlids = publishedLayoutRevisions.keySet();
-
-		for (Long plid : publishedLayoutPlids) {
-			long layoutRevisionId = publishedLayoutRevisions.get(plid);
-
-			LayoutRevision layoutRevision =
-				layoutRevisionLocalService.fetchLayoutRevision(
-					layoutRevisionId);
-
-			Layout layout = layoutLocalService.fetchLayout(plid);
-
-			layout = updateLayoutWithLayoutRevision(layout, layoutRevision);
-
-			layoutLocalService.updateLayout(layout);
-		}
-
-		layoutSetBranchLocalService.deleteLayoutSetBranches(
-			groupId, privateLayout, true);
-	}
-
 	protected Layout updateLayoutWithLayoutRevision(
-			Layout layout, LayoutRevision layoutRevision)
+			LayoutRevision layoutRevision)
 		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.fetchLayout(
+			layoutRevision.getPlid());
 
 		LayoutStagingHandler layoutStagingHandler =
 			LayoutStagingUtil.getLayoutStagingHandler(layout);
@@ -895,27 +853,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setWapColorSchemeId(layoutRevision.getWapColorSchemeId());
 		layout.setCss(layoutRevision.getCss());
 
-		return layout;
-	}
-
-	protected void updatePageVersioning(
-			long groupId, boolean branchingPublic, boolean branchingPrivate,
-			boolean branchedPublic, boolean branchedPrivate)
-		throws PortalException, SystemException {
-
-		if (branchedPrivate && !branchingPrivate) {
-			updateLayoutsWithLatestRevisions(groupId, true);
-		}
-		else {
-			clearLastPublishDate(groupId, true);
-		}
-
-		if (branchedPublic && !branchingPublic) {
-			updateLayoutsWithLatestRevisions(groupId, false);
-		}
-		else {
-			clearLastPublishDate(groupId, false);
-		}
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	protected void updateStagedPortlets(

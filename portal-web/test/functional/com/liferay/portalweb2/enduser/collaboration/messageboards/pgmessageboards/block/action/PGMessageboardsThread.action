@@ -10,4 +10,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="QUICK_REPLY_BODY_FIELD">
+			<execute function="Type#typeFrameWaitForCKEditor" />
+		</case>
+	</command>
 </definition>

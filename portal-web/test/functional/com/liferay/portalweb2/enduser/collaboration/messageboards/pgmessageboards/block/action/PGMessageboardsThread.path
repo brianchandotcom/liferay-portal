@@ -200,21 +200,21 @@
 <tr>
 	<td>MESSAGE_ANSWER_2</td>
 	<td>xpath=(//span[.='Answer'])[4]</td>
-	<td>Answer</td>
+	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_TAG_1</td>
-	<td>xpath=(//div[@class="tags"])[1]//span[contains(.,'${key_tagName}')]</td>
+	<td>xpath=(//div[@class='tags'])[1]//span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_TAG_2</td>
-	<td>xpath=(//div[@class="tags"])[2]//span[contains(.,'${key_tagName}')]</td>
+	<td>xpath=(//div[@class='tags'])[2]//span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_TAG_3</td>
-	<td>xpath=(//div[@class="tags"])[3]//span[contains(.,'${key_tagName}')]</td>
+	<td>xpath=(//div[@class='tags'])[3]//span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -230,6 +230,21 @@
 <tr>
 	<td>MESSAGE_REPLY_3</td>
 	<td>xpath=(//span[.='Reply'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_QUICK_REPLY_1</td>
+	<td>xpath=(//span[.='Quick Reply'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_QUICK_REPLY_2</td>
+	<td>xpath=(//span[.='Quick Reply'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_QUICK_REPLY_3</td>
+	<td>xpath=(//span[.='Quick Reply'])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -298,6 +313,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_REPLY_PERMISSIONS_1</td>
+	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_PERMISSIONS_2</td>
+	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_PERMISSIONS_3</td>
+	<td>xpath=(//table[contains(@class,'thread-message-view')]//td//a/span[contains(.,'Permissions')])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_SPLIT_THREAD</td>
 	<td>//table[contains(.,'${key_threadBody}')]/tbody/tr/td[@class='thread-bottom']/ul//a[contains(.,'Split Thread')]</td>
 	<td></td>
@@ -305,6 +335,27 @@
 <tr>
 	<td>MESSAGE_ATTACHMENT_IMAGE</td>
 	<td>//div[@class='message-attachments']/div/img[contains(@src,'${key_mbThreadAttachment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--QUICK_REPLY-->
+<tr>
+	<td>QUICK_REPLY_BODY_FIELD</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_REPLY_PUBLISH_BUTTON</td>
+	<td>//button[@id='_19_publishButton' and contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUICK_REPLY_CANCEL_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

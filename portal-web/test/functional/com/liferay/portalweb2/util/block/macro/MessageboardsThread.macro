@@ -56,6 +56,13 @@
 		</if>
 
 		<if>
+			<equals arg1="${viewableBy}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
 				<if>
@@ -330,6 +337,18 @@
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+	</command>
+
+	<command name="quickReplyPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="ratePG">

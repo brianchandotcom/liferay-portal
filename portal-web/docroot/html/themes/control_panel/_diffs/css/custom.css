@@ -98,7 +98,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.control-panel-home-menu {
 		margin-top: 40px;
 
-		a {
+		.control-panel-home-link a {
 			color: #009AE5;
 			font-size: 16px;
 			text-decoration: none;

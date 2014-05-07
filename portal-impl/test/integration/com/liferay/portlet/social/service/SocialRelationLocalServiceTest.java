@@ -29,14 +29,13 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-
-import java.util.List;
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -284,7 +283,7 @@ public class SocialRelationLocalServiceTest {
 		};
 
 		List<User> users = UserLocalServiceUtil.getUsersBySocialRelationsTypes(
-			"dlc", dlc2User.getUserId(), types, null, QueryUtil.ALL_POS,
+			"dlc", dlc2User.getUserId(), types, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		// dlc2 should have 1 coworker and 4 friends.

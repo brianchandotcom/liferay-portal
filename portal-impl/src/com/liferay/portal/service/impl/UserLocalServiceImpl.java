@@ -137,11 +137,13 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 import com.liferay.util.PwdGenerator;
+import com.liferay.util.dao.orm.CustomSQLConstants;
 
 import java.io.Serializable;
 
@@ -2905,18 +2907,37 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String keywords, long userId, long[] groupIds, int start, int end)
 		throws PortalException, SystemException {
 
-		return userFinder.findByUsersGroups(
-			keywords, userId, groupIds, start, end);
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
+		params.put("wildcardMode", CustomSQLConstants.TRAILING_WILDCARD_MODE);
+
+		return userFinder.findByKeywords(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, new UserScreenNameComparator());
 	}
 
 	@Override
 	public List<User> getUsersBySocialRelationsTypes(
-			String keywords, long userId, int[] types, long[] groupIds,
-			int start, int end)
+			String keywords, long userId, int[] types, int start, int end)
 		throws PortalException, SystemException {
 
-		return userFinder.findBySocialRelationTypes(
-			keywords, userId, types, start, end);
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put(
+			"socialRelationType",
+			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
+		params.put("wildcardMode", CustomSQLConstants.TRAILING_WILDCARD_MODE);
+
+		return userFinder.findByKeywords(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, new UserScreenNameComparator());
 	}
 
 	@Override

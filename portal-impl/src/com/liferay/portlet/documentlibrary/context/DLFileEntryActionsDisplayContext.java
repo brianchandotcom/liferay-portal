@@ -122,6 +122,8 @@ public class DLFileEntryActionsDisplayContext {
 			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
 			portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
 			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+			portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
+			portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
 			portletId.equals(PortletKeys.TRASH)) {
 
 			return true;

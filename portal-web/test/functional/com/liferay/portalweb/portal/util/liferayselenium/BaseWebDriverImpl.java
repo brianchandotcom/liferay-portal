@@ -539,6 +539,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public boolean isTCatEnabled() {
+		return LiferaySeleniumHelper.isTCatEnabled();
+	}
+
+	@Override
 	public boolean isText(String locator, String value) {
 		return value.equals(getText(locator, "1"));
 	}
@@ -718,6 +723,13 @@ public abstract class BaseWebDriverImpl
 		throws Exception {
 
 		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTCatFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTCatFile(this, image, value);
 	}
 
 	@Override

@@ -207,9 +207,17 @@ var AutoCompleteCKEditor = A.Component.create(
 
 				var term = instance.get(STR_TERM);
 
-				var termContainer = instance._getCaretContainer();
+				var caretContainer = instance._getCaretContainer();
 
-				var termIndex = termContainer.getText().lastIndexOf(term);
+				var caretContainerId = caretContainer.getUniqueId();
+
+				var caretIndex = instance._getCaretIndex();
+
+				var query = caretContainer.getText().substring(0, caretIndex.start);
+
+				var termContainer = caretContainer;
+
+				var termIndex = query.lastIndexOf(term);
 
 				if (termIndex === -1) {
 					var termWalker = instance._getWalker(termContainer);
@@ -217,13 +225,20 @@ var AutoCompleteCKEditor = A.Component.create(
 					termWalker.guard = function(node) {
 						var hasTerm = false;
 
-						if (node.type === CKEDITOR.NODE_TEXT) {
-							termIndex = node.getText().indexOf(term);
+						if (node.type === CKEDITOR.NODE_TEXT && node.getUniqueId() !== caretContainerId) {
+							var nodeText = node.getText();
+
+							termIndex = nodeText.indexOf(term);
 
 							hasTerm = (termIndex !== -1);
 
 							if (hasTerm) {
+								query = nodeText.substring(termIndex) + query;
+
 								termContainer = node;
+							}
+							else {
+								query = node.getText() + query;
 							}
 						}
 
@@ -232,10 +247,14 @@ var AutoCompleteCKEditor = A.Component.create(
 
 					termWalker.checkBackward();
 				}
+				else {
+					query = query.substring(termIndex);
+				}
 
 				return {
 					container: termContainer,
-					index: termIndex
+					index: termIndex,
+					query: query
 				};
 			},
 
@@ -244,45 +263,7 @@ var AutoCompleteCKEditor = A.Component.create(
 
 				var result;
 
-				var caretContainer = instance._getCaretContainer();
-
-				var caretContainerId = caretContainer.getUniqueId();
-
-				var caretIndex = instance._getCaretIndex().start;
-
-				var prevTermPosition = instance._getPrevTermPosition();
-
-				var prevTermContainerId = prevTermPosition.container.getUniqueId();
-
-				var query = '';
-
-				if (caretContainerId === prevTermContainerId) {
-					query = prevTermPosition.container.getText().substring(prevTermPosition.index, caretIndex);
-				}
-				else {
-					query = prevTermPosition.container.getText().substring(prevTermPosition.index);
-
-					var queryWalker = instance._getWalker(caretContainer, prevTermPosition.container);
-
-					queryWalker.guard = function(node) {
-						var nodeId = node.getUniqueId();
-
-						var isCaretContainer = (nodeId === caretContainerId);
-
-						if (!isCaretContainer) {
-							if ((node.type === CKEDITOR.NODE_TEXT) && (nodeId !== prevTermContainerId)) {
-								query += node.getText();
-							}
-						}
-						else {
-							query += node.getText().substring(0, caretIndex);
-						}
-
-						return !isCaretContainer;
-					};
-
-					queryWalker.checkForward();
-				}
+				var query = instance._getPrevTermPosition().query;
 
 				var regExp = instance.get('regExp');
 

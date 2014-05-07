@@ -57,6 +57,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -262,7 +263,9 @@ public class AssetUtil {
 
 				@Override
 				public boolean filter(AssetVocabulary assetVocabulary) {
-					if (classTypePK == 0) {
+					if (classTypePK ==
+						AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
+
 						return assetVocabulary.isAssociatedToAsset(classNameId);
 					}
 					else {

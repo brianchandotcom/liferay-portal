@@ -345,10 +345,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				defaultUser.setTimeZoneId(timeZone.getID());
 			}
 
-			defaultUser.setGreeting(
-				LanguageUtil.format(
-					defaultUser.getLocale(), "welcome-x", StringPool.BLANK,
-					false));
+			String greeting = LanguageUtil.format(
+				defaultUser.getLocale(), "welcome", null, false);
+
+			defaultUser.setGreeting(greeting + StringPool.EXCLAMATION);
 			defaultUser.setLoginDate(now);
 			defaultUser.setFailedLoginAttempts(0);
 			defaultUser.setAgreedToTermsOfUse(true);

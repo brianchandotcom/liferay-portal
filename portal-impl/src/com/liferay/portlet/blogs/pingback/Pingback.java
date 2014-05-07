@@ -19,7 +19,7 @@ package com.liferay.portlet.blogs.pingback;
  */
 public interface Pingback {
 
-	public void executeAddPingback(long companyId) throws Exception;
+	public void addPingback(long companyId) throws Exception;
 
 	public void setSourceUri(String sourceUri);
 

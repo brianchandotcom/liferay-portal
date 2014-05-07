@@ -55,7 +55,7 @@ public class PingbackMethodImpl implements Method {
 	@Override
 	public Response execute(long companyId) {
 		try {
-			_pingback.executeAddPingback(companyId);
+			_pingback.addPingback(companyId);
 
 			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}

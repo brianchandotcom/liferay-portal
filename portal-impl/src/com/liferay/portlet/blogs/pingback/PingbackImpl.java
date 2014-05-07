@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.blogs.pingback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -50,13 +53,7 @@ public class PingbackImpl implements Pingback {
 	}
 
 	@Override
-	public void executeAddPingback(long companyId) throws Exception {
-		/*
-		Just to make the diff easier to review,
-		in this commit this method is public and has a bad name.
-		Commits afterwards will make it better.
-		*/
-
+	public void addPingback(long companyId) throws Exception {
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {
 			throw new PingbackDisabledException("Pingbacks are disabled");
 		}
@@ -73,18 +70,11 @@ public class PingbackImpl implements Pingback {
 		long groupId = entry.getGroupId();
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
-
+		String body = buildBody();
 		String urlTitle = entry.getUrlTitle();
 
-		String body =
-			"[...] " + _pingbackExcerptExtractor.getExcerpt() +
-				" [...] [url=" + _sourceUri + "]" +
-				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
-				"[/url]";
-
-		_pingbackComments.addComment(
-			userId, groupId, className, classPK, body,
-			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
+		addComment(
+			userId, groupId, className, classPK, body, companyId, urlTitle);
 	}
 
 	@Override
@@ -99,9 +89,39 @@ public class PingbackImpl implements Pingback {
 		_pingbackExcerptExtractor.setTargetUri(targetUri);
 	}
 
-	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {
-		BlogsEntry entry = null;
+	protected PingbackImpl(
+		PingbackComments pingbackComments,
+		PingbackExcerptExtractor pingbackExcerptExtractor) {
 
+		_pingbackComments = pingbackComments;
+		_pingbackExcerptExtractor = pingbackExcerptExtractor;
+	}
+
+	protected void addComment(
+			long userId, long groupId, String className, long classPK,
+			String body, long companyId, String urlTitle)
+		throws PortalException, SystemException {
+
+		_pingbackComments.addComment(
+			userId, groupId, className, classPK, body,
+			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
+	}
+
+	protected String buildBody() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("[...] ");
+		sb.append(_pingbackExcerptExtractor.getExcerpt());
+		sb.append(" [...] [url=");
+		sb.append(_sourceUri);
+		sb.append("]");
+		sb.append(LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more"));
+		sb.append("[/url]");
+
+		return sb.toString();
+	}
+
+	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {
 		URL url = new URL(_targetUri);
 
 		String friendlyURL = url.getPath();
@@ -140,6 +160,8 @@ public class PingbackImpl implements Pingback {
 		friendlyURLMapper.populateParams(friendlyURL, params, requestContext);
 
 		String param = getParam(params, "entryId");
+
+		BlogsEntry entry;
 
 		if (Validator.isNotNull(param)) {
 			long entryId = GetterUtil.getLong(param);

@@ -66,6 +66,8 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.DefaultPersistenceNestedSetsTreeManager;
+import com.liferay.portal.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -140,6 +142,40 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 		"countAll",
 		new String[0]);
+
+	<#if entity.isHierarchicalTree()>
+		public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS = new FinderPath(
+			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countAncestors",
+			new String[] {Long.class.getName(), Long.class.getName(), Long.class.getName()});
+
+		public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS = new FinderPath(
+			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countDescendants",
+			new String[] {Long.class.getName(), Long.class.getName(), Long.class.getName()});
+
+		public static final FinderPath FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS = new FinderPath(
+			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			${entity.name}Impl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"getAncestors",
+			new String[] {Long.class.getName(), Long.class.getName(), Long.class.getName()});
+
+		public static final FinderPath FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS = new FinderPath(
+			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
+			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
+			${entity.name}Impl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"getDescendants",
+			new String[] {Long.class.getName(), Long.class.getName(), Long.class.getName()});
+	</#if>
 
 	<#list entity.getFinderList() as finder>
 		<#include "persistence_impl_finder_finder_path.ftl">
@@ -428,14 +464,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 
-		<#if entity.isHierarchicalTree()>
-			shrinkTree(${entity.varName});
-		</#if>
-
 		Session session = null;
 
 		try {
 			session = openSession();
+
+			<#if entity.isHierarchicalTree()>
+				if (rebuildTreeEnabled) {
+					if (session.isDirty()) {
+						session.flush();
+					}
+
+					_nestedSetsTreeManager.delete(${entity.varName});
+
+					clearCache();
+
+					session.clear();
+				}
+			</#if>
 
 			if (!session.contains(${entity.varName})) {
 				${entity.varName} = (${entity.name})session.get(
@@ -491,20 +537,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				String uuid = PortalUUIDUtil.generate();
 
 				${entity.varName}.setUuid(uuid);
-			}
-		</#if>
-
-		<#if entity.isHierarchicalTree()>
-			if (isNew) {
-				expandTree(${entity.varName}, null);
-			}
-			else {
-				if (${entity.varName}.getParent${pkColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkColumn.methodName}()) {
-					List<Long> children${pkColumn.methodNames} = getChildrenTree${pkColumn.methodNames}(${entity.varName});
-
-					shrinkTree(${entity.varName});
-					expandTree(${entity.varName}, children${pkColumn.methodNames});
-				}
 			}
 		</#if>
 
@@ -571,6 +603,25 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		try {
 			session = openSession();
+
+			<#if entity.isHierarchicalTree()>
+				if (rebuildTreeEnabled) {
+					if (session.isDirty()) {
+						session.flush();
+					}
+
+					if (isNew) {
+						_nestedSetsTreeManager.insert(${entity.varName}, fetchByPrimaryKey(${entity.varName}.getParent${pkColumn.methodName}()));
+					}
+					else if (${entity.varName}.getParent${pkColumn.methodName}() != ${entity.varName}ModelImpl.getOriginalParent${pkColumn.methodName}()){
+						_nestedSetsTreeManager.move(${entity.varName}, fetchByPrimaryKey(${entity.varName}ModelImpl.getOriginalParent${pkColumn.methodName}()), fetchByPrimaryKey(${entity.varName}.getParent${pkColumn.methodName}()));
+					}
+
+					clearCache();
+
+					session.clear();
+				}
+			</#if>
 
 			if (${entity.varName}.isNew()) {
 				session.save(${entity.varName});
@@ -1247,6 +1298,126 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if entity.isHierarchicalTree()>
+		@Override
+		public long countAncestors(${entity.name} ${entity.varName}) throws SystemException {
+			Object[] finderArgs = new Object[] {
+				${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()
+			};
+
+			Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, this);
+
+			if (count == null) {
+				try {
+					count = _nestedSetsTreeManager.countAncestors(${entity.varName});
+
+					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs, count);
+				}
+				catch(SystemException se) {
+					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_ANCESTORS, finderArgs);
+
+					throw se;
+				}
+			}
+
+			return count.intValue();
+		}
+
+		@Override
+		public long countDescendants(${entity.name} ${entity.varName}) throws SystemException {
+			Object[] finderArgs = new Object[] {
+				${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()
+			};
+
+			Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, this);
+
+			if (count == null) {
+				try {
+					count = _nestedSetsTreeManager.countDescendants(${entity.varName});
+
+					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs, count);
+				}
+				catch(SystemException se) {
+					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_DESCENDANTS, finderArgs);
+
+					throw se;
+				}
+			}
+
+			return count.intValue();
+		}
+
+		@Override
+		public List<${entity.name}> getAncestors(${entity.name} ${entity.varName}) throws SystemException {
+			Object[] finderArgs = new Object[] {
+				${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()
+			};
+
+			List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (${entity.name} temp${entity.name} : list) {
+					if ((${entity.varName}.getLeft${pkColumn.methodName}() < temp${entity.name}.getLeft${pkColumn.methodName}()) || (${entity.varName}.getRight${pkColumn.methodName}() > temp${entity.name}.getRight${pkColumn.methodName}())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+
+			if (list == null) {
+				try {
+					list = _nestedSetsTreeManager.getAncestors(${entity.varName});
+
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs, list);
+				}
+				catch (SystemException se) {
+					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_GET_ANCESTORS, finderArgs);
+
+					throw se;
+				}
+			}
+
+			return list;
+		}
+
+		@Override
+		public List<${entity.name}> getDescendants(${entity.name} ${entity.varName}) throws SystemException {
+			Object[] finderArgs = new Object[] {
+				${entity.varName}.get${scopeColumn.methodName}(), ${entity.varName}.getLeft${pkColumn.methodName}(), ${entity.varName}.getRight${pkColumn.methodName}()
+			};
+
+			List<${entity.name}> list = (List<${entity.name}>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (${entity.name} temp${entity.name} : list) {
+					if ((${entity.varName}.getLeft${pkColumn.methodName}() > temp${entity.name}.getLeft${pkColumn.methodName}()) || (${entity.varName}.getRight${pkColumn.methodName}() < temp${entity.name}.getRight${pkColumn.methodName}())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+
+			if (list == null) {
+				try {
+					list = _nestedSetsTreeManager.getDescendants(${entity.varName});
+
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs, list);
+				}
+				catch (SystemException se) {
+					FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_GET_DESCENDANTS, finderArgs);
+
+					throw se;
+				}
+			}
+
+			return list;
+		}
+
 		/**
 		 * Rebuilds the ${entity.humanNames} tree for the scope using the modified pre-order tree traversal algorithm.
 		 *
@@ -1264,15 +1435,31 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 			if (force || (countOrphanTreeNodes(${scopeColumn.name}) > 0)) {
-				rebuildTree(${scopeColumn.name}, 0, 1);
+				Session session = null;
 
-				if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				try {
+					session = openSession();
+
+					if (session.isDirty()) {
+						session.flush();
+					}
+
+					SQLQuery selectQuery = session.createSQLQuery("SELECT ${pkColumn.DBName} FROM ${entity.table} WHERE ${scopeColumn.DBName} = ? AND parent${pkColumn.methodName} = ? ORDER BY ${pkColumn.name} ASC");
+
+					selectQuery.addScalar("${pkColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+					SQLQuery updateQuery = session.createSQLQuery("UPDATE ${entity.table} SET left${pkColumn.methodName} = ?, right${pkColumn.methodName} = ? WHERE ${pkColumn.name} = ?");
+
+					rebuildTree(session, selectQuery, updateQuery, ${scopeColumn.name}, 0, 0);
+				}
+				catch (Exception e) {
+					throw processException(e);
+				}
+				finally {
+					closeSession(session);
 				}
 
-				EntityCacheUtil.clearCache(${entity.name}Impl.class);
-				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+				clearCache();
 			}
 		}
 
@@ -1305,218 +1492,34 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		}
 
-		protected void expandNoChildrenLeft${pkColumn.methodName}(long ${scopeColumn.name}, long left${pkColumn.methodName}, List<Long> children${pkColumn.methodNames}, long delta) {
-			String sql = "UPDATE ${entity.table} SET left${entity.PKDBName} = (left${entity.PKDBName} + ?) WHERE (${scopeColumn.DBName} = ?) AND (left${entity.PKDBName} > ?) AND (${entity.PKDBName} NOT IN (" + StringUtil.merge(children${pkColumn.methodNames}) + "))";
-
-			SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), sql, new int[] {java.sql.Types.BIGINT, java.sql.Types.BIGINT, java.sql.Types.BIGINT});
-
-			_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, left${pkColumn.methodName} });
-		}
-
-		protected void expandNoChildrenRight${pkColumn.methodName}(long ${scopeColumn.name}, long right${pkColumn.methodName}, List<Long> children${pkColumn.methodNames}, long delta) {
-			String sql = "UPDATE ${entity.table} SET right${entity.PKDBName} = (right${entity.PKDBName} + ?) WHERE (${scopeColumn.DBName} = ?) AND (right${entity.PKDBName} > ?) AND (${entity.PKDBName} NOT IN (" + StringUtil.merge(children${pkColumn.methodNames}) + "))";
-
-			SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), sql, new int[] {java.sql.Types.BIGINT, java.sql.Types.BIGINT, java.sql.Types.BIGINT});
-
-			_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, right${pkColumn.methodName} });
-		}
-
-		protected void expandTree(${entity.name} ${entity.varName}, List<Long> children${pkColumn.methodNames}) throws SystemException {
-			if (!rebuildTreeEnabled) {
-				return;
-			}
-
-			long ${scopeColumn.name} = ${entity.varName}.get${scopeColumn.methodName}();
-
-			long lastRight${pkColumn.methodName} = getLastRight${pkColumn.methodName}(${scopeColumn.name}, ${entity.varName}.getParent${pkColumn.methodName}());
-
-			long left${pkColumn.methodName} = 2;
-			long right${pkColumn.methodName} = 3;
-
-			if (lastRight${pkColumn.methodName} > 0) {
-				left${pkColumn.methodName} = lastRight${pkColumn.methodName} + 1;
-
-				long childrenDistance = ${entity.varName}.getRight${pkColumn.methodName}() - ${entity.varName}.getLeft${pkColumn.methodName}();
-
-				if (childrenDistance > 1) {
-					right${pkColumn.methodName} = left${pkColumn.methodName} + childrenDistance;
-
-					updateChildrenTree(${scopeColumn.name}, children${pkColumn.methodNames}, left${pkColumn.methodName} - ${entity.varName}.getLeft${pkColumn.methodName}());
-
-					expandNoChildrenLeft${pkColumn.methodName}(${scopeColumn.name}, lastRight${pkColumn.methodName}, children${pkColumn.methodNames}, childrenDistance + 1);
-					expandNoChildrenRight${pkColumn.methodName}(${scopeColumn.name}, lastRight${pkColumn.methodName}, children${pkColumn.methodNames}, childrenDistance + 1);
-				}
-				else {
-					right${pkColumn.methodName} = lastRight${pkColumn.methodName} + 2;
-
-					expandTreeLeft${pkColumn.methodName}.expand(${scopeColumn.name}, lastRight${pkColumn.methodName});
-					expandTreeRight${pkColumn.methodName}.expand(${scopeColumn.name}, lastRight${pkColumn.methodName});
-				}
-
-				if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
-				}
-
-				EntityCacheUtil.clearCache(${entity.name}Impl.class);
-				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-				if (<#if pluginName != "">_SPRING_HIBERNATE_SESSION_DELEGATED<#else>com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED</#if>) {
-					Session session = getCurrentSession();
-
-					session.clear();
-				}
-			}
-
-			${entity.varName}.setLeft${pkColumn.methodName}(left${pkColumn.methodName});
-			${entity.varName}.setRight${pkColumn.methodName}(right${pkColumn.methodName});
-		}
-
-		protected List<Long> getChildrenTree${pkColumn.methodNames}(${entity.name} parent${entity.name}) throws SystemException {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSynchronizedSQLQuery("SELECT ${entity.PKDBName} FROM ${entity.table} WHERE (${scopeColumn.DBName} = ?) AND (left${entity.PKDBName} BETWEEN ? AND ?)");
-
-				q.addScalar("${pkColumn.methodName}", com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(parent${entity.name}.get${scopeColumn.methodName}());
-				qPos.add(parent${entity.name}.getLeft${pkColumn.methodName}() + 1);
-				qPos.add(parent${entity.name}.getRight${pkColumn.methodName}());
-
-				return q.list();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		protected long getLastRight${pkColumn.methodName}(long ${scopeColumn.name}, long parent${pkColumn.methodName}) throws SystemException {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSynchronizedSQLQuery("SELECT right${pkColumn.methodName} FROM ${entity.table} WHERE (${scopeColumn.DBName} = ?) AND (parent${pkColumn.methodName} = ?) ORDER BY right${pkColumn.methodName} DESC");
-
-				q.addScalar("right${pkColumn.methodName}", com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(${scopeColumn.name});
-				qPos.add(parent${pkColumn.methodName});
-
-				List<Long> list = (List<Long>)QueryUtil.list(q, getDialect(), 0, 1);
-
-				if (list.isEmpty()) {
-					if (parent${pkColumn.methodName} > 0) {
-						session.clear();
-
-						${entity.name} parent${entity.name} = findByPrimaryKey(parent${pkColumn.methodName});
-
-						return parent${entity.name}.getLeft${pkColumn.methodName}();
-					}
-
-					return 0;
-				}
-				else {
-					return list.get(0);
-				}
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		protected long rebuildTree(long ${scopeColumn.name}, long parent${pkColumn.methodName}, long left${pkColumn.methodName}) throws SystemException {
-			if (!rebuildTreeEnabled) {
-				return 0;
-			}
+		protected long rebuildTree(Session session, SQLQuery selectQuery, SQLQuery updateQuery, long ${scopeColumn.name}, long parent${pkColumn.methodName}, long left${pkColumn.methodName}) throws SystemException {
+			long right${pkColumn.methodName} = left${pkColumn.methodName} + 1;
 
 			List<Long> ${pkColumn.names} = null;
 
-			Session session = null;
 
-			try {
-				session = openSession();
+			QueryPos qPos = QueryPos.getInstance(selectQuery);
 
-				SQLQuery q = session.createSynchronizedSQLQuery("SELECT ${pkColumn.DBName} FROM ${entity.table} WHERE ${scopeColumn.DBName} = ? AND parent${pkColumn.methodName} = ? ORDER BY ${pkColumn.name} ASC");
+			qPos.add(${scopeColumn.name});
+			qPos.add(parent${pkColumn.methodName});
 
-				q.addScalar("${pkColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(${scopeColumn.name});
-				qPos.add(parent${pkColumn.methodName});
-
-				${pkColumn.names} = q.list();
-			}
-			catch (Exception e) {
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-
-			long right${pkColumn.methodName} = left${pkColumn.methodName} + 1;
+			${pkColumn.names} = selectQuery.list();
 
 			for (long ${pkColumn.name} : ${pkColumn.names}) {
-				right${pkColumn.methodName} = rebuildTree(${scopeColumn.name}, ${pkColumn.name}, right${pkColumn.methodName});
+				right${pkColumn.methodName} = rebuildTree(session, selectQuery, updateQuery, ${scopeColumn.name}, ${pkColumn.name}, right${pkColumn.methodName});
 			}
 
 			if (parent${pkColumn.methodName} > 0) {
-				updateTree.update(parent${pkColumn.methodName}, left${pkColumn.methodName}, right${pkColumn.methodName});
+				qPos = QueryPos.getInstance(updateQuery);
+
+				qPos.add(left${pkColumn.methodName});
+				qPos.add(right${pkColumn.methodName});
+				qPos.add(parent${pkColumn.methodName});
+
+				updateQuery.executeUpdate();
 			}
 
 			return right${pkColumn.methodName} + 1;
-		}
-
-		protected void shrinkTree(${entity.name} ${entity.varName}) {
-			if (!rebuildTreeEnabled) {
-				return;
-			}
-
-			long ${scopeColumn.name} = ${entity.varName}.get${scopeColumn.methodName}();
-
-			long left${pkColumn.methodName} = ${entity.varName}.getLeft${pkColumn.methodName}();
-			long right${pkColumn.methodName} = ${entity.varName}.getRight${pkColumn.methodName}();
-
-			long delta = (right${pkColumn.methodName} - left${pkColumn.methodName}) + 1;
-
-			shrinkTreeLeft${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
-			shrinkTreeRight${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
-
-			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
-			}
-
-			EntityCacheUtil.clearCache(${entity.name}Impl.class);
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-			if (<#if pluginName != "">_SPRING_HIBERNATE_SESSION_DELEGATED<#else>com.liferay.portal.util.PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED</#if>) {
-				Session session = getCurrentSession();
-
-				session.clear();
-			}
-		}
-
-		protected void updateChildrenTree(long ${scopeColumn.name}, List<Long> children${pkColumn.methodNames}, long delta) {
-			String sql = "UPDATE ${entity.table} SET left${entity.PKDBName} = (left${entity.PKDBName} + ?), right${entity.PKDBName} = (right${entity.PKDBName} + ?) WHERE (${scopeColumn.DBName} = ?) AND (${entity.PKDBName} IN (" + StringUtil.merge(children${pkColumn.methodNames}) + "))";
-
-			SqlUpdate _sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), sql, new int[] {java.sql.Types.BIGINT, java.sql.Types.BIGINT, java.sql.Types.BIGINT});
-
-			_sqlUpdate.update(new Object[] {delta, delta, ${scopeColumn.name} });
 		}
 	</#if>
 
@@ -1550,10 +1553,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#list>
 
 		<#if entity.isHierarchicalTree()>
-			expandTreeLeft${pkColumn.methodName} = new ExpandTreeLeft${pkColumn.methodName}();
-			expandTreeRight${pkColumn.methodName} = new ExpandTreeRight${pkColumn.methodName}();
-			shrinkTreeLeft${pkColumn.methodName} = new ShrinkTreeLeft${pkColumn.methodName}();
-			shrinkTreeRight${pkColumn.methodName} = new ShrinkTreeRight${pkColumn.methodName}();
 			updateTree = new UpdateTree();
 		</#if>
 	}
@@ -1582,68 +1581,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#list>
 
 	<#if entity.isHierarchicalTree()>
+		protected NestedSetsTreeManager<${entity.name}> _nestedSetsTreeManager = new DefaultPersistenceNestedSetsTreeManager<${entity.name}>(this, "${entity.table}", "${entity.name}", ${entity.name}Impl.class, "${pkColumn.DBName}", "${scopeColumn.DBName}", "left${pkColumn.methodName}", "right${pkColumn.methodName}");
+
 		protected boolean rebuildTreeEnabled = true;
-		protected ExpandTreeLeft${pkColumn.methodName} expandTreeLeft${pkColumn.methodName};
-		protected ExpandTreeRight${pkColumn.methodName} expandTreeRight${pkColumn.methodName};
-		protected ShrinkTreeLeft${pkColumn.methodName} shrinkTreeLeft${pkColumn.methodName};
-		protected ShrinkTreeRight${pkColumn.methodName} shrinkTreeRight${pkColumn.methodName};
 		protected UpdateTree updateTree;
-
-		protected class ExpandTreeLeft${pkColumn.methodName} {
-
-			protected ExpandTreeLeft${pkColumn.methodName}() {
-				_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "UPDATE ${entity.table} SET left${pkColumn.methodName} = (left${pkColumn.methodName} + 2) WHERE (${scopeColumn.DBName} = ?) AND (left${pkColumn.methodName} > ?)", new int[] {java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}});
-			}
-
-			protected void expand(long ${scopeColumn.name}, long left${pkColumn.methodName}) {
-				_sqlUpdate.update(new Object[] {${scopeColumn.name}, left${pkColumn.methodName}});
-			}
-
-			private SqlUpdate _sqlUpdate;
-
-		}
-
-		protected class ExpandTreeRight${pkColumn.methodName} {
-
-			protected ExpandTreeRight${pkColumn.methodName}() {
-				_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "UPDATE ${entity.table} SET right${pkColumn.methodName} = (right${pkColumn.methodName} + 2) WHERE (${scopeColumn.DBName} = ?) AND (right${pkColumn.methodName} > ?)", new int[] {java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}});
-			}
-
-			protected void expand(long ${scopeColumn.name}, long right${pkColumn.methodName}) {
-				_sqlUpdate.update(new Object[] {${scopeColumn.name}, right${pkColumn.methodName}});
-			}
-
-			private SqlUpdate _sqlUpdate;
-
-		}
-
-		protected class ShrinkTreeLeft${pkColumn.methodName} {
-
-			protected ShrinkTreeLeft${pkColumn.methodName}() {
-				_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "UPDATE ${entity.table} SET left${pkColumn.methodName} = (left${pkColumn.methodName} - ?) WHERE (${scopeColumn.DBName} = ?) AND (left${pkColumn.methodName} > ?)", new int[] {java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}});
-			}
-
-			protected void shrink(long ${scopeColumn.name}, long right${pkColumn.methodName}, long delta) {
-				_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, right${pkColumn.methodName}});
-			}
-
-			private SqlUpdate _sqlUpdate;
-
-		}
-
-		protected class ShrinkTreeRight${pkColumn.methodName} {
-
-			protected ShrinkTreeRight${pkColumn.methodName}() {
-				_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "UPDATE ${entity.table} SET right${pkColumn.methodName} = (right${pkColumn.methodName} - ?) WHERE (${scopeColumn.DBName} = ?) AND (right${pkColumn.methodName} > ?)", new int[] {java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}, java.sql.Types.${serviceBuilder.getSqlType("long")}});
-			}
-
-			protected void shrink(long ${scopeColumn.name}, long right${pkColumn.methodName}, long delta) {
-				_sqlUpdate.update(new Object[] {delta, ${scopeColumn.name}, right${pkColumn.methodName}});
-			}
-
-			private SqlUpdate _sqlUpdate;
-
-		}
 
 		protected class UpdateTree {
 
@@ -1709,10 +1650,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE))<#else>com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE</#if>;
-
-	<#if entity.isHierarchicalTree() && pluginName != "">
-		private static final boolean _SPRING_HIBERNATE_SESSION_DELEGATED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED));
-	</#if>
 
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 

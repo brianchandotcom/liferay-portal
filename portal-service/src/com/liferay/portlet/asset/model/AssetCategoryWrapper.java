@@ -917,6 +917,31 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
+	public long getNestedSetsLeft() {
+		return _assetCategory.getNestedSetsLeft();
+	}
+
+	@Override
+	public long getNestedSetsRight() {
+		return _assetCategory.getNestedSetsRight();
+	}
+
+	@Override
+	public long getNestedSetsScopeId() {
+		return _assetCategory.getNestedSetsScopeId();
+	}
+
+	@Override
+	public void setNestedSetsLeft(long nestedSetsLeft) {
+		_assetCategory.setNestedSetsLeft(nestedSetsLeft);
+	}
+
+	@Override
+	public void setNestedSetsRight(long nestedSetsRight) {
+		_assetCategory.setNestedSetsRight(nestedSetsRight);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return _assetCategory.getStagedModelType();
 	}

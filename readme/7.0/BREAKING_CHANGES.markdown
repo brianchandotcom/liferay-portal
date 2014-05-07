@@ -180,3 +180,45 @@ This change gives users the flexibility to modify the default structure and
 template.
 
 ---------------------------------------
+
+### Changed API in AssetRenderes and Indexers to include the portletRequest and PortletReponse
+- **Date:** 2014-May-07
+- **JIRA Ticket:** LPS-44639 and LPS-44894
+
+#### What changed?
+The method doGetSummary in the Indexers API and the method getSummary in the
+AssetRenders API have changed and have to include now the PortletRequest and
+PortletResponse as part of the signature.
+
+#### Who is affected?
+Any Indexer or AssetRenderer needs to update these methods.
+
+#### How should I update my code?
+Add the PortletRequest and PortletResponse to the signature of your methods.
+
+**Example**
+
+Replace:
+```
+protected Summary doGetSummary(Document document, Locale locale, String snippet,PortletURL portletURL)
+```
+
+With:
+```
+protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletURL portletURL, PortletRequest portletRequest, PortletResponse portletResponse)
+```
+
+
+and replace:
+```
+public String getSummary(Locale locale)
+```
+
+With:
+```
+public String getSummary(PortletRequest portletRequest, PortletResponse portletResponse)
+```
+
+#### Why was this change made?
+Some content (such as web content) need the portletRequest in order to be
+rendered.

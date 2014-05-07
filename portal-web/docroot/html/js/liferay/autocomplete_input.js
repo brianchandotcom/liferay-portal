@@ -27,13 +27,6 @@ AUI.add(
 
 				NAME: 'liferay-autocomplete-input',
 
-				ATTRS: {
-					inputNode: {
-						setter: A.one,
-						writeOnce: true
-					}
-				},
-
 				prototype: {
 					initializer: function() {
 						var instance = this;
@@ -61,8 +54,6 @@ AUI.add(
 
 					_acUpdateValue: function(text) {
 						var instance = this;
-
-						console.log(text);
 
 						var caretIndex = instance._getCaretIndex();
 
@@ -127,12 +118,6 @@ AUI.add(
 						var inputNode = instance.get(STR_INPUT_NODE);
 
 						return inputNode.val();
-					},
-
-					_getInputElement: function() {
-						var instance = this;
-
-						return instance.get(STR_INPUT_NODE);
 					},
 
 					_getPrevTermIndex: function(content, position) {

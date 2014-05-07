@@ -9,6 +9,8 @@ AUI.add(
 
 		var REGEX_TERM = /term/g;
 
+		var STR_INPUT_NODE = 'inputNode';
+
 		var STR_PHRASE_MATCH = 'phraseMatch';
 
 		var STR_SOURCE = 'source';
@@ -118,11 +120,7 @@ AUI.add(
 					acConfig.resultFormatter = A.bind('_acResultFormatter', instance);
 				}
 
-				var input = instance._getInputElement();
-
-				if (input) {
-					acConfig.inputNode = input;
-				}
+				acConfig.inputNode = instance.get(STR_INPUT_NODE);
 
 				var source = instance.get(STR_SOURCE);
 
@@ -206,6 +204,10 @@ AUI.add(
 					resultFilters: STR_PHRASE_MATCH,
 					resultHighlighter: STR_PHRASE_MATCH
 				}
+			},
+
+			inputNode: {
+				writeOnce: true
 			},
 
 			caretAtTerm: {

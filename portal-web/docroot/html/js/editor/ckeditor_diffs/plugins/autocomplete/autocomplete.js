@@ -2,402 +2,380 @@ var A = AUI();
 
 var KeyMap = A.Event.KeyMap;
 
-var STR_EDITOR = 'editor';
+var STR_EMPTY = '';
+
+var STR_INPUT_NODE = 'inputNode';
 
 var STR_SPACE = ' ';
 
 var STR_TERM = 'term';
 
 var AutoCompleteCKEditor = A.Component.create(
-{
-	EXTENDS: A.Base,
+	{
+		EXTENDS: A.Base,
 
-	AUGMENTS: [Liferay.AutoCompleteInputBase],
+		AUGMENTS: [Liferay.AutoCompleteInputBase],
 
-	NAME: 'liferay-autocomplete-ckeditor',
+		NAME: 'liferay-autocomplete-ckeditor',
 
-	ATTRS: {
-		editor: {
-			validator: A.Lang.isObject
-		}
-	},
-
-	prototype: {
-		initializer: function() {
-			var instance = this;
-
-			instance._bindUI();
+		ATTRS: {
+			inputNode: {
+				getter: '_getInputElement',
+				writeOnce: true
+			}
 		},
 
-		_bindUI: function() {
-			var instance = this;
+		prototype: {
+			initializer: function() {
+				var instance = this;
 
-			instance._processCaret = A.bind('_processCaretPosition', instance);
+				instance._bindUI();
+			},
 
-			var editor = instance.get(STR_EDITOR);
+			_bindUI: function() {
+				var instance = this;
 
-			instance._eventHandles = [
-				editor.on('key', A.bind('_onEditorKey', instance)),
-				editor.on('selectionChange', instance._processCaret)
-			];
+				instance._processCaret = A.bind('_processCaretPosition', instance);
 
-			A.Do.before(instance._wrapCKEditorKeyEvent, instance, '_onEditorKey', instance);
-		},
+				var inputNode = instance.get(STR_INPUT_NODE);
 
-		_getACPositionBase: function() {
-			var instance = this;
+				instance._eventHandles = [
+					inputNode.on('key', '_onEditorKey', instance),
+					inputNode.on('selectionChange', instance._processCaret)
+				];
+			},
 
-			return [0, 0];
-		},
+			_getACPositionBase: function() {
+				var instance = this;
 
-		_getACPositionOffset: function() {
-			var instance = this;
+				if (!instance._contentsContainer) {
+					var inputElement = instance._getInputElement();
 
-			return [0, 0];
-		},
+					instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
+				}
 
-		_acUpdateValue: function(text) {
-			var instance = this;
+				return instance._contentsContainer.getXY();
+			},
 
-			var prevTermPosition = instance._getPrevTermPosition();
+			_getACPositionOffset: function() {
+				var instance = this;
 
-			var prevTermContainer = prevTermPosition.container;
+				return [0, 0];
+			},
 
-			var containerAscendant = prevTermContainer.getAscendant('p', true);
+			_acUpdateValue: function(text) {
+				var instance = this;
 
-			var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
+				var prevTermPosition = instance._getPrevTermPosition();
 
-			var offset = prevTermPosition.index;
+				var prevTermContainer = prevTermPosition.container;
 
-			var term = instance.get(STR_TERM);
+				var containerAscendant = prevTermContainer.getAscendant('p', true);
 
-			var node;
+				var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
 
-			var prevNode = node;
+				var offset = prevTermPosition.index;
 
-			text = term + text;
+				var term = instance.get(STR_TERM);
 
-			while (node = updateWalker.next()) {
-				if (node.type === CKEDITOR.NODE_TEXT) {
-					var nodeText = node.getText();
+				var addChars;
 
-					var availableChars = nodeText.length;
+				var node = updateWalker.next();
 
-					if (offset !== -1) {
-						availableChars -= offset;
+				var prevNode = node;
 
-						var addChars = text.substring(0, availableChars);
+				var remainingChars = term + text;
 
-						node.setText(nodeText.substring(0, offset) + addChars);
+				while (node) {
+					if (node.type === CKEDITOR.NODE_TEXT) {
+						var nodeText = node.getText();
 
-						offset = -1;
+						var availableChars = nodeText.length;
 
-						text = text.substring(availableChars);
-					}
-					else {
-						var spaceIndex = nodeText.indexOf(STR_SPACE);
+						if (offset !== -1) {
+							availableChars -= offset;
 
-						if (!availableChars || spaceIndex === 0) {
-							prevNode.setText(prevNode.getText() + text);
+							addChars = remainingChars.substring(0, availableChars);
 
-							updateWalker.end();
+							node.setText(nodeText.substring(0, offset) + addChars);
 
-							text = '';
-						}
-						else if (spaceIndex !== -1) {
-							node.setText(text + nodeText.substring(spaceIndex));
+							offset = -1;
 
-							updateWalker.end();
-
-							text = '';
+							remainingChars = remainingChars.substring(availableChars);
 						}
 						else {
-							var addChars = text.substring(0, availableChars);
+							var spaceIndex = nodeText.indexOf(STR_SPACE);
 
-							node.setText(addChars);
+							if (!availableChars || spaceIndex === 0) {
+								prevNode.setText(prevNode.getText() + remainingChars);
 
-							text = text.substring(availableChars);
+								updateWalker.end();
+
+								remainingChars = STR_EMPTY;
+							}
+							else if (spaceIndex !== -1) {
+								node.setText(remainingChars + nodeText.substring(spaceIndex));
+
+								updateWalker.end();
+
+								remainingChars = STR_EMPTY;
+							}
+							else {
+								addChars = remainingChars.substring(0, availableChars);
+
+								node.setText(addChars);
+
+								remainingChars = remainingChars.substring(availableChars);
+							}
 						}
-					}
 
-					prevNode = node;
+						prevNode = node;
+
+						node = updateWalker.next();
+					}
 				}
-			}
 
-			if (text.length) {
-				prevNode.setText(prevNode.getText() + text + STR_SPACE);
-			}
+				if (remainingChars.length) {
+					prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
+				}
 
-			var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
+				var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
 
-			instance._setCaretIndex(prevNode, caretIndex);
-		},
+				instance._setCaretIndex(prevNode, caretIndex);
+			},
 
-		_getCaretContainer: function() {
-			var instance = this;
+			_getCaretContainer: function() {
+				var instance = this;
 
-			var range = instance._getCaretRange();
+				return instance._getCaretRange().startContainer;
+			},
 
-			return range.startContainer;
-		},
+			_getCaretIndex: function(node) {
+				var instance = this;
 
-		_getCaretIndex: function(node) {
-			var instance = this;
+				var range = instance._getCaretRange();
 
-			var range = instance._getCaretRange();
-
-			return {
-				start: range.startOffset,
-				end: range.endOffset
-			};
-		},
-
-		_getCaretOffset: function() {
-			var instance = this;
-
-			var contentsOffset = instance._getContentsOffset();
-
-			var editor = instance.get(STR_EDITOR);
-			var bookmarks = editor.getSelection().createBookmarks();
-			var bookmarkNodeEl = bookmarks[0].startNode.$;
-
-			bookmarkNodeEl.style.setProperty('display', 'inline-block');
-
-			var inputCaretOffsetX = bookmarkNodeEl.offsetLeft + contentsOffset[0];
-			var inputCaretOffsetY = bookmarkNodeEl.offsetTop + contentsOffset[1];
-
-			bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
-
-			return {
-				x: inputCaretOffsetX,
-				y: inputCaretOffsetY
-			};
-		},
-
-		_getCaretRange: function() {
-			var instance = this;
-
-			var editor = instance.get(STR_EDITOR);
-
-			return editor.getSelection().getRanges()[0];
-		},
-
-		_getContentsOffset: function() {
-			var instance = this;
-
-			if (!instance._contentsContainer) {
-				var inputElement = instance._getInputElement();
-
-				instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
-			}
-
-			return instance._contentsContainer.getXY();
-		},
-
-		_getInputElement: function() {
-			var instance = this;
-
-			if (!instance._inputElement) {
-				var editor = instance.get(STR_EDITOR);
-
-				instance._inputElement = A.one(editor.element.$);
-			}
-
-			return instance._inputElement;
-		},
-
-		_getPrevTermPosition: function() {
-			var instance = this;
-
-			var term = instance.get(STR_TERM);
-
-			var termContainer = instance._getCaretContainer();
-
-			var termIndex = termContainer.getText().lastIndexOf(term);
-
-			if (termIndex === -1) {
-				var termWalker = instance._getWalker(termContainer);
-
-				termWalker.guard = function(node) {
-					var hasTerm = false;
-
-					if (node.type === CKEDITOR.NODE_TEXT) {
-						termIndex = node.getText().indexOf(term);
-
-						hasTerm = (termIndex !== -1);
-
-						if (hasTerm) {
-							termContainer = node;
-						}
-					}
-
-					return !hasTerm;
+				return {
+					end: range.endOffset,
+					start: range.startOffset
 				};
+			},
 
-				termWalker.checkBackward();
-			}
+			_getCaretOffset: function() {
+				var instance = this;
 
-			return {
-				container: termContainer,
-				index: termIndex
-			}
-		},
+				var inputNode = instance.get(STR_INPUT_NODE);
+				var bookmarks = inputNode.getSelection().createBookmarks();
+				var bookmarkNodeEl = bookmarks[0].startNode.$;
 
-		_getQuery: function() {
-			var instance = this;
+				bookmarkNodeEl.style.setProperty('display', 'inline-block');
 
-			var result;
+				var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
+				var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
 
-			var caretContainer = instance._getCaretContainer();
+				bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
 
-			var caretContainerId = caretContainer.getUniqueId();
+				return {
+					x: inputCaretOffsetX,
+					y: inputCaretOffsetY
+				};
+			},
 
-			var caretIndex = instance._getCaretIndex().start;
+			_getCaretRange: function() {
+				var instance = this;
 
-			var prevTermPosition = instance._getPrevTermPosition();
+				var inputNode = instance.get(STR_INPUT_NODE);
 
-			var prevTermContainerId = prevTermPosition.container.getUniqueId();
+				return inputNode.getSelection().getRanges()[0];
+			},
 
-			var query = '';
+			_getInputElement: function(value) {
+				return A.one(value.element.$);
+			},
 
-			if (caretContainerId === prevTermContainerId) {
-				query = prevTermPosition.container.getText().substring(prevTermPosition.index, caretIndex);
-			}
-			else {
-				query = prevTermPosition.container.getText().substring(prevTermPosition.index);
+			_getPrevTermPosition: function() {
+				var instance = this;
 
-				var queryWalker = instance._getWalker(caretContainer, prevTermPosition.container);
+				var term = instance.get(STR_TERM);
 
-				queryWalker.guard = function(node) {
-					var nodeId = node.getUniqueId();
+				var termContainer = instance._getCaretContainer();
 
-					var isCaretContainer = (nodeId === caretContainerId);
+				var termIndex = termContainer.getText().lastIndexOf(term);
 
-					if (!isCaretContainer) {
-						if ((node.type === CKEDITOR.NODE_TEXT) && (nodeId !== prevTermContainerId)) {
-							query += node.getText();
+				if (termIndex === -1) {
+					var termWalker = instance._getWalker(termContainer);
+
+					termWalker.guard = function(node) {
+						var hasTerm = false;
+
+						if (node.type === CKEDITOR.NODE_TEXT) {
+							termIndex = node.getText().indexOf(term);
+
+							hasTerm = (termIndex !== -1);
+
+							if (hasTerm) {
+								termContainer = node;
+							}
+						}
+
+						return !hasTerm;
+					};
+
+					termWalker.checkBackward();
+				}
+
+				return {
+					container: termContainer,
+					index: termIndex
+				};
+			},
+
+			_getQuery: function() {
+				var instance = this;
+
+				var result;
+
+				var caretContainer = instance._getCaretContainer();
+
+				var caretContainerId = caretContainer.getUniqueId();
+
+				var caretIndex = instance._getCaretIndex().start;
+
+				var prevTermPosition = instance._getPrevTermPosition();
+
+				var prevTermContainerId = prevTermPosition.container.getUniqueId();
+
+				var query = '';
+
+				if (caretContainerId === prevTermContainerId) {
+					query = prevTermPosition.container.getText().substring(prevTermPosition.index, caretIndex);
+				}
+				else {
+					query = prevTermPosition.container.getText().substring(prevTermPosition.index);
+
+					var queryWalker = instance._getWalker(caretContainer, prevTermPosition.container);
+
+					queryWalker.guard = function(node) {
+						var nodeId = node.getUniqueId();
+
+						var isCaretContainer = (nodeId === caretContainerId);
+
+						if (!isCaretContainer) {
+							if ((node.type === CKEDITOR.NODE_TEXT) && (nodeId !== prevTermContainerId)) {
+								query += node.getText();
+							}
+						}
+						else {
+							query += node.getText().substring(0, caretIndex);
+						}
+
+						return !isCaretContainer;
+					};
+
+					queryWalker.checkForward();
+				}
+
+				var regExp = instance.get('regExp');
+
+				var res = regExp.exec(query);
+
+				var term = instance.get(STR_TERM);
+
+				if (res && ((res.index + res[1].length + term.length) === query.length)) {
+					result = query;
+				}
+
+				return result;
+			},
+
+			_getWalker: function(endContainer, startContainer) {
+				var instance = this;
+
+				endContainer = endContainer || instance._getCaretContainer();
+
+				startContainer = startContainer || endContainer.getAscendant('p', true);
+
+				var range = new CKEDITOR.dom.range(startContainer);
+
+				range.setStart(startContainer, 0);
+				range.setEnd(endContainer, endContainer.getText().length);
+
+				var walker = new CKEDITOR.dom.walker(range);
+
+				return walker;
+			},
+
+			_isEmptySelection: function() {
+				var instance = this;
+
+				var inputNode = instance.get(STR_INPUT_NODE);
+
+				var selection = inputNode.getSelection();
+
+				var ranges = selection.getRanges();
+
+				return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
+			},
+
+			_normalizeCKEditorKeyEvent: function(event) {
+				return new A.DOMEventFacade(
+					{
+						keyCode: event.data.keyCode,
+						preventDefault: event.cancel,
+						stopPropagation: event.stop,
+						type: 'keydown'
+					}
+				);
+			},
+
+			_onEditorKey: function(event) {
+				var instance = this;
+
+				if (instance._isEmptySelection()) {
+					event = instance._normalizeCKEditorKeyEvent(event);
+
+					var ac = instance._ac;
+
+					var acVisible = ac.get('visible');
+
+					if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
+						var inputNode = instance.get(STR_INPUT_NODE);
+
+						var inlineEditor = inputNode.editable().isInline();
+
+						if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
+							ac._onInputKey(event);
 						}
 					}
 					else {
-						query += node.getText().substring(0, caretIndex);
-					}
-
-					return !isCaretContainer;
-				};
-
-				queryWalker.checkForward();
-			}
-
-			var regExp = instance.get('regExp');
-
-			var res = regExp.exec(query);
-
-			var term = instance.get(STR_TERM);
-
-			if (res && ((res.index + res[1].length + term.length) === query.length)) {
-				result = query;
-			}
-
-			return result;
-		},
-
-		_getWalker: function(endContainer, startContainer) {
-			var instance = this;
-
-			endContainer = endContainer || instance._getCaretContainer();
-
-			startContainer = startContainer || endContainer.getAscendant('p', true);
-
-			var range = new CKEDITOR.dom.range(startContainer);
-
-			range.setStart(startContainer, 0);
-			range.setEnd(endContainer, endContainer.getText().length);
-
-			var walker = new CKEDITOR.dom.walker(range);
-
-			return walker;
-		},
-
-		_isEmptySelection: function() {
-			var instance = this;
-
-			var editor = instance.get(STR_EDITOR);
-
-			var selection = editor.getSelection();
-
-			var ranges = selection.getRanges();
-
-			return (
-				(selection.getType() == CKEDITOR.SELECTION_NONE) ||
-				(ranges.length == 1 && ranges[0].collapsed)
-			);
-		},
-
-		_onEditorKey: function(event) {
-			var instance = this;
-
-			if (instance._isEmptySelection()) {
-				var ac = instance._ac;
-
-				var acVisible = ac.get('visible');
-
-				if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
-					var editor = instance.get(STR_EDITOR);
-
-					var inlineEditor = editor.editable().isInline();
-
-					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
-						ac._onInputKey(event);
+						A.soon(instance._processCaret);
 					}
 				}
-				else {
-					A.soon(instance._processCaret);
-				}
+			},
+
+			_processCaretPosition: function() {
+				var instance = this;
+
+				var query = instance._getQuery();
+
+				instance._processKeyUp(query);
+			},
+
+			_setCaretIndex: function(node, caretIndex) {
+				var instance = this;
+
+				var inputNode = instance.get(STR_INPUT_NODE);
+
+				var caretRange = inputNode.createRange();
+
+				caretRange.setStart(node, caretIndex);
+				caretRange.setEnd(node, caretIndex);
+
+				inputNode.getSelection().selectRanges([caretRange]);
+				inputNode.focus();
 			}
-		},
-
-		_processCaretPosition: function() {
-			var instance = this;
-
-			var query = instance._getQuery();
-
-			instance._processKeyUp(query);
-		},
-
-		_setCaretIndex: function(node, caretIndex) {
-			var instance = this;
-
-			var editor = instance.get(STR_EDITOR);
-
-			var caretRange = editor.createRange();
-
-			caretRange.setStart(node, caretIndex);
-			caretRange.setEnd(node, caretIndex);
-
-			editor.getSelection().selectRanges([caretRange]);
-			editor.focus();
-		},
-
-		_wrapCKEditorKeyEvent: function(event) {
-			var instance = this;
-
-			var alterArgs = new A.Do.AlterArgs(
-				'Wrapped CKEDITOR.dom.event inside A.DOMEventFacade',
-				[
-					new A.DOMEventFacade(
-						{
-							keyCode: event.data.keyCode,
-							preventDefault: event.cancel,
-							stopPropagation: event.stop,
-							type: 'keydown'
-						}
-					)
-				]
-			);
-
-			return alterArgs;
 		}
 	}
-});
+);
 
 Liferay.AutoCompleteCKEditor = AutoCompleteCKEditor;

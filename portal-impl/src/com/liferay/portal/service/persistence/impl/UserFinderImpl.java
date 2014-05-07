@@ -76,11 +76,8 @@ public class UserFinderImpl
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
 
-	public static final String FIND_BY_SOCIAL_RELATION_TYPES =
-		UserFinder.class.getName() + ".findBySocialRelationTypes";
-
-	public static final String FIND_BY_USERS_GROUPS =
-		UserFinder.class.getName() + ".findByUsersGroups";
+	public static final String FIND_BY_SOCIAL_RELATION_TYPES_GROUPS =
+		UserFinder.class.getName() + ".findBySocialRelationTypesGroups";
 
 	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
@@ -559,73 +556,26 @@ public class UserFinderImpl
 		String[] screenName = keywords;
 		String[] emailAddress = keywords;
 
-		// Groups
+		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES_GROUPS);
 
-		String byGroupsSQL = null;
+		sql = replaceValueSet(
+			sql, "[$USERS_GROUPS_WHERE$]", "Users_Groups.groupId",
+			ArrayUtil.toLongArray(groupIds));
+		sql = replaceValueSet(
+			sql, "[$SOCIAL_RELATION_TYPES$]", "SocialRelation.type_",
+			ArrayUtil.toLongArray(types));
 
-		if ((groupIds != null) && (groupIds.length > 0)) {
-			byGroupsSQL = getFindByUsersGroupsSQL(groupIds);
-
-			byGroupsSQL = CustomSQLUtil.replaceKeywords(
-				byGroupsSQL, "lower(User_.firstName)", StringPool.LIKE, false,
-				firstName);
-			byGroupsSQL = CustomSQLUtil.replaceKeywords(
-				byGroupsSQL, "lower(User_.middleName)", StringPool.LIKE, false,
-				middleName);
-			byGroupsSQL = CustomSQLUtil.replaceKeywords(
-				byGroupsSQL, "lower(User_.lastName)", StringPool.LIKE, false,
-				lastName);
-			byGroupsSQL = CustomSQLUtil.replaceKeywords(
-				byGroupsSQL, "lower(User_.screenName)", StringPool.LIKE, false,
-				screenName);
-			byGroupsSQL = CustomSQLUtil.replaceKeywords(
-				byGroupsSQL, "lower(User_.emailAddress)", StringPool.LIKE,
-				false, emailAddress);
-		}
-
-		// Social relations
-
-		String byRelationSQL = null;
-
-		if ((types != null) && (types.length > 0)) {
-			byRelationSQL = getFindBySocialRelationTypesSQL(types);
-
-			byRelationSQL = CustomSQLUtil.replaceKeywords(
-				byRelationSQL, "lower(User_.firstName)", StringPool.LIKE, false,
-				firstName);
-			byRelationSQL = CustomSQLUtil.replaceKeywords(
-				byRelationSQL, "lower(User_.middleName)", StringPool.LIKE,
-				false, middleName);
-			byRelationSQL = CustomSQLUtil.replaceKeywords(
-				byRelationSQL, "lower(User_.lastName)", StringPool.LIKE, false,
-				lastName);
-			byRelationSQL = CustomSQLUtil.replaceKeywords(
-				byRelationSQL, "lower(User_.screenName)", StringPool.LIKE,
-				false, screenName);
-			byRelationSQL = CustomSQLUtil.replaceKeywords(
-				byRelationSQL, "lower(User_.emailAddress)", StringPool.LIKE,
-				false, emailAddress);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if ((groupIds != null) && (groupIds.length > 0)) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(byGroupsSQL);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			if (types.length > 0) {
-				sb.append(" UNION ");
-			}
-		}
-
-		if ((types != null) && (types.length > 0)) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(byRelationSQL);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-
-		String sql = sb.toString();
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
+			emailAddress);
 
 		sql = CustomSQLUtil.replaceAndOperator(sql, false);
 
@@ -640,38 +590,34 @@ public class UserFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(query);
 
-			// Groups
-
-			if ((groupIds != null) && (groupIds.length > 0)) {
-				qPos.add(userId);
-
-				for (int i = 0; i < groupIds.length; i++) {
-					qPos.add(groupIds[i]);
-				}
-
-				qPos.add(firstName, 2);
-				qPos.add(middleName, 2);
-				qPos.add(lastName, 2);
-				qPos.add(screenName, 2);
-				qPos.add(emailAddress, 2);
-			}
-
 			// Relations
 
-			if ((types != null) && (types.length > 0)) {
-				qPos.add(userId);
+			qPos.add(userId);
 
-				for (int i = 0; i < types.length; i++) {
-					qPos.add(types[i]);
-				}
-
-				qPos.add(userId);
-				qPos.add(firstName, 2);
-				qPos.add(middleName, 2);
-				qPos.add(lastName, 2);
-				qPos.add(screenName, 2);
-				qPos.add(emailAddress, 2);
+			for (int i = 0; i < types.length; i++) {
+				qPos.add(types[i]);
 			}
+
+			qPos.add(firstName, 2);
+			qPos.add(middleName, 2);
+			qPos.add(lastName, 2);
+			qPos.add(screenName, 2);
+			qPos.add(emailAddress, 2);
+
+			// Groups
+
+			qPos.add(userId);
+
+			for (int i = 0; i < groupIds.length; i++) {
+				qPos.add(groupIds[i]);
+			}
+
+			qPos.add(userId);
+			qPos.add(firstName, 2);
+			qPos.add(middleName, 2);
+			qPos.add(lastName, 2);
+			qPos.add(screenName, 2);
+			qPos.add(emailAddress, 2);
 
 			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
 		}
@@ -735,33 +681,28 @@ public class UserFinderImpl
 		return q.list(true);
 	}
 
-	protected String getFindBySocialRelationTypesSQL(int[] types) {
-		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES);
-
-		if ((types == null) || (types.length == 0)) {
-			return StringUtil.replace(
-				sql, "[$SOCIAL_RELATION_TYPES$]", StringPool.BLANK);
+	protected String getJoin(LinkedHashMap<String, Object> params) {
+		if ((params == null) || params.isEmpty()) {
+			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(types.length * 2 - 1);
+		StringBundler sb = new StringBundler(params.size());
 
-		for (int i = 0; i < types.length; i++) {
-			sb.append(StringPool.QUESTION);
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
 
-			if ((i + 1) < types.length) {
-				sb.append(StringPool.COMMA);
+			if (key.equals("expandoAttributes")) {
+				continue;
+			}
+
+			Object value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				sb.append(getJoin(key, value));
 			}
 		}
 
-		if (types.length > 1) {
-			return StringUtil.replace(
-				sql, "[$SOCIAL_RELATION_TYPES$]",
-				"SocialRelation.type_ IN (" + sb.toString() + ") AND");
-		}
-
-		return StringUtil.replace(
-			sql, "[$SOCIAL_RELATION_TYPES$]",
-			"(SocialRelation.type_ = " + sb.toString() + ") AND");
+		return sb.toString();
 	}
 
 	@Override
@@ -1103,59 +1044,6 @@ public class UserFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected String getFindByUsersGroupsSQL(long[] groupIds) {
-		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
-
-		if ((groupIds == null) || (groupIds.length == 0)) {
-			return StringUtil.replace(
-				sql, "[$USERS_GROUPS_WHERE$]", StringPool.BLANK);
-		}
-
-		StringBundler sb = new StringBundler(groupIds.length * 2 - 1);
-
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append(StringPool.QUESTION);
-
-			if ((i + 1) < groupIds.length) {
-				sb.append(StringPool.COMMA);
-			}
-		}
-
-		if (groupIds.length > 1) {
-			return StringUtil.replace(
-				sql, "[$USERS_GROUPS_WHERE$]",
-				"(Users_Groups.groupId IN (" + sb.toString() + ")) AND");
-		}
-
-		return StringUtil.replace(
-			sql, "[$USERS_GROUPS_WHERE$]",
-			"(Users_Groups.groupId = " + sb.toString() + ") AND");
-	}
-
-	protected String getJoin(LinkedHashMap<String, Object> params) {
-		if ((params == null) || params.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(params.size());
-
-		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
-
-			if (key.equals("expandoAttributes")) {
-				continue;
-			}
-
-			Object value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				sb.append(getJoin(key, value));
-			}
-		}
-
-		return sb.toString();
 	}
 
 	protected String getJoin(String key, Object value) {
@@ -1514,6 +1402,32 @@ public class UserFinderImpl
 				customSQLParam.process(qPos);
 			}
 		}
+	}
+
+	private <T> String replaceValueSet(
+		String sql, String placeholder, String column, T[] values) {
+
+		if ((values == null) || (values.length == 0)) {
+			return StringUtil.replace(sql, placeholder, StringPool.BLANK);
+		}
+
+		StringBundler sb = new StringBundler(values.length * 2 - 1);
+
+		for (int i = 0; i < values.length; i++) {
+			sb.append(StringPool.QUESTION);
+
+			if ((i + 1) < values.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		if (values.length > 1) {
+			return StringUtil.replace(
+				sql, placeholder, column + " IN (" + sb.toString() + ") AND");
+		}
+
+		return StringUtil.replace(
+			sql, placeholder, "(" + column + " = " + sb.toString() + ") AND");
 	}
 
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";

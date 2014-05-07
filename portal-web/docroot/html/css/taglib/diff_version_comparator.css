@@ -1,4 +1,30 @@
 .diff-version-comparator {
+	.language-selector {
+		.control-group {
+			margin-bottom: 10px;
+		}
+	}
+
+	.legend {
+		border: #ccc solid 1px;
+		display: inline-block;
+		margin-bottom: 10px;
+		padding: 10px;
+
+		.info {
+			margin-left: 20px;
+
+			.add .icon-stop {
+				color: #CFC;
+			}
+
+			.delete .icon-stop {
+				color: #FDC6C6;
+				text-decoration: line-through;
+			}
+		}
+	}
+
 	.toolbar {
 		background: #EEE;
 		border-top: 1px solid #CCC;

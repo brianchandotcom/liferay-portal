@@ -138,21 +138,23 @@ if (Validator.isNotNull(languageId)) {
 		portletURL.setParameter("targetVersion", String.valueOf(targetVersion));
 		%>
 
-		<aui:form action="<%= portletURL %>" method="post" name="fm">
-			<aui:select label="" name="languageId" title="language">
+		<div class="language-selector">
+			<aui:form action="<%= portletURL %>" method="post" name="fm">
+				<aui:select label="" name="languageId" title="language">
 
-				<%
-				for (Locale availableLocale : availableLocales) {
-				%>
+					<%
+					for (Locale availableLocale : availableLocales) {
+					%>
 
-					<aui:option label="<%= availableLocale.getDisplayName(locale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(availableLocale)) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+						<aui:option label="<%= availableLocale.getDisplayName(locale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(availableLocale)) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
-		</aui:form>
+				</aui:select>
+			</aui:form>
+		</div>
 
 		<aui:script use="aui-base">
 			A.one('#<portlet:namespace />languageId').on(
@@ -163,6 +165,21 @@ if (Validator.isNotNull(languageId)) {
 			);
 		</aui:script>
 	</c:if>
+
+	<div class="legend">
+		<h3><liferay-ui:message key="legend" />:</h3>
+
+		<div class="info">
+			<div class="delete">
+				<i class="icon-stop"></i>
+				<liferay-ui:message key="deleted-content" />
+			</div>
+			<div class="add">
+				<i class="icon-stop"></i>
+				<liferay-ui:message key="added-content" />
+			</div>
+		</div>
+	</div>
 
 	<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
 </div>

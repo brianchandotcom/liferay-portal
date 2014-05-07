@@ -59,30 +59,13 @@
 		}
 
 		.next {
-			background-image: url(@theme_image_path@/arrows/paging_next.png);
-			background-position: 100% 0;
 			float: right;
 			padding-right: 15px;
 		}
 
 		.previous {
-			background-image: url(@theme_image_path@/arrows/paging_previous.png);
 			float: left;
 			padding-left: 15px;
-		}
-
-		a, span {
-			background: url() no-repeat;
-		}
-
-		span {
-			&.next {
-				background-position: 100% 100%;
-			}
-
-			&.previous {
-				background-position: 0 100%;
-			}
 		}
 	}
 }

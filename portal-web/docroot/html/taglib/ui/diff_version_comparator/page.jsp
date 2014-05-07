@@ -47,10 +47,10 @@ if (Validator.isNotNull(languageId)) {
 					iteratorURL.setParameter("targetVersion", String.valueOf(sourceVersion));
 					%>
 
-					<aui:a cssClass="previous" href="<%= iteratorURL.toString() %>" label="previous-change" />
+					<aui:a cssClass="icon-caret-left previous" href="<%= iteratorURL.toString() %>" label="previous-change" />
 				</c:when>
 				<c:otherwise>
-					<span class="previous"><liferay-ui:message key="previous-change" /></span>
+					<span class="icon-caret-left previous"><liferay-ui:message key="previous-change" /></span>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
@@ -63,8 +63,8 @@ if (Validator.isNotNull(languageId)) {
 			%>
 
 			<liferay-ui:icon
+				iconCssClass="icon-copy"
 				cssClass="central-title"
-				image="pages"
 				label="<%= true %>"
 				message='<%= LanguageUtil.format(pageContext, "comparing-versions-x-and-x", new Object[] {sourceVersionMessage, targetVersionMessage}, false) %>'
 			/>
@@ -79,7 +79,7 @@ if (Validator.isNotNull(languageId)) {
 				%>
 
 					<liferay-ui:icon
-						image="user_icon"
+						iconCssClass="icon-user"
 						label="<%= true %>"
 						message="<%= HtmlUtil.escape(diffVersionUser.getFullName()) %>"
 						toolTip="author"
@@ -122,10 +122,10 @@ if (Validator.isNotNull(languageId)) {
 					iteratorURL.setParameter("targetVersion", String.valueOf(nextVersion));
 					%>
 
-					<aui:a cssClass="next" href="<%= iteratorURL.toString() %>" label="next-change" />
+					<aui:a cssClass="icon-caret-right next" href="<%= iteratorURL.toString() %>" label="next-change" />
 				</c:when>
 				<c:otherwise>
-					<span class="next"><liferay-ui:message key="next-change" /></span>
+					<span class="icon-caret-right next"><liferay-ui:message key="next-change" /></span>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

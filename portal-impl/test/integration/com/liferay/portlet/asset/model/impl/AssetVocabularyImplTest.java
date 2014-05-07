@@ -23,6 +23,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.util.AssetTestUtil;
 
@@ -170,7 +171,7 @@ public class AssetVocabularyImplTest {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1, 1, false);
 
-		AssetCategory category = AssetTestUtil.addCategory(
+		AssetTestUtil.addCategory(
 			_group.getGroupId(), _vocabulary.getVocabularyId());
 
 		long[] selectedCategories = new long[]{1};
@@ -185,13 +186,51 @@ public class AssetVocabularyImplTest {
 
 		_vocabulary = _addVocabularyAssociatedToAsset(1, 1, true);
 
-		AssetCategory category = AssetTestUtil.addCategory(
+		AssetTestUtil.addCategory(
 			_group.getGroupId(), _vocabulary.getVocabularyId());
 
 		long[] selectedCategories = new long[]{1};
 
 		Assert.assertTrue(
 			_vocabulary.isMissingRequiredCategory(1, 1, selectedCategories));
+	}
+
+	@Test
+	public void testIsMissingRequiredCategoryWhenMatchingAllAndRequired()
+		throws Exception {
+
+		_vocabulary = _addVocabularyAssociatedToAsset(
+			AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+			AssetCategoryConstants.ALL_CLASS_TYPE_IDS, true);
+
+		AssetTestUtil.addCategory(
+			_group.getGroupId(), _vocabulary.getVocabularyId());
+
+		long[] selectedCategories = new long[]{2};
+
+		Assert.assertTrue(
+			_vocabulary.isMissingRequiredCategory(
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS, selectedCategories));
+	}
+
+	@Test
+	public void testIsMissingRequiredCategoryWhenMatchingAllAndNoRequired()
+		throws Exception {
+
+		_vocabulary = _addVocabularyAssociatedToAsset(
+			AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+			AssetCategoryConstants.ALL_CLASS_TYPE_IDS, false);
+
+		AssetTestUtil.addCategory(
+			_group.getGroupId(), _vocabulary.getVocabularyId());
+
+		long[] selectedCategories = new long[]{2};
+
+		Assert.assertFalse(
+			_vocabulary.isMissingRequiredCategory(
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS, selectedCategories));
 	}
 
 	@Test

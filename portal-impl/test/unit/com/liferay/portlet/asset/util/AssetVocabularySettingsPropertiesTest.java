@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class AssetVocabularySettingsPropertiesTest {
 	@Test
 	public void testIsAssociatedToAssetWhenAssociatedToClassName() {
 
-		_settingProperties = getSettingProperties(true, 1, 0, true);
+		_settingProperties = getSettingProperties(
+			true, 1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, true);
 
 		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 0));
 		Assert.assertTrue(_settingProperties.isAssociatedToAsset(1, 1));
@@ -95,7 +97,8 @@ public class AssetVocabularySettingsPropertiesTest {
 
 	@Test
 	public void testIsRequiredReturnsFalseWhenClassNameIsNotRequired() {
-		_settingProperties = getSettingProperties(true, 1, 0, false);
+		_settingProperties = getSettingProperties(
+			true, 1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, false);
 
 		Assert.assertFalse(_settingProperties.isRequired(1));
 		Assert.assertFalse(_settingProperties.isRequired(2));
@@ -125,7 +128,8 @@ public class AssetVocabularySettingsPropertiesTest {
 
 	@Test
 	public void testIsRequiredReturnsTrueWhenClassNameIsRequired() {
-		_settingProperties = getSettingProperties(true, 1, 0, true);
+		_settingProperties = getSettingProperties(
+			true, 1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, true);
 
 		Assert.assertTrue(_settingProperties.isRequired(1));
 		Assert.assertTrue(_settingProperties.isRequired(1, 1));

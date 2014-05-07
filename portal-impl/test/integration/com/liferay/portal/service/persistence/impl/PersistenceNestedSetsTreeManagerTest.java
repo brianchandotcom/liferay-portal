@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.CaptureAppender;
@@ -37,7 +37,6 @@ import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.util.AssetTestUtil;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -70,17 +69,13 @@ public class PersistenceNestedSetsTreeManagerTest {
 	public void setUp() throws Exception {
 		_assetCategoryPersistence = AssetCategoryUtil.getPersistence();
 
-		BasePersistenceImpl<?> basePersistenceImpl =
-			(BasePersistenceImpl<?>)_assetCategoryPersistence;
-
-		Field sessionFactoryField = ReflectionUtil.getDeclaredField(
-			BasePersistenceImpl.class, "_sessionFactory");
-
 		_sessionFactoryInvocationHandler = new SessionFactoryInvocationHandler(
-			sessionFactoryField.get(basePersistenceImpl));
+			ReflectionTestUtil.getFieldValue(
+				_assetCategoryPersistence, "_sessionFactory"));
 
-		basePersistenceImpl.setSessionFactory(
-			(SessionFactory)ProxyUtil.newProxyInstance(
+		ReflectionTestUtil.setFieldValue(
+			_assetCategoryPersistence, "_sessionFactory",
+			ProxyUtil.newProxyInstance(
 				SessionFactory.class.getClassLoader(),
 				new Class<?>[] {SessionFactory.class},
 				_sessionFactoryInvocationHandler));
@@ -89,9 +84,9 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		_nestedSetsTreeManager =
 			new PersistenceNestedSetsTreeManager<AssetCategory>(
-				basePersistenceImpl, "AssetCategory", "AssetCategory",
-				AssetCategoryImpl.class, "categoryId", "groupId",
-				"leftCategoryId", "rightCategoryId");
+				(BasePersistenceImpl<?>)_assetCategoryPersistence,
+				"AssetCategory", "AssetCategory", AssetCategoryImpl.class,
+				"categoryId", "groupId", "leftCategoryId", "rightCategoryId");
 
 		_group = GroupTestUtil.addGroup();
 

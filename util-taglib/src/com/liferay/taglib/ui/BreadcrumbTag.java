@@ -53,8 +53,6 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -65,18 +63,6 @@ public class BreadcrumbTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
-	}
-
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
-	public void setSelLayout(Layout selLayout) {
-		_selLayout = selLayout;
-	}
-
-	public void setSelLayoutParam(String selLayoutParam) {
-		_selLayoutParam = selLayoutParam;
 	}
 
 	public void setShowCurrentGroup(boolean showCurrentGroup) {
@@ -104,9 +90,8 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	protected void buildGroupsBreadcrumb(
-			LayoutSet layoutSet, PortletURL portletURL,
-			ThemeDisplay themeDisplay, boolean includeParentGroups,
-			StringBundler sb)
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			boolean includeParentGroups, StringBundler sb)
 		throws Exception {
 
 		Group group = layoutSet.getGroup();
@@ -119,8 +104,7 @@ public class BreadcrumbTag extends IncludeTag {
 			LayoutSet parentLayoutSet = getParentLayoutSet(layoutSet);
 
 			if (parentLayoutSet != null) {
-				buildGroupsBreadcrumb(
-					parentLayoutSet, portletURL, themeDisplay, true, sb);
+				buildGroupsBreadcrumb(parentLayoutSet, themeDisplay, true, sb);
 			}
 		}
 
@@ -186,8 +170,8 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	protected void buildLayoutBreadcrumb(
-			Layout selLayout, String selLayoutParam, boolean selectedLayout,
-			PortletURL portletURL, ThemeDisplay themeDisplay, StringBundler sb)
+			Layout selLayout, boolean selectedLayout, ThemeDisplay themeDisplay,
+			StringBundler sb)
 		throws Exception {
 
 		if (selLayout.getParentLayoutId() !=
@@ -196,15 +180,12 @@ public class BreadcrumbTag extends IncludeTag {
 			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
 				selLayout);
 
-			buildLayoutBreadcrumb(
-				parentLayout, selLayoutParam, false, portletURL, themeDisplay,
-				sb);
+			buildLayoutBreadcrumb(parentLayout, false, themeDisplay, sb);
 		}
 
 		sb.append("<li><a href=\"");
 
-		String layoutURL = getBreadcrumbLayoutURL(
-			selLayout, selLayoutParam, portletURL, themeDisplay);
+		String layoutURL = PortalUtil.getLayoutFullURL(selLayout, themeDisplay);
 
 		if (themeDisplay.isAddSessionIdToURL()) {
 			layoutURL = PortalUtil.getURLWithSessionId(
@@ -242,8 +223,7 @@ public class BreadcrumbTag extends IncludeTag {
 	}
 
 	protected void buildPortletBreadcrumb(
-			HttpServletRequest request, boolean showCurrentGroup,
-			boolean showCurrentPortlet, ThemeDisplay themeDisplay,
+			HttpServletRequest request, ThemeDisplay themeDisplay,
 			StringBundler sb)
 		throws Exception {
 
@@ -262,7 +242,7 @@ public class BreadcrumbTag extends IncludeTag {
 			String breadcrumbTitle = breadcrumbEntry.getTitle();
 			String breadcrumbURL = breadcrumbEntry.getURL();
 
-			if (!showCurrentGroup) {
+			if (!_showCurrentGroup) {
 				String siteGroupName = themeDisplay.getSiteGroupName();
 
 				if (siteGroupName.equals(breadcrumbTitle)) {
@@ -270,7 +250,7 @@ public class BreadcrumbTag extends IncludeTag {
 				}
 			}
 
-			if (!showCurrentPortlet) {
+			if (!_showCurrentPortlet) {
 				PortletDisplay portletDisplay =
 					themeDisplay.getPortletDisplay();
 
@@ -321,44 +301,12 @@ public class BreadcrumbTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_displayStyle = _DISPLAY_STYLE;
-		_portletURL = null;
-		_selLayout = null;
-		_selLayoutParam = null;
 		_showCurrentGroup = true;
 		_showCurrentPortlet = true;
 		_showGuestGroup = _SHOW_GUEST_GROUP;
 		_showLayout = true;
 		_showParentGroups = null;
 		_showPortletBreadcrumb = true;
-	}
-
-	protected String getBreadcrumbLayoutURL(
-			Layout selLayout, String selLayoutParam, PortletURL portletURL,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (portletURL == null) {
-			return PortalUtil.getLayoutFullURL(selLayout, themeDisplay);
-		}
-
-		portletURL.setParameter(
-			selLayoutParam, String.valueOf(selLayout.getPlid()));
-
-		if (selLayout.isTypeControlPanel()) {
-			if (themeDisplay.getDoAsGroupId() > 0) {
-				portletURL.setParameter(
-					"doAsGroupId",
-					String.valueOf(themeDisplay.getDoAsGroupId()));
-			}
-
-			if (themeDisplay.getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
-				portletURL.setParameter(
-					"refererPlid",
-					String.valueOf(themeDisplay.getRefererPlid()));
-			}
-		}
-
-		return portletURL.toString();
 	}
 
 	protected String getBreadcrumbString(HttpServletRequest request) {
@@ -368,11 +316,8 @@ public class BreadcrumbTag extends IncludeTag {
 		StringBundler sb = new StringBundler();
 
 		try {
-			if (_selLayout == null) {
-				setSelLayout(themeDisplay.getLayout());
-			}
-
-			Group group = _selLayout.getGroup();
+			Layout selLayout = themeDisplay.getLayout();
+			Group group = selLayout.getGroup();
 
 			if (_showGuestGroup) {
 				buildGuestGroupBreadcrumb(themeDisplay, sb);
@@ -380,30 +325,25 @@ public class BreadcrumbTag extends IncludeTag {
 
 			if (_showParentGroups) {
 				LayoutSet parentLayoutSet = getParentLayoutSet(
-					_selLayout.getLayoutSet());
+					selLayout.getLayoutSet());
 
 				if (parentLayoutSet != null) {
 					buildGroupsBreadcrumb(
-						parentLayoutSet, _portletURL, themeDisplay, true, sb);
+						parentLayoutSet, themeDisplay, true, sb);
 				}
 			}
 
 			if (_showCurrentGroup) {
 				buildGroupsBreadcrumb(
-					_selLayout.getLayoutSet(), _portletURL, themeDisplay, false,
-					sb);
+					selLayout.getLayoutSet(), themeDisplay, false, sb);
 			}
 
 			if (_showLayout && !group.isLayoutPrototype()) {
-				buildLayoutBreadcrumb(
-					_selLayout, _selLayoutParam, true, _portletURL,
-					themeDisplay, sb);
+				buildLayoutBreadcrumb(selLayout, true, themeDisplay, sb);
 			}
 
 			if (_showPortletBreadcrumb) {
-				buildPortletBreadcrumb(
-					request, _showCurrentGroup, _showCurrentPortlet,
-					themeDisplay, sb);
+				buildPortletBreadcrumb(request, themeDisplay, sb);
 			}
 		}
 		catch (Exception e) {
@@ -508,11 +448,7 @@ public class BreadcrumbTag extends IncludeTag {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_selLayout == null) {
-				setSelLayout(themeDisplay.getLayout());
-			}
-
-			Group group = _selLayout.getGroup();
+			Group group = themeDisplay.getLayout().getGroup();
 
 			UnicodeProperties typeSettingsProperties =
 				group.getTypeSettingsProperties();
@@ -543,10 +479,6 @@ public class BreadcrumbTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-ui:breadcrumb:displayStyle", displayStyle);
-		request.setAttribute("liferay-ui:breadcrumb:portletURL", _portletURL);
-		request.setAttribute("liferay-ui:breadcrumb:selLayout", _selLayout);
-		request.setAttribute(
-			"liferay-ui:breadcrumb:selLayoutParam", _selLayoutParam);
 		request.setAttribute(
 			"liferay-ui:breadcrumb:showCurrentGroup",
 			String.valueOf(_showCurrentGroup));
@@ -583,9 +515,6 @@ public class BreadcrumbTag extends IncludeTag {
 	private static Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
 
 	private String _displayStyle = _DISPLAY_STYLE;
-	private PortletURL _portletURL;
-	private Layout _selLayout;
-	private String _selLayoutParam;
 	private boolean _showCurrentGroup = true;
 	private boolean _showCurrentPortlet = true;
 	private boolean _showGuestGroup = _SHOW_GUEST_GROUP;

@@ -16,12 +16,28 @@
 
 <%@ include file="/html/portlet/breadcrumb/init.jsp" %>
 
-<liferay-ui:breadcrumb
-	displayStyle="<%= displayStyle %>"
-	showCurrentGroup="<%= showCurrentGroup %>"
-	showCurrentPortlet="<%= showCurrentPortlet %>"
-	showGuestGroup="<%= showGuestGroup %>"
-	showLayout="<%= showLayout %>"
-	showParentGroups="<%= showParentGroups %>"
-	showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
-/>
+<%
+	long portletDisplayTemplateId =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
+				displayStyleGroupId, displayStyle);
+
+	List<Object> entries = new ArrayList<Object>();
+	Map<String, Object> contextObjects = new HashMap<String, Object>();
+%>
+
+<c:choose>
+	<c:when test="<%= portletDisplayTemplateId > 0 %>">
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, entries, contextObjects) %>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:breadcrumb
+			displayStyle="<%= displayStyle %>"
+			showCurrentGroup="<%= showCurrentGroup %>"
+			showCurrentPortlet="<%= showCurrentPortlet %>"
+			showGuestGroup="<%= showGuestGroup %>"
+			showLayout="<%= showLayout %>"
+			showParentGroups="<%= showParentGroups %>"
+			showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
+		/>
+	</c:otherwise>
+</c:choose>

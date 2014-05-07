@@ -6,7 +6,9 @@
 	<target name="run-selenium-tomcat-sybase">
 		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
 
-		<echo file="test.${user.name}.properties">database.type=oracle</echo>
+		<echo file="test.${user.name}.properties">database.type=sybase</echo>
+
+		<echo file="sql/sql.${user.name}.properties">sybase.executable=isql</echo>
 
 		<if>
 			<not>

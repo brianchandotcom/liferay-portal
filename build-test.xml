@@ -2564,11 +2564,15 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
-							<exec executable="${oracle.sqlplus.executable}">
-								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-								<arg value="@create.sql" />
+							<exec executable="${sybase.executable}">
+								<arg value="-U" />
 								<arg value="${database.username}" />
+								<arg value="-S" />
+								<arg value="${database.schema}" />
+								<arg value="-P" />
 								<arg value="${database.password}" />
+								<arg value="-i" />
+								<arg value="create.sql" />
 							</exec>
 						</then>
 					</elseif>

@@ -172,6 +172,7 @@ public class LayoutStagingBackgroundTaskExecutor
 			try {
 				Map<String, Serializable> settingsMap =
 					_exportImportConfiguration.getSettingsMap();
+
 				boolean privateLayout = MapUtil.getBoolean(
 					settingsMap, "privateLayout");
 				long[] layoutIds = GetterUtil.getLongValues(

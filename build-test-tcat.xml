@@ -3,18 +3,6 @@
 <project name="portal-test-tcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-tcat">
-		<antcall target="clean-up-logs" />
-
-		<record action="start" name="log" />
-
-		<antcall target="run-simple-server" />
-
-		<record action="stop" name="log" />
-
-		<antcall target="evaluate-logs" />
-	</target>
-
 	<target name="run-selenium-tcat">
 		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
 
@@ -60,5 +48,17 @@ plugins.includes=marketplace-portlet</echo>
 		</antcall>
 
 		<antcall target="stop-selenium" />
+	</target>
+
+	<target name="run-tcat">
+		<antcall target="clean-up-logs" />
+
+		<record action="start" name="log" />
+
+		<antcall target="run-simple-server" />
+
+		<record action="stop" name="log" />
+
+		<antcall target="evaluate-logs" />
 	</target>
 </project>

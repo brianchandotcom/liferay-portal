@@ -541,94 +541,6 @@ public class UserFinderImpl
 		}
 	}
 
-	@Override
-	public List<User> findBySocialRelationTypesGroups(
-			String terms, long userId, int[] types, long[] groupIds, int start,
-			int end)
-		throws SystemException {
-
-		String[] keywords = CustomSQLUtil.keywords(
-			terms, true, WildcardMode.TRAILING);
-
-		String[] firstName = keywords;
-		String[] middleName = keywords;
-		String[] lastName = keywords;
-		String[] screenName = keywords;
-		String[] emailAddress = keywords;
-
-		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES_GROUPS);
-
-		sql = replaceValueSet(
-			sql, "[$USERS_GROUPS_WHERE$]", "Users_Groups.groupId",
-			ArrayUtil.toLongArray(groupIds));
-		sql = replaceValueSet(
-			sql, "[$SOCIAL_RELATION_TYPES$]", "SocialRelation.type_",
-			ArrayUtil.toLongArray(types));
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
-			emailAddress);
-
-		sql = CustomSQLUtil.replaceAndOperator(sql, false);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery query = session.createSynchronizedSQLQuery(sql);
-
-			query.addEntity("User_", UserImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(query);
-
-			// Relations
-
-			qPos.add(userId);
-
-			for (int i = 0; i < types.length; i++) {
-				qPos.add(types[i]);
-			}
-
-			qPos.add(firstName, 2);
-			qPos.add(middleName, 2);
-			qPos.add(lastName, 2);
-			qPos.add(screenName, 2);
-			qPos.add(emailAddress, 2);
-
-			// Groups
-
-			qPos.add(userId);
-
-			for (int i = 0; i < groupIds.length; i++) {
-				qPos.add(groupIds[i]);
-			}
-
-			qPos.add(userId);
-			qPos.add(firstName, 2);
-			qPos.add(middleName, 2);
-			qPos.add(lastName, 2);
-			qPos.add(screenName, 2);
-			qPos.add(emailAddress, 2);
-
-			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected List<Long> countByC_FN_MN_LN_SN_EA_S(
 		Session session, long companyId, String[] firstNames,
 		String[] middleNames, String[] lastNames, String[] screenNames,
@@ -749,6 +661,8 @@ public class UserFinderImpl
 		LinkedHashMap<String, Object> params3 = null;
 
 		LinkedHashMap<String, Object> params4 = null;
+
+		LinkedHashMap<String, Object> params5 = null;
 
 		Long[] groupIds = null;
 
@@ -897,6 +811,21 @@ public class UserFinderImpl
 			}
 		}
 
+		boolean doSocialUnion = GetterUtil.getBoolean(
+			params.get("socialUnion"));
+
+		boolean hasSocialRelationTypes = Validator.isNotNull(
+			params.get("socialRelationType"));
+
+		if (doSocialUnion && hasSocialRelationTypes &&
+			!ArrayUtil.isEmpty(groupIds)) {
+
+			params5 = new LinkedHashMap<String, Object>(params1);
+
+			params1.remove("socialRelationType");
+			params5.remove("usersGroups");
+		}
+
 		Session session = null;
 
 		try {
@@ -945,6 +874,12 @@ public class UserFinderImpl
 			if (params4 != null) {
 				sb.append(" UNION (");
 				sb.append(replaceJoinAndWhere(sql, params4));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			if (params5 != null) {
+				sb.append(" UNION (");
+				sb.append(replaceJoinAndWhere(sql, params5));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
@@ -1011,6 +946,22 @@ public class UserFinderImpl
 
 			if (params4 != null) {
 				setJoin(qPos, params4);
+
+				qPos.add(companyId);
+				qPos.add(false);
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			if (params5 != null) {
+				setJoin(qPos, params5);
 
 				qPos.add(companyId);
 				qPos.add(false);

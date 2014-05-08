@@ -83,7 +83,12 @@ if (assetEntryId > 0) {
 						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
+					if (themeDisplay.isStatePopUp()) {
+						assetPublisherURL.setWindowState(LiferayWindowState.POP_UP);
+					}
+					else {
+						assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
+					}
 
 					String viewFullContentURLString = assetPublisherURL.toString();
 

@@ -14,12 +14,18 @@
 
 package com.liferay.portlet.asset.service;
 
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -28,7 +34,9 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.util.AssetTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,24 +61,79 @@ import org.junit.runner.RunWith;
 public class AssetVocabularyServiceTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		_locale = LocaleThreadLocal.getSiteDefaultLocale();
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+
 		LocaleThreadLocal.setSiteDefaultLocale(_locale);
 	}
 
 	@Test
-	public void testLocalizedSiteAddDefaultVocabulary() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+	public void testDeleteVocabularyWithCategories() throws Exception {
+		int initialAssetCategoriesCount = searchCount();
 
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary.getVocabularyId());
+
+		AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary.getVocabularyId(),
+			category.getCategoryId());
+
+		Assert.assertEquals(initialAssetCategoriesCount + 2, searchCount());
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			vocabulary.getVocabularyId());
+
+		Assert.assertEquals(initialAssetCategoriesCount, searchCount());
+	}
+
+	@Test
+	public void testDeleteVocabularyWithCategoriesShouldDeleteOnCascade()
+		throws Exception {
+
+		int initialResourcesActionsCount =
+			ResourceActionLocalServiceUtil.getResourceActionsCount(
+				AssetVocabulary.class.getName());
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory category = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary.getVocabularyId());
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			vocabulary.getVocabularyId());
+
+		Assert.assertNull(
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				vocabulary.getVocabularyId()));
+
+		Assert.assertNull(
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+				category.getCategoryId()));
+
+		Assert.assertEquals(
+			initialResourcesActionsCount,
+			ResourceActionLocalServiceUtil.getResourceActionsCount(
+				AssetVocabulary.class.getName()));
+	}
+
+	@Test
+	public void testLocalizedSiteAddDefaultVocabulary() throws Exception {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
-				group.getGroupId());
+				_group.getGroupId());
 
 		Assert.assertEquals(
 			PropsValues.ASSET_VOCABULARY_DEFAULT,
@@ -95,10 +158,8 @@ public class AssetVocabularyServiceTest {
 		descriptionMap.put(LocaleUtil.SPAIN, description + "_ES");
 		descriptionMap.put(LocaleUtil.US, description + "_US");
 
-		Group group = GroupTestUtil.addGroup();
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -133,10 +194,8 @@ public class AssetVocabularyServiceTest {
 
 		String title = ServiceTestUtil.randomString();
 
-		Group group = GroupTestUtil.addGroup();
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -146,6 +205,19 @@ public class AssetVocabularyServiceTest {
 		Assert.assertEquals(title, vocabulary.getName());
 	}
 
+	protected int searchCount() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(AssetCategory.class);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
+	}
+
+	private Group _group;
 	private Locale _locale;
 
 }

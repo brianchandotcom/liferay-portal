@@ -310,6 +310,11 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getResourceActions(name);
 	}
 
+	public static int getResourceActionsCount(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResourceActionsCount(name);
+	}
+
 	public static ResourceActionLocalService getService() {
 		if (_service == null) {
 			_service = (ResourceActionLocalService)PortalBeanLocatorUtil.locate(ResourceActionLocalService.class.getName());

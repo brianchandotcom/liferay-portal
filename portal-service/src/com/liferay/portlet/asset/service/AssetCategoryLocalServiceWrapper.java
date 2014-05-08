@@ -582,6 +582,15 @@ public class AssetCategoryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
+		com.liferay.portlet.asset.model.AssetCategory category,
+		boolean childCategory)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.deleteCategory(category, childCategory);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategory deleteCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

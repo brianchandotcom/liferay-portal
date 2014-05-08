@@ -24,13 +24,13 @@ AUI.add(
 			initializer: function(config) {
 				var instance = this;
 
-				var namespace = config.namespace || "";
+				var namespace = config.namespace || '';
 
 				var nodeList = instance.get('nodeList');
 
 				instance._categories = nodeList.all(CSS_LFR_CONTENT_CATEGORY_SELECTOR);
 				instance._categoryContainers = nodeList.all(CSS_LFR_CATEGORY_CONTAINER_SELECTOR);
-				instance._togglerDelegate = Liferay.component(namespace + "addApplicationPanelContainer");
+				instance._togglerDelegate = Liferay.component(namespace + 'addApplicationPanelContainer');
 
 				var applicationSearch = new AddSearch(
 					{

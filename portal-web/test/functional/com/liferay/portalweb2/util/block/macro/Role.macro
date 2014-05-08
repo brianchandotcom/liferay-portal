@@ -263,6 +263,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION" />
+						<var name="permissionNavigationValue" value="Categories Navigation" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA" />
@@ -288,6 +295,13 @@
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
 						<var name="permissionNavigationValue" value="Bookmarks" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_CATEGORIES" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
+						<var name="permissionNavigationValue" value="Categories" />
 					</then>
 				</elseif>
 				<elseif>

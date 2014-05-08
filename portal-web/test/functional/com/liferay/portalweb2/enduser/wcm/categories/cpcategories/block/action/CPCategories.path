@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE_ALERT</td>
+	<td>//div[contains(@class,'message-response') and contains(@class,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>

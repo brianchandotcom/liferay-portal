@@ -199,6 +199,17 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
+	<command name="deletePartialCategoryCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#check" locator-key1="ALL_CATEGORIES_CHECKBOX" />
+		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected categories?" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE_ALERT" value1="The following items could not be deleted: ${categoryName}" />
+	</command>
+
 	<command name="editCategoryPropertyCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />

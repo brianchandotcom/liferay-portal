@@ -621,6 +621,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
+	<td>//input[@value='147CONFIGURATION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[@value='147VIEW']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -634,6 +644,11 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.assetADD_VOCABULARY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_TAG_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.assetADD_TAG']</td>
 	<td></td>
 </tr>
 <tr>
@@ -746,6 +761,27 @@
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_SITE_SCOPE</td>
 	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.bookmarks.model.BookmarksEntryVIEW']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[@value='122ADD_TO_PAGE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
+	<td>//input[@value='122CONFIGURATION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[@value='122VIEW']</td>
 	<td></td>
 </tr>
 <tr>

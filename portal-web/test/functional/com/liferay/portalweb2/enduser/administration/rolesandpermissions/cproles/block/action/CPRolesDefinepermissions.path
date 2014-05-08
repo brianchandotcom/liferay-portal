@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Categories Navigation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA</td>
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Documents and Media')]</td>
 	<td></td>

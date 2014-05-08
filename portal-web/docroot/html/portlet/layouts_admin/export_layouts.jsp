@@ -201,6 +201,10 @@ if (!cmd.equals(Constants.ADD)) {
 				<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
 				<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
 				<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
 
 				<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
@@ -230,105 +234,6 @@ if (!cmd.equals(Constants.ADD)) {
 								<liferay-util:param name="treeId" value="<%= treeId %>" />
 								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 							</liferay-util:include>
-						</aui:fieldset>
-					</c:if>
-
-					<%
-					List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(selectedLayouts);
-					%>
-
-					<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
-						<aui:fieldset cssClass="options-group" label="application-configuration">
-							<ul class="lfr-tree unstyled">
-								<li class="tree-item">
-									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= true %>" />
-
-									<div class="hide" id="<portlet:namespace />globalConfiguration">
-										<aui:fieldset cssClass="portlet-data-section" label="all-applications">
-											<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL, true) %>" />
-
-											<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL, true) %>" />
-
-											<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL, true) %>" />
-										</aui:fieldset>
-									</div>
-
-									<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
-										<li class="tree-item">
-											<span class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></span>
-
-											<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
-										</li>
-									</ul>
-
-									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
-
-									<c:if test="<%= !group.isLayoutPrototype() %>">
-										<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectApplications">
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION, true) %>" />
-
-											<%
-											portletDataHandlerPortlets = ListUtil.sort(portletDataHandlerPortlets, new PortletTitleComparator(application, locale));
-
-											for (Portlet portlet : portletDataHandlerPortlets) {
-												PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
-
-												PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), liveGroupId, portlet, privateLayout);
-
-												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
-											%>
-
-												<li class="tree-item">
-													<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId(), true) %>" />
-
-													<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
-														<ul class="lfr-tree unstyled">
-															<li class="tree-item">
-																<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
-																	<ul class="lfr-tree unstyled">
-
-																		<%
-																		request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																		request.setAttribute("render_controls.jsp-controls", configurationControls);
-																		request.setAttribute("render_controls.jsp-parameterMap", parameterMap);
-																		request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
-																		%>
-
-																		<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-																	</ul>
-																</aui:fieldset>
-															</li>
-														</ul>
-													</div>
-
-													<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
-														<li>
-															<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
-
-															<%
-															Map<String,Object> data = new HashMap<String,Object>();
-
-															data.put("portletid", portlet.getRootPortletId());
-															data.put("portlettitle", portletTitle);
-															%>
-
-															<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
-														</li>
-													</ul>
-
-													<aui:script>
-														Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + portlet.getRootPortletId() %>');
-													</aui:script>
-												</li>
-
-											<%
-											}
-											%>
-
-										</ul>
-									</c:if>
-								</li>
-							</ul>
 						</aui:fieldset>
 					</c:if>
 

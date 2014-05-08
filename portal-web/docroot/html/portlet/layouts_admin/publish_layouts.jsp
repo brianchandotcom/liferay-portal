@@ -267,6 +267,10 @@ else {
 					<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 					<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 					<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
 
 					<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
@@ -384,28 +388,6 @@ else {
 										<liferay-util:param name="treeId" value="<%= treeId %>" />
 										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 									</liferay-util:include>
-								</aui:fieldset>
-							</c:if>
-
-							<%
-							List<Layout> exportLayouts = new ArrayList<Layout>();
-
-							if (selLayout != null) {
-								exportLayouts.add(selLayout);
-							}
-							else if (!selectedLayouts.isEmpty()) {
-								exportLayouts = selectedLayouts;
-							}
-							else {
-								exportLayouts = LayoutLocalServiceUtil.getLayouts(group.getGroupId(), privateLayout);
-							}
-
-							List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
-							%>
-
-							<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
-								<aui:fieldset cssClass="options-group" label="application-configuration">
-									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
 								</aui:fieldset>
 							</c:if>
 

@@ -272,4 +272,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResourceActionsCount(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

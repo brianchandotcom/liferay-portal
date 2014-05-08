@@ -515,6 +515,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_SITES_SITE_NAME_2</td>
+	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

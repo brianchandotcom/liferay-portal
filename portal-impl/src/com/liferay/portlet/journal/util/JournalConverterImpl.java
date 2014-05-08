@@ -645,10 +645,10 @@ public class JournalConverterImpl implements JournalConverter {
 			Element metadataElement = dynamicElementElement.element(
 				"meta-data");
 
-			dynamicElementElement.addAttribute("name", labelElement.getText());
-
 			Element labelElement = fetchMetadataEntry(
 				metadataElement, "name", "label");
+
+			dynamicElementElement.addAttribute("name", labelElement.getText());
 
 			String repeatable = parentElement.attributeValue("repeatable");
 

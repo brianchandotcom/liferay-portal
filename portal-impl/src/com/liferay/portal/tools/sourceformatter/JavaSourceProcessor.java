@@ -479,7 +479,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkSystemEvents(String content, String fileName)
+	protected void checkSystemEventAnnotations(String content, String fileName)
 		throws Exception {
 
 		if (!fileName.endsWith("PortletDataHandler.java")) {
@@ -1190,7 +1190,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLogLevel(newContent, fileName, "trace");
 		checkLogLevel(newContent, fileName, "warn");
 
-		checkSystemEvents(newContent, fileName);
+		checkSystemEventAnnotations(newContent, fileName);
 
 		// LPS-41205
 

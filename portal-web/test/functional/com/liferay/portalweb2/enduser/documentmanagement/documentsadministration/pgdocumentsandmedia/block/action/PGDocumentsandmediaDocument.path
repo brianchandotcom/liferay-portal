@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_SUBMIT_BUTTON</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_CANCEL_BUTTON</td>
 	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Cancel')]</td>
 	<td></td>

@@ -95,33 +95,38 @@
 </tr>
 <!--COMMENT-->
 <tr>
-	<td>COMMENT_ADD_BUTTON</td>
-	<td>//a/span[contains(.,'Add Comment')]</td>
+	<td>COMMENT_BE_THE_FIRST_LINK</td>
+	<td>//a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_ADD_COMMENT_LINK</td>
+	<td>//a[contains(.,'Add Comment')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_FIELD</td>
-	<td>//textarea[@class='comment-form']</td>
+	<td>//textarea[contains(@id,'postReplyBody')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_POST_BUTTON</td>
-	<td>//input[@value='Post']</td>
+	<td>COMMENT_SUBMIT_BUTTON</td>
+	<td>//button[contains(.,'Submit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_BODY</td>
-	<td>//div[@class='comment-body']/span</td>
+	<td>//div[@class='lfr-discussion-message']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_EDIT_LINK</td>
-	<td>//span[@class='edit-message']/a</td>
+	<td>//a[contains(.,'Edit')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_DELETE_LINK</td>
-	<td>//span[@class='delete-message']/a</td>
+	<td>//a[contains(.,'Delete')]/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -107,27 +107,27 @@
 </tr>
 <tr>
 	<td>TASK_REPORTER</td>
-	<td>//div[@class='result-data']/span[contains(.,'Reporter')]</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[@class='result-data']/span[contains(.,'Reporter')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_ASSIGNEE</td>
-	<td>//div[@class='result-data']/span[contains(.,'Assignee')]</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[@class='result-data']/span[contains(.,'Assignee')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_PROGRESS_BAR</td>
-	<td>//div[contains(@class,'progress-picker')]</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[contains(@class,'progress-picker')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_PROGRESS_BAR_PERCENT_CLICK</td>
-	<td>//div[contains(@class,'progress-picker')]/div[@class='progress-selector']/a[@class='progress-${key_percentCompletion}']</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[contains(@class,'progress-picker')]/div[@class='progress-selector']/a[@class='progress-${key_percentCompletion}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_PROGRESS_BAR_PERCENT_COMPLETION</td>
-	<td>//div[@class='progress' and contains(@style,'${key_percentCompletion}%')]</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[@class='progress' and contains(@style,'${key_percentCompletion}%')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -263,7 +263,7 @@
 		<if>
 			<condition action="CPDynamicdatalistsDatadefinitions#isElementPresent" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
 			<then>
-				<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
 				<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 				<if>
 					<condition action="CPDynamicdatalistsDatadefinitionsManagetemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_1" />

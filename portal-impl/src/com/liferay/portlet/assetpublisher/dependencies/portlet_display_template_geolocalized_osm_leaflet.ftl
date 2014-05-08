@@ -12,7 +12,7 @@
 
 <#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
-<#assign markers = jsonFactoryUtil.createJSONArray() />
+<#assign jsonArray = jsonFactoryUtil.createJSONArray() />
 
 <#list entries as entry>
 	<#assign assetRenderer = entry.getAssetRenderer() />
@@ -22,17 +22,17 @@
 	<#assign fields = ddmReader.getFields("geolocation") />
 
 	<#list fields.iterator() as field>
-		<#assign marker = jsonFactoryUtil.createJSONObject(field.getValue()) />
+		<#assign jsonObject = jsonFactoryUtil.createJSONObject(field.getValue()) />
 
-		<@liferay.silently marker.put("title", assetRenderer.getTitle(locale)) />
+		<@liferay.silently jsonObject.put("title", assetRenderer.getTitle(locale)) />
 
 		<#assign entryAbstract>
 			<@getAbstract asset=entry />
 		</#assign>
 
-		<@liferay.silently marker.put("abstract", entryAbstract) />
+		<@liferay.silently jsonObject.put("abstract", entryAbstract) />
 
-		<@liferay.silently markers.put(marker) />
+		<@liferay.silently jsonArray.put(jsonObject) />
 	</#list>
 </#list>
 
@@ -68,21 +68,25 @@
 <@liferay_aui.script>
 	(function () {
 		function putMarkers(map) {
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			}).addTo(map);
+			L.tileLayer(
+				'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+				{
+					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
 
 			var bounds = L.latLngBounds([]);
-			var points = ${markers};
+			var points = ${jsonArray};
+
 			var len = points.length;
 
 			for (var i = 0; i < len; i++) {
 				var point = points[i];
+
 				var latLng = L.latLng(point['latitude'], point['longitude']);
 
-				L.marker(latLng)
-					.addTo(map)
-					.bindPopup(point['abstract'], {
+				L.marker(latLng).addTo(map).bindPopup(
+					point['abstract'],
+					{
 						maxWidth: ${maxWidth}
 					});
 
@@ -99,10 +103,12 @@
 		}
 
 		if ("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition(function (pos) {
-				drawMap(pos.coords.latitude, pos.coords.longitude);
-			});
-		} else {
+			navigator.geolocation.getCurrentPosition(
+				function (pos) {
+					drawMap(pos.coords.latitude, pos.coords.longitude);
+				});
+		}
+		else {
 			drawMap(${defaultLatitude}, ${defaultLongitude});
 		}
 	})();

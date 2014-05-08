@@ -157,10 +157,23 @@ AUI.add(
 				return instance;
 			},
 
+			setParameters: function(parameters) {
+				var instance = this;
+
+				A.each(
+					parameters,
+					function(item, index, collection) {
+						instance.setParameter(index, item);
+					}
+				);
+
+				return instance;
+			},
+
 			setPlid: function(plid) {
 				var instance = this;
 
-				instance.reservedParams.p_l_id =  plid;
+				instance.reservedParams.p_l_id = plid;
 
 				return instance;
 			},

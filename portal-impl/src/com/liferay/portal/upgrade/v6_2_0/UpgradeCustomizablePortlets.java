@@ -166,7 +166,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"update PortletPreferences set ownerId = ?, ownerType = ?, " +
 					"plid = ?, portletId = ? where ownerId = ? and " +
-						"ownerType = ? and portletId = ?");
+						"ownerType = ? and plid = ? and portletId = ?");
 
 			ps.setLong(1, userId);
 			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_USER);
@@ -174,7 +174,8 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			ps.setString(4, newPortletId);
 			ps.setLong(5, 0L);
 			ps.setInt(6, PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-			ps.setString(7, portletId);
+			ps.setLong(7, plid);
+			ps.setString(8, portletId);
 
 			ps.executeUpdate();
 		}

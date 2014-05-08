@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[6]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ACTIONS</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr[contains(.,'${key_dataDefinitionName}')]/td[6]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_dataDefinitionName}')]/td[6]/div/a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>

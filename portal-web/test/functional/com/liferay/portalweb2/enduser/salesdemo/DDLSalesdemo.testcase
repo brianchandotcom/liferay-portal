@@ -9,36 +9,20 @@
 	<tear-down>
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="DDLTemplate#tearDownTemplateCP" />
-
-		<execute macro="DDLTemplate#tearDownTemplateCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
-		</execute>
-
 		<execute macro="DDLList#tearDownCP" />
 
 		<execute macro="DDLDataDefinition#tearDownCP" />
-
-		<execute macro="DMDocument#tearDownCP" />
-
-		<execute macro="User#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="DDLDemo" priority="5">
-		<var name="ddlDataDefinitionDescription" value="List for Potlucks" />
-		<var name="ddlDataDefinitionName" value="Potluck Items" />
-		<var name="ddlListDescription" value="Sign up list for our company picnic." />
-		<var name="ddlListName" value="Potluck Sign Up List" />
-		<var name="pageName" value="Company Picnic" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Company Picnic" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Company Picnic" />
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
@@ -50,17 +34,17 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Company Picnic" />
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="Sign up list for our company picnic." />
+			<var name="ddlListName" value="Potluck Sign Up List" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addPGViaDDLDisplay">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="List for Potlucks" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -92,13 +76,13 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DDLList#savePGViaDDLDisplay" />
 
 		<execute macro="DDLRecord#addPGViaDDLDisplay">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DDLRecord#populateField">
@@ -125,7 +109,7 @@
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
 		<execute macro="DDLRecord#addPGViaDDLDisplay">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
 		<execute macro="DDLRecord#populateField">
@@ -181,11 +165,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Company Picnic" />
 		</execute>
 
 		<var name="ddlRecordFieldData" value="Joe" />
-		<var name="fieldName" value="First_Name" />
+		<var name="key_fieldName" value="First_Name" />
 
 		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[1]" />
 		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
@@ -193,7 +177,7 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[1]" value1="${ddlRecordFieldData}" />
 
 		<var name="ddlRecordFieldData" value="Perkins" />
-		<var name="fieldName" value="Last_Name" />
+		<var name="key_fieldName" value="Last_Name" />
 
 		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[2]" />
 		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
@@ -201,10 +185,10 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[2]" value1="${ddlRecordFieldData}" />
 
 		<var name="ddlRecordFieldData" value="Chips" />
-		<var name="fieldName" value="What_are_you_bringing" />
+		<var name="key_fieldName" value="What_are_you_bringing" />
 
 		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[3]" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator-key1="CELL_EDITOR_SELECT" value1="${ddlRecordFieldData}" />
 		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[3]" value1="${ddlRecordFieldData}" />
 	</command>

@@ -20,7 +20,12 @@
 </tr>
 <tr>
 	<td>CELL_EDITOR_FIELD</td>
-	<td>//input[@name='${fieldName}'] | //select[@name='${fieldName}']</td>
+	<td>//input[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CELL_EDITOR_SELECT</td>
+	<td>//select[@name='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

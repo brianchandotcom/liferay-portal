@@ -687,7 +687,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
 
 		while (matcher.find()) {
-			String tabs = matcher.group(1);
+			String tabs = matcher.group(2);
 			int tabCount = tabs.length();
 
 			int pos = matcher.start();
@@ -699,7 +699,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					continue;
 				}
 
-				String codeBlock = content.substring(pos + tabCount + 1);
+				String codeBlock = content.substring(
+					pos + tabCount + 1, matcher.end());
 
 				String firstLine = codeBlock.substring(
 					0, codeBlock.indexOf("\n"));
@@ -710,6 +711,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					firstLine.startsWith("new ") ||
 					firstLine.contains(" new ")) {
 
+					break;
+				}
+
+				String lastLine = StringUtil.trimLeading(matcher.group(1));
+
+				if (lastLine.startsWith("// ")) {
 					break;
 				}
 
@@ -2868,7 +2875,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _checkUnprocessedExceptions;
 	private Properties _hibernateSQLQueryExclusions;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
-		"\n\n(\t+)}\n");
+		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Properties _javaTermSortExclusions;

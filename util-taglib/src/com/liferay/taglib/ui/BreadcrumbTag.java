@@ -14,15 +14,12 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -31,19 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -52,10 +38,8 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -90,28 +74,12 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = showPortletBreadcrumb;
 	}
 
-	protected void buildParentGroupsBreadcrumb(
-		ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		List<BreadcrumbEntry> parentGroupEntries =
-			BreadcrumbUtil.getParentGroupEntries(themeDisplay);
-
-		for (BreadcrumbEntry parentGroupEntry : parentGroupEntries) {
-			sb.append("<li><a href=\"");
-			sb.append(parentGroupEntry.getURL());
-			sb.append("\">");
-			sb.append(HtmlUtil.escape(parentGroupEntry.getTitle()));
-			sb.append("</a><span class=\"divider\">/</span></li>");
-		}
-	}
-
 	protected void buildCurrentGroupBreadcrumb(
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		BreadcrumbEntry currentGroupEntry =
-			BreadcrumbUtil.getCurrentGroupEntry(themeDisplay);
+		BreadcrumbEntry currentGroupEntry = BreadcrumbUtil.getCurrentGroupEntry(
+			themeDisplay);
 
 		if (currentGroupEntry != null) {
 			sb.append("<li><a href=\"");
@@ -126,8 +94,8 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		BreadcrumbEntry guestGroupEntry =
-			BreadcrumbUtil.getGuestGroupEntry(themeDisplay);
+		BreadcrumbEntry guestGroupEntry = BreadcrumbUtil.getGuestGroupEntry(
+			themeDisplay);
 
 		if (guestGroupEntry != null) {
 			sb.append("<li><a href=\"");
@@ -142,8 +110,8 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		List<BreadcrumbEntry> layoutEntries =
-			BreadcrumbUtil.getLayoutEntries(themeDisplay);
+		List<BreadcrumbEntry> layoutEntries = BreadcrumbUtil.getLayoutEntries(
+			themeDisplay);
 
 		for (BreadcrumbEntry layoutEntry : layoutEntries) {
 			sb.append("<li><a href=\"");
@@ -168,16 +136,31 @@ public class BreadcrumbTag extends IncludeTag {
 		}
 	}
 
+	protected void buildParentGroupsBreadcrumb(
+			ThemeDisplay themeDisplay, StringBundler sb)
+		throws Exception {
+
+		List<BreadcrumbEntry> parentGroupEntries =
+			BreadcrumbUtil.getParentGroupEntries(themeDisplay);
+
+		for (BreadcrumbEntry parentGroupEntry : parentGroupEntries) {
+			sb.append("<li><a href=\"");
+			sb.append(parentGroupEntry.getURL());
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(parentGroupEntry.getTitle()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
+		}
+	}
+
 	protected void buildPortletBreadcrumb(
 			HttpServletRequest request, ThemeDisplay themeDisplay,
 			StringBundler sb)
 		throws Exception {
 
-		List<BreadcrumbEntry> portletEntries =
-			BreadcrumbUtil.getPortletEntries(request);
+		List<BreadcrumbEntry> portletEntries = BreadcrumbUtil.getPortletEntries(
+			request);
 
 		for (BreadcrumbEntry portletEntry : portletEntries) {
-
 			if (!_showCurrentGroup) {
 				String siteGroupName = themeDisplay.getSiteGroupName();
 
@@ -199,6 +182,7 @@ public class BreadcrumbTag extends IncludeTag {
 			}
 
 			sb.append("<li>");
+
 			if (Validator.isNotNull(portletEntry.getURL())) {
 				sb.append("<a href=\"");
 				sb.append(HtmlUtil.escape(portletEntry.getURL()));
@@ -267,6 +251,37 @@ public class BreadcrumbTag extends IncludeTag {
 		return modifyBreadcrumbClasses(sb.toString());
 	}
 
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	protected void initShowParentGroups(HttpServletRequest request) {
+		if (_showParentGroups != null) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			Layout layout = themeDisplay.getLayout();
+
+			Group group = layout.getGroup();
+
+			UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+			_showParentGroups = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty(
+					"breadcrumbShowParentGroups"),
+				_SHOW_PARENT_GROUPS);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	protected String modifyBreadcrumbClasses(String breadcrumbString) {
 		if (Validator.isNull(breadcrumbString)) {
 			return StringPool.BLANK;
@@ -315,37 +330,6 @@ public class BreadcrumbTag extends IncludeTag {
 		}
 
 		return breadcrumbString;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	protected void initShowParentGroups(HttpServletRequest request) {
-		if (_showParentGroups != null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			Layout layout = themeDisplay.getLayout();
-
-			Group group = layout.getGroup();
-
-			UnicodeProperties typeSettingsProperties =
-				group.getTypeSettingsProperties();
-
-			_showParentGroups = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty(
-					"breadcrumbShowParentGroups"),
-				_SHOW_PARENT_GROUPS);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	@Override

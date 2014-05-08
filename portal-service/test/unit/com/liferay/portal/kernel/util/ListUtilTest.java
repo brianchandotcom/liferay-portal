@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testCountWithEmptyListShouldReturnZero() {
-		List<String> list = new ArrayList<String>();
+		Collection<String> list = new ArrayList<String>();
 
 		PredicateFilter predicate = new PredicateFilter() {
 			@Override
@@ -161,7 +162,7 @@ public class ListUtilTest {
 		inputList.add("b");
 		inputList.add("c");
 
-		List<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputList = ListUtil.filter(
 			inputList, predicateFilter);
 
 		Assert.assertEquals(expectedOutputList, actualOutputList);
@@ -199,7 +200,7 @@ public class ListUtilTest {
 
 		};
 
-		List<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputList = ListUtil.filter(
 			inputList, outputList, predicateFilter);
 
 		Assert.assertSame(outputList, actualOutputList);

@@ -154,6 +154,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
 		upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
+		upgradeTable.setAllowUniqueIndexes(true);
 
 		upgradeTable.updateTable();
 

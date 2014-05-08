@@ -701,9 +701,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator-key1="BOOLEAN_CHECKBOX" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -723,9 +726,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator-key1="BOOLEAN_CHECKBOX" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
@@ -799,9 +805,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -821,9 +830,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DECIMAL_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
@@ -972,9 +984,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="INTEGER_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -994,9 +1009,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="INTEGER_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
@@ -1416,9 +1434,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="NUMBER_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -1438,9 +1459,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="NUMBER_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
@@ -1514,9 +1538,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_BOX_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -1536,9 +1563,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_BOX_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
@@ -1612,9 +1642,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
 
@@ -1634,9 +1667,12 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="TEXT_FIELD" value1="${fieldPredefinedValue}" />
+		<execute macro="DDLRecord#viewFieldPredefinedValue">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateField">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />

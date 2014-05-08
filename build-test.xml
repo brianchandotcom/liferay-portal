@@ -1997,13 +1997,7 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.geronimo}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=geronimo</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-geronimo" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-geronimo" inheritAll="false" />
 				</then>
 			</elseif>
 		</if>
@@ -2020,13 +2014,7 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-glassfish" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-glassfish" inheritAll="false" />
 				</then>
 			</elseif>
 		</if>
@@ -2043,15 +2031,23 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.jboss}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=jboss</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false" />
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+			</then>
 		</if>
 
 		<if>
@@ -2066,13 +2062,7 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.jetty}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-jetty" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-jetty" inheritAll="false" />
 				</then>
 			</elseif>
 		</if>
@@ -2089,13 +2079,7 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.jonas}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=jonas</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-jonas" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-jonas" inheritAll="false" />
 				</then>
 			</elseif>
 		</if>
@@ -2112,31 +2096,9 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.resin}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-resin" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-resin" inheritAll="false" />
 				</then>
 			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle">
-					<param name="app.server.type" value="tomcat" />
-					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
-				</antcall>
-			</then>
-			<else>
-				<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false" />
-
-				<antcall target="deploy" inheritAll="false" />
-			</else>
 		</if>
 
 		<if>
@@ -2152,15 +2114,23 @@ tck.url=true</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
-
-					<ant antfile="build-dist.xml" target="unzip-tcserver" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<delete file="app.server.${user.name}.properties" />
+					<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tomcat" />
+					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
+				</antcall>
+			</then>
+			<else>
+				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+			</else>
 		</if>
 
 		<if>

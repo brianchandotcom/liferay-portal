@@ -482,7 +482,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkSystemEventAnnotations(String content, String fileName)
 		throws Exception {
 
-		if (!fileName.endsWith("PortletDataHandler.java")) {
+		if (portalSource && !fileName.endsWith("PortletDataHandler.java")) {
 			return;
 		}
 

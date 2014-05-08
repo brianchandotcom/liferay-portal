@@ -1519,7 +1519,6 @@ public class JavadocFormatter {
 			else {
 				return false;
 			}
-
 		}
 
 		return false;

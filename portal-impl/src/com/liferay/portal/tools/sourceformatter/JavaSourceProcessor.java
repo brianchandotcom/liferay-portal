@@ -687,6 +687,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
 
 		while (matcher.find()) {
+			String lastLine = StringUtil.trimLeading(matcher.group(1));
+
+			if (lastLine.startsWith("// ")) {
+				continue;
+			}
+
 			String tabs = matcher.group(2);
 			int tabCount = tabs.length();
 
@@ -711,12 +717,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					firstLine.startsWith("new ") ||
 					firstLine.contains(" new ")) {
 
-					break;
-				}
-
-				String lastLine = StringUtil.trimLeading(matcher.group(1));
-
-				if (lastLine.startsWith("// ")) {
 					break;
 				}
 

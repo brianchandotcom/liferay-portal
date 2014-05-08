@@ -21,6 +21,11 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="BlogsPortlet#tearDownConfigurationScopePG" />
@@ -235,6 +240,58 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntriesAsGuestViaAP" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content 2" />
+			<var name="entryTitle" value="Blogs Entry Title 2" />
+		</execute>
+
+		<execute macro="BlogsEntry#removeViewPermissionsPG">
+			<var name="entryTitle" value="Blogs Entry Title 2" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="Blogs Entry Title 2" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryViaAPPG">
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
+			<var name="assetTitle" value="Blogs Entry Title 2" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
+			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 	</command>
 

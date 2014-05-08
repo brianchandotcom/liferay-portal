@@ -134,12 +134,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				var count = parseInt(responseData);
 
 				if (count > 0) {
-					status = <%= WorkflowConstants.STATUS_APPROVED %>
+					status = <%= WorkflowConstants.STATUS_APPROVED %>;
 
 					<portlet:namespace />getUsersCount(
 						className, ids, status,
 						function(event, id, obj) {
-							responseData = this.get('responseData')
+							responseData = this.get('responseData');
 							count = parseInt(responseData);
 
 							if (count > 0) {

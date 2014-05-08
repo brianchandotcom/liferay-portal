@@ -1,0 +1,65 @@
+<definition>
+	<command name="gotoHtmlMode">
+		<execute action="Home#open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
+
+		<execute action="BaseLiferay#pause" locator1="5000" />
+	</command>
+
+	<command name="login">
+		<execute action="Home#open" locator1="http://www.gmail.com" />
+		<execute action="Home#pause" locator1="5000" />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<if>
+			<condition action="Gmail#isElementNotPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
+			<then>
+				<if>
+					<condition action="Gmail#isElementPresent" locator-key1="LOGIN_EMAIL_FIELD" />
+					<then>
+						<execute action="Gmail#type" locator-key1="LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+					</then>
+				</if>
+
+				<execute action="Gmail#type" locator-key1="LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+				<execute action="Gmail#check" locator-key1="LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+				<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
+				<execute action="Gmail#pause" locator1="5000" />
+			</then>
+			<else>
+				<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" value1="${userEmailAddress}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="tearDown">
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<while>
+			<condition action="Gmail#isElementPresent" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
+			<then>
+				<execute action="Gmail#check" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
+				<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
+				<execute action="Gmail#pause" locator1="3000" />
+			</then>
+		</while>
+	</command>
+
+	<command name="viewMail">
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+		<execute action="Gmail#pause" locator1="3000" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
+	</command>
+</definition>

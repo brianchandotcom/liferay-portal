@@ -1,4 +1,22 @@
 <definition>
+	<command name="configureMailServerSettings">
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_MAIL" value1="Mail" />
+
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="pop.gmail.com" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="995" />
+		<execute action="CPServeradministrationMail#check" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="${userName}" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="${userPassword}" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="smtp.gmail.com" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="465" />
+		<execute action="CPServeradministrationMail#check" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="${userName}" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="${userPassword}" />
+		<execute action="CPServeradministrationMail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPServeradministrationMail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="searchPortalPropertiesCP">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PROPERTIES" value1="Properties" />
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />
@@ -21,5 +39,27 @@
 				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
 			</else>
 		</if>
+	</command>
+
+	<command name="tearDownMailServerSettings">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_MAIL" value1="Mail" />
+
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER" value1="localhost" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PORT" value1="110" />
+		<execute action="CPServeradministrationMail#uncheck" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME" value1="weblogic" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD" value1="password" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER" value1="localhost" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PORT" value1="25" />
+		<execute action="CPServeradministrationMail#uncheck" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME" value1="" />
+		<execute action="CPServeradministrationMail#type" locator-key1="CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD" value1="" />
+		<execute action="CPServeradministrationMail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPServeradministrationMail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 </definition>

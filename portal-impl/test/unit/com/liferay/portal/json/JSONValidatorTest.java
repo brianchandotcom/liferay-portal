@@ -38,21 +38,21 @@ public class JSONValidatorTest {
 
 	@Test
 	public void testInvalidAdditionalProperty() throws Exception {
-		String json = readJSON("invalid-additional-property.json");
+		String json = readJSON("invalid_additional_property.json");
 
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}
 
 	@Test
 	public void testInvalidDataType() throws Exception {
-		String json = readJSON("invalid-data-type.json");
+		String json = readJSON("invalid_data_type.json");
 
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}
 
 	@Test
 	public void testMissingRequiredProperty() throws Exception {
-		String json = readJSON("missing-required-property.json");
+		String json = readJSON("missing_required_property.json");
 
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}

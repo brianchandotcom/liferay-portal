@@ -1,7 +1,23 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
+	"additionalProperties": false,
+	"definitions": {
+		"array": {
+			"items": {
+				"type": "integer"
+			},
+			"type": "array"
+		},
+		"object": {
+			"properties": {
+				"requiredString": {
+					"type": "string"
+				}
+			},
+			"required": ["requiredString"],
+			"type": "object"
+		}
+	},
 	"description": "This object is intended to be used to test basic json schema features",
-	"type": "object",
 	"properties": {
 		"array": {
 			"$ref": "#/definitions/array"
@@ -30,22 +46,6 @@
 			"type": "integer"
 		}
 	},
-	"definitions": {
-		"array": {
-			"type": "array",
-			"items": {
-				"type": "integer"
-			}
-		},
-		"object": {
-			"type": "object",
-			"properties": {
-				"requiredString": {
-					"type": "string"
-				}
-			},
-			"required": ["requiredString"]
-		}
-	},
-	"additionalProperties": false
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object"
 }

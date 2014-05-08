@@ -3,6 +3,7 @@
 
 <#assign maxWidth = 500 />
 <#assign minHeight = "400px" />
+<#assign minWidth = "400px" />
 
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
@@ -36,6 +37,10 @@
 </#list>
 
 <style type="text/css">
+	.asset-entry-abstract {
+		min-width: ${minWidth};
+	}
+
 	.asset-entry-abstract .asset-entry-abstract-image {
 		float: left;
 		margin-right: 2em;

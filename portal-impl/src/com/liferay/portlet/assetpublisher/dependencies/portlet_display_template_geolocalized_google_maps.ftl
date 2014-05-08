@@ -2,6 +2,7 @@
 <#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
 
 <#assign group = themeDisplay.getScopeGroup() />
+
 <#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsKey")!"" />
 
 <#assign defaultLatitude = -3.6833 />
@@ -9,6 +10,7 @@
 
 <#if apiKey = "">
 	<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId) />
+
 	<#assign apiKey = companyPrefs.getValue("googleMapsKey", "") />
 </#if>
 
@@ -31,7 +33,7 @@
 		"default": "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 	} />
 
-	<#assign markers = jsonFactoryUtil.createJSONArray() />
+	<#assign jsonArray = jsonFactoryUtil.createJSONArray() />
 
 	<#list entries as entry>
 		<#assign assetRenderer = entry.getAssetRenderer() />
@@ -41,23 +43,23 @@
 		<#assign fields = ddmReader.getFields("geolocation") />
 
 		<#list fields.iterator() as field>
-			<#assign marker = jsonFactoryUtil.createJSONObject(field.getValue()) />
+			<#assign jsonObject = jsonFactoryUtil.createJSONObject(field.getValue()) />
 
-			<@liferay.silently marker.put("title", assetRenderer.getTitle(locale)) />
+			<@liferay.silently jsonObject.put("title", assetRenderer.getTitle(locale)) />
 
 			<#assign entryAbstract>
 				<@getAbstract asset = entry />
 			</#assign>
 
-			<@liferay.silently marker.put("abstract", entryAbstract) />
+			<@liferay.silently jsonObject.put("abstract", entryAbstract) />
 
 			<#if images?keys?seq_contains(entry.getClassName())>
-				<@liferay.silently marker.put("icon", images[entry.getClassName()]) />
+				<@liferay.silently jsonObject.put("icon", images[entry.getClassName()]) />
 			<#else>
-				<@liferay.silently marker.put("icon", images["default"]) />
+				<@liferay.silently jsonObject.put("icon", images["default"]) />
 			</#if>
 
-			<@liferay.silently markers.put(marker) />
+			<@liferay.silently jsonArray.put(jsonObject) />
 		</#list>
 	</#list>
 
@@ -98,7 +100,8 @@
 	<@liferay_aui.script>
 		(function () {
 			function putMarkers(map) {
-				var points = ${markers};
+				var points = ${jsonArray};
+
 				var len = points.length;
 
 				if (len == 0) {
@@ -110,24 +113,28 @@
 				for (var i = 0; i < len; i++) {
 					var point = points[i];
 
-					var marker = new google.maps.Marker({
-						position: new google.maps.LatLng(
-							point["latitude"], point["longitude"]),
-						map: map,
-						title: point["title"],
-						icon: point["icon"]
-					});
+					var marker = new google.maps.Marker(
+						{
+							icon: point["icon"],
+							map: map,
+							position: new google.maps.LatLng(point["latitude"], point["longitude"]),
+							title: point["title"]
+						}
+					);
 
 					bounds.extend(marker.position);
 
 					(function (marker) {
-						var infoWindow = new google.maps.InfoWindow({
-							content: point["abstract"] || point["title"]
-						});
+						var infoWindow = new google.maps.InfoWindow(
+							{
+								content: point["abstract"] || point["title"]
+							});
 
-						google.maps.event.addListener(marker, 'click', function () {
-							infoWindow.open(map, marker);
-						});
+						google.maps.event.addListener(
+							marker, 'click',
+							function () {
+								infoWindow.open(map, marker);
+							});
 					})(marker);
 				}
 
@@ -135,8 +142,7 @@
 			}
 
 			function drawMap(mapOptions) {
-				var map = new google.maps.Map(
-					document.getElementById("${namespace}map-canvas"), mapOptions);
+				var map = new google.maps.Map(document.getElementById("${namespace}map-canvas"), mapOptions);
 
 				var bounds = putMarkers(map);
 
@@ -147,13 +153,14 @@
 			}
 
 			if ("geolocation" in navigator) {
-				navigator.geolocation.getCurrentPosition(function (pos) {
-					drawMap({
-						center: new google.maps.LatLng(
-							pos.coords.latitude, pos.coords.longitude),
-						zoom: 8
+				navigator.geolocation.getCurrentPosition(
+					function (pos) {
+						drawMap(
+							{
+								center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+								zoom: 8
+							});
 					});
-				});
 			}
 			else {
 				drawMap({

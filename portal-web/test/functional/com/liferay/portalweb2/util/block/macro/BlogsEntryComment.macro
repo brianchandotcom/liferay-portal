@@ -120,7 +120,7 @@
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_HIGHLIGHTED" value1="${entrySearchTerm}" />
-		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}..." />
+		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="viewCP">

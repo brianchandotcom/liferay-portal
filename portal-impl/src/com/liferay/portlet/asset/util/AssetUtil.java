@@ -264,7 +264,7 @@ public class AssetUtil {
 				@Override
 				public boolean filter(AssetVocabulary assetVocabulary) {
 					if (classTypePK ==
-						AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
+							AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
 
 						return assetVocabulary.isAssociatedToAsset(classNameId);
 					}

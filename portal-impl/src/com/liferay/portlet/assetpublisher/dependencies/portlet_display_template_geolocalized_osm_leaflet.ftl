@@ -1,11 +1,11 @@
 <#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
-<#assign minHeight = "400px" />
 <#assign maxWidth = 500 />
+<#assign minHeight = "400px" />
 
-<#assign defaultLongitude = 40.40 />
 <#assign defaultLatitude = -3.6833 />
+<#assign defaultLongitude = 40.40 />
 
 <#assign namespace = renderResponse.getNamespace() />
 
@@ -106,22 +106,16 @@
 <#macro getAbstract asset>
 	<#assign assetRenderer = asset.getAssetRenderer() />
 
-	<#assign hasEditPermissions = assetRenderer.hasEditPermission(permissionChecker) />
-
-	<#assign showEditControls = showEditURL && hasEditPermissions />
-
-	<#assign popUpWindowState = windowStateFactory.getWindowState("POP_UP") />
-
-	<#assign redirectURL=renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
+	<#assign redirectURL = renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
 
 	${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
 	<div class="asset-entry-abstract">
-		<#assign editPortletURL=assetRenderer.getURLEdit(renderRequest, renderResponse, popUpWindowState, redirectURL) />
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse,  windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
-		<#assign taglibEditURL="javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />
+		<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />
 
-		<#if showEditControls && hasEditPermissions>
+		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
 			<@liferay_ui.icon
 				image="edit"
 				label=true
@@ -134,7 +128,7 @@
 			<img src="${assetRenderer.getThumbnailPath(renderRequest)}" />
 		</div>
 
-		<#assign assetURL=assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, asset) />
+		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, asset) />
 
 		<div class="asset-entry-abstract-content">
 			<h3><a href="${assetURL}">${assetRenderer.getTitle(locale)}</a></h3>

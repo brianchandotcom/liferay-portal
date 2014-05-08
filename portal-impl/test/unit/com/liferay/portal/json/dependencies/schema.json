@@ -3,28 +3,48 @@
 	"description": "This object is intended to be used to test basic json schema features",
 	"type": "object",
 	"properties": {
-		"array": { "$ref": "#/definitions/array" },
-		"boolean": { "type": "boolean" },
-		"integer": { "type": "integer" },
-		"number": { "type": "number" },
-		"null": { "type": "null" },
-		"object": { "$ref": "#/definitions/object" },
-		"string": { "type": "string" }
+		"array": {
+			"$ref": "#/definitions/array"
+		},
+		"boolean": {
+			"type": "boolean"
+		},
+		"integer": {
+			"type": "integer"
+		},
+		"null": {
+			"type": "null"
+		},
+		"number": {
+			"type": "number"
+		},
+		"object": {
+			"$ref": "#/definitions/object"
+		},
+		"string": {
+			"type": "string"
+		}
 	},
 	"patternProperties": {
-		"^patternProperty[0-9]+$": { "type": "integer" }
+		"^patternProperty[0-9]+$": {
+			"type": "integer"
+		}
 	},
 	"definitions": {
 		"array": {
 			"type": "array",
-			"items": { "type": "integer" }
+			"items": {
+				"type": "integer"
+			}
 		},
 		"object": {
 			"type": "object",
 			"properties": {
-				"requiredString": { "type": "string" }
+				"requiredString": {
+					"type": "string"
+				}
 			},
-			"required": [ "requiredString" ]
+			"required": ["requiredString"]
 		}
 	},
 	"additionalProperties": false

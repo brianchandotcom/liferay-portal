@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -11,9 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.json;
 
-import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONValidator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -22,43 +24,43 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 
 /**
  * @author Pablo Carvalho
  */
-@RunWith(PowerMockRunner.class)
-public class JSONValidatorTest extends PowerMockito {
+public class JSONValidatorTest {
+
 	@Before
-	public void setUp () throws Exception {
-		String jsonSchema = readJSON("schema.json");
-		_jsonValidator = new JSONValidator(jsonSchema);
+	public void setUp() throws Exception {
+		setupJSONFactory();
+		setupJSONValidator();
 	}
 
 	@Test
 	public void testInvalidAdditionalProperty() throws Exception {
 		String json = readJSON("invalid-additional-property.json");
+
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}
 
 	@Test
 	public void testInvalidDataType() throws Exception {
 		String json = readJSON("invalid-data-type.json");
+
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}
 
 	@Test
 	public void testMissingRequiredProperty() throws Exception {
 		String json = readJSON("missing-required-property.json");
+
 		Assert.assertFalse(_jsonValidator.isValid(json));
 	}
 
 	@Test
 	public void testValidJSON() throws Exception {
 		String json = readJSON("valid.json");
+
 		Assert.assertTrue(_jsonValidator.isValid(json));
 	}
 
@@ -70,5 +72,19 @@ public class JSONValidatorTest extends PowerMockito {
 
 		return StringUtil.read(inputStream);
 	}
+
+	protected void setupJSONFactory() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	protected void setupJSONValidator() throws Exception {
+		String jsonSchema = readJSON("schema.json");
+
+		_jsonValidator = JSONFactoryUtil.createJSONValidator(jsonSchema);
+	}
+
 	private JSONValidator _jsonValidator;
+
 }

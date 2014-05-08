@@ -51,38 +51,6 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 </portlet:renderURL>
 
-<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/journal/edit_article" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="portletResource" value="<%= portletResource %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="classPK" value="<%= classPK %>" />
-	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
-	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
-</portlet:renderURL>
-
-<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
-</liferay-portlet:renderURL>
-
 <div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
 	<div class="journal-article-body-content">
 		<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
@@ -386,6 +354,38 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	</c:if>
 </div>
 
+<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
+	<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
+	<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+</liferay-portlet:renderURL>
+
+<portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<portlet:param name="struts_action" value="/journal/edit_article" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="portletResource" value="<%= portletResource %>" />
+	<portlet:param name="articleId" value="<%= articleId %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<portlet:param name="classPK" value="<%= classPK %>" />
+	<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
+	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateKey()) : StringPool.BLANK %>" />
+</portlet:renderURL>
+
 <aui:script use="liferay-journal-content">
 	var journalContent = new Liferay.Portlet.JournalContent(
 		{
@@ -393,7 +393,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 			'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-			'ddm.classPK': <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
+			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
 			'ddm.groupId': <%= groupId %>,
 			'ddm.refererPortletName': '<%= PortletKeys.JOURNAL_CONTENT %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,

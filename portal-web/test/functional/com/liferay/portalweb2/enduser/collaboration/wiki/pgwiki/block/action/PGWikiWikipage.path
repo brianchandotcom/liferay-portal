@@ -55,8 +55,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_BODY_GENERIC</td>
+	<td>//div[@class='wiki-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WIKI_PAGE_BODY_LINK</td>
 	<td>//div[@class='wiki-body']/p/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_VIEW_COUNT</td>
+	<td>//div[@class='page-actions']/div[@class='stats']</td>
 	<td></td>
 </tr>
 <tr>

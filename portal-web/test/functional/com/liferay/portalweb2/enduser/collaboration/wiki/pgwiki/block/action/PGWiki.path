@@ -59,16 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
@@ -106,6 +96,42 @@
 <tr>
 	<td>WIKI_NODE</td>
 	<td>//span[@class='nav-item-label' and contains(.,'${key_wikiNodeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//div[@class='form-search']//div/button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_TITLE</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_NODE</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//small[contains(.,'Wiki Node')]//dd</td>
+	<td>Main</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_DESCRIPTION</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//span[@class='entry-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_CREATE_NEW_PAGE_LINK</td>
+	<td>//div[@class='portlet-body']//a[contains(.,'Create a new page on this topic.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -163,6 +189,11 @@
 <tr>
 	<td>WIKI_PAGE_BODY</td>
 	<td>//div[@class='wiki-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY_GENERIC</td>
+	<td>//div[@class='wiki-body']</td>
 	<td></td>
 </tr>
 <tr>

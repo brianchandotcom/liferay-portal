@@ -119,7 +119,8 @@ else {
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="edit"
+						iconCssClass="icon-edit"
+						message="edit"
 						url="<%= editURL %>"
 					/>
 				</c:if>

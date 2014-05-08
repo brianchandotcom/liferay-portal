@@ -98,8 +98,8 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 		%>
 
 			<liferay-ui:icon
+				iconCssClass="<%= group.getIconCssClass() %>"
 				message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-				src="<%= group.getIconURL(themeDisplay) %>"
 				url="<%= selectGroupURL.toString() %>"
 			/>
 

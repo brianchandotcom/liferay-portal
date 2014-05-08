@@ -123,7 +123,7 @@ boolean expired = true;
 
 											<div class="print-action">
 												<liferay-ui:icon
-													image="print"
+													iconCssClass="icon-print"
 													label="<%= true %>"
 													message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle())}, false) %>'
 													url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'

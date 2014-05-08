@@ -75,6 +75,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getIconCssClass();
+
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 

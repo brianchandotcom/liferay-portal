@@ -195,23 +195,43 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public String getIconURL(ThemeDisplay themeDisplay) {
-		String iconURL = themeDisplay.getPathThemeImages() + "/common/";
+	public String getIconCssClass() {
+		String iconCss = "icon-globe";
 
 		if (isCompany()) {
-			iconURL = iconURL.concat("global.png");
+			iconCss = "icon-globe";
 		}
 		else if (isLayout()) {
-			iconURL = iconURL.concat("page.png");
+			iconCss = "icon-page";
 		}
 		else if (isOrganization()) {
-			iconURL = iconURL.concat("organization_icon.png");
+			iconCss = "icon-globe";
 		}
 		else if (isUser()) {
-			iconURL = iconURL.concat("user_icon.png");
+			iconCss = "icon-user";
+		}
+
+		return iconCss;
+	}
+
+	@Override
+	public String getIconURL(ThemeDisplay themeDisplay) {
+		String iconURL = StringPool.BLANK;
+
+		if (isCompany()) {
+			iconURL = "../aui/globe";
+		}
+		else if (isLayout()) {
+			iconURL = "../aui/page";
+		}
+		else if (isOrganization()) {
+			iconURL = "../aui/globe";
+		}
+		else if (isUser()) {
+			iconURL = "../aui/user";
 		}
 		else {
-			iconURL = iconURL.concat("site_icon.png");
+			iconURL = "../aui/globe";
 		}
 
 		return iconURL;

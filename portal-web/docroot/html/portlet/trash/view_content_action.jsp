@@ -59,7 +59,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 		<liferay-ui:icon
 			cssClass="trash-restore-link"
 			data="<%= data %>"
-			image="undo"
+			iconCssClass="icon-undo"
 			message="restore"
 			url="javascript:;"
 		/>

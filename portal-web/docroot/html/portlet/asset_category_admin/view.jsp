@@ -40,7 +40,7 @@
 			</c:if>
 
 			<aui:nav-item dropdown="<%= true %>" label="actions">
-				<aui:nav-item iconCssClass="icon-remove" id="deleteSelectedItems" label="delete" />
+				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedItems" label="delete" />
 			</aui:nav-item>
 		</aui:nav>
 

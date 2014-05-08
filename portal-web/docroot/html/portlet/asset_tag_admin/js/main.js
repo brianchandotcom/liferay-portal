@@ -56,7 +56,7 @@ AUI.add(
 			'<a href="javascript:;" data-tagId="{tagId}" tabIndex="-1">' +
 				'<input type="checkbox" class="tag-item-check" name="tag-item-check" data-tagId="{tagId}" data-tagName="{name}">' +
 				'<span class="tag-item-name" data-tagId="{tagId}">{name}</span>' +
-				'<span tabindex="0" class="tag-item-actions-trigger" data-tagId="{tagId}"></span>' +
+				'<span tabindex="0" class="icon-edit tag-item-actions-trigger" data-tagId="{tagId}"></span>' +
 			'</a>' +
 		'</li>';
 

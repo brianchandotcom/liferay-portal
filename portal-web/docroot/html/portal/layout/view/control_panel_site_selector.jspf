@@ -56,8 +56,8 @@ switchGroupURL = PortalUtil.resetPortletParameters(switchGroupURL, themeDisplay.
 			%>
 
 				<liferay-ui:icon
+					iconCssClass="<%= manageableSiteGroup.getIconCssClass() %>"
 					message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
-					src="<%= manageableSiteGroup.getIconURL(themeDisplay) %>"
 					url='<%= HttpUtil.setParameter(switchGroupURL, "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
 				/>
 

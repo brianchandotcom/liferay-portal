@@ -36,7 +36,7 @@ printAssetURL.setWindowState(LiferayWindowState.POP_UP);
 <c:choose>
 	<c:when test="<%= print %>">
 		<liferay-ui:icon
-			image="print"
+			iconCssClass="icon-print"
 			label="<%= true %>"
 			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
 			url="javascript:print();"
@@ -48,7 +48,7 @@ printAssetURL.setWindowState(LiferayWindowState.POP_UP);
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:icon
-			image="print"
+			iconCssClass="icon-print"
 			label="<%= true %>"
 			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
 			url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + assetEntryIndex + "();" %>'

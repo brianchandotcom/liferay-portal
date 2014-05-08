@@ -880,6 +880,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public java.lang.String getIconCssClass() {
+		return _group.getIconCssClass();
+	}
+
+	@Override
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		return _group.getIconURL(themeDisplay);

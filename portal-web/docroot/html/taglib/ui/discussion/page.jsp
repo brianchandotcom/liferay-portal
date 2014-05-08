@@ -110,7 +110,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon
-										image="reply"
+										iconCssClass="icon-reply"
 										label="<%= true %>"
 										message="add-comment"
 										url="<%= taglibPostReplyURL %>"
@@ -131,7 +131,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							<c:when test="<%= subscribed %>">
 								<liferay-ui:icon
 									cssClass="subscribe-link"
-									image="unsubscribe"
+									iconCssClass="icon-remove-sign"
 									label="<%= true %>"
 									message="unsubscribe-from-comments"
 									url="<%= subscriptionURL %>"
@@ -140,7 +140,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							<c:otherwise>
 								<liferay-ui:icon
 									cssClass="subscribe-link"
-									image="subscribe"
+									iconCssClass="icon-ok-sign"
 									label="<%= true %>"
 									message="subscribe-to-comments"
 									url="<%= subscriptionURL %>"
@@ -351,7 +351,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														%>
 
 														<liferay-ui:icon
-															image="reply"
+															iconCssClass="icon-reply"
 															label="<%= true %>"
 															message="post-reply"
 															url="<%= taglibPostReplyURL %>"
@@ -367,10 +367,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 													<li class="lfr-discussion-top-link">
 														<liferay-ui:icon
-															image="top"
+															iconCssClass="icon-long-arrow-up"
 															label="<%= true %>"
+															message="top"
 															url="<%= taglibTopURL %>"
-															/>
+														/>
 													</li>
 
 													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
@@ -381,8 +382,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 														<li class="lfr-discussion-edit">
 															<liferay-ui:icon
-																image="edit"
+																iconCssClass="icon-edit"
 																label="<%= true %>"
+																message="edit"
 																url="<%= taglibEditURL %>"
 															/>
 														</li>

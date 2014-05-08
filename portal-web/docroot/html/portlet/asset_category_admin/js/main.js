@@ -184,7 +184,7 @@ AUI.add(
 				'<a href="javascript:;" data-vocabularyId="{vocabularyId}" tabIndex="-1">' +
 					'<input type="checkbox" class="vocabulary-item-check" name="vocabulary-item-check" data-vocabularyId="{vocabularyId}" data-vocabularyName="{titleCurrentValue}">' +
 					'<span class="vocabulary-item-name" data-vocabularyId="{vocabularyId}">{titleCurrentValue}</span>' +
-					'<span tabindex="0" class="vocabulary-item-actions-trigger" data-vocabularyId="{vocabularyId}"></span>' +
+					'<span tabindex="0" class="icon-edit vocabulary-item-actions-trigger" data-vocabularyId="{vocabularyId}"></span>' +
 				'</a>' +
 			'</li>';
 

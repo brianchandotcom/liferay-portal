@@ -112,8 +112,9 @@ boolean hasAddPortletURLs = false;
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="unsubscribe"
+					iconCssClass="icon-remove-sign"
 					label="<%= true %>"
+					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
 			</c:when>
@@ -125,8 +126,9 @@ boolean hasAddPortletURLs = false;
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>

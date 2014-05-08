@@ -21,7 +21,7 @@ long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:d
 String displayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:displayStyle");
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:displayStyleGroupId"));
 List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-template-select:displayStyles");
-String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-template-select:icon"), "configuration");
+String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-template-select:icon"), "icon-cog");
 String label = (String)request.getAttribute("liferay-ui:ddm-template-select:label");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-select:refreshURL");
 boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-select:showEmptyOption"));
@@ -80,8 +80,8 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 </aui:select>
 
 <liferay-ui:icon
+	iconCssClass="<%= icon %>"
 	id="selectDDMTemplate"
-	image="<%= icon %>"
 	label="<%= true %>"
 	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
 	url="javascript:;"

@@ -133,7 +133,12 @@ if (summary != null) {
 			</a>
 
 			<c:if test="<%= Validator.isNotNull(downloadURL) %>">
-				<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>' url="<%= downloadURL %>" />
+				<liferay-ui:icon
+					iconCssClass="icon-download-alt"
+					label="<%= false %>"
+					message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
+					url="<%= downloadURL %>"
+				/>
 			</c:if>
 		</span>
 

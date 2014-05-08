@@ -91,8 +91,8 @@
 							<liferay-ui:message key="scope" />:
 							<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
 								<liferay-ui:icon
+									iconCssClass="<%= curSite.getIconCssClass() %>"
 									message="default"
-									src="<%= curSite.getIconURL(themeDisplay) %>"
 									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curSite.getGroupId()) %>'
 								/>
 
@@ -102,10 +102,10 @@
 								%>
 
 									<liferay-ui:icon
+										iconCssClass="<%= scopeGroup.getIconCssClass() %>"
 										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
-										src="<%= scopeGroup.getIconURL(themeDisplay) %>"
 										url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", scopeGroup.getGroupId()) %>'
-										/>
+									/>
 
 								<%
 								}

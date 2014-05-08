@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -2474,22 +2473,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				String[] configurationPortletOptions = StringUtil.split(
 					element.attributeValue("portlet-configuration"));
 
-				PortletDataHandlerControl[] portletDataHandlerControls =
-					portletDataHandler.getImportConfigurationControls(
-						configurationPortletOptions);
-
-				if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
-					_manifestSummary.addConfigurationPortlet(
-						portlet, configurationPortletOptions);
-				}
-
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&
 					portletDataHandler.isDataSiteLevel() &&
 					GetterUtil.getBoolean(
 						element.attributeValue("portlet-data"))) {
 
-					_manifestSummary.addDataPortlet(portlet);
+					_manifestSummary.addDataPortlet(
+						portlet, configurationPortletOptions);
+				}
+				else {
+					_manifestSummary.addLayoutPortlet(
+						portlet, configurationPortletOptions);
 				}
 			}
 			else if (elementName.equals("staged-model")) {

@@ -54,6 +54,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 ;(function() {
 	var config = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'].config;
 
+	config.allowedContent = true;
+
 	config.height = 265;
 
 	config.removePlugins = [

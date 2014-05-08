@@ -54,6 +54,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	var config = ckEditor.config;
 
+	config.allowedContent = true;
+
 	config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';

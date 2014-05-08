@@ -1,0 +1,73 @@
+<definition>
+	<command name="addPG">
+		<var name="portletTypeKey" value="PORTLET" />
+
+		<execute macro="MobilePortlet#addPGCmd">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<var name="i" value="1" />
+		<var name="key_portletName" value="${portletName}" />
+
+		<while>
+			<not>
+				<or>
+					<condition action="Home#isElementPresent" locator-key1="${portletTypeKey}" />
+					<equals arg1="${i}" arg2="3" />
+				</or>
+			</not>
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
+
+				<execute action="Home#refresh" />
+
+				<execute macro="MobilePortlet#addPGCmd">
+					<var name="portletName" value="${portletName}" />
+				</execute>
+			</then>
+		</while>
+
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
+	</command>
+
+	<command name="addPGCmd">
+		<description message="Add a ${portletName} portlet." />
+
+		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
+		<execute action="Mobiledockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
+		<execute action="Mobiledockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
+
+		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
+
+		<if>
+			<or>
+				<equals arg1="${portletName}" arg2="Asset Publisher" />
+				<equals arg1="${portletName}" arg2="Documents and Media Display" />
+				<equals arg1="${portletName}" arg2="Navigation" />
+				<equals arg1="${portletName}" arg2="OpenSocial Gadget" />
+				<equals arg1="${portletName}" arg2="Web Content Display" />
+			</or>
+			<then>
+				<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
+			</then>
+		</if>
+
+		<execute action="Mobiledockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+
+		<echo message="Adding ${portletName} portlet..." />
+
+		<if>
+			<or>
+				<equals arg1="${portletName}" arg2="Calendar" />
+				<equals arg1="${portletName}" arg2="Documents and Media" />
+				<equals arg1="${portletName}" arg2="Media Gallery" />
+			</or>
+			<then>
+				<execute action="Mobiledockbar#pause" locator1="30000" />
+			</then>
+		</if>
+	</command>
+</definition>

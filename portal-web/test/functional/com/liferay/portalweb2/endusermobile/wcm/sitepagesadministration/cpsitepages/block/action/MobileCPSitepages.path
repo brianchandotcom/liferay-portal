@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>MobileCPSitepages</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MobileCPSitepages</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>MobileCPSitepages</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPSitepages</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>REORDER_ICON</td>
+	<td>//div[@class='navbar-inner']//a[contains(@class,'btn-navbar') and contains(@id,'_156_')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

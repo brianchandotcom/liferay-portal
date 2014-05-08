@@ -118,7 +118,8 @@ public class BreadcrumbTag extends IncludeTag {
 			sb.append(layoutEntry.getURL());
 			sb.append("\" ");
 
-			Layout layout = (Layout)layoutEntry.getData().get("entity");
+			Layout layout = (Layout)layoutEntry.getEntity();
+
 			String target;
 
 			if (layout.isTypeControlPanel()) {
@@ -248,7 +249,7 @@ public class BreadcrumbTag extends IncludeTag {
 			_log.error(e, e);
 		}
 
-		return modifyBreadcrumbClasses(sb.toString());
+		return modifyBreadcrumbCssClasses(sb.toString());
 	}
 
 	@Override
@@ -282,7 +283,7 @@ public class BreadcrumbTag extends IncludeTag {
 		}
 	}
 
-	protected String modifyBreadcrumbClasses(String breadcrumbString) {
+	protected String modifyBreadcrumbCssClasses(String breadcrumbString) {
 		if (Validator.isNull(breadcrumbString)) {
 			return StringPool.BLANK;
 		}

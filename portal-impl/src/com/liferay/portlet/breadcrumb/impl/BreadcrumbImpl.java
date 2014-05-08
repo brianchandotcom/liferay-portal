@@ -37,9 +37,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.breadcrumb.Breadcrumb;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -99,6 +97,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 		// Entry title
 
 		Account account = themeDisplay.getAccount();
+
 		entry.setTitle(account.getName());
 
 		return entry;
@@ -110,11 +109,12 @@ public class BreadcrumbImpl implements Breadcrumb {
 
 		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
 
-		Layout selLayout = themeDisplay.getLayout();
-		Group group = selLayout.getGroup();
+		Layout layout = themeDisplay.getLayout();
+
+		Group group = layout.getGroup();
 
 		if (!group.isLayoutPrototype()) {
-			_addLayoutEntries(entries, themeDisplay, selLayout);
+			_addLayoutEntries(entries, themeDisplay, layout);
 		}
 
 		return entries;
@@ -152,7 +152,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 			BreadcrumbEntry portletBreadcrumbEntry =
 				portletBreadcrumbEntries.get(i);
 
-			BreadcrumbEntry newEntry = new BreadcrumbEntry();
+			BreadcrumbEntry entry = new BreadcrumbEntry();
 
 			String portletBreadcrumbURL = portletBreadcrumbEntry.getURL();
 
@@ -166,13 +166,14 @@ public class BreadcrumbImpl implements Breadcrumb {
 						portletBreadcrumbURL, session.getId());
 				}
 
-				newEntry.setURL(portletBreadcrumbEntry.getURL());
-				newEntry.setData(portletBreadcrumbEntry.getData());
+				entry.setURL(portletBreadcrumbURL);
 			}
 
-			newEntry.setTitle(portletBreadcrumbEntry.getTitle());
+			entry.setData(portletBreadcrumbEntry.getData());
+			entry.setEntity(portletBreadcrumbEntry.getEntity());
+			entry.setTitle(portletBreadcrumbEntry.getTitle());
 
-			entries.add(newEntry);
+			entries.add(entry);
 		}
 
 		return entries;
@@ -189,7 +190,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 			return;
 		}
 
-		BreadcrumbEntry newEntry = null;
+		BreadcrumbEntry entry = null;
 
 		if (includeParentGroups) {
 			LayoutSet parentLayoutSet = _getParentLayoutSet(layoutSet);
@@ -217,67 +218,65 @@ public class BreadcrumbImpl implements Breadcrumb {
 					layoutSetFriendlyURL, themeDisplay.getSessionId());
 			}
 
-			newEntry = new BreadcrumbEntry();
+			entry = new BreadcrumbEntry();
 
-			newEntry.setURL(layoutSetFriendlyURL);
-			newEntry.setTitle(group.getDescriptiveName());
+			entry.setURL(layoutSetFriendlyURL);
+			entry.setTitle(group.getDescriptiveName());
 
-			entries.add(newEntry);
+			entries.add(entry);
 		}
 	}
 
 	private void _addLayoutEntries(
 			List<BreadcrumbEntry> entries, ThemeDisplay themeDisplay,
-			Layout selLayout)
+			Layout layout)
 		throws Exception {
 
-		if (selLayout.getParentLayoutId() !=
+		if (layout.getParentLayoutId() !=
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
 			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
-				selLayout);
+				layout);
 
 			_addLayoutEntries(entries, themeDisplay, parentLayout);
 		}
 
-		BreadcrumbEntry newEntry = new BreadcrumbEntry();
+		BreadcrumbEntry entry = new BreadcrumbEntry();
 
-		// Entry additional data
+		// Entry entity
 
-		Map<String, Object> entryData = new HashMap<String, Object>();
-		entryData.put("entity", selLayout);
-		newEntry.setData(entryData);
+		entry.setEntity(layout);
 
 		// Entry URL
 
-		String layoutURL = PortalUtil.getLayoutFullURL(selLayout, themeDisplay);
+		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
 		if (themeDisplay.isAddSessionIdToURL()) {
 			layoutURL = PortalUtil.getURLWithSessionId(
 				layoutURL, themeDisplay.getSessionId());
 		}
 
-		if (selLayout.isTypeControlPanel()) {
+		if (layout.isTypeControlPanel()) {
 			layoutURL = HttpUtil.removeParameter(
 				layoutURL, "controlPanelCategory");
 		}
 
-		newEntry.setURL(layoutURL);
+		entry.setURL(layoutURL);
 
 		// Entry title
 
-		String layoutName = selLayout.getName(themeDisplay.getLocale());
+		String layoutName = layout.getName(themeDisplay.getLocale());
 
-		if (selLayout.isTypeControlPanel()) {
+		if (layout.isTypeControlPanel()) {
 			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
 				layoutName = LanguageUtil.get(
 					themeDisplay.getLocale(), "control-panel");
 			}
 		}
 
-		newEntry.setTitle(layoutName);
+		entry.setTitle(layoutName);
 
-		entries.add(newEntry);
+		entries.add(entry);
 	}
 
 	private LayoutSet _getParentLayoutSet(LayoutSet layoutSet)

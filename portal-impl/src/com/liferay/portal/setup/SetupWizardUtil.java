@@ -416,8 +416,7 @@ public class SetupWizardUtil {
 
 		if (user != null) {
 			String greeting = LanguageUtil.format(
-				themeDisplay.getLocale(), "welcome-x",
-				StringPool.SPACE + fullName, false);
+				themeDisplay.getLocale(), "welcome-x", fullName, false);
 
 			Contact contact = user.getContact();
 

@@ -436,6 +436,24 @@
 			</else>
 		</if>
 
-		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${ddlRecordFieldData}" />
+		<if>
+			<equals arg1="${field}" arg2="Boolean" />
+			<then>
+				<if>
+					<equals arg1="${ddlRecordFieldData}" arg2="true" />
+					<then>
+						<var name="ddlRecordFieldData" value="Yes" />
+					</then>
+					<elseif>
+						<equals arg1="${ddlRecordFieldData}" arg2="false" />
+						<then>
+							<var name="ddlRecordFieldData" value="No" />
+						</then>
+					</elseif>
+				</if>
+			</then>
+		</if>
+
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 </definition>

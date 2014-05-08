@@ -39,11 +39,20 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_LINK</td>
@@ -329,7 +338,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_TEXT_AREA</td>
-	<td>//textarea[@name='${fieldFieldLabel}']</td>
+	<td>//textarea[@name='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

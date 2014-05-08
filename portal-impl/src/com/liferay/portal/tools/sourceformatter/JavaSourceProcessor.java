@@ -496,10 +496,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String deletionSystemEventStagedModelTypes = content.substring(
 			methodIndex, content.indexOf(");", methodIndex));
 
-		Pattern pattern = Pattern.compile(
-			"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
-
-		Matcher matcher = pattern.matcher(deletionSystemEventStagedModelTypes);
+		Matcher matcher = _stagedModelTypesPattern.matcher(
+			deletionSystemEventStagedModelTypes);
 
 		while (matcher.find()) {
 			String stagedModelTypeEntity = matcher.group(1);
@@ -2953,6 +2951,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
 	private Properties _secureRandomExclusions;
+	private Pattern _stagedModelTypesPattern = Pattern.compile(
+		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;
 

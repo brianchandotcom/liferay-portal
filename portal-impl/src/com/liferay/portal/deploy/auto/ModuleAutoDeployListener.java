@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import java.util.Iterator;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -80,15 +80,19 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		Manifest manifest = null;
+		JarInputStream jarInputStream = null;
 
 		try {
-			JarInputStream jarInputStream = new JarInputStream(
+			jarInputStream = new JarInputStream(
 				new FileInputStream(file));
 
 			manifest = jarInputStream.getManifest();
 		}
 		catch (IOException ioe) {
 			throw new AutoDeployException(ioe);
+		}
+		finally {
+			StreamUtil.cleanUp(jarInputStream);
 		}
 
 		if (manifest == null) {

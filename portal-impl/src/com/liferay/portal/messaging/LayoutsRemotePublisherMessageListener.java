@@ -17,31 +17,17 @@ package com.liferay.portal.messaging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,7 +35,7 @@ import java.util.Map;
  * @author Daniel Kocsis
  */
 public class LayoutsRemotePublisherMessageListener
-	extends BaseMessageStatusMessageListener {
+	extends BasePublisherMessageListener {
 
 	public LayoutsRemotePublisherMessageListener() {
 	}
@@ -90,7 +76,7 @@ public class LayoutsRemotePublisherMessageListener
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 
-		initThreadLocals(userId, parameterMap);
+		initThreadLocals(userId, parameterMap, true);
 
 		try {
 			StagingUtil.copyRemoteLayouts(
@@ -100,65 +86,8 @@ public class LayoutsRemotePublisherMessageListener
 				dateRange.getEndDate());
 		}
 		finally {
-			resetThreadLocals();
+			resetThreadLocals(true);
 		}
-	}
-
-	protected void initThreadLocals(
-			long userId, Map<String, String[]> parameterMap)
-		throws PortalException, SystemException {
-
-		User user = UserLocalServiceUtil.getUserById(userId);
-
-		CompanyThreadLocal.setCompanyId(user.getCompanyId());
-
-		PermissionChecker permissionChecker = null;
-
-		try {
-			permissionChecker = PermissionCheckerFactoryUtil.create(user);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setPathMain(PortalUtil.getPathMain());
-		serviceContext.setSignedIn(!user.isDefaultUser());
-		serviceContext.setUserId(user.getUserId());
-
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
-
-		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String param = entry.getKey();
-			String[] values = entry.getValue();
-
-			if (ArrayUtil.isNotEmpty(values)) {
-				if (values.length == 1) {
-					attributes.put(param, values[0]);
-				}
-				else {
-					attributes.put(param, values);
-				}
-			}
-		}
-
-		serviceContext.setAttributes(attributes);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
-
-	protected void resetThreadLocals() {
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
-		PermissionThreadLocal.setPermissionChecker(null);
-		PrincipalThreadLocal.setName(null);
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 }

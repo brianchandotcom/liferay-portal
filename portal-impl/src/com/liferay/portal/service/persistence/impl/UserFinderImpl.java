@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -450,11 +451,14 @@ public class UserFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
+			WildcardMode wildcardMode = (WildcardMode)GetterUtil.getObject(
+				params.get("wildcardMode"), WildcardMode.SURROUND);
+
+			firstNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			middleNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			lastNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			screenNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			emailAddresses = CustomSQLUtil.keywords(keywords, wildcardMode);
 		}
 		else {
 			andOperator = true;
@@ -541,140 +545,13 @@ public class UserFinderImpl
 	}
 
 	@Override
-	public List<User> findBySocialRelationTypes(
-			String terms, long userId, int[] types, int start, int end)
-		throws SystemException {
-
-		String sql = getFindBySocialRelationTypesSQL(types);
-
-		String[] keywords = removeLeadingPercent(
-			CustomSQLUtil.keywords(terms, true));
-
-		String[] firstName = keywords;
-		String[] middleName = keywords;
-		String[] lastName = keywords;
-		String[] screenName = keywords;
-		String[] emailAddress = keywords;
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
-			emailAddress);
-
-		sql = CustomSQLUtil.replaceAndOperator(sql, false);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery query = session.createSynchronizedSQLQuery(sql);
-
-			query.addEntity("User_", UserImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(query);
-
-			qPos.add(userId);
-
-			for (int i = 0; i < types.length; i++) {
-				qPos.add(types[i]);
-			}
-
-			qPos.add(userId);
-			qPos.add(firstName, 2);
-			qPos.add(middleName, 2);
-			qPos.add(lastName, 2);
-			qPos.add(screenName, 2);
-			qPos.add(emailAddress, 2);
-
-			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<User> findByUsersGroups(
-			String terms, long userId, long[] groupIds, int start, int end)
-		throws SystemException {
-
-		String sql = getFindByUsersGroupsSQL(groupIds);
-
-		String[] keywords = removeLeadingPercent(
-			CustomSQLUtil.keywords(terms, true));
-
-		String[] firstName = keywords;
-		String[] middleName = keywords;
-		String[] lastName = keywords;
-		String[] screenName = keywords;
-		String[] emailAddress = keywords;
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false, middleName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false, screenName);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, false,
-			emailAddress);
-
-		sql = CustomSQLUtil.replaceAndOperator(sql, false);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery query = session.createSynchronizedSQLQuery(sql);
-
-			query.addEntity("User_", UserImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(query);
-
-			qPos.add(userId);
-
-			for (int i = 0; i < groupIds.length; i++) {
-				qPos.add(groupIds[i]);
-			}
-
-			qPos.add(firstName, 2);
-			qPos.add(middleName, 2);
-			qPos.add(lastName, 2);
-			qPos.add(screenName, 2);
-			qPos.add(emailAddress, 2);
-
-			return (List<User>)QueryUtil.list(query, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
 	public List<User> findBySocialRelationTypesGroups(
 			String terms, long userId, int[] types, long[] groupIds, int start,
 			int end)
 		throws SystemException {
 
-		String[] keywords = removeLeadingPercent(
-			CustomSQLUtil.keywords(terms, true));
+		String[] keywords = CustomSQLUtil.keywords(
+			terms, true, WildcardMode.TRAILING);
 
 		String[] firstName = keywords;
 		String[] middleName = keywords;
@@ -806,6 +683,58 @@ public class UserFinderImpl
 		}
 	}
 
+	protected List<Long> countByC_FN_MN_LN_SN_EA_S(
+		Session session, long companyId, String[] firstNames,
+		String[] middleNames, String[] lastNames, String[] screenNames,
+		String[] emailAddresses, int status,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
+
+		String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.middleName)", StringPool.LIKE, false,
+			middleNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.screenName)", StringPool.LIKE, false,
+			screenNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
+			emailAddresses);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+		}
+
+		sql = replaceJoinAndWhere(sql, params);
+		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.addScalar("userId", Type.LONG);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		setJoin(qPos, params);
+
+		qPos.add(companyId);
+		qPos.add(false);
+		qPos.add(firstNames, 2);
+		qPos.add(middleNames, 2);
+		qPos.add(lastNames, 2);
+		qPos.add(screenNames, 2);
+		qPos.add(emailAddresses, 2);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			qPos.add(status);
+		}
+
+		return q.list(true);
+	}
+
 	protected String getFindBySocialRelationTypesSQL(int[] types) {
 		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES);
 
@@ -833,35 +762,6 @@ public class UserFinderImpl
 		return StringUtil.replace(
 			sql, "[$SOCIAL_RELATION_TYPES$]",
 			"(SocialRelation.type_ = " + sb.toString() + ") AND");
-	}
-
-	protected String getFindByUsersGroupsSQL(long[] groupIds) {
-		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
-
-		if ((groupIds == null) || (groupIds.length == 0)) {
-			return StringUtil.replace(
-				sql, "[$USERS_GROUPS_WHERE$]", StringPool.BLANK);
-		}
-
-		StringBundler sb = new StringBundler(groupIds.length * 2 - 1);
-
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append(StringPool.QUESTION);
-
-			if ((i + 1) < groupIds.length) {
-				sb.append(StringPool.COMMA);
-			}
-		}
-
-		if (groupIds.length > 1) {
-			return StringUtil.replace(
-				sql, "[$USERS_GROUPS_WHERE$]",
-				"(Users_Groups.groupId IN (" + sb.toString() + ")) AND");
-		}
-
-		return StringUtil.replace(
-			sql, "[$USERS_GROUPS_WHERE$]",
-			"(Users_Groups.groupId = " + sb.toString() + ") AND");
 	}
 
 	@Override
@@ -1205,56 +1105,33 @@ public class UserFinderImpl
 		}
 	}
 
-	protected List<Long> countByC_FN_MN_LN_SN_EA_S(
-		Session session, long companyId, String[] firstNames,
-		String[] middleNames, String[] lastNames, String[] screenNames,
-		String[] emailAddresses, int status,
-		LinkedHashMap<String, Object> params, boolean andOperator) {
+	protected String getFindByUsersGroupsSQL(long[] groupIds) {
+		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
 
-		String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false,
-			middleNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false,
-			screenNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
-			emailAddresses);
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+		if ((groupIds == null) || (groupIds.length == 0)) {
+			return StringUtil.replace(
+				sql, "[$USERS_GROUPS_WHERE$]", StringPool.BLANK);
 		}
 
-		sql = replaceJoinAndWhere(sql, params);
-		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+		StringBundler sb = new StringBundler(groupIds.length * 2 - 1);
 
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append(StringPool.QUESTION);
 
-		q.addScalar("userId", Type.LONG);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		setJoin(qPos, params);
-
-		qPos.add(companyId);
-		qPos.add(false);
-		qPos.add(firstNames, 2);
-		qPos.add(middleNames, 2);
-		qPos.add(lastNames, 2);
-		qPos.add(screenNames, 2);
-		qPos.add(emailAddresses, 2);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			qPos.add(status);
+			if ((i + 1) < groupIds.length) {
+				sb.append(StringPool.COMMA);
+			}
 		}
 
-		return q.list(true);
+		if (groupIds.length > 1) {
+			return StringUtil.replace(
+				sql, "[$USERS_GROUPS_WHERE$]",
+				"(Users_Groups.groupId IN (" + sb.toString() + ")) AND");
+		}
+
+		return StringUtil.replace(
+			sql, "[$USERS_GROUPS_WHERE$]",
+			"(Users_Groups.groupId = " + sb.toString() + ") AND");
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {
@@ -1513,7 +1390,31 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
 		}
 		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			if (value instanceof Long[]) {
+				join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			}
+			else if (value instanceof Long[][]) {
+				Long[][] doubleArrayValue = (Long[][])value;
+
+				Long[] socialRelationTypes = doubleArrayValue[1];
+
+				StringBundler sb = new StringBundler(
+					socialRelationTypes.length * 2 + 1);
+
+				sb.append("WHERE (SocialRelation.userId1 = ?) AND ");
+				sb.append("(SocialRelation.type_ IN (");
+
+				for (long socialRelationType : socialRelationTypes) {
+					sb.append(StringPool.QUESTION);
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
+
+				join = sb.toString();
+			}
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;
@@ -1533,23 +1434,6 @@ public class UserFinderImpl
 		}
 
 		return join;
-	}
-
-	protected String[] removeLeadingPercent(String[] keywords) {
-		String[] result = new String[keywords.length];
-
-		for (int i = 0; i < keywords.length; i++) {
-			String keyword = keywords[i];
-
-			if (keyword.startsWith(StringPool.PERCENT)) {
-				result[i] = keyword.substring(1);
-			}
-			else {
-				result[i] = keyword;
-			}
-		}
-
-		return result;
 	}
 
 	protected String replaceJoinAndWhere(

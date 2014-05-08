@@ -328,20 +328,20 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	/**
 	 * Returns the template matching the group and template key, optionally in
-	 * the global scope.
+	 * the ancestor sites.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the template is still not
 	 * found and <code>includeAncestorTemplates</code> is set to
-	 * <code>true</code>, this method searches the global group.
+	 * <code>true</code>, this method searches the group's ancestor sites.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
-	 * @param  includeAncestorTemplates whether to include the global scope in the
-	 *         search
+	 * @param  includeAncestorTemplates whether to include the ancestor sites in
+	 *         the search
 	 * @return the matching template
 	 * @throws PortalException if a matching template could not be found
 	 */

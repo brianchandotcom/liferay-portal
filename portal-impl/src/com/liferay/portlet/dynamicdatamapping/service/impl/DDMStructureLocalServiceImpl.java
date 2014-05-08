@@ -526,20 +526,20 @@ public class DDMStructureLocalServiceImpl
 
 	/**
 	 * Returns the structure matching the class name ID, structure key, and
-	 * group, optionally in the global scope.
+	 * group, optionally in the ancestor sites.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
 	 * found and <code>includeAncestorStructures</code> is set to
-	 * <code>true</code>, this method searches the parent sites.
+	 * <code>true</code>, this method searches the group's ancestor sites.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for the structure's
 	 *         related model
 	 * @param  structureKey the unique string identifying the structure
-	 * @param  includeAncestorStructures whether to include the parent sites in
-	 *         the search
+	 * @param  includeAncestorStructures whether to include the ancestor sites
+	 *         in the search
 	 * @return the matching structure, or <code>null</code> if a matching
 	 *         structure could not be found
 	 * @throws PortalException if a portal exception occurred
@@ -764,20 +764,20 @@ public class DDMStructureLocalServiceImpl
 
 	/**
 	 * Returns the structure matching the class name ID, structure key, and
-	 * group, optionally in the parent site.
+	 * group, optionally in the ancestor sites.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
 	 * found and <code>includeAncestorStructures</code> is set to
-	 * <code>true</code>, this method searches the parent sites.
+	 * <code>true</code>, this method searches the group's ancestor sites.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the structure's group
 	 * @param  classNameId the primary key of the class name for the structure's
 	 *         related model
 	 * @param  structureKey the unique string identifying the structure
-	 * @param  includeAncestorStructures whether to include the parent sites in
-	 *         the search
+	 * @param  includeAncestorStructures whether to include the ancestor sites
+	 *         in the search
 	 * @return the matching structure
 	 * @throws PortalException if a matching structure could not be found
 	 */

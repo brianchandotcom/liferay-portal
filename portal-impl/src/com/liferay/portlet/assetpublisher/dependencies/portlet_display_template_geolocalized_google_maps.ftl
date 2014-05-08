@@ -18,6 +18,7 @@
 	</div>
 <#else>
 	<#assign minHeight = "400px" />
+	<#assign minWidth = "400px" />
 
 	<#assign namespace = renderResponse.getNamespace() />
 
@@ -61,6 +62,10 @@
 	</#list>
 
 	<style type="text/css">
+		.asset-entry-abstract {
+			min-width: ${minWidth};
+		}
+
 		.asset-entry-abstract .asset-entry-abstract-image {
 			float: left;
 		}

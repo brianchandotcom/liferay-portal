@@ -805,6 +805,22 @@ public class ArrayUtil {
 		return true;
 	}
 
+	public static <T> int count(T[] array, PredicateFilter<T> predicateFilter) {
+		if (isEmpty(array)) {
+			return 0;
+		}
+
+		int counter = 0;
+
+		for (T o : array) {
+			if (predicateFilter.filter(o)) {
+				++counter;
+			}
+		}
+
+		return counter;
+	}
+
 	public static String[] distinct(String[] array) {
 		return distinct(array, null);
 	}

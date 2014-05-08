@@ -28,6 +28,113 @@ import org.junit.Test;
 public class ListUtilTest {
 
 	@Test
+	public void testCountWithEmptyListShouldReturnZero() {
+		List<String> list = new ArrayList<String>();
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return true;
+			}
+		};
+
+		Assert.assertEquals(0, ListUtil.count(list, predicate));
+	}
+
+	@Test
+	public void testCountWithNullListShouldReturnZero() {
+		List<String> list = null;
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return true;
+			}
+		};
+
+		Assert.assertEquals(0, ListUtil.count(list, predicate));
+	}
+
+	@Test
+	public void testCountWithPopulatedListShouldReturnRightCount() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return o.toString().equals("b");
+			}
+		};
+
+		Assert.assertEquals(1, ListUtil.count(list, predicate));
+	}
+
+	@Test
+	public void testExistsWithEmptyListShouldReturnFalse() {
+		List<String> list = new ArrayList<String>();
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return true;
+			}
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicate));
+	}
+
+	@Test
+	public void testExistsWithNullListShouldReturnFalse() {
+		List<String> list = null;
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return true;
+			}
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicate));
+	}
+
+	@Test
+	public void testExistsWithPopulatedListShouldReturnFalseIfNotExists() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("bb");
+		list.add("c");
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return (o.toString().length() == 3);
+			}
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicate));
+	}
+
+	@Test
+	public void testExistsWithPopulatedListShouldReturnTrueIfExists() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("bb");
+		list.add("c");
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return (o.toString().length() == 2);
+			}
+		};
+
+		Assert.assertTrue(ListUtil.exists(list, predicate));
+	}
+
+	@Test
 	public void testFilterWithoutOutputList() {
 		List<String> expectedOutputList = new ArrayList<String>();
 

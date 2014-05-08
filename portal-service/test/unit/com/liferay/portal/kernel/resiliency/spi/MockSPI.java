@@ -53,8 +53,14 @@ public class MockSPI implements SPI {
 	}
 
 	@Override
-	public RegistrationReference getRegistrationReference() {
-		throw new UnsupportedOperationException();
+	public RegistrationReference getRegistrationReference()
+		throws RemoteException {
+
+		if (registrationReference == null) {
+			throw new RemoteException();
+		}
+
+		return registrationReference;
 	}
 
 	@Override
@@ -110,6 +116,7 @@ public class MockSPI implements SPI {
 	public boolean failOnIsAlive;
 	public boolean failOnStop;
 	public MPI mpi;
+	public RegistrationReference registrationReference;
 	public SPIConfiguration spiConfiguration;
 	public String spiProviderName;
 	public boolean stopped;

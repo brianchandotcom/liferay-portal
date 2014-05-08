@@ -62,31 +62,31 @@
 			var reviewers = options.reviewers;
 
 			var contents =
-				"<div>" +
-					"<form action='" + options.url + "' method='post'>";
+				'<div>' +
+					'<form action="' + options.url + '" method="post">';
 
 			if (reviewers.length > 0) {
 				contents +=
-					"<textarea name='" + namespace + "description' style='height: 100px; width: 284px;'></textarea><br /><br />" +
-					Liferay.Language.get('reviewer') + " <select name='" + namespace + "reviewUserId'>";
+					'<textarea name="' + namespace + 'description" style="height: 100px; width: 284px;"></textarea><br /><br />' +
+					Liferay.Language.get('reviewer') + ' <select name="' + namespace + 'reviewUserId">';
 
 				for (var i = 0; i < reviewers.length; i++) {
-					contents += "<option value='" + reviewers[i].userId + "'>" + reviewers[i].fullName + "</option>";
+					contents += '<option value="' + reviewers[i].userId + '">' + reviewers[i].fullName + '</option>';
 				}
 
 				contents +=
-					"</select><br /><br />" +
-					"<input type='submit' value='" + Liferay.Language.get('proceed') + "' />";
+					'</select><br /><br />' +
+					'<input type="submit" value="' + Liferay.Language.get('proceed') + '" />';
 			}
 			else {
 				contents +=
-					Liferay.Language.get('no-reviewers-were-found') + "<br />" +
-					Liferay.Language.get('please-contact-the-administrator-to-assign-reviewers') + "<br /><br />";
+					Liferay.Language.get('no-reviewers-were-found') + '<br />' +
+					Liferay.Language.get('please-contact-the-administrator-to-assign-reviewers') + '<br /><br />';
 			}
 
 			contents +=
-					"</form>" +
-				"</div>";
+					'</form>' +
+				'</div>';
 
 			Liferay.Util.openWindow(
 				{

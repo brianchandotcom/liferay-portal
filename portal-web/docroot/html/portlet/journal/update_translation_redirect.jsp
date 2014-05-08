@@ -47,7 +47,7 @@ if (cmd.equals(Constants.TRANSLATE)) {
 	Liferay.fire(
 		'closeWindow',
 		{
-			id: '<%= HtmlUtil.escapeJS(renderResponse.getNamespace() + toLanguageId) %>'
+			id: '<%= HtmlUtil.escapeJS(renderResponse.getNamespace() + "journal-article-translation-" + toLanguageId) %>'
 		}
 	);
 </aui:script>

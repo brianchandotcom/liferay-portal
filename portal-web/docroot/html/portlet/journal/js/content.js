@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var STR_AVAILABLE_TRANSLATIONS_LINKS = 'availableTranslationsLinks';
+
 		var STR_CHANGE_DEFAULT_LANGUAGE = 'changeDefaultLanguage';
 
 		var STR_CLICK = 'click';
@@ -10,6 +12,12 @@ AUI.add(
 		var STR_DDM = 'ddm';
 
 		var STR_DEFAULT_LANGUAGE_SELECTOR = 'defaultLanguageSelector';
+
+		var STR_HASH = '#';
+
+		var STR_LANGUAGE_ID = 'languageId';
+
+		var STR_TRANSLATIONS_MESSAGE = 'translationsMessage';
 
 		var STR_SELECT_STRUCTURE = 'selectStructure';
 
@@ -19,8 +27,14 @@ AUI.add(
 
 		var STR_URLS = 'urls';
 
-		var TPL_TRANSLATION = '<a class="journal-article-translation journal-article-translation-{newLanguageId} lfr-token" data-languageId="{newLanguageId}" href="javascript:;">' +
-			'<img alt="" src="{pathThemeImages}/language/{newLanguageId}.png" />{newLanguage}' +
+		var TPL_CHANGE_DEFAULT_LOCALE_URL = '{baseURL}&{namespace}defaultLanguageId={languageId}';
+
+		var TPL_EDIT_TRANSLATION_URL = '{baseURL}&{namespace}toLanguageId={languageId}';
+
+		var TPL_LANGUAGE_INPUT = '<input name={namespace}available_locales" type="hidden" value="{languageId}" />';
+
+		var TPL_TRANSLATION = '<a class="journal-article-translation lfr-token" href="{uri}" id="{namespace}journal-article-translation-{languageId}">' +
+			'<img alt="" src="{pathThemeImages}/language/{languageId}.png" />{language}' +
 			'</a>';
 
 		var JournalContent = A.Component.create(
@@ -141,6 +155,12 @@ AUI.add(
 								selectStructure.on(STR_CLICK, instance._openDDMStructureSelector, instance)
 							);
 						}
+
+						var availableTranslationContainer = A.one(STR_HASH + instance.ns('availableTranslationContainer'));
+
+						if (availableTranslationContainer) {
+							A.getBody().delegate(STR_CLICK, instance._openEditTranslationWindow, '.journal-article-translation', instance);
+						}
 					},
 
 					destructor: function() {
@@ -156,9 +176,14 @@ AUI.add(
 
 						var defaultLanguageId = instance.get(STR_DEFAULT_LANGUAGE_SELECTOR).get('value');
 
-						var url = urls.updateDefaultLanguage + '&' + instance.ns('defaultLanguageId') + '=' + defaultLanguageId;
-
-						window.location.href = url;
+						window.location.href = Lang.sub(
+							TPL_CHANGE_DEFAULT_LOCALE_URL,
+							{
+								baseURL: urls.updateDefaultLanguage,
+								languageId: defaultLanguageId,
+								namespace: instance.NS
+							}
+						);
 					},
 
 					_changeDefaultLanguage: function() {
@@ -246,9 +271,9 @@ AUI.add(
 							function(event) {
 								var form = instance._getPrincipalForm();
 
-								var ddmStructureId = A.one('#' + instance.ns('ddmStructureId'));
-								var structureId = A.one('#' + instance.ns('structureId'));
-								var templateId = A.one('#' + instance.ns('templateId'));
+								var ddmStructureId = A.one(STR_HASH + instance.ns('ddmStructureId'));
+								var structureId = A.one(STR_HASH + instance.ns('structureId'));
+								var templateId = A.one(STR_HASH + instance.ns('templateId'));
 
 								if (confirm(strings.selectStructure) && (ddmStructureId.val() != event.ddmstructureid)) {
 									ddmStructureId.val(event.ddmstructureid);
@@ -288,7 +313,7 @@ AUI.add(
 								if (confirm(strings.selectTemplate)) {
 									var form = instance._getPrincipalForm();
 
-									var ddmTemplateId = form.one('#' + instance.ns('ddmTemplateId'))
+									var ddmTemplateId = form.one(STR_HASH + instance.ns('ddmTemplateId'))
 
 									ddmTemplateId.val(event.ddmtemplateid);
 
@@ -298,6 +323,25 @@ AUI.add(
 						);
 					},
 
+					_openEditTranslationWindow: function(event) {
+						var instance = this;
+
+						var strings = instance.get(STR_STRINGS);
+
+						var target = event.currentTarget;
+
+						Liferay.Util.openWindow(
+							{
+								cache: false,
+								id: target.attr('id'),
+								title: strings.webContentTranslation,
+								uri: target.attr('href')
+							}
+						);
+
+						event.preventDefault();
+					},
+
 					_postProcessTranslation: function(formDate, cmd, newVersion, newLanguageId, newLanguage, newStatusMessage) {
 						var instance = this;
 
@@ -305,10 +349,10 @@ AUI.add(
 
 						var form = instance._getPrincipalForm();
 
-						form.one('#' + instance.ns('formDate')).val(formDate);
-						form.one('#' + instance.ns('version')).val(newVersion);
+						form.one(STR_HASH + instance.ns('formDate')).val(formDate);
+						form.one(STR_HASH + instance.ns('version')).val(newVersion);
 
-						var taglibWorkflowStatus = A.one('#' + instance.ns('journalArticleWrapper') + ' .taglib-workflow-status');
+						var taglibWorkflowStatus = A.one(STR_HASH + instance.ns('journalArticleWrapper') + ' .taglib-workflow-status');
 
 						var statusNode = taglibWorkflowStatus.one('.workflow-status strong');
 
@@ -318,12 +362,12 @@ AUI.add(
 
 						versionNode.html(newVersion);
 
-						var availableTranslationContainer = A.one('#' + instance.ns('availableTranslationContainer'));
+						var availableTranslationContainer = A.one(STR_HASH + instance.ns('availableTranslationContainer'));
 
-						var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
+						var translationLink = availableTranslationContainer.one(STR_HASH + instance.ns('journal-article-translation-' + newLanguageId));
 
 						if (cmd == 'delete_translation') {
-							var availableLocales = A.one('#' + instance.ns('availableLocales') + newLanguageId);
+							var availableLocales = A.one(STR_HASH + instance.ns('availableLocales') + newLanguageId);
 
 							if (availableLocales) {
 								availableLocales.remove();
@@ -333,20 +377,20 @@ AUI.add(
 								translationLink.remove();
 							}
 
-							A.one('#' + instance.ns('languageId') + newLanguageId).ancestor('li').show();
+							A.one(STR_HASH + instance.ns(STR_LANGUAGE_ID) + newLanguageId).ancestor('li').show();
 
 							var availableLocales = availableTranslationContainer.all('a.lfr-token');
 
 							if (availableLocales.size() === 0) {
 								availableTranslationContainer.removeClass('contains-translations');
 
-								A.one('#' + instance.ns('availableTranslationsLinks')).hide();
-								A.one('#' + instance.ns('translationsMessage')).hide();
+								A.one(STR_HASH + instance.ns(STR_AVAILABLE_TRANSLATIONS_LINKS)).hide();
+								A.one(STR_HASH + instance.ns(STR_TRANSLATIONS_MESSAGE)).hide();
 							}
 						}
 						else if (!translationLink) {
-							var availableTranslationsLinks = A.one('#' + instance.ns('availableTranslationsLinks'));
-							var translationsMessage = A.one('#' + instance.ns('translationsMessage'));
+							var availableTranslationsLinks = A.one(STR_HASH + instance.ns(STR_AVAILABLE_TRANSLATIONS_LINKS));
+							var translationsMessage = A.one(STR_HASH + instance.ns(STR_TRANSLATIONS_MESSAGE));
 
 							statusNode.replaceClass('workflow-status-approved', 'workflow-status-draft');
 
@@ -359,39 +403,39 @@ AUI.add(
 							availableTranslationsLinks.show();
 							translationsMessage.show();
 
-							translationLink = A.Node.create(
-								A.Lang.sub(
-									TPL_TRANSLATION,
-									{
-										newLanguageId: newLanguageId,
-										newLanguage: newLanguage,
-										pathThemeImages: themeDisplay.getPathThemeImages()
-									}
-								);
+							var editTranslationURL = Lang.sub(
+								TPL_EDIT_TRANSLATION_URL,
+								{
+									baseURL: instance.get(STR_URLS).editTranslation,
+									languageId: newLanguageId,
+									namespace: instance.NS
+								}
 							);
 
-							var urls = instance.get(STR_URLS);
-
-							var editTranslationURL = urls.editTranslation + '&' + instance.ns('toLanguageId=') + newLanguageId;
-
-							translationLink.on(
-								'click',
-								function(event) {
-									Liferay.Util.openWindow(
-										{
-											id: instance.ns(newLanguageId),
-											title: strings.webContentTranslation,
-											uri: editTranslationURL
-										}
-									);
-								}
+							translationLink = A.Node.create(
+								Lang.sub(
+									TPL_TRANSLATION,
+									{
+										language: newLanguage,
+										languageId: newLanguageId,
+										namespace: instance.NS,
+										pathThemeImages: themeDisplay.getPathThemeImages(),
+										uri: editTranslationURL
+									}
+								)
 							);
 
 							availableTranslationsLinks.append(translationLink);
 
-							A.one('#' + instance.ns('languageId') + newLanguageId).ancestor('li').hide();
+							A.one(STR_HASH + instance.ns(STR_LANGUAGE_ID) + newLanguageId).ancestor('li').hide();
 
-							var languageInput = A.Node.create('<input name="' + instance.ns('available_locales') +'" type="hidden" value="' + newLanguageId + '" />');
+							var languageInput = A.Node.create(
+								TPL_LANGUAGE_INPUT,
+								{
+									languageId: newLanguageId,
+									namespace: instance.NS
+								}
+							);
 
 							form.append(languageInput);
 						}

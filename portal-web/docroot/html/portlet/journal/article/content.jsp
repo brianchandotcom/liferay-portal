@@ -224,15 +224,16 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 										for (int i = 0; i < locales.length; i++) {
 											String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
-											String taglibEditURL = "javascript:Liferay.Util.openWindow({cache: false, id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "web-content-translation")) + "', uri: '" + HtmlUtil.escapeJS(taglibEditArticleURL) + "'});";
 										%>
 
 											<liferay-ui:icon
 												cssClass='<%= ArrayUtil.contains(article.getAvailableLanguageIds(), LocaleUtil.toLanguageId(locales[i])) ? "hide" : StringPool.BLANK %>'
-												id='<%= renderResponse.getNamespace() + "languageId" + LocaleUtil.toLanguageId(locales[i]) %>'
+												id='<%= "journal-article-translation-link-" + LocaleUtil.toLanguageId(locales[i]) %>'
 												image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
+												linkCssClass="journal-article-translation"
 												message="<%= locales[i].getDisplayName(locale) %>"
-												url="<%= taglibEditURL %>"
+												method="get"
+												url="<%= taglibEditArticleURL %>"
 											/>
 
 										<%
@@ -281,11 +282,11 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<a class="journal-article-translation-<%= translations[i] %> lfr-token" href="javascript:;" onClick="Liferay.Util.openWindow({cache: false, id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
+										<aui:a cssClass="journal-article-translation lfr-token" href="<%= editTranslationURL %>" id='<%= "journal-article-translation-" + translations[i] %>'>
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>
-										</a>
+										</aui:a>
 
 									<%
 									}

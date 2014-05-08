@@ -47,6 +47,9 @@ public interface JSONFactory {
 
 	public JSONSerializer createJSONSerializer();
 
+	public JSONValidator createJSONValidator(String jsonSchema)
+		throws JSONException;
+
 	public Object deserialize(JSONObject jsonObj);
 
 	public Object deserialize(String json);

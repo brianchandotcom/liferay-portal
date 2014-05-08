@@ -167,16 +167,14 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						>
 
 							<%
-							try {
-								User curUser = UserLocalServiceUtil.getUserById(curLayoutRevision.getUserId());
+							User curUser = UserLocalServiceUtil.fetchUserById(curLayoutRevision.getUserId());
 
+							if (curUser != null) {
 								buffer.append("<a class=\"user-handle\" href=\"");
 								buffer.append(curUser.getDisplayURL(themeDisplay));
 								buffer.append("\">");
 								buffer.append(HtmlUtil.escape(curUser.getFullName()));
 								buffer.append("</a>");
-							}
-							catch (NoSuchUserException nsue) {
 							}
 							%>
 

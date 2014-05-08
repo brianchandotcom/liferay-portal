@@ -102,6 +102,13 @@ public class StagingUtil {
 	}
 
 	public static void copyRemoteLayouts(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		getStaging().copyRemoteLayouts(exportImportConfiguration);
+	}
+
+	public static void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			String remoteAddress, int remotePort, String remotePathContext,

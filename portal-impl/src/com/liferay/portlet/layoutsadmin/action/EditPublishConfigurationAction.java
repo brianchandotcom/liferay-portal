@@ -237,7 +237,7 @@ public class EditPublishConfigurationAction
 
 			ExportImportConfigurationHelper.
 				publishRemoteLayoutByExportImportConfiguration(
-					exportImportConfiguration.getExportImportConfigurationId());
+					exportImportConfiguration);
 		}
 	}
 

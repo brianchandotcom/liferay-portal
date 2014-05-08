@@ -340,6 +340,93 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void copyRemoteLayouts(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		boolean secureConnection = MapUtil.getBoolean(
+			settingsMap, "secureConnection");
+
+		StringBundler sb = new StringBundler(4);
+
+		if (secureConnection) {
+			sb.append(Http.HTTPS_WITH_SLASH);
+		}
+		else {
+			sb.append(Http.HTTP_WITH_SLASH);
+		}
+
+		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
+		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
+		String remotePathContext = MapUtil.getString(
+			settingsMap, "remotePathContext");
+
+		sb.append(remoteAddress);
+		sb.append(StringPool.COLON);
+		sb.append(remotePort);
+		sb.append(remotePathContext);
+
+		String url = sb.toString();
+
+		User user = permissionChecker.getUser();
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			url, user.getEmailAddress(), user.getPassword(),
+			user.getPasswordEncrypted());
+
+		// Ping remote host and verify that the group exists in the same company
+		// as the remote user
+
+		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+
+		try {
+			GroupServiceHttp.checkRemoteStagingGroup(
+				httpPrincipal, remoteGroupId);
+		}
+		catch (NoSuchGroupException nsge) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(url);
+
+			throw rae;
+		}
+		catch (SystemException se) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.BAD_CONNECTION);
+
+			ree.setURL(url);
+
+			throw ree;
+		}
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+		taskContextMap.put("httpPrincipal", httpPrincipal);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			user.getUserId(), exportImportConfiguration.getGroupId(),
+			StringPool.BLANK, null,
+			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
+	}
+
+	@Override
+	public void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			String remoteAddress, int remotePort, String remotePathContext,
@@ -408,8 +495,6 @@ public class StagingImpl implements Staging {
 				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
 				endDate, null, null);
 
-		settingsMap.put("httpPrincipal", httpPrincipal);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		ExportImportConfiguration exportImportConfiguration =
@@ -427,6 +512,7 @@ public class StagingImpl implements Staging {
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
+		taskContextMap.put("httpPrincipal", httpPrincipal);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
 			user.getUserId(), sourceGroupId, StringPool.BLANK, null,

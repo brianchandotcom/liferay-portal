@@ -4,12 +4,12 @@
 <#assign group = themeDisplay.getScopeGroup() />
 <#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsKey")!"" />
 
-<#assign defaultLongitude = 40.40 />
 <#assign defaultLatitude = -3.6833 />
+<#assign defaultLongitude = 40.40 />
 
 <#if apiKey = "">
-	<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId)>
-	<#assign apiKey = companyPrefs.getValue("googleMapsKey", "")>
+	<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId) />
+	<#assign apiKey = companyPrefs.getValue("googleMapsKey", "") />
 </#if>
 
 <#if apiKey = "">
@@ -24,9 +24,9 @@
 	<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 	<#assign images = {
-		"com.liferay.portlet.journal.model.JournalArticle": "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
 		"com.liferay.portlet.documentlibrary.model.DLFileEntry": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
 		"com.liferay.portlet.dynamicdatalists.model.DDLRecord": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+		"com.liferay.portlet.journal.model.JournalArticle": "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
 		"default": "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 	} />
 
@@ -162,22 +162,16 @@
 	<#macro getAbstract asset>
 		<#assign assetRenderer = asset.getAssetRenderer() />
 
-		<#assign hasEditPermissions = assetRenderer.hasEditPermission(permissionChecker) />
-
-		<#assign showEditControls = showEditURL && hasEditPermissions />
-
-		<#assign popUpWindowState = windowStateFactory.getWindowState("POP_UP") />
-
 		<#assign redirectURL = renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
 
 		${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
 		<div class="asset-entry-abstract">
-			<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, popUpWindowState, redirectURL) />
+			<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
 			<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />
 
-			<#if showEditControls && hasEditPermissions>
+			<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
 				<@liferay_ui.icon
 					image = "edit"
 					label = true

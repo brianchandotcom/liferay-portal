@@ -268,7 +268,7 @@ if (hints != null) {
 							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Year'].disabled = checked;
 
 							<c:if test="<%= showTime %>">
-								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Tim'].disabled = checked;
+								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Time'].disabled = checked;
 								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Hour'].disabled = checked;
 								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Minute'].disabled = checked;
 								document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>AmPm'].disabled = checked;

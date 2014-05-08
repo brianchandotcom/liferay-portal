@@ -42,21 +42,21 @@
 		<#list fields.iterator() as field>
 			<#assign marker = jsonFactoryUtil.createJSONObject(field.getValue()) />
 
-			<#assign _ = marker.put("title", assetRenderer.getTitle(locale)) />
+			<@liferay.silently marker.put("title", assetRenderer.getTitle(locale)) />
 
 			<#assign entryAbstract>
 				<@getAbstract asset = entry />
 			</#assign>
 
-			<#assign _ = marker.put("abstract", entryAbstract) />
+			<@liferay.silently marker.put("abstract", entryAbstract) />
 
 			<#if images?keys?seq_contains(entry.getClassName())>
-				<#assign _ = marker.put("icon", images[entry.getClassName()]) />
+				<@liferay.silently marker.put("icon", images[entry.getClassName()]) />
 			<#else>
-				<#assign _ = marker.put("icon", images["default"]) />
+				<@liferay.silently marker.put("icon", images["default"]) />
 			</#if>
 
-			<#assign _ = markers.put(marker) />
+			<@liferay.silently markers.put(marker) />
 		</#list>
 	</#list>
 

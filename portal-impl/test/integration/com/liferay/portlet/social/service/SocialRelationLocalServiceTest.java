@@ -284,7 +284,7 @@ public class SocialRelationLocalServiceTest {
 		};
 
 		List<User> users = UserLocalServiceUtil.getUsersBySocialRelationsTypes(
-			"dlc", dlc2User.getUserId(), types, null, QueryUtil.ALL_POS,
+			"dlc", dlc2User.getUserId(), types, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		// dlc2 should have 1 coworker and 4 friends.

@@ -2945,8 +2945,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			int start, int end)
 		throws PortalException, SystemException {
 
-		return userFinder.findBySocialRelationTypesGroups(
-			keywords, userId, types, groupIds, start, end);
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put(
+			"socialRelationType",
+			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
+		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
+		params.put("socialUnion", true);
+		params.put("wildcardMode", WildcardMode.TRAILING);
+
+		return userFinder.findByKeywords(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, null);
 	}
 
 	/**

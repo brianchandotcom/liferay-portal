@@ -162,8 +162,8 @@ AUI.add(
 
 				A.each(
 					parameters,
-					function(value, key) {
-						instance.setParameter(key, value);
+					function(item, index, collection) {
+						instance.setParameter(index, item);
 					}
 				);
 
@@ -173,7 +173,7 @@ AUI.add(
 			setPlid: function(plid) {
 				var instance = this;
 
-				instance.reservedParams.p_l_id =  plid;
+				instance.reservedParams.p_l_id = plid;
 
 				return instance;
 			},

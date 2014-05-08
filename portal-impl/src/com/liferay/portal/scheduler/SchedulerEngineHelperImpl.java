@@ -577,6 +577,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		SchedulerLifecycle schedulerLifecycle = new SchedulerLifecycle();
 
 		schedulerLifecycle.registerPortalLifecycle(PortalLifecycle.METHOD_INIT);
+
+		_initialized = true;
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return _initialized;
 	}
 
 	@Override
@@ -796,6 +803,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private static Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
+	private boolean _initialized;
 	private SchedulerEngine _schedulerEngine;
 	private SchedulerEngineClusterManager _schedulerEngineClusterManager;
 

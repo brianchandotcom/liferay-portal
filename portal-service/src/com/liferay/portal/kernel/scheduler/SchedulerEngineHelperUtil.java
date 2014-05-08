@@ -237,6 +237,10 @@ public class SchedulerEngineHelperUtil {
 		getSchedulerEngineHelper().initialize();
 	}
 
+	public static boolean isInitialized() {
+		return getSchedulerEngineHelper().isInitialized();
+	}
+
 	public static String namespaceGroupName(
 		String groupName, StorageType storageType) {
 

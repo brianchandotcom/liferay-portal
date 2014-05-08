@@ -16,8 +16,10 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,6 +33,10 @@ public class ServletContextPool {
 
 	public static void clear() {
 		_instance._servletContexts.clear();
+	}
+
+	public static boolean containsAll(String[] servletContextNames) {
+		return _instance._containsAll(servletContextNames);
 	}
 
 	public static boolean containsKey(String servletContextName) {
@@ -57,6 +63,16 @@ public class ServletContextPool {
 
 	private ServletContextPool() {
 		_servletContexts = new ConcurrentHashMap<String, ServletContext>();
+	}
+
+	private boolean _containsAll(String[] servletContextNames) {
+		if (ArrayUtil.isEmpty(servletContextNames)) {
+			return false;
+		}
+
+		Set<String> keySet = _keySet();
+
+		return keySet.containsAll(Arrays.asList(servletContextNames));
 	}
 
 	private boolean _containsKey(String servletContextName) {

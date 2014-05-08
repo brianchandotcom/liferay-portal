@@ -486,15 +486,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		int methodIndex = content.indexOf(
-			"setDeletionSystemEventStagedModelTypes");
+		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
 
-		if (methodIndex < 0) {
+		if (pos == -1) {
 			return;
 		}
 
 		String deletionSystemEventStagedModelTypes = content.substring(
-			methodIndex, content.indexOf(");", methodIndex));
+			pos, content.indexOf(");", pos));
 
 		Matcher matcher = _stagedModelTypesPattern.matcher(
 			deletionSystemEventStagedModelTypes);
@@ -502,20 +501,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		while (matcher.find()) {
 			String stagedModelTypeEntity = matcher.group(1);
 
-			String entityName = null;
+			pos = stagedModelTypeEntity.indexOf(".class");
 
-			if (stagedModelTypeEntity.contains(".class")) {
-				entityName = stagedModelTypeEntity.substring(
-					0, stagedModelTypeEntity.indexOf(".class"));
-			}
-			else if (stagedModelTypeEntity.contains("Constants")) {
-				entityName = stagedModelTypeEntity.substring(
-					0, stagedModelTypeEntity.indexOf("Constants"));
+			if (pos == -1) {
+				pos = stagedModelTypeEntity.indexOf("Constants");
 			}
 
-			if (Validator.isNull(entityName)) {
+			if (pos == -1) {
 				return;
 			}
+
+			String entityName = stagedModelTypeEntity.substring(0, pos);
 
 			Pattern packagePattern = Pattern.compile(
 				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." +
@@ -529,10 +525,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String entityPackage = packageMatcher.group(1);
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
+			sb.append(BASEDIR);
 			sb.append("portal-impl/src/");
-			sb.append(StringUtil.replace(entityPackage, ".", "/"));
+			sb.append(
+				StringUtil.replace(
+					entityPackage, StringPool.PERIOD, StringPool.SLASH));
 			sb.append("/service/impl/");
 			sb.append(entityName);
 			sb.append("LocalServiceImpl.java");
@@ -545,7 +544,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (!localServiceImplContent.contains("@SystemEvent")) {
 				processErrorMessage(
 					fileName,
-					"missing deletion system event: " +
+					"Missing deletion system event: " +
 						localServiceImplFileName);
 			}
 		}
@@ -1187,6 +1186,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLogLevel(newContent, fileName, "info");
 		checkLogLevel(newContent, fileName, "trace");
 		checkLogLevel(newContent, fileName, "warn");
+
+		// LPS-46632
 
 		checkSystemEventAnnotations(newContent, fileName);
 

@@ -897,10 +897,11 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void validate(long groupId, java.lang.String className,
-		long[] categoryIds, java.lang.String[] tagNames)
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().validate(groupId, className, categoryIds, tagNames);
+		getService()
+			.validate(groupId, className, classTypeId, categoryIds, tagNames);
 	}
 
 	public static AssetEntryLocalService getService() {

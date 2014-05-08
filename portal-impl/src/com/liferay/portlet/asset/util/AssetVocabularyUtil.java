@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +52,7 @@ public class AssetVocabularyUtil {
 			return vocabularyTitle;
 		}
 
-		List<AssetVocabulary> ambiguousVocabularies = ListUtil.filter(
+		Collection<AssetVocabulary> ambiguousVocabularies = ListUtil.filter(
 			vocabularies,
 			new PredicateFilter<AssetVocabulary>() {
 

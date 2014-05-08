@@ -88,28 +88,6 @@ public class UserFinderUtil {
 		return getFinder().findByNoGroups();
 	}
 
-	public static java.util.List<com.liferay.portal.model.User> findBySocialRelationTypes(
-		java.lang.String terms, long userId, int[] types, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .findBySocialRelationTypes(terms, userId, types, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.model.User> findByUsersGroups(
-		java.lang.String terms, long userId, long[] groupIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByUsersGroups(terms, userId, groupIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.model.User> findBySocialRelationTypesGroups(
-		java.lang.String terms, long userId, int[] types, long[] groupIds,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .findBySocialRelationTypesGroups(terms, userId, types,
-			groupIds, start, end);
-	}
-
 	public static java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(
 		long companyId, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,

@@ -2306,13 +2306,12 @@ public class UserLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypes(
-		java.lang.String keywords, long userId, int[] types, long[] groupIds,
-		int start, int end)
+		java.lang.String keywords, long userId, int[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getUsersBySocialRelationsTypes(keywords, userId, types,
-			groupIds, start, end);
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypesGroups(

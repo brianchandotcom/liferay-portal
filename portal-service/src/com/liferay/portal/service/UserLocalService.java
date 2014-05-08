@@ -2013,8 +2013,7 @@ public interface UserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypes(
-		java.lang.String keywords, long userId, int[] types, long[] groupIds,
-		int start, int end)
+		java.lang.String keywords, long userId, int[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

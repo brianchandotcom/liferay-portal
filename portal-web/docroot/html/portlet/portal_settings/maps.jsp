@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-	PortletPreferences companyPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
@@ -25,7 +25,7 @@
 <h3><liferay-ui:message key="maps" /></h3>
 
 <%
-String googleMapsKey = PrefsParamUtil.getString(companyPreferences, request, "googleMapsKey");
+String googleMapsKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsKey");
 %>
 
 <aui:input helpMessage="set-the-google-maps-key-that-will-be-used-for-this-set-of-pages" label="google-maps-key" name="settings--googleMapsKey--" size="40" type="text" value="<%= googleMapsKey %>" />

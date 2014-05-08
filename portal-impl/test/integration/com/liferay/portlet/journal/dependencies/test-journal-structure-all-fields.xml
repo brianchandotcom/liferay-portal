@@ -50,8 +50,8 @@
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element name="list" type="list" index-type="" repeatable="false">
-		<dynamic-element name="Item 01" type="value" repeatable="false" />
-		<dynamic-element name="Item 02" type="value" repeatable="false" />
+		<dynamic-element name="List Item 01" type="value 01" repeatable="false" />
+		<dynamic-element name="List Item 02" type="value 02" repeatable="false" />
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 			<entry name="instructions"><![CDATA[]]></entry>
@@ -61,8 +61,8 @@
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element name="multi-list" type="multi-list" index-type="" repeatable="false">
-		<dynamic-element name="Item 01" type="value" repeatable="false" />
-		<dynamic-element name="Item 02" type="value" repeatable="false" />
+		<dynamic-element name="Multi Item 01" type="value 01" repeatable="false" />
+		<dynamic-element name="Multi Item 02" type="value 02" repeatable="false" />
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 			<entry name="instructions"><![CDATA[]]></entry>

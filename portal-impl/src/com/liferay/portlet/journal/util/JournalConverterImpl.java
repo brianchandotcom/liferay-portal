@@ -642,21 +642,23 @@ public class JournalConverterImpl implements JournalConverter {
 		if (Validator.equals(parentType, "list") ||
 			Validator.equals(parentType, "multi-list")) {
 
+			Element metadataElement = dynamicElementElement.element(
+				"meta-data");
+
+			Element labelElement = fetchMetadataEntry(
+				metadataElement, "name", "label");
+
 			String repeatable = parentElement.attributeValue("repeatable");
 
 			String value = dynamicElementElement.attributeValue("value");
 
-			dynamicElementElement.addAttribute("name", value);
+			dynamicElementElement.addAttribute("name", labelElement.getText());
 			dynamicElementElement.addAttribute("repeatable", repeatable);
-			dynamicElementElement.addAttribute("type", "value");
+			dynamicElementElement.addAttribute("type", value);
 
 			removeAttribute(dynamicElementElement, "value");
 
-			for (Element metadataElement :
-					dynamicElementElement.elements("meta-data")) {
-
-				dynamicElementElement.remove(metadataElement);
-			}
+			dynamicElementElement.remove(metadataElement);
 
 			return;
 		}

@@ -479,6 +479,77 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkSystemEventAnnotations(String content, String fileName)
+		throws Exception {
+
+		if (portalSource && !fileName.endsWith("PortletDataHandler.java")) {
+			return;
+		}
+
+		int pos = content.indexOf("setDeletionSystemEventStagedModelTypes");
+
+		if (pos == -1) {
+			return;
+		}
+
+		String deletionSystemEventStagedModelTypes = content.substring(
+			pos, content.indexOf(");", pos));
+
+		Matcher matcher = _stagedModelTypesPattern.matcher(
+			deletionSystemEventStagedModelTypes);
+
+		while (matcher.find()) {
+			String stagedModelTypeEntity = matcher.group(1);
+
+			pos = stagedModelTypeEntity.indexOf(".class");
+
+			if (pos == -1) {
+				pos = stagedModelTypeEntity.indexOf("Constants");
+			}
+
+			if (pos == -1) {
+				return;
+			}
+
+			String entityName = stagedModelTypeEntity.substring(0, pos);
+
+			Pattern packagePattern = Pattern.compile(
+				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." +
+					entityName + ";");
+
+			Matcher packageMatcher = packagePattern.matcher(content);
+
+			if (!packageMatcher.find()) {
+				return;
+			}
+
+			String entityPackage = packageMatcher.group(1);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(BASEDIR);
+			sb.append("portal-impl/src/");
+			sb.append(
+				StringUtil.replace(
+					entityPackage, StringPool.PERIOD, StringPool.SLASH));
+			sb.append("/service/impl/");
+			sb.append(entityName);
+			sb.append("LocalServiceImpl.java");
+
+			String localServiceImplFileName = sb.toString();
+
+			String localServiceImplContent = fileUtil.read(
+				localServiceImplFileName);
+
+			if (!localServiceImplContent.contains("@SystemEvent")) {
+				processErrorMessage(
+					fileName,
+					"Missing deletion system event: " +
+						localServiceImplFileName);
+			}
+		}
+	}
+
 	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
 		int methodType = javaTerm.getType();
 
@@ -1115,6 +1186,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLogLevel(newContent, fileName, "info");
 		checkLogLevel(newContent, fileName, "trace");
 		checkLogLevel(newContent, fileName, "warn");
+
+		// LPS-46632
+
+		checkSystemEventAnnotations(newContent, fileName);
 
 		// LPS-41205
 
@@ -2877,6 +2952,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
 	private Properties _secureRandomExclusions;
+	private Pattern _stagedModelTypesPattern = Pattern.compile(
+		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;
 

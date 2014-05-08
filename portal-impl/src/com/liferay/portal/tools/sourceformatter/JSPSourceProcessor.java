@@ -1155,8 +1155,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _TAG_LIBRARIES = new String[] {
 		"aui", "c", "html", "jsp", "liferay-portlet", "liferay-security",
-		"liferay-staging", "liferay-theme", "liferay-ui", "liferay-util",
-		"portlet", "struts", "tiles"
+		"liferay-theme", "liferay-ui", "liferay-util", "portlet", "struts",
+		"tiles"
 	};
 
 	private List<String> _duplicateImportClassNames = new ArrayList<String>();

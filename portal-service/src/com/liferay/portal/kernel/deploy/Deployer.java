@@ -88,8 +88,6 @@ public interface Deployer {
 
 	public void setSecurityTaglibDTD(String securityTaglibDTD);
 
-	public void setStagingTaglibDTD(String stagingTaglibDTD);
-
 	public void setThemeTaglibDTD(String themeTaglibDTD);
 
 	public void setTomcatLibDir(String tomcatLibDir);

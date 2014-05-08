@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
 	<td></td>
@@ -46,6 +51,11 @@
 <tr>
 	<td>TEMPLATE_NAME</td>
 	<td>//span[@id='_15_templateNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_TEMPLATE</td>
+	<td>//a[@id='_15_editDDMTemplate']</td>
 	<td></td>
 </tr>
 <tr>

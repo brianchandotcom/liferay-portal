@@ -266,28 +266,6 @@
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="selectWebContentGlobalStructure">
-		<var name="key_selectStructureName" value="${selectStructureName}" />
-
-		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" value1="Add" />
-		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="SELECT_STRUCTURE" value1="Select" />
-		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" value1="relative=top" />
-
-		<execute action="PGWebcontentdisplayAddwebcontentStructures#selectFrame" locator-key1="STRUCTURE_IFRAME" />
-
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute action="PGWebcontentdisplayAddwebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-		<execute action="PGWebcontentdisplayAddwebcontentStructures#confirm" locator-key1="CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
-		<execute action="PGWebcontentdisplayAddwebcontentStructures#selectFrame" value1="relative=top" />
-
-		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-		<execute action="PGWebcontentdisplayAddwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
-	</command>
-
 	<command name="tearDownScopePG">
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
 			<var name="scopeSelection" value="Liferay" />

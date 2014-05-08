@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SELECT_STRUCTURE</td>
-	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'article-structure-toolbar')]/div/div/span[3]/a/span</td>
+	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'article-structure-toolbar')]/div/div/span[2]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,6 +56,11 @@
 <tr>
 	<td>CONTENT_FIELD_LOCALIZED</td>
 	<td>//iframe[contains(@class,'cke_wysiwyg_frame cke_reset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,9 +22,13 @@ import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.IntrabandFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.rpc.BootstrapRPCDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -224,12 +228,39 @@ public class MPIHelperUtil {
 	}
 
 	public static void shutdown() {
+		if (SPIUtil.isSPI()) {
+			SPI spi = SPIUtil.getSPI();
+
+			try {
+				SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
+
+				IntrabandRPCUtil.execute(
+					spi.getRegistrationReference(),
+					new UnregisterSPIProcessCallable(
+						spi.getSPIProviderName(), spiConfiguration.getSPIId()));
+			}
+			catch (RemoteException re) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to unregister from MPI", re);
+				}
+			}
+		}
+
 		try {
 			UnicastRemoteObject.unexportObject(_mpiImpl, true);
 		}
 		catch (NoSuchObjectException nsoe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to unexport " + _mpiImpl, nsoe);
+			}
+		}
+
+		try {
+			_intraband.close();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to close Intraband", e);
 			}
 		}
 	}
@@ -472,6 +503,34 @@ public class MPIHelperUtil {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
+	}
+
+	private static class UnregisterSPIProcessCallable
+		implements ProcessCallable<Boolean> {
+
+		public UnregisterSPIProcessCallable(
+			String spiProviderName, String spiId) {
+
+			_spiProviderName = spiProviderName;
+			_spiId = spiId;
+		}
+
+		@Override
+		public Boolean call() throws ProcessException {
+			SPI spi = getSPI(_spiProviderName, _spiId);
+
+			if (spi != null) {
+				return unregisterSPI(spi);
+			}
+
+			return false;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private String _spiProviderName;
+		private String _spiId;
+
 	}
 
 }

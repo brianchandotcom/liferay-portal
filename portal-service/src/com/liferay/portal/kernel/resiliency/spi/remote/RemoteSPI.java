@@ -67,9 +67,15 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 	@Override
 	public SPI call() throws ProcessException {
 		try {
+			SPIShutdownHook spiShutdownHook = new SPIShutdownHook();
+
 			ProcessExecutor.ProcessContext.attach(
 				spiConfiguration.getSPIId(), spiConfiguration.getPingInterval(),
-				new SPIShutdownHook());
+				spiShutdownHook);
+
+			Runtime runtime = Runtime.getRuntime();
+
+			runtime.addShutdownHook(spiShutdownHook);
 
 			SPI spi = (SPI)UnicastRemoteObject.exportObject(this, 0);
 
@@ -168,10 +174,15 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 
 	}
 
-	protected class SPIShutdownHook implements ProcessExecutor.ShutdownHook {
+	protected class SPIShutdownHook
+		extends Thread implements ProcessExecutor.ShutdownHook {
+
+		public SPIShutdownHook() {
+			setName(SPIShutdownHook.class.getSimpleName());
+		}
 
 		@Override
-		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable) {
+		public void run() {
 			try {
 				RemoteSPI.this.stop();
 			}
@@ -185,6 +196,15 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			catch (RemoteException re) {
 				_log.error("Unable to destroy SPI", re);
 			}
+		}
+
+		@Override
+		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable) {
+			Runtime runtime = Runtime.getRuntime();
+
+			runtime.removeShutdownHook(this);
+
+			run();
 
 			return true;
 		}

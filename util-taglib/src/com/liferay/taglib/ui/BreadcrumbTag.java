@@ -79,7 +79,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		BreadcrumbEntry currentGroupEntry =
-			BreadcrumbUtil.getCurrentGroupBreadcrumbEntry(themeDisplay);
+			BreadcrumbUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
 
 		if (currentGroupEntry != null) {
 			sb.append("<li><a href=\"");

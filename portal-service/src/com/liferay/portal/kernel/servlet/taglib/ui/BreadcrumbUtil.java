@@ -48,7 +48,7 @@ import javax.servlet.http.HttpSession;
 @ProviderType
 public class BreadcrumbUtil {
 
-	public static BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
+	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 

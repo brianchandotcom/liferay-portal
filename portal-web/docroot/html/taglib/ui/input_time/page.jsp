@@ -19,18 +19,18 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_time_page") + StringPool.UNDERLINE;
 
-String amPmParam = namespace + request.getAttribute("liferay-ui:input-time:amPmParam");
+String amPmParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:amPmParam"));
 int amPmValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:amPmValue"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:cssClass"));
-String dateParam = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:dateParam"), "date");
+String dateParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:dateParam"), "date");
 Date dateValue = (Date)GetterUtil.getObject(request.getAttribute("liferay-ui:input-time:dateValue"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:disabled"));
-String hourParam = namespace + request.getAttribute("liferay-ui:input-time:hourParam");
+String hourParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:hourParam"));
 int hourValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:hourValue"));
-String minuteParam = namespace + request.getAttribute("liferay-ui:input-time:minuteParam");
+String minuteParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:minuteParam"));
 int minuteValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteValue"));
 int minuteInterval = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteInterval"));
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
+String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
 
 if (minuteInterval < 1) {
 	minuteInterval = 30;
@@ -42,11 +42,11 @@ if (amPmValue == Calendar.PM) {
 	hourOfDayValue += 12;
 }
 
-String amPmParamId = HtmlUtil.getAUICompatibleId(amPmParam);
-String dateParamId = HtmlUtil.getAUICompatibleId(dateParam);
-String hourParamId = HtmlUtil.getAUICompatibleId(hourParam);
-String minuteParamId = HtmlUtil.getAUICompatibleId(minuteParam);
-String nameId = HtmlUtil.getAUICompatibleId(name);
+String amPmParamId = namespace + HtmlUtil.getAUICompatibleId(amPmParam);
+String dateParamId = namespace + HtmlUtil.getAUICompatibleId(dateParam);
+String hourParamId = namespace + HtmlUtil.getAUICompatibleId(hourParam);
+String minuteParamId = namespace + HtmlUtil.getAUICompatibleId(minuteParam);
+String nameId = namespace + HtmlUtil.getAUICompatibleId(name);
 
 Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue);
 
@@ -71,17 +71,17 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 <span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">
 	<c:choose>
 		<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= hourParamId %>" name="<%= HtmlUtil.escapeAttribute(hourParam) %>" type="hidden" value="<%= hourValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= minuteParamId %>" name="<%= HtmlUtil.escapeAttribute(minuteParam) %>" type="hidden" value="<%= minuteValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= amPmParamId %>" name="<%= HtmlUtil.escapeAttribute(amPmParam) %>" type="hidden" value="<%= amPmValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dateParamId %>" name="<%= HtmlUtil.escapeAttribute(dateParam) %>" type="hidden" value="<%= dateValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= hourParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(hourParam) %>" type="hidden" value="<%= hourValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= minuteParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(minuteParam) %>" type="hidden" value="<%= minuteValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= amPmParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(amPmParam) %>" type="hidden" value="<%= amPmValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dateParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(dateParam) %>" type="hidden" value="<%= dateValue %>" />
 </span>
 
 <aui:script use='<%= "aui-timepicker" + (BrowserSnifferUtil.isMobile(request) ? "-native" : StringPool.BLANK) %>'>

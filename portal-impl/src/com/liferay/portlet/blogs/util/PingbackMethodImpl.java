@@ -14,42 +14,18 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.pingback.DuplicateCommentException;
 import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
-import com.liferay.portlet.blogs.pingback.PingbackComments;
-import com.liferay.portlet.blogs.pingback.PingbackCommentsImpl;
+import com.liferay.portlet.blogs.pingback.Pingback;
 import com.liferay.portlet.blogs.pingback.PingbackDisabledException;
-import com.liferay.portlet.blogs.pingback.PingbackExcerptExtractor;
-import com.liferay.portlet.blogs.pingback.PingbackExcerptExtractorImpl;
-import com.liferay.portlet.blogs.pingback.PingbackServiceContextFunction;
+import com.liferay.portlet.blogs.pingback.PingbackImpl;
 import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -73,15 +49,13 @@ public class PingbackMethodImpl implements Method {
 	public static final int TARGET_URI_INVALID = 33;
 
 	public PingbackMethodImpl() {
-		_pingbackComments = new PingbackCommentsImpl();
-		_pingbackExcerptExtractor = new PingbackExcerptExtractorImpl(
-			PropsValues.BLOGS_LINKBACK_EXCERPT_LENGTH);
+		_pingback = new PingbackImpl();
 	}
 
 	@Override
 	public Response execute(long companyId) {
 		try {
-			executeAddPingback(companyId);
+			_pingback.executeAddPingback(companyId);
 
 			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}
@@ -111,43 +85,6 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
-	public void executeAddPingback(long companyId) throws Exception {
-		/*
-		Just to make the diff easier to review,
-		in this commit this method is public and has a bad name.
-		Commits afterwards will make it better.
-		*/
-
-		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {
-			throw new PingbackDisabledException("Pingbacks are disabled");
-		}
-
-		_pingbackExcerptExtractor.validateSource();
-
-		BlogsEntry entry = getBlogsEntry(companyId);
-
-		if (!entry.isAllowPingbacks()) {
-			throw new PingbackDisabledException("Pingbacks are disabled");
-		}
-
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
-		long groupId = entry.getGroupId();
-		String className = BlogsEntry.class.getName();
-		long classPK = entry.getEntryId();
-
-		String urlTitle = entry.getUrlTitle();
-
-		String body =
-			"[...] " + _pingbackExcerptExtractor.getExcerpt() +
-				" [...] [url=" + _sourceUri + "]" +
-				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
-					"[/url]";
-
-		_pingbackComments.addComment(
-			userId, groupId, className, classPK, body,
-			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
-	}
-
 	@Override
 	public String getMethodName() {
 		return "pingback.ping";
@@ -161,8 +98,8 @@ public class PingbackMethodImpl implements Method {
 	@Override
 	public boolean setArguments(Object[] arguments) {
 		try {
-			_pingbackExcerptExtractor.setSourceUri((String)arguments[0]);
-			_pingbackExcerptExtractor.setTargetUri((String)arguments[1]);
+			_pingback.setSourceUri((String)arguments[0]);
+			_pingback.setTargetUri((String)arguments[1]);
 
 			return true;
 		}
@@ -175,85 +112,8 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
-	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {
-		BlogsEntry entry = null;
-
-		URL url = new URL(_targetUri);
-
-		String friendlyURL = url.getPath();
-
-		int end = friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
-
-		if (end != -1) {
-			friendlyURL = friendlyURL.substring(0, end);
-		}
-
-		long plid = PortalUtil.getPlidFromFriendlyURL(companyId, friendlyURL);
-		long groupId = PortalUtil.getScopeGroupId(plid);
-
-		Map<String, String[]> params = new HashMap<String, String[]>();
-
-		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
-			new HashMap<String, String>());
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.BLOGS);
-
-		FriendlyURLMapper friendlyURLMapper =
-			portlet.getFriendlyURLMapperInstance();
-
-		friendlyURL = url.getPath();
-
-		end = friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
-
-		if (end != -1) {
-			friendlyURL = friendlyURL.substring(
-				end + Portal.FRIENDLY_URL_SEPARATOR.length() - 1);
-		}
-
-		Map<String, Object> requestContext = new HashMap<String, Object>();
-
-		friendlyURLMapper.populateParams(friendlyURL, params, requestContext);
-
-		String param = getParam(params, "entryId");
-
-		if (Validator.isNotNull(param)) {
-			long entryId = GetterUtil.getLong(param);
-
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-		}
-		else {
-			String urlTitle = getParam(params, "urlTitle");
-
-			entry = BlogsEntryLocalServiceUtil.getEntry(groupId, urlTitle);
-		}
-
-		return entry;
-	}
-
-	protected String getParam(Map<String, String[]> params, String name) {
-		String[] paramArray = params.get(name);
-
-		if (paramArray == null) {
-			String namespace = PortalUtil.getPortletNamespace(
-				PortletKeys.BLOGS);
-
-			paramArray = params.get(namespace + name);
-		}
-
-		if (ArrayUtil.isNotEmpty(paramArray)) {
-			return paramArray[0];
-		}
-		else {
-			return null;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(PingbackMethodImpl.class);
 
-	private PingbackComments _pingbackComments;
-	private PingbackExcerptExtractor _pingbackExcerptExtractor;
-	private String _sourceUri;
-	private String _targetUri;
+	private Pingback _pingback;
 
 }

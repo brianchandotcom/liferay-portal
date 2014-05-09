@@ -200,8 +200,6 @@ public class BreadcrumbUtil {
 			return;
 		}
 
-		BreadcrumbEntry breadcrumbEntry = null;
-
 		if (includeParentGroups) {
 			LayoutSet parentLayoutSet = _getParentLayoutSet(layoutSet);
 
@@ -229,7 +227,7 @@ public class BreadcrumbUtil {
 					layoutSetFriendlyURL, themeDisplay.getSessionId());
 			}
 
-			breadcrumbEntry = new BreadcrumbEntry();
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 			breadcrumbEntry.setTitle(group.getDescriptiveName());
 			breadcrumbEntry.setURL(layoutSetFriendlyURL);

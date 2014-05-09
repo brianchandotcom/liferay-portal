@@ -51,7 +51,7 @@ public class AssetVocabularyUtil {
 			return vocabularyTitle;
 		}
 
-		List<AssetVocabulary> ambiguousVocabularies = ListUtil.filter(
+		boolean hasAmbiguousVocabularies = ListUtil.exists(
 			vocabularies,
 			new PredicateFilter<AssetVocabulary>() {
 
@@ -71,7 +71,7 @@ public class AssetVocabularyUtil {
 
 			});
 
-		if (!ambiguousVocabularies.isEmpty()) {
+		if (hasAmbiguousVocabularies) {
 			Group vocabularyGroup = GroupLocalServiceUtil.getGroup(
 				vocabulary.getGroupId());
 

@@ -62,7 +62,7 @@ public class BreadcrumbUtil {
 
 		BreadcrumbEntry breadcrumbEntry = null;
 
-		if (breadcrumbEntries.size() > 0) {
+		if (!breadcrumbEntries.isEmpty()) {
 			breadcrumbEntry = breadcrumbEntries.get(0);
 		}
 

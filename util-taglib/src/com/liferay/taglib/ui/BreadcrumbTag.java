@@ -118,7 +118,7 @@ public class BreadcrumbTag extends IncludeTag {
 			sb.append(layoutEntry.getURL());
 			sb.append("\" ");
 
-			Layout layout = (Layout)layoutEntry.getEntity();
+			Layout layout = (Layout)layoutEntry.getBaseModel();
 
 			String target;
 

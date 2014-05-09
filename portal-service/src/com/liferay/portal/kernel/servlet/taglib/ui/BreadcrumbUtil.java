@@ -142,7 +142,7 @@ public class BreadcrumbUtil {
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
-			breadcrumbEntry.setEntity(portletBreadcrumbEntry.getEntity());
+			breadcrumbEntry.setBaseModel(portletBreadcrumbEntry.getBaseModel());
 			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
 			String url = portletBreadcrumbEntry.getURL();
@@ -253,7 +253,7 @@ public class BreadcrumbUtil {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setEntity(layout);
+		breadcrumbEntry.setBaseModel(layout);
 
 		String layoutName = layout.getName(themeDisplay.getLocale());
 

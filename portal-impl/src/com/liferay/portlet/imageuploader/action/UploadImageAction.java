@@ -303,23 +303,6 @@ public class UploadImageAction extends PortletAction {
 		}
 	}
 
-	protected boolean isResized(
-		RenderedImage renderedImage, JSONObject jsonObject) {
-
-		int height = jsonObject.getInt("height");
-		int width = jsonObject.getInt("width");
-		int x = jsonObject.getInt("x");
-		int y = jsonObject.getInt("y");
-
-		if ((renderedImage.getHeight() == height) &&
-			(renderedImage.getWidth() == width) && (x == 0) && (y == 0)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	protected FileEntry saveTempImageFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -348,7 +331,10 @@ public class UploadImageAction extends PortletAction {
 				int x = jsonObject.getInt("x");
 				int y = jsonObject.getInt("y");
 
-				if (!isResized(renderedImage, jsonObject)) {
+				if ((x == 0) && (y == 0) &&
+					(renderedImage.getHeight() == height) &&
+					(renderedImage.getWidth() == width)) {
+
 					return tempFileEntry;
 				}
 

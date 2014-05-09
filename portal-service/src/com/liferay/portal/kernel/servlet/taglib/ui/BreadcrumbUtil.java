@@ -36,6 +36,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,15 +125,15 @@ public class BreadcrumbUtil {
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
-
 		List<BreadcrumbEntry> portletBreadcrumbEntries =
 			PortalUtil.getPortletBreadcrumbs(request);
 
 		if (portletBreadcrumbEntries == null) {
-			return breadcrumbEntries;
+			return Collections.emptyList();
 		}
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		for (int i = 0; i < portletBreadcrumbEntries.size(); i++) {
 			BreadcrumbEntry portletBreadcrumbEntry =

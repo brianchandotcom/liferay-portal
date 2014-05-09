@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -62,6 +63,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
@@ -78,6 +81,37 @@ import javax.servlet.jsp.PageContext;
  */
 @DoPrivileged
 public class LanguageImpl implements Language, Serializable {
+
+	@Override
+	public String expandKeys(
+		ResourceBundle resourceBundle, Locale locale, String content) {
+
+		StringBundler sb = new StringBundler();
+
+		Matcher matcher = _pattern.matcher(content);
+
+		int x = 0;
+
+		while (matcher.find()) {
+			int y = matcher.start(0);
+
+			String key = matcher.group(1);
+
+			sb.append(content.substring(x, y));
+			sb.append(StringPool.APOSTROPHE);
+
+			String value = get(resourceBundle, key);
+
+			sb.append(value);
+			sb.append(StringPool.APOSTROPHE);
+
+			x = matcher.end(0);
+		}
+
+		sb.append(content.substring(x));
+
+		return sb.toString();
+	}
 
 	@Override
 	public String format(
@@ -955,6 +989,9 @@ public class LanguageImpl implements Language, Serializable {
 
 	private static Map<Long, LanguageImpl> _instances =
 		new ConcurrentHashMap<Long, LanguageImpl>();
+	private static Pattern _pattern = Pattern.compile(
+		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
+
 	private static PortalCache<Long, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
 

@@ -26,19 +26,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Breadcrumb {
 
-	public BreadcrumbEntry getCurrentGroupEntry(ThemeDisplay themeDisplay)
-		throws Exception;
-
-	public BreadcrumbEntry getGuestGroupEntry(ThemeDisplay themeDisplay)
-		throws Exception;
-
-	public List<BreadcrumbEntry> getLayoutEntries(ThemeDisplay themeDisplay)
-		throws Exception;
-
-	public List<BreadcrumbEntry> getParentGroupEntries(
+	public BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception;
 
-	public List<BreadcrumbEntry> getPortletEntries(HttpServletRequest request);
+	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
+		throws Exception;
+
+	public List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
+			ThemeDisplay themeDisplay)
+		throws Exception;
+
+	public List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
+			ThemeDisplay themeDisplay)
+		throws Exception;
+
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
+		HttpServletRequest request);
 
 }

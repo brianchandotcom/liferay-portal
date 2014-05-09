@@ -48,12 +48,13 @@ import javax.servlet.http.HttpSession;
 public class BreadcrumbImpl implements Breadcrumb {
 
 	@Override
-	public BreadcrumbEntry getCurrentGroupEntry(ThemeDisplay themeDisplay)
+	public BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
 
-		_addGroupsEntries(
+		_addGroupsBreadcrumbEntries(
 			entries, themeDisplay, themeDisplay.getLayout().getLayoutSet(),
 			false);
 
@@ -67,7 +68,8 @@ public class BreadcrumbImpl implements Breadcrumb {
 	}
 
 	@Override
-	public BreadcrumbEntry getGuestGroupEntry(ThemeDisplay themeDisplay)
+	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -104,7 +106,8 @@ public class BreadcrumbImpl implements Breadcrumb {
 	}
 
 	@Override
-	public List<BreadcrumbEntry> getLayoutEntries(ThemeDisplay themeDisplay)
+	public List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
@@ -114,14 +117,14 @@ public class BreadcrumbImpl implements Breadcrumb {
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutPrototype()) {
-			_addLayoutEntries(entries, themeDisplay, layout);
+			_addLayoutBreadcrumbEntries(entries, themeDisplay, layout);
 		}
 
 		return entries;
 	}
 
 	@Override
-	public List<BreadcrumbEntry> getParentGroupEntries(
+	public List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -131,14 +134,17 @@ public class BreadcrumbImpl implements Breadcrumb {
 			themeDisplay.getLayout().getLayoutSet());
 
 		if (parentLayoutSet != null) {
-			_addGroupsEntries(entries, themeDisplay, parentLayoutSet, true);
+			_addGroupsBreadcrumbEntries(
+				entries, themeDisplay, parentLayoutSet, true);
 		}
 
 		return entries;
 	}
 
 	@Override
-	public List<BreadcrumbEntry> getPortletEntries(HttpServletRequest request) {
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
+		HttpServletRequest request) {
+
 		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
 
 		List<BreadcrumbEntry> portletBreadcrumbEntries =
@@ -179,7 +185,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 		return entries;
 	}
 
-	private void _addGroupsEntries(
+	private void _addGroupsBreadcrumbEntries(
 			List<BreadcrumbEntry> entries, ThemeDisplay themeDisplay,
 			LayoutSet layoutSet, boolean includeParentGroups)
 		throws Exception {
@@ -196,7 +202,8 @@ public class BreadcrumbImpl implements Breadcrumb {
 			LayoutSet parentLayoutSet = _getParentLayoutSet(layoutSet);
 
 			if (parentLayoutSet != null) {
-				_addGroupsEntries(entries, themeDisplay, parentLayoutSet, true);
+				_addGroupsBreadcrumbEntries(
+					entries, themeDisplay, parentLayoutSet, true);
 			}
 		}
 
@@ -227,7 +234,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 	}
 
-	private void _addLayoutEntries(
+	private void _addLayoutBreadcrumbEntries(
 			List<BreadcrumbEntry> entries, ThemeDisplay themeDisplay,
 			Layout layout)
 		throws Exception {
@@ -238,7 +245,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
 				layout);
 
-			_addLayoutEntries(entries, themeDisplay, parentLayout);
+			_addLayoutBreadcrumbEntries(entries, themeDisplay, parentLayout);
 		}
 
 		BreadcrumbEntry entry = new BreadcrumbEntry();

@@ -37,37 +37,38 @@ public class BreadcrumbUtil {
 		return _breadcrumb;
 	}
 
-	public static BreadcrumbEntry getCurrentGroupEntry(
+	public static BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getCurrentGroupEntry(themeDisplay);
+		return getBreadcrumb().getCurrentGroupBreadcrumbEntry(themeDisplay);
 	}
 
-	public static BreadcrumbEntry getGuestGroupEntry(ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return getBreadcrumb().getGuestGroupEntry(themeDisplay);
-	}
-
-	public static List<BreadcrumbEntry> getLayoutEntries(
+	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getLayoutEntries(themeDisplay);
+		return getBreadcrumb().getGuestGroupBreadcrumbEntry(themeDisplay);
 	}
 
-	public static List<BreadcrumbEntry> getParentGroupEntries(
+	public static List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getParentGroupEntries(themeDisplay);
+		return getBreadcrumb().getLayoutBreadcrumbEntries(themeDisplay);
 	}
 
-	public static List<BreadcrumbEntry> getPortletEntries(
+	public static List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getBreadcrumb().getParentGroupBreadcrumbEntries(themeDisplay);
+	}
+
+	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		return getBreadcrumb().getPortletEntries(request);
+		return getBreadcrumb().getPortletBreadcrumbEntries(request);
 	}
 
 	public void setBreadcrumb(Breadcrumb breadcrumb) {

@@ -90,7 +90,7 @@ public class VerifyLayout extends VerifyProcess {
 				String friendlyURL = StringPool.SLASH + layout.getLayoutId();
 
 				LayoutLocalServiceUtil.updateFriendlyURL(
-					layout.getPlid(), friendlyURL,
+					layout.getUserId(), layout.getPlid(), friendlyURL,
 					layoutFriendlyURL.getLanguageId());
 			}
 		}

@@ -816,11 +816,6 @@
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil">
 		<property name="assetPublisher" ref="com.liferay.portlet.assetpublisher.util.AssetPublisher" />
 	</bean>
-	<bean id="com.liferay.portlet.breadcrumb.util.BreadcrumbUtil" class="com.liferay.portlet.breadcrumb.util.BreadcrumbUtil">
-		<property name="breadcrumb">
-			<bean class="com.liferay.portlet.breadcrumb.impl.BreadcrumbImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />

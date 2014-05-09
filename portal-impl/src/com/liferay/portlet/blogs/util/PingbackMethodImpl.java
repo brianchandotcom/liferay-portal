@@ -23,18 +23,15 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -43,13 +40,11 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.pingback.DuplicateCommentException;
 import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
+import com.liferay.portlet.blogs.pingback.PingbackComments;
+import com.liferay.portlet.blogs.pingback.PingbackCommentsImpl;
 import com.liferay.portlet.blogs.pingback.PingbackDisabledException;
 import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.IOException;
 
@@ -84,6 +79,10 @@ public class PingbackMethodImpl implements Method {
 	public static final int TARGET_URI_DOES_NOT_EXIST = 32;
 
 	public static final int TARGET_URI_INVALID = 33;
+
+	public PingbackMethodImpl() {
+		_pingbackComments = new PingbackCommentsImpl();
+	}
 
 	@Override
 	public Response execute(long companyId) {
@@ -142,60 +141,12 @@ public class PingbackMethodImpl implements Method {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
 		String body =
 			"[...] " + getExcerpt() + " [...] [url=" + _sourceUri + "]" +
 				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
 					"[/url]";
 
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				threadId, WorkflowConstants.STATUS_APPROVED);
-
-		for (MBMessage message : messages) {
-			if (message.getBody().equals(body)) {
-				throw new DuplicateCommentException();
-			}
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		String pingbackUserName = LanguageUtil.get(
-			LocaleUtil.getSiteDefault(), "pingback");
-
-		serviceContext.setAttribute("pingbackUserName", pingbackUserName);
-
-		StringBundler sb = new StringBundler(5);
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			groupId, PortletKeys.BLOGS);
-
-		sb.append(layoutFullURL);
-
-		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, PortletKeys.BLOGS);
-
-		sb.append(portlet.getFriendlyURLMapping());
-		sb.append(StringPool.SLASH);
-		sb.append(entry.getUrlTitle());
-
-		serviceContext.setAttribute("redirect", sb.toString());
-
-		serviceContext.setLayoutFullURL(layoutFullURL);
-
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, StringPool.BLANK, groupId, className, classPK, threadId,
-			parentMessageId, StringPool.BLANK, body, serviceContext);
+		_pingbackComments.addComment(userId, groupId, className, classPK, body);
 	}
 
 	@Override
@@ -371,6 +322,7 @@ public class PingbackMethodImpl implements Method {
 
 	private static Log _log = LogFactoryUtil.getLog(PingbackMethodImpl.class);
 
+	private PingbackComments _pingbackComments;
 	private String _sourceUri;
 	private String _targetUri;
 

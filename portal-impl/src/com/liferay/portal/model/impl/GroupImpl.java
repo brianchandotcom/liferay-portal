@@ -202,7 +202,7 @@ public class GroupImpl extends GroupBaseImpl {
 			iconCss = "icon-globe";
 		}
 		else if (isLayout()) {
-			iconCss = "icon-page";
+			iconCss = "icon-file";
 		}
 		else if (isOrganization()) {
 			iconCss = "icon-globe";
@@ -222,7 +222,7 @@ public class GroupImpl extends GroupBaseImpl {
 			iconURL = "../aui/globe";
 		}
 		else if (isLayout()) {
-			iconURL = "../aui/page";
+			iconURL = "../aui/file";
 		}
 		else if (isOrganization()) {
 			iconURL = "../aui/globe";

@@ -63,16 +63,17 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 		<tr>
 			<td align="center" valign="middle">
 				<form action="<%= jSecurityCheck %>" method="post" name="fm">
-				<input name="j_username" type="hidden" value="<%= HtmlUtil.escapeAttribute(jUserName) %>" />
-				<input name="j_password" type="hidden" value="<%= HtmlUtil.escapeAttribute(jPassword) %>" />
+					<input name="j_username" type="hidden" value="<%= HtmlUtil.escapeAttribute(jUserName) %>" />
+					<input name="j_password" type="hidden" value="<%= HtmlUtil.escapeAttribute(jPassword) %>" />
 				</form>
 
 				<font face="Verdana, Tahoma, Arial" size="3">
-				<strong><liferay-ui:message key="processing-login" /></strong>
-				</font><br /><br />
+					<strong><liferay-ui:message key="processing-login" /></strong>
+				</font>
+				<br /><br />
 
 				<script type="text/javascript">
-					var progressBar = createBar(300, 15, "#FFFFFF", 1, "#000000", "", 85, 7, 3, "");
+					var progressBar = createBar(300, 15, '#FFFFFF', 1, '#000000', '', 85, 7, 3, '');
 				</script>
 			</td>
 		</tr>

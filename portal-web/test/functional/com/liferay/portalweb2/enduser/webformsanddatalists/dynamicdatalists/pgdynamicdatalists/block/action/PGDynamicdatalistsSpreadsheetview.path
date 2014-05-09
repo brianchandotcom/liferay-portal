@@ -43,6 +43,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RECORD_TABLE-->
+<tr>
+	<td>RECORD_TABLE_FIELD_ENTRY</td>
+	<td>//tbody[@class='table-data']/tr[${key_ddlRecordRow}]/td[contains(@class,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

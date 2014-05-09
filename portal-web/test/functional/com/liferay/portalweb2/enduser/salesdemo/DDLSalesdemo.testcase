@@ -168,28 +168,22 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
-		<var name="ddlRecordFieldData" value="Joe" />
-		<var name="key_fieldName" value="First_Name" />
+		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Joe" />
+			<var name="ddlRecordRow" value="3" />
+			<var name="fieldName" value="First_Name" />
+		</execute>
 
-		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[1]" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[1]" value1="${ddlRecordFieldData}" />
+		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Perkins" />
+			<var name="ddlRecordRow" value="3" />
+			<var name="fieldName" value="Last_Name" />
+		</execute>
 
-		<var name="ddlRecordFieldData" value="Perkins" />
-		<var name="key_fieldName" value="Last_Name" />
-
-		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[2]" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[2]" value1="${ddlRecordFieldData}" />
-
-		<var name="ddlRecordFieldData" value="Chips" />
-		<var name="key_fieldName" value="What_are_you_bringing" />
-
-		<execute action="PGDynamicdatalists#doubleClick" locator1="//tbody[@class='table-data']/tr[3]/td[3]" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator-key1="CELL_EDITOR_SELECT" value1="${ddlRecordFieldData}" />
-		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr[3]/td[3]" value1="${ddlRecordFieldData}" />
+		<execute macro="DDLRecord#populateFieldSelectViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="Chips" />
+			<var name="ddlRecordRow" value="3" />
+			<var name="fieldName" value="What_are_you_bringing" />
+		</execute>
 	</command>
 </definition>

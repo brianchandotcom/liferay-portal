@@ -201,6 +201,34 @@
 		</if>
 	</command>
 
+	<command name="populateFieldSelectViaSpreadsheetView">
+		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator-key1="RECORD_TABLE_FIELD_ENTRY" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#select" locator-key1="CELL_EDITOR_SELECT" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator-key1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldTextViaSpreadsheetView">
+		<execute macro="DDLRecord#populateFieldTextViaSpreadsheetViewCmd">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="ddlRecordRow" value="${ddlRecordRow}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="populateFieldTextViaSpreadsheetViewCmd">
+		<var name="key_ddlRecordRow" value="${ddlRecordRow}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGDynamicdatalistsSpreadsheetview#doubleClick" locator-key1="RECORD_TABLE_FIELD_ENTRY" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator-key1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
+	</command>
+
 	<command name="publishCP">
 		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 

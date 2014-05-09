@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[8]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[8]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[8]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[8]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

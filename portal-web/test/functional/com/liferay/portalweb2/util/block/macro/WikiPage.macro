@@ -464,7 +464,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPage1Title}" />
 
-		<execute action="PGWikiWikipageRename#assertClick" locator-key1="CHANGE_PARENT_NEW_PARENT_SELECT" value1="- ${wikiPage1Title}" />
+		<execute action="PGWikiWikipageRename#select" locator-key1="CHANGE_PARENT_NEW_PARENT_SELECT" value1="- ${wikiPage1Title}" />
 		<execute action="PGWikiWikipageRename#assertClick" locator-key1="CHANGE_PARENT_CHANGE_PARENT_BUTTON" value1="Change Parent" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

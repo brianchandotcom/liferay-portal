@@ -103,25 +103,29 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {
-		Collection<AssetRendererFactory> assetRendererFactories = ListUtil.filter(
+
+		Collection<AssetRendererFactory> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId()),
-				new PredicateFilter<AssetRendererFactory>() {
+				_themeDisplay.getCompanyId());
 
-					@Override
-					public boolean filter(
-						AssetRendererFactory assetRendererFactory) {
+		assetRendererFactories = ListUtil.filter(
+			assetRendererFactories,
+			new PredicateFilter<AssetRendererFactory>() {
 
-						if (assetRendererFactory.isLinkable() &&
-							assetRendererFactory.isSelectable()) {
+				@Override
+				public boolean filter(
+					AssetRendererFactory assetRendererFactory) {
 
-							return true;
-						}
+					if (assetRendererFactory.isLinkable() &&
+						assetRendererFactory.isSelectable()) {
 
-						return false;
+						return true;
 					}
 
-				});
+					return false;
+				}
+
+			});
 
 		return ListUtil.sort(
 			ListUtil.fromCollection(assetRendererFactories),

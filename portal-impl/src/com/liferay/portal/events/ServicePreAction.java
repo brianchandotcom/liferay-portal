@@ -330,7 +330,20 @@ public class ServicePreAction extends Action {
 
 		if (plid > 0) {
 			layout = LayoutLocalServiceUtil.getLayout(plid);
+		}
+		else {
+			long groupId = ParamUtil.getLong(request, "groupId");
+			boolean privateLayout = ParamUtil.getBoolean(
+				request, "privateLayout");
+			long layoutId = ParamUtil.getLong(request, "layoutId");
 
+			if ((groupId > 0) && (layoutId > 0)) {
+				layout = LayoutLocalServiceUtil.getLayout(
+					groupId, privateLayout, layoutId);
+			}
+		}
+
+		if (layout != null) {
 			long sourceGroupId = ParamUtil.getLong(request, "p_v_l_s_g_id");
 
 			if ((sourceGroupId > 0) && (sourceGroupId != layout.getGroupId())) {
@@ -346,17 +359,6 @@ public class ServicePreAction extends Action {
 				else {
 					viewableSourceGroup = false;
 				}
-			}
-		}
-		else {
-			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
-			long layoutId = ParamUtil.getLong(request, "layoutId");
-
-			if ((groupId > 0) && (layoutId > 0)) {
-				layout = LayoutLocalServiceUtil.getLayout(
-					groupId, privateLayout, layoutId);
 			}
 		}
 

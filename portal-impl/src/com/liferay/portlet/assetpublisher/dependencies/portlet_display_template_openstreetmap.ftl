@@ -8,6 +8,12 @@
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
 
+<#if themeDisplay.isSecure()>
+	<#assign uriScheme = "https" />
+<#else>
+	<#assign uriScheme = "http" />
+</#if>
+
 <#assign namespace = renderResponse.getNamespace() />
 
 <#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
@@ -37,81 +43,85 @@
 </#list>
 
 <style type="text/css">
-	.asset-entry-abstract {
+	.${namespace}asset-entry-abstract {
 		min-width: ${minWidth};
+		overflow: auto;
 	}
 
-	.asset-entry-abstract .asset-entry-abstract-image {
+	.${namespace}asset-entry-abstract .asset-entry-abstract-image {
 		float: left;
 		margin-right: 2em;
 	}
 
-	.asset-entry-abstract .asset-entry-abstract-image img {
+	.${namespace}asset-entry-abstract .asset-entry-abstract-image img {
 		display: block;
 	}
 
-	.asset-entry-abstract .taglib-icon {
+	.${namespace}asset-entry-abstract .taglib-icon {
 		float: right;
 	}
 
-	.map-canvas {
+	.${namespace}map-canvas {
 		min-height: ${minHeight};
 	}
 </style>
 
-<div id="${namespace}map-canvas" class="map-canvas"></div>
+<div class="${namespace}map-canvas" id="${namespace}mapCanvas"></div>
 
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<link href="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" />
 
-<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 <@liferay_aui.script>
-	(function () {
-		function putMarkers(map) {
-			L.tileLayer(
-				'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-				{
-					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				}).addTo(map);
-
-			var bounds = L.latLngBounds([]);
-			var points = ${jsonArray};
-
-			var len = points.length;
-
-			for (var i = 0; i < len; i++) {
-				var point = points[i];
-
-				var latLng = L.latLng(point['latitude'], point['longitude']);
-
-				L.marker(latLng).addTo(map).bindPopup(
-					point['abstract'],
-					{
-						maxWidth: ${maxWidth}
-					});
-
-				bounds.extend(latLng);
+(function() {
+	var putMarkers = function(map) {
+		L.tileLayer(
+			'${uriScheme}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			{
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}
+		).addTo(map);
 
-			return bounds;
+		var bounds = L.latLngBounds([]);
+		var points = ${jsonArray};
+
+		var len = points.length;
+
+		for (var i = 0; i < len; i++) {
+			var point = points[i];
+
+			var latLng = L.latLng(point['latitude'], point['longitude']);
+
+			L.marker(latLng).addTo(map).bindPopup(
+				point['abstract'],
+				{
+					maxWidth: ${maxWidth}
+				}
+			);
+
+			bounds.extend(latLng);
 		}
 
-		function drawMap(lat, lng) {
-			var map = L.map('${namespace}map-canvas').setView([lat, lng], 8);
+		return bounds;
+	};
 
-			map.fitBounds(putMarkers(map));
-		}
+	var drawMap = function(lat, lng) {
+		var map = L.map('${namespace}mapCanvas').setView([lat, lng], 8);
 
-		if ("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition(
-				function (pos) {
-					drawMap(pos.coords.latitude, pos.coords.longitude);
-				});
-		}
-		else {
-			drawMap(${defaultLatitude}, ${defaultLongitude});
-		}
-	})();
+		map.fitBounds(putMarkers(map));
+	};
+
+	var drawDefaultMap = function() {
+		drawMap(${defaultLatitude}, ${defaultLongitude});
+	};
+
+	Liferay.Util.getGeolocation(
+		function(latitude, longitude) {
+			drawMap(latitude, longitude);
+		},
+		drawDefaultMap
+	);
+})();
 </@liferay_aui.script>
 
 <#macro getAbstract asset>
@@ -121,7 +131,7 @@
 
 	${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
-	<div class="asset-entry-abstract">
+	<div class="${namespace}asset-entry-abstract">
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse,  windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
 		<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />

@@ -205,6 +205,13 @@
 		<execute action="CPSitetemplates#assertElementNotPresent" locator-key1="SITE_TEMPLATE_TABLE_NAME_3" />
 	</command>
 
+	<command name="viewDefaultDataLocalizedCP">
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME_1" value1="${communitySiteTranslation}" />
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME_2" value1="${intranetSiteTranslation}" />
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_DESCRITPION_1" value1="${communitySiteDescriptionTranslation}" />
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
+	</command>
+
 	<command name="viewEditCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

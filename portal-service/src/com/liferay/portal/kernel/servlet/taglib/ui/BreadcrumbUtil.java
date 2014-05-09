@@ -146,7 +146,7 @@ public class BreadcrumbUtil {
 			String url = portletBreadcrumbEntry.getURL();
 
 			if (Validator.isNotNull(url) &&
-				!(i == (portletBreadcrumbEntries.size() - 1))) {
+				((i + 1) < portletBreadcrumbEntries.size())) {
 
 				if (!CookieKeys.hasSessionId(request)) {
 					HttpSession session = request.getSession();

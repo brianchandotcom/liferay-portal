@@ -140,8 +140,8 @@ public class BreadcrumbUtil {
 
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
 			breadcrumbEntry.setBaseModel(portletBreadcrumbEntry.getBaseModel());
+			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
 			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
 			String url = portletBreadcrumbEntry.getURL();

@@ -332,35 +332,37 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			group.getGroupId(), "layoutA");
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getPlid(), "/layoutA-de", "de");
+			layoutA.getUserId(), layoutA.getPlid(), "/layoutA-de", "de");
 
 		Layout layoutB = LayoutTestUtil.addLayout(
 			group.getGroupId(), "layoutB");
 
 		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getPlid(), "/layoutB-de", "de");
+			layoutB.getUserId(), layoutB.getPlid(), "/layoutB-de", "de");
 
 		long[] layoutIds = {layoutA.getLayoutId(), layoutB.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getPlid(), "/temp", defaultLanguageId);
+			layoutA.getUserId(), layoutA.getPlid(), "/temp", defaultLanguageId);
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getPlid(), "/temp-de", "de");
+			layoutA.getUserId(), layoutA.getPlid(), "/temp-de", "de");
 
 		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getPlid(), "/layoutA", defaultLanguageId);
+			layoutB.getUserId(), layoutB.getPlid(), "/layoutA",
+			defaultLanguageId);
 
 		LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutB.getPlid(), "/layoutA-de", "de");
+			layoutB.getUserId(), layoutB.getPlid(), "/layoutA-de", "de");
 
 		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getPlid(), "/layoutB", defaultLanguageId);
+			layoutA.getUserId(), layoutA.getPlid(), "/layoutB",
+			defaultLanguageId);
 
 		LayoutLocalServiceUtil.updateFriendlyURL(
-			layoutA.getPlid(), "/layoutB-de", "de");
+			layoutA.getUserId(), layoutA.getPlid(), "/layoutB-de", "de");
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 	}

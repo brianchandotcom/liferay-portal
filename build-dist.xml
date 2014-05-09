@@ -1987,12 +1987,6 @@ this task.
 				</replace>
 			</then>
 		</if>
-
-		<chmod perm="a+x">
-			<fileset dir="${app.server.tomcat.bin.dir}">
-				<include name="*.sh" />
-			</fileset>
-		</chmod>
 	</target>
 
 	<target name="unzip-tomcat">

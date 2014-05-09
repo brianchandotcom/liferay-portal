@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var WIN = A.config.win;
+
 		var STR_AVAILABLE_TRANSLATIONS_LINKS = 'availableTranslationsLinks';
 
 		var STR_CHANGE_DEFAULT_LANGUAGE = 'changeDefaultLanguage';
@@ -17,13 +19,13 @@ AUI.add(
 
 		var STR_LANGUAGE_ID = 'languageId';
 
-		var STR_TRANSLATIONS_MESSAGE = 'translationsMessage';
-
 		var STR_SELECT_STRUCTURE = 'selectStructure';
 
 		var STR_SELECT_TEMPLATE = 'selectTemplate';
 
 		var STR_STRINGS = 'strings';
+
+		var STR_TRANSLATIONS_MESSAGE = 'translationsMessage';
 
 		var STR_URLS = 'urls';
 
@@ -96,11 +98,7 @@ AUI.add(
 
 						instance._bindUI();
 
-						Liferay.provide(
-							window,
-							instance.ns('postProcessTranslation'),
-							A.bind('_postProcessTranslation', instance)
-						);
+						Liferay.provide(WIN, instance.ns('postProcessTranslation'), A.bind('_postProcessTranslation', instance));
 					},
 
 					_bindUI: function() {
@@ -176,7 +174,7 @@ AUI.add(
 
 						var defaultLanguageId = instance.get(STR_DEFAULT_LANGUAGE_SELECTOR).get('value');
 
-						window.location.href = Lang.sub(
+						WIN.location.href = Lang.sub(
 							TPL_CHANGE_DEFAULT_LOCALE_URL,
 							{
 								baseURL: urls.updateDefaultLanguage,
@@ -215,7 +213,7 @@ AUI.add(
 							Liferay.Util.openWindow(
 								{
 									id: A.guid(),
-									refreshWindow: window,
+									refreshWindow: WIN,
 									title: strings.structures,
 									uri: urls.editStructure
 								}

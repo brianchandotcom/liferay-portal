@@ -3,6 +3,14 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var STR_ADD = 'add';
+
+		var STR_ARTICLE_ID = 'articleId';
+
+		var STR_CMD = 'cmd';
+
+		var STR_UPDATE = 'update';
+
 		var Journal = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -18,14 +26,8 @@ AUI.add(
 				},
 
 				prototype: {
-					initializer: function(config) {
-						var instance = this;
-					},
-
 					displayTemplateMessage: function() {
-						var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
-
-						alert(templateMessage);
+						alert(Liferay.Language.get('please-add-a-template-to-render-this-structure'));
 					},
 
 					hasStructure: function() {
@@ -81,21 +83,21 @@ AUI.add(
 							instance.displayTemplateMessage();
 						}
 						else {
-							var articleId = instance.get('articleId');
+							var articleId = instance.get(STR_ARTICLE_ID);
 
 							if (!cmd) {
-								cmd = articleId ? 'update' : 'add';
+								cmd = articleId ? STR_UPDATE : STR_ADD;
 							}
 
-							var articleIdInput = instance.getByName(form, 'articleId');
-							var cmdInput = instance.getByName(form, 'cmd');
+							var articleIdInput = instance.getByName(form, STR_ARTICLE_ID);
+							var cmdInput = instance.getByName(form, STR_CMD);
 							var newArticleIdInput = instance.getByName(form, 'newArticleId');
 							var workflowActionInput = instance.getByName(form, 'workflowAction');
 
 							if (cmd == 'publish') {
 								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
 
-								cmd = articleId ? 'update' : 'add';
+								cmd = articleId ? STR_UPDATE : STR_ADD;
 							}
 
 							cmdInput.val(cmd);
@@ -113,7 +115,7 @@ AUI.add(
 
 						var form = instance.getPrincipalForm();
 
-						var cmdInput = instance.getByName(form, 'cmd');
+						var cmdInput = instance.getByName(form, STR_CMD);
 
 						cmdInput.val('translate');
 

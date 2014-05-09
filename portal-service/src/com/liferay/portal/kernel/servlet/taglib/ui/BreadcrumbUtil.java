@@ -253,11 +253,18 @@ public class BreadcrumbUtil {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		// Entry entity
-
 		breadcrumbEntry.setEntity(layout);
 
-		// Entry URL
+		String layoutName = layout.getName(themeDisplay.getLocale());
+
+		if (layout.isTypeControlPanel()) {
+			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
+				layoutName = LanguageUtil.get(
+					themeDisplay.getLocale(), "control-panel");
+			}
+		}
+
+		breadcrumbEntry.setTitle(layoutName);
 
 		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
@@ -272,19 +279,6 @@ public class BreadcrumbUtil {
 		}
 
 		breadcrumbEntry.setURL(layoutURL);
-
-		// Entry title
-
-		String layoutName = layout.getName(themeDisplay.getLocale());
-
-		if (layout.isTypeControlPanel()) {
-			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
-				layoutName = LanguageUtil.get(
-					themeDisplay.getLocale(), "control-panel");
-			}
-		}
-
-		breadcrumbEntry.setTitle(layoutName);
 
 		breadcrumbEntries.add(breadcrumbEntry);
 	}

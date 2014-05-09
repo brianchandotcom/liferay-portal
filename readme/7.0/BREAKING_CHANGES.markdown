@@ -181,21 +181,21 @@ template.
 
 ---------------------------------------
 
-### Changed the AssetRenderer and Indexer APIs to include the `PortletRequest` and `PortletResponse` Parameters
+### Changed the AssetRenderer and Indexer APIs to Include the `PortletRequest` and `PortletResponse` Parameters
 - **Date:** 2014-May-07
 - **JIRA Ticket:** LPS-44639 and LPS-44894
 
 #### What changed?
-The `getSummary()` method in the AssetRenderer APIs and the `doGetSummary()`
-method in the Indexer APIs have changed and must include the `PortletRequest`
-and `PortletResponse` parameters as part of their signature.
+The `getSummary()` method in the AssetRenderer API and the `doGetSummary()`
+method in the Indexer API have changed and must include a `PortletRequest`
+and `PortletResponse` parameter as part of their signatures.
 
 #### Who is affected?
-Any AssetRenderer or Indexer that needs to update these methods.
+These methods must be updated in all AssetRenderer and Indexer implementations.
 
 #### How should I update my code?
-Add the `PortletRequest` and `PortletResponse` parameters to the signature of
-your methods.
+Add a `PortletRequest` and `PortletResponse` parameter to the signatures of
+these methods.
 
 **Example**
 

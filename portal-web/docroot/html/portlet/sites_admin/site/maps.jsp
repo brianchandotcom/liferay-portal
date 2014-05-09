@@ -34,7 +34,7 @@ else {
 <h3><liferay-ui:message key="maps" /></h3>
 
 <%
-String googleMapsKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsKey");
+String googleMapsApiKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsApiKey");
 %>
 
-<aui:input helpMessage="set-the-google-maps-key-that-will-be-used-for-this-set-of-pages" label="google-maps-key" name="TypeSettingsProperties--googleMapsKey--" size="40" type="text" value="<%= googleMapsKey %>" />
+<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="TypeSettingsProperties--googleMapsApiKey--" size="40" type="text" value="<%= googleMapsApiKey %>" />

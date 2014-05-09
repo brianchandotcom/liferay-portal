@@ -391,7 +391,7 @@
 			return columnId;
 		},
 
-		getGeolocation: function(callback) {
+		getGeolocation: function(callback, defaultCallback) {
 			if (callback && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
 					function(position) {
@@ -400,8 +400,12 @@
 							position.coords.latitude,
 							position.coords.longitude
 						);
-					}
+					},
+					defaultCallback
 				);
+			}
+			else if (defaultCallback) {
+				defaultCallback();
 			}
 		},
 

@@ -25,7 +25,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <h3><liferay-ui:message key="maps" /></h3>
 
 <%
-String googleMapsKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsKey");
+String googleMapsApiKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsApiKey");
 %>
 
-<aui:input helpMessage="set-the-google-maps-key-that-will-be-used-for-this-set-of-pages" label="google-maps-key" name="settings--googleMapsKey--" size="40" type="text" value="<%= googleMapsKey %>" />
+<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="settings--googleMapsApiKey--" size="40" type="text" value="<%= googleMapsApiKey %>" />

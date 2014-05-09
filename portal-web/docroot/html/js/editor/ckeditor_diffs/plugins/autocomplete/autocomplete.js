@@ -40,51 +40,6 @@
 					instance._bindUI();
 				},
 
-				_bindUI: function() {
-					var instance = this;
-
-					instance._processCaret = A.bind('_processCaretPosition', instance);
-
-					var editor = instance.get(STR_EDITOR);
-
-					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance)),
-						editor.on('selectionChange', instance._processCaret)
-					];
-				},
-
-				_getACPositionBase: function() {
-					var instance = this;
-
-					if (!instance._contentsContainer) {
-						var inputElement = instance._getInputElement();
-
-						instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
-					}
-
-					return instance._contentsContainer.getXY();
-				},
-
-				_getACPositionOffset: function() {
-					var instance = this;
-
-					var caretContainer = instance._getCaretContainer();
-
-					var containerAscendantElement = instance._getContainerAscendant(caretContainer);
-
-					var containerAscendantNode = A.one(containerAscendantElement.$);
-
-					return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
-				},
-
-				_getContainerAscendant: function(container, ascendant) {
-					if (!ascendant) {
-						ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
-					}
-
-					return container.getAscendant(ascendant, true);
-				},
-
 				_acUpdateValue: function(text) {
 					var instance = this;
 
@@ -170,6 +125,43 @@
 					instance._setCaretIndex(prevNode, caretIndex);
 				},
 
+				_bindUI: function() {
+					var instance = this;
+
+					instance._processCaret = A.bind('_processCaretPosition', instance);
+
+					var editor = instance.get(STR_EDITOR);
+
+					instance._eventHandles = [
+						editor.on('key', A.bind('_onEditorKey', instance)),
+						editor.on('selectionChange', instance._processCaret)
+					];
+				},
+
+				_getACPositionBase: function() {
+					var instance = this;
+
+					if (!instance._contentsContainer) {
+						var inputElement = instance._getInputElement();
+
+						instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
+					}
+
+					return instance._contentsContainer.getXY();
+				},
+
+				_getACPositionOffset: function() {
+					var instance = this;
+
+					var caretContainer = instance._getCaretContainer();
+
+					var containerAscendantElement = instance._getContainerAscendant(caretContainer);
+
+					var containerAscendantNode = A.one(containerAscendantElement.$);
+
+					return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
+				},
+
 				_getCaretContainer: function() {
 					var instance = this;
 
@@ -213,6 +205,14 @@
 					var editor = instance.get(STR_EDITOR);
 
 					return editor.getSelection().getRanges()[0];
+				},
+
+				_getContainerAscendant: function(container, ascendant) {
+					if (!ascendant) {
+						ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
+					}
+
+					return container.getAscendant(ascendant, true);
 				},
 
 				_getInputElement: function(value) {

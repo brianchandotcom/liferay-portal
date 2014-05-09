@@ -1867,27 +1867,28 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			_log.debug("Export all portlet data " + exportPortletDataAll);
 		}
 
-		boolean exportCurPortletData = exportPortletData;
-
-		String rootPortletId = getExportableRootPortletId(companyId, portletId);
-
-		if (exportPortletDataAll) {
-			exportCurPortletData = true;
-		}
-		else if (rootPortletId != null) {
-
-			// PORTLET_DATA and the PORTLET_DATA for this specific data handler
-			// must be true
-
-			exportCurPortletData =
-				exportPortletData &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_DATA +
-							StringPool.UNDERLINE + rootPortletId);
+		if (!exportPortletData) {
+			return false;
 		}
 
-		return exportCurPortletData;
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (exportPortletDataAll ||
+			(portlet == null) ||
+			(portletDataHandler == null) ||
+			!portletDataHandler.isDataSiteLevel()) {
+
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+				parameterMap,
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					portlet.getRootPortletId());
 	}
 
 	protected String getExportPortletPreferencesUuid(
@@ -2126,26 +2127,28 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			_log.debug("Import all portlet data " + importPortletDataAll);
 		}
 
-		boolean importCurPortletData = importPortletData;
-
-		String rootPortletId = getExportableRootPortletId(companyId, portletId);
-
-		if (portletDataElement == null) {
-			importCurPortletData = false;
-		}
-		else if (importPortletDataAll) {
-			importCurPortletData = true;
-		}
-		else if (rootPortletId != null) {
-			importCurPortletData =
-				importPortletData &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_DATA +
-							StringPool.UNDERLINE + rootPortletId);
+		if (!importPortletData || (portletDataElement == null)) {
+			return false;
 		}
 
-		return importCurPortletData;
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (importPortletDataAll ||
+			(portlet == null) ||
+			(portletDataHandler == null) ||
+			!portletDataHandler.isDataSiteLevel()) {
+
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+				parameterMap,
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					portlet.getRootPortletId());
 	}
 
 	protected Long getImportPortletPreferencesNewPrimaryKey(

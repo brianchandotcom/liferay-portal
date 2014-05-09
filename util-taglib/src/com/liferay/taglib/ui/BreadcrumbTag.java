@@ -221,10 +221,6 @@ public class BreadcrumbTag extends IncludeTag {
 		StringBundler sb = new StringBundler();
 
 		try {
-			Layout layout = themeDisplay.getLayout();
-
-			Group group = layout.getGroup();
-
 			if (_showGuestGroup) {
 				buildGuestGroupBreadcrumb(themeDisplay, sb);
 			}

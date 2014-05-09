@@ -247,6 +247,10 @@ if (!cmd.equals(Constants.ADD)) {
 
 					<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
 						<aui:fieldset cssClass="options-group" label="content">
+							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
+
+							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
+
 							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
 									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
@@ -255,10 +259,6 @@ if (!cmd.equals(Constants.ADD)) {
 
 									<ul class="hide select-options" id="<portlet:namespace />selectContents">
 										<li>
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
-
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
-
 											<div class="hide" id="<portlet:namespace />range">
 												<ul class="lfr-tree unstyled">
 													<li class="tree-item">

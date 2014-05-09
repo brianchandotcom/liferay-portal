@@ -197,6 +197,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 			<c:if test="<%= !dataPortlets.isEmpty() %>">
 				<aui:fieldset cssClass="options-group" label="content">
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
+
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+
 					<ul class="lfr-tree unstyled">
 						<li class="tree-item">
 							<aui:input checked="<%= true %>" helpMessage="all-content-import-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
@@ -238,9 +242,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 							<ul class="hide select-options" id="<portlet:namespace />selectContents">
 								<li class="options">
 									<ul class="portlet-list">
-										<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
-
-										<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
 
 										<%
 										Set<String> displayedControls = new HashSet<String>();

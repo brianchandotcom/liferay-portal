@@ -141,19 +141,19 @@ public class BreadcrumbUtil {
 
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			String portletBreadcrumbURL = portletBreadcrumbEntry.getURL();
+			String url = portletBreadcrumbEntry.getURL();
 
 			boolean isLastEntry = (i == (portletBreadcrumbEntries.size() - 1));
 
-			if (Validator.isNotNull(portletBreadcrumbURL) && !isLastEntry) {
+			if (Validator.isNotNull(url) && !isLastEntry) {
 				if (!CookieKeys.hasSessionId(request)) {
 					HttpSession session = request.getSession();
 
-					portletBreadcrumbURL = PortalUtil.getURLWithSessionId(
-						portletBreadcrumbURL, session.getId());
+					url = PortalUtil.getURLWithSessionId(
+						url, session.getId());
 				}
 
-				breadcrumbEntry.setURL(portletBreadcrumbURL);
+				breadcrumbEntry.setURL(url);
 			}
 
 			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());

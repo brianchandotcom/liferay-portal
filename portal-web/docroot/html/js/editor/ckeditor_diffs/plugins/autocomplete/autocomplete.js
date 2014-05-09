@@ -133,9 +133,16 @@
 					var editor = instance.get(STR_EDITOR);
 
 					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance)),
-						editor.on('selectionChange', instance._processCaret)
+						editor.on('key', A.bind('_onEditorKey', instance))
 					];
+
+					editor.once('instanceReady', function(event) {
+						var editorBody = A.one(event.editor.document.$.body);
+
+						instance._eventHandles.push(
+							editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
+						);
+					});
 				},
 
 				_getACPositionBase: function() {

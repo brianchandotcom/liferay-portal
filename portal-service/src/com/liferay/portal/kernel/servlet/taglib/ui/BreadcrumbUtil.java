@@ -231,8 +231,8 @@ public class BreadcrumbUtil {
 
 			breadcrumbEntry = new BreadcrumbEntry();
 
-			breadcrumbEntry.setURL(layoutSetFriendlyURL);
 			breadcrumbEntry.setTitle(group.getDescriptiveName());
+			breadcrumbEntry.setURL(layoutSetFriendlyURL);
 
 			breadcrumbEntries.add(breadcrumbEntry);
 		}

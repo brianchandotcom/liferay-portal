@@ -106,9 +106,11 @@ public class BreadcrumbUtil {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
+			
+		Layout layout = themeDisplay.getLayout();
 
 		LayoutSet parentLayoutSet = _getParentLayoutSet(
-			themeDisplay.getLayout().getLayoutSet());
+			layout.getLayoutSet());
 
 		if (parentLayoutSet != null) {
 			_addGroupsBreadcrumbEntries(

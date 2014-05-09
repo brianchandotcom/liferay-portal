@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ASSIGN_TO_ME</td>
-	<td>//div[@class='lfr-asset-assigned']/div/span[contains(@class,'task-assign-to-me-link')]</td>
+	<td>//div[@class='lfr-asset-assigned']/span[contains(@class,'task-assign-to-me-link')]</td>
 	<td></td>
 </tr>
 <tr>

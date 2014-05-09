@@ -16,11 +16,11 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Account;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -108,11 +108,10 @@ public class BreadcrumbUtil {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
-			
+
 		Layout layout = themeDisplay.getLayout();
 
-		LayoutSet parentLayoutSet = _getParentLayoutSet(
-			layout.getLayoutSet());
+		LayoutSet parentLayoutSet = _getParentLayoutSet(layout.getLayoutSet());
 
 		if (parentLayoutSet != null) {
 			_addGroupsBreadcrumbEntries(
@@ -148,7 +147,7 @@ public class BreadcrumbUtil {
 			String url = portletBreadcrumbEntry.getURL();
 
 			boolean last = false;
-			
+
 			if (i == (portletBreadcrumbEntries.size() - 1)) {
 				last = true;
 			}
@@ -157,8 +156,7 @@ public class BreadcrumbUtil {
 				if (!CookieKeys.hasSessionId(request)) {
 					HttpSession session = request.getSession();
 
-					url = PortalUtil.getURLWithSessionId(
-						url, session.getId());
+					url = PortalUtil.getURLWithSessionId(url, session.getId());
 				}
 
 				breadcrumbEntry.setURL(url);
@@ -176,7 +174,7 @@ public class BreadcrumbUtil {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
-			
+
 		Layout layout = themeDisplay.getLayout();
 
 		_addGroupsBreadcrumbEntries(

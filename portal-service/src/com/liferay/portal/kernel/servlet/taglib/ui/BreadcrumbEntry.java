@@ -14,15 +14,19 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.model.BaseModel;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.liferay.portal.model.BaseModel;
 
 /**
  * @author Sergio González
  */
 public class BreadcrumbEntry {
+
+	public BaseModel<?> getBaseModel() {
+		return _baseModel;
+	}
 
 	public Map<String, Object> getData() {
 		return _data;
@@ -30,10 +34,6 @@ public class BreadcrumbEntry {
 
 	public Object getData(String key) {
 		return _data.get(key);
-	}
-
-	public BaseModel<?> getBaseModel() {
-		return _baseModel;
 	}
 
 	public String getTitle() {
@@ -52,12 +52,12 @@ public class BreadcrumbEntry {
 		_data.put(key, value);
 	}
 
-	public void setData(Map<String, Object> data) {
-		_data = data;
-	}
-
 	public void setBaseModel(BaseModel<?> baseModel) {
 		_baseModel = baseModel;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setTitle(String title) {
@@ -68,8 +68,8 @@ public class BreadcrumbEntry {
 		_url = url;
 	}
 
-	private Map<String, Object> _data;
 	private BaseModel<?> _baseModel;
+	private Map<String, Object> _data;
 	private String _title;
 	private String _url;
 

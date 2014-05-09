@@ -60,13 +60,11 @@ public class BreadcrumbUtil {
 		_addGroupsBreadcrumbEntries(
 			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
 
-		BreadcrumbEntry breadcrumbEntry = null;
-
-		if (!breadcrumbEntries.isEmpty()) {
-			breadcrumbEntry = breadcrumbEntries.get(0);
+		if (breadcrumbEntries.isEmpty()) {
+			return null;
 		}
 
-		return breadcrumbEntry;
+		return breadcrumbEntries.get(0);
 	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(

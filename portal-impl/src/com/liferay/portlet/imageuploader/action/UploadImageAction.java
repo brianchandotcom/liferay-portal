@@ -331,6 +331,13 @@ public class UploadImageAction extends PortletAction {
 				int x = jsonObject.getInt("x");
 				int y = jsonObject.getInt("y");
 
+				if ((x == 0) && (y == 0) &&
+					(renderedImage.getHeight() == height) &&
+					(renderedImage.getWidth() == width)) {
+
+					return tempFileEntry;
+				}
+
 				if ((height + y) > renderedImage.getHeight()) {
 					height = renderedImage.getHeight() - y;
 				}

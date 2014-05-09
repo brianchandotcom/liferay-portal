@@ -2747,13 +2747,17 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<isset property="env.JENKINS_HOME" />
 			<then>
+				<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
+					<antelope:replace regex="," replacement="_" />
+				</antelope:stringutil>
+
 				<if>
 					<and>
 						<available file="portal-web/test-results/functional/screenshots" />
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="${env.JOB_NAME}/builds/${env.BUILD_NUMBER}/screenshots">
+						<copy todir="${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset
 								dir="portal-web/test-results/functional/screenshots"
 							/>
@@ -2769,7 +2773,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<then>
 						<copy
 							file="portal-web/test-results/functional/report.html"
-							tofile="${env.JOB_NAME}/builds/${env.BUILD_NUMBER}/report.html"
+							tofile="${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
 				</if>

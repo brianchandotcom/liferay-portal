@@ -64,7 +64,9 @@ public class BreadcrumbUtil {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		// Entry URL
+		Account account = themeDisplay.getAccount();
+
+		breadcrumbEntry.setTitle(account.getName());
 
 		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 			layoutSet, themeDisplay);
@@ -75,12 +77,6 @@ public class BreadcrumbUtil {
 		}
 
 		breadcrumbEntry.setURL(layoutSetFriendlyURL);
-
-		// Entry title
-
-		Account account = themeDisplay.getAccount();
-
-		breadcrumbEntry.setTitle(account.getName());
 
 		return breadcrumbEntry;
 	}

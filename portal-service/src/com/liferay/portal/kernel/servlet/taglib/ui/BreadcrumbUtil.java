@@ -141,6 +141,10 @@ public class BreadcrumbUtil {
 
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
+			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
+			breadcrumbEntry.setEntity(portletBreadcrumbEntry.getEntity());
+			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
+
 			String url = portletBreadcrumbEntry.getURL();
 
 			boolean last = false;
@@ -159,10 +163,6 @@ public class BreadcrumbUtil {
 
 				breadcrumbEntry.setURL(url);
 			}
-
-			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
-			breadcrumbEntry.setEntity(portletBreadcrumbEntry.getEntity());
-			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
 			breadcrumbEntries.add(breadcrumbEntry);
 		}

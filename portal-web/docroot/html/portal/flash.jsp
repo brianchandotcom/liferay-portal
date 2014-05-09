@@ -42,9 +42,9 @@ String movie = ParamUtil.getString(request, "movie");
 	<div id="flashMovie"></div>
 
 	<script type="text/javascript">
-		var so = new SWFObject("<%= HtmlUtil.escapeJS(movie) %>", "flashMovie", "<%= HtmlUtil.escapeJS(width) %>", "<%= HtmlUtil.escapeJS(height) %>", "6", "#FFFFFF");
+		var so = new SWFObject('<%= HtmlUtil.escapeJS(movie) %>', 'flashMovie', '<%= HtmlUtil.escapeJS(width) %>', '<%= HtmlUtil.escapeJS(height) %>', '6', '#FFFFFF');
 
-		so.write("flashMovie");
+		so.write('flashMovie');
 	</script>
 </c:if>
 

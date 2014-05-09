@@ -72,7 +72,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 				</font><br /><br />
 
 				<script type="text/javascript">
-					var progressBar = createBar(300, 15, "#FFFFFF", 1, "#000000", "", 85, 7, 3, "");
+					var progressBar = createBar(300, 15, '#FFFFFF', 1, '#000000', '', 85, 7, 3, '');
 				</script>
 			</td>
 		</tr>

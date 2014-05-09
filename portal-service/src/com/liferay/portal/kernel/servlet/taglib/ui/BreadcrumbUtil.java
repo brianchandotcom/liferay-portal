@@ -54,10 +54,11 @@ public class BreadcrumbUtil {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
+			
+		Layout layout = themeDisplay.getLayout();
 
 		_addGroupsBreadcrumbEntries(
-			breadcrumbEntries, themeDisplay,
-			themeDisplay.getLayout().getLayoutSet(), false);
+			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
 
 		BreadcrumbEntry breadcrumbEntry = null;
 

@@ -78,8 +78,8 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		BreadcrumbEntry currentGroupEntry = BreadcrumbUtil.getCurrentGroupEntry(
-			themeDisplay);
+		BreadcrumbEntry currentGroupEntry =
+			BreadcrumbUtil.getCurrentGroupBreadcrumbEntry(themeDisplay);
 
 		if (currentGroupEntry != null) {
 			sb.append("<li><a href=\"");
@@ -94,8 +94,8 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		BreadcrumbEntry guestGroupEntry = BreadcrumbUtil.getGuestGroupEntry(
-			themeDisplay);
+		BreadcrumbEntry guestGroupEntry =
+			BreadcrumbUtil.getGuestGroupBreadcrumbEntry(themeDisplay);
 
 		if (guestGroupEntry != null) {
 			sb.append("<li><a href=\"");
@@ -110,8 +110,8 @@ public class BreadcrumbTag extends IncludeTag {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		List<BreadcrumbEntry> layoutEntries = BreadcrumbUtil.getLayoutEntries(
-			themeDisplay);
+		List<BreadcrumbEntry> layoutEntries =
+			BreadcrumbUtil.getLayoutBreadcrumbEntries(themeDisplay);
 
 		for (BreadcrumbEntry layoutEntry : layoutEntries) {
 			sb.append("<li><a href=\"");
@@ -142,7 +142,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		List<BreadcrumbEntry> parentGroupEntries =
-			BreadcrumbUtil.getParentGroupEntries(themeDisplay);
+			BreadcrumbUtil.getParentGroupBreadcrumbEntries(themeDisplay);
 
 		for (BreadcrumbEntry parentGroupEntry : parentGroupEntries) {
 			sb.append("<li><a href=\"");
@@ -158,8 +158,8 @@ public class BreadcrumbTag extends IncludeTag {
 			StringBundler sb)
 		throws Exception {
 
-		List<BreadcrumbEntry> portletEntries = BreadcrumbUtil.getPortletEntries(
-			request);
+		List<BreadcrumbEntry> portletEntries =
+			BreadcrumbUtil.getPortletBreadcrumbEntries(request);
 
 		for (BreadcrumbEntry portletEntry : portletEntries) {
 			if (!_showCurrentGroup) {

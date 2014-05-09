@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.breadcrumb.util;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.Account;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;

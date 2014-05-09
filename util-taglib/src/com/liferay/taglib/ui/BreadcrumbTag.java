@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.breadcrumb.util.BreadcrumbUtil;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 

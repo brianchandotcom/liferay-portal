@@ -38,7 +38,11 @@
 	<command name="AddAdditionalEmailAddress" priority="5">
 		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
 
-		<execute macro="MyAccount#addAdditionalEmailAddress">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addAdditionalEmailAddressViaMyAccount">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
 		</execute>
 
@@ -57,7 +61,11 @@
 		<var name="userAddressStreet1" value="123 Liferay Ln." />
 		<var name="userAddressType" value="Personal" />
 
-		<execute macro="MyAccount#addAddress">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addAddressViaMyAccount">
 			<var name="userAddressCity" value="${userAddressCity}" />
 			<var name="userAddressCountry" value="${userAddressCountry}" />
 			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
@@ -86,7 +94,11 @@
 		<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
 		<var name="userInstantMessengerYM" value="socialofficesn" />
 
-		<execute macro="MyAccount#addInstantMessenger">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addInstantMessengerViaMyAccount">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
@@ -110,7 +122,11 @@
 	<command name="AddIntroduction" priority="5">
 		<var name="userIntroduction" value="Introduction Content" />
 
-		<execute macro="MyAccount#addComments">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addCommentViaMyAccount">
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
@@ -126,7 +142,11 @@
 		<var name="userPhoneNumberNumber" value="123-123-1234" />
 		<var name="userPhoneNumberType" value="Business" />
 
-		<execute macro="MyAccount#addPhoneNumbers">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addPhoneNumbersViaMyAccount">
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
 			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
@@ -146,7 +166,11 @@
 		<var name="imageFileNameEdit" value="Document_3.jpg" />
 		<var name="userName" value="${userName}" />
 
-		<execute macro="MyAccount#addProfilePicture">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addProfilePictureViaMyAccount">
 			<var name="imageFileName" value="${imageFileName}" />
 		</execute>
 
@@ -154,7 +178,11 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute macro="MyAccount#addProfilePicture">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addProfilePictureViaMyAccount">
 			<var name="imageFileName" value="${imageFileNameEdit}" />
 		</execute>
 
@@ -162,7 +190,11 @@
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
-		<execute macro="MyAccount#deleteProfilePicture" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#deleteProfilePictureViaMyAccount" />
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -173,7 +205,11 @@
 		<var name="userProjectDescription" value="Expertise Description" />
 		<var name="userProjectTitle" value="Expertise Title" />
 
-		<execute macro="MyAccount#addProjects">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addProjectViaMyAccount">
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 		</execute>
@@ -189,7 +225,11 @@
 	<command name="AddSMS" priority="5">
 		<var name="userSMS" value="socialoffice@liferay.com" />
 
-		<execute macro="MyAccount#addSMS">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addSMSViaMyAccount">
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
@@ -205,7 +245,11 @@
 		<var name="userSocialNetworkMyspace" value="socialoffice01" />
 		<var name="userSocialNetworkTwitter" value="socialoffice01" />
 
-		<execute macro="MyAccount#addSocialNetwork">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addSocialNetworkViaMyAccount">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
 			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
@@ -223,7 +267,11 @@
 	<command name="AddTag" priority="5">
 		<var name="userTag" value="tag1" />
 
-		<execute macro="MyAccount#addTag">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addTagViaMyAccount">
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
@@ -239,7 +287,11 @@
 		<var name="userWebsiteType" value="Personal" />
 		<var name="userWebsiteURL" value="http://www.socialoffice01.com" />
 
-		<execute macro="MyAccount#addWebsite">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute macro="User#addWebsiteViaMyAccount">
 			<var name="userWebsiteType" value="${userWebsiteType}" />
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 		</execute>

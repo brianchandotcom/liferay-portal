@@ -135,12 +135,13 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 		Mockito.verify(
 			_pingback
-		).setSourceURI(
+		).setSourceUri(
 			"__sourceURI__"
 		);
+
 		Mockito.verify(
 			_pingback
-		).setTargetURI(
+		).setTargetUri(
 			"__targetURI__"
 		);
 	}

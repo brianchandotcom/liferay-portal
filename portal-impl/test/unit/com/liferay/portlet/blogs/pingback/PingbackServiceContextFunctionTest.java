@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.blogs.pingback;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.Portlet;
@@ -94,7 +92,7 @@ public class PingbackServiceContextFunctionTest extends PowerMockito {
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void setUpPortal() throws PortalException, SystemException {
+	protected void setUpPortal() throws Exception {
 		Portal portal = Mockito.mock(Portal.class);
 
 		when(
@@ -109,7 +107,7 @@ public class PingbackServiceContextFunctionTest extends PowerMockito {
 		portalUtil.setPortal(portal);
 	}
 
-	protected void setUpPortlet() throws SystemException {
+	protected void setUpPortlet() throws Exception {
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		when(

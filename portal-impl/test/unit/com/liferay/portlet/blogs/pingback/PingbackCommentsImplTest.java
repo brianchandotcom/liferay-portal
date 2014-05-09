@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.blogs.pingback;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -68,21 +66,21 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).getDiscussionMessageDisplay(
-			USER_ID, GROUP_ID, BlogsEntry.class.getName(), ENTRY_ID,
+			_USER_ID, _GROUP_ID, BlogsEntry.class.getName(), _ENTRY_ID,
 			WorkflowConstants.STATUS_APPROVED
 		);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).getThreadMessages(
-			THREAD_ID, WorkflowConstants.STATUS_APPROVED
+			_THREAD_ID, WorkflowConstants.STATUS_APPROVED
 		);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			USER_ID, StringPool.BLANK, GROUP_ID, BlogsEntry.class.getName(),
-			ENTRY_ID, THREAD_ID, PARENT_MESSAGE_ID, StringPool.BLANK,
+			_USER_ID, StringPool.BLANK, _GROUP_ID, BlogsEntry.class.getName(),
+			_ENTRY_ID, _THREAD_ID, _PARENT_MESSAGE_ID, StringPool.BLANK,
 			"__body__", _serviceContext
 		);
 	}
@@ -101,7 +99,7 @@ public class PingbackCommentsImplTest extends PowerMockito {
 
 		when(
 			_mbMessageLocalService.getThreadMessages(
-				THREAD_ID, WorkflowConstants.STATUS_APPROVED)
+				_THREAD_ID, WorkflowConstants.STATUS_APPROVED)
 		).thenReturn(
 			messages
 		);
@@ -111,10 +109,10 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		Assert.fail();
 	}
 
-	protected void addComment() throws PortalException, SystemException {
+	protected void addComment() throws Exception {
 		_pingbackComments.addComment(
-			USER_ID, GROUP_ID, BlogsEntry.class.getName(), ENTRY_ID, "__body__",
-			_serviceContextFunction);
+			_USER_ID, _GROUP_ID, BlogsEntry.class.getName(), _ENTRY_ID,
+			"__body__", _serviceContextFunction);
 	}
 
 	protected void setUpMessageBoards() throws Exception {
@@ -136,13 +134,13 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		when(
 			_mbThread.getRootMessageId()
 		).thenReturn(
-			PARENT_MESSAGE_ID
+			_PARENT_MESSAGE_ID
 		);
 
 		when(
 			_mbThread.getThreadId()
 		).thenReturn(
-			THREAD_ID
+			_THREAD_ID
 		);
 
 		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
@@ -162,15 +160,15 @@ public class PingbackCommentsImplTest extends PowerMockito {
 		);
 	}
 
-	private static final long ENTRY_ID = ServiceTestUtil.randomLong();
+	private static final long _ENTRY_ID = ServiceTestUtil.randomLong();
 
-	private static final long GROUP_ID = ServiceTestUtil.randomLong();
+	private static final long _GROUP_ID = ServiceTestUtil.randomLong();
 
-	private static final long PARENT_MESSAGE_ID = ServiceTestUtil.randomLong();
+	private static final long _PARENT_MESSAGE_ID = ServiceTestUtil.randomLong();
 
-	private static final long THREAD_ID = ServiceTestUtil.randomLong();
+	private static final long _THREAD_ID = ServiceTestUtil.randomLong();
 
-	private static final long USER_ID = ServiceTestUtil.randomLong();
+	private static final long _USER_ID = ServiceTestUtil.randomLong();
 
 	@Mock
 	private MBMessageDisplay _mbMessageDisplay;

@@ -118,8 +118,8 @@ public class PingbackExcerptExtractorImplTest extends PowerMockito {
 	}
 
 	protected void execute(String targetURI) throws Exception {
-		_pingbackExcerptExtractor.setSourceURI("__sourceURI__");
-		_pingbackExcerptExtractor.setTargetURI(targetURI);
+		_pingbackExcerptExtractor.setSourceUri("__sourceURI__");
+		_pingbackExcerptExtractor.setTargetUri(targetURI);
 		_pingbackExcerptExtractor.validateSource();
 
 		_excerpt = _pingbackExcerptExtractor.getExcerpt();

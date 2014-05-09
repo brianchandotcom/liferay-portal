@@ -235,17 +235,17 @@ public class PingbackImplTest extends PowerMockito {
 		PingbackImpl pingback = new PingbackImpl(
 			_pingbackComments, _excerptExtractor);
 
-		pingback.setSourceURI("__sourceURI__");
-		pingback.setTargetURI("__targetURI__");
+		pingback.setSourceUri("__sourceURI__");
+		pingback.setTargetUri("__targetURI__");
 
 		Mockito.verify(
 			_excerptExtractor
-		).setSourceURI(
+		).setSourceUri(
 			"__sourceURI__"
 		);
 		Mockito.verify(
 			_excerptExtractor
-		).setTargetURI(
+		).setTargetUri(
 			"__targetURI__"
 		);
 	}
@@ -291,8 +291,8 @@ public class PingbackImplTest extends PowerMockito {
 		PingbackImpl pingback = new PingbackImpl(
 			_pingbackComments, _excerptExtractor);
 
-		pingback.setSourceURI("__sourceURI__");
-		pingback.setTargetURI(targetURI);
+		pingback.setSourceUri("__sourceURI__");
+		pingback.setTargetUri(targetURI);
 
 		pingback.addPingback(COMPANY_ID);
 	}

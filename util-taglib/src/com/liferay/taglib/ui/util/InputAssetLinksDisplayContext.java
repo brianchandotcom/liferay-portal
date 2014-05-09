@@ -45,6 +45,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {
-		List<AssetRendererFactory> assetRendererFactories = ListUtil.filter(
+		Collection<AssetRendererFactory> assetRendererFactories = ListUtil.filter(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				_themeDisplay.getCompanyId()),
 				new PredicateFilter<AssetRendererFactory>() {
@@ -123,7 +124,7 @@ public class InputAssetLinksDisplayContext {
 				});
 
 		return ListUtil.sort(
-			assetRendererFactories,
+			ListUtil.fromCollection(assetRendererFactories),
 			new AssetRendererFactoryTypeNameComparator(
 				_themeDisplay.getLocale()));
 	}

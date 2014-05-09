@@ -82,6 +82,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+	<aui:input name="portletResourceNamespace" type="hidden" value="<%= portletResourceNamespace %>" />
 	<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />

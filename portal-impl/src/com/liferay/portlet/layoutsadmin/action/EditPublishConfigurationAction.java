@@ -228,8 +228,7 @@ public class EditPublishConfigurationAction
 
 			ExportImportConfigurationHelper.
 				publishLocalLayoutByExportImportConfiguration(
-					userId,
-					exportImportConfiguration.getExportImportConfigurationId());
+					userId, exportImportConfiguration);
 		}
 		else if (exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.

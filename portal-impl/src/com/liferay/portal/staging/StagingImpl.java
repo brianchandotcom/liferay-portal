@@ -1462,14 +1462,28 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void publishLayouts(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
+			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
+	}
+
+	@Override
+	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException, SystemException {
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
-			new String[] {Boolean.TRUE.toString()});
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(

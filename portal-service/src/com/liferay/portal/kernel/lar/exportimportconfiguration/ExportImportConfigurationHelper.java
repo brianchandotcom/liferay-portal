@@ -18,11 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -96,6 +92,13 @@ public class ExportImportConfigurationHelper {
 	}
 
 	public static void publishLocalLayoutByExportImportConfiguration(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		StagingUtil.publishLayouts(userId, exportImportConfiguration);
+	}
+
+	public static void publishLocalLayoutByExportImportConfiguration(
 			long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException {
 
@@ -103,23 +106,8 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		boolean privateLayout = GetterUtil.getBoolean(
-			settingsMap.get("privateLayout"));
-		long[] layoutIds = GetterUtil.getLongValues(
-			settingsMap.get("layoutIds"));
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
-
-		StagingUtil.publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-			parameterMap, dateRange.getStartDate(), dateRange.getEndDate());
+		publishLocalLayoutByExportImportConfiguration(
+			userId, exportImportConfiguration);
 	}
 
 	public static void publishRemoteLayoutByExportImportConfiguration(

@@ -16,6 +16,7 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -33,12 +35,18 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.AggregateResourceBundle;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.minifier.MinifierUtil;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -50,8 +58,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
+
+import javax.portlet.PortletConfig;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -213,6 +226,9 @@ public class ComboServlet extends HttpServlet {
 			URL resourceURL, String resourcePath, String minifierType)
 		throws IOException {
 
+		ModulePathContainer modulePathContainer = new ModulePathContainer(
+			resourcePath);
+
 		int colonIndex = resourcePath.indexOf(CharPool.COLON);
 
 		if (colonIndex > 0) {
@@ -298,6 +314,11 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent);
 				}
 				else if (minifierType.equals("js")) {
+					stringFileContent = translateResponse(
+						request, modulePathContainer.getModuleContextPath(),
+						modulePathContainer.getResourcePath(),
+						stringFileContent);
+
 					stringFileContent = MinifierUtil.minifyJavaScript(
 						resourcePath, stringFileContent);
 				}
@@ -354,6 +375,40 @@ public class ComboServlet extends HttpServlet {
 
 		throw new ServletException(
 			"Servlet context " + contextName + " does not exist");
+	}
+
+	protected String translateResponse(
+		HttpServletRequest request, String contextPath, String resourcePath,
+		String stringFileContent) {
+
+		String languageId = LanguageUtil.getLanguageId(request);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+			contextPath);
+		List<Portlet> portlets = Collections.emptyList();
+
+		if ((portletApp != null) && portletApp.isWARFile()) {
+			portlets = portletApp.getPortlets();
+		}
+
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+				locale);
+
+		if (portlets.size() > 0) {
+			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+				portlets.get(0), getServletContext());
+
+			if (portletConfig != null) {
+				resourceBundle = new AggregateResourceBundle(
+					portletConfig.getResourceBundle(locale), resourceBundle);
+			}
+		}
+
+		stringFileContent = LanguageUtil.expandKeys(
+			resourceBundle, locale, stringFileContent);
+
+		return stringFileContent;
 	}
 
 	protected boolean validateModuleExtension(String moduleName)

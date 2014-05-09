@@ -118,7 +118,7 @@
 
 					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
 
-					if (!caretIndex || caretIndex <= prevTermPosition.index) {
+					if (prevNode.getUniqueId() === prevTermPosition.container.getUniqueId() && caretIndex <= prevTermPosition.index) {
 						caretIndex = prevNode.getText().length;
 					}
 

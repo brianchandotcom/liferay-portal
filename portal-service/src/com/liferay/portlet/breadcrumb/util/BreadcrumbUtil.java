@@ -16,14 +16,32 @@ package com.liferay.portlet.breadcrumb.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Account;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.breadcrumb.Breadcrumb;
+import com.liferay.portal.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author José Manuel Navarro

@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_RELATED_ASSET_HEADER</td>
+	<td>//h2[@class='asset-links-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_RELATED_ASSET_IMAGE</td>
+	<td>//li[@class='asset-links-list-item']//i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_RELATED_ASSET_TITLE</td>
+	<td>//li[@class='asset-links-list-item']//a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_MESSAGE_BOARDS_THREAD_SUBJECT</td>
 	<td>//div[@class='subject']/strong</td>
 	<td></td>

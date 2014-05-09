@@ -64,6 +64,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RELATED_ASSETS_DROPDOWN</td>
+	<td>//div[@id='dlFileEntryAssetLinksPanel']/div[contains(@class,'header-expanded')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_DROPDOWN_COLLAPSED</td>
+	<td>//div[@id='dlFileEntryAssetLinksPanel']/div[contains(@class,'header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//button[contains(.,'Save as Draft')]</td>
 	<td></td>
@@ -76,6 +86,22 @@
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_SELECT</td>
+	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
+	<td>//li[contains(@class,'asset-selector') and contains(.,'${key_assetType}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

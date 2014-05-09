@@ -339,12 +339,12 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="addRelatedAssetPG">
 		<if>
-			<condition action="PGBlogsAdd#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT_MENULIST" />
+			<condition action="PGBlogsAdd#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT" />
 			<then>
 				<execute action="PGBlogsAdd#click" locator-key1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
 				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="RELATED_ASSETS_DROPDOWN" />
@@ -353,7 +353,7 @@
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute action="PGBlogsAdd#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST" value1="Select" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
@@ -1086,7 +1086,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="viewNoEntryViaBlogsAggregatorPG">
@@ -1147,7 +1147,7 @@
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />

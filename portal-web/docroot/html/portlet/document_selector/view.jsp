@@ -272,13 +272,11 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 				%>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
 					name="num-of-folders"
 					value="<%= String.valueOf(foldersCount) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
 					name="num-of-documents"
 					value="<%= String.valueOf(fileEntriesCount) %>"
 				/>
@@ -341,13 +339,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 			keyProperty="fileEntryId"
 			modelVar="fileEntry"
 		>
-
-			<%
-			String rowHREF = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true);
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="document"
 			>
 				<img align="left" alt="" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle() %>" />
@@ -355,21 +347,18 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="size"
 				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
 				<liferay-ui:search-container-column-text
-					href="<%= rowHREF %>"
 					name="downloads"
 					value="<%= String.valueOf(fileEntry.getReadCount()) %>"
 				/>
 			</c:if>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="locked"
 				value='<%= fileEntry.isCheckedOut() ? "yes" : "no" %>'
 			/>

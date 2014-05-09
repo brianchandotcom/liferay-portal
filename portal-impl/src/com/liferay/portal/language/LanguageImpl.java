@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -102,7 +103,7 @@ public class LanguageImpl implements Language, Serializable {
 
 			String value = get(resourceBundle, key);
 
-			sb.append(value);
+			sb.append(HtmlUtil.escapeJS(value));
 			sb.append(StringPool.APOSTROPHE);
 
 			x = matcher.end(0);

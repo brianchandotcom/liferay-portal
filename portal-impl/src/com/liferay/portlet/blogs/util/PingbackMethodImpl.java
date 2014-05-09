@@ -92,18 +92,21 @@ public class PingbackMethodImpl implements Method {
 
 			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}
-		catch (PingbackDisabledException pde) {
-			return createFault(XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND, pde);
-		}
 		catch (DuplicateCommentException dce) {
 			return XmlRpcUtil.createFault(
 				PINGBACK_ALREADY_REGISTERED, "Pingback previously registered");
 		}
 		catch (InvalidSourceURIException isue) {
-			return createFault(SOURCE_URI_INVALID, isue);
+			return XmlRpcUtil.createFault(
+				SOURCE_URI_INVALID, isue.getMessage());
+		}
+		catch (PingbackDisabledException pde) {
+			return XmlRpcUtil.createFault(
+				XmlRpcConstants.REQUESTED_METHOD_NOT_FOUND, pde.getMessage());
 		}
 		catch (UnavailableSourceURIException usue) {
-			return createFault(SOURCE_URI_DOES_NOT_EXIST, usue);
+			return XmlRpcUtil.createFault(
+				SOURCE_URI_DOES_NOT_EXIST, usue.getMessage());
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -220,10 +223,6 @@ public class PingbackMethodImpl implements Method {
 
 			return false;
 		}
-	}
-
-	protected Response createFault(int code, Throwable cause) {
-		return XmlRpcUtil.createFault(code, cause.getMessage());
 	}
 
 	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {

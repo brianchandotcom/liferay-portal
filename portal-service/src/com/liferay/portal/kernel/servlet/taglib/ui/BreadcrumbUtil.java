@@ -48,25 +48,6 @@ import javax.servlet.http.HttpSession;
 @ProviderType
 public class BreadcrumbUtil {
 
-	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
-			
-		Layout layout = themeDisplay.getLayout();
-
-		_addGroupsBreadcrumbEntries(
-			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
-
-		if (breadcrumbEntries.isEmpty()) {
-			return null;
-		}
-
-		return breadcrumbEntries.get(0);
-	}
-
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -183,6 +164,25 @@ public class BreadcrumbUtil {
 		}
 
 		return breadcrumbEntries;
+	}
+
+	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
+			
+		Layout layout = themeDisplay.getLayout();
+
+		_addGroupsBreadcrumbEntries(
+			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
+
+		if (breadcrumbEntries.isEmpty()) {
+			return null;
+		}
+
+		return breadcrumbEntries.get(0);
 	}
 
 	private static void _addGroupsBreadcrumbEntries(

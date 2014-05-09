@@ -5,7 +5,7 @@
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
 		<if>
-			<equals arg1="${currentUser}" arg2="Test Test" />
+			<equals arg1="${currentUser}" arg2="${adminName}" />
 			<then>
 				<if>
 					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
@@ -75,7 +75,7 @@
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 
 				<if>
-					<equals arg1="${currentUser}" arg2="Test Test" />
+					<equals arg1="${currentUser}" arg2="${adminName}" />
 					<then>
 						<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
 					</then>
@@ -89,7 +89,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${currentUser}" arg2="Test Test" />
+			<equals arg1="${currentUser}" arg2="${adminName}" />
 			<then>
 				<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
 				<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
@@ -182,7 +182,7 @@
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
 		<if>
-			<equals arg1="${currentUser}" arg2="Test Test" />
+			<equals arg1="${currentUser}" arg2="${adminName}" />
 			<then>
 				<if>
 					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />

@@ -1,0 +1,206 @@
+<definition component-name="social-office-profile">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="testray.main.component.name" value="Social Office" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="adminFirstName" value="Test" />
+	<var name="adminListName" value="Test, Test" />
+	<var name="adminName" value="Test Test" />
+	<var name="pageName" value="Tasks" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOMicroblogs#tearDownMicroblogsEntry" />
+
+		<execute macro="SOUser#tearDownCP" />
+	</tear-down>
+
+	<command name="ProfileXSSDemo" priority="4">
+		<var name="adminFirstName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
+		<var name="adminLastName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
+		<var name="adminListName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;, &lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
+		<var name="adminName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt; &lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
+		<var name="adminScreenName" value="test" />
+		<var name="microblogsEntryCommentContent" value="&lt;script&gt;alert(&quot;Microblogs Post Comment&quot;);&lt;/script&gt;" />
+		<var name="microblogsEntryContent" value="&lt;script&gt;alert(&quot;Microblogs Post&quot;);&lt;/script&gt;" />
+		<var name="soPage" value="true" />
+		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
+		<var name="userAddressCity" value="&lt;script&gt;alert(&quot;Ray of Light&quot;);&lt;/script&gt;" />
+		<var name="userAddressCountry" value="United States" />
+		<var name="userAddressPostalCode" value="&lt;script&gt;alert(&quot;91234&quot;);&lt;/script&gt;" />
+		<var name="userAddressRegion" value="California" />
+		<var name="userAddressStreet1" value="&lt;script&gt;alert(&quot;123 Liferay Ln.&quot;);&lt;/script&gt;" />
+		<var name="userAddressType" value="Personal" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="&lt;script&gt;alert(&quot;Social01&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerAIM" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerICQ" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerJabber" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerSkype" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerWindowsLiveMessenger" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userInstantMessengerYM" value="&lt;script&gt;alert(&quot;socialofficesn&quot;);&lt;/script&gt;" />
+		<var name="userIntroduction" value="&lt;script&gt;alert(&quot;Introduction Content&quot;);&lt;/script&gt;" />
+		<var name="userLastName" value="&lt;script&gt;alert(&quot;User01&quot;);&lt;/script&gt;" />
+		<var name="userListName" value="&lt;script&gt;alert(&quot;User01&quot;);&lt;/script&gt;, &lt;script&gt;alert(&quot;Social01&quot;);&lt;/script&gt;" />
+		<var name="userMiddleName" value="&lt;script&gt;alert(&quot;Office01&quot;);&lt;/script&gt;" />
+		<var name="userName" value="&lt; &lt; &lt;script&gt;alert(&quot;User01&quot;);&lt;/script&gt;" />
+		<var name="userPhoneNumberExtension" value="123" />
+		<var name="userPhoneNumberNumber" value="&lt;script&gt;alert(&quot;123-123-1234&quot;);&lt;/script&gt;" />
+		<var name="userPhoneNumberType" value="Business" />
+		<var name="userProjectDescription" value="&lt;script&gt;alert(&quot;Expertise Description&quot;);&lt;/script&gt;" />
+		<var name="userProjectTitle" value="&lt;script&gt;alert(&quot;Expertise Title&quot;);&lt;/script&gt;" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="userSMS" value="socialoffice01@liferay.com" />
+		<var name="userSocialNetworkFacebook" value="&lt;script&gt;alert(&quot;socialoffice01&quot;);&lt;/script&gt;" />
+		<var name="userSocialNetworkTwitter" value="&lt;script&gt;alert(&quot;socialoffice01&quot;);&lt;/script&gt;" />
+		<var name="userTag" value="tag1" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<var name="key_userScreenName" value="${adminScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${adminScreenName}" />
+
+		<execute action="CPUsersandorganizationsUser#type" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${adminFirstName}" />
+		<execute action="CPUsersandorganizationsUser#type" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${adminLastName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOProfile#addAdditionalEmailAddress">
+			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
+		</execute>
+
+		<execute macro="SOProfile#addAddress">
+			<var name="userAddressCity" value="${userAddressCity}" />
+			<var name="userAddressCountry" value="${userAddressCountry}" />
+			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
+			<var name="userAddressRegion" value="${userAddressRegion}" />
+			<var name="userAddressStreet1" value="${userAddressStreet1}" />
+			<var name="userAddressType" value="${userAddressType}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addInstantMessenger">
+			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
+			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
+			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
+			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
+			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
+			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addIntroduction">
+			<var name="userIntroduction" value="${userIntroduction}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addPhoneNumbers">
+			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
+			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addProjects">
+			<var name="userProjectDescription" value="${userProjectDescription}" />
+			<var name="userProjectTitle" value="${userProjectTitle}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addSMS">
+			<var name="userSMS" value="${userSMS}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addSocialNetwork">
+			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
+			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="SOProfile#addTag">
+			<var name="userTag" value="${userTag}" />
+		</execute>
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryCharacterCountdown" value="108" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="microblogsEntryAuthorName" value="${userName}" />
+			<var name="microblogsEntryCharacterCountdown" value="100" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_CONTACTS" />
+
+		<execute action="SOProfile#assertAlertNotPresent" />
+	</command>
+</definition>

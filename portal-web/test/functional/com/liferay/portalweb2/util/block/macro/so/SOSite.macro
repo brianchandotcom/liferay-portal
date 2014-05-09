@@ -261,6 +261,47 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
+		<if>
+			<equals arg1="siteAdmin" arg2="true" />
+			<then>
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+
+				<if>
+					<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+					<then>
+						<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+						<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+					</then>
+				</if>
+
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="ANNOUNCEMENTS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="ACTIVITIES_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="WELCOME_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="RECENT_DOWNLOADS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_OPTIONS" />
+			</then>
+			<else>
+				<execute action="SOUserBar#assertElementNotPresent" locator-key1="TOGGLE_DOCKBAR" />
+
+				<execute action="Dockbar#assertElementNotPresent" locator-key1="EDIT_CONTROLS" />
+
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="ACTIVITIES_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="WELCOME_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="BOOKMARKS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="RSS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="RECENT_DOWNLOADS_OPTIONS" />
+				<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_OPTIONS" />
+			</else>
+		</if>
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
@@ -272,6 +313,17 @@
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+
+		<if>
+			<equals arg1="siteAdmin" arg2="true" />
+			<then>
+				<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="DELETE_SITE_ICON" />
+			</then>
+			<else>
+				<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="DELETE_SITE_ICON" />
+			</else>
+		</if>
+
 		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />

@@ -27,9 +27,20 @@
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">
-		<var name="key_eventTitle" value="${eventTitle}" />
+		<if>
+			<isset var="eventTitleShort" />
+			<then>
+				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+			</then>
+			<else>
+				<var name="key_eventTitle" value="${eventTitle}" />
+
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+			</else>
+		</if>
+
 		<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
@@ -59,9 +70,20 @@
 	</command>
 
 	<command name="viewUpcomingEventSiteEvent">
-		<var name="key_eventTitle" value="${eventTitle}" />
+		<if>
+			<isset var="eventTitleShort" />
+			<then>
+				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+			</then>
+			<else>
+				<var name="key_eventTitle" value="${eventTitle}" />
+
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+			</else>
+		</if>
+
 		<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
 		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 

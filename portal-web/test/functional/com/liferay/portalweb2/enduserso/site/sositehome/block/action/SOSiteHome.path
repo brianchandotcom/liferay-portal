@@ -101,7 +101,7 @@
 </tr>
 <!--ANNOUNCEMENTS-->
 <tr>
-	<td>ANOUNCEMENTS_PORTLET_TITLE</td>
+	<td>ANNOUNCEMENTS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Announcements')]//h1</td>
 	<td></td>
 </tr>

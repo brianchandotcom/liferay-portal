@@ -217,6 +217,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ASSET_ABSTRACT_DETAIL-->
+<tr>
+	<td>ASSET_ABSTRACT_DETAIL_TITLE</td>
+	<td>//h3[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DETAIL_CONTENT</td>
+	<td>//div[@class='asset-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_ORDER-->
 <tr>
 	<td>ASSET_ORDER_FIRST</td>

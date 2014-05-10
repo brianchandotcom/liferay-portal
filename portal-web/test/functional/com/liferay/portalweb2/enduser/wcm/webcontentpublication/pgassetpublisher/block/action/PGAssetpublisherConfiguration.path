@@ -306,6 +306,32 @@
 	<td>//select[@id='_86_orderByType1']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_SELECTION_MANUAL_ASSET_ENTRIES-->
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON</td>
+	<td>//legend[contains(.,'Asset Entries')]/following-sibling::*//a[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET</td>
+	<td>//a[@data-title='Select ${key_assetType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON</td>
+	<td>//tr//td[6]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

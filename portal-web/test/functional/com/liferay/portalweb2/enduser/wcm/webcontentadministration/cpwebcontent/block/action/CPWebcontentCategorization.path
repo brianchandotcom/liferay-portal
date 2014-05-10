@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_SELECT</td>
+	<td>//button[@title='Select Vocabulary Name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY</td>
 	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>

@@ -28,6 +28,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
+		<case locator-key1="ASSET_ABSTRACT_DETAIL_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="METADATA_CATEGORY">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

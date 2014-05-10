@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -57,10 +58,6 @@ public class GlobalShutdownAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) {
-
-		// Portal Resiliency
-
-		MPIHelperUtil.shutdown();
 
 		// Auto deploy
 
@@ -226,6 +223,14 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Portal executors
 
 		PortalExecutorManagerUtil.shutdown(true);
+
+		// Messaging
+
+		MessageBusUtil.shutdown(true);
+
+		// Portal Resiliency
+
+		MPIHelperUtil.shutdown();
 
 		// Programmatically exit
 

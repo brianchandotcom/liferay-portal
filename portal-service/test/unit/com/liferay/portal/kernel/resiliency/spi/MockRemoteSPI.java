@@ -41,7 +41,7 @@ public class MockRemoteSPI extends RemoteSPI {
 	}
 
 	@Override
-	public void destroy() throws RemoteException {
+	public void doDestroy() throws RemoteException {
 		if (_failOnDestroy) {
 			throw new RemoteException();
 		}
@@ -49,7 +49,7 @@ public class MockRemoteSPI extends RemoteSPI {
 
 	@Override
 	public String getSPIProviderName() {
-		throw new UnsupportedOperationException();
+		return _spiProviderName;
 	}
 
 	@Override
@@ -63,6 +63,10 @@ public class MockRemoteSPI extends RemoteSPI {
 
 	public void setFailOnStop(boolean failOnStop) {
 		_failOnStop = failOnStop;
+	}
+
+	public void setSpiProviderName(String spiProviderName) {
+		_spiProviderName = spiProviderName;
 	}
 
 	@Override
@@ -79,5 +83,6 @@ public class MockRemoteSPI extends RemoteSPI {
 
 	private boolean _failOnDestroy;
 	private boolean _failOnStop;
+	private String _spiProviderName;
 
 }

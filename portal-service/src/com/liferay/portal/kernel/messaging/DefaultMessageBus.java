@@ -54,10 +54,6 @@ public class DefaultMessageBus implements MessageBus {
 		}
 	}
 
-	public void destroy() {
-		shutdown(true);
-	}
-
 	@Override
 	public Destination getDestination(String destinationName) {
 		return _destinations.get(destinationName);

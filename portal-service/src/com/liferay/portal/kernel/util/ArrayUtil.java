@@ -1721,6 +1721,26 @@ public class ArrayUtil {
 		return newArray;
 	}
 
+	public static Long[] toLongArray(int[] array) {
+		Long[] newArray = new Long[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			newArray[i] = (long)array[i];
+		}
+
+		return newArray;
+	}
+
+	public static Long[] toLongArray(long[] array) {
+		Long[] newArray = new Long[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			newArray[i] = array[i];
+		}
+
+		return newArray;
+	}
+
 	public static Long[] toLongArray(Object[] array) {
 		Long[] newArray = new Long[array.length];
 

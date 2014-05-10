@@ -2430,6 +2430,35 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getUserIdByScreenName(companyId, screenName);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getUsersByGroups(
+		java.lang.String keywords, long userId, long[] groupIds, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getUsersByGroups(keywords, userId, groupIds,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypes(
+		java.lang.String keywords, long userId, int[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getUsersBySocialRelationsTypes(keywords,
+			userId, types, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getUsersBySocialRelationsTypesGroups(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getUsersBySocialRelationsTypesGroups(keywords,
+			userId, types, groupIds, start, end);
+	}
+
 	/**
 	* Returns <code>true</code> if the password policy has been assigned to the
 	* user.

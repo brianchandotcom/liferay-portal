@@ -60,6 +60,24 @@ public class ListUtil {
 		copy.addAll(master);
 	}
 
+	public static <E> int count(
+		Collection<? extends E> list, PredicateFilter<E> predicateFilter) {
+
+		if (isEmpty(list)) {
+			return 0;
+		}
+
+		int counter = 0;
+
+		for (E element : list) {
+			if (predicateFilter.filter(element)) {
+				++counter;
+			}
+		}
+
+		return counter;
+	}
+
 	public static <E> void distinct(
 		List<? extends E> list, Comparator<E> comparator) {
 
@@ -88,8 +106,24 @@ public class ListUtil {
 		distinct(list, null);
 	}
 
-	public static <T> List<T> filter(
-		List<? extends T> inputList, List<T> outputList,
+	public static <E> boolean exists(
+		Collection<? extends E> list, PredicateFilter<E> predicateFilter) {
+
+		if (isEmpty(list)) {
+			return false;
+		}
+
+		for (E element : list) {
+			if (predicateFilter.filter(element)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static <T> Collection<T> filter(
+		Collection<? extends T> inputList, Collection<T> outputList,
 		PredicateFilter<T> predicateFilter) {
 
 		for (T item : inputList) {
@@ -101,8 +135,8 @@ public class ListUtil {
 		return outputList;
 	}
 
-	public static <T> List<T> filter(
-		List<? extends T> inputList, PredicateFilter<T> predicateFilter) {
+	public static <T> Collection<T> filter(
+		Collection<? extends T> inputList, PredicateFilter<T> predicateFilter) {
 
 		return filter(
 			inputList, new ArrayList<T>(inputList.size()), predicateFilter);
@@ -206,7 +240,7 @@ public class ListUtil {
 		return fromArray(StringUtil.split(s, delimiter));
 	}
 
-	public static boolean isEmpty(List<?> list) {
+	public static boolean isEmpty(Collection<?> list) {
 		if ((list == null) || list.isEmpty()) {
 			return true;
 		}
@@ -214,7 +248,7 @@ public class ListUtil {
 		return false;
 	}
 
-	public static boolean isNotEmpty(List<?> list) {
+	public static boolean isNotEmpty(Collection<?> list) {
 		return !isEmpty(list);
 	}
 

@@ -48,6 +48,13 @@
 			<var name="expected" value="regularexpression=32132" />
 		</execute>
 
+		<var name="regex" input="${regex}" pattern="[a-z]*=([0-9]*)" group="0" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="regularexpression=32132" />
+		</execute>
+
 		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="1" />
 
 		<execute macro="TestUtils#assertEquals">

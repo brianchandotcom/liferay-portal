@@ -233,8 +233,7 @@ public class ProcessUtil {
 					int exitCode = _process.waitFor();
 
 					if (exitCode != 0) {
-						throw new ProcessException(
-							"Subprocess terminated with exit code " + exitCode);
+						throw new TerminationProcessException(exitCode);
 					}
 				}
 				catch (InterruptedException ie) {

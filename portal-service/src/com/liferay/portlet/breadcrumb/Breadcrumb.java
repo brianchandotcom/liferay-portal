@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Breadcrumb {
 
-	public BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
+	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception;
 

@@ -34,11 +34,11 @@ public class BreadcrumbUtil {
 		return _breadcrumb;
 	}
 
-	public static BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
+	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getCurrentGroupBreadcrumbEntry(themeDisplay);
+		return getBreadcrumb().getScopeGroupBreadcrumbEntry(themeDisplay);
 	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(

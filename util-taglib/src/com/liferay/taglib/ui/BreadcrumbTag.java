@@ -74,22 +74,6 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = showPortletBreadcrumb;
 	}
 
-	protected void buildScopeGroupBreadcrumb(
-		ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		BreadcrumbEntry scopeGroupBreadcrumbEntry =
-			BreadcrumbUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
-
-		if (scopeGroupBreadcrumbEntry != null) {
-			sb.append("<li><a href=\"");
-			sb.append(scopeGroupBreadcrumbEntry.getURL());
-			sb.append("\">");
-			sb.append(HtmlUtil.escape(scopeGroupBreadcrumbEntry.getTitle()));
-			sb.append("</a><span class=\"divider\">/</span></li>");
-		}
-	}
-
 	protected void buildGuestGroupBreadcrumb(
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
@@ -204,6 +188,22 @@ public class BreadcrumbTag extends IncludeTag {
 			}
 
 			sb.append("<span class=\"divider\">/</span></li>");
+		}
+	}
+
+	protected void buildScopeGroupBreadcrumb(
+		ThemeDisplay themeDisplay, StringBundler sb)
+		throws Exception {
+
+		BreadcrumbEntry scopeGroupBreadcrumbEntry =
+			BreadcrumbUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
+
+		if (scopeGroupBreadcrumbEntry != null) {
+			sb.append("<li><a href=\"");
+			sb.append(scopeGroupBreadcrumbEntry.getURL());
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(scopeGroupBreadcrumbEntry.getTitle()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
 		}
 	}
 

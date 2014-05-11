@@ -32,107 +32,142 @@ public class ListUtilTest {
 	public void testCountWithEmptyListShouldReturnZero() {
 		Collection<String> list = new ArrayList<String>();
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
+			public boolean filter(String string) {
 				return true;
 			}
+
 		};
 
-		Assert.assertEquals(0, ListUtil.count(list, predicate));
+		Assert.assertEquals(0, ListUtil.count(list, predicateFilter));
 	}
 
 	@Test
 	public void testCountWithNullListShouldReturnZero() {
-		List<String> list = null;
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
+			public boolean filter(String string) {
 				return true;
 			}
+
 		};
 
-		Assert.assertEquals(0, ListUtil.count(list, predicate));
+		Assert.assertEquals(0, ListUtil.count(null, predicateFilter));
 	}
 
 	@Test
 	public void testCountWithPopulatedListShouldReturnRightCount() {
 		List<String> list = new ArrayList<String>();
+
 		list.add("a");
 		list.add("b");
 		list.add("c");
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
-				return o.toString().equals("b");
+			public boolean filter(String string) {
+				if (string.equals("b")) {
+					return true;
+				}
+
+				return false;
 			}
+
 		};
 
-		Assert.assertEquals(1, ListUtil.count(list, predicate));
+		Assert.assertEquals(1, ListUtil.count(list, predicateFilter));
 	}
 
 	@Test
 	public void testExistsWithEmptyListShouldReturnFalse() {
 		List<String> list = new ArrayList<String>();
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
+			public boolean filter(String string) {
 				return true;
 			}
+
 		};
 
-		Assert.assertFalse(ListUtil.exists(list, predicate));
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
 	}
 
 	@Test
 	public void testExistsWithNullListShouldReturnFalse() {
 		List<String> list = null;
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
+			public boolean filter(String string) {
 				return true;
 			}
+
 		};
 
-		Assert.assertFalse(ListUtil.exists(list, predicate));
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
 	}
 
 	@Test
 	public void testExistsWithPopulatedListShouldReturnFalseIfNotExists() {
 		List<String> list = new ArrayList<String>();
+
 		list.add("a");
 		list.add("bb");
 		list.add("c");
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
-				return (o.toString().length() == 3);
+			public boolean filter(String string) {
+				if (string.length() == 3) {
+					return true;
+				}
+
+				return false;
 			}
+
 		};
 
-		Assert.assertFalse(ListUtil.exists(list, predicate));
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
 	}
 
 	@Test
 	public void testExistsWithPopulatedListShouldReturnTrueIfExists() {
 		List<String> list = new ArrayList<String>();
+
 		list.add("a");
 		list.add("bb");
 		list.add("c");
 
-		PredicateFilter predicate = new PredicateFilter() {
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
 			@Override
-			public boolean filter(Object o) {
-				return (o.toString().length() == 2);
+			public boolean filter(String string) {
+				if (string.length() == 2) {
+					return true;
+				}
+
+				return false;
 			}
+
 		};
 
-		Assert.assertTrue(ListUtil.exists(list, predicate));
+		Assert.assertTrue(ListUtil.exists(list, predicateFilter));
 	}
 
 	@Test

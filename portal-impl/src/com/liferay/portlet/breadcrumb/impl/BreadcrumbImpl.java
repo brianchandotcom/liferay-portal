@@ -48,7 +48,7 @@ import javax.servlet.http.HttpSession;
 public class BreadcrumbImpl implements Breadcrumb {
 
 	@Override
-	public BreadcrumbEntry getCurrentGroupBreadcrumbEntry(
+	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 

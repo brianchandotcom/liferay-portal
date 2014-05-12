@@ -21,9 +21,11 @@ import java.io.Serializable;
 
 import java.text.DateFormat;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 
@@ -297,6 +299,17 @@ public class ParamUtil {
 			serviceContext.getAttribute(param), defaultValue);
 	}
 
+	public static Date getDate(HttpServletRequest request, String paramPrefix) {
+		return getDate(request, paramPrefix, TimeZoneUtil.getDefault());
+	}
+
+	public static Date getDate(
+		HttpServletRequest request, String paramPrefix, Date defaultValue) {
+
+		return getDate(
+			request, paramPrefix, TimeZoneUtil.getDefault(), defaultValue);
+	}
+
 	public static Date getDate(
 		HttpServletRequest request, String param, DateFormat dateFormat) {
 
@@ -311,6 +324,34 @@ public class ParamUtil {
 	}
 
 	public static Date getDate(
+		HttpServletRequest request, String paramPrefix, TimeZone timeZone) {
+
+		return getDate(request, paramPrefix, timeZone, DateUtil.newDate());
+	}
+
+	public static Date getDate(
+		HttpServletRequest request, String paramPrefix, TimeZone timeZone,
+		Date defaultValue) {
+
+		return _getDate(
+			request.getParameterMap(), paramPrefix, timeZone, defaultValue);
+	}
+
+	public static Date getDate(
+		PortletRequest portletRequest, String paramPrefix) {
+
+		return getDate(portletRequest, paramPrefix, TimeZoneUtil.getDefault());
+	}
+
+	public static Date getDate(
+		PortletRequest portletRequest, String paramPrefix, Date defaultValue) {
+
+		return getDate(
+			portletRequest, paramPrefix, TimeZoneUtil.getDefault(),
+			defaultValue);
+	}
+
+	public static Date getDate(
 		PortletRequest portletRequest, String param, DateFormat dateFormat) {
 
 		return GetterUtil.getDate(
@@ -322,6 +363,22 @@ public class ParamUtil {
 		Date defaultValue) {
 
 		return get(portletRequest, param, dateFormat, defaultValue);
+	}
+
+	public static Date getDate(
+		PortletRequest portletRequest, String paramPrefix, TimeZone timeZone) {
+
+		return getDate(
+			portletRequest, paramPrefix, timeZone, DateUtil.newDate());
+	}
+
+	public static Date getDate(
+		PortletRequest portletRequest, String paramPrefix, TimeZone timeZone,
+		Date defaultValue) {
+
+		return _getDate(
+			portletRequest.getParameterMap(), paramPrefix, timeZone,
+			defaultValue);
 	}
 
 	public static Date getDate(
@@ -908,6 +965,38 @@ public class ParamUtil {
 			System.out.println(
 				entry.getKey() + " = " + String.valueOf(entry.getValue()));
 		}
+	}
+
+	private static Date _getDate(
+		Map<String, String[]> parameterMap, String paramPrefix,
+		TimeZone timeZone, Date defaultValue) {
+
+		boolean hasDateParams =
+			parameterMap.containsKey(paramPrefix + "Year") &&
+			parameterMap.containsKey(paramPrefix + "Month") &&
+			parameterMap.containsKey(paramPrefix + "Day");
+
+		if (hasDateParams) {
+			int year = MapUtil.getInteger(parameterMap, paramPrefix + "Year");
+			int month = MapUtil.getInteger(
+				parameterMap, paramPrefix + "Month");
+			int day = MapUtil.getInteger(parameterMap, paramPrefix + "Day");
+			int hour = MapUtil.getInteger(parameterMap, paramPrefix + "Hour");
+			int minute = MapUtil.getInteger(
+				parameterMap, paramPrefix + "Minute");
+			int amPm = MapUtil.getInteger(parameterMap, paramPrefix + "AmPm");
+
+			if (amPm == Calendar.PM) {
+				hour += 12;
+			}
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				year, month, day, hour, minute, 0, 0, timeZone);
+
+			return calendar.getTime();
+		}
+
+		return defaultValue;
 	}
 
 }

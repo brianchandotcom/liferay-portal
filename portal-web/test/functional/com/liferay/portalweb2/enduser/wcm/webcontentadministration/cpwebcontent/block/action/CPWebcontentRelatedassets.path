@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>CPWebcontentRelatedassets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentRelatedassets</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentRelatedassets</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON</td>
+	<td>//a[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_SELECT_MENULIST_ASSET</td>
+	<td>//a[@data-title='Select ${key_assetType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[contains(@id,'selectAsset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS_TABLE-->
+<tr>
+	<td>RELATED_ASSETS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_TABLE_SCOPE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_TABLE_REMOVE_LINK</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

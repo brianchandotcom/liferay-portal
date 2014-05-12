@@ -254,6 +254,43 @@
 		<execute action="PGAssetpublisherConfigurationDisplaysettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureManualAssetSelectionPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL" />
+
+		<if>
+			<isset var="assetTitle" />
+			<then>
+				<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON" />
+
+				<var name="key_assetType" value="${assetType}" />
+
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
+
+				<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+
+				<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+				<var name="key_assetTitle" value="${assetTitle}" />
+
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+
+				<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+
+				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+			</then>
+		</if>
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGAssetpublisherConfiguration#selectFrameTop" value1="relative=top" />
+	</command>
+
 	<command name="configurePaginationPG">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
@@ -418,6 +455,15 @@
 
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="viewAssetDetailsPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DETAIL_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DETAIL_CONTENT" value1="${assetContent}" />
 	</command>
 
 	<command name="viewAssetNotPresentPG">

@@ -58,6 +58,41 @@
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addExistingRelatedAssetCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="MENU_RELATED_ASSETS" value1="Related Assets" />
+
+		<execute action="CPWebcontentRelatedassets#click" locator-key1="SELECT_BUTTON" />
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute action="CPWebcontentRelatedassets#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
+
+		<execute action="CPWebcontentRelatedassets#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="CPWebcontentRelatedassets#click" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CPWebcontentRelatedassets#selectFrameTop" />
+
+		<execute action="CPWebcontentRelatedassets#assertTextEquals" locator-key1="RELATED_ASSETS_TABLE_TYPE" value1="${assetType}" />
+		<execute action="CPWebcontentRelatedassets#assertTextEquals" locator-key1="RELATED_ASSETS_TABLE_TITLE" value1="${assetTitle}" />
+		<execute action="CPWebcontentRelatedassets#assertTextEquals" locator-key1="RELATED_ASSETS_TABLE_SCOPE" value1="${siteName}" />
+		<execute action="CPWebcontentRelatedassets#assertElementPresent" locator-key1="RELATED_ASSETS_TABLE_REMOVE_LINK" />
+
+		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addNullCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />

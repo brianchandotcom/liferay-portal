@@ -1,4 +1,26 @@
 <definition>
+	<command name="configureFilterByCategories">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Related Assets" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGRelatedassetsConfiguration#select" locator-key1="FILTER_SELECT" value1="Categories" />
+		<execute action="PGRelatedassetsConfiguration#assertClick" locator-key1="FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGRelatedassetsConfiguration#click" locator-key1="CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+		<execute action="PGRelatedassetsConfiguration#click" locator-key1="CATEGORIES_WINDOW_CLOSE_BUTTON" />
+		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator-key1="CATEGORY" value1="${categoryName}" />
+		<execute action="PGRelatedassetsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGRelatedassetsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="gotoWebContentSelectionCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
@@ -98,6 +120,14 @@
 	<command name="viewDefaultPG">
 		<execute action="PGRelatedassets#assertTextEquals" locator-key1="TITLE" value1="Related Assets" />
 		<execute action="PGRelatedassets#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
+	</command>
+
+	<command name="viewNoPG">
+		<for list="${assetTitleList}" param="assetTitle">
+			<var name="key_assetTitle" value="${assetTitle}" />
+
+			<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE" />
+		</for>
 	</command>
 
 	<command name="viewNoSearchResultsCP">

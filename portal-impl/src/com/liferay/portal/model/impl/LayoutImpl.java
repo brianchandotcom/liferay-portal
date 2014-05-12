@@ -103,14 +103,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Verifies that the friendly URL is valid by checking that the maximum
-	 * length and other syntactic restrictions are met.
+	 * Checks whether the URL is a valid friendly URL. It checks for minimal
+	 * length and that syntactic restrictions are met, and can check that the
+	 * URL's length does not exceed the maximum length.
 	 *
 	 * @param  friendlyURL the URL to be checked
-	 * @param  checkMaxLength whether to check the URL's maximum length
-	 * @return the error code, which can can be found as constants in {@link
-	 *         LayoutFriendlyURLException}, or <code>-1</code> if the URL
-	 *         validates correctly
+	 * @param  checkMaxLength whether to check that the URL's length does not
+	 *         exceed the maximum length
+	 * @return <code>-1</code> if the URL is a valid friendly URL; a {@link
+	 *         LayoutFriendlyURLException} constant otherwise
 	 */
 	public static int validateFriendlyURL(
 		String friendlyURL, boolean checkMaxLength) {
@@ -190,7 +191,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns the ID of the topmost parent layout of the current layout.
+	 * Returns the ID of the topmost parent layout (e.g. n-th parent layout) of
+	 * the current layout.
 	 *
 	 * @return the ID of the topmost parent layout of the current layout
 	 * @throws PortalException if a matching layout could not be found
@@ -219,7 +221,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns the plid of the topmost parent layout of the current layout.
+	 * Returns the plid of the topmost parent layout (e.g. n-th parent layout)
+	 * of the current layout.
 	 *
 	 * @return the plid of the topmost parent layout of the current layout
 	 * @throws PortalException if a matching layout could not be found
@@ -320,12 +323,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	/**
 	 * Returns the color scheme that is configured for the current layout, or
-	 * the layout set that contains the current layout if no color scheme is
-	 * configured.
+	 * the color scheme of the layout set that contains the current layout if no
+	 * color scheme is configured.
 	 *
 	 * @return the color scheme that is configured for the current layout, or
-	 *         the layout set that contains the current layout if there is no
-	 *         color scheme configured
+	 *         the color scheme  of the layout set that contains the current
+	 *         layout if no color scheme is configured
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -343,7 +346,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	/**
 	 * Returns the CSS text for the current layout, or for the layout set if no
-	 * CSS text is available in the current layout.
+	 * CSS text is configured in the current layout.
 	 *
 	 * <p>
 	 * Layouts and layout sets can configure CSS that is applied in addition to
@@ -351,7 +354,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * </p>
 	 *
 	 * @return the CSS text for the current layout, or for the layout set if no
-	 *         CSS text is available in the current layout
+	 *         CSS text is configured in the current layout
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -393,7 +396,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	/**
 	 * Returns the layout's friendly URL for the given locale.
 	 *
-	 * @param  locale the locale of the friendly URL being generated
+	 * @param  locale the locale that the friendly URL should be retrieved for
 	 * @return the layout's friendly URL for the given locale
 	 */
 	@Override
@@ -464,12 +467,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns the HTML title for the given locale, or the current layout's name
-	 * if no HTML title is configured.
+	 * Returns the current layout's HTML title for the given locale, or the
+	 * current layout's name for the given locale if no HTML title is
+	 * configured.
 	 *
-	 * @param  locale the locale of the HTML title being retrieved
-	 * @return the HTML title for the given locale, or the current layout's name
-	 *         if no HTML title is configured
+	 * @param  locale the locale that the HTML title should be retrieved for
+	 * @return the current layout's HTML title for the given locale, or the
+	 *         current layout's name for the given locale if no HTML title is
+	 *         configured
 	 */
 	@Override
 	public String getHTMLTitle(Locale locale) {
@@ -479,12 +484,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns the HTML title for the given locale language ID, or the current
-	 * layout's name if no HTML title is configured.
+	 * Returns the current layout's HTML title for the given locale language ID,
+	 * or the current layout's name if no HTML title is configured.
 	 *
-	 * @param  localeLanguageId the locale of the HTML title being retrieved
-	 * @return the HTML title for the given locale language ID, or the current
-	 *         layout's name if no HTML title is configured
+	 * @param  localeLanguageId the locale that the HTML title should be
+	 *         retrieved for
+	 * @return the current layout's HTML title for the given locale language ID,
+	 *         or the current layout's name if no HTML title is configured
 	 */
 	@Override
 	public String getHTMLTitle(String localeLanguageId) {
@@ -500,7 +506,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	/**
 	 * Returns <code>true</code> if the current layout has a configured icon.
 	 *
-	 * @return <code>true</code> if the current layout has a configured icon,
+	 * @return <code>true</code> if the current layout has a configured icon;
 	 *         <code>false</code> otherwise
 	 */
 	@Override
@@ -723,15 +729,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the given layout ID describes one of the
+	 * Returns <code>true</code> if the given layout ID matches one of the
 	 * current layout's hierarchical parents.
 	 *
 	 * @param  layoutId the layout ID to search for in the current layout's
 	 *         parent list
-	 * @return <code>true</code> if the given layout ID describes one of the
+	 * @return <code>true</code> if the given layout ID matches one of the
 	 *         current layout's hierarchical parents; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if a matching layout could not be found
+	 * @throws PortalException if any one of the current layout's acestors could
+	 *         not be retrieved
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -863,7 +870,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	/**
 	 * Returns <code>true</code> if the current layout utilizes its {@link
-	 * LayoutSet}'s look and feel options (e.g. theme, color scheme).
+	 * LayoutSet}'s look and feel options (e.g. theme and color scheme).
 	 *
 	 * @return <code>true</code> if the current layout utilizes its layout set's
 	 *         look and feel options; <code>false</code> otherwise
@@ -892,10 +899,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	/**
 	 * Returns <code>true</code> if the current layout is built from a layout
-	 * template and still maintains an active connection.
+	 * template and still maintains an active connection to it.
 	 *
 	 * @return <code>true</code> if the current layout is built from a layout
-	 *         template and still maintains an active connection;
+	 *         template and still maintains an active connection to it;
 	 *         <code>false</code> otherwise
 	 */
 	@Override
@@ -914,8 +921,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * {@link LayoutSet}.
 	 *
 	 * <p>
-	 * Note that this does not give any information about the actual access
-	 * permissions, just the default access options.
+	 * Note, the returned value reflects the layout's default access options,
+	 * not its access permissions.
 	 * </p>
 	 *
 	 * @return <code>true</code> if the current layout is part of the public

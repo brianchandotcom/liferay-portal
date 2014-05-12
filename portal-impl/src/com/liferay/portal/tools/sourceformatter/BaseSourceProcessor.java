@@ -949,12 +949,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected boolean isJSPAttributName(String attributeName) {
+	protected boolean isAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
 		}
 
-		Matcher matcher = jspAttributeNamePattern.matcher(attributeName);
+		Matcher matcher = attributeNamePattern.matcher(attributeName);
 
 		return matcher.matches();
 	}
@@ -1002,7 +1002,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newLine;
 	}
 
-	protected String sortJSPAttributes(
+	protected String sortAttributes(
 		String fileName, String line, int lineCount) {
 
 		String s = line;
@@ -1029,7 +1029,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String attribute = s.substring(0, x);
 
-			if (!isJSPAttributName(attribute)) {
+			if (!isAttributName(attribute)) {
 				return line;
 			}
 
@@ -1096,7 +1096,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 					StringPool.QUOTE + value + StringPool.QUOTE);
 
-				return sortJSPAttributes(fileName, line, lineCount);
+				return sortAttributes(fileName, line, lineCount);
 			}
 
 			StringBundler sb = new StringBundler(5);
@@ -1121,7 +1121,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						line, currentAttributeAndValue,
 						previousAttributeAndValue);
 
-					return sortJSPAttributes(fileName, line, lineCount);
+					return sortAttributes(fileName, line, lineCount);
 				}
 
 				return line;
@@ -1318,7 +1318,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static FileImpl fileUtil = FileImpl.getInstance();
-	protected Pattern jspAttributeNamePattern = Pattern.compile(
+	protected Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");

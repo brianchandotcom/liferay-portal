@@ -595,7 +595,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							readAttributes = false;
 						}
 						else if (Validator.isNotNull(previousAttribute)) {
-							if (!isJSPAttributName(attribute) &&
+							if (!isAttributName(attribute) &&
 								!attribute.startsWith(StringPool.LESS_THAN)) {
 
 								processErrorMessage(
@@ -659,7 +659,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					readAttributes = true;
 				}
 				else {
-					line = sortJSPAttributes(fileName, line, lineCount);
+					line = sortAttributes(fileName, line, lineCount);
 				}
 			}
 

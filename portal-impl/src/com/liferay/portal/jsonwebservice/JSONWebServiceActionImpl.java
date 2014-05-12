@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Array;
@@ -54,10 +54,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 	public JSONWebServiceActionImpl(
 		JSONWebServiceActionConfig jsonWebServiceActionConfig,
-		JSONWebServiceActionParameters jsonWebServiceActionParameters) {
+		JSONWebServiceActionParameters jsonWebServiceActionParameters,
+		JSONWebServiceNaming jsonWebServiceNaming
+		) {
 
 		_jsonWebServiceActionConfig = jsonWebServiceActionConfig;
 		_jsonWebServiceActionParameters = jsonWebServiceActionParameters;
+		_jsonWebServiceNaming = jsonWebServiceNaming;
 	}
 
 	@Override
@@ -120,15 +123,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 						ClassLoader classLoader = clazz.getClassLoader();
 
-						String className = targetType.getName();
-
-						className = StringUtil.replace(
-							className, ".model.", ".model.impl.");
-
-						className += "Impl";
+						String modelClassName =
+							_jsonWebServiceNaming.
+								convertModelClassNameToImplClassName(
+									targetType);
 
 						try {
-							targetType = classLoader.loadClass(className);
+							targetType = classLoader.loadClass(modelClassName);
 						}
 						catch (ClassNotFoundException cnfe) {
 						}
@@ -446,5 +447,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 	private JSONWebServiceActionConfig _jsonWebServiceActionConfig;
 	private JSONWebServiceActionParameters _jsonWebServiceActionParameters;
+	private JSONWebServiceNaming _jsonWebServiceNaming;
 
 }

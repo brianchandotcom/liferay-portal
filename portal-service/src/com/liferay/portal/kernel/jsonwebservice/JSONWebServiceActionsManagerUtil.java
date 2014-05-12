@@ -71,6 +71,10 @@ public class JSONWebServiceActionsManagerUtil {
 			contextPath);
 	}
 
+	public static JSONWebServiceNaming getJSONWebServiceNaming() {
+		return getJSONWebServiceActionsManager().getJSONWebServiceNaming();
+	}
+
 	public static JSONWebServiceActionsManager
 		getJSONWebServiceActionsManager() {
 

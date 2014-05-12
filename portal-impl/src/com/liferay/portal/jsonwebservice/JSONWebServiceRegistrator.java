@@ -42,7 +42,8 @@ import org.springframework.aop.framework.AdvisedSupport;
 public class JSONWebServiceRegistrator {
 
 	public JSONWebServiceRegistrator() {
-		_jsonWebServiceNaming = new JSONWebServiceNaming();
+		_jsonWebServiceNaming =
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
 
 		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
 			_jsonWebServiceNaming);
@@ -149,7 +150,7 @@ public class JSONWebServiceRegistrator {
 		}
 
 		String utilClassName =
-			_jsonWebServiceNaming.convertImplClassNameToUtilClassName(
+			_jsonWebServiceNaming.convertServiceImplClassNameToUtilClassName(
 				implementationClass);
 
 		ClassLoader classLoader = implementationClass.getClassLoader();

@@ -75,7 +75,8 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
-			pathFromClass = _jsonWebServiceNaming.convertClassNameToPath(clazz);
+			pathFromClass = _jsonWebServiceNaming.convertServiceClassNameToPath(
+				clazz);
 		}
 
 		if (!pathFromClass.startsWith(StringPool.SLASH)) {

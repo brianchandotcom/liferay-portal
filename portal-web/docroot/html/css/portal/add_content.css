@@ -22,10 +22,10 @@
 
 .lfr-add-dialog, .lfr-add-panel {
 	.add-content-menu {
-		.accordion {
+		.panel-group {
 			margin-bottom: 20px;
 
-			.accordion-group .accordion-inner {
+			.panel.panel-default .panel-body {
 				padding: 6px 0;
 			}
 		}
@@ -102,7 +102,7 @@
 			margin-top: 30px;
 		}
 
-		.accordion-inner {
+		.panel-body {
 			padding-left: 0;
 			padding-right: 0;
 

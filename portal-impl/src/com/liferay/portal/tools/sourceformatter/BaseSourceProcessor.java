@@ -1003,7 +1003,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String sortAttributes(
-		String fileName, String line, int lineCount) {
+		String fileName, String line, int lineCount,
+		boolean allowApostropheDelimeter) {
 
 		String s = line;
 
@@ -1089,14 +1090,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
-			if ((delimeter == CharPool.APOSTROPHE) &&
-				!value.contains(StringPool.QUOTE)) {
+			if (delimeter == CharPool.APOSTROPHE) {
+				if (!value.contains(StringPool.QUOTE)) {
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + value + StringPool.QUOTE);
 
-				line = StringUtil.replace(
-					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-					StringPool.QUOTE + value + StringPool.QUOTE);
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+				else if (!allowApostropheDelimeter) {
+					String newValue = StringUtil.replace(
+						value, StringPool.QUOTE, "&quot;");
 
-				return sortAttributes(fileName, line, lineCount);
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + newValue + StringPool.QUOTE);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
 			}
 
 			StringBundler sb = new StringBundler(5);
@@ -1121,7 +1136,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						line, currentAttributeAndValue,
 						previousAttributeAndValue);
 
-					return sortAttributes(fileName, line, lineCount);
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
 				}
 
 				return line;

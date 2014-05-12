@@ -659,7 +659,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					readAttributes = true;
 				}
 				else {
-					line = sortAttributes(fileName, line, lineCount);
+					line = sortAttributes(fileName, line, lineCount, true);
 				}
 			}
 

@@ -64,26 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SOURCE_CREOLE_BUTTON</td>
-	<td>//span[@id='cke_36_label'] | //span[@id='cke_35_label']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_HTML_BUTTON</td>
-	<td>//span[@id='cke_56_label']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_MEDIAWIKI_BUTTON</td>
-	<td>//span[@id='cke_35_label']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY_FIELD_MEDIAWIKI</td>
 	<td>//div[contains(@id,'36_content_container')]//textarea</td>
 	<td></td>
@@ -91,11 +71,6 @@
 <tr>
 	<td>VIEW_BODY_FIELD</td>
 	<td>//html/body/p[contains(.,'${key_wikiPageContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CK_EDITOR_SOURCE_FIELD</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,13 +94,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[@id='_36_publishButton' and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_36_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

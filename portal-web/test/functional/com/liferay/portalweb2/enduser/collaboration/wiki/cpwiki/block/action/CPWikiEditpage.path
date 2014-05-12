@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SOURCE_HTML_BUTTON</td>
-	<td>//span[@id='cke_56_label']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[@id='_154_publishButton' and contains(.,'Publish')]</td>
 	<td></td>

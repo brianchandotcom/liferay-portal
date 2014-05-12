@@ -15,9 +15,9 @@
 package com.liferay.portlet.breadcrumb.impl;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Group;
@@ -32,9 +32,13 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.breadcrumb.Breadcrumb;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,8 +130,8 @@ public class BreadcrumbImpl implements Breadcrumb {
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> portletBreadcrumbEntries =
-			PortalUtil.getPortletBreadcrumbs(request);
+		List<BreadcrumbEntry> portletBreadcrumbEntries = _getPortletBreadcrumbs(
+			request);
 
 		if (portletBreadcrumbEntries == null) {
 			return Collections.emptyList();
@@ -313,6 +317,29 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 
 		return null;
+	}
+
+	private List<BreadcrumbEntry> _getPortletBreadcrumbs(
+		HttpServletRequest request) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String name = WebKeys.PORTLET_BREADCRUMBS;
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
+			!portletDisplay.isFocused()) {
+
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
+		}
+
+		return (List<BreadcrumbEntry>)request.getAttribute(name);
 	}
 
 }

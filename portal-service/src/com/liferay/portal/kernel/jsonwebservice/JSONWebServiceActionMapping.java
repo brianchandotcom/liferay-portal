@@ -41,4 +41,6 @@ public interface JSONWebServiceActionMapping {
 
 	public String getSignature();
 
+	public boolean isDeprecated();
+
 }

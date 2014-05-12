@@ -156,6 +156,10 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			jsonWebServiceActionMappingMap.put("id", id);
 
+			if (jsonWebServiceActionMapping.isDeprecated()) {
+				jsonWebServiceActionMappingMap.put("deprecated", Boolean.TRUE);
+			}
+
 			jsonWebServiceActionMappingMap.put(
 				"method", jsonWebServiceActionMapping.getMethod());
 
@@ -288,7 +292,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			if (modelType.isInterface() ||
 				Modifier.isAbstract(modelType.getModifiers())) {
 
-				map.put("interface", "true");
+				map.put("interface", Boolean.TRUE);
 			}
 
 			List<Map<String, String>> propertiesList = _buildPropertiesList(

@@ -364,6 +364,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		Object[] parameters = _prepareParameters(actionClass);
 
+		if (_jsonWebServiceActionConfig.isDeprecated()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Invoking deprecated method: " + actionMethod.getName());
+			}
+		}
+
 		return actionMethod.invoke(actionObject, parameters);
 	}
 

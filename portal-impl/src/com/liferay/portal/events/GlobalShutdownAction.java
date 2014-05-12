@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -69,6 +70,7 @@ public class GlobalShutdownAction extends SimpleAction {
 		shutdownLevel4();
 		shutdownLevel5();
 		shutdownLevel6();
+		shutdownLevel7();
 	}
 
 	protected ThreadGroup getThreadGroup() {
@@ -225,6 +227,13 @@ public class GlobalShutdownAction extends SimpleAction {
 
 	protected void shutdownLevel3() {
 
+		// Messaging
+
+		MessageBusUtil.shutdown(true);
+	}
+
+	protected void shutdownLevel4() {
+
 		// Hypersonic
 
 		DB db = DBFactoryUtil.getDB();
@@ -255,14 +264,14 @@ public class GlobalShutdownAction extends SimpleAction {
 		MPIHelperUtil.shutdown();
 	}
 
-	protected void shutdownLevel4() {
+	protected void shutdownLevel5() {
 
 		// Portal executors
 
 		PortalExecutorManagerUtil.shutdown(true);
 	}
 
-	protected void shutdownLevel5() {
+	protected void shutdownLevel6() {
 
 		// Reset log to default JDK 1.4 logger. This will allow WARs dependent
 		// on the portal to still log events after the portal WAR has been
@@ -280,7 +289,7 @@ public class GlobalShutdownAction extends SimpleAction {
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
-	protected void shutdownLevel6() {
+	protected void shutdownLevel7() {
 
 		// Programmatically exit
 

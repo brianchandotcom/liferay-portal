@@ -190,6 +190,60 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testCountWithEmptyArrayShouldReturnZero() {
+		String[] array = {};
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String string) {
+					return true;
+				}
+			};
+
+		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
+	}
+
+	@Test
+	public void testCountWithNullArrayShouldReturnZero() {
+		String[] array = null;
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String string) {
+					return true;
+				}
+
+			};
+
+		Assert.assertEquals(0, ArrayUtil.count(array, predicateFilter));
+	}
+
+	@Test
+	public void testCountWithPopulatedArrayShouldReturnTheRightCount() {
+		String[] array = {"a", "b", "c"};
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String string) {
+					if (string.equals("b")) {
+						return true;
+					}
+
+					return false;
+				}
+
+			};
+
+		Assert.assertEquals(1, ArrayUtil.count(array, predicateFilter));
+	}
+
+	@Test
 	public void testFilterDoubleArray() {
 		double[] array = ArrayUtil.filter(
 			new double[] {0.1, 0.2, 1.2, 1.3}, _doublePredicateFilter);

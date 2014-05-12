@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +27,148 @@ import org.junit.Test;
  * @author Olaf Kock
  */
 public class ListUtilTest {
+
+	@Test
+	public void testCountWithEmptyListShouldReturnZero() {
+		Collection<String> list = new ArrayList<String>();
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
+
+		};
+
+		Assert.assertEquals(0, ListUtil.count(list, predicateFilter));
+	}
+
+	@Test
+	public void testCountWithNullListShouldReturnZero() {
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
+
+		};
+
+		Assert.assertEquals(0, ListUtil.count(null, predicateFilter));
+	}
+
+	@Test
+	public void testCountWithPopulatedListShouldReturnRightCount() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				if (string.equals("b")) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		Assert.assertEquals(1, ListUtil.count(list, predicateFilter));
+	}
+
+	@Test
+	public void testExistsWithEmptyListShouldReturnFalse() {
+		List<String> list = new ArrayList<String>();
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
+
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
+	}
+
+	@Test
+	public void testExistsWithNullListShouldReturnFalse() {
+		List<String> list = null;
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
+
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
+	}
+
+	@Test
+	public void testExistsWithPopulatedListShouldReturnFalseIfNotExists() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("a");
+		list.add("bb");
+		list.add("c");
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				if (string.length() == 3) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
+	}
+
+	@Test
+	public void testExistsWithPopulatedListShouldReturnTrueIfExists() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("a");
+		list.add("bb");
+		list.add("c");
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+			@Override
+			public boolean filter(String string) {
+				if (string.length() == 2) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		Assert.assertTrue(ListUtil.exists(list, predicateFilter));
+	}
 
 	@Test
 	public void testFilterWithoutOutputList() {
@@ -54,7 +197,7 @@ public class ListUtilTest {
 		inputList.add("b");
 		inputList.add("c");
 
-		List<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputList = ListUtil.filter(
 			inputList, predicateFilter);
 
 		Assert.assertEquals(expectedOutputList, actualOutputList);
@@ -92,7 +235,7 @@ public class ListUtilTest {
 
 		};
 
-		List<String> actualOutputList = ListUtil.filter(
+		Collection<String> actualOutputList = ListUtil.filter(
 			inputList, outputList, predicateFilter);
 
 		Assert.assertSame(outputList, actualOutputList);

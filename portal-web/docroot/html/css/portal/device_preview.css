@@ -163,6 +163,24 @@
 	}
 }
 
+.lfr-device-preview {
+	bottom: 0;
+	display: none;
+	left: 220px;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 500;
+}
+
+.lfr-has-device-preview {
+	overflow: hidden;
+
+	.lfr-device-preview {
+		display: block;
+	}
+}
+
 .ie8 .lfr-device {
 	&.smartphone, &.tablet {
 		padding: 0;
@@ -193,24 +211,6 @@
 				font-size: 14px;
 			}
 		}
-	}
-}
-
-.lfr-device-preview {
-	bottom: 0;
-	display: none;
-	left: 220px;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 500;
-}
-
-.lfr-has-device-preview {
-	overflow: hidden;
-
-	.lfr-device-preview {
-		display: block;
 	}
 }
 

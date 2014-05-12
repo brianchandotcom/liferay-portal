@@ -137,19 +137,15 @@ public class BreadcrumbImpl implements Breadcrumb {
 			return Collections.emptyList();
 		}
 
-		for (int i = 0; i < breadcrumbEntries.size(); i++) {
+		for (int i = 0; i < breadcrumbEntries.size() - 1; i++) {
 			BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(i);
 
 			String url = breadcrumbEntry.getURL();
 
-			if (Validator.isNotNull(url) &&
-				((i + 1) < portletBreadcrumbEntries.size())) {
+			if (Validator.isNotNull(url) && !CookieKeys.hasSessionId(request)) {
+				HttpSession session = request.getSession();
 
-				if (!CookieKeys.hasSessionId(request)) {
-					HttpSession session = request.getSession();
-
-					url = PortalUtil.getURLWithSessionId(url, session.getId());
-				}
+				url = PortalUtil.getURLWithSessionId(url, session.getId());
 
 				breadcrumbEntry.setURL(url);
 			}

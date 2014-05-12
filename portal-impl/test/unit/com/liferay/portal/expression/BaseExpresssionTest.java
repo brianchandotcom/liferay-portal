@@ -23,7 +23,7 @@ import org.junit.Assert;
  */
 public abstract class BaseExpresssionTest {
 
-	public void testExpression(ExpressionTestData expressionTestData)
+	public void executeTest(ExpressionTestData expressionTestData)
 		throws Exception {
 
 		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(

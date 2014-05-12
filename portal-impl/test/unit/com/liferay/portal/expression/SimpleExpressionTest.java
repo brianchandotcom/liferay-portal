@@ -23,93 +23,95 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 
 	@Test
 	public void testEvaluateBooleanExpression() throws Exception {
-		ExpressionTestData expressionTestData = ExpressionTestData
-			.newExpressionTestData("variable1 >= variable2")
-			.usingIntegerVariable("variable1", null, 5)
-			.usingIntegerVariable("variable2", null, 6)
-			.withReturnType(Boolean.class)
-			.withExpectedResult(false);
 
-		testExpression(expressionTestData);
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 >= var2");
+		expressionTestData.addIntegerVariable("var1", null, 5);
+		expressionTestData.addIntegerVariable("var2", null, 6);
+		expressionTestData.setReturnType(Boolean.class);
+		expressionTestData.setExpectedResult(false);
+
+		executeTest(expressionTestData);
 	}
 
 	@Test
 	public void testEvaluateDoubleExpression() throws Exception {
-		double variable1Value = 5.5;
-		double variable2value = variable1Value + 3;
-		double variable3Value = variable1Value + variable2value;
-		double expectedResult =
-			variable1Value + variable2value + variable3Value;
+
+		double var1Value = 5.5;
+		double var2value = var1Value + 3;
+		double var3Value = var1Value + var2value;
+		double expectedResult = var1Value + var2value + var3Value;
 
 		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"variable1 + variable2 + variable3")
-				.usingDoubleVariable("variable1", null, variable1Value)
-				.usingDoubleVariable("variable2", "variable1 + 3", null)
-				.usingDoubleVariable("variable3", "variable2 + variable1", null)
-				.withReturnType(Double.class)
-				.withExpectedResult(expectedResult);
+			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
+		expressionTestData.addDoubleVariable("var1", null, var1Value);
+		expressionTestData.addDoubleVariable("var2", "var1 + 3",null);
+		expressionTestData.addDoubleVariable("var3", "var2 + var1", null);
+		expressionTestData.setReturnType(Double.class);
+		expressionTestData.setExpectedResult(expectedResult);
 
-		testExpression(expressionTestData);
+		executeTest(expressionTestData);
 	}
 
 	@Test
 	public void testEvaluateFloatExpression() throws Exception {
-		float variable1Value = 5.5F;
-		float variable2value = variable1Value + 3;
-		float variable3Value = variable1Value + variable2value;
-		float expectedResult = variable1Value + variable2value + variable3Value;
+
+		float var1Value = 5.5F;
+		float var2value = var1Value + 3;
+		float var3Value = var1Value + var2value;
+		float expectedResult = var1Value + var2value + var3Value;
 
 		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"variable1 + variable2 + variable3")
-				.usingFloatVariable("variable1", null, variable1Value)
-				.usingFloatVariable("variable2", "variable1 + 3", null)
-				.usingFloatVariable("variable3", "variable2 + variable1", null)
-				.withReturnType(Float.class)
-				.withExpectedResult(expectedResult);
+			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
+		expressionTestData.addFloatVariable("var1", null, var1Value);
+		expressionTestData.addFloatVariable("var2", "var1 + 3", null);
+		expressionTestData.addFloatVariable("var3","var2 + var1", null);
+		expressionTestData.setReturnType(Float.class);
+		expressionTestData.setExpectedResult(expectedResult);
 
-		testExpression(expressionTestData);
+		executeTest(expressionTestData);
 	}
 
 	@Test
 	public void testEvaluateIntegerExpression() throws Exception {
-		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"variable1 + variable2 + variable3")
-				.usingIntegerVariable("variable1", null, 5)
-				.usingIntegerVariable("variable2", "variable1 + 3", 5)
-				.usingIntegerVariable("variable3", "variable2 + variable1", 5)
-				.withReturnType(Integer.class)
-				.withExpectedResult(5 + (5 + 3) + ((5 + 3) + 5));
 
-		testExpression(expressionTestData);
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
+		expressionTestData.addIntegerVariable("var1", null, 5);
+		expressionTestData.addIntegerVariable("var2", "var1 + 3", 5);
+		expressionTestData.addIntegerVariable("var3","var2 + var1", 5);
+		expressionTestData.setReturnType(Integer.class);
+		expressionTestData.setExpectedResult(5 + (5 + 3) + ((5 + 3) + 5));
+
+		executeTest(expressionTestData);
 	}
 
 	@Test
 	public void testEvaluateLongExpression() throws Exception {
-		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"variable1 + variable2 + variable3")
-				.usingLongVariable("variable1", null, 5L)
-				.usingLongVariable("variable2", "variable1 + 3", 5L)
-				.usingLongVariable("variable3", "variable2 + variable1", 5L)
-				.withReturnType(Long.class)
-				.withExpectedResult((long) (5 + (5 + 3) + ((5 + 3) + 5)));
 
-		testExpression(expressionTestData);
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
+		expressionTestData.addLongVariable("var1", null, 5L);
+		expressionTestData.addLongVariable("var2", "var1 + 3", 5L);
+		expressionTestData.addLongVariable("var3", "var2 + var1", 5L);
+		expressionTestData.setReturnType(Long.class);
+		expressionTestData.setExpectedResult(
+			(long) (5 + (5 + 3) + ((5 + 3) + 5)));
+
+		executeTest(expressionTestData);
 	}
 
 	@Test
 	public void testEvaluateStringExpression() throws Exception {
-		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData("variable1 + variable2")
-			.usingStringVariable("variable1", null, "Life")
-			.usingStringVariable("variable2", null, "ray")
-			.withReturnType(String.class)
-			.withExpectedResult("Liferay");
 
-		testExpression(expressionTestData);
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 + var2");
+		expressionTestData.addStringVariable("var1", null, "Life");
+		expressionTestData.addStringVariable("var2", null, "ray");
+		expressionTestData.setReturnType(String.class);
+		expressionTestData.setExpectedResult("Liferay");
+
+		executeTest(expressionTestData);
 	}
 
 }

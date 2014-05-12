@@ -31,11 +31,10 @@ public class DependenciesTest {
 	@Test
 	public void testVariableDependenciesMap() {
 		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"variable1 + variable2 + variable3")
-				.usingLongVariable("variable1", null, 5L)
-				.usingLongVariable("variable2", "variable1 + 3", 5L)
-				.usingLongVariable("variable3", "variable2 + variable1", 5L);
+			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
+		expressionTestData.addLongVariable("var1", null, 5L);
+		expressionTestData.addLongVariable("var2", "var1 + 3", 5L);
+		expressionTestData.addLongVariable("var3", "var2 + var1", 5L);
 
 		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(
 			expressionTestData.getVariables());
@@ -43,56 +42,47 @@ public class DependenciesTest {
 		Map<String, VariableDependencies> dependenciesMap =
 			evaluator.getVariableDependenciesMap();
 
-		VariableDependencies variable1Dependencies = dependenciesMap.get(
-			"variable1");
+		VariableDependencies var1Dependencies = dependenciesMap.get("var1");
 
-		Assert.assertTrue(
-			variable1Dependencies.getRequiredVariableNames().isEmpty());
+		Assert.assertTrue(var1Dependencies.getRequiredVariableNames().isEmpty()
+			);
 
-		Assert.assertTrue(
-			affectedVariablesContains(variable1Dependencies, "variable2"));
+		Assert.assertTrue(affectedVariablesContains(var1Dependencies, "var2"));
 
-		Assert.assertTrue(
-			affectedVariablesContains(variable1Dependencies, "variable3"));
+		Assert.assertTrue(affectedVariablesContains(var1Dependencies, "var3"));
 
-		VariableDependencies variable2Dependencies = dependenciesMap.get(
-			"variable2");
+		VariableDependencies var2Dependencies = dependenciesMap.get("var2");
 
-		Assert.assertTrue(
-			requiredVariablesContains(variable2Dependencies, "variable1"));
+		Assert.assertTrue(requiredVariablesContains(var2Dependencies, "var1"));
 
-		Assert.assertTrue(
-			affectedVariablesContains(variable2Dependencies, "variable3"));
+		Assert.assertTrue(affectedVariablesContains(var2Dependencies, "var3"));
 
-		VariableDependencies variable3Dependencies = dependenciesMap.get(
-			"variable3");
+		VariableDependencies var3Dependencies = dependenciesMap.get( "var3");
 
-		Assert.assertTrue(
-			requiredVariablesContains(variable3Dependencies, "variable1"));
+		Assert.assertTrue(requiredVariablesContains(var3Dependencies, "var1"));
 
-		Assert.assertTrue(
-			requiredVariablesContains(variable3Dependencies, "variable2"));
+		Assert.assertTrue(requiredVariablesContains(var3Dependencies, "var2"));
 
-		Assert.assertTrue(
-			variable3Dependencies.getAffectedVariableNames().isEmpty());
+		Assert.assertTrue(var3Dependencies.getAffectedVariableNames().isEmpty()
+			);
 	}
 
 	protected boolean affectedVariablesContains(
-		VariableDependencies variableDependencies, String variableName) {
+		VariableDependencies varDependencies, String varName) {
 
 		List<String> affectedVariableNames =
-			variableDependencies.getAffectedVariableNames();
+			varDependencies.getAffectedVariableNames();
 
-		return affectedVariableNames.contains(variableName);
+		return affectedVariableNames.contains(varName);
 	}
 
 	protected boolean requiredVariablesContains(
-		VariableDependencies variableDependencies, String variableName) {
+		VariableDependencies varDependencies, String varName) {
 
 		List<String> requiredVariableNames =
-			variableDependencies.getRequiredVariableNames();
+			varDependencies.getRequiredVariableNames();
 
-		return requiredVariableNames.contains(variableName);
+		return requiredVariableNames.contains(varName);
 	}
 
 }

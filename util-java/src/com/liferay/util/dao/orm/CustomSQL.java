@@ -237,7 +237,7 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(
-			String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
 
 		if (Validator.isNull(keywords)) {
 			return new String[] {null};
@@ -749,13 +749,12 @@ public class CustomSQL {
 			return StringUtil.quote(keyword, StringPool.PERCENT);
 		}
 		else if (wildcardMode == WildcardMode.TRAILING) {
-			return keyword + StringPool.PERCENT;
+			return keyword.concat(StringPool.PERCENT);
 		}
 		else {
 			throw new IllegalArgumentException(
 				"Expected one of: " + Arrays.toString(WildcardMode.values()) +
-				"; found: " + wildcardMode
-			);
+					"; found: " + wildcardMode);
 		}
 	}
 

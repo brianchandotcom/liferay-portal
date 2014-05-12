@@ -15,8 +15,6 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -243,9 +241,7 @@ public class SocialRelationLocalServiceTest {
 	}
 
 	@Test
-	public void testGetMultipleGroups()
-		throws PortalException, SystemException {
-
+	public void testGetMultipleGroups() throws Exception {
 		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc2");
 
@@ -272,9 +268,7 @@ public class SocialRelationLocalServiceTest {
 	}
 
 	@Test
-	public void testGetMultipleRelations()
-		throws PortalException, SystemException {
-
+	public void testGetMultipleRelations() throws Exception {
 		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc2");
 

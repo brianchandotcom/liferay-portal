@@ -241,6 +241,10 @@
 				&.input-small {
 					width: 90px;
 				}
+
+				&.input-mini {
+					width: 60px;
+				}
 			}
 		}
 	}

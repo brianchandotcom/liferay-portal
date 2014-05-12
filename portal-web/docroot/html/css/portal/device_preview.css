@@ -173,6 +173,30 @@
 	}
 }
 
+.ie9 {
+	.lfr-has-device-preview {
+		.portlet-dockbar, #wrapper {
+			display: none;
+		}
+
+		.lfr-device-preview-panel {
+			margin: 0;
+			position: fixed;
+			width: 200px;
+
+			.btn.close {
+				font-size: 20px;
+				margin: 0;
+			}
+
+			.field {
+				font-size: 14px;
+				height: 20px;
+			}
+		}
+	}
+}
+
 .lfr-device-preview {
 	bottom: 0;
 	display: none;

@@ -163,16 +163,6 @@
 	}
 }
 
-.ie8 .lfr-device {
-	&.smartphone, &.tablet {
-		padding: 0;
-
-		&:after, &:before {
-			display: none;
-		}
-	}
-}
-
 .lfr-device-preview {
 	bottom: 0;
 	display: none;
@@ -188,6 +178,39 @@
 
 	.lfr-device-preview {
 		display: block;
+	}
+}
+
+.ie8 .lfr-device {
+	&.smartphone, &.tablet {
+		padding: 0;
+
+		&:after, &:before {
+			display: none;
+		}
+	}
+}
+
+.ie9 {
+	.lfr-has-device-preview {
+		.portlet-dockbar, #wrapper {
+			display: none;
+		}
+
+		.lfr-device-preview-panel {
+			margin: 0;
+			position: fixed;
+			width: 200px;
+
+			.btn.close {
+				font-size: 20px;
+				margin: 0;
+			}
+
+			.field {
+				font-size: 14px;
+			}
+		}
 	}
 }
 

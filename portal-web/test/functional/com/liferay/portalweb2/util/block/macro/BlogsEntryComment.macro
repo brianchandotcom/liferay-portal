@@ -42,7 +42,15 @@
 				</execute>
 			</then>
 			<else>
-				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+				<if>
+					<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+					<then>
+						<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+					</then>
+					<else>
+						<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+					</else>
+				</if>
 			</else>
 		</if>
 

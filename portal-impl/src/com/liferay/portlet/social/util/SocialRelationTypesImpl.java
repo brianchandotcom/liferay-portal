@@ -106,4 +106,5 @@ public class SocialRelationTypesImpl implements SocialRelationTypes {
 		SocialRelationConstants.TYPE_UNI_PARENT,
 		SocialRelationConstants.TYPE_UNI_SUBORDINATE,
 		SocialRelationConstants.TYPE_UNI_SUPERVISOR);
+
 }

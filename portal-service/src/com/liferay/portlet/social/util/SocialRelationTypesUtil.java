@@ -28,7 +28,8 @@ public class SocialRelationTypesUtil {
 	}
 
 	public static SocialRelationTypes getSocialRelationTypes() {
-		PortalRuntimePermission.checkGetBeanProperty(SocialRelationTypes.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			SocialRelationTypesUtil.class);
 
 		return _socialRelationTypes;
 	}

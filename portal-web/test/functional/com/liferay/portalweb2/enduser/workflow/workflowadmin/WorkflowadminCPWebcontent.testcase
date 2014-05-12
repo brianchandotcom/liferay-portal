@@ -84,7 +84,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name='workflowStatus' value="Draft" />
+			<var name="workflowStatus" value="Draft" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -230,7 +230,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-			<var name='workflowStatus' value="Pending" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 	</command>
 </definition>

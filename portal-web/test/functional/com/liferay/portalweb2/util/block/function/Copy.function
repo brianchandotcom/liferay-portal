@@ -1,18 +1,18 @@
 <definition>
 	<command name="ckEditorCopy">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="selectFrame" />
 
-		<execute selenium="waitForVisible" argument1="//html/body" />
+		<execute argument1="//html/body" selenium="waitForVisible" />
 
-		<execute selenium="mouseOver" argument1="//html/body" />
+		<execute argument1="//html/body" selenium="mouseOver" />
 
-		<execute selenium="copyText" argument1="//html/body" />
+		<execute argument1="//html/body" selenium="copyText" />
 
-		<execute selenium="selectFrame" argument1="relative=parent" />
+		<execute argument1="relative=parent" selenium="selectFrame" />
 	</command>
 
 	<command name="textCopy">

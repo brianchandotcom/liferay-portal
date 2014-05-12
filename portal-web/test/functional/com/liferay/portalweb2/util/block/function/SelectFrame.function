@@ -8,6 +8,6 @@
 	</command>
 
 	<command name="selectFrameTop">
-		<execute selenium="selectFrame" argument1="relative=top" />
+		<execute argument1="relative=top" selenium="selectFrame" />
 	</command>
 </definition>

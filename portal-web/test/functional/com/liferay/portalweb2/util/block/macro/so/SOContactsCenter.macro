@@ -501,7 +501,7 @@
 		<while>
 			<condition action="SOContactscenter#isElementPresent" locator-key1="CONTACTS_LIST_NAME" />
 			<then>
-				<var name="contactName" path="SOContactscenter" locator-key="CONTACTS_LIST_NAME" />
+				<var locator-key="CONTACTS_LIST_NAME" name="contactName" path="SOContactscenter" />
 
 				<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" />
 				<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" />

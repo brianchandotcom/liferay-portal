@@ -228,7 +228,7 @@
 
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
@@ -244,7 +244,7 @@
 		<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplayConfiguration#assertElementNotPresent" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
@@ -257,7 +257,7 @@
 
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayConfiguration#assertTextEquals" locator-key1="INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />

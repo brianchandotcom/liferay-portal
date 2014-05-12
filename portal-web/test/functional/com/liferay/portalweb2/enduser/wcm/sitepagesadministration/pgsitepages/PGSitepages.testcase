@@ -30,8 +30,8 @@
 		<var name="fieldKey" value="EMBEDDED_PORTLETS" />
 		<var name="fieldLabel" value="embeddedPortlets" />
 		<var name="fieldName" value="Embedded Portlets" />
-		<var name="webContentContent"><![CDATA[<runtime-portlet name='11' />]]></var>
-		<var name="webContentContentEdit"><![CDATA[<runtime-portlet name='16' />]]></var>
+		<var name="webContentContent"><![CDATA[<runtime-portlet name="11" />]]></var>
+		<var name="webContentContentEdit"><![CDATA[<runtime-portlet name="16" />]]></var>
 		<var name="webContentJavascript" value="true" />
 		<var name="webContentTitle" value="Embedded Portlets" />
 

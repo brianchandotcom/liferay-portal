@@ -396,7 +396,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertEditWebContentStaging" known-issues="LPS-46378" priority="5">
+	<command known-issues="LPS-46378" name="AssertEditWebContentStaging" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 		<var name="siteName" value="${siteName}" />
 
@@ -604,7 +604,7 @@
 		</execute>
 	</command>
 
-	<command name="BlogsOrganizationWorkflowStaging" known-issues="LPS-45916" priority="4">
+	<command known-issues="LPS-45916" name="BlogsOrganizationWorkflowStaging" priority="4">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">

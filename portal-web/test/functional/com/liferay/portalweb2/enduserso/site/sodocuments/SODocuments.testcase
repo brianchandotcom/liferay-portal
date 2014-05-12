@@ -1388,7 +1388,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportLARSODocuments" known-issues="LPS-45435" priority="4">
+	<command known-issues="LPS-45435" name="ImportLARSODocuments" priority="4">
 		<var name="dmDocument1Description" value="DM Folder1 Document Description" />
 		<var name="dmDocument1File" value="Document_1.doc" />
 		<var name="dmDocument1Title" value="DM Folder1 Document Title" />
@@ -2828,7 +2828,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDMFolderAsGuest" known-issues="LPS-45435" priority="4">
+	<command known-issues="LPS-45435" name="ViewDMFolderAsGuest" priority="4">
 		<var name="dmDocumentDescription1" value="DM Folder Document 1 Description" />
 		<var name="dmDocumentDescription2" value="DM Folder Document 2 Description" />
 		<var name="dmDocumentFile1" value="Document_1.doc" />
@@ -2946,7 +2946,7 @@
 		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="${dmFolderName2}" />
 	</command>
 
-	<command name="ViewDMFolderDocumentAsGuest" known-issues="LPS-45435" priority="4">
+	<command known-issues="LPS-45435" name="ViewDMFolderDocumentAsGuest" priority="4">
 		<var name="dmDocumentDescription1" value="DM Folder Document 1 Description" />
 		<var name="dmDocumentDescription2" value="DM Folder Document 2 Description" />
 		<var name="dmDocumentFile1" value="Document_1.doc" />

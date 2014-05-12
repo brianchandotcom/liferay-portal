@@ -44,7 +44,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="ActivateInitialStagingWithWikiAttachment" known-issues="LPS-46486" priority="4">
+	<command known-issues="LPS-46486" name="ActivateInitialStagingWithWikiAttachment" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -387,7 +387,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogs" known-issues="LPS-45854" priority="4">
+	<command known-issues="LPS-45854" name="StagingBlogs" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -1008,7 +1008,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive3" known-issues="LPS-43693" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive3" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1336,7 +1336,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive4" known-issues="LPS-43693" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive4" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -2300,7 +2300,7 @@
 		<execute macro="Page#viewCustomLogoPG" />
 	</command>
 
-	<command name="StagingOnlyApprovedPublishToLive" known-issues="LPS-44150" priority="5">
+	<command known-issues="LPS-44150" name="StagingOnlyApprovedPublishToLive" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoPG">
@@ -2705,7 +2705,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishPage" known-issues="LPS-46018" priority="4">
+	<command known-issues="LPS-46018" name="StagingPublishPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2878,7 +2878,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="StagingRemoteDMViaGlobalScope" known-issues="LIFERAYQA-8936" priority="5">
+	<command known-issues="LIFERAYQA-8936" name="StagingRemoteDMViaGlobalScope" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
@@ -3006,7 +3006,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingRemoteLiveWebContent" known-issues="LPS-46086" priority="5">
+	<command known-issues="LPS-46086" name="StagingRemoteLiveWebContent" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3194,7 +3194,7 @@
 
 		<execute action="PGStaging#click" locator-key1="HISTORY_BUTTON" />
 
-		<var name="historyVersion" path="PGStaging" locator-key="HISTORY_VERSION" />
+		<var locator-key="HISTORY_VERSION" name="historyVersion" path="PGStaging" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -3286,7 +3286,7 @@
 		<execute macro="Staging#publishToLiveNow" />
 	</command>
 
-	<command name="StagingWithPublishTemplate" known-issues="LPS-46468" priority="5" >
+	<command known-issues="LPS-46468" name="StagingWithPublishTemplate" priority="5" >
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

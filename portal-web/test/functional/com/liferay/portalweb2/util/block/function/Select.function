@@ -1,6 +1,6 @@
 <definition>
 	<command name="pauseSelect">
-		<execute selenium="pause" argument1="5000" />
+		<execute argument1="5000" selenium="pause" />
 
 		<execute function="Select#select" />
 	</command>

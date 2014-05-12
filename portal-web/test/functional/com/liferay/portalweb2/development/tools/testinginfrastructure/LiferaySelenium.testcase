@@ -6,56 +6,56 @@
 	</set-up>
 
 	<command name="UsingMethods" priority="5">
-		<var name="url" method="selenium#getLocation()" />
+		<var method="selenium#getLocation()" name="url" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${url}" />
 			<var name="expected" value="http://localhost:8080/web/guest" />
 		</execute>
 
-		<var name="url" method='StringUtil#replace("${url}", "guest", "hello")' />
+		<var method="StringUtil#replace(&quot;${url}&quot;, &quot;guest&quot;, &quot;hello&quot;)" name="url" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${url}" />
 			<var name="expected" value="http://localhost:8080/web/hello" />
 		</execute>
 
-		<var name="boolean" method='StringUtil#startsWith("This is a test", "This")' />
+		<var method="StringUtil#startsWith(&quot;This is a test&quot;, &quot;This&quot;)" name="boolean" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${boolean}" />
 			<var name="expected" value="true" />
 		</execute>
 
-		<var name="boolean" method='StringUtil#isLowerCase("Hello")' />
+		<var method="StringUtil#isLowerCase(&quot;Hello&quot;)" name="boolean" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${boolean}" />
 			<var name="expected" value="false" />
 		</execute>
 
-		<var name="int" method='StringUtil#count("Life Ray is Life of Portal", "Life")' />
+		<var method="StringUtil#count(&quot;Life Ray is Life of Portal&quot;, &quot;Life&quot;)" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
 			<var name="expected" value="2" />
 		</execute>
 
-		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="0" />
+		<var group="0" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${regex}" />
 			<var name="expected" value="regularexpression=32132" />
 		</execute>
 
-		<var name="regex" input="${regex}" pattern="[a-z]*=([0-9]*)" group="0" />
+		<var group="0" input="${regex}" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${regex}" />
 			<var name="expected" value="regularexpression=32132" />
 		</execute>
 
-		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="1" />
+		<var group="1" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${regex}" />

@@ -314,7 +314,7 @@
 		<execute macro="PortalSettings#viewAuthenticationLDAPCP" />
 	</command>
 
-	<command name="ViewAuthenticationNTLM" known-issues="LPS-46487" priority="3">
+	<command known-issues="LPS-46487" name="ViewAuthenticationNTLM" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

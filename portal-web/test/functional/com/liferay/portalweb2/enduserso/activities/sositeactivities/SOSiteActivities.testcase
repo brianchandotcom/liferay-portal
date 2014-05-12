@@ -860,7 +860,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPrivateRestrictedSiteActivitiesProfileByNonMember" known-issues="SOS-2179" priority="4">
+	<command known-issues="SOS-2179" name="ViewPrivateRestrictedSiteActivitiesProfileByNonMember" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
@@ -975,7 +975,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command name="ViewPrivateSiteActivitiesProfileByNonMember" known-issues="SOS-2179" priority="5">
+	<command known-issues="SOS-2179" name="ViewPrivateSiteActivitiesProfileByNonMember" priority="5">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />

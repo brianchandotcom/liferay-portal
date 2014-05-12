@@ -16,7 +16,7 @@
 	</command>
 
 	<command name="assertPartialTextClickAtCPNavigation">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" />
 	</command>
@@ -46,9 +46,9 @@
 	</command>
 
 	<command name="assertTextClickAtAddApplication">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" selenium="waitForElementPresent" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
@@ -62,52 +62,52 @@
 	</command>
 
 	<command name="assertTextClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" />
 	</command>
 
 	<command name="assertTextClickAtCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
 	<command name="assertTextClickAtClickDockbar">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
+		<execute argument1="//div[@id='_145_dockbar']" argument2="" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
 	<command name="assertTextClickAtClickSidebar">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
+		<execute argument1="//ul[@class='nav nav-add-controls']" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
 	<command name="assertTextClickAtNavigation">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<if>
-			<condition selenium="isElementPresent" argument1="//a[@id='_145_addPanel']" />
+			<condition argument1="//a[@id='_145_addPanel']" selenium="isElementPresent" />
 			<then>
-				<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
+				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" />
+				<execute argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 				<execute selenium="mouseOver" />
 
-				<execute selenium="waitForElementPresent" argument1="//li[contains(@class,'lfr-nav-hover')]" />
+				<execute argument1="//li[contains(@class,'lfr-nav-hover')]" selenium="waitForElementPresent" />
 			</then>
 		</if>
 
@@ -117,14 +117,14 @@
 	<command name="assertTextClickTagSelector">
 		<execute function="AssertClick#assertTextClick" />
 
-		<execute selenium="waitForVisible" argument1="//div[contains(@class,'lfr-tag-selector-popup')]" />
+		<execute argument1="//div[contains(@class,'lfr-tag-selector-popup')]" selenium="waitForVisible" />
 	</command>
 
 	<command name="assertTextClickWaitForInlineCKEditor">
 		<if>
-			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />
+			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
 			<then>
-				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
+				<execute argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" selenium="waitForElementPresent" />
 			</then>
 		</if>
 
@@ -148,25 +148,25 @@
 	</command>
 
 	<command name="assertValueClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="AssertClick#assertValueClickAtAndWait" />
 	</command>
 
 	<command name="pauseAssertPartialTextClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" />
 	</command>
 
 	<command name="pauseAssertTextClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
 	<command name="pauseAssertTextClickAtAndWait">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" />
 	</command>
@@ -182,15 +182,15 @@
 
 		<execute selenium="mouseDown" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="click" />
 	</command>
 
 	<command name="waitForDMHomeAssertTextEqualsClick">
-		<execute selenium="waitForElementPresent" argument1="//a[contains(@class,'browse-folder')]" />
+		<execute argument1="//a[contains(@class,'browse-folder')]" selenium="waitForElementPresent" />
 
-		<execute selenium="pause" argument1="1500" />
+		<execute argument1="1500" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>

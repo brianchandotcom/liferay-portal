@@ -4,21 +4,21 @@
 
 		<execute selenium="mouseOver" />
 
-		<execute selenium="type" argument2="" />
+		<execute argument2="" selenium="type" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="clickAt" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="sendKeys" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="clickAt" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 	</command>
 
 	<command name="sendKeys">
@@ -30,7 +30,7 @@
 	</command>
 
 	<command name="sendKeysApplicationSearch">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" />
+		<execute argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Type#sendKeys" />
 	</command>
@@ -66,19 +66,19 @@
 	</command>
 
 	<command name="typeFrameWaitForCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Type#typeFrame" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 	</command>
 
 	<command name="typeWaitForCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Type#type" />
 	</command>

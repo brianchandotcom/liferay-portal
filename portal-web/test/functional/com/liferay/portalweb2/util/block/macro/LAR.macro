@@ -52,11 +52,11 @@
 
 		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var name="valueName" method='selenium#getText("//tr/td[5]/span/a")' />
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var name="larFileName" input="${valueName}"  pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" group="1" />
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="import file name ${larFileName}" />
 

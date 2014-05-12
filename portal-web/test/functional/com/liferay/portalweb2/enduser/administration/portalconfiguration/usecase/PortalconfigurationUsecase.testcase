@@ -49,7 +49,7 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<var name="documentURL" method="selenium#getLocation()" />
+		<var method="selenium#getLocation()" name="documentURL" />
 
 		<var name="otherInstanceAccessAttempt" value="${documentURL?replace('able', 'baker')}" />
 

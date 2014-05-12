@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWebContentPGViaAP" known-issues="LPS-44710" priority="5">
+	<command known-issues="LPS-44710" name="AddWebContentPGViaAP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
 

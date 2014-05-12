@@ -120,7 +120,7 @@
 		<execute action="PGTestEventConsumer#assertTextEquals" locator-key1="EVENT_CONSUMER_PORTLET_BODY" value1="PASSED" />
 	</command>
 
-	<command name="ViewHook" known-issues="Ignore" priority="5">
+	<command known-issues="Ignore" name="ViewHook" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Hook Page" />
 		</execute>
@@ -171,7 +171,7 @@
 		<execute action="PGTestJSR#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
-	<command name="ViewKaleo" known-issues="LPS-45103" priority="5">
+	<command known-issues="LPS-45103" name="ViewKaleo" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Kaleo Page" />
 		</execute>
@@ -195,7 +195,7 @@
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
-	<command name="ViewLog" known-issues="Ignore" priority="5">
+	<command known-issues="Ignore" name="ViewLog" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Log Page" />
 		</execute>
@@ -245,7 +245,7 @@
 		<execute action="PGTestSubscriberPortlet#assertTextEquals" locator-key1="SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
 	</command>
 
-	<command name="ViewResourcesImporter" known-issues="LPS-45835" priority="5">
+	<command known-issues="LPS-45835" name="ViewResourcesImporter" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Resources Importer Page" />
 		</execute>
@@ -269,7 +269,7 @@
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
-	<command name="ViewUserAttributes" known-issues="Ignore" priority="5">
+	<command known-issues="Ignore" name="ViewUserAttributes" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test User Attributes Page" />
 		</execute>

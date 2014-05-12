@@ -806,7 +806,7 @@
 		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}01" />
 	</command>
 
-	<command name="FilterTasksByTag" known-issues="SOS-1999" priority="5">
+	<command known-issues="SOS-1999" name="FilterTasksByTag" priority="5">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">

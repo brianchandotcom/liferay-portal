@@ -337,7 +337,7 @@
 	<command name="viewUpcomingTask">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
-		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<if>

@@ -34,7 +34,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="ADTAssetPublisher" known-issues="LIFERAYQA-6795" priority="3">
+	<command known-issues="LIFERAYQA-6795" name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -631,7 +631,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTWiki" known-issues="LPS-45343" priority="3">
+	<command known-issues="LPS-45343" name="ADTWiki" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

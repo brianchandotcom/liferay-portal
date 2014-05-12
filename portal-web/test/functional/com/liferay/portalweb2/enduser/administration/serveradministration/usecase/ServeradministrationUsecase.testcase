@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="PortalPropertiesDatabaseValue" known-issues="LPS-44663" priority="3">
+	<command known-issues="LPS-44663" name="PortalPropertiesDatabaseValue" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>

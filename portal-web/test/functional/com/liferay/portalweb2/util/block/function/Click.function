@@ -24,17 +24,17 @@
 	</command>
 
 	<command name="clickAtAndWaitCPNavigation">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAtAndWait" />
 	</command>
 
 	<command name="clickAtClickDockbar">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
+		<execute argument1="//div[@id='_145_dockbar']" argument2="" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />
 	</command>
@@ -42,61 +42,61 @@
 	<command name="clickAtNavigation">
 		<execute function="Click#clickAtNonLiferayNavigation" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" selenium="waitForElementPresent" />
 	</command>
 
 	<command name="clickAtNonLiferayNavigation">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<if>
-			<condition selenium="isElementPresent" argument1="//a[@id='_145_addPanel']" />
+			<condition argument1="//a[@id='_145_addPanel']" selenium="isElementPresent" />
 			<then>
-				<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
+				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" />
+				<execute argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 				<execute selenium="mouseOver" />
 
-				<execute selenium="waitForElementPresent" argument1="//li[contains(@class,'lfr-nav-hover')]" />
+				<execute argument1="//li[contains(@class,'lfr-nav-hover')]" selenium="waitForElementPresent" />
 			</then>
 		</if>
 
 		<execute function="Click#clickAt" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 	</command>
 
 	<command name="clickAtSidebarClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
+		<execute argument1="//ul[@class='nav nav-add-controls']" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#clickAt" />
 	</command>
 
 	<command name="clickAtSidebarClickAtWaitForScript">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
+		<execute argument1="//ul[@class='nav nav-add-controls']" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')]" selenium="waitForElementPresent" />
 	</command>
 
 	<command name="clickWaitForInlineCKEditor">
 		<if>
-			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />
+			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
 			<then>
-				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
+				<execute argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" selenium="waitForElementPresent" />
 			</then>
 		</if>
 
@@ -128,7 +128,7 @@
 	</command>
 
 	<command name="pauseClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="mouseOver" />
 
@@ -136,19 +136,19 @@
 	</command>
 
 	<command name="pauseMakeVisibleClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#makeVisibleClickAt" />
 	</command>
 
 	<command name="pauseTextClickAt">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAt" />
 	</command>
 
 	<command name="pauseTextClickAtAndWait">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#textClickAtAndWait" />
 	</command>
@@ -186,15 +186,15 @@
 	</command>
 
 	<command name="textClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#textClickAtAndWait" />
 	</command>
 
 	<command name="textClickAtClickDockbar">
-		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
+		<execute argument1="//div[@id='_145_dockbar']" argument2="" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#textClickAt" />
 	</command>
@@ -216,7 +216,7 @@
 	</command>
 
 	<command name="valueClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute function="Click#valueClickAtAndWait" />
 	</command>

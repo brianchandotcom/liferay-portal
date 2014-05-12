@@ -83,7 +83,7 @@
 
 		<execute action="PGAnnouncementsAddentry#uncheck" locator-key1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
-		<var name="displayDateHour" locator="//input[@id='_84_displayDateHour']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_84_displayDateHour']" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -93,11 +93,11 @@
 			</then>
 		</if>
 
-		<var name="displayDateAMPM" locator="//input[@id='_84_displayDateAmPm']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_84_displayDateAmPm']" name="displayDateAMPM" />
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('0', 'AM')}" />
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
 
-		<var name="displayDateMinute" locator="//input[@id='_84_displayDateMinute']" attribute="value" />
+		<var attribute="value" locator="//input[@id='_84_displayDateMinute']" name="displayDateMinute" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />

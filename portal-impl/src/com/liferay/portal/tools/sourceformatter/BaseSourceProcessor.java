@@ -910,6 +910,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected boolean isAttributName(String attributeName) {
+		if (Validator.isNull(attributeName)) {
+			return false;
+		}
+
+		Matcher matcher = attributeNamePattern.matcher(attributeName);
+
+		return matcher.matches();
+	}
+
 	protected boolean isExcluded(Properties properties, String fileName) {
 		return isExcluded(properties, fileName, -1);
 	}
@@ -990,6 +1000,170 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return newLine;
+	}
+
+	protected String sortAttributes(
+		String fileName, String line, int lineCount,
+		boolean allowApostropheDelimeter) {
+
+		String s = line;
+
+		int x = s.indexOf(StringPool.SPACE);
+
+		if (x == -1) {
+			return line;
+		}
+
+		s = s.substring(x + 1);
+
+		String previousAttribute = null;
+		String previousAttributeAndValue = null;
+
+		boolean wrongOrder = false;
+
+		for (x = 0;;) {
+			x = s.indexOf(StringPool.EQUAL);
+
+			if ((x == -1) || (s.length() <= (x + 1))) {
+				return line;
+			}
+
+			String attribute = s.substring(0, x);
+
+			if (!isAttributName(attribute)) {
+				return line;
+			}
+
+			if (Validator.isNotNull(previousAttribute) &&
+				(previousAttribute.compareTo(attribute) > 0)) {
+
+				wrongOrder = true;
+			}
+
+			s = s.substring(x + 1);
+
+			char delimeter = s.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				if (delimeter != CharPool.AMPERSAND) {
+					processErrorMessage(
+						fileName, "delimeter: " + fileName + " " + lineCount);
+				}
+
+				return line;
+			}
+
+			s = s.substring(1);
+
+			String value = null;
+
+			int y = -1;
+
+			while (true) {
+				y = s.indexOf(delimeter, y + 1);
+
+				if ((y == -1) || (s.length() <= (y + 1))) {
+					return line;
+				}
+
+				value = s.substring(0, y);
+
+				if (value.startsWith("<%")) {
+					int endJavaCodeSignCount = StringUtil.count(value, "%>");
+					int startJavaCodeSignCount = StringUtil.count(value, "<%");
+
+					if (endJavaCodeSignCount == startJavaCodeSignCount) {
+						break;
+					}
+				}
+				else {
+					int greaterThanCount = StringUtil.count(
+						value, StringPool.GREATER_THAN);
+					int lessThanCount = StringUtil.count(
+						value, StringPool.LESS_THAN);
+
+					if (greaterThanCount == lessThanCount) {
+						break;
+					}
+				}
+			}
+
+			if (delimeter == CharPool.APOSTROPHE) {
+				if (!value.contains(StringPool.QUOTE)) {
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + value + StringPool.QUOTE);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+				else if (!allowApostropheDelimeter) {
+					String newValue = StringUtil.replace(
+						value, StringPool.QUOTE, "&quot;");
+
+					line = StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + newValue + StringPool.QUOTE);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(attribute);
+			sb.append(StringPool.EQUAL);
+			sb.append(delimeter);
+			sb.append(value);
+			sb.append(delimeter);
+
+			String currentAttributeAndValue = sb.toString();
+
+			if (wrongOrder) {
+				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
+					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
+
+					line = StringUtil.replaceFirst(
+						line, previousAttributeAndValue,
+						currentAttributeAndValue);
+
+					line = StringUtil.replaceLast(
+						line, currentAttributeAndValue,
+						previousAttributeAndValue);
+
+					return sortAttributes(
+						fileName, line, lineCount, allowApostropheDelimeter);
+				}
+
+				return line;
+			}
+
+			s = s.substring(y + 1);
+
+			if (s.startsWith(StringPool.GREATER_THAN)) {
+				x = s.indexOf(StringPool.SPACE);
+
+				if (x == -1) {
+					return line;
+				}
+
+				s = s.substring(x + 1);
+
+				previousAttribute = null;
+				previousAttributeAndValue = null;
+			}
+			else {
+				s = StringUtil.trimLeading(s);
+
+				previousAttribute = attribute;
+				previousAttributeAndValue = currentAttributeAndValue;
+			}
+		}
 	}
 
 	protected String stripQuotes(String s, char delimeter) {
@@ -1157,6 +1331,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static final String MAIN_RELEASE_VERSION_7_0_0 = "7.0.0";
 
+	protected static Pattern attributeNamePattern = Pattern.compile(
+		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static FileImpl fileUtil = FileImpl.getInstance();

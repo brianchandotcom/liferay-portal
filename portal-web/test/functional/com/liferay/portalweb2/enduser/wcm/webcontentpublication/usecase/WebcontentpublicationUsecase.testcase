@@ -39,7 +39,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAndEditAssetsViaVirtualHostOrganizations" known-issues="LPS-44575" priority="4">
+	<command known-issues="LPS-44575" name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -1748,7 +1748,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" known-issues="LIFERAYQA-6795" priority="5">
+	<command known-issues="LIFERAYQA-6795" name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

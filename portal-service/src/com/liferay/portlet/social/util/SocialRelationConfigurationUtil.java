@@ -38,20 +38,19 @@ public class SocialRelationConfigurationUtil {
 
 		boolean interactionsEnabled = GetterUtil.getBoolean(
 			companyPortletPreferences.getValue(
-				"interactionsEnabled", Boolean.TRUE.toString()));
+				"interactionsEnabled", null), true);
 
 		boolean interactionsAnyUserEnabled = GetterUtil.getBoolean(
 			companyPortletPreferences.getValue(
-				"interactionsAnyUserEnabled", Boolean.TRUE.toString()));
+				"interactionsAnyUserEnabled", null), true);
 
 		boolean interactionsSitesEnabled = GetterUtil.getBoolean(
 			companyPortletPreferences.getValue(
-				"interactionsSitesEnabled", Boolean.TRUE.toString()));
+				"interactionsSitesEnabled", null), true);
 
 		boolean interactionsSocialRelationTypesEnabled = GetterUtil.getBoolean(
 			companyPortletPreferences.getValue(
-				"interactionsSocialRelationTypesEnabled",
-				Boolean.TRUE.toString()));
+				"interactionsSocialRelationTypesEnabled", null), true);
 
 		String interactionsSocialRelationTypes =
 			companyPortletPreferences.getValue(

@@ -328,6 +328,16 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 		searchContext.setStart(entryStart);
 
 		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
+
+		for (String param : httpServletRequest.getParameterMap().keySet()) {
+			String[] values = httpServletRequest.getParameterValues(param);
+
+			params.put(param, StringUtil.merge(values));
+		}
 		%>
 
 		<liferay-ui:search-container-results
@@ -366,7 +376,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 			<liferay-ui:search-container-column-text>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<String, Object>(params);
 
 				data.put("groupid", fileEntry.getGroupId());
 				data.put("title", fileEntry.getTitle());

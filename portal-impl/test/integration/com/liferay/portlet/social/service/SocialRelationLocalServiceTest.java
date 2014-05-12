@@ -15,8 +15,6 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,18 +50,6 @@ public class SocialRelationLocalServiceTest {
 				UserTestUtil.addUser(screenNamePrefix + i, false, null);
 			}
 		}
-
-		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
-			TestPropsValues.getCompanyId(), "dlc3");
-
-		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
-			TestPropsValues.getCompanyId(), "dlc4");
-
-		GroupLocalServiceUtil.addUserGroup(
-			dlc3User.getUserId(), TestPropsValues.getGroupId());
-
-		GroupLocalServiceUtil.addUserGroup(
-			dlc4User.getUserId(), TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -243,17 +229,18 @@ public class SocialRelationLocalServiceTest {
 	}
 
 	@Test
-	public void testGetMultipleGroups()
-		throws PortalException, SystemException {
-
-		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
-			TestPropsValues.getCompanyId(), "dlc2");
-
+	public void testGetMultipleGroups() throws Exception {
 		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc3");
 
 		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc4");
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
 
 		long[] dlc3GroupIds = dlc3User.getGroupIds();
 		long[] dlc4GroupIds = dlc4User.getGroupIds();
@@ -264,26 +251,36 @@ public class SocialRelationLocalServiceTest {
 
 		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[]{}));
 
-		List<User> users = UserLocalServiceUtil.getUsersByGroups(
-			"dlc", dlc2User.getUserId(), groupIds, QueryUtil.ALL_POS,
+		List<User> users = UserLocalServiceUtil.getUsersByKeywordsAndGroupIds(
+			TestPropsValues.getCompanyId(), "dlc", groupIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(2, users.size());
 	}
 
 	@Test
-	public void testGetMultipleRelations()
-		throws PortalException, SystemException {
+	public void testGetMultipleRelations() throws Exception {
+		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc3");
 
-		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
-			TestPropsValues.getCompanyId(), "dlc2");
+		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc4");
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
 
 		int[] types = {
 			SocialRelationConstants.TYPE_BI_FRIEND,
 			SocialRelationConstants.TYPE_BI_COWORKER
 		};
 
-		List<User> users = UserLocalServiceUtil.getUsersBySocialRelationsTypes(
+		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc2");
+
+		List<User> users = UserLocalServiceUtil.getSocialUsersByKeywords(
 			"dlc", dlc2User.getUserId(), types, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 

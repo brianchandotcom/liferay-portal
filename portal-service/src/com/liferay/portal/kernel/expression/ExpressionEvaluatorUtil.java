@@ -1,5 +1,5 @@
 
-package com.liferay.portal.kernel.expressionevaluator;
+package com.liferay.portal.kernel.expression;
 
 import java.lang.reflect.InvocationTargetException;
 

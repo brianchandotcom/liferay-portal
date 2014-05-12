@@ -1,5 +1,5 @@
 
-package com.liferay.portal.kernel.expressionevaluator.model;
+package com.liferay.portal.kernel.expression;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

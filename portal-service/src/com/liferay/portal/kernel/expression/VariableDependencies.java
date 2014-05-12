@@ -1,5 +1,5 @@
 
-package com.liferay.portal.kernel.expressionevaluator.model;
+package com.liferay.portal.kernel.expression;
 
 import java.util.ArrayList;
 import java.util.List;

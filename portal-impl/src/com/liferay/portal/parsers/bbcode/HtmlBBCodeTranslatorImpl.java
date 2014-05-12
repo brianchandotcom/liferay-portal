@@ -259,11 +259,10 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			sb.append("<span class=\"number\">");
 
 			String index = String.valueOf(i + 1);
-			sb.append(index);
 
+			sb.append(index);
 			sb.append("</span>");
 			sb.append("</td>");
-
 			sb.append("<td class=\"lines\">");
 
 			String line = lines[i];
@@ -279,9 +278,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			sb.append("<div class=\"line\">");
 			sb.append(line);
 			sb.append("</div>");
-
 			sb.append("</td>");
-
 			sb.append("</tr>");
 		}
 

@@ -51,6 +51,13 @@ public class JSONValidatorTest {
 	}
 
 	@Test
+	public void testInvalidEmail() throws Exception {
+		String json = readJSON("invalid_email.json");
+
+		Assert.assertFalse(_jsonValidator.isValid(json));
+	}
+
+	@Test
 	public void testMissingRequiredProperty() throws Exception {
 		String json = readJSON("missing_required_property.json");
 

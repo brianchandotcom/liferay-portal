@@ -25,6 +25,10 @@
 		"boolean": {
 			"type": "boolean"
 		},
+		"email": {
+			"format": "email",
+			"type": "string"
+		},
 		"integer": {
 			"type": "integer"
 		},

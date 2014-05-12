@@ -220,7 +220,21 @@ public interface ExportImportHelper {
 	public boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel);
 
+	@Deprecated
 	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent)
+		throws Exception;
+
+	@Deprecated
+	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean exportReferencedContent)
@@ -228,19 +242,30 @@ public interface ExportImportHelper {
 
 	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content, boolean exportReferencedContent)
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent)
 		throws Exception;
 
+	public String replaceExportLayoutReferences(
+			PortletDataContext portletDataContext, String content)
+		throws Exception;
+
+	@Deprecated
 	public String replaceExportLayoutReferences(
 			PortletDataContext portletDataContext, String content,
 			boolean exportReferencedContent)
 		throws Exception;
 
+	@Deprecated
 	public String replaceExportLinksToLayouts(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceExportLinksToLayouts(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content)
 		throws Exception;
 
 	/**
@@ -256,8 +281,7 @@ public interface ExportImportHelper {
 
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content, boolean importReferencedContent)
+			StagedModel entityStagedModel, String content)
 		throws Exception;
 
 	/**
@@ -273,15 +297,24 @@ public interface ExportImportHelper {
 
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
-			boolean importReferencedContent)
+			StagedModel entityStagedModel, String content)
 		throws Exception;
 
+	public String replaceImportLayoutReferences(
+			PortletDataContext portletDataContext, String content)
+		throws Exception;
+
+	@Deprecated
 	public String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content,
 			boolean importReferencedContent)
 		throws Exception;
 
+	public String replaceImportLinksToLayouts(
+			PortletDataContext portletDataContext, String content)
+		throws Exception;
+
+	@Deprecated
 	public String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content,
 			boolean importReferencedContent)

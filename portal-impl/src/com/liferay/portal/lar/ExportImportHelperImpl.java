@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -873,6 +874,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return false;
 	}
 
+	@Deprecated
 	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
@@ -880,21 +882,30 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		content = replaceExportLayoutReferences(
-			portletDataContext, content, exportReferencedContent);
-		content = replaceExportLinksToLayouts(
-			portletDataContext, entityStagedModel, entityElement, content,
+		return replaceExportContentReferences(
+			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
+	}
+
+	@Override
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent)
+		throws Exception {
+
+		content = replaceExportLayoutReferences(portletDataContext, content);
+		content = replaceExportLinksToLayouts(
+			portletDataContext, entityStagedModel, content);
 
 		content = replaceExportDLReferences(
-			portletDataContext, entityStagedModel, entityElement, content,
+			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
 
-		Element groupElement = entityElement.getParent();
+		String className = ExportImportClassedModelUtil.getClassName(
+			entityStagedModel);
 
-		String groupElementName = groupElement.getName();
-
-		if (!groupElementName.equals(JournalArticle.class.getSimpleName())) {
+		if (!className.equals(JournalArticle.class.getName())) {
 			content = StringUtil.replace(
 				content, StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
 		}
@@ -902,11 +913,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	@Deprecated
 	@Override
 	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean exportReferencedContent)
+		throws Exception {
+
+		return replaceExportDLReferences(
+			portletDataContext, entityStagedModel, content,
+			exportReferencedContent);
+	}
+
+	@Override
+	public String replaceExportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -964,6 +988,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				else {
+					Element entityElement =
+						portletDataContext.getExportDataElement(
+							entityStagedModel);
+
 					portletDataContext.addReferenceElement(
 						entityStagedModel, entityElement, fileEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
@@ -992,8 +1020,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public String replaceExportLayoutReferences(
-			PortletDataContext portletDataContext, String content,
-			boolean exportReferencedContent)
+			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -1192,11 +1219,32 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return sb.toString();
 	}
 
+	@Deprecated
+	@Override
+	public String replaceExportLayoutReferences(
+			PortletDataContext portletDataContext, String content,
+			boolean exportReferencedContent)
+		throws Exception {
+
+		return replaceExportLayoutReferences(portletDataContext, content);
+	}
+
+	@Deprecated
 	@Override
 	public String replaceExportLinksToLayouts(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean exportReferencedContent)
+		throws Exception {
+
+		return replaceExportLinksToLayouts(
+			portletDataContext, entityStagedModel, content);
+	}
+
+	@Override
+	public String replaceExportLinksToLayouts(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content)
 		throws Exception {
 
 		List<String> oldLinksToLayout = new ArrayList<String>();
@@ -1231,6 +1279,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				oldLinksToLayout.add(oldLinkToLayout);
 				newLinksToLayout.add(newLinkToLayout);
+
+				Element entityElement = portletDataContext.getExportDataElement(
+					entityStagedModel);
 
 				portletDataContext.addReferenceElement(
 					entityStagedModel, entityElement, layout,
@@ -1277,18 +1328,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content, boolean importReferencedContent)
+			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		content = replaceImportLayoutReferences(
-			portletDataContext, content, importReferencedContent);
-		content = replaceImportLinksToLayouts(
-			portletDataContext, content, importReferencedContent);
+		content = replaceImportLayoutReferences(portletDataContext, content);
+		content = replaceImportLinksToLayouts(portletDataContext, content);
 
 		content = replaceImportDLReferences(
-			portletDataContext, entityStagedModel, content,
-			importReferencedContent);
+			portletDataContext, entityStagedModel, content);
 
 		return content;
 	}
@@ -1311,8 +1358,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Override
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
-			boolean importReferencedContent)
+			StagedModel entityStagedModel, String content)
 		throws Exception {
 
 		List<Element> referenceElements =
@@ -1381,8 +1427,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public String replaceImportLayoutReferences(
-			PortletDataContext portletDataContext, String content,
-			boolean importReferencedContent)
+			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
 		String companyPortalURL = StringPool.BLANK;
@@ -1475,10 +1520,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	@Deprecated
 	@Override
-	public String replaceImportLinksToLayouts(
+	public String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content,
 			boolean importReferencedContent)
+		throws Exception {
+
+		return replaceImportLayoutReferences(portletDataContext, content);
+	}
+
+	@Override
+	public String replaceImportLinksToLayouts(
+			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
 		List<String> oldLinksToLayout = new ArrayList<String>();
@@ -1581,6 +1635,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
 
 		return content;
+	}
+
+	@Deprecated
+	@Override
+	public String replaceImportLinksToLayouts(
+			PortletDataContext portletDataContext, String content,
+			boolean importReferencedContent)
+		throws Exception {
+
+		return replaceImportLinksToLayouts(portletDataContext, content);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 
 package com.liferay.portal.kernel.expressionevaluator;
 
+import com.liferay.portal.expression.ExpressionEvaluatorImpl;
 import com.liferay.portal.kernel.expression.ExpressionEvaluator;
-import com.liferay.portal.kernel.expression.ExpressionEvaluatorImpl;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
 import java.util.Map;

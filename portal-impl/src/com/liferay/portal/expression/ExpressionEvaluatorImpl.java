@@ -1,6 +1,12 @@
 
-package com.liferay.portal.kernel.expression;
+package com.liferay.portal.expression;
 
+
+import com.liferay.portal.kernel.expression.ExpressionData;
+import com.liferay.portal.kernel.expression.ExpressionEvaluator;
+import com.liferay.portal.kernel.expression.ExpressionEvaluatorUtil;
+import com.liferay.portal.kernel.expression.ExpressionVariable;
+import com.liferay.portal.kernel.expression.VariableDependencies;
 
 import java.lang.reflect.InvocationTargetException;
 

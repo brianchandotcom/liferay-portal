@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.List;
@@ -25,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author José Manuel Navarro
  */
-@ProviderType
 public class BreadcrumbUtil {
 
 	public static Breadcrumb getBreadcrumb() {

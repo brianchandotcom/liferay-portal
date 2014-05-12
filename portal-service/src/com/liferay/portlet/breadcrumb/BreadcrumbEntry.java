@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.portlet.breadcrumb;
 
 import com.liferay.portal.model.BaseModel;
 

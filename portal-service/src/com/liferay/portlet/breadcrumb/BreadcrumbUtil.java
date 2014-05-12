@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.portlet.breadcrumb;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.List;

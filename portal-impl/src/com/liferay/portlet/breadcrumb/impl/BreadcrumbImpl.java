@@ -15,7 +15,7 @@
 package com.liferay.portlet.breadcrumb.impl;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;

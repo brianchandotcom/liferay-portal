@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.breadcrumb;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.List;

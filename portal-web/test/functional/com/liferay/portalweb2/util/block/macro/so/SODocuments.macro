@@ -79,7 +79,7 @@
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 				<if>
 					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
@@ -94,7 +94,7 @@
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
-					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_LOCKED_ICON" />
 
@@ -122,7 +122,7 @@
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 				<if>
 					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
@@ -137,7 +137,7 @@
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
-					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_LOCKED_ICON" />
 
@@ -155,7 +155,7 @@
 			<elseif>
 				<equals arg1="${workflow}" arg2="Locked" />
 				<then>
-					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_LOCKED_ICON" />
 
@@ -179,7 +179,7 @@
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 				<if>
 					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
@@ -194,7 +194,7 @@
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
-					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 					<if>
 						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
@@ -228,7 +228,7 @@
 				<equals arg1="${workflow}" arg2="Checkedout" />
 			</or>
 			<then>
-				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 				<if>
 					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />

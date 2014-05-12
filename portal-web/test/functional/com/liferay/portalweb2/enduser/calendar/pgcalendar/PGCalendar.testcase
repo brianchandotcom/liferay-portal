@@ -728,7 +728,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarToCurrentSiteCalendars" known-issues="LPS-45783" priority="5">
+	<command known-issues="LPS-45783" name="AddCalendarToCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="site" value="Liferay" />
@@ -754,7 +754,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarToMyCalendars" known-issues="LPS-45783" priority="5">
+	<command known-issues="LPS-45783" name="AddCalendarToMyCalendars" priority="5">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -964,7 +964,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventRegular" known-issues="LPS-45783"  priority="5">
+	<command known-issues="LPS-45783" name="DeleteCalendarEventRegular"  priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -994,7 +994,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarMyCalendars" known-issues="LPS-45783" priority="5">
+	<command known-issues="LPS-45783" name="DeleteCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="resourceNameList" value="Test Test" />
@@ -1052,7 +1052,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarCurrentSiteCalendars" known-issues="LPS-45783" priority="5">
+	<command known-issues="LPS-45783" name="EditCalendarCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarNameEdit" value="Site Calendar Name Edit" />
 		<var name="calendarType" value="Current Site Calendars" />
@@ -1108,7 +1108,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarMyCalendars" known-issues="LPS-45783" priority="5">
+	<command known-issues="LPS-45783" name="EditCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarNameEdit" value="My Calendar Name Edit" />
 		<var name="calendarType" value="My Calendars" />

@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<var name='key_webContentTitle' value="${folderName}" />
+		<var name="key_webContentTitle" value="${folderName}" />
 
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
@@ -17,7 +17,7 @@
 	</command>
 
 	<command name="addSubfolderCP">
-		<var name='key_webContentTitle' value="${folderName}" />
+		<var name="key_webContentTitle" value="${folderName}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -30,7 +30,7 @@
 		<execute action="CPWebcontentAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${subfolderDescription}" />
 		<execute action="CPWebcontentAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<var name='key_webContentTitle' value="${subfolderName}" />
+		<var name="key_webContentTitle" value="${subfolderName}" />
 
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />

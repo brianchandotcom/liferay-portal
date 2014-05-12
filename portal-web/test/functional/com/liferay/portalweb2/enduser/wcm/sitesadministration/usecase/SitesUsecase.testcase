@@ -588,7 +588,7 @@
 		<var name="portlet3Name" value="Asset Publisher" />
 		<var name="portlet4Name" value="User Statistics" />
 		<var name="portlet5Name" value="Upcoming Events" />
-		<var name='roleList' value="Guest,Owner,Power User,Site Member,User" />
+		<var name="roleList" value="Guest,Owner,Power User,Site Member,User" />
 		<var name="siteGuestViewURL" value="http://localhost:8080/web/site-name/home" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Home" />

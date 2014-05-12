@@ -1,17 +1,17 @@
 <definition>
 	<command name="close">
-		<execute selenium="selectWindow" argument1="null" />
+		<execute argument1="null" selenium="selectWindow" />
 
-		<execute selenium="selectFrame" argument1="relative=top" />
+		<execute argument1="relative=top" selenium="selectFrame" />
 	</command>
 
 	<command name="closeWindow">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="close" />
 
-		<execute selenium="selectWindow" argument1="null" />
+		<execute argument1="null" selenium="selectWindow" />
 
-		<execute selenium="selectFrame" argument1="relative=top" />
+		<execute argument1="relative=top" selenium="selectFrame" />
 	</command>
 </definition>

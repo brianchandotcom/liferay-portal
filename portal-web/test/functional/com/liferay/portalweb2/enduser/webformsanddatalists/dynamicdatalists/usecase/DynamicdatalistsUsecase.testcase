@@ -407,7 +407,7 @@
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 		<execute action="PGDynamicdatalists#pause" locator1="1000" />
 
-		<var name="adminViewURL" method="selenium#getLocation()" />
+		<var method="selenium#getLocation()" name="adminViewURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -417,7 +417,7 @@
 
 		<execute action="PGDynamicdatalists#pause" locator1="1000" />
 
-		<var name="adminEditURL" method="selenium#getLocation()" />
+		<var method="selenium#getLocation()" name="adminEditURL" />
 
 		<execute macro="User#logoutPG" />
 

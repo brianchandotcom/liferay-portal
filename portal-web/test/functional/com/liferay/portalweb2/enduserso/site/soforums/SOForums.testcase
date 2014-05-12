@@ -1039,7 +1039,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMBCategoryThreadAsGuest" known-issues="LPS-45435" priority="4">
+	<command known-issues="LPS-45435" name="ViewMBCategoryThreadAsGuest" priority="4">
 		<var name="categoryName1" value="MB Category 1 Name" />
 		<var name="categoryName2" value="MB Category 2 Name" />
 		<var name="postCount" value="1" />

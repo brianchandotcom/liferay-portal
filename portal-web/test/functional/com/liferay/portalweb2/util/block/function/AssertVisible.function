@@ -6,7 +6,7 @@
 	</command>
 
 	<command name="pauseAssertVisible">
-		<execute selenium="pause" argument1="2000" />
+		<execute argument1="2000" selenium="pause" />
 
 		<execute function="AssertElementPresent#assertVisible" />
 	</command>

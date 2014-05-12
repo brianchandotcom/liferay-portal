@@ -429,7 +429,7 @@
 	</command>
 
 	<command name="resolveTask">
-		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<execute action="SOTasks#assertClick" locator-key1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
@@ -500,7 +500,7 @@
 	<command name="viewTask">
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 		<execute action="SOTasks#assertClick" locator-key1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
 

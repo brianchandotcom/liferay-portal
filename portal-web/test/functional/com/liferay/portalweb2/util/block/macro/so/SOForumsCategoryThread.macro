@@ -2,7 +2,7 @@
 	<command name="viewDetailsPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -179,7 +179,7 @@
 	</command>
 
 	<command name="viewPG">
-		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />

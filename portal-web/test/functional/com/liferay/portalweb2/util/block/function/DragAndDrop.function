@@ -4,16 +4,16 @@
 	</command>
 
 	<command name="dragAndDropToObject">
-		<execute selenium="waitForVisible" argument1="${locator1}" />
+		<execute argument1="${locator1}" selenium="waitForVisible" />
 
-		<execute selenium="mouseOver" argument1="${locator1}" />
+		<execute argument1="${locator1}" selenium="mouseOver" />
 
-		<execute selenium="waitForText" argument1="${locator1}" argument2="${value1}" />
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
 
-		<execute selenium="waitForVisible" argument1="${locator2}" />
+		<execute argument1="${locator2}" selenium="waitForVisible" />
 
-		<execute selenium="mouseOver" argument1="${locator2}" />
+		<execute argument1="${locator2}" selenium="mouseOver" />
 
-		<execute selenium="dragAndDropToObject" argument1="${locator1}" argument2="${locator2}" />
+		<execute argument1="${locator1}" argument2="${locator2}" selenium="dragAndDropToObject" />
 	</command>
 </definition>

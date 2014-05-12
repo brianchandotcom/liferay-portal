@@ -6,9 +6,9 @@
 	</command>
 
 	<command name="mouseOverClickNavigation">
-		<execute selenium="clickAt" argument1="//nav[@id='navigation']" argument2="" />
+		<execute argument1="//nav[@id='navigation']" argument2="" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" />
+		<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 		<execute function="MouseOver#mouseOver" />
 	</command>
@@ -26,9 +26,9 @@
 	</command>
 
 	<command name="textMouseOverClickNavigation">
-		<execute selenium="clickAt" argument1="//nav[@id='navigation']" argument2="" />
+		<execute argument1="//nav[@id='navigation']" argument2="" selenium="clickAt" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" />
+		<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 		<execute function="MouseOver#textMouseOver" />
 	</command>

@@ -6,9 +6,9 @@
 	</command>
 
 	<command name="assertElementNotPresentClickDockbar">
-		<execute selenium="pause" argument1="1000" />
+		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="click" argument1="//div[@id='_145_dockbar']" />
+		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
 
 		<execute function="AssertElementNotPresent#assertElementNotPresent" />
 	</command>

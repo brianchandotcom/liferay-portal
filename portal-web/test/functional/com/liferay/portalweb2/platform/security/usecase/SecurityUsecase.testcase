@@ -152,7 +152,7 @@
 		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 	</command>
 
-	<command name="ViewExternalWebappsPG" known-issues="LPS-44790" priority="5">
+	<command known-issues="LPS-44790" name="ViewExternalWebappsPG" priority="5">
 		<property name="portlet.plugins.includes" value="opensocial-portlet" />
 
 		<execute macro="Page#addPG">

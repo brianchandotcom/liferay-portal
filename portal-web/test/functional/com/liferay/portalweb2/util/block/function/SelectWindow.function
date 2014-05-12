@@ -1,13 +1,13 @@
 <definition>
 	<command name="selectWindow">
-		<execute selenium="pause" argument1="5000" />
+		<execute argument1="5000" selenium="pause" />
 
 		<execute selenium="selectWindow" />
 	</command>
 
 	<command name="selectWindowTop">
-		<execute selenium="pause" argument1="5000" />
+		<execute argument1="5000" selenium="pause" />
 
-		<execute selenium="selectWindow" argument1="null" />
+		<execute argument1="null" selenium="selectWindow" />
 	</command>
 </definition>

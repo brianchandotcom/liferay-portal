@@ -60,7 +60,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreDeleteWikiFrontpage" known-issues="LIFERAYQA-7755" priority="5">
+	<command known-issues="LIFERAYQA-7755" name="RestoreDeleteWikiFrontpage" priority="5">
 		<var name="assetName" value="${wikiPageTitle}" />
 		<var name="assetRestoreLocation" value="Main" />
 		<var name="assetType" value="Wiki Page" />

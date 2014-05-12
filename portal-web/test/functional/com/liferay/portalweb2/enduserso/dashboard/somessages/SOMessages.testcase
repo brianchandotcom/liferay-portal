@@ -75,7 +75,7 @@
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 	</command>
 
-	<command name="DeleteMessageBySOUser" known-issues="SOS-2108" priority="5">
+	<command known-issues="SOS-2108" name="DeleteMessageBySOUser" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -258,7 +258,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMessageDetails" known-issues="SOS-2108" priority="5">
+	<command known-issues="SOS-2108" name="DeleteMessageDetails" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -458,7 +458,7 @@
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 	</command>
 
-	<command name="MarkAsUnreadMessageDetails" known-issues="SOS-2108" priority="5">
+	<command known-issues="SOS-2108" name="MarkAsUnreadMessageDetails" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />

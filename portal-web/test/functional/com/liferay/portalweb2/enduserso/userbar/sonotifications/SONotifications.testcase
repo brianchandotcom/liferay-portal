@@ -31,7 +31,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="ViewContactsCenterNotifications" known-issues="SOS-2143" priority="5">
+	<command known-issues="SOS-2143" name="ViewContactsCenterNotifications" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="soPage" value="true" />

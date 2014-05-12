@@ -583,7 +583,7 @@
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">
-		<var name='key_assetTitle' value="${assetTitle}" />
+		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
@@ -620,7 +620,7 @@
 	</command>
 
 	<command name="viewDefaultWithAllDisplaySettingsCheckboxesPG">
-		<var name='key_assetTitle' value="${assetTitle}" />
+		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_EDIT" />

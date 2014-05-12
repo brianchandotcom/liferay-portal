@@ -9,7 +9,7 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlogsEntries" description="Ensure that a user can add multiple Blogs Entries." priority="5">
+	<command description="Ensure that a user can add multiple Blogs Entries." name="AddBlogsEntries" priority="5">
 		<property name="testray.component.names" value="Blogs,Collaboration" />
 		<property name="testray.main.component.name" value="Blogs" />
 

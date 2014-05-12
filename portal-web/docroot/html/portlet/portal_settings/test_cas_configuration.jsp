@@ -100,6 +100,8 @@ private String _getCssClass(String result) {
 		cssClass += "error";
 	}
 
+	cssClass += "-label";
+
 	return cssClass;
 }
 

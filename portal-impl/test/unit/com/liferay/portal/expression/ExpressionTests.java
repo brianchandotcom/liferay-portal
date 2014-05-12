@@ -1,4 +1,4 @@
-package com.liferay.portal.kernel.expressionevaluator;
+package com.liferay.portal.expression;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

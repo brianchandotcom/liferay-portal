@@ -24,7 +24,7 @@ Group group = (Group)row.getObject();
 String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 %>
 
-<liferay-ui:icon-menu showWhenSingleIcon='<%= tabs1.equals("my-sites") %>'>
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon='<%= tabs1.equals("my-sites") %>' triggerCssClass="btn">
 	<c:choose>
 		<c:when test='<%= tabs1.equals("my-sites") %>'>
 			<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
@@ -36,7 +36,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="view"
+					iconCssClass="icon-search"
 					message="go-to-public-pages"
 					target="_blank"
 					url="<%= viewPublicPagesURL %>"
@@ -52,7 +52,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="view"
+					iconCssClass="icon-search"
 					message="go-to-private-pages"
 					target="_blank"
 					url="<%= viewPrivatePagesURL %>"
@@ -69,7 +69,8 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="leave"
+					iconCssClass="icon-external-link-sign"
+					message="leave"
 					url="<%= leaveURL %>"
 				/>
 			</c:if>
@@ -88,7 +89,8 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 							</portlet:actionURL>
 
 							<liferay-ui:icon
-								image="join"
+								iconCssClass="icon-group"
+								message="join"
 								url="<%= joinURL %>"
 							/>
 						</c:when>
@@ -100,14 +102,14 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="post"
+								iconCssClass="icon-pencil"
 								message="request-membership"
 								url="<%= membershipRequestURL %>"
 							/>
 						</c:when>
 						<c:when test="<%= MembershipRequestLocalServiceUtil.hasMembershipRequest(user.getUserId(), group.getGroupId(), MembershipRequestConstants.STATUS_PENDING) %>">
 							<liferay-ui:icon
-								image="checked"
+								iconCssClass="icon-check"
 								message="membership-requested"
 							/>
 						</c:when>
@@ -124,7 +126,8 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							image="leave"
+							iconCssClass="icon-external-link-sign"
+							message="leave"
 							url="<%= leaveURL %>"
 						/>
 					</c:if>

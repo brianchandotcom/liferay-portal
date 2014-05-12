@@ -78,13 +78,13 @@ catch (Exception e) {
 
 			<c:if test="<%= showFeedTitle %>">
 				<div class="feed-title">
-					<aui:a href="<%= feedLink %>" target="_new"><%= HtmlUtil.escape(title) %></aui:a>
+					<aui:a cssClass="icon-rss" href="<%= feedLink %>" target="_new"><%= HtmlUtil.escape(title) %></aui:a>
 				</div>
 			</c:if>
 
 			<c:if test="<%= (publishedDate != null) && showFeedPublishedDate %>">
 				<div class="feed-published-date feed-date">
-					<aui:a href="<%= feedLink %>" target="_new"><%= dateFormatDateTime.format(publishedDate) %></aui:a>
+					<aui:a cssClass="icon-calendar" href="<%= feedLink %>" target="_new"><%= dateFormatDateTime.format(publishedDate) %></aui:a>
 				</div>
 			</c:if>
 
@@ -151,13 +151,13 @@ catch (Exception e) {
 				%>
 
 					<div class="feed-entry">
-						<img alt="<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? LanguageUtil.get(pageContext, "collapse") : LanguageUtil.get(pageContext, "expand") %>" class="<portlet:namespace />entry-expander feed-entry-expander" src='<%= themeDisplay.getPathThemeImage() %>/arrows/01_<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "minus" : "plus" %>.png' />
+						<i class='entry-expander feed-entry-expander <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "icon-collapse-alt" : "icon-expand-alt" %>'></i>
 
 						<span class="feed-entry-title"><aui:a href="<%= entryLink %>" target="_new"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
 
 						<div class="feed-entry-content <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "" : "hide" %>">
 							<c:if test="<%= entry.getPublishedDate() != null %>">
-								<div class="feed-date">
+								<div class="feed-date icon-time">
 									<%= dateFormatDateTime.format(entry.getPublishedDate()) %>
 								</div>
 							</c:if>

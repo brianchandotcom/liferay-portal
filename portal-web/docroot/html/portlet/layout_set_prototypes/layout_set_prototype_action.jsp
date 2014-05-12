@@ -30,7 +30,7 @@ long layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 Group group = layoutSetPrototype.getGroup();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
 	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.UPDATE) %>">
 
 		<%
@@ -43,7 +43,7 @@ Group group = layoutSetPrototype.getGroup();
 
 		<c:if test="<%= siteAdministrationURL != null %>">
 			<liferay-ui:icon
-				image="edit"
+				iconCssClass="icon-edit"
 				message="manage"
 				method="get"
 				url="<%= siteAdministrationURL.toString() %>"
@@ -58,7 +58,7 @@ Group group = layoutSetPrototype.getGroup();
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
-				image="view"
+				iconCssClass="icon-search"
 				message="view-pages"
 				target="_blank"
 				url="<%= viewPagesURL %>"
@@ -76,23 +76,11 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="layoutSetPrototypeIds" value="<%= String.valueOf(layoutSetPrototypeId) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
 		/>
 	</c:if>
 
@@ -107,7 +95,8 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="export-layoutset-prototype layoutset-prototype-action"
-			image="export"
+			iconCssClass="icon-arrow-down"
+			message="export"
 			method="get"
 			url="<%= exportPagesURL %>"
 		/>
@@ -121,10 +110,23 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="import-layoutset-prototype layoutset-prototype-action"
-			image="../aui/arrow-up"
+			iconCssClass="icon-arrow-up"
 			message="import"
 			method="get"
 			url="<%= importPagesURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.DELETE) %>">
+		<portlet:actionURL var="deleteURL">
+			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="layoutSetPrototypeIds" value="<%= String.valueOf(layoutSetPrototypeId) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

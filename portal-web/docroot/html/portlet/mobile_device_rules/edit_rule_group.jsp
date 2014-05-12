@@ -73,7 +73,7 @@ long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				image="manage_nodes"
+				iconCssClass="icon-cog"
 				label="<%= true %>"
 				message="manage-classification-rules"
 				url="<%= editRulesURL.toString() %>"

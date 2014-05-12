@@ -240,7 +240,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												</liferay-portlet:actionURL>
 
 												<liferay-ui:icon
-													image="view"
+													iconCssClass="icon-search"
 													label="<%= true %>"
 													message="open-public-pages"
 													method="get"
@@ -342,7 +342,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												</liferay-portlet:actionURL>
 
 												<liferay-ui:icon
-													image="view"
+													iconCssClass="icon-search"
 													label="<%= true %>"
 													message="open-private-pages"
 													method="get"
@@ -490,7 +490,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 	<liferay-util:buffer var="removeGroupIcon">
 		<liferay-ui:icon
-			image="unlink"
+			iconCssClass="icon-unlink"
 			label="<%= true %>"
 			message="remove"
 		/>

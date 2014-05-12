@@ -15,28 +15,20 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
-	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= true %>"
 >
-	<c:choose>
-		<c:when test="<%= curGroup.isOrganization() %>">
 
-			<%
-			Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
+	<aui:a label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" href="<%= rowURL %>" />
 
-			String title = LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", organization.getType());
-			%>
+	<c:if test="<%= curGroup.isOrganization() %>">
 
-			<img alt="<%= title %>" class="site-icon" src="<%= curGroup.getIconURL(themeDisplay) %>" title="<%= title %>" />
-		</c:when>
-		<c:otherwise>
-			<img alt="<%= LanguageUtil.get(locale, "icon") %>" class="site-icon" src="<%= curGroup.getIconURL(themeDisplay) %>" />
-		</c:otherwise>
-	</c:choose>
+		<%
+		Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
+		%>
 
-	<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>
+		<span class="organization-type">(<liferay-ui:message key="<%= organization.getType() %>" />)</span>
+	</c:if>
 
 	<%
 	List<String> names = new ArrayList<String>();
@@ -93,7 +85,7 @@
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
-	name="type"
+	name="membership-type"
 	value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
 />
 

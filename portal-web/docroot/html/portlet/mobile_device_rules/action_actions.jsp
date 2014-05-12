@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 MDRAction action = (MDRAction)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editActionURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />
@@ -34,7 +34,11 @@ MDRAction action = (MDRAction)row.getObject();
 			<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="edit" url="<%= editActionURL %>" />
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= editActionURL %>"
+		/>
 
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />

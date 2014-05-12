@@ -19,6 +19,7 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
+
 String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
 
 PortletURL portletURL = renderResponse.createRenderURL();

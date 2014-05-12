@@ -69,30 +69,15 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 			</liferay-portlet:renderURL>
 
 			<c:if test="<%= usersCount > 0 %>">
-				<liferay-ui:icon
-					image="user_icon"
-					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>'
-					url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>'
-				/>
+				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(pageContext, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>' />
 			</c:if>
 
 			<c:if test="<%= organizationsCount > 0 %>">
-				<liferay-ui:icon
-					image="organization_icon"
-					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>'
-					url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>'
-				/>
+				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(pageContext, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>' />
 			</c:if>
 
 			<c:if test="<%= userGroupsCount > 0 %>">
-				<liferay-ui:icon
-					image="group"
-					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>'
-					url='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>'
-				/>
+				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(pageContext, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>' />
 			</c:if>
 		</dd>
 
@@ -108,21 +93,12 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon
-					image="manage_task"
-					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>'
-					url="<%= viewMembershipRequestsURL %>"
-				/>
+				<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(pageContext, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
 			</dd>
 		</c:if>
 
 		<dt>
-			<liferay-ui:icon
-				image="assign"
-				label="<%= true %>"
-				message='<%= LanguageUtil.get(pageContext, "membership-type") + StringPool.COLON + StringPool.SPACE %>'
-			/>
+			<liferay-ui:message key="membership-type" />:
 		</dt>
 
 		<dd class="last">

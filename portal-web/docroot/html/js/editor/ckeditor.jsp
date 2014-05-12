@@ -326,6 +326,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 			<portlet:param name="struts_action" value="/document_selector/view" />
 			<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+			<portlet:param name="showGroupsSelector" value="true" />
 		</liferay-portlet:renderURL>
 
 		<%

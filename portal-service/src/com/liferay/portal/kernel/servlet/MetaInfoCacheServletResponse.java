@@ -375,12 +375,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 		_committed = true;
 
-		if (errorMessage != null) {
-			super.sendError(status, errorMessage);
-		}
-		else {
-			super.sendError(status);
-		}
+		super.sendError(status, errorMessage);
 	}
 
 	@Override
@@ -551,12 +546,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		_metaData._status = status;
 		_metaData._statusMessage = statusMessage;
 
-		if (statusMessage != null) {
-			super.setStatus(status, statusMessage);
-		}
-		else {
-			super.setStatus(status);
-		}
+		super.setStatus(status, statusMessage);
 	}
 
 	@Override

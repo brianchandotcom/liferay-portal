@@ -53,6 +53,49 @@ import javax.servlet.http.HttpSession;
 public class BreadcrumbImpl implements Breadcrumb {
 
 	@Override
+	public List<BreadcrumbEntry> getBreadcrumbEntries(
+			HttpServletRequest request, long typeMask)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+
+		BreadcrumbEntry entry;
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_GUEST_GROUP) != 0) {
+			entry = getGuestGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_PARENT_GROUP) != 0) {
+			entries.addAll(getParentGroupBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_CURRENT_GROUP) != 0) {
+			entry = getScopeGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_LAYOUT) != 0) {
+			entries.addAll(getLayoutBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_PORTLET) != 0) {
+			entries.addAll(getPortletBreadcrumbEntries(request));
+		}
+
+		return entries;
+	}
+
+	@Override
 	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {

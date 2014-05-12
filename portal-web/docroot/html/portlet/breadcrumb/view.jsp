@@ -22,7 +22,7 @@ long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemp
 
 <c:choose>
 	<c:when test="<%= portletDisplayTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, BreadcrumbUtil.getEntries(request, 0)) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, BreadcrumbUtil.getBreadcrumbEntries(request, BreadcrumbUtil.ENTRY_TYPE_ALL)) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:breadcrumb

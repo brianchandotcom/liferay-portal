@@ -24,6 +24,18 @@ import java.util.Map;
  */
 public class BreadcrumbEntry {
 
+	public static final long ENTRY_TYPE_ANY = 0xFFFFFFFF;
+
+	public static final long ENTRY_TYPE_CURRENT_GROUP = 1 << 1;
+
+	public static final long ENTRY_TYPE_GUEST_GROUP = 1 << 2;
+
+	public static final long ENTRY_TYPE_LAYOUT = 1 << 3;
+
+	public static final long ENTRY_TYPE_PARENT_GROUP = 1 << 4;
+
+	public static final long ENTRY_TYPE_PORTLET = 1 << 5;
+
 	public BaseModel<?> getBaseModel() {
 		return _baseModel;
 	}

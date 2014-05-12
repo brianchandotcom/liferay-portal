@@ -25,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Breadcrumb {
 
+	public List<BreadcrumbEntry> getBreadcrumbEntries(
+			HttpServletRequest request, long typeMask)
+		throws Exception;
+
 	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception;

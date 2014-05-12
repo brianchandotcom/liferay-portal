@@ -32,6 +32,13 @@ public class BreadcrumbUtil {
 		return _breadcrumb;
 	}
 
+	public static List<BreadcrumbEntry> getBreadcrumbEntries(
+			HttpServletRequest request, long typeMask)
+		throws Exception {
+
+		return getBreadcrumb().getBreadcrumbEntries(request, typeMask);
+	}
+
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {

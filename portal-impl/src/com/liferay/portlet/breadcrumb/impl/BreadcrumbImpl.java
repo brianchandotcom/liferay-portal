@@ -168,10 +168,11 @@ public class BreadcrumbImpl implements Breadcrumb {
 			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
 			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
-			boolean isLastEntry = (i == (portletBreadcrumbEntries.size() - 1));
 			String url = portletBreadcrumbEntry.getURL();
 
-			if (Validator.isNotNull(portletBreadcrumbURL) && !isLastEntry) {
+			if (Validator.isNotNull(url) &&
+				((i + 1) < portletBreadcrumbEntries.size())) {
+
 				if (!CookieKeys.hasSessionId(request)) {
 					HttpSession session = request.getSession();
 

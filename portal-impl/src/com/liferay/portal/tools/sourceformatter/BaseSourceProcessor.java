@@ -910,6 +910,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected boolean isAttributName(String attributeName) {
+		if (Validator.isNull(attributeName)) {
+			return false;
+		}
+
+		Matcher matcher = attributeNamePattern.matcher(attributeName);
+
+		return matcher.matches();
+	}
+
 	protected boolean isExcluded(Properties properties, String fileName) {
 		return isExcluded(properties, fileName, -1);
 	}
@@ -947,16 +957,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected boolean isAttributName(String attributeName) {
-		if (Validator.isNull(attributeName)) {
-			return false;
-		}
-
-		Matcher matcher = attributeNamePattern.matcher(attributeName);
-
-		return matcher.matches();
 	}
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
@@ -1315,11 +1315,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static final String MAIN_RELEASE_VERSION_7_0_0 = "7.0.0";
 
+	protected static Pattern attributeNamePattern = Pattern.compile(
+		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static FileImpl fileUtil = FileImpl.getInstance();
-	protected Pattern attributeNamePattern = Pattern.compile(
-		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static String mainReleaseVersion;

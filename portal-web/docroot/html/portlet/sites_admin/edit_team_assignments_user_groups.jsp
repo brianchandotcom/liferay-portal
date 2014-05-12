@@ -89,6 +89,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	<div class="separator"><!-- --></div>
 
 	<%
+	portletURL.setParameter("cur", String.valueOf(cur));
+
 	String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 

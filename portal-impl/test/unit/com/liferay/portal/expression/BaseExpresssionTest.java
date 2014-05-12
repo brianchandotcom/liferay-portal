@@ -1,7 +1,6 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.expression.ExpressionEvaluatorImpl;
 import com.liferay.portal.kernel.expression.ExpressionEvaluator;
 
 import org.junit.Assert;

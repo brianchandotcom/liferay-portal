@@ -1,7 +1,6 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.expression.ExpressionEvaluatorImpl;
 import com.liferay.portal.kernel.expression.ExpressionEvaluator;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
@@ -28,31 +27,31 @@ public class DependenciesTest extends BaseExpresssionTest {
 		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(
 			expressionTestData.getVariables());
 
-		Map<String, VariableDependencies> dependenciesMap = evaluator
-			.getDependenciesMap();
+		Map<String, VariableDependencies> dependenciesMap =
+			evaluator.getVariableDependenciesMap();
 
-		Assert.assertTrue(dependenciesMap.get("variable01").getDependencies()
+		Assert.assertTrue(dependenciesMap.get("variable01").getRequiredVariableNames()
 			.isEmpty());
 
-		Assert.assertTrue(dependenciesMap.get("variable01").getDependents()
+		Assert.assertTrue(dependenciesMap.get("variable01").getAffectedVariableNames()
 			.contains("variable02"));
 
-		Assert.assertTrue(dependenciesMap.get("variable01").getDependents()
+		Assert.assertTrue(dependenciesMap.get("variable01").getAffectedVariableNames()
 			.contains("variable03"));
 
-		Assert.assertTrue(dependenciesMap.get("variable02").getDependencies()
+		Assert.assertTrue(dependenciesMap.get("variable02").getRequiredVariableNames()
 			.contains("variable01"));
 
-		Assert.assertTrue(dependenciesMap.get("variable02").getDependents()
+		Assert.assertTrue(dependenciesMap.get("variable02").getAffectedVariableNames()
 			.contains("variable03"));
 
-		Assert.assertTrue(dependenciesMap.get("variable03").getDependencies()
+		Assert.assertTrue(dependenciesMap.get("variable03").getRequiredVariableNames()
 			.contains("variable01"));
 
-		Assert.assertTrue(dependenciesMap.get("variable03").getDependencies()
+		Assert.assertTrue(dependenciesMap.get("variable03").getRequiredVariableNames()
 			.contains("variable02"));
 
-		Assert.assertTrue(dependenciesMap.get("variable03").getDependents()
+		Assert.assertTrue(dependenciesMap.get("variable03").getAffectedVariableNames()
 			.isEmpty());
 	}
 

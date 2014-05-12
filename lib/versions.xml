@@ -2363,7 +2363,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/json-schema-validator.jar</file-name>
-		<version>2.2.3</version>
+		<version>2.2.4</version>
 		<project-name>json-schema-validator</project-name>
 		<project-url>https://github.com/liferaybrasil/json-schema-validator</project-url>
 		<licenses>
@@ -2380,7 +2380,8 @@
 			This project is a fork from
 			https://github.com/fge/json-schema-validator, on which the libJar
 			build task was changed to generate a jar with all the dependencies
-			but mailapi, already present in the portal's classpath.
+			but mailapi library is already present in the portal's classpath and
+			it was excluded from the final jar.
 		</comments>
 	</library>
 	<library>

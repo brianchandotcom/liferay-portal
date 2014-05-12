@@ -979,16 +979,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected boolean isJSPAttributName(String attributeName) {
-		if (Validator.isNull(attributeName)) {
-			return false;
-		}
-
-		Matcher matcher = _jspAttributeNamePattern.matcher(attributeName);
-
-		return matcher.matches();
-	}
-
 	protected boolean isJSPDuplicateImport(
 		String fileName, String importLine, boolean checkFile) {
 
@@ -1085,154 +1075,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String sortJSPAttributes(
-		String fileName, String line, int lineCount) {
-
-		String s = line;
-
-		int x = s.indexOf(StringPool.SPACE);
-
-		if (x == -1) {
-			return line;
-		}
-
-		s = s.substring(x + 1);
-
-		String previousAttribute = null;
-		String previousAttributeAndValue = null;
-
-		boolean wrongOrder = false;
-
-		for (x = 0;;) {
-			x = s.indexOf(StringPool.EQUAL);
-
-			if ((x == -1) || (s.length() <= (x + 1))) {
-				return line;
-			}
-
-			String attribute = s.substring(0, x);
-
-			if (!isJSPAttributName(attribute)) {
-				return line;
-			}
-
-			if (Validator.isNotNull(previousAttribute) &&
-				(previousAttribute.compareTo(attribute) > 0)) {
-
-				wrongOrder = true;
-			}
-
-			s = s.substring(x + 1);
-
-			char delimeter = s.charAt(0);
-
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
-
-				if (delimeter != CharPool.AMPERSAND) {
-					processErrorMessage(
-						fileName, "delimeter: " + fileName + " " + lineCount);
-				}
-
-				return line;
-			}
-
-			s = s.substring(1);
-
-			String value = null;
-
-			int y = -1;
-
-			while (true) {
-				y = s.indexOf(delimeter, y + 1);
-
-				if ((y == -1) || (s.length() <= (y + 1))) {
-					return line;
-				}
-
-				value = s.substring(0, y);
-
-				if (value.startsWith("<%")) {
-					int endJavaCodeSignCount = StringUtil.count(value, "%>");
-					int startJavaCodeSignCount = StringUtil.count(value, "<%");
-
-					if (endJavaCodeSignCount == startJavaCodeSignCount) {
-						break;
-					}
-				}
-				else {
-					int greaterThanCount = StringUtil.count(
-						value, StringPool.GREATER_THAN);
-					int lessThanCount = StringUtil.count(
-						value, StringPool.LESS_THAN);
-
-					if (greaterThanCount == lessThanCount) {
-						break;
-					}
-				}
-			}
-
-			if ((delimeter == CharPool.APOSTROPHE) &&
-				!value.contains(StringPool.QUOTE)) {
-
-				line = StringUtil.replace(
-					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-					StringPool.QUOTE + value + StringPool.QUOTE);
-
-				return sortJSPAttributes(fileName, line, lineCount);
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(attribute);
-			sb.append(StringPool.EQUAL);
-			sb.append(delimeter);
-			sb.append(value);
-			sb.append(delimeter);
-
-			String currentAttributeAndValue = sb.toString();
-
-			if (wrongOrder) {
-				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
-					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
-
-					line = StringUtil.replaceFirst(
-						line, previousAttributeAndValue,
-						currentAttributeAndValue);
-
-					line = StringUtil.replaceLast(
-						line, currentAttributeAndValue,
-						previousAttributeAndValue);
-
-					return sortJSPAttributes(fileName, line, lineCount);
-				}
-
-				return line;
-			}
-
-			s = s.substring(y + 1);
-
-			if (s.startsWith(StringPool.GREATER_THAN)) {
-				x = s.indexOf(StringPool.SPACE);
-
-				if (x == -1) {
-					return line;
-				}
-
-				s = s.substring(x + 1);
-
-				previousAttribute = null;
-				previousAttributeAndValue = null;
-			}
-			else {
-				s = StringUtil.trimLeading(s);
-
-				previousAttribute = attribute;
-				previousAttributeAndValue = currentAttributeAndValue;
-			}
-		}
-	}
-
 	protected String stripJSPImports(String fileName, String content)
 		throws IOException {
 
@@ -1320,8 +1162,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private List<String> _importClassNames = new ArrayList<String>();
 	private Map<String, Integer> _importCountMap =
 		new HashMap<String, Integer>();
-	private Pattern _jspAttributeNamePattern = Pattern.compile(
-		"[a-z]+[-_a-zA-Z0-9]*");
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);

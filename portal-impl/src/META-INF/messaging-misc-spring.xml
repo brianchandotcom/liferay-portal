@@ -83,20 +83,20 @@
 	<bean id="messageListener.flags" class="com.liferay.portlet.flags.messaging.FlagsRequestMessageListener" />
 	<bean id="messageListener.hot_deploy" class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 	<bean id="messageListener.layouts_local_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="groupName" value="com.liferay.portal.messaging.LayoutsLocalPublisherMessageListener" />
-		<property name="jobName" value="com.liferay.portal.messaging.LayoutsLocalPublisherMessageListener" />
+		<property name="groupName" value="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener" />
+		<property name="jobName" value="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener" />
 		<property name="messageListener">
-			<bean class="com.liferay.portal.messaging.LayoutsLocalPublisherMessageListener">
+			<bean class="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener">
 				<property name="responseSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
 				<property name="statusSender" ref="messageSender.service_request_status" />
 			</bean>
 		</property>
 	</bean>
 	<bean id="messageListener.layouts_remote_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="groupName" value="com.liferay.portal.messaging.LayoutsRemotePublisherMessageListener" />
-		<property name="jobName" value="com.liferay.portal.messaging.LayoutsRemotePublisherMessageListener" />
+		<property name="groupName" value="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener" />
+		<property name="jobName" value="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener" />
 		<property name="messageListener">
-			<bean class="com.liferay.portal.messaging.LayoutsRemotePublisherMessageListener">
+			<bean class="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener">
 				<property name="responseSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
 				<property name="statusSender" ref="messageSender.service_request_status" />
 			</bean>

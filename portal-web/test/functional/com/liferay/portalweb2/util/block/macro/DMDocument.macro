@@ -6,7 +6,17 @@
 
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
 		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
+		<if>
+			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			<then>
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+			</else>
+		</if>
+
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 

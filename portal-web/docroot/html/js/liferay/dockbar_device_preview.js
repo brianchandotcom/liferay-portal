@@ -228,6 +228,9 @@ AUI.add(
 
 						var devicePreviewNode = instance._devicePreviewNode;
 
+						var height = dialogAttrs.size.height;
+						var width = dialogAttrs.size.width;
+
 						if (!dialog) {
 							var dialogConfig = {
 								align: {
@@ -236,9 +239,9 @@ AUI.add(
 								},
 								autoSizeNode: devicePreviewNode,
 								constrain: devicePreviewNode,
-								height: dialogAttrs.size.height,
+								height: height,
 								render: devicePreviewNode,
-								width: dialogAttrs.size.width
+								width: width
 							};
 
 							Liferay.Util.openWindow(
@@ -246,11 +249,9 @@ AUI.add(
 									cache: false,
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
-									height: dialogConfig.height,
 									id: instance._dialogId,
 									iframeId: 'devicePreviewIframe',
-									uri: WIN.location.href,
-									width: dialogConfig.width
+									uri: WIN.location.href
 								},
 								function(dialogWindow) {
 									var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
@@ -311,6 +312,13 @@ AUI.add(
 							}
 
 							dialog.setAttrs(dialogAttrs);
+
+							dialog.iframe.node.setStyles(
+								{
+									height: height,
+									width: width
+								}
+							);
 
 							dialog.show();
 						}
@@ -442,13 +450,6 @@ AUI.add(
 							{
 								height: height,
 								resizable: true,
-								width: width
-							}
-						);
-
-						dialog.iframe.node.setStyles(
-							{
-								height: height,
 								width: width
 							}
 						);

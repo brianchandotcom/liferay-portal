@@ -84,7 +84,7 @@
 	}
 }
 
-.input-prepend, .input-append {
+.input-group {
 	.input-localized .input-localized-content {
 		margin-top: 3px;
 	}

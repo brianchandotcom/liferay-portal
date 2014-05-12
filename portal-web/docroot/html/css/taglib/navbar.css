@@ -6,12 +6,12 @@
 		z-index: 1;
 	}
 
-	.nav-collapse .navbar-search-advanced {
+	.navbar-collapse .navbar-search-advanced {
 		float: none;
 		margin: 0;
 		padding: 0;
 
-		.input-append {
+		.input-group {
 			float: right;
 			margin: 8px 0;
 
@@ -25,7 +25,7 @@
 	.search-panel {
 		margin-bottom: 0;
 
-		.control-group {
+		.form-group {
 			margin: 0 16px;
 		}
 	}
@@ -36,7 +36,7 @@
 		.container {
 			position: relative;
 
-			.btn-navbar {
+			.navbar-btn {
 				color: #000;
 				display: inline-block;
 				margin-bottom: 5px;
@@ -53,7 +53,7 @@
 				}
 			}
 
-			.nav-collapse {
+			.navbar-collapse {
 				display: none;
 
 				&.open {
@@ -74,7 +74,7 @@
 				.form-search {
 					margin: 0;
 
-					.input-append {
+					.input-group {
 						display: block;
 						padding-right: 0;
 					}

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -68,6 +69,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		_baseURL = String.valueOf(request.getRequestURL());
 		_contextPath = ParamUtil.getString(
 			request, "contextPath", request.getContextPath());
+		_jsonWebServiceNaming =
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
 	}
 
 	@Override
@@ -140,6 +143,18 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 						"description", javadocMethod.getComment());
 				}
 			}
+
+			Method idMethod = jsonWebServiceActionMapping.getRealActionMethod();
+			Class idClass = jsonWebServiceActionMapping.getActionClass();
+
+			String idClassName =
+				_jsonWebServiceNaming.convertServiceClassNameToSimpleName(
+					idClass);
+
+			String id = idClassName.concat(
+				StringPool.POUND).concat(idMethod.getName());
+
+			jsonWebServiceActionMappingMap.put("id", id);
 
 			jsonWebServiceActionMappingMap.put(
 				"method", jsonWebServiceActionMapping.getMethod());
@@ -260,13 +275,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 					ClassLoader classLoader = clazz.getClassLoader();
 
-					String modelImplClassName = type.getName();
-
-					modelImplClassName =
-						StringUtil.replace(
-							modelImplClassName, ".model.", ".model.impl.");
-
-					modelImplClassName += "ModelImpl";
+					String modelImplClassName =
+						_jsonWebServiceNaming.
+							convertModelClassNameToImplClassName(type);
 
 					modelType = classLoader.loadClass(modelImplClassName);
 				}
@@ -422,6 +433,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	private String _basePath;
 	private String _baseURL;
 	private String _contextPath;
+	private JSONWebServiceNaming _jsonWebServiceNaming;
 	private List<Class<?>> _types = new ArrayList<Class<?>>();
 
 }

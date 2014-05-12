@@ -57,11 +57,16 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 			return unsavedChanges;
 		};
 
+		<%
+		DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
+		%>
+
 		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/journal/preview_article_content" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+			<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getTemplateId() %>" />
 		</liferay-portlet:renderURL>
 
 		var previewArticleContentURL = '<%= previewArticleContentURL %>';

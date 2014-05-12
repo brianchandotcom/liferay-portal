@@ -18,8 +18,10 @@
 
 <%
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+
+String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getTemplateId());
 %>
 
-<%= JournalArticleLocalServiceUtil.getArticleContent(article, article.getTemplateId(), null, themeDisplay.getLanguageId(), new PortletRequestModel(renderRequest, renderResponse), themeDisplay) %>
+<%= JournalArticleLocalServiceUtil.getArticleContent(article, ddmTemplateKey, null, themeDisplay.getLanguageId(), new PortletRequestModel(renderRequest, renderResponse), themeDisplay) %>
 
 <liferay-util:include page="/html/common/themes/bottom.jsp" />

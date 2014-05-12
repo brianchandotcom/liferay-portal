@@ -17,10 +17,11 @@
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
 <liferay-ui:error-marker key="errorSection" value="relations" />
-<liferay-ui:error key="restrictedRelationInvalid" message="please-restrict-by-site-or-type" />
-<liferay-ui:error key="selectAtLeastOneRelation" message="please-select-at-least-one-relation-type" />
 
 <h3><liferay-ui:message key="relations" /></h3>
+
+<liferay-ui:error key="interactionsInvalid" message="please-select-the-type-of-interaction" />
+<liferay-ui:error key="interactionsSocialRelationTypes" message="please-select-at-least-one-social-relation-type" />
 
 <%
 SocialRelationConfiguration socialRelationConfiguration = SocialRelationConfigurationUtil.getSocialRelationConfiguration(company.getCompanyId(), request);

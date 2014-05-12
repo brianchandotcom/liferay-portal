@@ -288,16 +288,14 @@ public class EditCompanyAction extends PortletAction {
 		if (interactionsSocialRelationTypesEnabled &&
 			Validator.isBlank(interactionsSocialRelationTypes)) {
 
-			SessionErrors.add(actionRequest, "selectAtLeastOneRelation");
+			SessionErrors.add(actionRequest, "interactionsSocialRelationTypes");
 		}
 
-		if (interactionsSocialRelationTypesEnabled ||
-			interactionsSitesEnabled) {
+		if (!interactionsSocialRelationTypesEnabled &&
+			!interactionsSitesEnabled) {
 
-			return;
+			SessionErrors.add(actionRequest, "interactionsInvalid");
 		}
-
-		SessionErrors.add(actionRequest, "restrictedRelationInvalid");
 	}
 
 	protected void validateLDAP(ActionRequest actionRequest) throws Exception {

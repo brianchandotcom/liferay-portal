@@ -1215,7 +1215,7 @@ public class UserFinderImpl
 				Long[] socialRelationTypes = doubleArrayValue[1];
 
 				StringBundler sb = new StringBundler(
-					socialRelationTypes.length * 2 + 1);
+					socialRelationTypes.length * 2 + 2);
 
 				sb.append("WHERE (SocialRelation.userId1 = ?) AND ");
 				sb.append("(SocialRelation.type_ IN (");

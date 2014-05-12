@@ -17,17 +17,12 @@
 <%@ include file="/html/portlet/breadcrumb/init.jsp" %>
 
 <%
-	long portletDisplayTemplateId =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
-				displayStyleGroupId, displayStyle);
-
-	List<Object> entries = new ArrayList<Object>();
-	Map<String, Object> contextObjects = new HashMap<String, Object>();
+long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 %>
 
 <c:choose>
 	<c:when test="<%= portletDisplayTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, entries, contextObjects) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, BreadcrumbUtil.getEntries(request, 0)) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:breadcrumb

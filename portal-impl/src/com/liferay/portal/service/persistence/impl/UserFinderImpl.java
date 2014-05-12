@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -444,11 +445,14 @@ public class UserFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
+			WildcardMode wildcardMode = (WildcardMode)GetterUtil.getObject(
+				params.get("wildcardMode"), WildcardMode.SURROUND);
+
+			firstNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			middleNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			lastNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			screenNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			emailAddresses = CustomSQLUtil.keywords(keywords, wildcardMode);
 		}
 		else {
 			andOperator = true;
@@ -607,68 +611,21 @@ public class UserFinderImpl
 
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		if (ArrayUtil.isNotEmpty(groupIds) && inherit) {
-			List<Long> organizationIds = new ArrayList<Long>();
-			List<Long> userGroupIds = new ArrayList<Long>();
+		boolean socialRelationTypeUnionUserGroups = GetterUtil.getBoolean(
+			params.get("socialRelationTypeUnionUserGroups"));
 
-			for (long groupId : groupIds) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+		if (inherit) {
+			if (ArrayUtil.isNotEmpty(groupIds)) {
+				List<Long> organizationIds = new ArrayList<Long>();
+				List<Long> userGroupIds = new ArrayList<Long>();
 
-				if (group == null) {
-					continue;
-				}
+				for (long groupId : groupIds) {
+					Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-				if (group.isOrganization()) {
-					organizationIds.add(group.getOrganizationId());
-				}
-				else if (group.isUserGroup()) {
-					userGroupIds.add(group.getClassPK());
-				}
-				else {
-					for (Organization organization :
-							GroupUtil.getOrganizations(groupId)) {
-
-						organizationIds.add(organization.getOrganizationId());
+					if (group == null) {
+						continue;
 					}
 
-					for (UserGroup userGroup :
-							GroupUtil.getUserGroups(groupId)) {
-
-						userGroupIds.add(userGroup.getUserGroupId());
-					}
-				}
-			}
-
-			if (!organizationIds.isEmpty()) {
-				params2 = new LinkedHashMap<String, Object>(params1);
-
-				params2.remove("usersGroups");
-
-				params2.put(
-					"usersOrgs",
-					organizationIds.toArray(new Long[organizationIds.size()]));
-			}
-
-			if (!userGroupIds.isEmpty()) {
-				params3 = new LinkedHashMap<String, Object>(params1);
-
-				params3.remove("usersGroups");
-
-				params3.put(
-					"usersUserGroups",
-					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-		}
-
-		if (ArrayUtil.isNotEmpty(roleIds) && inherit) {
-			List<Long> organizationIds = new ArrayList<Long>();
-			List<Long> roleGroupIds = new ArrayList<Long>();
-			List<Long> userGroupIds = new ArrayList<Long>();
-
-			for (long roleId : roleIds) {
-				List<Group> groups = RoleUtil.getGroups(roleId);
-
-				for (Group group : groups) {
 					if (group.isOrganization()) {
 						organizationIds.add(group.getOrganizationId());
 					}
@@ -676,53 +633,122 @@ public class UserFinderImpl
 						userGroupIds.add(group.getClassPK());
 					}
 					else {
-						roleGroupIds.add(group.getGroupId());
-
 						for (Organization organization :
-								GroupUtil.getOrganizations(
-									group.getGroupId())) {
+								GroupUtil.getOrganizations(groupId)) {
 
 							organizationIds.add(
 								organization.getOrganizationId());
 						}
 
 						for (UserGroup userGroup :
-								GroupUtil.getUserGroups(group.getGroupId())) {
+								GroupUtil.getUserGroups(groupId)) {
 
 							userGroupIds.add(userGroup.getUserGroupId());
 						}
 					}
 				}
+
+				if (!organizationIds.isEmpty()) {
+					params2 = new LinkedHashMap<String, Object>(params1);
+
+					params2.remove("usersGroups");
+
+					params2.put(
+						"usersOrgs",
+						organizationIds.toArray(
+							new Long[organizationIds.size()]));
+				}
+
+				if (!userGroupIds.isEmpty()) {
+					params3 = new LinkedHashMap<String, Object>(params1);
+
+					params3.remove("usersGroups");
+
+					params3.put(
+						"usersUserGroups",
+						userGroupIds.toArray(new Long[userGroupIds.size()]));
+				}
 			}
 
-			if (!roleGroupIds.isEmpty()) {
+			if (ArrayUtil.isNotEmpty(roleIds)) {
+				List<Long> organizationIds = new ArrayList<Long>();
+				List<Long> roleGroupIds = new ArrayList<Long>();
+				List<Long> userGroupIds = new ArrayList<Long>();
+
+				for (long roleId : roleIds) {
+					List<Group> groups = RoleUtil.getGroups(roleId);
+
+					for (Group group : groups) {
+						if (group.isOrganization()) {
+							organizationIds.add(group.getOrganizationId());
+						}
+						else if (group.isUserGroup()) {
+							userGroupIds.add(group.getClassPK());
+						}
+						else {
+							roleGroupIds.add(group.getGroupId());
+
+							for (Organization organization :
+									GroupUtil.getOrganizations(
+										group.getGroupId())) {
+
+								organizationIds.add(
+									organization.getOrganizationId());
+							}
+
+							for (UserGroup userGroup :
+									GroupUtil.getUserGroups(
+										group.getGroupId())) {
+
+								userGroupIds.add(userGroup.getUserGroupId());
+							}
+						}
+					}
+				}
+
+				if (!roleGroupIds.isEmpty()) {
+					params2 = new LinkedHashMap<String, Object>(params1);
+
+					params2.remove("usersRoles");
+
+					params2.put(
+						"usersGroups",
+						roleGroupIds.toArray(new Long[roleGroupIds.size()]));
+				}
+
+				if (!userGroupIds.isEmpty()) {
+					params3 = new LinkedHashMap<String, Object>(params1);
+
+					params3.remove("usersRoles");
+
+					params3.put(
+						"usersUserGroups",
+						userGroupIds.toArray(new Long[userGroupIds.size()]));
+				}
+
+				if (!organizationIds.isEmpty()) {
+					params4 = new LinkedHashMap<String, Object>(params1);
+
+					params4.remove("usersRoles");
+
+					params4.put(
+						"usersOrgs",
+						organizationIds.toArray(
+							new Long[organizationIds.size()]));
+				}
+			}
+		}
+		else if (socialRelationTypeUnionUserGroups) {
+			boolean hasSocialRelationTypes = Validator.isNotNull(
+				params.get("socialRelationType"));
+
+			if (socialRelationTypeUnionUserGroups && hasSocialRelationTypes &&
+				ArrayUtil.isNotEmpty(groupIds)) {
+
 				params2 = new LinkedHashMap<String, Object>(params1);
 
-				params2.remove("usersRoles");
-
-				params2.put(
-					"usersGroups",
-					roleGroupIds.toArray(new Long[roleGroupIds.size()]));
-			}
-
-			if (!userGroupIds.isEmpty()) {
-				params3 = new LinkedHashMap<String, Object>(params1);
-
-				params3.remove("usersRoles");
-
-				params3.put(
-					"usersUserGroups",
-					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-
-			if (!organizationIds.isEmpty()) {
-				params4 = new LinkedHashMap<String, Object>(params1);
-
-				params4.remove("usersRoles");
-
-				params4.put(
-					"usersOrgs",
-					organizationIds.toArray(new Long[organizationIds.size()]));
+				params1.remove("socialRelationType");
+				params2.remove("usersGroups");
 			}
 		}
 
@@ -1183,7 +1209,31 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
 		}
 		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			if (value instanceof Long[]) {
+				join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			}
+			else if (value instanceof Long[][]) {
+				Long[][] doubleArrayValue = (Long[][])value;
+
+				Long[] socialRelationTypes = doubleArrayValue[1];
+
+				StringBundler sb = new StringBundler(
+					socialRelationTypes.length * 2 + 2);
+
+				sb.append("WHERE (SocialRelation.userId1 = ?) AND ");
+				sb.append("(SocialRelation.type_ IN (");
+
+				for (long socialRelationType : socialRelationTypes) {
+					sb.append(StringPool.QUESTION);
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
+
+				join = sb.toString();
+			}
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;

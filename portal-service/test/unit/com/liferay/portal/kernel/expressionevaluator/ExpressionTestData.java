@@ -1,7 +1,7 @@
 
 package com.liferay.portal.kernel.expressionevaluator;
 
-import com.liferay.portal.kernel.expressionevaluator.model.ExpressionVariable;
+import com.liferay.portal.kernel.expression.ExpressionVariable;
 
 import java.util.HashMap;
 import java.util.Map;

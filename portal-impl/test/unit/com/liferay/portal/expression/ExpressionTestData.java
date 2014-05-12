@@ -28,6 +28,54 @@ public class ExpressionTestData {
 		return new ExpressionTestData(expression);
 	}
 
+	public ExpressionTestData addBooleanVariable(String name, String expression,
+	Boolean value) {
+
+		addVariable(name, expression, Boolean.class, value);
+
+		return this;
+	}
+
+	public ExpressionTestData addDoubleVariable(String name, String expression,
+	Double value) {
+
+		addVariable(name, expression, Double.class, value);
+
+		return this;
+	}
+
+	public ExpressionTestData addFloatVariable(String name, String expression,
+	Float value) {
+
+		addVariable(name, expression, Float.class, value);
+
+		return this;
+	}
+
+	public ExpressionTestData addIntegerVariable(String name, String expression,
+	Integer value) {
+
+		addVariable(name, expression, Integer.class, value);
+
+		return this;
+	}
+
+	public ExpressionTestData addLongVariable(String name, String expression,
+	Long value) {
+
+		addVariable(name, expression, Long.class, value);
+
+		return this;
+	}
+
+	public ExpressionTestData addStringVariable(String name, String expression,
+	String value) {
+
+		addVariable(name, expression, String.class, value);
+
+		return this;
+	}
+
 	public Object getExpectedResult() {
 		return _expectedResult;
 	}
@@ -44,61 +92,13 @@ public class ExpressionTestData {
 		return _variables;
 	}
 
-	public ExpressionTestData usingBooleanVariable(
-		String name, String expression, Boolean value) {
-
-		usingVariable(name, expression, Boolean.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData usingDoubleVariable(
-		String name, String expression, Double value) {
-
-		usingVariable(name, expression, Double.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData usingFloatVariable(
-		String name, String expression, Float value) {
-
-		usingVariable(name, expression, Float.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData usingIntegerVariable(
-		String name, String expression, Integer value) {
-
-		usingVariable(name, expression, Integer.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData usingLongVariable(
-		String name, String expression, Long value) {
-
-		usingVariable(name, expression, Long.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData usingStringVariable(
-		String name, String expression, String value) {
-
-		usingVariable(name, expression, String.class, value);
-
-		return this;
-	}
-
-	public ExpressionTestData withExpectedResult(Object value) {
+	public ExpressionTestData setExpectedResult(Object value) {
 		_expectedResult = value;
 
 		return this;
 	}
 
-	public ExpressionTestData withReturnType(Class<?> returnType) {
+	public ExpressionTestData setReturnType(Class<?> returnType) {
 		_returnType = returnType;
 
 		return this;
@@ -108,15 +108,14 @@ public class ExpressionTestData {
 		_expression = expression;
 	}
 
-	private void usingVariable(
-		String name, String expression, Class<?> type, Object value) {
-		ExpressionVariable variable = new ExpressionVariable();
+	private void addVariable(String name, String expression, Class<?> type,
+	Object value) {
 
+		ExpressionVariable variable = new ExpressionVariable();
 		variable.setCalculatedValue(value == null ? null : value.toString());
 		variable.setDataType(type);
 		variable.setName(name);
 		variable.setValueExpression(expression);
-
 		_variables.put(name, variable);
 	}
 

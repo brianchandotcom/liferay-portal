@@ -23,25 +23,26 @@ public class FunctionsTest extends BaseExpresssionTest {
 
 	@Test
 	public void testSum() throws Exception {
+
+		long expectedResult01 = (long) (5 + (5 + 3) + ((5 + 3) + 5));
 		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"sum(variable1,variable2,variable3)")
-				.usingLongVariable("variable1", null, 5L)
-				.usingLongVariable("variable2", "variable1 + 3", null)
-				.usingLongVariable("variable3", "variable2 + variable1",null)
-				.withExpectedResult((long)(5 + (5 + 3) + ((5 + 3) + 5)));
+			ExpressionTestData.newExpressionTestData("sum(var1,var2,var3)");
+		expressionTestData.addLongVariable("var1", null, 5L);
+		expressionTestData.addLongVariable("var2", "var1 + 3", null);
+		expressionTestData.addLongVariable("var3", "var2 + var1", null);
+		expressionTestData.setExpectedResult(expectedResult01);
 
-		testExpression(expressionTestData);
+		executeTest(expressionTestData);
 
+		double expectedResult02 = 5.5 + (5.5 + 3.5) + ((5.5 + 3.5) + 5.5);
 		ExpressionTestData doubleExpressionTestData =
-			ExpressionTestData.newExpressionTestData(
-				"sum(variable1,variable2,variable3)")
-				.usingDoubleVariable("variable1", null, 5.5)
-				.usingDoubleVariable("variable2", "variable1 + 3.5", null)
-				.usingDoubleVariable("variable3", "variable2 + variable1",null)
-				.withExpectedResult(5.5 + (5.5 + 3.5) + ((5.5 + 3.5) + 5.5));
+			ExpressionTestData.newExpressionTestData("sum(var1,var2,var3)");
+		expressionTestData.addDoubleVariable("var1", null, 5.5);
+		expressionTestData.addDoubleVariable("var2", "var1 + 3.5", null);
+		expressionTestData.addDoubleVariable("var3", "var2 + var1", null);
+		expressionTestData.setExpectedResult(expectedResult02);
 
-		testExpression(doubleExpressionTestData);
+		executeTest(doubleExpressionTestData);
 	}
 
 }

@@ -37,6 +37,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.breadcrumb.Breadcrumb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -147,15 +148,15 @@ public class BreadcrumbImpl implements Breadcrumb {
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
-
 		List<BreadcrumbEntry> portletBreadcrumbEntries =
 			PortalUtil.getPortletBreadcrumbs(request);
 
 		if (portletBreadcrumbEntries == null) {
-			return breadcrumbEntries;
+			return Collections.emptyList();
 		}
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		for (int i = 0; i < portletBreadcrumbEntries.size(); i++) {
 			BreadcrumbEntry portletBreadcrumbEntry =

@@ -110,8 +110,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_EDIT_FIELD</td>
+	<td>//textarea[contains(@id,'editReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_SUBMIT_BUTTON</td>
 	<td>//button[contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_PUBLISH_BUTTON</td>
+	<td>//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

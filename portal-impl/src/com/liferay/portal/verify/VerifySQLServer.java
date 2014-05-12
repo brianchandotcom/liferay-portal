@@ -299,7 +299,8 @@ public class VerifySQLServer extends VerifyProcess {
 			"'Cyrus%') and (sysobjects.name not like 'QUARTZ%')";
 
 	private static final String _FILTER_NONUNICODE_DATA_TYPES =
-		"((systypes.name = 'varchar') OR (systypes.name = 'text'))";
+		"((systypes.name = 'varchar') OR (systypes.name = 'text') " +
+			"OR (systypes.name = 'ntext'))";
 
 	private static Log _log = LogFactoryUtil.getLog(VerifySQLServer.class);
 

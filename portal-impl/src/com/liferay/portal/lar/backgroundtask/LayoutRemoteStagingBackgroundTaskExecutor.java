@@ -17,10 +17,14 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -37,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,7 +57,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -75,8 +80,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
-		Date startDate = (Date)settingsMap.get("startDate");
-		Date endDate = (Date)settingsMap.get("endDate");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
 		HttpPrincipal httpPrincipal = (HttpPrincipal)settingsMap.get(
 			"httpPrincipal");
 
@@ -91,7 +96,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		try {
 			file = exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-				remoteGroupId, startDate, endDate, httpPrincipal);
+				remoteGroupId, dateRange.getStartDate(), dateRange.getEndDate(),
+				httpPrincipal);
 
 			String checksum = FileUtil.getMD5Checksum(file);
 
@@ -141,8 +147,11 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			if (updateLastPublishDate) {
 				StagingUtil.updateLastPublishDate(
-					sourceGroupId, privateLayout, endDate);
+					sourceGroupId, privateLayout, dateRange.getEndDate());
 			}
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 		finally {
 			StreamUtil.cleanUp(fileInputStream);
@@ -164,7 +173,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			long remoteGroupId, Date startDate, Date endDate,
 			HttpPrincipal httpPrincipal)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		if ((layoutIdMap == null) || layoutIdMap.isEmpty()) {
 			return LayoutLocalServiceUtil.exportLayoutsAsFile(
@@ -221,7 +230,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	 */
 	protected List<Layout> getMissingRemoteParentLayouts(
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
 

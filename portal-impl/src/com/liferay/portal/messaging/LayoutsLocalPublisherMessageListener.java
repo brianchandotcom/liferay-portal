@@ -69,7 +69,7 @@ public class LayoutsLocalPublisherMessageListener
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 
-		initThreadLocals(userId, parameterMap, false);
+		initThreadLocals(userId, parameterMap);
 
 		try {
 			if (layoutIds == null) {
@@ -86,7 +86,7 @@ public class LayoutsLocalPublisherMessageListener
 			}
 		}
 		finally {
-			resetThreadLocals(false);
+			resetThreadLocals();
 		}
 	}
 

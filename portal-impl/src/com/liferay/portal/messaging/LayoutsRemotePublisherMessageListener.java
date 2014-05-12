@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -76,7 +80,11 @@ public class LayoutsRemotePublisherMessageListener
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 
-		initThreadLocals(userId, parameterMap, true);
+		initThreadLocals(userId, parameterMap);
+
+		User user = UserLocalServiceUtil.fetchUserById(userId);
+
+		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 		try {
 			StagingUtil.copyRemoteLayouts(
@@ -86,7 +94,9 @@ public class LayoutsRemotePublisherMessageListener
 				dateRange.getEndDate());
 		}
 		finally {
-			resetThreadLocals(true);
+			resetThreadLocals();
+
+			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 		}
 	}
 

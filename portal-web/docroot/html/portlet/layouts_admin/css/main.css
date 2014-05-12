@@ -384,7 +384,7 @@
 		display: inline;
 	}
 
-	ul.unstyled ul {
+	ul.list-unstyled ul {
 		list-style: none;
 	}
 }

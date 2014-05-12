@@ -660,7 +660,7 @@
 		@include ellipsis;
 	}
 
-	.panel-group .accordion-group {
+	.panel-group .panel.panel-default {
 		.panel-heading .accordion-toggle {
 			padding-left: 15px;
 		}
@@ -683,7 +683,7 @@
 		content: $chevron-sign-down;
 	}
 
-	.accordion-group {
+	.panel.panel-default {
 		border-width: 0;
 
 		.panel-heading {
@@ -773,7 +773,7 @@
 	}
 
 	&.ie6, &.ie7 {
-		.accordion-group .panel-heading {
+		.panel.panel-default .panel-heading {
 			background: none no-repeat 0 50%;
 
 			&.toggler-header-collapsed {
@@ -816,7 +816,7 @@
 			border: 1px solid #D3D3D3;
 			border-top-width: 0;
 
-			.accordion-group {
+			.panel.panel-default {
 				border-width: 0;
 				margin-bottom: 0;
 

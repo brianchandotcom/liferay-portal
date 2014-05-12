@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.resiliency.spi.remote;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.mpi.MPI;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.rmi.RemoteException;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +37,8 @@ import java.util.concurrent.TimeUnit;
  * @author Shuyang Zhou
  */
 public class RemoteSPIProxy implements SPI {
+
+	public static final int SIGINT = 130;
 
 	public RemoteSPIProxy(
 		SPI spi, SPIConfiguration spiConfiguration, String spiProviderName,
@@ -78,10 +82,27 @@ public class RemoteSPIProxy implements SPI {
 				_spiConfiguration.getShutdownTimeout(), TimeUnit.MILLISECONDS);
 		}
 		catch (Exception e) {
-			_cancelHandlerFuture.cancel(true);
+			boolean forceDestroy = true;
 
-			if (_log.isWarnEnabled()) {
-				_log.warn("Forcibly destroyed SPI " + _spiConfiguration, e);
+			if (e instanceof ExecutionException) {
+				Throwable throwable = e.getCause();
+
+				if (throwable instanceof TerminationProcessException) {
+					TerminationProcessException terminationProcessException =
+						(TerminationProcessException)throwable;
+
+					if (terminationProcessException.getExitCode() == SIGINT) {
+						forceDestroy = false;
+					}
+				}
+			}
+
+			if (forceDestroy) {
+				_cancelHandlerFuture.cancel(true);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn("Forcibly destroyed SPI " + _spiConfiguration, e);
+				}
 			}
 		}
 		finally {

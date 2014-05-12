@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
-import com.liferay.portal.kernel.resiliency.spi.SPI;
-import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -423,25 +422,6 @@ public class SPIClassPathContextListenerTest {
 		Assert.assertSame(spiProviderReference.get(), spiProviders.get(0));
 
 		embeddedLibDir.delete();
-	}
-
-	public static class MockSPIProvider implements SPIProvider {
-
-		@Override
-		public SPI createSPI(SPIConfiguration spiConfiguration) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public String getName() {
-			return MockSPIProvider.class.getName();
-		}
-
-		@Override
-		public String toString() {
-			return MockSPIProvider.class.getName();
-		}
-
 	}
 
 	protected void deleteFile(File file) {

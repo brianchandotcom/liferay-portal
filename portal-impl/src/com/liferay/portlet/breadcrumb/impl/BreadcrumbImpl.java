@@ -55,9 +55,10 @@ public class BreadcrumbImpl implements Breadcrumb {
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
 
+		Layout layout = themeDisplay.getLayout();
+
 		_addGroupsBreadcrumbEntries(
-			breadcrumbEntries, themeDisplay,
-			themeDisplay.getLayout().getLayoutSet(), false);
+			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
 
 		BreadcrumbEntry breadcrumbEntry = null;
 
@@ -134,8 +135,9 @@ public class BreadcrumbImpl implements Breadcrumb {
 		List<BreadcrumbEntry> breadcrumbEntries =
 			new ArrayList<BreadcrumbEntry>();
 
-		LayoutSet parentLayoutSet = _getParentLayoutSet(
-			themeDisplay.getLayout().getLayoutSet());
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutSet parentLayoutSet = _getParentLayoutSet(layout.getLayoutSet());
 
 		if (parentLayoutSet != null) {
 			_addGroupsBreadcrumbEntries(

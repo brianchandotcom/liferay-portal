@@ -52,19 +52,20 @@ public class BreadcrumbImpl implements Breadcrumb {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		_addGroupsBreadcrumbEntries(
-			entries, themeDisplay, themeDisplay.getLayout().getLayoutSet(),
-			false);
+			breadcrumbEntries, themeDisplay,
+			themeDisplay.getLayout().getLayoutSet(), false);
 
-		BreadcrumbEntry entry = null;
+		BreadcrumbEntry breadcrumbEntry = null;
 
-		if (entries.size() > 0) {
-			entry = entries.get(0);
+		if (breadcrumbEntries.size() > 0) {
+			breadcrumbEntry = breadcrumbEntries.get(0);
 		}
 
-		return entry;
+		return breadcrumbEntry;
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
 
-		BreadcrumbEntry entry = new BreadcrumbEntry();
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		// Entry URL
 
@@ -94,15 +95,15 @@ public class BreadcrumbImpl implements Breadcrumb {
 				layoutSetFriendlyURL, themeDisplay.getSessionId());
 		}
 
-		entry.setURL(layoutSetFriendlyURL);
+		breadcrumbEntry.setURL(layoutSetFriendlyURL);
 
 		// Entry title
 
 		Account account = themeDisplay.getAccount();
 
-		entry.setTitle(account.getName());
+		breadcrumbEntry.setTitle(account.getName());
 
-		return entry;
+		return breadcrumbEntry;
 	}
 
 	@Override
@@ -110,17 +111,19 @@ public class BreadcrumbImpl implements Breadcrumb {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		Layout layout = themeDisplay.getLayout();
 
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutPrototype()) {
-			_addLayoutBreadcrumbEntries(entries, themeDisplay, layout);
+			_addLayoutBreadcrumbEntries(breadcrumbEntries, themeDisplay,
+				layout);
 		}
 
-		return entries;
+		return breadcrumbEntries;
 	}
 
 	@Override
@@ -128,37 +131,39 @@ public class BreadcrumbImpl implements Breadcrumb {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		LayoutSet parentLayoutSet = _getParentLayoutSet(
 			themeDisplay.getLayout().getLayoutSet());
 
 		if (parentLayoutSet != null) {
 			_addGroupsBreadcrumbEntries(
-				entries, themeDisplay, parentLayoutSet, true);
+				breadcrumbEntries, themeDisplay, parentLayoutSet, true);
 		}
 
-		return entries;
+		return breadcrumbEntries;
 	}
 
 	@Override
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
 
 		List<BreadcrumbEntry> portletBreadcrumbEntries =
 			PortalUtil.getPortletBreadcrumbs(request);
 
 		if (portletBreadcrumbEntries == null) {
-			return entries;
+			return breadcrumbEntries;
 		}
 
 		for (int i = 0; i < portletBreadcrumbEntries.size(); i++) {
 			BreadcrumbEntry portletBreadcrumbEntry =
 				portletBreadcrumbEntries.get(i);
 
-			BreadcrumbEntry entry = new BreadcrumbEntry();
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 			String portletBreadcrumbURL = portletBreadcrumbEntry.getURL();
 
@@ -172,21 +177,21 @@ public class BreadcrumbImpl implements Breadcrumb {
 						portletBreadcrumbURL, session.getId());
 				}
 
-				entry.setURL(portletBreadcrumbURL);
+				breadcrumbEntry.setURL(portletBreadcrumbURL);
 			}
 
-			entry.setData(portletBreadcrumbEntry.getData());
-			entry.setEntity(portletBreadcrumbEntry.getEntity());
-			entry.setTitle(portletBreadcrumbEntry.getTitle());
+			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
+			breadcrumbEntry.setEntity(portletBreadcrumbEntry.getEntity());
+			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
-			entries.add(entry);
+			breadcrumbEntries.add(breadcrumbEntry);
 		}
 
-		return entries;
+		return breadcrumbEntries;
 	}
 
 	private void _addGroupsBreadcrumbEntries(
-			List<BreadcrumbEntry> entries, ThemeDisplay themeDisplay,
+			List<BreadcrumbEntry> breadcrumbEntries, ThemeDisplay themeDisplay,
 			LayoutSet layoutSet, boolean includeParentGroups)
 		throws Exception {
 
@@ -196,14 +201,14 @@ public class BreadcrumbImpl implements Breadcrumb {
 			return;
 		}
 
-		BreadcrumbEntry entry = null;
+		BreadcrumbEntry breadcrumbEntry = null;
 
 		if (includeParentGroups) {
 			LayoutSet parentLayoutSet = _getParentLayoutSet(layoutSet);
 
 			if (parentLayoutSet != null) {
 				_addGroupsBreadcrumbEntries(
-					entries, themeDisplay, parentLayoutSet, true);
+					breadcrumbEntries, themeDisplay, parentLayoutSet, true);
 			}
 		}
 
@@ -225,17 +230,17 @@ public class BreadcrumbImpl implements Breadcrumb {
 					layoutSetFriendlyURL, themeDisplay.getSessionId());
 			}
 
-			entry = new BreadcrumbEntry();
+			breadcrumbEntry = new BreadcrumbEntry();
 
-			entry.setURL(layoutSetFriendlyURL);
-			entry.setTitle(group.getDescriptiveName());
+			breadcrumbEntry.setURL(layoutSetFriendlyURL);
+			breadcrumbEntry.setTitle(group.getDescriptiveName());
 
-			entries.add(entry);
+			breadcrumbEntries.add(breadcrumbEntry);
 		}
 	}
 
 	private void _addLayoutBreadcrumbEntries(
-			List<BreadcrumbEntry> entries, ThemeDisplay themeDisplay,
+			List<BreadcrumbEntry> breadcrumbEntries, ThemeDisplay themeDisplay,
 			Layout layout)
 		throws Exception {
 
@@ -245,14 +250,15 @@ public class BreadcrumbImpl implements Breadcrumb {
 			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
 				layout);
 
-			_addLayoutBreadcrumbEntries(entries, themeDisplay, parentLayout);
+			_addLayoutBreadcrumbEntries(
+				breadcrumbEntries, themeDisplay, parentLayout);
 		}
 
-		BreadcrumbEntry entry = new BreadcrumbEntry();
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		// Entry entity
 
-		entry.setEntity(layout);
+		breadcrumbEntry.setEntity(layout);
 
 		// Entry URL
 
@@ -268,7 +274,7 @@ public class BreadcrumbImpl implements Breadcrumb {
 				layoutURL, "controlPanelCategory");
 		}
 
-		entry.setURL(layoutURL);
+		breadcrumbEntry.setURL(layoutURL);
 
 		// Entry title
 
@@ -281,9 +287,9 @@ public class BreadcrumbImpl implements Breadcrumb {
 			}
 		}
 
-		entry.setTitle(layoutName);
+		breadcrumbEntry.setTitle(layoutName);
 
-		entries.add(entry);
+		breadcrumbEntries.add(breadcrumbEntry);
 	}
 
 	private LayoutSet _getParentLayoutSet(LayoutSet layoutSet)

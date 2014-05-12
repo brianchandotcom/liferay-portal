@@ -109,7 +109,7 @@ public class PollerRequestHandlerImpl
 		}
 
 		List<PollerRequest> pollerRequests = createPollerRequests(
-			request, pollerHeader, pollerRequestChunks, receiveRequest);
+			pollerHeader, pollerRequestChunks, receiveRequest);
 
 		executePollerRequests(pollerSession, pollerRequests);
 
@@ -148,18 +148,16 @@ public class PollerRequestHandlerImpl
 	}
 
 	protected PollerRequest createPollerRequest(
-			HttpServletRequest request, boolean receiveRequest,
-			PollerHeader pollerHeader, String portletId)
+			boolean receiveRequest, PollerHeader pollerHeader, String portletId)
 		throws Exception {
 
 		return createPollerRequest(
-			request, receiveRequest, pollerHeader, portletId,
+			receiveRequest, pollerHeader, portletId,
 			new HashMap<String, String>(), null);
 	}
 
 	protected PollerRequest createPollerRequest(
-			HttpServletRequest request, boolean receiveRequest,
-			PollerHeader pollerHeader, String portletId,
+			boolean receiveRequest, PollerHeader pollerHeader, String portletId,
 			Map<String, String> parameterMap, String chunkId)
 		throws Exception {
 
@@ -176,12 +174,11 @@ public class PollerRequestHandlerImpl
 		}
 
 		return new PollerRequest(
-			request, pollerHeader, portletId, parameterMap, chunkId,
-			receiveRequest);
+			pollerHeader, portletId, parameterMap, chunkId, receiveRequest);
 	}
 
 	protected List<PollerRequest> createPollerRequests(
-			HttpServletRequest request, PollerHeader pollerHeader,
+			PollerHeader pollerHeader,
 			Map<String, Object>[] pollerRequestChunks, boolean receiveRequest)
 		throws Exception {
 
@@ -206,8 +203,8 @@ public class PollerRequestHandlerImpl
 
 			try {
 				PollerRequest pollerRequest = createPollerRequest(
-					request, receiveRequest, pollerHeader, portletId,
-					parameterMap, chunkId);
+					receiveRequest, pollerHeader, portletId, parameterMap,
+					chunkId);
 
 				pollerRequests.add(pollerRequest);
 
@@ -230,7 +227,7 @@ public class PollerRequestHandlerImpl
 
 				try {
 					PollerRequest pollerRequest = createPollerRequest(
-						request, receiveRequest, pollerHeader, portletId);
+						receiveRequest, pollerHeader, portletId);
 
 					pollerRequests.add(pollerRequest);
 				}

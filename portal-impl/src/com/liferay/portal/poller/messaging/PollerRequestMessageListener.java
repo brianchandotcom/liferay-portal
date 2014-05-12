@@ -54,6 +54,10 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 				pollerResponse.setParameter("pollerException", pe.getMessage());
 			}
 			finally {
+				if (pollerResponse == null) {
+					pollerResponse = pollerRequest.createPollerResponse();
+				}
+
 				pollerResponse.close(
 					message, pollerRequest.getPollerHeader(),
 					pollerRequest.getPortletId(), pollerRequest.getChunkId());

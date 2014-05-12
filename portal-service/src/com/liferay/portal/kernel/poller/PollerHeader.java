@@ -16,12 +16,14 @@ package com.liferay.portal.kernel.poller;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.Serializable;
+
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollerHeader {
+public class PollerHeader implements Serializable {
 
 	public PollerHeader(
 		long companyId, long userId, long browserKey,
@@ -78,6 +80,8 @@ public class PollerHeader {
 
 		return sb.toString();
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private long _browserKey;
 	private long _companyId;

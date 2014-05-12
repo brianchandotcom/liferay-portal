@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 
+import java.io.Serializable;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
  */
-public interface PollerResponse {
+public interface PollerResponse extends Serializable {
 
 	public static final String POLLER_HINT_HIGH_CONNECTIVITY =
 		"pollerHintHighConnectivity";

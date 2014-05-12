@@ -358,7 +358,18 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void sendError(int status) throws IOException {
-		sendError(status, null);
+		if (isCommitted()) {
+			throw new IllegalStateException("Send error after commit");
+		}
+
+		_metaData._error = true;
+		_metaData._status = status;
+
+		resetBuffer();
+
+		_committed = true;
+
+		super.sendError(status);
 	}
 
 	@Override
@@ -375,12 +386,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 		_committed = true;
 
-		if (errorMessage != null) {
-			super.sendError(status, errorMessage);
-		}
-		else {
-			super.sendError(status);
-		}
+		super.sendError(status, errorMessage);
 	}
 
 	@Override
@@ -538,7 +544,13 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setStatus(int status) {
-		setStatus(status, null);
+		if (isCommitted()) {
+			return;
+		}
+
+		_metaData._status = status;
+
+		super.setStatus(status);
 	}
 
 	@Override
@@ -551,12 +563,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		_metaData._status = status;
 		_metaData._statusMessage = statusMessage;
 
-		if (statusMessage != null) {
-			super.setStatus(status, statusMessage);
-		}
-		else {
-			super.setStatus(status);
-		}
+		super.setStatus(status, statusMessage);
 	}
 
 	@Override

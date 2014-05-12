@@ -424,6 +424,11 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				@Override
+				public void sendError(int status) {
+					statusReference.set(status);
+				}
+
+				@Override
 				public void sendError(int status, String errorMessage) {
 					statusReference.set(status);
 					messageReference.set(errorMessage);
@@ -453,6 +458,11 @@ public class MetaInfoCacheServletResponseTest {
 
 				@Override
 				public void setLocale(Locale locale) {
+				}
+
+				@Override
+				public void setStatus(int status) {
+					statusReference.set(status);
 				}
 
 				@Override
@@ -1106,6 +1116,11 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				@Override
+				public void sendError(int status) {
+					statusReference.set(status);
+				}
+
+				@Override
 				public void sendError(int status, String message) {
 					statusReference.set(status);
 					messageReference.set(message);
@@ -1143,7 +1158,7 @@ public class MetaInfoCacheServletResponseTest {
 		messageReference.set(null);
 		statusReference.set(0);
 
-		// Set after commit
+		// Set both status and message after commit
 
 		metaInfoCacheServletResponse = new MetaInfoCacheServletResponse(
 			stubHttpServletResponse);
@@ -1152,6 +1167,21 @@ public class MetaInfoCacheServletResponseTest {
 
 		try {
 			metaInfoCacheServletResponse.sendError(500, "After commit");
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+		}
+
+		// Set status after commit
+
+		metaInfoCacheServletResponse = new MetaInfoCacheServletResponse(
+			stubHttpServletResponse);
+
+		metaInfoCacheServletResponse.flushBuffer();
+
+		try {
+			metaInfoCacheServletResponse.sendError(500);
 
 			Assert.fail();
 		}
@@ -1182,6 +1212,11 @@ public class MetaInfoCacheServletResponseTest {
 			@Override
 			public void sendRedirect(String location) {
 				locationReference.set(location);
+			}
+
+			@Override
+			public void setStatus(int status) {
+				statusReference.set(status);
 			}
 
 			@Override
@@ -1341,6 +1376,11 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				@Override
+				public void setStatus(int status) {
+					statusReference.set(status);
+				}
+
+				@Override
 				public void setStatus(int status, String message) {
 					statusReference.set(status);
 					messageReference.set(message);
@@ -1373,11 +1413,21 @@ public class MetaInfoCacheServletResponseTest {
 		messageReference.set(null);
 		statusReference.set(0);
 
-		// Set after commit
+		// Set both status and message after commit
 
 		metaInfoCacheServletResponse.flushBuffer();
 
 		metaInfoCacheServletResponse.setStatus(500, "After commit");
+
+		Assert.assertNull(messageReference.get());
+		Assert.assertEquals(404, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(0, statusReference.get());
+
+		// Set status after commit
+
+		metaInfoCacheServletResponse.flushBuffer();
+
+		metaInfoCacheServletResponse.setStatus(500);
 
 		Assert.assertNull(messageReference.get());
 		Assert.assertEquals(404, metaInfoCacheServletResponse.getStatus());

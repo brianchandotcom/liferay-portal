@@ -993,6 +993,11 @@
 			<bean class="com.liferay.portlet.social.service.permission.SocialActivityPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.social.util.SocialRelationTypesUtil" class="com.liferay.portlet.social.util.SocialRelationTypesUtil">
+		<property name="socialRelationTypes">
+			<bean class="com.liferay.portlet.social.util.SocialRelationTypesImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.social.service.permission.SocialRequestPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialRequestPermissionUtil">
 		<property name="socialRequestPermission">
 			<bean class="com.liferay.portlet.social.service.permission.SocialRequestPermissionImpl" />

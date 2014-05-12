@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.nio.intraband.welder.WelderFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -46,6 +47,9 @@ import java.rmi.server.UnicastRemoteObject;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -104,6 +108,20 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 	}
 
 	@Override
+	public void destroy() throws RemoteException {
+		try {
+			doDestroy();
+
+			if (countDownLatch != null) {
+				countDownLatch.countDown();
+			}
+		}
+		finally {
+			UnicastRemoteObject.unexportObject(RemoteSPI.this, true);
+		}
+	}
+
+	@Override
 	public MPI getMPI() {
 		return mpi;
 	}
@@ -141,6 +159,9 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 		return true;
 	}
 
+	protected abstract void doDestroy() throws RemoteException;
+
+	protected transient CountDownLatch countDownLatch;
 	protected final MPI mpi;
 	protected RegistrationReference registrationReference;
 	protected transient volatile SPIAgent spiAgent;
@@ -174,15 +195,112 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 
 	}
 
+	protected static class UnregisterSPIProcessCallable
+		implements ProcessCallable<Boolean> {
+
+		public UnregisterSPIProcessCallable(
+			String spiProviderName, String spiId) {
+
+			_spiProviderName = spiProviderName;
+			_spiId = spiId;
+		}
+
+		@Override
+		public Boolean call() {
+			SPI spi = MPIHelperUtil.getSPI(_spiProviderName, _spiId);
+
+			if (spi != null) {
+				return MPIHelperUtil.unregisterSPI(spi);
+			}
+
+			return false;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private String _spiProviderName;
+		private String _spiId;
+
+	}
+
 	protected class SPIShutdownHook
 		extends Thread implements ProcessExecutor.ShutdownHook {
 
 		public SPIShutdownHook() {
+			setDaemon(true);
 			setName(SPIShutdownHook.class.getSimpleName());
 		}
 
 		@Override
 		public void run() {
+			if (countDownLatch.getCount() == 0) {
+				return;
+			}
+
+			boolean unregistered = false;
+
+			try {
+				Future<Boolean> future = IntrabandRPCUtil.execute(
+					registrationReference,
+					new UnregisterSPIProcessCallable(
+						getSPIProviderName(), spiConfiguration.getSPIId()));
+
+				unregistered = future.get();
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to unregister SPI from MPI", e);
+				}
+			}
+
+			if (unregistered || !waitForMPI()) {
+				doShutdown();
+			}
+		}
+
+		@Override
+		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable) {
+			Runtime runtime = Runtime.getRuntime();
+
+			runtime.removeShutdownHook(this);
+
+			doShutdown();
+
+			return true;
+		}
+
+		private boolean waitForMPI() {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Wait for MPI initiated shutdown, up to " +
+						spiConfiguration.getShutdownTimeout() + " ms");
+			}
+
+			try {
+				if (countDownLatch.await(
+						spiConfiguration.getShutdownTimeout(),
+						TimeUnit.MILLISECONDS)) {
+
+					if (_log.isInfoEnabled()) {
+						_log.info("MPI shutdown request received");
+					}
+
+					return true;
+				}
+			}
+			catch (InterruptedException ie) {
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"MPI shutdown waiting timed out, preceeding with SPI " +
+						"shutdown");
+			}
+
+			return false;
+		}
+
+		private void doShutdown() {
 			try {
 				RemoteSPI.this.stop();
 			}
@@ -196,17 +314,6 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			catch (RemoteException re) {
 				_log.error("Unable to destroy SPI", re);
 			}
-		}
-
-		@Override
-		public boolean shutdown(int shutdownCode, Throwable shutdownThrowable) {
-			Runtime runtime = Runtime.getRuntime();
-
-			runtime.removeShutdownHook(this);
-
-			run();
-
-			return true;
 		}
 
 	}
@@ -257,6 +364,8 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 		// Log4j log file postfix
 
 		System.setProperty("spi.id", "-" + spiConfiguration.getSPIId());
+
+		countDownLatch = new CountDownLatch(1);
 	}
 
 	private void writeObject(ObjectOutputStream objectOutputStream)

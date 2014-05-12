@@ -24,61 +24,79 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author José Manuel Navarro
  */
-public class BreadcrumbUtil {
+public class BreadcrumbHelperUtil {
 
-	public static Breadcrumb getBreadcrumb() {
-		PortalRuntimePermission.checkGetBeanProperty(BreadcrumbUtil.class);
+	public static final long ENTRY_TYPE_ANY = BreadcrumbEntry.ENTRY_TYPE_ANY;
 
-		return _breadcrumb;
+	public static final long ENTRY_TYPE_CURRENT_GROUP =
+		BreadcrumbEntry.ENTRY_TYPE_CURRENT_GROUP;
+
+	public static final long ENTRY_TYPE_GUEST_GROUP =
+		BreadcrumbEntry.ENTRY_TYPE_GUEST_GROUP;
+
+	public static final long ENTRY_TYPE_LAYOUT =
+		BreadcrumbEntry.ENTRY_TYPE_LAYOUT;
+
+	public static final long ENTRY_TYPE_PARENT_GROUP =
+		BreadcrumbEntry.ENTRY_TYPE_PARENT_GROUP;
+
+	public static final long ENTRY_TYPE_PORTLET =
+		BreadcrumbEntry.ENTRY_TYPE_PORTLET;
+
+	public static BreadcrumbHelper getBreadcrumbHelper() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			BreadcrumbHelperUtil.class);
+
+		return _breadcrumbHelper;
 	}
 
 	public static List<BreadcrumbEntry> getBreadcrumbEntries(
 			HttpServletRequest request, long typeMask)
 		throws Exception {
 
-		return getBreadcrumb().getBreadcrumbEntries(request, typeMask);
+		return getBreadcrumbHelper().getBreadcrumbEntries(request, typeMask);
 	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getGuestGroupBreadcrumbEntry(themeDisplay);
+		return getBreadcrumbHelper().getGuestGroupBreadcrumbEntry(themeDisplay);
 	}
 
 	public static List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getLayoutBreadcrumbEntries(themeDisplay);
+		return getBreadcrumbHelper().getLayoutBreadcrumbEntries(themeDisplay);
 	}
 
 	public static List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getParentGroupBreadcrumbEntries(themeDisplay);
+		return getBreadcrumbHelper().getParentGroupBreadcrumbEntries(themeDisplay);
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		return getBreadcrumb().getPortletBreadcrumbEntries(request);
+		return getBreadcrumbHelper().getPortletBreadcrumbEntries(request);
 	}
 
 	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumb().getScopeGroupBreadcrumbEntry(themeDisplay);
+		return getBreadcrumbHelper().getScopeGroupBreadcrumbEntry(themeDisplay);
 	}
 
-	public void setBreadcrumb(Breadcrumb breadcrumb) {
+	public void setBreadcrumbHelper(BreadcrumbHelper breadcrumbHelper) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_breadcrumb = breadcrumb;
+		_breadcrumbHelper = breadcrumbHelper;
 	}
 
-	private static Breadcrumb _breadcrumb;
+	private static BreadcrumbHelper _breadcrumbHelper;
 
 }

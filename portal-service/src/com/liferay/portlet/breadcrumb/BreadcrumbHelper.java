@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author José Manuel Navarro
  */
-public interface Breadcrumb {
+public interface BreadcrumbHelper {
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries(
 			HttpServletRequest request, long typeMask)

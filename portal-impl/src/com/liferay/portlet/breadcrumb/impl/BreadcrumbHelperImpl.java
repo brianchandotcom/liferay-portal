@@ -37,7 +37,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.breadcrumb.Breadcrumb;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelper;
 import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author José Manuel Navarro
  */
-public class BreadcrumbImpl implements Breadcrumb {
+public class BreadcrumbHelperImpl implements BreadcrumbHelper {
 
 	@Override
 	public List<BreadcrumbEntry> getBreadcrumbEntries(

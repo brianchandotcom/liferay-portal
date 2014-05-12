@@ -193,7 +193,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
-import com.liferay.portlet.breadcrumb.BreadcrumbUtil;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -4332,14 +4332,14 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.breadcrumb.BreadcrumbUtil#getPortletBreadcrumbs(HttpServletRequest)}
+	 *             com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil#getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
 	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
-		return BreadcrumbUtil.getPortletBreadcrumbEntries(request);
+		return BreadcrumbHelperUtil.getPortletBreadcrumbEntries(request);
 	}
 
 	@Override

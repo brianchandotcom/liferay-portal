@@ -17,7 +17,8 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.breadcrumb.BreadcrumbEntry" %><%@
-page import="com.liferay.portlet.breadcrumb.BreadcrumbUtil" %>
+page import="com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil" %><%@
+page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

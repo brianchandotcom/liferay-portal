@@ -23,7 +23,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
-import com.liferay.portlet.breadcrumb.BreadcrumbUtil;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelper;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -76,7 +76,8 @@ public class BreadcrumbPortletDisplayTemplateHandler
 			PortletDisplayTemplateConstants.ENTRY, "getTitle()");
 
 		fieldsGroup.addVariable(
-			"breadcrumb-util", BreadcrumbUtil.class, "breadcrumbUtil");
+			"breadcrumb-helper", BreadcrumbHelper.class,
+			PortletDisplayTemplateConstants.BREADCRUMB_HELPER);
 
 		return templateVariableGroups;
 	}

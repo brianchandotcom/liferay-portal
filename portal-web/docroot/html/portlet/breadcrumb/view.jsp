@@ -18,11 +18,14 @@
 
 <%
 long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+
+Map<String, Object> context = new HashMap<String, Object>();
+context.put(PortletDisplayTemplateConstants.BREADCRUMB_HELPER, BreadcrumbHelperUtil.getBreadcrumbHelper());
 %>
 
 <c:choose>
 	<c:when test="<%= portletDisplayTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, BreadcrumbUtil.getBreadcrumbEntries(request, BreadcrumbUtil.ENTRY_TYPE_ALL)) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayTemplateId, BreadcrumbHelperUtil.getBreadcrumbEntries(request, BreadcrumbEntry.ENTRY_TYPE_ANY), context) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:breadcrumb

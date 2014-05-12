@@ -1005,7 +1005,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.breadcrumb.BreadcrumbUtil#getPortletBreadcrumbs(HttpServletRequest)}
+	 *             com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil#getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	@Deprecated
 	public List<BreadcrumbEntry> getPortletBreadcrumbs(

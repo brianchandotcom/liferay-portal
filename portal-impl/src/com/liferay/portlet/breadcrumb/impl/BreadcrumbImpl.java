@@ -130,8 +130,25 @@ public class BreadcrumbImpl implements Breadcrumb {
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> breadcrumbEntries = _getPortletBreadcrumbs(
-			request);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String name = WebKeys.PORTLET_BREADCRUMBS;
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
+			!portletDisplay.isFocused()) {
+
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
+		}
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			(List<BreadcrumbEntry>)request.getAttribute(name);
 
 		if (breadcrumbEntries == null) {
 			return Collections.emptyList();
@@ -301,29 +318,6 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 
 		return null;
-	}
-
-	private List<BreadcrumbEntry> _getPortletBreadcrumbs(
-		HttpServletRequest request) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String name = WebKeys.PORTLET_BREADCRUMBS;
-
-		String portletName = portletDisplay.getPortletName();
-
-		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!portletName.equals(PortletKeys.BREADCRUMB) &&
-			!portletDisplay.isFocused()) {
-
-			name = name.concat(
-				StringPool.UNDERLINE.concat(portletDisplay.getId()));
-		}
-
-		return (List<BreadcrumbEntry>)request.getAttribute(name);
 	}
 
 }

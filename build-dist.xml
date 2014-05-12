@@ -1443,6 +1443,11 @@ this task.
 							</echo>
 						</then>
 						<else>
+							<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+								<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
+								<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+							</replace>
+
 							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
 								<![CDATA[
 									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"

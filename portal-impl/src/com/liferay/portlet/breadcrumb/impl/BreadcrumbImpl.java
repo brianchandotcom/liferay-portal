@@ -86,7 +86,9 @@ public class BreadcrumbImpl implements Breadcrumb {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		// Entry URL
+		Account account = themeDisplay.getAccount();
+
+		breadcrumbEntry.setTitle(account.getName());
 
 		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 			layoutSet, themeDisplay);
@@ -97,12 +99,6 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 
 		breadcrumbEntry.setURL(layoutSetFriendlyURL);
-
-		// Entry title
-
-		Account account = themeDisplay.getAccount();
-
-		breadcrumbEntry.setTitle(account.getName());
 
 		return breadcrumbEntry;
 	}
@@ -167,24 +163,22 @@ public class BreadcrumbImpl implements Breadcrumb {
 
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			String portletBreadcrumbURL = portletBreadcrumbEntry.getURL();
+			breadcrumbEntry.setBaseModel(portletBreadcrumbEntry.getBaseModel());
+			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
+			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
 			boolean isLastEntry = (i == (portletBreadcrumbEntries.size() - 1));
+			String url = portletBreadcrumbEntry.getURL();
 
 			if (Validator.isNotNull(portletBreadcrumbURL) && !isLastEntry) {
 				if (!CookieKeys.hasSessionId(request)) {
 					HttpSession session = request.getSession();
 
-					portletBreadcrumbURL = PortalUtil.getURLWithSessionId(
-						portletBreadcrumbURL, session.getId());
+					url = PortalUtil.getURLWithSessionId(url, session.getId());
 				}
 
-				breadcrumbEntry.setURL(portletBreadcrumbURL);
+				breadcrumbEntry.setURL(url);
 			}
-
-			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
-			breadcrumbEntry.setEntity(portletBreadcrumbEntry.getEntity());
-			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
 
 			breadcrumbEntries.add(breadcrumbEntry);
 		}
@@ -202,8 +196,6 @@ public class BreadcrumbImpl implements Breadcrumb {
 		if (group.isControlPanel()) {
 			return;
 		}
-
-		BreadcrumbEntry breadcrumbEntry = null;
 
 		if (includeParentGroups) {
 			LayoutSet parentLayoutSet = _getParentLayoutSet(layoutSet);
@@ -232,10 +224,10 @@ public class BreadcrumbImpl implements Breadcrumb {
 					layoutSetFriendlyURL, themeDisplay.getSessionId());
 			}
 
-			breadcrumbEntry = new BreadcrumbEntry();
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-			breadcrumbEntry.setURL(layoutSetFriendlyURL);
 			breadcrumbEntry.setTitle(group.getDescriptiveName());
+			breadcrumbEntry.setURL(layoutSetFriendlyURL);
 
 			breadcrumbEntries.add(breadcrumbEntry);
 		}
@@ -258,11 +250,18 @@ public class BreadcrumbImpl implements Breadcrumb {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		// Entry entity
+		breadcrumbEntry.setBaseModel(layout);
 
-		breadcrumbEntry.setEntity(layout);
+		String layoutName = layout.getName(themeDisplay.getLocale());
 
-		// Entry URL
+		if (layout.isTypeControlPanel()) {
+			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
+				layoutName = LanguageUtil.get(
+					themeDisplay.getLocale(), "control-panel");
+			}
+		}
+
+		breadcrumbEntry.setTitle(layoutName);
 
 		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
@@ -277,19 +276,6 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 
 		breadcrumbEntry.setURL(layoutURL);
-
-		// Entry title
-
-		String layoutName = layout.getName(themeDisplay.getLocale());
-
-		if (layout.isTypeControlPanel()) {
-			if (layoutName.equals(LayoutConstants.NAME_CONTROL_PANEL_DEFAULT)) {
-				layoutName = LanguageUtil.get(
-					themeDisplay.getLocale(), "control-panel");
-			}
-		}
-
-		breadcrumbEntry.setTitle(layoutName);
 
 		breadcrumbEntries.add(breadcrumbEntry);
 	}

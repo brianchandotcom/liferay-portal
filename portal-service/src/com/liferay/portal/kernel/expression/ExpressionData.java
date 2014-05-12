@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
 package com.liferay.portal.kernel.expression;
 
@@ -10,28 +23,22 @@ import java.util.List;
 public class ExpressionData {
 
 	public ExpressionData(String originalExpression) {
-
 		_originalExpression = originalExpression;
-		_variableNames = new ArrayList<String>();
-		_variableTypes = new ArrayList<Class<?>>();
-		_variableValues = new ArrayList<Object>();
 	}
 
-	public void addVariable(String variableName, Class<?> variableClass,
-		Object variableValue) {
+	public void addVariable(
+		Class<?> variableType, String variableName, Object variableValue) {
 
+		_variableTypes.add(variableType);
 		_variableNames.add(variableName);
-		_variableTypes.add(variableClass);
 		_variableValues.add(variableValue);
 	}
 
 	public String getOriginalExpression() {
-
 		return _originalExpression;
 	}
 
 	public String getRewritedExpression() {
-
 		if (_rewritedExpression == null) {
 			return _originalExpression;
 		}
@@ -40,29 +47,25 @@ public class ExpressionData {
 	}
 
 	public String[] getVariableNames() {
-
 		return _variableNames.toArray(new String[_variableNames.size()]);
 	}
 
 	public Class<?>[] getVariableTypes() {
-
 		return _variableTypes.toArray(new Class<?>[_variableTypes.size()]);
 	}
 
 	public Object[] getVariableValues() {
-
 		return _variableValues.toArray();
 	}
 
 	public void setRewritedExpression(String rewritedExpression) {
-
-		this._rewritedExpression = rewritedExpression;
+		_rewritedExpression = rewritedExpression;
 	}
 
-	private final String _originalExpression;
+	private String _originalExpression;
 	private String _rewritedExpression;
-	private final List<String> _variableNames;
-	private final List<Class<?>> _variableTypes;
-	private final List<Object> _variableValues;
+	private List<String> _variableNames = new ArrayList<String>();;
+	private List<Class<?>> _variableTypes = new ArrayList<Class<?>>();
+	private List<Object> _variableValues = new ArrayList<Object>();
 
 }

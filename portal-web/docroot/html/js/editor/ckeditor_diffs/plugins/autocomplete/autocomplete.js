@@ -118,7 +118,7 @@
 
 					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
 
-					if (prevNode.getUniqueId() === prevTermPosition.container.getUniqueId() && caretIndex <= prevTermPosition.index) {
+					if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
 						caretIndex = prevNode.getText().length;
 					}
 
@@ -197,7 +197,7 @@
 					var bookmarks = editor.getSelection().createBookmarks();
 					var bookmarkNodeEl = bookmarks[0].startNode.$;
 
-					bookmarkNodeEl.style.setProperty('display', 'inline-block');
+					A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
 
 					var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
 					var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
@@ -239,8 +239,6 @@
 
 					var caretContainer = instance._getCaretContainer();
 
-					var caretContainerId = caretContainer.getUniqueId();
-
 					var caretIndex = instance._getCaretIndex();
 
 					var query = caretContainer.getText().substring(0, caretIndex.start);
@@ -255,7 +253,7 @@
 						termWalker.guard = function(node) {
 							var hasTerm = false;
 
-							if (node.type === CKEDITOR.NODE_TEXT && node.getUniqueId() !== caretContainerId) {
+							if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
 								var nodeText = node.getText();
 
 								termIndex = nodeText.lastIndexOf(term);

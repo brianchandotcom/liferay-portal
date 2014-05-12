@@ -52,6 +52,12 @@ public class JSONWebServiceActionConfig
 		catch (NoSuchMethodException nsme) {
 		}
 
+		Deprecated depreacted = _actionMethod.getAnnotation(Deprecated.class);
+
+		if (depreacted != null) {
+			_deprecated = true;
+		}
+
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
 		sb.append(_fullPath);
@@ -171,6 +177,11 @@ public class JSONWebServiceActionConfig
 	}
 
 	@Override
+	public boolean isDeprecated() {
+		return _deprecated;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
@@ -180,6 +191,8 @@ public class JSONWebServiceActionConfig
 		sb.append(_actionMethod);
 		sb.append(", contextPath=");
 		sb.append(_contextPath);
+		sb.append(", deprecated=");
+		sb.append(_deprecated);
 		sb.append(", fullPath=");
 		sb.append(_fullPath);
 		sb.append(", method=");
@@ -201,6 +214,7 @@ public class JSONWebServiceActionConfig
 	private Method _actionMethod;
 	private Object _actionObject;
 	private String _contextPath;
+	private boolean _deprecated;
 	private String _fullPath;
 	private String _method;
 	private MethodParameter[] _methodParameters;

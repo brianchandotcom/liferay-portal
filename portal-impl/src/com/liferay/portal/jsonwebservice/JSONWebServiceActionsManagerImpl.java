@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -138,7 +139,8 @@ public class JSONWebServiceActionsManagerImpl
 			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
 
 		return new JSONWebServiceActionImpl(
-			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
+			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
+			_jsonWebServiceNaming);
 	}
 
 	@Override
@@ -181,7 +183,8 @@ public class JSONWebServiceActionsManagerImpl
 			_jsonWebServiceActionConfigs.get(jsonWebServiceActionConfigIndex);
 
 		return new JSONWebServiceActionImpl(
-			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
+			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
+			_jsonWebServiceNaming);
 	}
 
 	@Override
@@ -236,6 +239,10 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return count;
+	}
+
+	public JSONWebServiceNaming getJSONWebServiceNaming() {
+		return _jsonWebServiceNaming;
 	}
 
 	@Override
@@ -548,6 +555,8 @@ public class JSONWebServiceActionsManagerImpl
 	private SortedArrayList<JSONWebServiceActionConfig>
 		_jsonWebServiceActionConfigs =
 			new SortedArrayList<JSONWebServiceActionConfig>();
+	private JSONWebServiceNaming _jsonWebServiceNaming =
+		new JSONWebServiceNaming();
 	private BinarySearch<String> _pathBinarySearch = new PathBinarySearch();
 
 	private class PathBinarySearch extends BinarySearch<String> {

@@ -35,16 +35,49 @@ import java.util.Set;
  */
 public class JSONWebServiceNaming {
 
-	public String convertClassNameToPath(Class<?> clazz) {
+	public String convertMethodNameToHttpMethod(Method method) {
+		String methodName = method.getName();
+
+		String methodNamePrefix = getMethodNamePrefix(methodName);
+
+		if (prefixes.contains(methodNamePrefix)) {
+			return HttpMethods.GET;
+		}
+
+		return HttpMethods.POST;
+	}
+
+	public String convertMethodNameToPath(Method method) {
+		return CamelCaseUtil.fromCamelCase(method.getName());
+	}
+
+	public String convertModelClassNameToImplClassName(Class<?> clazz) {
+		String modelImplClassName = clazz.getName();
+
+		modelImplClassName = StringUtil.replace(
+			modelImplClassName, ".model.", ".model.impl.");
+
+		modelImplClassName += "ModelImpl";
+
+		return modelImplClassName;
+	}
+
+	public String convertServiceClassNameToPath(Class<?> clazz) {
+		String className = convertServiceClassNameToSimpleName(clazz);
+
+		return StringUtil.toLowerCase(className);
+	}
+
+	public String convertServiceClassNameToSimpleName(Class<?> clazz) {
 		String className = clazz.getSimpleName();
 
 		className = StringUtil.replace(className, "Impl", StringPool.BLANK);
 		className = StringUtil.replace(className, "Service", StringPool.BLANK);
 
-		return StringUtil.toLowerCase(className);
+		return className;
 	}
 
-	public String convertImplClassNameToUtilClassName(
+	public String convertServiceImplClassNameToUtilClassName(
 		Class<?> implementationClass) {
 
 		String implementationClassName = implementationClass.getName();
@@ -60,22 +93,6 @@ public class JSONWebServiceNaming {
 			utilClassName, ".impl.", StringPool.PERIOD);
 
 		return utilClassName;
-	}
-
-	public String convertMethodNameToHttpMethod(Method method) {
-		String methodName = method.getName();
-
-		String methodNamePrefix = getMethodNamePrefix(methodName);
-
-		if (prefixes.contains(methodNamePrefix)) {
-			return HttpMethods.GET;
-		}
-
-		return HttpMethods.POST;
-	}
-
-	public String convertMethodNameToPath(Method method) {
-		return CamelCaseUtil.fromCamelCase(method.getName());
 	}
 
 	public boolean isIncludedMethod(Method method) {

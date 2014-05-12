@@ -218,10 +218,12 @@ public class SubscriptionLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		Subscription subscription = subscriptionPersistence.findByC_U_C_C(
+		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			user.getCompanyId(), userId, classNameId, classPK);
 
-		deleteSubscription(subscription);
+		if (subscription != null) {
+			deleteSubscription(subscription);
+		}
 	}
 
 	/**

@@ -58,21 +58,45 @@ public class GlobalShutdownAction extends SimpleAction {
 	@Override
 	public void run(String[] ids) {
 
-		// Portal Resiliency
+		// Lower shutdown levels have dependences on higher levels, therefore
+		// lower ones need to shutdown before higher ones.
+		// Components within the same shutdown level should have no dependence
+		// among each others.
 
-		MPIHelperUtil.shutdown();
+		shutdownLevel1();
+		shutdownLevel2();
+		shutdownLevel3();
+		shutdownLevel4();
+		shutdownLevel5();
+		shutdownLevel6();
+	}
 
-		// Auto deploy
+	protected ThreadGroup getThreadGroup() {
+		Thread currentThread = Thread.currentThread();
 
-		AutoDeployUtil.unregisterDir(AutoDeployDir.DEFAULT_NAME);
+		ThreadGroup threadGroup = currentThread.getThreadGroup();
 
-		// Hot deploy
+		for (int i = 0; i < 10; i++) {
+			if (threadGroup.getParent() == null) {
+				break;
+			}
+			else {
+				threadGroup = threadGroup.getParent();
+			}
+		}
 
-		HotDeployUtil.unregisterListeners();
+		return threadGroup;
+	}
 
-		// Sandbox deploy
+	protected Thread[] getThreads(ThreadGroup threadGroup) {
+		Thread[] threads = new Thread[threadGroup.activeCount() * 2];
 
-		SandboxDeployUtil.unregisterDir(SandboxDeployDir.DEFAULT_NAME);
+		threadGroup.enumerate(threads);
+
+		return threads;
+	}
+
+	protected void shutdownLevel1() {
 
 		// Instant messenger AIM
 
@@ -150,46 +174,6 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		RequiredPluginsUtil.stopCheckingRequiredPlugins();
 
-		// Thread local registry
-
-		ThirdPartyThreadLocalRegistry.resetThreadLocals();
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
-
-		// Hypersonic
-
-		DB db = DBFactoryUtil.getDB();
-
-		String dbType = db.getType();
-
-		if (dbType.equals(DB.TYPE_HYPERSONIC)) {
-			Connection connection = null;
-			Statement statement = null;
-
-			try {
-				connection = DataAccess.getConnection();
-
-				statement = connection.createStatement();
-
-				statement.executeUpdate("SHUTDOWN");
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-			finally {
-				DataAccess.cleanUp(connection, statement);
-			}
-		}
-
-		// Reset log to default JDK 1.4 logger. This will allow WARs dependent
-		// on the portal to still log events after the portal WAR has been
-		// destroyed.
-
-		try {
-			LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
-		}
-		catch (Exception e) {
-		}
-
 		// Scheduler engine
 
 		try {
@@ -222,10 +206,81 @@ public class GlobalShutdownAction extends SimpleAction {
 		}
 		catch (Exception e) {
 		}
+	}
+
+	protected void shutdownLevel2() {
+
+		// Auto deploy
+
+		AutoDeployUtil.unregisterDir(AutoDeployDir.DEFAULT_NAME);
+
+		// Hot deploy
+
+		HotDeployUtil.unregisterListeners();
+
+		// Sandbox deploy
+
+		SandboxDeployUtil.unregisterDir(SandboxDeployDir.DEFAULT_NAME);
+	}
+
+	protected void shutdownLevel3() {
+
+		// Hypersonic
+
+		DB db = DBFactoryUtil.getDB();
+
+		String dbType = db.getType();
+
+		if (dbType.equals(DB.TYPE_HYPERSONIC)) {
+			Connection connection = null;
+			Statement statement = null;
+
+			try {
+				connection = DataAccess.getConnection();
+
+				statement = connection.createStatement();
+
+				statement.executeUpdate("SHUTDOWN");
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+			finally {
+				DataAccess.cleanUp(connection, statement);
+			}
+		}
+
+		// Portal Resiliency
+
+		MPIHelperUtil.shutdown();
+	}
+
+	protected void shutdownLevel4() {
 
 		// Portal executors
 
 		PortalExecutorManagerUtil.shutdown(true);
+	}
+
+	protected void shutdownLevel5() {
+
+		// Reset log to default JDK 1.4 logger. This will allow WARs dependent
+		// on the portal to still log events after the portal WAR has been
+		// destroyed.
+
+		try {
+			LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
+		}
+		catch (Exception e) {
+		}
+
+		// Thread local registry
+
+		ThirdPartyThreadLocalRegistry.resetThreadLocals();
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
+	}
+
+	protected void shutdownLevel6() {
 
 		// Programmatically exit
 
@@ -252,31 +307,6 @@ public class GlobalShutdownAction extends SimpleAction {
 
 			threadGroup.destroy();
 		}
-	}
-
-	protected ThreadGroup getThreadGroup() {
-		Thread currentThread = Thread.currentThread();
-
-		ThreadGroup threadGroup = currentThread.getThreadGroup();
-
-		for (int i = 0; i < 10; i++) {
-			if (threadGroup.getParent() == null) {
-				break;
-			}
-			else {
-				threadGroup = threadGroup.getParent();
-			}
-		}
-
-		return threadGroup;
-	}
-
-	protected Thread[] getThreads(ThreadGroup threadGroup) {
-		Thread[] threads = new Thread[threadGroup.activeCount() * 2];
-
-		threadGroup.enumerate(threads);
-
-		return threads;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(GlobalShutdownAction.class);

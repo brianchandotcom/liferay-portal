@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.expression;
-
-import com.liferay.portal.kernel.expression.ExpressionEvaluator;
+package com.liferay.portal.kernel.util;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Marcellus Tavares
  */
-public abstract class BaseExpresssionTest {
+public class MathUtilTest {
 
-	public void testExpression(ExpressionTestData expressionTestData)
-		throws Exception {
+	@Test
+	public void testSumWithDoubleValues() {
+		double expected = 1.1 + 2.2 + 3.3 + 5.5 + 8.8;
 
-		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(
-			expressionTestData.getVariables());
+		Assert.assertEquals(
+			expected, MathUtil.sum(1.1, 2.2, 3.3, 5.5, 8.8), 0.01);
+	}
 
-		Object result = evaluator.evaluateExpression(
-			expressionTestData.getExpression(),
-			expressionTestData.getReturnType());
+	@Test
+	public void testSumWithLongValues() {
+		long expected = 1 + 2 + 3 + 5 + 8;
 
-		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+		Assert.assertEquals(expected, MathUtil.sum(1L, 2L, 3L, 5L, 8L));
 	}
 
 }

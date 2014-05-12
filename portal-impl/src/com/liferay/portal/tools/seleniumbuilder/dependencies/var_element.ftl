@@ -100,7 +100,7 @@
 
 				<#assign parameter = parameter?trim>
 
-				RuntimeVariables.evaluateVariable("${parameter}", ${variableContext})
+				RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeHtml(parameter)}", ${variableContext})
 
 				<#if methodParameter_has_next>
 					,

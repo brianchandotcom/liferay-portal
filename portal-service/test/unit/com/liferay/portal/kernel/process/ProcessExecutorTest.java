@@ -541,10 +541,10 @@ public class ProcessExecutorTest {
 
 		try {
 
-			// Negative one crash
+			// One crash
 
 			KillJVMProcessCallable killJVMProcessCallable =
-				new KillJVMProcessCallable(-1);
+				new KillJVMProcessCallable(1);
 
 			Future<Serializable> future = ProcessExecutor.execute(
 				_classPath, killJVMProcessCallable);
@@ -560,7 +560,17 @@ public class ProcessExecutorTest {
 
 				Throwable throwable = ee.getCause();
 
-				Assert.assertTrue(throwable instanceof ProcessException);
+				Assert.assertSame(
+					TerminationProcessException.class, throwable.getClass());
+				Assert.assertEquals(
+					"Subprocess terminated with exit code 1",
+					throwable.getMessage());
+
+				TerminationProcessException terminationProcessException =
+					(TerminationProcessException)throwable;
+
+				Assert.assertEquals(
+					1, terminationProcessException.getExitCode());
 			}
 
 			// Zero crash
@@ -581,11 +591,11 @@ public class ProcessExecutorTest {
 
 				Throwable throwable = ee.getCause();
 
-				Assert.assertTrue(throwable instanceof ProcessException);
+				Assert.assertSame(ProcessException.class, throwable.getClass());
 
 				throwable = throwable.getCause();
 
-				Assert.assertTrue(throwable instanceof EOFException);
+				Assert.assertSame(EOFException.class, throwable.getClass());
 			}
 		}
 		finally {

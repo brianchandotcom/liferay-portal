@@ -1,0 +1,15 @@
+{
+	"array": [1, 2, 3],
+	"boolean": true,
+	"integer": 1,
+	"number": 1.5,
+	"null": null,
+	"object": {
+		"additionalProperty": "valid",
+		"requiredString": "abc"
+	},
+	"string": "abc",
+	"patternProperty1": 1,
+	"patternProperty2": 2,
+	"additionalProperty": "invalid"
+}

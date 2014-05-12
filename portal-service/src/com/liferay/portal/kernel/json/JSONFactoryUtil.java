@@ -75,6 +75,12 @@ public class JSONFactoryUtil {
 		return getJSONFactory().createJSONSerializer();
 	}
 
+	public static JSONValidator createJSONValidator(String jsonSchema)
+		throws JSONException {
+
+		return getJSONFactory().createJSONValidator(jsonSchema);
+	}
+
 	public static Object deserialize(JSONObject jsonObj) {
 		return getJSONFactory().deserialize(jsonObj);
 	}

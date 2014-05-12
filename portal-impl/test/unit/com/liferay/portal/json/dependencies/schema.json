@@ -1,0 +1,55 @@
+{
+	"additionalProperties": false,
+	"definitions": {
+		"array": {
+			"items": {
+				"type": "integer"
+			},
+			"type": "array"
+		},
+		"object": {
+			"properties": {
+				"requiredString": {
+					"type": "string"
+				}
+			},
+			"required": ["requiredString"],
+			"type": "object"
+		}
+	},
+	"description": "This object is intended to be used to test basic json schema features",
+	"properties": {
+		"array": {
+			"$ref": "#/definitions/array"
+		},
+		"boolean": {
+			"type": "boolean"
+		},
+		"email": {
+			"format": "email",
+			"type": "string"
+		},
+		"integer": {
+			"type": "integer"
+		},
+		"null": {
+			"type": "null"
+		},
+		"number": {
+			"type": "number"
+		},
+		"object": {
+			"$ref": "#/definitions/object"
+		},
+		"string": {
+			"type": "string"
+		}
+	},
+	"patternProperties": {
+		"^patternProperty[0-9]+$": {
+			"type": "integer"
+		}
+	},
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object"
+}

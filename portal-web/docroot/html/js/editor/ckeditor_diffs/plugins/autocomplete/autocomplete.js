@@ -123,6 +123,10 @@
 					}
 
 					instance._setCaretIndex(prevNode, caretIndex);
+
+					var editor = instance.get('editor');
+
+					editor.fire('saveSnapshot');
 				},
 
 				_bindUI: function() {

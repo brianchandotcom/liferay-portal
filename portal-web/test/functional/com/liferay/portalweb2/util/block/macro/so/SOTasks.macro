@@ -265,6 +265,7 @@
 
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
 		<execute action="SOTasksTask#assertClick" locator-key1="COMMENT_DELETE_LINK" value1="Delete" />
+		<execute action="SOTasksTask#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
 		<execute action="SOTasksTask#assertElementNotPresent" locator-key1="COMMENT_BODY" />
 		<execute action="SOTasksTask#assertTextNotPresent" value1="${taskComment}" />
 
@@ -350,8 +351,8 @@
 
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskComment}" />
 		<execute action="SOTasksTask#assertClick" locator-key1="COMMENT_EDIT_LINK" value1="Edit" />
-		<execute action="SOTasksTask#type" locator-key1="COMMENT_FIELD" value1="${taskCommentEdit}" />
-		<execute action="SOTasksTask#click" locator-key1="COMMENT_SUBMIT_BUTTON" />
+		<execute action="SOTasksTask#type" locator-key1="COMMENT_EDIT_FIELD" value1="${taskCommentEdit}" />
+		<execute action="SOTasksTask#click" locator-key1="COMMENT_PUBLISH_BUTTON" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="COMMENT_BODY" value1="${taskCommentEdit}" />
 	</command>
 

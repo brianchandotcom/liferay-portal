@@ -13,28 +13,28 @@
 			<var name="expected" value="http://localhost:8080/web/guest" />
 		</execute>
 
-		<var method='StringUtil#replace("${url}", "guest", "hello")' name="url" />
+		<var method="StringUtil#replace(&quot;${url}&quot;, &quot;guest&quot;, &quot;hello&quot;)" name="url" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${url}" />
 			<var name="expected" value="http://localhost:8080/web/hello" />
 		</execute>
 
-		<var method='StringUtil#startsWith("This is a test", "This")' name="boolean" />
+		<var method="StringUtil#startsWith(&quot;This is a test&quot;, &quot;This&quot;)" name="boolean" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${boolean}" />
 			<var name="expected" value="true" />
 		</execute>
 
-		<var method='StringUtil#isLowerCase("Hello")' name="boolean" />
+		<var method="StringUtil#isLowerCase(&quot;Hello&quot;)" name="boolean" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${boolean}" />
 			<var name="expected" value="false" />
 		</execute>
 
-		<var method='StringUtil#count("Life Ray is Life of Portal", "Life")' name="int" />
+		<var method="StringUtil#count(&quot;Life Ray is Life of Portal&quot;, &quot;Life&quot;)" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />

@@ -130,27 +130,17 @@ public class BreadcrumbImpl implements Breadcrumb {
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> portletBreadcrumbEntries = _getPortletBreadcrumbs(
+		List<BreadcrumbEntry> breadcrumbEntries = _getPortletBreadcrumbs(
 			request);
 
-		if (portletBreadcrumbEntries == null) {
+		if (breadcrumbEntries == null) {
 			return Collections.emptyList();
 		}
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+		for (int i = 0; i < breadcrumbEntries.size(); i++) {
+			BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(i);
 
-		for (int i = 0; i < portletBreadcrumbEntries.size(); i++) {
-			BreadcrumbEntry portletBreadcrumbEntry =
-				portletBreadcrumbEntries.get(i);
-
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setBaseModel(portletBreadcrumbEntry.getBaseModel());
-			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
-			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
-
-			String url = portletBreadcrumbEntry.getURL();
+			String url = breadcrumbEntry.getURL();
 
 			if (Validator.isNotNull(url) &&
 				((i + 1) < portletBreadcrumbEntries.size())) {
@@ -163,8 +153,6 @@ public class BreadcrumbImpl implements Breadcrumb {
 
 				breadcrumbEntry.setURL(url);
 			}
-
-			breadcrumbEntries.add(breadcrumbEntry);
 		}
 
 		return breadcrumbEntries;

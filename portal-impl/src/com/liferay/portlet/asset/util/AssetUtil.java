@@ -261,20 +261,18 @@ public class AssetUtil {
 		PredicateFilter<AssetVocabulary> associatedVocabulariesFilter =
 			new PredicateFilter<AssetVocabulary>() {
 
-				@Override
-				public boolean filter(AssetVocabulary assetVocabulary) {
-					if (classTypePK ==
-							AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
-
-						return assetVocabulary.isAssociatedToAsset(classNameId);
-					}
-					else {
-						return assetVocabulary.isAssociatedToAsset(
-							classNameId, classTypePK);
-					}
+			@Override
+			public boolean filter(AssetVocabulary assetVocabulary) {
+				if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
+					return assetVocabulary.isAssociatedToAsset(classNameId);
 				}
+				else {
+					return assetVocabulary.isAssociatedToAsset(
+						classNameId, classTypePK);
+				}
+			}
 
-			};
+		};
 
 		Collection<AssetVocabulary> filteredVocabularies = ListUtil.filter(
 			vocabularies, associatedVocabulariesFilter);

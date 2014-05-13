@@ -196,16 +196,16 @@ public class ArrayUtilTest {
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					if (string.equals("b")) {
-						return true;
-					}
-
-					return false;
+			@Override
+			public boolean filter(String string) {
+				if (string.equals("b")) {
+					return true;
 				}
 
-			};
+				return false;
+			}
+
+		};
 
 		Assert.assertEquals(1, ArrayUtil.count(array, predicateFilter));
 	}
@@ -217,10 +217,10 @@ public class ArrayUtilTest {
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					return true;
-				}
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
 
 		};
 
@@ -234,10 +234,10 @@ public class ArrayUtilTest {
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					return true;
-				}
+			@Override
+			public boolean filter(String string) {
+				return true;
+			}
 
 		};
 
@@ -600,32 +600,32 @@ public class ArrayUtilTest {
 	private PredicateFilter<Double> _doublePredicateFilter =
 		new PredicateFilter<Double>() {
 
-			@Override
-			public boolean filter(Double d) {
-				return d >= 1.1;
-			}
+		@Override
+		public boolean filter(Double d) {
+			return d >= 1.1;
+		}
 
-		};
+	};
 
 	private PredicateFilter<Integer> _integerPredicateFilter =
 		new PredicateFilter<Integer>() {
 
-			@Override
-			public boolean filter(Integer i) {
-				return i >= 5;
-			}
+		@Override
+		public boolean filter(Integer i) {
+			return i >= 5;
+		}
 
-		};
+	};
 
 	private PredicateFilter<User> _userPredicateFilter =
 		new PredicateFilter<User>() {
 
-			@Override
-			public boolean filter(User user) {
-				return user.getAge() > 18;
-			}
+		@Override
+		public boolean filter(User user) {
+			return user.getAge() > 18;
+		}
 
-		};
+	};
 
 	private class User {
 

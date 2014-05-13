@@ -103,12 +103,19 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 		PredicateFilter<AssetCategory> existingCategoryFilter =
 			new PredicateFilter<AssetCategory>() {
-				@Override
-				public boolean filter(AssetCategory assetCategory) {
-					return ArrayUtil.contains(
-						selectedCategoryIds, assetCategory.getCategoryId());
+
+			@Override
+			public boolean filter(AssetCategory assetCategory) {
+				if (ArrayUtil.contains(
+					selectedCategoryIds, assetCategory.getCategoryId())) {
+
+					return true;
 				}
-			};
+
+				return false;
+			}
+
+		};
 
 		if (ListUtil.count(getCategories(), existingCategoryFilter) > 1) {
 			return true;
@@ -133,13 +140,18 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			PredicateFilter<AssetCategory> categoryFilter =
 				new PredicateFilter<AssetCategory>() {
 
-					@Override
-					public boolean filter(AssetCategory assetCategory) {
-						return ArrayUtil.contains(
-							selectedCategoryIds, assetCategory.getCategoryId());
+				@Override
+				public boolean filter(AssetCategory assetCategory) {
+					if (ArrayUtil.contains(
+						selectedCategoryIds, assetCategory.getCategoryId())) {
+
+						return true;
 					}
 
-				};
+					return false;
+				}
+
+			};
 
 			if (!ListUtil.exists(categories, categoryFilter)) {
 				return true;

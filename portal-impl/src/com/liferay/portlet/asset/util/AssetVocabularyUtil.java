@@ -55,21 +55,21 @@ public class AssetVocabularyUtil {
 			vocabularies,
 			new PredicateFilter<AssetVocabulary>() {
 
-				@Override
-				public boolean filter(AssetVocabulary curVocabulary) {
-					String curVocabularyTitle = curVocabulary.getTitle(locale);
+			@Override
+			public boolean filter(AssetVocabulary curVocabulary) {
+				String curVocabularyTitle = curVocabulary.getTitle(locale);
 
-					if (curVocabularyTitle.equals(vocabularyTitle) &&
-						(curVocabulary.getVocabularyId() !=
-							vocabulary.getVocabularyId())) {
+				if (curVocabularyTitle.equals(vocabularyTitle) &&
+					(curVocabulary.getVocabularyId() !=
+						vocabulary.getVocabularyId())) {
 
-						return true;
-					}
-
-					return false;
+					return true;
 				}
 
-			});
+				return false;
+			}
+
+		});
 
 		if (hasAmbiguousVocabularies) {
 			Group vocabularyGroup = GroupLocalServiceUtil.getGroup(

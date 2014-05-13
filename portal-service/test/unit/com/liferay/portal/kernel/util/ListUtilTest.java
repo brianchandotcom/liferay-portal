@@ -156,14 +156,14 @@ public class ListUtilTest {
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					if (!string.equals("b")) {
-						return true;
-					}
-
-					return false;
+			@Override
+			public boolean filter(String string) {
+				if (!string.equals("b")) {
+					return true;
 				}
+
+				return false;
+			}
 
 		};
 
@@ -200,14 +200,14 @@ public class ListUtilTest {
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					if (!string.equals("b")) {
-						return true;
-					}
-
-					return false;
+			@Override
+			public boolean filter(String string) {
+				if (!string.equals("b")) {
+					return true;
 				}
+
+				return false;
+			}
 
 		};
 

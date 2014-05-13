@@ -52,6 +52,8 @@ import org.springframework.mock.web.MockServletContext;
 public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 	protected static void initPortalServices() {
+		PropsUtil.setProps(new PropsImpl());
+
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
@@ -73,8 +75,6 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		methodParametersResolverUtil.setMethodParametersResolver(
 			new MethodParametersResolverImpl());
-
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	protected static void registerActionClass(Class<?> actionClass) {

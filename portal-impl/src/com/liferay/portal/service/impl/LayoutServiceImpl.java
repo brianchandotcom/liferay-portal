@@ -474,6 +474,27 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public long exportLayoutsAsFileInBackground(
 			String taskName, long groupId, boolean privateLayout,
 			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.exportLayoutsAsFileInBackground(
+			getUserId(), taskName, groupId, privateLayout, layoutIds,
+			parameterMap, startDate, endDate);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #exportLayoutsAsFileInBackground(String, long, boolean,
+	 *             long[], Map, Date, Date)}
+	 */
+	@Deprecated
+	@Override
+	public long exportLayoutsAsFileInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate, String fileName)
 		throws PortalException, SystemException {
 

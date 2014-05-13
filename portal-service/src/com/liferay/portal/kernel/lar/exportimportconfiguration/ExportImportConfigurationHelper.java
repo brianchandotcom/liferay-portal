@@ -92,13 +92,6 @@ public class ExportImportConfigurationHelper {
 	}
 
 	public static void publishLocalLayoutByExportImportConfiguration(
-			long userId, ExportImportConfiguration exportImportConfiguration)
-		throws PortalException, SystemException {
-
-		StagingUtil.publishLayouts(userId, exportImportConfiguration);
-	}
-
-	public static void publishLocalLayoutByExportImportConfiguration(
 			long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException {
 
@@ -106,15 +99,7 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
-		publishLocalLayoutByExportImportConfiguration(
-			userId, exportImportConfiguration);
-	}
-
-	public static void publishRemoteLayoutByExportImportConfiguration(
-			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException, SystemException {
-
-		StagingUtil.copyRemoteLayouts(exportImportConfiguration);
+		StagingUtil.publishLayouts(userId, exportImportConfiguration);
 	}
 
 	public static void publishRemoteLayoutByExportImportConfiguration(
@@ -125,8 +110,7 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
-		publishRemoteLayoutByExportImportConfiguration(
-			exportImportConfiguration);
+		StagingUtil.copyRemoteLayouts(exportImportConfiguration);
 	}
 
 	public static ExportImportConfiguration

@@ -647,6 +647,40 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
+	protected Properties getExclusionsProperties(String fileName)
+		throws IOException {
+
+		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
+
+		if (exclusionsTuples.isEmpty()) {
+			return null;
+		}
+
+		Properties allProperties = new Properties();
+
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			inputStream.close();
+
+			if (!portalSource) {
+				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
+					1);
+
+				properties = stripTopLevelDirectories(
+					properties, pluginsDirectoryLevel);
+			}
+
+			allProperties.putAll(properties);
+		}
+
+		return allProperties;
+	}
+
 	protected List<Tuple> getExclusionsTuples(String fileName)
 		throws IOException {
 
@@ -690,40 +724,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return exclusionsTuples;
-	}
-
-	protected Properties getExclusionsProperties(String fileName)
-		throws IOException {
-
-		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
-
-		if (exclusionsTuples.isEmpty()) {
-			return null;
-		}
-
-		Properties allProperties = new Properties();
-
-		for (Tuple exclusionsTuple : exclusionsTuples) {
-			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			inputStream.close();
-
-			if (!portalSource) {
-				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
-					1);
-
-				properties = stripTopLevelDirectories(
-					properties, pluginsDirectoryLevel);
-			}
-
-			allProperties.putAll(properties);
-		}
-
-		return allProperties;
 	}
 
 	protected List<String> getFileNames(

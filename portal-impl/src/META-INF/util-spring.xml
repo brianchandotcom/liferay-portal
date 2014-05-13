@@ -247,6 +247,9 @@
 				<property name="errorSPI">
 					<bean class="com.liferay.portal.resiliency.spi.ErrorSPI" />
 				</property>
+				<property name="sPIRegistryValidator">
+					<bean class="com.liferay.portal.kernel.resiliency.spi.DefaultSPIRegistryValidator" />
+				</property>
 			</bean>
 		</property>
 	</bean>

@@ -14,9 +14,16 @@
 
 package com.liferay.portal.kernel.resiliency.spi.remote;
 
+import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.MockIntraband;
+import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
+import com.liferay.portal.kernel.nio.intraband.rpc.RPCResponse;
 import com.liferay.portal.kernel.nio.intraband.welder.Welder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -24,31 +31,40 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.ProcessExecutor.ProcessContext;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
+import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtilTestUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockRemoteSPI;
+import com.liferay.portal.kernel.resiliency.spi.MockSPI;
+import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.MockWelder;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.resiliency.spi.SPIRegistry;
+import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.MockSPIAgent;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPISynchronousQueueUtil;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.RegisterCallback;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.SPIShutdownHook;
+import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI.UnregisterSPIProcessCallable;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ReflectPermission;
 
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
@@ -56,12 +72,16 @@ import java.rmi.server.UnicastRemoteObject;
 import java.security.Permission;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -95,11 +115,31 @@ public class RemoteSPITest {
 
 	@Before
 	public void setUp() {
-		_spiConfiguration = new SPIConfiguration(
-			"spiId", MockSPIAgent.class.getName(), 8081, "", new String[0],
-			new String[0], null);
+		_spiConfiguration =
+			new SPIConfiguration(
+				"spiId", null, null, MockSPIAgent.class.getName(), 8081, null,
+				new String[0], new String[0], 5000, 0, 0, null);
 
 		_mockRemoteSPI = new MockRemoteSPI(_spiConfiguration);
+
+		_mockRemoteSPI.countDownLatch = new CountDownLatch(1);
+
+		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
+
+		spiRegistryUtil.setSPIRegistry(
+			(SPIRegistry)ProxyUtil.newProxyInstance(
+				RemoteSPITest.class.getClassLoader(),
+				new Class<?>[] {SPIRegistry.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						return null;
+					}
+
+				}));
 	}
 
 	@Test
@@ -210,6 +250,54 @@ public class RemoteSPITest {
 	}
 
 	@Test
+	public void testDestroy() throws RemoteException {
+
+		// Unexport failure
+
+		try {
+			_mockRemoteSPI.destroy();
+
+			Assert.fail();
+		}
+		catch (RemoteException re) {
+			Assert.assertSame(NoSuchObjectException.class, re.getClass());
+		}
+
+		CountDownLatch countDownLatch = _mockRemoteSPI.countDownLatch;
+
+		Assert.assertEquals(0, countDownLatch.getCount());
+
+		// Destroy failure
+
+		_mockRemoteSPI.setFailOnDestroy(true);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		try {
+			_mockRemoteSPI.destroy();
+
+			Assert.fail();
+		}
+		catch (RemoteException re) {
+			Assert.assertSame(RemoteException.class, re.getClass());
+		}
+
+		assertUnexported();
+
+		// Success destroy
+
+		_mockRemoteSPI.countDownLatch = null;
+
+		_mockRemoteSPI.setFailOnDestroy(false);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		_mockRemoteSPI.destroy();
+
+		assertUnexported();
+	}
+
+	@Test
 	public void testRegisterCallback() throws Exception {
 
 		// Success
@@ -289,7 +377,11 @@ public class RemoteSPITest {
 		ObjectInputStream objectInputStream = new ObjectInputStream(
 			new UnsyncByteArrayInputStream(data));
 
+		Assert.assertTrue(DependencyManagementThreadLocal.isEnabled());
+
 		Object object = objectInputStream.readObject();
+
+		Assert.assertFalse(DependencyManagementThreadLocal.isEnabled());
 
 		Assert.assertSame(MockRemoteSPI.class, object.getClass());
 
@@ -405,30 +497,342 @@ public class RemoteSPITest {
 	}
 
 	@Test
-	public void testSPIShutdownHook() {
+	public void testSPIShutdownHookRun1() {
 
-		// Peaceful shutdown
+		// Shortcut
+
+		_mockRemoteSPI.countDownLatch = new CountDownLatch(0);
 
 		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
 
-		Assert.assertTrue(spiShutdownHook.shutdown(0, null));
-
-		CaptureHandler captureHandler = null;
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
 
 		try {
-
-			// Unable to stop with log
-
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				RemoteSPI.class.getName(), Level.SEVERE);
+			spiShutdownHook.run();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			_mockRemoteSPI.setFailOnStop(true);
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
 
+	@Test
+	public void testSPIShutdownHookRun2() throws RemoteException {
+
+		// Unable to unregister and MPI waiting timed out, with log
+
+		String spiProviderName = "spiProviderName";
+
+		MockSPIProvider mockSPIProvider = new MockSPIProvider(spiProviderName);
+
+		MPIHelperUtil.registerSPIProvider(mockSPIProvider);
+
+		_mockRemoteSPI.setFailOnStop(false);
+		_mockRemoteSPI.setSpiProviderName(spiProviderName);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		MPIHelperUtil.registerSPI(_mockRemoteSPI);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(3, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to unregister SPI from MPI", logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Wait up to " + _spiConfiguration.getShutdownTimeout() +
+					" ms for MPI shutdown request",
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(2);
+
+			Assert.assertEquals(
+				"Proceed with SPI shutdown", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookRun3() throws RemoteException {
+
+		// Unable to unregister and MPI waiting timed out, without log
+
+		String spiProviderName = "spiProviderName";
+
+		MockSPIProvider mockSPIProvider = new MockSPIProvider(spiProviderName);
+
+		MPIHelperUtil.registerSPIProvider(mockSPIProvider);
+
+		_mockRemoteSPI.setFailOnStop(false);
+		_mockRemoteSPI.setSpiProviderName(spiProviderName);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		MPIHelperUtil.registerSPI(_mockRemoteSPI);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.OFF);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookRun4() throws Exception {
+
+		// Unable to unregister and MPI shutdown request received, without log
+
+		String spiProviderName = "spiProviderName";
+
+		MockSPIProvider mockSPIProvider = new MockSPIProvider(spiProviderName);
+
+		MPIHelperUtil.registerSPIProvider(mockSPIProvider);
+
+		_mockRemoteSPI = new MockRemoteSPI(
+			new SPIConfiguration(
+				"spiId", null, null, MockSPIAgent.class.getName(), 8081, null,
+				new String[0], new String[0], 5000, 0, Long.MAX_VALUE, null));
+
+		_mockRemoteSPI.countDownLatch = new CountDownLatch(1);
+
+		_mockRemoteSPI.setFailOnStop(false);
+		_mockRemoteSPI.setSpiProviderName(spiProviderName);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		MPIHelperUtil.registerSPI(_mockRemoteSPI);
+
+		Future<?> future = actionOnMPIWaiting(true);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.OFF);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		Assert.assertNull(future.get());
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookRun5() throws Exception {
+
+		// Unregister returns false and MPI waiting interrupts, with log
+
+		_mockRemoteSPI = new MockRemoteSPI(
+			new SPIConfiguration(
+				"spiId", null, null, MockSPIAgent.class.getName(), 8081, null,
+				new String[0], new String[0], 5000, 0, Long.MAX_VALUE, null));
+
+		_mockRemoteSPI.countDownLatch = new CountDownLatch(1);
+		_mockRemoteSPI.registrationReference = mockRegistrationReference(false);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		Future<?> future = actionOnMPIWaiting(false);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(2, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Wait up to " + Long.MAX_VALUE + " ms for MPI shutdown request",
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Proceed with SPI shutdown", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		Assert.assertNull(future.get());
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookRun6() throws Exception {
+
+		// Unregister returns true and MPI shutdown request received, with log
+
+		_mockRemoteSPI = new MockRemoteSPI(
+			new SPIConfiguration(
+				"spiId", null, null, MockSPIAgent.class.getName(), 8081, null,
+				new String[0], new String[0], 5000, 0, Long.MAX_VALUE, null));
+
+		_mockRemoteSPI.countDownLatch = new CountDownLatch(1);
+		_mockRemoteSPI.registrationReference = mockRegistrationReference(false);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		Future<?> future = actionOnMPIWaiting(true);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(2, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Wait up to " + Long.MAX_VALUE + " ms for MPI shutdown request",
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"MPI shutdown request received", logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		Assert.assertNull(future.get());
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookRun7() throws Exception {
+
+		// Unregister returns true and MPI waiting timed out, with log
+
+		_mockRemoteSPI.registrationReference = mockRegistrationReference(true);
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
+
+		try {
+			spiShutdownHook.run();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookShutdown1() throws RemoteException {
+
+		// Peacefully
+
+		UnicastRemoteObject.exportObject(_mockRemoteSPI, 0);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.ALL);
+
+		try {
 			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
 
-			Assert.assertEquals(1, logRecords.size());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+
+		assertUnexported();
+	}
+
+	@Test
+	public void testSPIShutdownHookShutdown2() {
+
+		// Unable to stop and destroy, with log
+
+		_mockRemoteSPI.setFailOnStop(true);
+
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.SEVERE);
+
+		try {
+			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
@@ -438,52 +842,155 @@ public class RemoteSPITest {
 
 			Assert.assertSame(RemoteException.class, throwable.getClass());
 
-			// Unable to stop without log
-
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
-
-			_mockRemoteSPI.setFailOnStop(true);
-
-			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
-
-			Assert.assertTrue(logRecords.isEmpty());
-
-			// Unable to destroy with log
-
-			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
-
-			_mockRemoteSPI.setFailOnStop(false);
-			_mockRemoteSPI.setFailOnDestroy(true);
-
-			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
-
-			Assert.assertEquals(1, logRecords.size());
-
-			logRecord = logRecords.get(0);
+			logRecord = logRecords.get(1);
 
 			Assert.assertEquals(
 				"Unable to destroy SPI", logRecord.getMessage());
 
 			throwable = logRecord.getThrown();
 
-			Assert.assertSame(RemoteException.class, throwable.getClass());
+			Assert.assertSame(
+				NoSuchObjectException.class, throwable.getClass());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
 
-			// Unable to destroy without log
+	@Test
+	public void testSPIShutdownHookShutdown3() {
 
-			logRecords = captureHandler.resetLogLevel(Level.OFF);
+		// Unable to stop and destroy, without log
 
-			_mockRemoteSPI.setFailOnStop(false);
-			_mockRemoteSPI.setFailOnDestroy(true);
+		_mockRemoteSPI.setFailOnStop(true);
 
+		SPIShutdownHook spiShutdownHook = _mockRemoteSPI.new SPIShutdownHook();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			RemoteSPI.class.getName(), Level.OFF);
+
+		try {
 			Assert.assertTrue(spiShutdownHook.shutdown(0, null));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 		finally {
-			if (captureHandler != null) {
-				captureHandler.close();
-			}
+			captureHandler.close();
 		}
+	}
+
+	@Test
+	public void testUnregisterSPIProcessCallable() throws Exception {
+
+		// No such SPI
+
+		String spiProviderName = "spiProviderName";
+		String spiId = "spiId";
+
+		ProcessCallable<Boolean> processCallable =
+			new UnregisterSPIProcessCallable(spiProviderName, spiId);
+
+		Assert.assertFalse(processCallable.call());
+
+		// Unable to unregister SPI
+
+		MPIHelperUtil.registerSPIProvider(new MockSPIProvider(spiProviderName));
+
+		MockSPI mockSPI = new MockSPI();
+
+		mockSPI.spiProviderName = spiProviderName;
+
+		MPIHelperUtilTestUtil.directResigterSPI(spiId, mockSPI);
+
+		Assert.assertFalse(processCallable.call());
+
+		// Successful unregister SPI
+
+		mockSPI.mpi = MPIHelperUtil.getMPI();
+		mockSPI.spiConfiguration = new SPIConfiguration(
+			spiId, null, 0, null, null, new String[0], null);
+
+		Assert.assertTrue(processCallable.call());
+	}
+
+	protected Future<?> actionOnMPIWaiting(final boolean countDownOrInterrupt) {
+		final Thread mainThread = Thread.currentThread();
+
+		FutureTask<?> futureTask = new FutureTask<Object>(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					AbstractQueuedSynchronizer abstractQueuedSynchronizer =
+						(AbstractQueuedSynchronizer)
+							ReflectionTestUtil.getFieldValue(
+								_mockRemoteSPI.countDownLatch, "sync");
+
+					while (true) {
+						Collection<Thread> queuedThreads =
+							abstractQueuedSynchronizer.getQueuedThreads();
+
+						if (queuedThreads.contains(mainThread)) {
+							if (countDownOrInterrupt) {
+								CountDownLatch countDownLatch =
+									_mockRemoteSPI.countDownLatch;
+
+								countDownLatch.countDown();
+							}
+							else {
+								mainThread.interrupt();
+							}
+
+							break;
+						}
+					}
+
+					return null;
+				}
+
+			});
+
+		Thread thread = new Thread(futureTask);
+
+		thread.start();
+
+		return futureTask;
+	}
+
+	protected void assertUnexported() {
+		try {
+			UnicastRemoteObject.unexportObject(_mockRemoteSPI, true);
+		}
+		catch (RemoteException re) {
+			Assert.assertSame(NoSuchObjectException.class, re.getClass());
+		}
+	}
+
+	protected RegistrationReference mockRegistrationReference(
+		final boolean unregistered) {
+
+		MockIntraband mockIntraband = new MockIntraband() {
+
+			@Override
+			protected Datagram processDatagram(Datagram datagram) {
+				try {
+					Serializer serializer = new Serializer();
+
+					serializer.writeObject(new RPCResponse(unregistered));
+
+					return Datagram.createResponseDatagram(
+						datagram, serializer.toByteBuffer());
+				}
+				catch (Exception e) {
+					throw new RuntimeException();
+				}
+			}
+
+		};
+
+		return new MockRegistrationReference(mockIntraband);
 	}
 
 	private static File _currentDir = new File(".");

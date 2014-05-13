@@ -647,6 +647,40 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
+	protected Properties getExclusionsProperties(String fileName)
+		throws IOException {
+
+		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
+
+		if (exclusionsTuples.isEmpty()) {
+			return null;
+		}
+
+		Properties allProperties = new Properties();
+
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			inputStream.close();
+
+			if (!portalSource) {
+				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
+					1);
+
+				properties = stripTopLevelDirectories(
+					properties, pluginsDirectoryLevel);
+			}
+
+			allProperties.putAll(properties);
+		}
+
+		return allProperties;
+	}
+
 	protected List<Tuple> getExclusionsTuples(String fileName)
 		throws IOException {
 
@@ -690,40 +724,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return exclusionsTuples;
-	}
-
-	protected Properties getExclusionsProperties(String fileName)
-		throws IOException {
-
-		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
-
-		if (exclusionsTuples.isEmpty()) {
-			return null;
-		}
-
-		Properties allProperties = new Properties();
-
-		for (Tuple exclusionsTuple : exclusionsTuples) {
-			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			inputStream.close();
-
-			if (!portalSource) {
-				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
-					1);
-
-				properties = stripTopLevelDirectories(
-					properties, pluginsDirectoryLevel);
-			}
-
-			allProperties.putAll(properties);
-		}
-
-		return allProperties;
 	}
 
 	protected List<String> getFileNames(
@@ -1379,6 +1379,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			StringUtil.readLines(inputStream, excludesList);
 		}
 
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(BASEDIR);
+
+		String[] includes = new String[] {"**\\source_formatter.ignore"};
+
+		directoryScanner.setIncludes(includes);
+
+		List<String> ignoreFileNames = sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		for (String ignoreFileName : ignoreFileNames) {
+			excludesList.add(
+				ignoreFileName.substring(0, ignoreFileName.length() - 23) +
+					"**");
+		}
+
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
@@ -1393,10 +1410,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		sourceFormatterHelper.init();
 
-		if (_initialized) {
-			return;
-		}
-
 		_autoFix = autoFix;
 
 		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
@@ -1406,8 +1419,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 
 		_printErrors = printErrors;
-
-		_initialized = true;
 	}
 
 	private boolean _isPortalSource() {
@@ -1425,7 +1436,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<String> _errorMessages = new ArrayList<String>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
-	private boolean _initialized;
 	private String _oldCopyright;
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;

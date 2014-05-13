@@ -373,6 +373,36 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static long exportLayoutsAsFileInBackground(
+		com.liferay.portal.model.ExportImportConfigurationSoap exportImportConfiguration)
+		throws RemoteException {
+		try {
+			long returnValue = LayoutServiceUtil.exportLayoutsAsFileInBackground(com.liferay.portal.model.impl.ExportImportConfigurationModelImpl.toModel(
+						exportImportConfiguration));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long exportLayoutsAsFileInBackground(
+		long exportImportConfigurationId) throws RemoteException {
+		try {
+			long returnValue = LayoutServiceUtil.exportLayoutsAsFileInBackground(exportImportConfigurationId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all the ancestor layouts of the layout.
 	*

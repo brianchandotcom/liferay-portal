@@ -2571,8 +2571,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 							<exec executable="${postgresql.executable}">
 								<arg value="-U" />
 								<arg value="${database.username}" />
-								<arg value="-w" />
-								<arg value="${database.password}" />
 								<arg value="-f" />
 								<arg value="create.sql" />
 							</exec>

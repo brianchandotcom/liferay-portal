@@ -396,8 +396,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String fixCopyright(
-			String content, String copyright, String oldCopyright, File file,
-			String fileName)
+			String content, String copyright, String oldCopyright,
+			String absolutePath, String fileName)
 		throws IOException {
 
 		if (fileName.endsWith(".vm")) {
@@ -411,7 +411,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (!content.contains(copyright)) {
-			String customCopyright = getCustomCopyright(file);
+			String customCopyright = getCustomCopyright(absolutePath);
 
 			if (Validator.isNotNull(customCopyright)) {
 				copyright = customCopyright;
@@ -623,8 +623,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _copyright;
 	}
 
-	protected String getCustomCopyright(File file) throws IOException {
-		String absolutePath = fileUtil.getAbsolutePath(file);
+	protected String getCustomCopyright(String absolutePath)
+		throws IOException {
 
 		for (int x = absolutePath.length();;) {
 			x = absolutePath.lastIndexOf(StringPool.SLASH, x);

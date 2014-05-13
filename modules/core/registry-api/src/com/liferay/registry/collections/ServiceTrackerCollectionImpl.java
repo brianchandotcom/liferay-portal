@@ -22,6 +22,8 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -219,12 +221,27 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public Object[] toArray() {
-		return _services.toArray();
+		return toArray(new Object[0]);
 	}
 
 	@Override
 	public <T> T[] toArray(T[] services) {
-		return _services.toArray(services);
+		if (services.length < _services.size()) {
+			services = (T[])Array.newInstance(
+				services.getClass().getComponentType(), _services.size());
+		}
+
+		for (int i = 0; i < _services.size(); i++) {
+			EntryWrapper entryWrapper = _services.get(i);
+
+			services[i] = (T) (entryWrapper._service);
+		}
+
+		if (services.length > _services.size()) {
+			services[_services.size()] = null;
+		}
+
+		return services;
 	}
 
 	protected ServiceTrackerCollectionImpl(

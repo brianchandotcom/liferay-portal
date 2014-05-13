@@ -19,4 +19,8 @@
 		<execute action="PGVimeoConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGVimeoConfiguration#selectFrame" value1="relative=top" />
 	</command>
+
+	<command name="view">
+		<execute action="PGVimeo#assertElementPresent" locator-key1="VIMEO_VIDEO" />
+	</command>
 </definition>

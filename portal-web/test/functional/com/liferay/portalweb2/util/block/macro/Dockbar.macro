@@ -22,9 +22,9 @@
 		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES_SITE_NAME_2" value1="${siteName}" />
 	</command>
 
-	<command name="viewMySitesDropDownSiteName">
+	<command name="viewSitesViaMySitesDropDown">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES_SITE_NAME_2" value1="${siteName}" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 	</command>
 </definition>

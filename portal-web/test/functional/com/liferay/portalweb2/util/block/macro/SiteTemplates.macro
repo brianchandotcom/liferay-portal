@@ -146,12 +146,6 @@
 		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
-	<command name="goThroughSitePages">
-		<var name="key_pageName" value="${pageName}" />
-
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
-	</command>
-
 	<command name="gotoSettingsCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

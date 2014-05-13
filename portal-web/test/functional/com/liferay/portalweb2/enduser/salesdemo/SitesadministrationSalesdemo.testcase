@@ -1,0 +1,195 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="Demo1" priority="5">
+		<property name="portlet.plugins.includes" value="opensocial-portlet,vimeo-portlet,web-form-portlet" />
+		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
+
+		<var name="allSiteNameLists" value="Liferay,Site1 Name,Site2 Name,Site3 Name,Staging Site Name,Healthcare Site Name" />
+		<var name="siteNameLists" value="Site1 Name,Site2 Name,Site3 Name" />
+
+		<for list="${siteNameLists}" param="siteNameListsCount" >
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="Site#addCommunityCP">
+				<var name="siteName" value="${siteNameListsCount}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Staging Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Staging Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Staging Site Name" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Staging Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Staging Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#viewStagingLocalLivePG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Healthcare Site Name" />
+			<var name="siteTemplateName" value="Zoe Healthcare Theme" />
+			<var name="siteType" value="Site Template" />
+		</execute>
+
+		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+			<var name="siteName" value="Healthcare Site Name" />
+			<var name="siteTemplate" value="Zoe Healthcare Theme" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
+			<execute macro="Site#viewCP">
+				<var name="siteMember" value="User" />
+				<var name="siteName" value="${allSiteNameListsCount}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Site3 Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="MY_SITES" value1="My Sites" />
+
+		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
+			<execute macro="Dockbar#viewSitesViaMySitesDropDown">
+				<var name="siteName" value="${allSiteNameListsCount}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="SITE_PAGES_LINK" value1="Site Pages" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="OpenSocial Gadget" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Page#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Video" />
+			<var name="pageType" value="2 Columns (70/30)" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="portletName" value="Vimeo" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Vimeo" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Vimeo#addURL">
+			<var name="vimeoURL" value="//http://vimeo.com/45677716" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Vimeo#view" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Vimeo" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Vimeo#addURL">
+			<var name="enabledCheckbox" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="home" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="OpensocialGadget#addPG">
+			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="To-Do List" />
+		</execute>
+	</command>
+</definition>

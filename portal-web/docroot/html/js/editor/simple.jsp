@@ -55,13 +55,15 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
 
 				<c:if test="<%= resizable %>">
-					new A.Resize(
-						{
-							handles: 'br',
-							node: '#<%= name %>_container',
-							wrap: true
-						}
-					);
+					if (A.UA.ie) {
+						new A.Resize(
+							{
+								handles: 'br',
+								node: '#<%= name %>_container',
+								wrap: true
+							}
+						);
+					}
 				</c:if>
 			</c:if>
 
@@ -82,19 +84,7 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 	<tr>
 		<td bgcolor="#FFFFFF" height="100%">
-			<textarea id="<%= name %>" name="<%= name %>"
-
-			<%
-			if (Validator.isNotNull(onChangeMethod)) {
-			%>
-
-				onChange="<%= HtmlUtil.escapeJS(onChangeMethod) %>(this.value)"
-
-			<%
-			}
-			%>
-
-			style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; resize: vertical; width: 100%;"></textarea>
+			<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"></textarea>
 		</td>
 	</tr>
 	</table>

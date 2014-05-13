@@ -54,16 +54,14 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
 
-				<c:if test="<%= resizable %>">
-					if (A.UA.ie) {
-						new A.Resize(
-							{
-								handles: 'br',
-								node: '#<%= name %>_container',
-								wrap: true
-							}
-						);
-					}
+				<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
+					new A.Resize(
+						{
+							handles: 'br',
+							node: '#<%= name %>_container',
+							wrap: true
+						}
+					);
 				</c:if>
 			</c:if>
 

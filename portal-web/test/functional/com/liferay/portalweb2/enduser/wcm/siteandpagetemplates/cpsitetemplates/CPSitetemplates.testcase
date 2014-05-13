@@ -140,6 +140,12 @@
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewDefaultCP" />
 	</command>
 
 	<command name="ResetPageChanges" priority="5">

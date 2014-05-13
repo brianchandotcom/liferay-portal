@@ -1193,6 +1193,798 @@
 		</execute>
 	</command>
 
+	<command name="SearchContentSOSitePrivateNonMember" priority="5">
+		<var name="announcementEntryContent" value="Announcements Entry Content" />
+		<var name="announcementEntryTitle" value="Announcements Entry Title" />
+		<var name="announcementEntryURL" value="http://www.liferay.com" />
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="eventDescription" value="Calendar Event Description" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="siteDescription" value="Private Site Description" />
+		<var name="siteName" value="Private Site Name" />
+		<var name="siteType" value="Private" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventDescription" value="${eventDescription}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="Regular" />
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="Wiki" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${announcementEntryContent}" />
+			<var name="entryTitle" value="${announcementEntryTitle}" />
+			<var name="entryURL" value="${announcementEntryURL}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${eventDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
+
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryContent}" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryTitle}" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="DM" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Folder" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Description" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Name" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="MB" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Thread" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Message" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Subject" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Body" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="FrontPage" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="http://www.google.com" />
+		</execute>
+	</command>
+
+	<command name="SearchContentSOSitePrivateRestrictedNonMember" priority="5">
+		<var name="announcementEntryContent" value="Announcements Entry Content" />
+		<var name="announcementEntryTitle" value="Announcements Entry Title" />
+		<var name="announcementEntryURL" value="http://www.liferay.com" />
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="eventDescription" value="Calendar Event Description" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="siteDescription" value="Private Restricted Site Description" />
+		<var name="siteName" value="Private Restricted Site Name" />
+		<var name="siteType" value="Private Restricted" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventDescription" value="${eventDescription}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="Regular" />
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="Wiki" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${announcementEntryContent}" />
+			<var name="entryTitle" value="${announcementEntryTitle}" />
+			<var name="entryURL" value="${announcementEntryURL}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryUrl}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${categoryName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentFile}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmDocumentTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${dmFolderName}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryContent}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${entryTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${eventDescription}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${eventTitle}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContent}" />
+
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryContent}" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${announcementEntryTitle}" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="DM" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Folder" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Description" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Name" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="MB" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Thread" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Message" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Subject" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Body" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="FrontPage" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="http://www.google.com" />
+		</execute>
+	</command>
+
 	<command name="SearchFolderDocumentSOSiteOpenDeleted" priority="3">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />

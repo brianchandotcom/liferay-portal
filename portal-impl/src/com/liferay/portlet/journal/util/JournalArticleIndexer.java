@@ -54,9 +54,13 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.journal.NoSuchArticleException;
+import com.liferay.portlet.journal.NoSuchArticleResourceException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
+import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -479,10 +483,31 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			classPK);
+		JournalArticle article = null;
 
-		doReindex(article);
+		try {
+			article = JournalArticleLocalServiceUtil.getArticle(classPK);
+		}
+		catch (NoSuchArticleException nsae) {
+			try {
+				JournalArticleResource articleResource =
+						JournalArticleResourceLocalServiceUtil
+							.getArticleResource(classPK);
+
+				article = JournalArticleLocalServiceUtil.getArticle(
+							articleResource.getGroupId(),
+							articleResource.getArticleId());
+			}
+			catch (NoSuchArticleResourceException e) {
+				if (_log.isErrorEnabled()) {
+					_log.error("Unable to index " + className + " " + classPK);
+				}
+			}
+		}
+
+		if (article != null) {
+			doReindex(article);
+		}
 	}
 
 	@Override

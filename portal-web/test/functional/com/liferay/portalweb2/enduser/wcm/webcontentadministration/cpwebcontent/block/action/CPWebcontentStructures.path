@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_structureName}')]//a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_structureName}')]//a[@id='_166_ddmStructuresSearchContainer_1_menu']</td>
 	<td></td>
 </tr>
 <tr>

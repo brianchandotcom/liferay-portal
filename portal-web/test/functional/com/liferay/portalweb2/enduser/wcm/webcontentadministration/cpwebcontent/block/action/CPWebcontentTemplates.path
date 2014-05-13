@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_templateName}')]//a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_templateName}')]//a[@id='_166_ddmTemplatesSearchContainer_1_menu']</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.ExpressionEvaluator;
+import com.liferay.portal.kernel.expression.InterdependentExpressionEvaluator;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
 import java.util.List;
@@ -36,8 +36,9 @@ public class DependenciesTest {
 		expressionTestData.addLongVariable("var2", "var1 + 3", 5L);
 		expressionTestData.addLongVariable("var3", "var2 + var1", 5L);
 
-		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(
-			expressionTestData.getVariables());
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
 
 		Map<String, VariableDependencies> dependenciesMap =
 			evaluator.getVariableDependenciesMap();

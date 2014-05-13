@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface ExpressionEvaluator {
+public interface InterdependentExpressionEvaluator {
 
 	public Boolean evaluateBooleanExpression(String expression)
 		throws ExpressionEvaluationException;
@@ -27,8 +27,8 @@ public interface ExpressionEvaluator {
 	public Double evaluateDoubleExpression(String expression)
 		throws ExpressionEvaluationException;
 
-	public Object evaluateExpression(String expression, Class<?> returnedType)
-		throws ExpressionEvaluationException;
+	public <T> T evaluateExpression(String stringExpression,
+	Class<T> returnedType) throws ExpressionEvaluationException;
 
 	public Float evaluateFloatExpression(String expression)
 		throws ExpressionEvaluationException;

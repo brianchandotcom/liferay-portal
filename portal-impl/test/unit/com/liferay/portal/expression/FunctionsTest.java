@@ -30,19 +30,21 @@ public class FunctionsTest extends BaseExpresssionTest {
 		expressionTestData.addLongVariable("var1", null, 5L);
 		expressionTestData.addLongVariable("var2", "var1 + 3", null);
 		expressionTestData.addLongVariable("var3", "var2 + var1", null);
+		expressionTestData.setReturnType(Long.class);
 		expressionTestData.setExpectedResult(expectedResult01);
 
-		executeTest(expressionTestData);
+		verifyExpression(expressionTestData);
 
 		double expectedResult02 = 5.5 + (5.5 + 3.5) + ((5.5 + 3.5) + 5.5);
-		ExpressionTestData doubleExpressionTestData =
-			ExpressionTestData.newExpressionTestData("sum(var1,var2,var3)");
+		expressionTestData = ExpressionTestData.newExpressionTestData(
+			"sum(var1,var2,var3)");
 		expressionTestData.addDoubleVariable("var1", null, 5.5);
 		expressionTestData.addDoubleVariable("var2", "var1 + 3.5", null);
 		expressionTestData.addDoubleVariable("var3", "var2 + var1", null);
+		expressionTestData.setReturnType(Double.class);
 		expressionTestData.setExpectedResult(expectedResult02);
 
-		executeTest(doubleExpressionTestData);
+		verifyExpression(expressionTestData);
 	}
 
 }

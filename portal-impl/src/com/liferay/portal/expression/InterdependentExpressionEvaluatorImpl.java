@@ -14,83 +14,95 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.ExpressionData;
 import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
-import com.liferay.portal.kernel.expression.ExpressionEvaluator;
 import com.liferay.portal.kernel.expression.ExpressionVariable;
+import com.liferay.portal.kernel.expression.InterdependentExpressionEvaluator;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import jodd.typeconverter.TypeConverterManager;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
+public class InterdependentExpressionEvaluatorImpl
+implements InterdependentExpressionEvaluator {
 
-	public ExpressionEvaluatorImpl(Map<String, ExpressionVariable> variables) {
+	public InterdependentExpressionEvaluatorImpl(Map<String,
+	ExpressionVariable> variables) {
 		_variablesMap = variables;
 	}
 
 	@Override
-	public Boolean evaluateBooleanExpression(String expression)
+	public Boolean evaluateBooleanExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (Boolean)evaluateExpression(expression, Boolean.class);
+		Expression<Boolean> expression = populateExpression(
+			stringExpression, Boolean.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
-	public Double evaluateDoubleExpression(String expression)
+	public Double evaluateDoubleExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (Double)evaluateExpression(expression, Double.class);
+		Expression<Double> expression = populateExpression(
+			stringExpression, Double.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
-	public Object evaluateExpression(String expression, Class<?> returnedType)
-		throws ExpressionEvaluationException {
+	public <T> T evaluateExpression(String stringExpression,
+	Class<T> returnedType) throws ExpressionEvaluationException {
 
-		ExpressionData expressionData = extractExpressionData(expression);
+		Expression<T> expression = populateExpression(stringExpression,
+		returnedType);
 
-		return ExpressionEvaluatorUtil.evaluate(
-			expressionData.getRewritedExpression(), returnedType,
-			expressionData.getVariableNames(),
-			expressionData.getVariableTypes(),
-			expressionData.getVariableValues());
+		return expression.evaluate();
 	}
 
 	@Override
-	public Float evaluateFloatExpression(String expression)
+	public Float evaluateFloatExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (Float)evaluateExpression(expression, Float.class);
+		Expression<Float> expression = populateExpression(
+			stringExpression, Float.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
-	public Integer evaluateIntegerExpression(String expression)
+	public Integer evaluateIntegerExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (Integer)evaluateExpression(expression, Integer.class);
+		Expression<Integer> expression = populateExpression(
+			stringExpression, Integer.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
-	public Long evaluateLongExpression(String expression)
+	public Long evaluateLongExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (Long)evaluateExpression(expression, Long.class);
+		Expression<Long> expression = populateExpression(
+			stringExpression, Long.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
-	public String evaluateStringExpression(String expression)
+	public String evaluateStringExpression(String stringExpression)
 		throws ExpressionEvaluationException {
 
-		return (String)evaluateExpression(expression, String.class);
+		Expression<String> expression = populateExpression(
+			stringExpression, String.class);
+
+		return expression.evaluate();
 	}
 
 	@Override
@@ -104,40 +116,6 @@ public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
 
 	protected Object convertToDataType(String value, Class<?> dataType) {
 		return TypeConverterManager.convertType(value, dataType);
-	}
-
-	protected ExpressionData extractExpressionData(String expression)
-		throws ExpressionEvaluationException {
-
-		String[] expressionVariables = extractExpressionVariables(expression);
-
-		ExpressionData expressionData = new ExpressionData(expression);
-
-		for (String variableName : expressionVariables) {
-			ExpressionVariable variable = _variablesMap.get(variableName);
-
-			expressionData.addVariable(
-				variable.getDataType(), variable.getName(),
-				getVariableValue(variable));
-		}
-
-		return expressionData;
-	}
-
-	protected String[] extractExpressionVariables(String expression) {
-		if (expression == null) {
-			return new String[0];
-		}
-
-		List<String> variableNames = new ArrayList<String>();
-
-		Matcher matcher = VARIABLE_REGEX_PATTERN.matcher(expression);
-
-		while (matcher.find()) {
-			variableNames.add(matcher.group(1));
-		}
-
-		return variableNames.toArray(new String[variableNames.size()]);
 	}
 
 	protected Object getVariableValue(ExpressionVariable variable)
@@ -161,6 +139,24 @@ public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
 		}
 	}
 
+	protected <T> Expression<T> populateExpression(String stringExpression,
+	Class<T> returnedType) throws ExpressionEvaluationException {
+
+		Expression<T> expression = Expression.createExpression(stringExpression,
+		returnedType);
+
+		String[] expressionVariables = expression.getVariableNames();
+
+		for (String variableName : expressionVariables) {
+			ExpressionVariable variable = _variablesMap.get(variableName);
+
+			expression.addVariable(variable.getDataType(), variable.getName(),
+			getVariableValue(variable));
+		}
+
+		return expression;
+	}
+
 	protected VariableDependencies populateVariableDependencies(
 		ExpressionVariable variable) {
 
@@ -174,9 +170,10 @@ public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
 		_variableDependenciesMap.put(variable.getName(), variableDependencies);
 
 		if (variable.getValueExpression() != null) {
-			String expression = variable.getValueExpression();
-			String[] expressionVariables = extractExpressionVariables(
-				expression);
+			Expression expression = Expression.createExpression(
+				variable.getValueExpression(), variable.getDataType());
+
+			String[] expressionVariables = expression.getVariableNames();
 
 			for (String dependency : expressionVariables) {
 				VariableDependencies populateVariableDependencies =
@@ -192,9 +189,6 @@ public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
 
 		return variableDependencies;
 	}
-
-	private static final Pattern VARIABLE_REGEX_PATTERN = Pattern.compile(
-		"\\b([a-zA-Z]+[\\w\\._]+)(?!\\()\\b", Pattern.MULTILINE);
 
 	private Map<String, Object> _calculatedVariableValues =
 		new HashMap<String, Object>();

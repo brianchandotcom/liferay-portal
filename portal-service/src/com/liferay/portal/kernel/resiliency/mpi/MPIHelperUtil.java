@@ -46,6 +46,25 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MPIHelperUtil {
 
+	public static SPI checkSPILiveness(SPI spi) {
+		boolean alive = false;
+
+		try {
+			alive = spi.isAlive();
+		}
+		catch (RemoteException re) {
+			_log.error(re);
+		}
+
+		if (alive) {
+			return spi;
+		}
+
+		unregisterSPI(spi);
+
+		return null;
+	}
+
 	public static Intraband getIntraband() {
 		return _intraband;
 	}
@@ -65,7 +84,7 @@ public class MPIHelperUtil {
 		SPI spi = spiProviderContainer.getSPI(spiId);
 
 		if (spi != null) {
-			spi = _checkSPILiveness(spi);
+			spi = checkSPILiveness(spi);
 		}
 
 		return spi;
@@ -101,7 +120,7 @@ public class MPIHelperUtil {
 				_spiProviderContainers.values()) {
 
 			for (SPI spi : spiProviderContainer.getSPIs()) {
-				spi = _checkSPILiveness(spi);
+				spi = checkSPILiveness(spi);
 
 				if (spi != null) {
 					spis.add(spi);
@@ -120,7 +139,7 @@ public class MPIHelperUtil {
 
 		if (spiProviderContainer != null) {
 			for (SPI spi : spiProviderContainer.getSPIs()) {
-				spi = _checkSPILiveness(spi);
+				spi = checkSPILiveness(spi);
 
 				if (spi != null) {
 					spis.add(spi);
@@ -364,25 +383,6 @@ public class MPIHelperUtil {
 		}
 
 		return false;
-	}
-
-	private static SPI _checkSPILiveness(SPI spi) {
-		boolean alive = false;
-
-		try {
-			alive = spi.isAlive();
-		}
-		catch (RemoteException re) {
-			_log.error(re);
-		}
-
-		if (alive) {
-			return spi;
-		}
-
-		unregisterSPI(spi);
-
-		return null;
 	}
 
 	private static void _doUnregisterSPI(SPI spi) throws RemoteException {

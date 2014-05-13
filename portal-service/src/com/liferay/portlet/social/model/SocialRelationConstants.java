@@ -47,7 +47,9 @@ public class SocialRelationConstants {
 	public static final int TYPE_UNI_SUPERVISOR = 11;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#getTypeLabel(int)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.social.util.SocialRelationTypesUtil#getTypeLabel(
+	 *             int)}
 	 */
 	@Deprecated
 	public static String getTypeLabel(int type) {
@@ -55,7 +57,9 @@ public class SocialRelationConstants {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeBi(int)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeBi(
+	 *             int)}
 	 */
 	@Deprecated
 	public static boolean isTypeBi(int type) {
@@ -63,7 +67,9 @@ public class SocialRelationConstants {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeUni(int)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.social.util.SocialRelationTypesUtil#isTypeUni(
+	 *             int)}
 	 */
 	@Deprecated
 	public static boolean isTypeUni(int type) {

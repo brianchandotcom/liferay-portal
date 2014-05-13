@@ -71,6 +71,31 @@ public class ListUtilTest {
 	}
 
 	@Test
+	public void testCountListNotFoundElements() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String string) {
+					if (string.equals("z")) {
+						return true;
+					}
+
+					return false;
+				}
+
+			};
+
+		Assert.assertEquals(0, ListUtil.count(list, predicateFilter));
+	}
+
+	@Test
 	public void testCountNullList() {
 		List<String> list = null;
 
@@ -127,6 +152,31 @@ public class ListUtilTest {
 		};
 
 		Assert.assertTrue(ListUtil.exists(list, predicateFilter));
+	}
+
+	@Test
+	public void testExistsListNotFoundElements() {
+		List<String> list = new ArrayList<String>();
+
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		PredicateFilter<String> predicateFilter =
+			new PredicateFilter<String>() {
+
+				@Override
+				public boolean filter(String string) {
+					if (string.equals("z")) {
+						return true;
+					}
+
+					return false;
+				}
+
+			};
+
+		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
 	}
 
 	@Test

@@ -377,7 +377,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = fixCopyright(
-			newContent, getCopyright(), getOldCopyright(), file, fileName);
+			newContent, getCopyright(), getOldCopyright(), absolutePath,
+			fileName);
 
 		newContent = StringUtil.replace(
 			newContent,

@@ -988,7 +988,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = fixCopyright(
-			newContent, getCopyright(), getOldCopyright(), file, fileName);
+			newContent, getCopyright(), getOldCopyright(), absolutePath,
+			fileName);
 
 		if (newContent.contains(className + ".java.html")) {
 			processErrorMessage(fileName, "Java2HTML: " + fileName);

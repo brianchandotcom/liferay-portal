@@ -258,6 +258,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'event-tap', 'event-outside', 'liferay-menu-filter', 'liferay-store']
+		requires: ['aui-node', 'event-outside', 'event-tap', 'liferay-menu-filter', 'liferay-store']
 	}
 );

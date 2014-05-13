@@ -187,8 +187,9 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertTrue(
 				_vocabulary.isMissingRequiredCategory(
-						AssetCategoryConstants.ALL_CLASS_NAME_IDS,
-						AssetCategoryConstants.ALL_CLASS_TYPE_IDS, selectedCategories));
+					AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+					AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+					selectedCategories));
 	}
 
 	@Test
@@ -200,7 +201,8 @@ public class AssetVocabularyImplTest {
 		long[] selectedCategories = new long[]{1};
 
 		Assert.assertFalse(
-				_vocabulary.isMissingRequiredCategory(1, 1, selectedCategories));
+				_vocabulary.isMissingRequiredCategory(
+					1, 1, selectedCategories));
 	}
 
 	@Test
@@ -215,7 +217,8 @@ public class AssetVocabularyImplTest {
 		long[] selectedCategories = new long[]{1};
 
 		Assert.assertFalse(
-				_vocabulary.isMissingRequiredCategory(1, 1, selectedCategories));
+				_vocabulary.isMissingRequiredCategory(
+					1, 1, selectedCategories));
 	}
 
 	@Test
@@ -230,7 +233,8 @@ public class AssetVocabularyImplTest {
 		long[] selectedCategories = new long[]{1};
 
 		Assert.assertTrue(
-				_vocabulary.isMissingRequiredCategory(1, 1, selectedCategories));
+				_vocabulary.isMissingRequiredCategory(
+					1, 1, selectedCategories));
 	}
 
 	@Test

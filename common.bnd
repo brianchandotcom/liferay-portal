@@ -38,7 +38,7 @@ Liferay-Portal-Version: ${release.info.version}
 		name=remoterepo;\
 		phase=any;\
 		type=R5
--pluginpath: ${workspace}/osgi/lib/plugin/bnd-repository.jar
+-pluginpath: ${workspace}/tools/sdk/osgi/lib/plugin/bnd-repository.jar
 -releaserepo: localrepo
 -sources: false
 

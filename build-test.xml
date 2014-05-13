@@ -1674,6 +1674,19 @@ tck.url=true</echo>
 		<if>
 			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 			<then>
+				<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
+			</then>
+			<elseif>
+				<equals arg1="${tcat.enabled}" arg2="true" />
+				<then>
+					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<isset property="test.build.liferay.portal.zip.file.name" />
+			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
@@ -1682,7 +1695,7 @@ tck.url=true</echo>
 
 				<unzip
 					dest="${tstamp.value}"
-					src="${app.server.portal.dir}"
+					src="${test.build.liferay.portal.zip.file.name}"
 				/>
 
 				<copy
@@ -1692,7 +1705,7 @@ tck.url=true</echo>
 
 				<zip
 					basedir="${tstamp.value}"
-					destfile="${app.server.portal.dir}"
+					destfile="${test.build.liferay.portal.zip.file.name}"
 					update="yes"
 				/>
 
@@ -1844,6 +1857,16 @@ tck.url=true</echo>
 				<delete dir="${selenium.output.dir}" />
 
 				<mkdir dir="${selenium.output.dir}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${tcat.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
+					tcat.enabled=true
+				</echo>
 			</then>
 		</if>
 
@@ -2117,6 +2140,30 @@ tck.url=true</echo>
 					<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.bundle.tcat}" arg2="true" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
+
+plugins.includes=marketplace-portlet</echo>
+
+				<if>
+					<isset property="test.build.portal.war.url" />
+					<then>
+						<get
+							dest="dist/liferay-portal-${lp.version}.war"
+							src="${test.build.portal.war.url}"
+						/>
+					</then>
+					<else>
+						<ant antfile="build-dist.xml" target="zip-portal-war" inheritAll="false" />
+					</else>
+				</if>
+
+				<ant antfile="build-dist.xml" target="build-dist-tcat" inheritAll="false" />
+			</then>
 		</if>
 
 		<if>
@@ -2951,64 +2998,78 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 		<antcall target="copy-sikuli-temp-files" />
 
-		<antcall target="start-app-server" />
+		<if>
+			<equals arg1="${tcat.enabled}" arg2="true" />
+			<then>
+				<antcall target="start-app-server" inheritAll="false">
+					<param name="app.server.bin.dir" value="${app.server.tcat.admin.bin.dir}" />
+				</antcall>
 
-		<for param="log.file">
-			<path>
-				<fileset dir="${liferay.home}/logs">
-					<include name="*.log" />
-				</fileset>
-			</path>
-			<sequential>
-				<var name="log.file" value="@{log.file}" />
-			</sequential>
-		</for>
+				<antcall target="start-app-server" inheritAll="false">
+					<param name="app.server.bin.dir" value="${app.server.tcat.agent.bin.dir}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="start-app-server" />
 
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				import com.liferay.portal.kernel.util.StringUtil;
+				<for param="log.file">
+					<path>
+						<fileset dir="${liferay.home}/logs">
+							<include name="*.log" />
+						</fileset>
+					</path>
+					<sequential>
+						<var name="log.file" value="@{log.file}" />
+					</sequential>
+				</for>
 
-				import org.apache.commons.io.FileUtils;
+				<script classpathref="project.classpath" language="beanshell">
+					<![CDATA[
+						import com.liferay.portal.kernel.util.StringUtil;
 
-				Set requiredPluginNamesSet = new HashSet();
+						import org.apache.commons.io.FileUtils;
 
-				requiredPluginNamesSet.add("marketplace-portlet");
+						Set requiredPluginNamesSet = new HashSet();
 
-				String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
+						requiredPluginNamesSet.add("marketplace-portlet");
 
-				for (String pluginType : pluginTypes) {
-					String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
+						String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
 
-					for (String pluginName : pluginNames) {
-						requiredPluginNamesSet.add(pluginName);
-					}
-				}
+						for (String pluginType : pluginTypes) {
+							String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
 
-				System.out.println("Ensuring the following plugins have been deployed:");
-				System.out.println(StringUtil.merge(requiredPluginNamesSet));
-
-				int i = 0;
-
-				for (String pluginName : requiredPluginNamesSet) {
-					String content = "";
-
-					while (i < 120 && !content.contains(pluginName + " is available for use")) {
-						try {
-							Thread.sleep(1000);
-
-							File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
-
-							content = FileUtils.readFileToString(file);
-
-							i++;
+							for (String pluginName : pluginNames) {
+								requiredPluginNamesSet.add(pluginName);
+							}
 						}
-						catch (Exception e) {
-							e.printStackTrace();
+
+						System.out.println("Ensuring the following plugins have been deployed:");
+						System.out.println(StringUtil.merge(requiredPluginNamesSet));
+
+						int i = 0;
+
+						for (String pluginName : requiredPluginNamesSet) {
+							String content = "";
+
+							while (i < 120 && !content.contains(pluginName + " is available for use")) {
+								try {
+									Thread.sleep(1000);
+
+									File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
+
+									content = FileUtils.readFileToString(file);
+
+									i++;
+								}
+								catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						}
-					}
-				}
-			]]>
-		</script>
+					]]>
+				</script>
+			</else>
+		</if>
 
 		<if>
 			<contains string="${hook.plugins.includes}" substring="so-hook" />
@@ -3026,7 +3087,21 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 		<antcall target="run-selenium-test" />
 
-		<antcall target="stop-app-server" />
+		<if>
+			<equals arg1="${tcat.enabled}" arg2="true" />
+			<then>
+				<antcall target="stop-app-server" inheritAll="false">
+					<param name="app.server.bin.dir" value="${app.server.tcat.admin.bin.dir}" />
+				</antcall>
+
+				<antcall target="stop-app-server" inheritAll="false">
+					<param name="app.server.bin.dir" value="${app.server.tcat.agent.bin.dir}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="stop-app-server" />
+			</else>
+		</if>
 
 		<antcall target="clean-up-sikuli-temp-files" />
 
@@ -3061,12 +3136,30 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</exec>
 		</forget>
 
-		<waitfor maxwait="5" maxwaitunit="minute">
-			<and>
-				<available file="${liferay.home}/logs" />
-				<http url="http://localhost:8080/web/guest" />
-			</and>
-		</waitfor>
+		<if>
+			<equals arg1="${app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+			<then>
+				<waitfor maxwait="5" maxwaitunit="minute">
+					<http url="http://localhost:8180/console" />
+				</waitfor>
+			</then>
+			<elseif>
+				<equals arg1="${app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+				<then>
+					<waitfor maxwait="1" maxwaitunit="minute">
+						<http url="http://localhost:8080" />
+					</waitfor>
+				</then>
+			</elseif>
+			<else>
+				<waitfor maxwait="5" maxwaitunit="minute">
+					<and>
+						<available file="${liferay.home}/logs" />
+						<http url="http://localhost:8080/web/guest" />
+					</and>
+				</waitfor>
+			</else>
+		</if>
 	</target>
 
 	<target name="start-chrome-driver">

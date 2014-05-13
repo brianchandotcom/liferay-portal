@@ -1176,6 +1176,17 @@
 	<command name="firstLoginPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}, if not logged in as ${userEmailAddress} log out first." />
 
+		<echo message="Checking to see if TCat is enabled..." />
+
+		<var name="tcatEnabled" method="selenium#isTCatEnabled()" />
+
+		<if>
+			<equals arg1="${tcatEnabled}" arg2="true" />
+			<then>
+				<execute macro="TCat#deployLiferayPortalWar" />
+			</then>
+		</if>
+
 		<execute macro="Page#openURL" />
 
 		<if>

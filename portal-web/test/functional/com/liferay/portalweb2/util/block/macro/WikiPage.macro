@@ -89,7 +89,17 @@
 		</if>
 
 		<execute action="PGWiki#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
-		<execute action="PGWiki#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
+		<if>
+			<condition action="PGWiki#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			<then>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+			</then>
+			<else>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+			</else>
+		</if>
+
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 

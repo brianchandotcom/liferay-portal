@@ -623,12 +623,12 @@
 	<command name="AddSOWikiPageFormatCreole" priority="5">
 		<var name="wikiPageCreoleSource">
 			<![CDATA[
-				== Wiki Page Content
-				# //Creole Formatting// 1
-				* Creole Formatting 2
+				==Wiki Page Content==\\
+				//Creole Formatting 1// **Creole Formatting 2** **//Creole Formatting//** 3
 			]]>
 		</var>
-		<var name="wikiPageContent" value="Wiki Page Content # Creole Formatting 1 Creole Formatting 2" />
+		<var name="wikiPageContent1" value="Wiki Page Content# " />
+		<var name="wikiPageContent2" value=" Creole Formatting 1 Creole Formatting 2 Creole Formatting 3" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
 		<execute macro="Page#gotoPG">
@@ -648,7 +648,7 @@
 		</execute>
 
 		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageContent" value="${wikiPageContent1}${wikiPageContent2}" />
 			<var name="wikiPageContentGeneric" value="true" />
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />

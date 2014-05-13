@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_SUBMIT_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_REPLY_AS_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Reply as...')]</td>
 	<td></td>

@@ -4,42 +4,10 @@
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-postgresql">
-		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
-
 		<echo file="test.${user.name}.properties">database.type=postgresql</echo>
 
-		<if>
-			<not>
-				<isset property="build.app.server" />
-			</not>
-			<then>
-				<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-			</then>
-		</if>
-
-		<antcall target="revert-test-properties" />
-
-		<ant dir="portal-impl" target="build-selenium-new-test-case" />
-
-		<if>
-			<isset property="vm.host" />
-			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#vm.host="
-					value="vm.host=${vm.host}"
-				/>
-			</then>
-		</if>
-
-		<antcall target="prepare-virtual-host-name-properties" />
-
-		<antcall target="start-selenium" />
-
-		<antcall target="run-tomcat" inheritAll="false">
+		<antcall target="run-selenium-tomcat" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
-
-		<antcall target="stop-selenium" />
 	</target>
 </project>

@@ -530,11 +530,6 @@ public class EditArticleAction extends PortletAction {
 				uploadPortletRequest, "description_" + toLanguageId);
 		}
 
-		String content = ParamUtil.getString(
-			uploadPortletRequest, "articleContent");
-
-		Map<String, byte[]> images = new HashMap<String, byte[]>();
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
 
@@ -555,8 +550,9 @@ public class EditArticleAction extends PortletAction {
 			ddmStructure, LocaleUtil.fromLanguageId(languageId),
 			serviceContext);
 
-		content = (String)contentAndImages[0];
-		images = (HashMap<String, byte[]>)contentAndImages[1];
+		String content = (String)contentAndImages[0];
+		Map<String, byte[]> images =
+			(HashMap<String, byte[]>)contentAndImages[1];
 
 		Boolean fileItemThresholdSizeExceeded =
 			(Boolean)uploadPortletRequest.getAttribute(

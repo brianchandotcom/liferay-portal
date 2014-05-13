@@ -14,7 +14,7 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.ExpressionEvaluator;
+import com.liferay.portal.kernel.expression.InterdependentExpressionEvaluator;
 
 import org.junit.Assert;
 
@@ -23,15 +23,94 @@ import org.junit.Assert;
  */
 public abstract class BaseExpresssionTest {
 
-	public void executeTest(ExpressionTestData expressionTestData)
+	public void verifyBooleanExpression(ExpressionTestData expressionTestData)
 		throws Exception {
 
-		ExpressionEvaluator evaluator = new ExpressionEvaluatorImpl(
-			expressionTestData.getVariables());
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		Boolean result = evaluator.evaluateBooleanExpression(
+			expressionTestData.getExpression());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyDoubleExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		Double result = evaluator.evaluateDoubleExpression(
+			expressionTestData.getExpression());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
 
 		Object result = evaluator.evaluateExpression(
 			expressionTestData.getExpression(),
 			expressionTestData.getReturnType());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyFloatExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		Float result = evaluator.evaluateFloatExpression(
+			expressionTestData.getExpression());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyIntegerExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		Integer result = evaluator.evaluateIntegerExpression(
+			expressionTestData.getExpression());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyLongExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		Long result = evaluator.evaluateLongExpression(
+			expressionTestData.getExpression());
+
+		Assert.assertEquals(result, expressionTestData.getExpectedResult());
+	}
+
+	public void verifyStringExpression(ExpressionTestData expressionTestData)
+		throws Exception {
+
+		InterdependentExpressionEvaluator evaluator =
+			new InterdependentExpressionEvaluatorImpl(
+				expressionTestData.getVariables());
+
+		String result = evaluator.evaluateStringExpression(
+			expressionTestData.getExpression());
 
 		Assert.assertEquals(result, expressionTestData.getExpectedResult());
 	}

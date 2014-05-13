@@ -16,10 +16,25 @@ package com.liferay.portal.expression;
 
 import org.junit.Test;
 
+import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
+
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
 public class SimpleExpressionTest extends BaseExpresssionTest {
+
+	@Test(expected=ExpressionEvaluationException.class)
+	public void testEvaluateBlankExpression() throws Exception {
+
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("");
+		expressionTestData.addIntegerVariable("var1", null, 5);
+		expressionTestData.addIntegerVariable("var2", null, 6);
+		expressionTestData.setReturnType(Boolean.class);
+		expressionTestData.setExpectedResult(false);
+
+		verifyBooleanExpression(expressionTestData);
+	}
 
 	@Test
 	public void testEvaluateBooleanExpression() throws Exception {
@@ -31,7 +46,16 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setReturnType(Boolean.class);
 		expressionTestData.setExpectedResult(false);
 
-		executeTest(expressionTestData);
+		verifyBooleanExpression(expressionTestData);
+
+		expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 = var2");
+		expressionTestData.addBooleanVariable("var1", null, true);
+		expressionTestData.addBooleanVariable("var2", null, false);
+		expressionTestData.setReturnType(Boolean.class);
+		expressionTestData.setExpectedResult(false);
+
+		verifyBooleanExpression(expressionTestData);
 	}
 
 	@Test
@@ -50,7 +74,20 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setReturnType(Double.class);
 		expressionTestData.setExpectedResult(expectedResult);
 
-		executeTest(expressionTestData);
+		verifyDoubleExpression(expressionTestData);
+	}
+
+	@Test(expected=ExpressionEvaluationException.class)
+	public void testEvaluateExpressionWithError() throws Exception {
+
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData("var1 >=+P var2");
+		expressionTestData.addIntegerVariable("var1", null, 5);
+		expressionTestData.addIntegerVariable("var2", null, 6);
+		expressionTestData.setReturnType(Boolean.class);
+		expressionTestData.setExpectedResult(false);
+
+		verifyBooleanExpression(expressionTestData);
 	}
 
 	@Test
@@ -69,7 +106,7 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setReturnType(Float.class);
 		expressionTestData.setExpectedResult(expectedResult);
 
-		executeTest(expressionTestData);
+		verifyFloatExpression(expressionTestData);
 	}
 
 	@Test
@@ -83,7 +120,7 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setReturnType(Integer.class);
 		expressionTestData.setExpectedResult(5 + (5 + 3) + ((5 + 3) + 5));
 
-		executeTest(expressionTestData);
+		verifyIntegerExpression(expressionTestData);
 	}
 
 	@Test
@@ -98,7 +135,21 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setExpectedResult(
 			(long) (5 + (5 + 3) + ((5 + 3) + 5)));
 
-		executeTest(expressionTestData);
+		verifyLongExpression(expressionTestData);
+	}
+
+
+	@Test(expected=ExpressionEvaluationException.class)
+	public void testEvaluateNullExpression() throws Exception {
+
+		ExpressionTestData expressionTestData =
+			ExpressionTestData.newExpressionTestData(null);
+		expressionTestData.addIntegerVariable("var1", null, 5);
+		expressionTestData.addIntegerVariable("var2", null, 6);
+		expressionTestData.setReturnType(Boolean.class);
+		expressionTestData.setExpectedResult(false);
+
+		verifyBooleanExpression(expressionTestData);
 	}
 
 	@Test
@@ -111,7 +162,7 @@ public class SimpleExpressionTest extends BaseExpresssionTest {
 		expressionTestData.setReturnType(String.class);
 		expressionTestData.setExpectedResult("Liferay");
 
-		executeTest(expressionTestData);
+		verifyStringExpression(expressionTestData);
 	}
 
 }

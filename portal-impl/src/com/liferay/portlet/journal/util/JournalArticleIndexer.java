@@ -499,9 +499,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 							articleResource.getArticleId());
 			}
 			catch (NoSuchArticleResourceException e) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Unable to index " + className + " " + classPK);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to index " + className + " " + classPK, e);
 				}
+				throw nsae;
 			}
 		}
 

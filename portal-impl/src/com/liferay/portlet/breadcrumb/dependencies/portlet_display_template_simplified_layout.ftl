@@ -7,7 +7,7 @@
 
 		<li class="current-parent">
 			<a href="${group.getURL()}">Site Home</a>
-            &nbsp;&nbsp;|&nbsp;&nbsp;
+			&nbsp;&nbsp;|&nbsp;&nbsp;
 		</li>
 	</#if>
 

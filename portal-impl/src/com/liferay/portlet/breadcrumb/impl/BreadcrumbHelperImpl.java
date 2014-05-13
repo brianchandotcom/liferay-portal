@@ -37,8 +37,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.breadcrumb.BreadcrumbHelper;
 import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -43,18 +43,18 @@ public class BreadcrumbHelperUtil {
 	public static final long ENTRY_TYPE_PORTLET =
 		BreadcrumbEntry.ENTRY_TYPE_PORTLET;
 
-	public static BreadcrumbHelper getBreadcrumbHelper() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			BreadcrumbHelperUtil.class);
-
-		return _breadcrumbHelper;
-	}
-
 	public static List<BreadcrumbEntry> getBreadcrumbEntries(
 			HttpServletRequest request, long typeMask)
 		throws Exception {
 
 		return getBreadcrumbHelper().getBreadcrumbEntries(request, typeMask);
+	}
+
+	public static BreadcrumbHelper getBreadcrumbHelper() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			BreadcrumbHelperUtil.class);
+
+		return _breadcrumbHelper;
 	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
@@ -75,7 +75,8 @@ public class BreadcrumbHelperUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getBreadcrumbHelper().getParentGroupBreadcrumbEntries(themeDisplay);
+		return getBreadcrumbHelper().getParentGroupBreadcrumbEntries(
+			themeDisplay);
 	}
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(

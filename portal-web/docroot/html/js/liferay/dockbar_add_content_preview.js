@@ -45,6 +45,12 @@ AUI.add(
 			destructor: function() {
 				var instance = this;
 
+				var tooltip = instance._tooltip;
+
+				if (tooltip) {
+					tooltip.destroy();
+				}
+
 				(new A.EventHandle(instance._eventHandles)).detach();
 			},
 

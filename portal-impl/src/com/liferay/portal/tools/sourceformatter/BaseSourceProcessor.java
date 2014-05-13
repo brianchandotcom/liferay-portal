@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -646,10 +647,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected InputStream getExclusionsInputStream(String fileName)
+	protected List<Tuple> getExclusionsTuples(String fileName)
 		throws IOException {
 
-		_pluginsDirectorylevel = 0;
+		List<Tuple> exclusionsTuples = new ArrayList<Tuple>();
 
 		if (portalSource) {
 			ClassLoader classLoader =
@@ -661,58 +662,68 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			URL url = classLoader.getResource(sourceFormatterExclusions);
 
-			if (url == null) {
-				return null;
+			if (url != null) {
+				exclusionsTuples.add(new Tuple(url.openStream(), 0));
 			}
 
-			return url.openStream();
+			return exclusionsTuples;
 		}
 
 		try {
-			return new FileInputStream(fileName);
+			exclusionsTuples.add(new Tuple(new FileInputStream(fileName), 0));
 		}
 		catch (FileNotFoundException fnfe) {
 		}
 
 		try {
-			_pluginsDirectorylevel = 1;
-
-			return new FileInputStream("../" + fileName);
+			exclusionsTuples.add(
+				new Tuple(new FileInputStream("../" + fileName), 1));
 		}
 		catch (FileNotFoundException fnfe) {
 		}
 
 		try {
-			_pluginsDirectorylevel = 2;
-
-			return new FileInputStream("../../" + fileName);
+			exclusionsTuples.add(
+				new Tuple(new FileInputStream("../../" + fileName), 2));
 		}
 		catch (FileNotFoundException fnfe) {
-			return null;
 		}
+
+		return exclusionsTuples;
 	}
 
 	protected Properties getExclusionsProperties(String fileName)
 		throws IOException {
 
-		InputStream inputStream = getExclusionsInputStream(fileName);
+		List<Tuple> exclusionsTuples = getExclusionsTuples(fileName);
 
-		if (inputStream == null) {
+		if (exclusionsTuples.isEmpty()) {
 			return null;
 		}
 
-		Properties properties = new Properties();
+		Properties allProperties = new Properties();
 
-		properties.load(inputStream);
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
 
-		inputStream.close();
+			Properties properties = new Properties();
 
-		if (_pluginsDirectorylevel > 0) {
-			properties = stripTopLevelDirectories(
-				properties, _pluginsDirectorylevel);
+			properties.load(inputStream);
+
+			inputStream.close();
+
+			if (!portalSource) {
+				int pluginsDirectoryLevel = (Integer)exclusionsTuple.getObject(
+					1);
+
+				properties = stripTopLevelDirectories(
+					properties, pluginsDirectoryLevel);
+			}
+
+			allProperties.putAll(properties);
 		}
 
-		return properties;
+		return allProperties;
 	}
 
 	protected List<String> getFileNames(
@@ -1222,6 +1233,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			Properties properties, int level)
 		throws IOException {
 
+		if (level == 0) {
+			return properties;
+		}
+
 		File dir = new File(".");
 
 		String dirName = dir.getCanonicalPath();
@@ -1355,10 +1370,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		InputStream inputStream = getExclusionsInputStream(
+		List<Tuple> exclusionsTuples = getExclusionsTuples(
 			"source_formatter_excludes.txt");
 
-		if (inputStream != null) {
+		for (Tuple exclusionsTuple : exclusionsTuples) {
+			InputStream inputStream = (InputStream)exclusionsTuple.getObject(0);
+
 			StringUtil.readLines(inputStream, excludesList);
 		}
 
@@ -1410,7 +1427,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private boolean _initialized;
 	private String _oldCopyright;
-	private int _pluginsDirectorylevel;
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;
 

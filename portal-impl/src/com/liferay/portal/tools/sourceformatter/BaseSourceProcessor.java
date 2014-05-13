@@ -1393,10 +1393,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		sourceFormatterHelper.init();
 
-		if (_initialized) {
-			return;
-		}
-
 		_autoFix = autoFix;
 
 		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
@@ -1406,8 +1402,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 
 		_printErrors = printErrors;
-
-		_initialized = true;
 	}
 
 	private boolean _isPortalSource() {
@@ -1425,7 +1419,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<String> _errorMessages = new ArrayList<String>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
-	private boolean _initialized;
 	private String _oldCopyright;
 	private Properties _portalLanguageKeysProperties;
 	private boolean _printErrors;

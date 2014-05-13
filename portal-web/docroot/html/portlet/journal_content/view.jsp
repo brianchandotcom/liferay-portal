@@ -375,7 +375,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 					direction="down"
 					message="add"
 					showArrow="<%= false %>"
-					showWhenSingleIcon="<%= false %>"
+					showWhenSingleIcon="<%= true %>"
 				>
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" varImpl="addArticleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="struts_action" value="/journal/edit_article" />

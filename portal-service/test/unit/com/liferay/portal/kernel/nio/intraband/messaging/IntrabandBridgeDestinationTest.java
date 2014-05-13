@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
+import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
@@ -44,7 +45,6 @@ import java.nio.ByteBuffer;
 import java.rmi.RemoteException;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -389,6 +389,28 @@ public class IntrabandBridgeDestinationTest {
 		Assert.assertNull(message.get(_RECEIVE_KEY));
 	}
 
+	private static void _installSPIs(SPI... spis) throws Exception {
+		Map<String, Object> spiProviderContainers =
+			(Map<String, Object>)ReflectionTestUtil.getFieldValue(
+				MPIHelperUtil.class, "_spiProviderContainers");
+
+		for (SPI spi : spis) {
+			MPIHelperUtil.registerSPIProvider(
+				new MockSPIProvider(spi.getSPIProviderName()));
+
+			Object spiProviderContainer = spiProviderContainers.get(
+				spi.getSPIProviderName());
+
+			Map<String, SPI> spiMap =
+				(Map<String, SPI>)ReflectionTestUtil.getFieldValue(
+					spiProviderContainer, "_spis");
+
+			SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
+
+			spiMap.put(spiConfiguration.getSPIId(), spi);
+		}
+	}
+
 	private MessageRoutingBag _createMessageRoutingBag() {
 		Message message = new Message();
 
@@ -413,18 +435,6 @@ public class IntrabandBridgeDestinationTest {
 		mockSPI.spiProviderName = spiProviderName;
 
 		return mockSPI;
-	}
-
-	private void _installSPIs(SPI... spis) throws Exception {
-		Map<String, SPI> spisMap = new ConcurrentHashMap<String, SPI>();
-
-		for (SPI spi : spis) {
-			SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
-
-			spisMap.put(spiConfiguration.getSPIId(), spi);
-		}
-
-		ReflectionTestUtil.setFieldValue(MPIHelperUtil.class, "_spis", spisMap);
 	}
 
 	private String _toRoutingId(SPI spi) throws RemoteException {

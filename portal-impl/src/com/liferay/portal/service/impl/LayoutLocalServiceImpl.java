@@ -938,10 +938,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Date startDate, Date endDate, String fileName)
 		throws PortalException, SystemException {
 
-		if (!DLStoreUtil.isValidName(fileName)) {
-			throw new LARFileNameException(fileName);
-		}
-
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
@@ -955,20 +951,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>();
-
-		taskContextMap.put(
-			"exportImportConfigurationId",
-			exportImportConfiguration.getExportImportConfigurationId());
-
-		BackgroundTask backgroundTask =
-			backgroundTaskLocalService.addBackgroundTask(
-				userId, groupId, taskName, null,
-				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
-				serviceContext);
-
-		return backgroundTask.getBackgroundTaskId();
+		return exportLayoutsAsFileInBackground(
+			userId, exportImportConfiguration);
 	}
 
 	/**

@@ -33,86 +33,86 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CKEDITOR_TOOLBOX-->
+<!--TOOLBOX-->
 <tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--CKEDITOR_TOOLBAR-->
+<!--TOOLBAR-->
 <tr>
-	<td>CKEDITOR_TOOLBAR_FONT_BUTTON</td>
+	<td>TOOLBAR_FONT_BUTTON</td>
 	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_SIZE_BUTTON</td>
+	<td>TOOLBAR_SIZE_BUTTON</td>
 	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Size')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_FORMAT_BUTTON</td>
+	<td>TOOLBAR_FORMAT_BUTTON</td>
 	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Format')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_UNDO_BUTTON</td>
-	<td>//a[contains(@class,'cke_button__undo')]</td>
+	<td>TOOLBAR_UNDO_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'undo')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_REDO_BUTTON</td>
-	<td>//a[contains(@class,'cke_button__redo')]</td>
+	<td>TOOLBAR_REDO_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'redo')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_FONT_BUTTON_PORTLET</td>
+	<td>TOOLBAR_SOURCE_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_FONT_BUTTON_PORTLET</td>
 	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_SOURCE_BUTTON</td>
-	<td>//a[contains(@class,'cke_button__source')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CKEDITOR_TOOLBAR_SIZE_BUTTON_PORTLET</td>
+	<td>TOOLBAR_SIZE_BUTTON_PORTLET</td>
 	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Size')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_FORMAT_BUTTON_PORTLET</td>
+	<td>TOOLBAR_FORMAT_BUTTON_PORTLET</td>
 	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Format')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_UNDO_BUTTON_PORTLET</td>
+	<td>TOOLBAR_UNDO_BUTTON_PORTLET</td>
 	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__undo')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_REDO_BUTTON_PORTLET</td>
+	<td>TOOLBAR_REDO_BUTTON_PORTLET</td>
 	<td>n[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__redo')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_SOURCE_BUTTON_PORTLET</td>
+	<td>TOOLBAR_SOURCE_BUTTON_PORTLET</td>
 	<td>n[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__source')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_FONT_IFRAME</td>
-	<td>//iframe[@title='Font Name']</td>
+	<td>TOOLBAR_FONT_IFRAME</td>
+	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'font')]/iframe</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_SIZE_IFRAME</td>
-	<td>//iframe[@title='Font Size']</td>
+	<td>TOOLBAR_SIZE_IFRAME</td>
+	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'fontsize')]/iframe</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CKEDITOR_TOOLBAR_FORMAT_IFRAME</td>
-	<td>//iframe[@title='Paragraph Format']</td>
+	<td>TOOLBAR_FORMAT_IFRAME</td>
+	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'format')]/iframe</td>
 	<td></td>
 </tr>
 <tr>
@@ -120,9 +120,9 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CKEDITOR_TOOLBAR_FONT_MENULIST-->
+<!--TOOLBAR_FONT_MENULIST-->
 <tr>
-	<td>CKEDITOR_TOOLBAR_FONT_MENULIST</td>
+	<td>TOOLBAR_FONT_MENULIST</td>
 	<td>//div[@class='cke_panel_block' and contains(.,'Font Name')]//li/a[contains(.,'${key_font}')]</td>
 	<td></td>
 </tr>
@@ -131,9 +131,9 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CKEDITOR_TOOLBAR_SIZE_MENULIST-->
+<!--TOOLBAR_SIZE_MENULIST-->
 <tr>
-	<td>CKEDITOR_TOOLBAR_SIZE_MENULIST</td>
+	<td>TOOLBAR_SIZE_MENULIST</td>
 	<td>//div[@class='cke_panel_block' and contains(.,'Font Size')]//li/a[contains(.,'${key_size}')]</td>
 	<td></td>
 </tr>
@@ -142,9 +142,9 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CKEDITOR_TOOLBAR_FORMAT_MENULIST-->
+<!--TOOLBAR_FORMAT_MENULIST-->
 <tr>
-	<td>CKEDITOR_TOOLBAR_FORMAT_MENULIST</td>
+	<td>TOOLBAR_FORMAT_MENULIST</td>
 	<td>//div[@class='cke_panel_block' and contains(.,'Format')]//li/a[contains(.,'${key_format}')]</td>
 	<td></td>
 </tr>

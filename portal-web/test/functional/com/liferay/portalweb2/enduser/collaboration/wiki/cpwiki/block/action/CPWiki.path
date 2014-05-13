@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>ADD_WIKI_BUTTON</td>
-	<td>//button[@id='_154_addNodeButton']</td>
+	<td>//a[contains(@id,'addNodeButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[@id='_154_permissionsButton']</td>
+	<td>//a[contains(@id,'permissionsButton')]</td>
 	<td></td>
 </tr>
 <tr>

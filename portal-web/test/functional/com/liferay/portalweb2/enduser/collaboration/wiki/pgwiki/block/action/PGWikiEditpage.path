@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SOURCE_HTML_BUTTON</td>
-	<td>//span[@id='cke_56_label']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>THIS_IS_A_MINOR_EDIT_CHECKBOX</td>
 	<td>//label[contains(.,'This is a minor edit.')]/input[@type='checkbox']</td>
 	<td></td>

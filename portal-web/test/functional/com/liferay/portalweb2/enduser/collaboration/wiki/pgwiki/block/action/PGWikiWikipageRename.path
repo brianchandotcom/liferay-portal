@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>NEW_TITLE_FIELD</td>
-	<td>//div[@class='control-group']//input[@name='_36_newTitle']</td>
+	<td>//input[contains(@id,'newTitle') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[@class='btn btn-cancel' and contains(.,'Cancel')]</td>
+	<td>//a[contains(@class,'btn-cancel') and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

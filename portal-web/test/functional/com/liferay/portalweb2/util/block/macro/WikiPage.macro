@@ -34,7 +34,7 @@
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
 		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -53,7 +53,7 @@
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
 		<execute action="PGWikidisplayAddpage#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -114,7 +114,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="CPWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
-		<execute action="CPWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
@@ -131,8 +131,8 @@
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
 		<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 		<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-		<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
-		<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${welcomeToLiferay}" />
+		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -154,8 +154,8 @@
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
 		<execute action="PGWikidisplayAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 		<execute action="PGWikidisplayAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${welcomeToLiferay}" />
+		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -177,7 +177,7 @@
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="PORTLET_ERROR_MESSAGE" value1="Your request failed to complete." />
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="TITLE_ERROR_MESSAGE" value1="Please enter a valid title." />\
@@ -197,7 +197,7 @@
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiChildPageContent}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGWikidisplayAddpage#assertTextEquals" locator-key1="PORTLET_ERROR_MESSAGE" value1="Your request failed to complete." />
 		<execute action="PGWikidisplayAddpage#assertTextEquals" locator-key1="TITLE_ERROR_MESSAGE" value1="Please enter a valid title." />
@@ -216,7 +216,7 @@
 
 		<execute action="CPWikiFrontpage#assertClick" locator-key1="INFO_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="CPWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiFrontPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiFrontPageContent}" />
 		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -229,7 +229,7 @@
 		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
 
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
-		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="CKEditor#selectFrame" locator-key1="BODY_FIELD" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
@@ -257,20 +257,20 @@
 			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
 				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="Creole" />
-				<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_CREOLE_BUTTON" value1="Source" />
-				<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContent}" />
+				<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 			</then>
 			<elseif>
 				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-					<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
-					<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContent}" />
+					<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+					<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 			</else>
 		</if>
 
@@ -295,7 +295,7 @@
 		<execute action="PGWikidisplayAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 		<execute action="PGWikidisplayAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="FORMAT_DROPDOWN" value1="Source" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -305,7 +305,7 @@
 	<command name="addFrontPagePGViaWD">
 		<execute action="PGWikidisplay#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="PGWikidisplayAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -318,7 +318,7 @@
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikidisplayAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -335,7 +335,7 @@
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -357,7 +357,7 @@
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
-		<execute action="PGWikidisplayAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikidisplayAddpage#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute action="PGWikidisplayAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -386,16 +386,16 @@
 			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
 				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="Creole" />
-				<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_CREOLE_BUTTON" value1="Source" />
-				<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContent}" />
+				<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContent}" />
 			</then>
 			<elseif>
 				<equals arg1="${htmlSource}" arg2="true" />
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-					<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
-					<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${welcomeToLiferay}" />
+					<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+					<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 				</then>
 			</elseif>
 			<elseif>
@@ -407,7 +407,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 			</else>
 		</if>
 
@@ -429,7 +429,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-		<execute action="PGWikiAddpage#assertElementPresent" locator-key1="BODY_FIELD" />
+		<execute action="CKEditor#assertElementPresent" locator-key1="BODY_FIELD" />
 
 		<if>
 			<condition action="PGWikiAddpage#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
@@ -595,7 +595,7 @@
 		<if>
 			<equals arg1="${creole}" arg2="true" />
 			<then>
-				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="Creole" />
 			</then>
 			<elseif>
@@ -603,8 +603,8 @@
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-					<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
-					<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${welcomeToLiferay}" />
+					<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+					<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${welcomeToLiferay}" />
 				</then>
 			</elseif>
 			<elseif>
@@ -612,12 +612,12 @@
 				<then>
 					<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="MediaWiki" />
 					<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
-					<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_MEDIAWIKI_BUTTON" value1="Source" />
-					<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageMediaWikiContent}" />
+					<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
+					<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageMediaWikiContent}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContentCopy}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContentCopy}" />
 				<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -742,7 +742,7 @@
 
 		<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 		<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-		<execute action="PGWikiAddpage#assertClick" locator-key1="SOURCE_HTML_BUTTON" value1="Source" />
+		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_SOURCE_BUTTON" value1="Source" />
 
 		<if>
 			<equals arg1="${pageAccess}" arg2="Private" />
@@ -810,14 +810,14 @@
 					<![CDATA[<p>${wikiPageContent} <a href="${siteNameURL}${pageNameURL}/-/wiki${wikiNodeNameURL}${wikiPage2TitleURL}">Link to ${wikiPage2Title}</a></p>]]>
 				</var>
 
-				<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContentURL}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContentURL}" />
 			</then>
 			<else>
 				<var name="wikiPageContentLinkHTML">
 					<![CDATA[<p>${wikiPageContent} <a href="${pageAccessURL}${siteNameURL}${pageStagingURL}${pageNameURL}/-/wiki${wikiNodeNameURL}${wikiPage2TitleURL}">Link to ${wikiPage2Title}</a></p>]]>
 				</var>
 
-				<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContentLinkHTML}" />
+				<execute action="CKEditor#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${wikiPageContentLinkHTML}" />
 			</else>
 		</if>
 
@@ -1037,11 +1037,11 @@
 	<command name="saveAsDraftFrontPagePG">
 		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE"  value1="Your request completed successfully." />
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
-		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="CKEditor#selectFrame" locator-key1="BODY_FIELD" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
@@ -1484,7 +1484,7 @@
 		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
 
 		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
-		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="CKEditor#selectFrame" locator-key1="BODY_FIELD" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 

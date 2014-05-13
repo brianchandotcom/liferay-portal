@@ -75,7 +75,7 @@
 	<command name="addFrontPageTagPG">
 		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="CATEGORIZATION_DROPDOWN" value1="Categorization" />
 		<execute action="PGWikiAddpage#type" locator-key1="TAGS_FIELD" value1="${wikiTagName}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />

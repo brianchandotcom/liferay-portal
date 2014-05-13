@@ -46,10 +46,10 @@
 
 		<var name="key_portletName" value="${portlet1Name}" />
 
-		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
-		<execute action="CKEditor#assertClick" locator-key1="CKEDITOR_TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute action="CKEditor#selectFrame" locator-key1="CKEDITOR_TOOLBAR_FORMAT_IFRAME" />
+		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
+		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute action="CKEditor#selectFrame" locator-key1="TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
 			<var name="key_format" value="${optionList}" />
@@ -57,10 +57,10 @@
 			<if>
 				<contains string="${optionList}" substring="${invalidSubstring}" />
 				<then>
-					<execute action="CKEditor#assertElementNotPresent" locator-key1="CKEDITOR_TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute action="CKEditor#assertElementNotPresent" locator-key1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</then>
 				<else>
-					<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</else>
 			</if>
 		</for>
@@ -69,10 +69,10 @@
 
 		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
-		<execute action="CKEditor#assertClick" locator-key1="CKEDITOR_TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute action="CKEditor#selectFrame" locator-key1="CKEDITOR_TOOLBAR_FORMAT_IFRAME" />
+		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
+		<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute action="CKEditor#assertClick" locator-key1="TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
+		<execute action="CKEditor#selectFrame" locator-key1="TOOLBAR_FORMAT_IFRAME" />
 
 		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
 			<var name="key_format" value="${optionList}" />
@@ -80,10 +80,10 @@
 			<if>
 				<contains string="${optionList}" substring="${invalidSubstring}" />
 				<then>
-					<execute action="CKEditor#assertElementNotPresent" locator-key1="CKEDITOR_TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute action="CKEditor#assertElementNotPresent" locator-key1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</then>
 				<else>
-					<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
+					<execute action="CKEditor#assertTextEquals" locator-key1="TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
 				</else>
 			</if>
 		</for>

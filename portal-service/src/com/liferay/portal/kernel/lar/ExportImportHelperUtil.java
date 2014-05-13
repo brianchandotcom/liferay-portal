@@ -291,6 +291,11 @@ public class ExportImportHelperUtil {
 			portletDataContext, stagedModel);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportContentReferences(PortletDataContext,
+	 *             StagedModel, String, boolean)}
+	 */
 	@Deprecated
 	public static String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
@@ -314,6 +319,11 @@ public class ExportImportHelperUtil {
 			exportReferencedContent);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportDLReferences(PortletDataContext, StagedModel,
+	 *             String, boolean)}
+	 */
 	@Deprecated
 	public static String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
@@ -345,6 +355,10 @@ public class ExportImportHelperUtil {
 			portletDataContext, content);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportLayoutReferences(PortletDataContext, String)}
+	 */
 	@Deprecated
 	public static String replaceExportLayoutReferences(
 			PortletDataContext portletDataContext, String content,
@@ -355,6 +369,11 @@ public class ExportImportHelperUtil {
 			portletDataContext, content, exportReferencedContent);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportLinksToLayouts(PortletDataContext, StagedModel,
+	 *             String)}
+	 */
 	@Deprecated
 	public static String replaceExportLinksToLayouts(
 			PortletDataContext portletDataContext,
@@ -379,7 +398,7 @@ public class ExportImportHelperUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #replaceImportContentReferences(PortletDataContext,
-	 *             StagedModel, Element, String, boolean)}
+	 *             StagedModel, String)}
 	 */
 	@Deprecated
 	public static String replaceImportContentReferences(
@@ -404,7 +423,7 @@ public class ExportImportHelperUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
-	 *             String, boolean)}
+	 *             String)}
 	 */
 	@Deprecated
 	public static String replaceImportDLReferences(
@@ -434,6 +453,10 @@ public class ExportImportHelperUtil {
 			portletDataContext, content);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportLayoutReferences(PortletDataContext, String)}
+	 */
 	@Deprecated
 	public static String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content,
@@ -452,6 +475,10 @@ public class ExportImportHelperUtil {
 			portletDataContext, content);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportLinksToLayouts(PortletDataContext, String)}
+	 */
 	@Deprecated
 	public static String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content,

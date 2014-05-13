@@ -874,6 +874,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportContentReferences(PortletDataContext,
+	 *             StagedModel, String, boolean)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceExportContentReferences(
@@ -913,6 +918,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportDLReferences(PortletDataContext, StagedModel,
+	 *             String, boolean)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceExportDLReferences(
@@ -1219,6 +1229,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportLayoutReferences(PortletDataContext, String)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceExportLayoutReferences(
@@ -1229,6 +1243,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return replaceExportLayoutReferences(portletDataContext, content);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceExportLinksToLayouts(PortletDataContext, StagedModel,
+	 *             String)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceExportLinksToLayouts(
@@ -1313,7 +1332,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #replaceImportContentReferences(PortletDataContext,
-	 *             StagedModel, Element, String, boolean)}
+	 *             StagedModel, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1343,7 +1362,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
-	 *             String, boolean)}
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -1520,6 +1539,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportLayoutReferences(PortletDataContext, String)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceImportLayoutReferences(
@@ -1637,6 +1660,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportLinksToLayouts(PortletDataContext, String)}
+	 */
 	@Deprecated
 	@Override
 	public String replaceImportLinksToLayouts(

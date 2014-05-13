@@ -17,11 +17,7 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, FileEntryDisplayTerms.SELECTED_GROUP_ID);
-
-if (groupId == 0) {
-	groupId = ParamUtil.getLong(request, "groupId");
-}
+long groupId = ParamUtil.getLong(request, "groupId");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -33,23 +29,8 @@ if ((folder != null) && (folder.getGroupId() != groupId)) {
 	folderId = 0;
 }
 
-long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
-
-long[] folderIdsArray = null;
-
 if (folderId > 0) {
-	folderIdsArray = new long[] {folderId};
-
 	folder = DLAppServiceUtil.getFolder(folderId);
-}
-else {
-	long defaultFolderId = DLFolderConstants.getFolderId(groupId, DLFolderConstants.getDataRepositoryId(groupId, searchFolderIds));
-
-	List<Long> folderIds = DLAppServiceUtil.getSubfolderIds(groupId, searchFolderIds);
-
-	folderIds.add(0, defaultFolderId);
-
-	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
 }
 
 long repositoryId = groupId;
@@ -320,7 +301,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 		searchContext.setAttribute("groupId", groupId);
 		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setEnd(entryEnd);
-		searchContext.setFolderIds(folderIdsArray);
+		searchContext.setFolderIds(new long[]{folderId});
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setIncludeFolders(false);
 		searchContext.setKeywords(keywords);

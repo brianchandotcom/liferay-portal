@@ -65,38 +65,36 @@ portletURL.setParameter("portletResource", portletResource);
 	headerNames.add("modified-date");
 	headerNames.add(StringPool.BLANK);
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-archived-setups");
+	SearchContainer<ArchivedSettings> searchContainer = new SearchContainer<ArchivedSettings>(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-archived-setups");
 
-	List archivedSetups = PortletItemLocalServiceUtil.getPortletItems(scopeGroupId, selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName());
+	List<ArchivedSettings> archivedSettingsList = SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(scopeGroupId, selPortlet.getRootPortletId());
 
-	int total = archivedSetups.size();
+	int total = archivedSettingsList.size();
 
 	searchContainer.setTotal(total);
 
-	List results = ListUtil.subList(archivedSetups, searchContainer.getStart(), searchContainer.getEnd());
+	List<ArchivedSettings> results = ListUtil.subList(archivedSettingsList, searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 
-	List resultRows = searchContainer.getResultRows();
+	List<ResultRow> resultRows = searchContainer.getResultRows();
 
 	for (int i = 0; i < results.size(); i++) {
-		PortletItem portletItem = (PortletItem)results.get(i);
+		ArchivedSettings archivedSettings = results.get(i);
 
-		portletItem = portletItem.toEscapedModel();
-
-		ResultRow row = new ResultRow(new Object[] {portletItem, portletResource}, portletItem.getName(), i);
+		ResultRow row = new ResultRow(new Object[] {archivedSettings, portletResource}, archivedSettings.getName(), i);
 
 		// Name
 
-		row.addText(portletItem.getName());
+		row.addText(archivedSettings.getName());
 
 		// User
 
-		row.addText(PortalUtil.getUserName(portletItem));
+		row.addText(archivedSettings.getUserName());
 
 		// Date
 
-		row.addDate(portletItem.getModifiedDate());
+		row.addDate(archivedSettings.getModifiedDate());
 
 		// Action
 

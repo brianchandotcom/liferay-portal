@@ -43,6 +43,7 @@ page import="com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskEx
 page import="com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
+page import="com.liferay.portal.settings.ArchivedSettings" %><%@
 page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@
 page import="com.liferay.portlet.PortletQNameUtil" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@

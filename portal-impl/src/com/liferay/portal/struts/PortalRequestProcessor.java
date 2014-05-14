@@ -20,6 +20,7 @@ import com.liferay.portal.UserActiveException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -68,9 +69,11 @@ import com.liferay.portlet.RenderResponseImpl;
 import java.io.IOException;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -88,6 +91,7 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
@@ -832,6 +836,47 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	}
 
 	@Override
+	protected void processPopulate(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionForm actionForm, ActionMapping actionMapping)
+		throws ServletException {
+
+		if (actionForm == null) {
+			return;
+		}
+
+		// LPS-46552
+
+		boolean hasIgnoredParameter = false;
+
+		Set<Map.Entry<String, String[]>> originalParameters =
+			request.getParameterMap().entrySet();
+
+		Map<String, String[]> validParameters = new HashMap<String, String[]>(
+			originalParameters.size());
+
+		for (Map.Entry<String, String[]> entry : originalParameters) {
+			String parameterName = entry.getKey();
+
+			if (_STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP.matcher(
+					parameterName).matches()) {
+
+				hasIgnoredParameter = true;
+			}
+			else {
+				validParameters.put(parameterName, entry.getValue());
+			}
+		}
+
+		if (hasIgnoredParameter) {
+			request = new DynamicServletRequest(
+				request, validParameters, false);
+		}
+
+		super.processPopulate(request, response, actionForm, actionMapping);
+	}
+
+	@Override
 	protected boolean processRoles(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
@@ -993,6 +1038,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final String _PATH_PORTAL_VERIFY_EMAIL_ADDRESS =
 		"/portal/verify_email_address";
+
+	private static final Pattern _STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP =
+		Pattern.compile(PropsValues.STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);

@@ -257,6 +257,16 @@
 		right: 0;
 	}
 
+	.taglib-search-toggle-advanced {
+		.input-text-wrapper {
+			margin-right: 30px;
+		}
+
+		.input-select-wrapper {
+			margin-right: 45px;
+		}
+	}
+
 	.entry-thumbnail .taglib-workflow-status {
 		left: 6px;
 		margin: 0;

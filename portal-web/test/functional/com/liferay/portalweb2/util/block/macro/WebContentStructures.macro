@@ -126,7 +126,7 @@
 
 		<execute action="CPWebcontentStructures#type" locator-key1="SEARCH_FIELD" value1="${structureName}" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_DELETE" value1="Delete" />
 
 		<if>
@@ -193,7 +193,7 @@
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 		<execute action="CPWebcontentStructures#type" locator-key1="SEARCH_FIELD" value1="${substructureName}" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" />
@@ -210,7 +210,7 @@
 
 		<execute action="CPWebcontentStructures#selectFrame" value1="relative=top" />
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentStructures#click" locator-key1="STRUCTURE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" value1="relative=top" />

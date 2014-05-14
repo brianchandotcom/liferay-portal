@@ -214,6 +214,10 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setTimeoutImplicit(String timeout);
 
+	public void sikuliAssertElementNotPresent(String image) throws Exception;
+
+	public void sikuliAssertElementPresent(String image) throws Exception;
+
 	public void sikuliClick(String image) throws Exception;
 
 	public void sikuliType(String image, String value) throws Exception;

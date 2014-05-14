@@ -335,6 +335,18 @@
 		</default>
 	</command>
 
+	<command name="sikuliAssertElementNotPresent">
+		<default>
+			<execute function="SikuliAssertElementNotPresent#sikuliAssertElementNotPresent" />
+		</default>
+	</command>
+
+	<command name="sikuliAssertElementPresent">
+		<default>
+			<execute function="SikuliAssertElementPresent#sikuliAssertElementPresent" />
+		</default>
+	</command>
+
 	<command name="sikuliClick">
 		<default>
 			<description message="Click on the ${locator1}." />

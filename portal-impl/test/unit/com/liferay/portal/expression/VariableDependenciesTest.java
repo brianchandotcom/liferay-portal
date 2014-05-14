@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class DependenciesTest {
+public class VariableDependenciesTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -49,8 +49,8 @@ public class DependenciesTest {
 
 		VariableDependencies var1Dependencies = dependenciesMap.get("var1");
 
-		Assert.assertTrue(var1Dependencies.getRequiredVariableNames().isEmpty()
-			);
+		Assert.assertTrue(
+			var1Dependencies.getRequiredVariableNames().isEmpty());
 
 		Assert.assertTrue(affectedVariablesContains(var1Dependencies, "var2"));
 
@@ -68,8 +68,8 @@ public class DependenciesTest {
 
 		Assert.assertTrue(requiredVariablesContains(var3Dependencies, "var2"));
 
-		Assert.assertTrue(var3Dependencies.getAffectedVariableNames().isEmpty()
-			);
+		Assert.assertTrue(
+			var3Dependencies.getAffectedVariableNames().isEmpty());
 	}
 
 	protected boolean affectedVariablesContains(

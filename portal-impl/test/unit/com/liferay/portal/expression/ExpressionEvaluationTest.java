@@ -17,6 +17,7 @@ package com.liferay.portal.expression;
 import com.liferay.portal.kernel.expression.Expression;
 import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
 import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
+import com.liferay.portal.kernel.util.MathUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ import org.testng.Assert;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class SimpleExpressionTest {
+public class ExpressionEvaluationTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -177,6 +178,49 @@ public class SimpleExpressionTest {
 		expression.addStringVariable("var2", "ray");
 
 		Assert.assertEquals(expression.evaluate(), "Liferay");
+	}
+
+	@Test
+	public void testSumWithDoubleValues() throws Exception {
+		Expression<Double> expression =
+			ExpressionFactoryUtil.createDoubleExpression(
+				"sum(var1, var2, var3)");
+
+		double var1 = 5.5;
+
+		expression.addDoubleVariable("var1", var1);
+		expression.addExpressionVariable("var2", Double.class, "var1 + 3.5");
+		expression.addExpressionVariable("var3", Double.class, "var2 + var1");
+
+		double var2 = var1 + 3.5;
+		double var3 = var1 + var2;
+
+		double actual = expression.evaluate();
+
+		double expected = MathUtil.sum(var1, var2, var3);
+
+		Assert.assertEquals(actual, expected);
+	}
+
+	@Test
+	public void testSumWithLongValues() throws Exception {
+		Expression<Long> expression =
+			ExpressionFactoryUtil.createLongExpression("sum(var1, var2, var3)");
+
+		long var1 = 5;
+
+		expression.addLongVariable("var1", var1);
+		expression.addExpressionVariable("var2", Long.class, "var1 + 3");
+		expression.addExpressionVariable("var3", Long.class, "var2 + var1");
+
+		long var2 = var1 + 3;
+		long var3 = var1 + var2;
+
+		long actual = expression.evaluate();
+
+		long expected = MathUtil.sum(var1, var2, var3);
+
+		Assert.assertEquals(actual, expected);
 	}
 
 	protected void setupExpressionFactory() {

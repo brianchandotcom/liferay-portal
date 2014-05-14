@@ -1,7 +1,4 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
-
 <ul class="breadcrumb breadcrumb-horizontal">
-
 	<#if entries?size &gt; 1>
 		<#assign group = breadcrumbHelper.getScopeGroupBreadcrumbEntry(themeDisplay) />
 
@@ -14,5 +11,4 @@
 	<li class="active last">
 		<a href="${entries?last.getURL()}">${entries?last.getTitle()}</a>
 	</li>
-
 </ul>

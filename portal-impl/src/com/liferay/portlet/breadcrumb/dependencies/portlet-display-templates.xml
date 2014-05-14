@@ -4,7 +4,7 @@
 	<template>
 		<template-key>breadcrumb-simplified-layout-ftl</template-key>
 		<name>portlet-display-template-name-simplified-layout</name>
-		<description>portlet-display-template-description-simplified-layout-breadcrumb</description>
+		<description>portlet-display-template-description-simplified-layout</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portlet/breadcrumb/dependencies/portlet_display_template_simplified_layout.ftl</script-file>
 		<cacheable>false</cacheable>

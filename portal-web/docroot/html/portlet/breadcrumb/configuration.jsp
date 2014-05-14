@@ -31,7 +31,6 @@
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 			<aui:fieldset>
-
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
 						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
@@ -42,7 +41,6 @@
 						showEmptyOption="<%= true %>"
 					/>
 				</div>
-
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="checkBoxes">
@@ -65,7 +63,6 @@
 		</aui:form>
 	</aui:col>
 	<aui:col width="<%= 50 %>">
-
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
 			queryString="struts_action=/breadcrumb/view"

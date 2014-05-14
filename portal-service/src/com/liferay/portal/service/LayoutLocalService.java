@@ -1301,6 +1301,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	/**
 	* Updates the friendly URL of the layout.
 	*
+	* @param userId the primary key of the user
 	* @param plid the primary key of the layout
 	* @param friendlyURL the friendly URL to be assigned
 	* @param languageId the primary key of the language
@@ -1309,6 +1310,25 @@ public interface LayoutLocalService extends BaseLocalService,
 	not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	public com.liferay.portal.model.Layout updateFriendlyURL(long userId,
+		long plid, java.lang.String friendlyURL, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the friendly URL of the layout.
+	*
+	* @param plid the primary key of the layout
+	* @param friendlyURL the friendly URL to be assigned
+	* @param languageId the primary key of the language
+	* @return the updated layout
+	* @throws PortalException if a group or layout with the primary key
+	could not be found
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateFriendlyURL(long,
+	long, String, String)}
+	*/
+	@Deprecated
 	public com.liferay.portal.model.Layout updateFriendlyURL(long plid,
 		java.lang.String friendlyURL, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

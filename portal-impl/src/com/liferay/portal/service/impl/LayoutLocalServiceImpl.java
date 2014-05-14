@@ -2266,6 +2266,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Updates the friendly URL of the layout.
 	 *
+	 * @param  userId the primary key of the user
 	 * @param  plid the primary key of the layout
 	 * @param  friendlyURL the friendly URL to be assigned
 	 * @param  languageId the primary key of the language
@@ -2276,7 +2277,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public Layout updateFriendlyURL(
-			long plid, String friendlyURL, String languageId)
+			long userId, long plid, String friendlyURL, String languageId)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -2292,7 +2293,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			friendlyURL);
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
-			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
+			userId, layout.getCompanyId(), layout.getGroupId(),
 			layout.getPlid(), layout.isPrivateLayout(), friendlyURL, languageId,
 			new ServiceContext());
 
@@ -2308,6 +2309,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutPersistence.update(layout);
 
 		return layout;
+	}
+
+	/**
+	 * Updates the friendly URL of the layout.
+	 *
+	 * @param      plid the primary key of the layout
+	 * @param      friendlyURL the friendly URL to be assigned
+	 * @param      languageId the primary key of the language
+	 * @return     the updated layout
+	 * @throws     PortalException if a group or layout with the primary key
+	 *             could not be found
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFriendlyURL(long,
+	 *             long, String, String)}
+	 */
+	@Deprecated
+	@Override
+	public Layout updateFriendlyURL(
+			long plid, String friendlyURL, String languageId)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutPersistence.findByPrimaryKey(plid);
+
+		return updateFriendlyURL(
+			layout.getUserId(), plid, friendlyURL, languageId);
 	}
 
 	@Override
@@ -2456,9 +2482,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
-			layout.getPlid(), layout.isPrivateLayout(), friendlyURLMap,
-			serviceContext);
+			serviceContext.getUserId(), layout.getCompanyId(),
+			layout.getGroupId(), layout.getPlid(), layout.isPrivateLayout(),
+			friendlyURLMap, serviceContext);
 
 		// Asset
 

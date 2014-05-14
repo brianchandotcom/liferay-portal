@@ -448,7 +448,7 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		java.lang.String structureKey, boolean includeGlobalStructures)
+		java.lang.String structureKey, boolean includeAncestorStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -456,7 +456,7 @@ public class DDMStructureServiceHttp {
 					"getStructure", _getStructureParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId, structureKey, includeGlobalStructures);
+					classNameId, structureKey, includeAncestorStructures);
 
 			Object returnObj = null;
 

@@ -599,7 +599,7 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* <p>
 	* This method first searches in the given group. If the template is still
-	* not found and <code>includeGlobalTemplates</code> is set to
+	* not found and <code>includeAncestorTemplates</code> is set to
 	* <code>true</code>, this method searches the global group.
 	* </p>
 	*

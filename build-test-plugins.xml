@@ -3,6 +3,48 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<target name="deploy-simple-server-plugin">
+		<if>
+			<isset property="portlet.properties.${plugin}" />
+			<then>
+				<propertycopy
+					from="portlet.properties.${plugin}"
+					name="portlet.properties"
+					override="true"
+				/>
+
+				<echo file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+			</then>
+			<else>
+				<delete file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/src/portlet-ext.properties" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${java.security}" arg2="true" />
+			<then>
+				<if>
+					<not>
+						<resourcecontains
+							resource="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/liferay-plugin-package.properties"
+							substring="security-manager-enabled=true"
+						/>
+					</not>
+					<then>
+						<echo append="true" file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/liferay-plugin-package.properties">
+
+security-manager-enabled=true</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<ant dir="${plugins.dir}/${plugin.types}/${plugin}" inheritAll="false">
+			<target name="clean" />
+			<target name="deploy" />
+		</ant>
+	</target>
+
 	<target name="deploy-simple-server-plugins">
 		<antcall target="prepare-build-properties">
 			<param name="plugins.dir" value="${lp.plugins.dir}" />
@@ -16,45 +58,6 @@
 				</antcall>
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${java.security}" arg2="true" />
-			<then>
-				<if>
-					<not>
-						<resourcecontains
-							resource="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties"
-							substring="security-manager-enabled=true"
-						/>
-					</not>
-					<then>
-						<echo append="true" file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties">
-
-security-manager-enabled=true</echo>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<for list="${plugins.includes}" param="plugin">
-			<sequential>
-				<if>
-					<isset property="portlet.properties.@{plugin}" />
-					<then>
-						<propertycopy
-							from="portlet.properties.@{plugin}"
-							name="portlet.properties"
-							override="true"
-						/>
-
-						<echo file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
-					</then>
-					<else>
-						<delete file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties" />
-					</else>
-				</if>
-			</sequential>
-		</for>
 
 		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />

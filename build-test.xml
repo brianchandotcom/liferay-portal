@@ -2536,10 +2536,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<equals arg1="${database.type}" arg2="postgresql" />
 						<then>
 							<exec executable="${postgresql.executable}">
-								<arg value="-U" />
-								<arg value="${database.username}" />
 								<arg value="-f" />
 								<arg value="create.sql" />
+								<arg value="-U" />
+								<arg value="${database.username}" />
 							</exec>
 						</then>
 					</elseif>
@@ -2547,14 +2547,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
 							<exec executable="${sybase.executable}">
-								<arg value="-U" />
-								<arg value="${database.username}" />
-								<arg value="-S" />
-								<arg value="${database.schema}" />
-								<arg value="-P" />
-								<arg value="${database.password}" />
 								<arg value="-i" />
 								<arg value="create.sql" />
+								<arg value="-P" />
+								<arg value="${database.password}" />
+								<arg value="-S" />
+								<arg value="${database.schema}" />
+								<arg value="-U" />
+								<arg value="${database.username}" />
 							</exec>
 						</then>
 					</elseif>

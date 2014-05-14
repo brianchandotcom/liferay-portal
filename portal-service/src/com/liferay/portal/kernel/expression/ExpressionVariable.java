@@ -19,41 +19,45 @@ package com.liferay.portal.kernel.expression;
  */
 public class ExpressionVariable {
 
-	public String getCalculatedValue() {
-		return _calculatedValue;
-	}
-
-	public Class<?> getDataType() {
-		return _dataType;
+	public ExpressionVariable(String name) {
+		_name = name;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
+	public Class<?> getType() {
+		return _type;
+	}
+
+	public Object getValue() {
+		return _value;
+	}
+
 	public String getValueExpression() {
 		return _valueExpression;
-	}
-
-	public void setCalculatedValue(String calculatedValue) {
-		_calculatedValue = calculatedValue;
-	}
-
-	public void setDataType(Class<?> dataType) {
-		_dataType = dataType;
 	}
 
 	public void setName(String name) {
 		_name = name;
 	}
 
+	public void setType(Class<?> dataType) {
+		_type = dataType;
+	}
+
+	public void setValue(Object value) {
+		_value = value;
+	}
+
 	public void setValueExpression(String valueExpression) {
 		_valueExpression = valueExpression;
 	}
 
-	private String _calculatedValue;
-	private Class<?> _dataType;
 	private String _name;
+	private Class<?> _type;
+	private Object _value;
 	private String _valueExpression;
 
 }

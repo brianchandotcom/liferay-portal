@@ -14,13 +14,15 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.InterdependentExpressionEvaluator;
+import com.liferay.portal.kernel.expression.Expression;
+import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,20 +30,22 @@ import org.junit.Test;
  */
 public class DependenciesTest {
 
+	@Before
+	public void setUp() throws Exception {
+		setupExpressionFactory();
+	}
+
 	@Test
 	public void testVariableDependenciesMap() {
-		ExpressionTestData expressionTestData =
-			ExpressionTestData.newExpressionTestData("var1 + var2 + var3");
-		expressionTestData.addLongVariable("var1", null, 5L);
-		expressionTestData.addLongVariable("var2", "var1 + 3", 5L);
-		expressionTestData.addLongVariable("var3", "var2 + var1", 5L);
+		Expression<Long> expression =
+			ExpressionFactoryUtil.createLongExpression("var1 + var2 + var3");
 
-		InterdependentExpressionEvaluator evaluator =
-			new InterdependentExpressionEvaluatorImpl(
-				expressionTestData.getVariables());
+		expression.addLongVariable("var1", 5l);
+		expression.addExpressionVariable("var2", Long.class, "var1 + 3");
+		expression.addExpressionVariable("var3", Long.class, "var2 + var1");
 
 		Map<String, VariableDependencies> dependenciesMap =
-			evaluator.getVariableDependenciesMap();
+			expression.getVariableDependenciesMap();
 
 		VariableDependencies var1Dependencies = dependenciesMap.get("var1");
 
@@ -84,6 +88,13 @@ public class DependenciesTest {
 			varDependencies.getRequiredVariableNames();
 
 		return requiredVariableNames.contains(varName);
+	}
+
+	protected void setupExpressionFactory() {
+		ExpressionFactoryUtil expressionFactoryUtil =
+			new ExpressionFactoryUtil();
+
+		expressionFactoryUtil.setExpressionFactory(new ExpressionFactoryImpl());
 	}
 
 }

@@ -54,7 +54,12 @@ public class SQLQueryImpl implements SQLQuery {
 
 	@Override
 	public SQLQuery addEntity(String alias, Class<?> entityClass) {
-		_sqlQuery.addEntity(alias, entityClass);
+		if (alias == null) {
+			_sqlQuery.addEntity(entityClass);
+		}
+		else {
+			_sqlQuery.addEntity(alias, entityClass);
+		}
 
 		return this;
 	}

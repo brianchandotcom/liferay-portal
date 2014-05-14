@@ -626,6 +626,528 @@
 		</execute>
 	</command>
 
+	<command name="AssignSORoleSiteAndOrganizationAndUnassignSORoleSite" priority="5">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="roleName" value="Social Office User" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersOrganizationsCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#unassignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="AssignSORoleSiteAndOrganizationAndUnassignSOUserSite" priority="5">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="roleName" value="Social Office User" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersOrganizationsCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#removeMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="AssignSORoleSiteAndUserGroupAndUnassignSORoleSite" priority="5">
+		<var name="roleName" value="Social Office User" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userGroupName" value="User Group Name" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersUserGroupsCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#unassignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="AssignSORoleSiteAndUserGroupAndUnassignSOUserSite" priority="5">
+		<var name="roleName" value="Social Office User" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userGroupName" value="User Group Name" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersUserGroupsCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersSitesCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#removeMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
 	<command name="AssignSORoleSiteMember" priority="4">
 		<var name="roleName" value="Social Office User" />
 		<var name="siteName" value="Site Name" />

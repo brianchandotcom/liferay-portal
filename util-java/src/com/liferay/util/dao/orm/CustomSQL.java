@@ -236,7 +236,8 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(
-		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+		String keywords, boolean lowerCase, boolean escapeXml,
+		WildcardMode wildcardMode) {
 
 		if (Validator.isNull(keywords)) {
 			return new String[] {null};
@@ -269,6 +270,10 @@ public class CustomSQL {
 				if (i > pos) {
 					String keyword = keywords.substring(pos, i);
 
+					if (escapeXml) {
+						keyword = escapeXml(keyword);
+					}
+
 					keywordsList.add(insertWildcard(keyword, wildcardMode));
 				}
 			}
@@ -293,11 +298,21 @@ public class CustomSQL {
 
 				String keyword = keywords.substring(pos, i);
 
+				if (escapeXml) {
+					keyword = escapeXml(keyword);
+				}
+
 				keywordsList.add(insertWildcard(keyword, wildcardMode));
 			}
 		}
 
 		return keywordsList.toArray(new String[keywordsList.size()]);
+	}
+
+	public String[] keywords(
+		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+
+		return keywords(keywords, lowerCase, false, wildcardMode);
 	}
 
 	public String[] keywords(String keywords, WildcardMode wildcardMode) {
@@ -846,6 +861,11 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
+	private String escapeXml(String xml) {
+		return StringUtil.replace(
+			xml, _XML_REPLACE_CHARACTERS, _XML_REPLACEMENT_CHARACTERS);
+	}
+
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -862,6 +882,14 @@ public class CustomSQL {
 	private static final String _STATUS_CONDITION_INVERSE = "status != ?";
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
+
+	private static final String[] _XML_REPLACE_CHARACTERS = new String[] {
+		StringPool.AMPERSAND, StringPool.LESS_THAN
+	};
+
+	private static final String[] _XML_REPLACEMENT_CHARACTERS = new String[] {
+		StringPool.AMPERSAND_ENCODED, StringPool.LESS_THAN_ENCODED
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);
 

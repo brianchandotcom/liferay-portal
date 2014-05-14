@@ -80,6 +80,14 @@ public class CustomSQLUtil {
 	}
 
 	public static String[] keywords(
+		String keywords, boolean lowerCase, boolean escapeXml,
+		WildcardMode wildcardMode) {
+
+		return _instance._customSQL.keywords(
+			keywords, lowerCase, escapeXml, wildcardMode);
+	}
+
+	public static String[] keywords(
 		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
 
 		return _instance._customSQL.keywords(keywords, lowerCase, wildcardMode);

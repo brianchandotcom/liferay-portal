@@ -933,6 +933,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public long exportLayoutsAsFileInBackground(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
+
+		return exportLayoutsAsFileInBackground(
+			userId, exportImportConfiguration);
+	}
+
+	@Override
+	public long exportLayoutsAsFileInBackground(
 			long userId, String taskName, long groupId, boolean privateLayout,
 			long[] layoutIds, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate)

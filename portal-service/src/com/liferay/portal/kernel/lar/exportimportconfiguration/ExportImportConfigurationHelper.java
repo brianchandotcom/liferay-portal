@@ -18,12 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -67,50 +65,6 @@ public class ExportImportConfigurationHelper {
 		return addExportImportConfiguration(
 			portletRequest,
 			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE);
-	}
-
-	public static void exportLayoutsByExportImportConfiguration(
-			long exportImportConfigurationId)
-		throws PortalException, SystemException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
-
-		LayoutServiceUtil.exportLayoutsAsFileInBackground(
-			exportImportConfiguration);
-	}
-
-	public static void exportLayoutsByExportImportConfiguration(
-			PortletRequest portletRequest)
-		throws PortalException, SystemException {
-
-		long exportImportConfigurationId = ParamUtil.getLong(
-			portletRequest, "exportImportConfigurationId");
-
-		exportLayoutsByExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	public static void publishLocalLayoutByExportImportConfiguration(
-			long userId, long exportImportConfigurationId)
-		throws PortalException, SystemException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
-
-		StagingUtil.publishLayouts(userId, exportImportConfiguration);
-	}
-
-	public static void publishRemoteLayoutByExportImportConfiguration(
-			long exportImportConfigurationId)
-		throws PortalException, SystemException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
-
-		StagingUtil.copyRemoteLayouts(exportImportConfiguration);
 	}
 
 	public static ExportImportConfiguration

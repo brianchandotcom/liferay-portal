@@ -79,6 +79,9 @@ public interface Staging {
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException, SystemException;
 
+	public void copyRemoteLayouts(long exportImportConfigurationId)
+		throws PortalException, SystemException;
+
 	public void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -233,6 +236,9 @@ public interface Staging {
 
 	public void publishLayouts(
 			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException;
+
+	public void publishLayouts(long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException;
 
 	public void publishLayouts(

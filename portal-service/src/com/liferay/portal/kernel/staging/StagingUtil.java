@@ -109,6 +109,12 @@ public class StagingUtil {
 		getStaging().copyRemoteLayouts(exportImportConfiguration);
 	}
 
+	public static void copyRemoteLayouts(long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		getStaging().copyRemoteLayouts(exportImportConfigurationId);
+	}
+
 	public static void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -377,6 +383,13 @@ public class StagingUtil {
 		throws PortalException, SystemException {
 
 		getStaging().publishLayouts(userId, exportImportConfiguration);
+	}
+
+	public static void publishLayouts(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		getStaging().publishLayouts(userId, exportImportConfigurationId);
 	}
 
 	public static void publishLayouts(

@@ -367,6 +367,17 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public void copyRemoteLayouts(long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		copyRemoteLayouts(exportImportConfiguration);
+	}
+
+	@Override
 	public void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -1363,6 +1374,17 @@ public class StagingImpl implements Staging {
 			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
 			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
 			new ServiceContext());
+	}
+
+	@Override
+	public void publishLayouts(long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		publishLayouts(userId, exportImportConfiguration);
 	}
 
 	@Override

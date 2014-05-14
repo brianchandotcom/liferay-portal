@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_PAGES_LINK</td>
+	<td>//ul[@class='visit-links']/li/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

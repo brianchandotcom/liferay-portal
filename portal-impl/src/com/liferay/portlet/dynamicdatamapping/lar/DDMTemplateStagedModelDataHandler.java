@@ -269,7 +269,7 @@ public class DDMTemplateStagedModelDataHandler
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
 					ExportImportHelperUtil.replaceExportContentReferences(
-						portletDataContext, template, templateElement,
+						portletDataContext, template,
 						template.getSmallImageURL().concat(StringPool.SPACE),
 						true);
 
@@ -296,8 +296,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			String content =
 				ExportImportHelperUtil.replaceExportContentReferences(
-					portletDataContext, template, templateElement,
-					template.getScript(), true);
+					portletDataContext, template, template.getScript(), true);
 
 			template.setScript(content);
 		}
@@ -348,8 +347,8 @@ public class DDMTemplateStagedModelDataHandler
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, template, element,
-							template.getSmallImageURL(), true);
+							portletDataContext, template,
+							template.getSmallImageURL());
 
 					template.setSmallImageURL(smallImageURL);
 				}

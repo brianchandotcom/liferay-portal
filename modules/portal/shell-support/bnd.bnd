@@ -1,0 +1,4 @@
+Include-Resource:\
+	classes
+-include: classes/META-INF/MANIFEST.MF
+-removeheaders: Bundle-ActivationPolicy

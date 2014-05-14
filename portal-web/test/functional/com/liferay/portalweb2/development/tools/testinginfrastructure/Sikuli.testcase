@@ -2,6 +2,8 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="Smoke" priority="5">
+		<execute action="PGLogin#sikuliAssertElementPresent" locator-key1="SIGN_IN_BUTTON_PNG" />
+		<execute action="PGLogin#sikuliAssertElementNotPresent" locator-key1="AVERAGE_RATING_STAR_ICON_PNG" />
 		<execute action="PGLogin#sikuliType" locator-key1="EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
 		<execute action="PGLogin#sikuliType" locator-key1="PASSWORD_FIELD_PNG" value1="test" />
 		<execute action="PGLogin#check" locator-key1="REMEMBER_ME_CHECKBOX" />

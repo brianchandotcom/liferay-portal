@@ -19,29 +19,31 @@ import java.util.Map;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface InterdependentExpressionEvaluator {
+public interface Expression<T> {
 
-	public Boolean evaluateBooleanExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addBooleanVariable(String variableName, Boolean variableValue);
 
-	public Double evaluateDoubleExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addDoubleVariable(String variableName, Double variableValue);
 
-	public <T> T evaluateExpression(String stringExpression,
-	Class<T> returnedType) throws ExpressionEvaluationException;
+	public void addExpressionVariable(
+		String variableName, Class<?> variableType,
+		String variableValueExpresion);
 
-	public Float evaluateFloatExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addFloatVariable(String variableName, Float variableValue);
 
-	public Integer evaluateIntegerExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addIntegerVariable(String variableName, Integer variableValue);
 
-	public Long evaluateLongExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addLongVariable(String variableName, Long variableValue);
 
-	public String evaluateStringExpression(String expression)
-		throws ExpressionEvaluationException;
+	public void addStringVariable(String variableName, String variableValue);
+
+	public void addVariable(
+		String variableName, Class<?> variableType, Object variableValue);
+
+	public T evaluate() throws ExpressionEvaluationException;
 
 	public Map<String, VariableDependencies> getVariableDependenciesMap();
+
+	public String[] getVariableNames();
 
 }

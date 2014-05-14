@@ -20,32 +20,32 @@
 </tr>
 <tr>
 	<td>DATEPICKER_POPUP</td>
-	<td>//div[contains(@class,'datepicker-popover')]</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIOUS_MONTH_ARROW</td>
-	<td>//div[contains(@class,'datepicker-popover')]//a[contains(@class,'yui3-calendarnav-prevmonth')]</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]//a[contains(@class,'yui3-calendarnav-prevmonth')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT_MONTH_ARROW</td>
-	<td>//div[contains(@class,'datepicker-popover')]//a[contains(@class,'yui3-calendarnav-nextmonth')]</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]//a[contains(@class,'yui3-calendarnav-nextmonth')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATEPICKER_SPECIFIC_MONTH_YEAR</td>
-	<td>//div[contains(@class,'datepicker-popover')]//div[contains(@class,'calendar-header-label') and contains(.,'${key_month} ${key_year}')]</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]//div[contains(@class,'calendar-header-label') and contains(.,'${key_month} ${key_year}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DATEPICKER_SPECIFIC_DATE</td>
-	<td>//div[contains(@class,'datepicker-popover')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day') and contains(.,'${key_date}')]</td>
+	<td>DATEPICKER_SPECIFIC_DAY</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day') and contains(.,'${key_day}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DATEPICKER_SPECIFIC_DATE_SELECTED</td>
-	<td>//div[contains(@class,'datepicker-popover')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day-selected') and contains(.,'${key_date}')]</td>
+	<td>DATEPICKER_SPECIFIC_DAY_SELECTED</td>
+	<td>//div[contains(@class,'yui3-calendar-content')]//table[@class='yui3-calendar-grid']//td[contains(@class,'yui3-calendar-day-selected') and contains(.,'${key_day}')]</td>
 	<td></td>
 </tr>
 </tbody>

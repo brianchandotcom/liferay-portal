@@ -215,6 +215,17 @@
 		</if>
 
 		<if>
+			<equals arg1="${field}" arg2="Date" />
+			<then>
+				<execute macro="YUICalendarwidget#addDate">
+					<var name="day" value="${fieldPredefinedValueDay}" />
+					<var name="month" value="${fieldPredefinedValueMonth}" />
+					<var name="year" value="${fieldPredefinedValueYear}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
 			<or>
 				<equals arg1="${field}" arg2="Decimal" />
 				<equals arg1="${field}" arg2="HTML" />

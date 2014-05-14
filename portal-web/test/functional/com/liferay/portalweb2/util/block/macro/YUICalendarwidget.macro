@@ -1,0 +1,17 @@
+<definition>
+	<command name="addDate">
+		<var name="key_day" value="${day}" />
+		<var name="key_month" value="${month}" />
+		<var name="key_year" value="${year}" />
+
+		<while>
+			<condition action="YUICalendarwidget#isElementNotPresent" locator-key1="DATEPICKER_SPECIFIC_MONTH_YEAR" />
+			<then>
+				<execute action="YUICalendarwidget#click" locator-key1="NEXT_MONTH_ARROW" />
+			</then>
+		</while>
+
+		<execute action="YUICalendarwidget#assertTextEquals" locator-key1="DATEPICKER_SPECIFIC_MONTH_YEAR" value1="${month} ${year}" />
+		<execute action="YUICalendarwidget#assertClick" locator-key1="DATEPICKER_SPECIFIC_DAY" value1="${day}" />
+	</command>
+</definition>

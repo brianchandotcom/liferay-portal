@@ -777,6 +777,36 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.pause("3000");
 	}
 
+	public static void sikuliAssertElementNotPresent(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		Match match = _screen.exists(
+			liferaySelenium.getProjectDirName() +
+			liferaySelenium.getSikuliImagesDirName() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match != null) {
+			throw new Exception ("Element is present");
+		}
+	}
+
+	public static void sikuliAssertElementPresent(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		Match match = _screen.exists(
+			liferaySelenium.getProjectDirName() +
+			liferaySelenium.getSikuliImagesDirName() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match == null) {
+			throw new Exception ("Element is not present");
+		}
+	}
+
 	public static void sikuliClick(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {

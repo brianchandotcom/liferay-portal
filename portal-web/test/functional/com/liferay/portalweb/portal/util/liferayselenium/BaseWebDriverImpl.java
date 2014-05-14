@@ -709,6 +709,16 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sikuliAssertElementNotPresent(String image) throws Exception {
+		LiferaySeleniumHelper.sikuliAssertElementNotPresent(this, image);
+	}
+
+	@Override
+	public void sikuliAssertElementPresent(String image) throws Exception {
+		LiferaySeleniumHelper.sikuliAssertElementPresent(this, image);
+	}
+
+	@Override
 	public void sikuliClick(String image) throws Exception {
 		LiferaySeleniumHelper.sikuliClick(this, image);
 	}

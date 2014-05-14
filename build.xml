@@ -100,19 +100,36 @@
 
 			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
 				<sequential>
-					<propertycopy
-						from="app.@{app.server.dir.property}.dir"
-						name="temp.app.server.dir"
-					/>
+					<if>
+						<or>
+							<contains string="@{app.server.dir.property}" substring="geronimo" />
+							<contains string="@{app.server.dir.property}" substring="glassfish" />
+							<contains string="@{app.server.dir.property}" substring="jboss" />
+							<contains string="@{app.server.dir.property}" substring="jetty" />
+							<contains string="@{app.server.dir.property}" substring="jonas" />
+							<contains string="@{app.server.dir.property}" substring="resin" />
+							<contains string="@{app.server.dir.property}" substring="tcat" />
+							<contains string="@{app.server.dir.property}" substring="tcserver" />
+							<contains string="@{app.server.dir.property}" substring="tomcat" />
+							<contains string="@{app.server.dir.property}" substring="weblogic" />
+							<contains string="@{app.server.dir.property}" substring="websphere" />
+						</or>
+						<then>
+							<propertycopy
+								from="app.@{app.server.dir.property}.dir"
+								name="temp.app.server.dir"
+							/>
 
-					<echo
-						append="true"
-						file="${project.dir}/tools/sdk/build.${user.name}.properties"
-					>
-						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
-					</echo>
+							<echo
+								append="true"
+								file="${project.dir}/tools/sdk/build.${user.name}.properties"
+							>
+								app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+							</echo>
 
-					<var name="temp.app.server.dir" unset="true" />
+							<var name="temp.app.server.dir" unset="true" />
+						</then>
+					</if>
 				</sequential>
 			</for>
 
@@ -726,6 +743,13 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				</exec>
 			</then>
 		</if>
+
+		<replaceregexp
+			file="${project.dir}/tools/sdk/build.${user.name}.properties"
+			flags="g"
+			match="(app.server.type=)\w+"
+			replace="app.server.type=${app.server.type}"
+		/>
 
 		<ant-execute
 			ant.dir="${project.dir}/modules"

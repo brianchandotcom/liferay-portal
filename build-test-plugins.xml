@@ -4,25 +4,17 @@
 	<import file="build-test.xml" />
 
 	<target name="deploy-simple-server-plugins">
+		<antcall target="prepare-build-properties">
+			<param name="plugins.dir" value="${lp.plugins.dir}" />
+		</antcall>
+
 		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
+			<isset property="plugins.additional.dir" />
 			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.type=${app.server.type}
-app.server.jboss.dir=${app.server.dir}
-
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugins.includes}</echo>
+				<antcall target="prepare-build-properties">
+					<param name="plugins.dir" value="${plugins.additional.dir}" />
+				</antcall>
 			</then>
-			<else>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.type=${app.server.type}
-
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugins.includes}</echo>
-			</else>
 		</if>
 
 		<if>
@@ -113,5 +105,21 @@ security-manager-enabled=true</echo>
 
 		<delete dir="${lp.plugins.dir}/dist" />
 		<mkdir dir="${lp.plugins.dir}/dist" />
+	</target>
+
+	<target name="prepare-build-properties">
+		<echo file="${plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+
+auto.deploy.dir=${liferay.home}/deploy</echo>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo append="true" file="${plugins.dir}/build.${user.name}.properties">
+
+app.server.jboss.dir=${app.server.dir}</echo>
+			</then>
+		</if>
 	</target>
 </project>

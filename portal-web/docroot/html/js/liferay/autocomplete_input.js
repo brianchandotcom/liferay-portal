@@ -99,9 +99,7 @@ AUI.add(
 					_getACPositionBase: function() {
 						var instance = this;
 
-						var inputNode = instance.get('inputNode');
-
-						return inputNode.getXY();
+						return instance.get(STR_INPUT_NODE).getXY();
 					},
 
 					_getACPositionOffset: function() {
@@ -115,9 +113,7 @@ AUI.add(
 					_getACVal: function() {
 						var instance = this;
 
-						var inputNode = instance.get(STR_INPUT_NODE);
-
-						return inputNode.val();
+						return instance.get(STR_INPUT_NODE).val();
 					},
 
 					_getPrevTermIndex: function(content, position) {
@@ -174,7 +170,7 @@ AUI.add(
 						var acVisible = instance._ac.get(STR_VISIBLE);
 
 						if (!acVisible || event.isKeyInSet('left', 'right')) {
-							var inputNode = instance.get('inputNode');
+							var inputNode = instance.get(STR_INPUT_NODE);
 
 							var query = instance._getQuery(inputNode.val());
 
@@ -188,7 +184,7 @@ AUI.add(
 						var inputNode = instance.get(STR_INPUT_NODE);
 
 						inputNode.val(text);
-					},
+					}
 				}
 			}
 		);

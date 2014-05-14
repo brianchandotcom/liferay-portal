@@ -140,13 +140,16 @@
 						editor.on('key', A.bind('_onEditorKey', instance))
 					];
 
-					editor.once('instanceReady', function(event) {
-						var editorBody = A.one(event.editor.document.$.body);
+					editor.once(
+						'instanceReady',
+						function(event) {
+							var editorBody = A.one(event.editor.document.$.body);
 
-						instance._eventHandles.push(
-							editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
-						);
-					});
+							instance._eventHandles.push(
+								editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
+							);
+						}
+					);
 				},
 
 				_getACPositionBase: function() {
@@ -194,7 +197,9 @@
 					var instance = this;
 
 					var editor = instance.get(STR_EDITOR);
+
 					var bookmarks = editor.getSelection().createBookmarks();
+
 					var bookmarkNodeEl = bookmarks[0].startNode.$;
 
 					A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
@@ -238,7 +243,6 @@
 					var term = instance.get(STR_TERM);
 
 					var caretContainer = instance._getCaretContainer();
-
 					var caretIndex = instance._getCaretIndex();
 
 					var query = caretContainer.getText().substring(0, caretIndex.start);
@@ -289,8 +293,6 @@
 				_getQuery: function() {
 					var instance = this;
 
-					var result;
-
 					var query = instance._getPrevTermPosition().query;
 
 					var regExp = instance.get('regExp');
@@ -298,6 +300,8 @@
 					var res = regExp.exec(query);
 
 					var term = instance.get(STR_TERM);
+
+					var result;
 
 					if (res && ((res.index + res[1].length + term.length) === query.length)) {
 						result = query;

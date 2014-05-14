@@ -23,6 +23,51 @@ AUI.add(
 
 		var AutoCompleteInputBase = function() {};
 
+		AutoCompleteInputBase.ATTRS = {
+			acConfig: {
+				validator: Lang.isObject,
+				value: {
+					activateFirstItem: true,
+					resultFilters: STR_PHRASE_MATCH,
+					resultHighlighter: STR_PHRASE_MATCH
+				}
+			},
+
+			inputNode: {
+				setter: A.one,
+				writeOnce: true
+			},
+
+			caretAtTerm: {
+				validator: Lang.isBoolean,
+				value: true
+			},
+
+			offset: {
+				validator: '_validateOffset',
+				value: 10
+			},
+
+			regExp: {
+				setter: '_setRegExp',
+				value: '(?:\\sterm|^term)([^\\s]+)'
+			},
+
+			source: {
+			},
+
+			term: {
+				validator: Lang.isString,
+				value: '@'
+			},
+
+			tplResults: {
+				validator: Lang.isString
+			}
+		};
+
+		AutoCompleteInputBase.NAME = 'liferay-autocomplete-input-base';
+
 		AutoCompleteInputBase.prototype = {
 			initializer: function() {
 				var instance = this;
@@ -191,51 +236,6 @@ AUI.add(
 
 			_validateOffset: function(value) {
 				return (Lang.isArray(value) || Lang.isNumber(value));
-			}
-		};
-
-		AutoCompleteInputBase.NAME = 'liferay-autocomplete-input-base';
-
-		AutoCompleteInputBase.ATTRS = {
-			acConfig: {
-				validator: Lang.isObject,
-				value: {
-					activateFirstItem: true,
-					resultFilters: STR_PHRASE_MATCH,
-					resultHighlighter: STR_PHRASE_MATCH
-				}
-			},
-
-			inputNode: {
-				setter: A.one,
-				writeOnce: true
-			},
-
-			caretAtTerm: {
-				validator: Lang.isBoolean,
-				value: true
-			},
-
-			offset: {
-				validator: '_validateOffset',
-				value: 10
-			},
-
-			regExp: {
-				setter: '_setRegExp',
-				value: '(?:\\sterm|^term)([^\\s]+)'
-			},
-
-			source: {
-			},
-
-			term: {
-				validator: Lang.isString,
-				value: '@'
-			},
-
-			tplResults: {
-				validator: Lang.isString
 			}
 		};
 

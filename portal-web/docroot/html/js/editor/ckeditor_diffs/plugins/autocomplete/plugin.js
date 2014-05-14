@@ -11,7 +11,7 @@
 						var path = instance.path;
 
 						var dependencies = [
-							CKEDITOR.getUrl(path + 'autocomplete.js'),
+							CKEDITOR.getUrl(path + 'autocomplete.js')
 						];
 
 						CKEDITOR.scriptLoader.load(

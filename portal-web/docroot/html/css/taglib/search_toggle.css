@@ -1,7 +1,6 @@
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
 	border: 1px solid transparent;
 	margin-top: 5px;
-	padding: 20px;
 }
 
 .navbar .navbar-inner {
@@ -19,6 +18,7 @@
 
 		.taglib-search-toggle-advanced {
 			border-width: 1px 0 0;
+			height: 100%;
 			margin-top: 0;
 		}
 	}
@@ -37,4 +37,13 @@
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
 	background-color: #FCFCFC;
 	border-color: #DDD;
+
+	.btn.close {
+		margin-right: 5px;
+	}
+
+	.taglib-search-toggle-advanced-content {
+		margin: 20px;
+		position: relative;
+	}
 }

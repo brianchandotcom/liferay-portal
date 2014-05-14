@@ -43,9 +43,9 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 	<div class="taglib-search-toggle-advanced <%= advancedSearch ? "toggler-content-expanded" : "toggler-content-collapsed" %>" id="<%= id %>advanced">
 		<input id="<%= id + displayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= advancedSearch %>" />
 
-		<div id="<%= id %>advancedContent">
-			<aui:button cssClass="close pull-right" name="closeAdvancedSearch" value="&times;" />
+		<aui:button cssClass="close pull-right" name="closeAdvancedSearch" value="&times;" />
 
+		<div class="taglib-search-toggle-advanced-content" id="<%= id %>advancedContent">
 			<liferay-util:buffer var="andOperator">
 				<aui:select cssClass="inline-control" inlineField="<%= true %>" label="" name="<%= displayTerms.AND_OPERATOR %>">
 					<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />

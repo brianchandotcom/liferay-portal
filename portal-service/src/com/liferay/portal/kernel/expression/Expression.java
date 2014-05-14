@@ -44,6 +44,4 @@ public interface Expression<T> {
 
 	public Map<String, VariableDependencies> getVariableDependenciesMap();
 
-	public String[] getVariableNames();
-
 }

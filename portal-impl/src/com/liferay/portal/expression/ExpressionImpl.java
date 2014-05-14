@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.MathUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.codehaus.janino.ExpressionEvaluator;
 
@@ -39,7 +36,10 @@ public class ExpressionImpl<T> implements Expression<T> {
 		_expression = expression;
 		_expressionType = expressionType;
 
-		for (String name : _extractVariables(expression)) {
+		List<String> variableNames =
+			_expressionVariablesExtractor.extractVariables(expression);
+
+		for (String name : variableNames) {
 			ExpressionVariable expressionVariable = new ExpressionVariable(
 				name);
 
@@ -135,8 +135,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 		return _variableDependenciesMap;
 	}
 
-	@Override
-	public String[] getVariableNames() {
+	protected String[] getVariableNames() {
 		List<String> variableNames = new ArrayList<String>();
 
 		for (ExpressionVariable expressionVariable :
@@ -146,22 +145,6 @@ public class ExpressionImpl<T> implements Expression<T> {
 		}
 
 		return variableNames.toArray(new String[variableNames.size()]);
-	}
-
-	protected List<String> _extractVariables(String expression) {
-		if (expression == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> variableNames = new ArrayList<String>();
-
-		Matcher matcher = _VARIABLE_REGEX_PATTERN.matcher(expression);
-
-		while (matcher.find()) {
-			variableNames.add(matcher.group(1));
-		}
-
-		return variableNames;
 	}
 
 	protected Class<?>[] getVariableTypes() {
@@ -187,7 +170,9 @@ public class ExpressionImpl<T> implements Expression<T> {
 			Expression<?> expression = new ExpressionImpl(
 				variable.getValueExpression(), variable.getType());
 
-			String[] variableNames = expression.getVariableNames();
+			List<String> variableNames =
+				_expressionVariablesExtractor.extractVariables(
+					variable.getValueExpression());
 
 			for (String variableName : variableNames) {
 				ExpressionVariable expressionVariable =
@@ -244,7 +229,9 @@ public class ExpressionImpl<T> implements Expression<T> {
 				expressionVariable.getValueExpression(),
 				expressionVariable.getType());
 
-			String[] variableNames = expression.getVariableNames();
+			List<String> variableNames =
+				_expressionVariablesExtractor.extractVariables(
+					expressionVariable.getValueExpression());
 
 			for (String variableName : variableNames) {
 				VariableDependencies populateVariableDependencies =
@@ -262,13 +249,12 @@ public class ExpressionImpl<T> implements Expression<T> {
 		return variableDependencies;
 	}
 
-	private static final Pattern _VARIABLE_REGEX_PATTERN = Pattern.compile(
-		"\\b([a-zA-Z]+[\\w\\._]+)(?!\\()\\b", Pattern.MULTILINE);
-
 	private Map<String, Object> _evaluatedVariableValues =
 		new TreeMap<String, Object>();
 	private String _expression;
 	private Class<?> _expressionType;
+	private ExpressionVariablesExtractor _expressionVariablesExtractor =
+		new ExpressionVariablesExtractor();
 	private Map<String, ExpressionVariable> _expressionVariablesMap =
 		new TreeMap<String, ExpressionVariable>();
 	private Map<String, VariableDependencies> _variableDependenciesMap =

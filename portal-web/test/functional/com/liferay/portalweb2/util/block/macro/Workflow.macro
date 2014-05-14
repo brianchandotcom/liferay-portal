@@ -86,7 +86,7 @@
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute action="CPMyworkflowtasksTask#selectFrame" locator-key1="MANAGE_MY_ACCOUNT_IFRAME" />
-		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Test Test" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="${userName}" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_APPROVE" value1="Approve" />
 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

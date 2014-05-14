@@ -4,11 +4,6 @@
 		<execute action="PGNotificationsdockbar#assertClick" locator-key1="VIEW_ALL_NOTIFICATIONS" value1="View All Notifications" />
 	</command>
 
-	<command name="viewContent">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
-	</command>
-
 	<command name="viewCount">
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
 	</command>

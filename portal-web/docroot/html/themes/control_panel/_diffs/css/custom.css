@@ -303,10 +303,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				#_145_navAddControlsNavbarCollapse {
-					display: none;
-				}
-
 				.nav-collapse {
 					@include respond-to(phone, tablet) {
 						float: right;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.breadcrumb;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
  * @author Sergio González

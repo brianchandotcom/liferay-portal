@@ -1370,45 +1370,45 @@ $editLayoutPanelWidth: 460px;
 	.dockbar .nav-collapse {
 		-webkit-transform: none;
 	}
-}
 
-/* -------- flexbox fallback for IE 9 -------- */
+	/* -------- Flexbox fallback for IE 9 -------- */
 
-@include respond-to(phone, tablet) {
-	.ie9 {
-		.dockbar .navbar-inner .container .nav-collapse {
-			&#_145_navAccountControlsNavbarCollapse {
-				max-width: 220px;
-				width: 55%;
+	@include respond-to(phone, tablet) {
+		&.ie9 {
+			.dockbar .navbar-inner .container .nav-collapse {
+				&#_145_navAccountControlsNavbarCollapse {
+					max-width: 220px;
+					width: 55%;
 
-				.nav-account-controls {
-					white-space: nowrap;
-					width: 100%;
+					.nav-account-controls {
+						white-space: nowrap;
+						width: 100%;
 
-					> li.dropdown {
-						@include box-sizing(border-box);
+						> li.dropdown {
+							@include box-sizing(border-box);
 
-						margin: 0;
-						max-width: 55px;
-						padding: 5px;
-						width: 25%;
-					}
+							margin: 0;
+							max-width: 55px;
+							padding: 5px;
+							width: 25%;
+						}
 
-					li.sign-in a {
-						position: absolute;
-						right: 0;
+						li.sign-in a {
+							position: absolute;
+							right: 0;
+						}
 					}
 				}
-			}
 
-			&:not(#_145_navAccountControlsNavbarCollapse) {
-				@include box-sizing(border-box);
+				&:not(#_145_navAccountControlsNavbarCollapse) {
+					@include box-sizing(border-box);
 
-				max-width: 55px;
-				width: 15%;
+					max-width: 55px;
+					width: 15%;
 
-				li {
-					width: 100%;
+					li {
+						width: 100%;
+					}
 				}
 			}
 		}

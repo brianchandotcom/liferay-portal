@@ -788,7 +788,7 @@ public class UserFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("userId", Type.LONG);
+			q.addEntity("User_", UserImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

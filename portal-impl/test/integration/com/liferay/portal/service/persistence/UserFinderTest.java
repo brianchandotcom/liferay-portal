@@ -36,6 +36,7 @@ import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserGroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
+import com.liferay.portal.util.comparator.UserLastNameComparator;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -160,6 +161,19 @@ public class UserFinderTest {
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
 		Assert.assertEquals(expectedCount + 2, count);
+	}
+
+	@Test
+	public void testFindByC_FN_MN_LN_SN_EA_SWithUnionAndOrderByComparator()
+		throws Exception {
+
+		List<User> users = UserFinderUtil.findByC_FN_MN_LN_SN_EA_S(
+			TestPropsValues.getCompanyId(), (String[])null, null, null, null,
+			null, 0, _inheritedUserGroupsParams, true, 0, 20,
+			new UserLastNameComparator());
+
+		Assert.assertNotNull(users);
+		Assert.assertFalse(users.isEmpty());
 	}
 
 	@Test

@@ -45,5 +45,14 @@
 	.taglib-search-toggle-advanced-content {
 		margin: 20px;
 		position: relative;
+
+		.match-fields {
+			margin-bottom: 0;
+		}
+
+		.match-fields-legend {
+			color: #999;
+			font-size: 13px;
+		}
 	}
 }

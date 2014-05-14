@@ -52,6 +52,7 @@ import com.liferay.portal.service.persistence.UserTrackerPathUtil;
 import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -895,7 +896,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 					if (!PortletPermissionUtil.contains(
 							permissionChecker, layout, portlet,
-							ActionKeys.VIEW)) {
+							ActionKeys.VIEW) &&
+						!portlet.getPortletId().equals(
+							PortletKeys.DYNAMIC_DATA_MAPPING)) {
 
 						throw new PrincipalException();
 					}

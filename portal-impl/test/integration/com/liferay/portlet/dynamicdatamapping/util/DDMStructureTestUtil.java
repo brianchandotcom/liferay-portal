@@ -93,6 +93,15 @@ public class DDMStructureTestUtil {
 			ServiceTestUtil.getServiceContext());
 	}
 
+	public static DDMStructure addStructure(
+			long groupId, String className, String xsd, Locale defaultLocale)
+		throws Exception {
+
+		return addStructure(
+			groupId, className, 0, xsd, defaultLocale,
+			ServiceTestUtil.getServiceContext());
+	}
+
 	public static DDMStructure addStructure(String className) throws Exception {
 		return addStructure(
 			TestPropsValues.getGroupId(), className, 0, getSampleStructureXSD(),

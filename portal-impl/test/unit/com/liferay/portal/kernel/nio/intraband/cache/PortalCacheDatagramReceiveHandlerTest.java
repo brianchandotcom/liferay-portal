@@ -462,7 +462,7 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 	private MockIntraband _mockIntraband = new MockIntraband();
 	private MockPortalCacheManager _mockPortalCacheManager =
-		new MockPortalCacheManager();;
+		new MockPortalCacheManager();
 	private MockRegistrationReference _mockRegistrationReference =
 		new MockRegistrationReference(_mockIntraband);
 	private SystemDataType _portalCacheSystemDataType =

@@ -49,7 +49,7 @@ public class CacheManagerUtil {
 
 			if (JavaDetector.isJDK6()) {
 				blockingQueue = (BlockingQueue<Runnable>)_workQueueField.get(
-					scheduledThreadPoolExecutor);;
+					scheduledThreadPoolExecutor);
 
 				_workQueueField.set(
 					scheduledThreadPoolExecutor,

@@ -90,7 +90,7 @@ public class OutputStreamWriterTest {
 
 		Assert.assertSame(
 			dummyOutputStream, _getOutputStream(outputStreamWriter));
-		Assert.assertSame(encoding, outputStreamWriter.getEncoding());;
+		Assert.assertSame(encoding, outputStreamWriter.getEncoding());
 		Assert.assertEquals(
 			_getDefaultOutputBufferSize(),
 			_getOutputBufferSize(outputStreamWriter));

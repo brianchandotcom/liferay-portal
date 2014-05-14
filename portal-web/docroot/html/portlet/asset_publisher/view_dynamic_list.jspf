@@ -224,23 +224,30 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 }
 %>
 
-<c:if test="<%= (total == 0) && (assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() == 0) %>">
-	<c:if test="<%= !hasAddPortletURLs && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
+<c:if test="<%= total == 0 %>">
+	<c:choose>
+		<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+			<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= !hasAddPortletURLs && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
 
-		<%
-		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-		%>
+				<%
+				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+				%>
 
-	 </c:if>
+			</c:if>
 
-	<div class="alert alert-info">
-		<c:choose>
-			<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
-				<liferay-ui:message key="there-are-no-results" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="there-are-no-related-assets" />
-			</c:otherwise>
-		</c:choose>
-	</div>
+			<div class="alert alert-info">
+				<c:choose>
+					<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+						<liferay-ui:message key="there-are-no-results" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-are-no-related-assets" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </c:if>

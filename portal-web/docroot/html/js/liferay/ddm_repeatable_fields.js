@@ -83,10 +83,12 @@ AUI.add(
 								data: {
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
+									controlPanelCategory: 'current_site.content',
 									doAsGroupId: instance.get('doAsGroupId'),
 									fieldName: fieldName,
 									namespace: instance.get('namespace'),
 									p_l_id: instance.get('p_l_id'),
+									p_p_id: '166',
 									p_p_isolated: true,
 									portletNamespace: instance.get('portletNamespace'),
 									readOnly: instance.get('readOnly')

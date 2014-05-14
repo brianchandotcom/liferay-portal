@@ -4,16 +4,4 @@
 			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
-
-	<command name="sikuliAssertElementNotPresent">
-		<case locator-key1="AVERAGE_RATING_STAR_ICON_PNG">
-			<execute function="SikuliAssertElementNotPresent#sikuliAssertElementNotPresent" />
-		</case>
-	</command>
-
-	<command name="sikuliAssertElementPresent">
-		<case locator-key1="SIGN_IN_BUTTON">
-			<execute function="SikuliAssertElementPresent#sikuliAssertElementPresent" />
-		</case>
-	</command>
 </definition>

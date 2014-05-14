@@ -108,6 +108,7 @@
 							<contains string="@{app.server.dir.property}" substring="jetty" />
 							<contains string="@{app.server.dir.property}" substring="jonas" />
 							<contains string="@{app.server.dir.property}" substring="resin" />
+							<contains string="@{app.server.dir.property}" substring="tcat" />
 							<contains string="@{app.server.dir.property}" substring="tcserver" />
 							<contains string="@{app.server.dir.property}" substring="tomcat" />
 							<contains string="@{app.server.dir.property}" substring="weblogic" />

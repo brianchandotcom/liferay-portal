@@ -15,6 +15,7 @@
 package com.liferay.util.dao.orm;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -76,6 +77,18 @@ public class CustomSQLUtil {
 
 	public static String[] keywords(String keywords, boolean lowerCase) {
 		return _instance._customSQL.keywords(keywords, lowerCase);
+	}
+
+	public static String[] keywords(
+		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+
+		return _instance._customSQL.keywords(keywords, lowerCase, wildcardMode);
+	}
+
+	public static String[] keywords(
+		String keywords, WildcardMode wildcardMode) {
+
+		return _instance._customSQL.keywords(keywords, wildcardMode);
 	}
 
 	public static String[] keywords(String[] keywordsArray) {

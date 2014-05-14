@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>TEXT_BOX_FIELD</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/textarea</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,5 +25,9 @@
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrame" />
 		</case>
+
+		<case locator-key1="HTML_FIELD">
+			<execute function="Type#typeFrame" />
+		</case>
 	</command>
 </definition>

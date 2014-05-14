@@ -36,6 +36,16 @@
 
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+
+		<if>
+			<isset var="abstractSummary" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_ABSTRACT" value1="Abstract" />
+				<execute action="CPWebcontentAbstract#type" locator-key1="SUMMARY_FIELD" value1="${abstractSummary}" />
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_CONTENT" value1="Content" />
+			</then>
+		</if>
+
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -225,6 +235,13 @@
 		</if>
 
 		<if>
+			<isset var="localizedAbstractSummary" />
+			<then>
+				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="SUMMARY_FIELD" value1="${localizedAbstractSummary}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="localizedContent" />
 			<then>
 				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="CONTENT_FIELD" value1="${localizedContent}" />
@@ -255,6 +272,33 @@
 				<var name="key_fieldName" value="Text" />
 
 				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TEXT_FIELD" value1="${localizedText}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="unlocalizableHTML" />
+			<then>
+				<var name="key_fieldName" value="${unlocalizableHTML}" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="HTML_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="unlocalizableText" />
+			<then>
+				<var name="key_fieldName" value="${unlocalizableText}" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="TEXT_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="unlocalizableTextBox" />
+			<then>
+				<var name="key_fieldName" value="${unlocalizableTextBox}" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#assertElementNotPresent" locator-key1="TEXT_BOX_FIELD" />
 			</then>
 		</if>
 
@@ -489,7 +533,18 @@
 		<if>
 			<isset var="webContentTextBox" />
 			<then>
+				<var name="key_fieldName" value="Text_Box" />
+
 				<execute action="CPWebcontentAddwebcontent#type" locator-key1="TEXT_BOX_FIELD" value1="${webContentTextBox}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="abstractSummary" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_ABSTRACT" value1="Abstract" />
+				<execute action="CPWebcontentAbstract#type" locator-key1="SUMMARY_FIELD" value1="${abstractSummary}" />
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_CONTENT" value1="Content" />
 			</then>
 		</if>
 
@@ -1183,6 +1238,13 @@
 					<isset var="localizedText" />
 					<then>
 						<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertTextEquals" locator-key1="TEXT_FIELD" value1="${localizedText}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="localizedAbstractDescription" />
+					<then>
+						<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertTextEquals" locator-key1="SUMMARY_FIELD" value1="${localizedAbstractDescription}" />
 					</then>
 				</if>
 			</then>

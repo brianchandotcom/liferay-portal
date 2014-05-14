@@ -23,6 +23,125 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddUnlocalizableStructure" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Text,HTML,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#editFieldSettingCP">
+			<var name="localizable" value="false" />
+			<var name="structureFieldNames" value="HTML,Text Box" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text,HTML,Text Box" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="entryAbstractDescription" value="WC Abstract Summary" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentHTML" value="WC HTML Content" />
+			<var name="webContentText" value="WC Text Content" />
+			<var name="webContentTextBox" value="WC Text Box Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addTranslationCP">
+			<var name="localizedAbstractSummary" value="世界您好 Abstract Summary" />
+			<var name="localizedLanguage" value="Chinese (China)" />
+			<var name="localizedText" value="世界您好 Text Content" />
+			<var name="localizedTitle" value="世界您好 Title" />
+			<var name="unlocalizableHTML" value="HTML" />
+			<var name="unlocalizableTextBox" value="Text_Box" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="WCD and Language Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="WCD and Language Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="WCD and Language Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="WCD and Language Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Text ContentWC HTML ContentWC Text Box Content" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Chinese (China)" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="世界您好 Text ContentWC HTML ContentWC Text Box Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="WCD and Language Page" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedAbstractSummary" value="世界您好 Abstract Summary" />
+			<var name="localizedText" value="世界您好 Text Content" />
+			<var name="localizedTitle" value="世界您好 Title" />
+			<var name="lowercaseLanguageCode" value="zh" />
+			<var name="structureLocalizationName" value="WC Structure Name" />
+			<var name="templateLocalizationName" value="WC Template Name" />
+			<var name="webContentTranslationLanguage" value="Chinese (China)" />
+		</execute>
+	</command>
+
 	<command name="AddWebContentRemoveGuestViewPermission" priority="5">
 		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
 

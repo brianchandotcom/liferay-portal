@@ -561,12 +561,12 @@ public class JournalArticleStagedModelDataHandler
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, article, Layout.class);
 
-		Element articleElement =
-			portletDataContext.getImportDataStagedModelElement(article);
-
 		File smallFile = null;
 
 		try {
+			Element articleElement =
+				portletDataContext.getImportDataStagedModelElement(article);
+
 			if (article.isSmallImage()) {
 				String smallImagePath = articleElement.attributeValue(
 					"small-image-path");

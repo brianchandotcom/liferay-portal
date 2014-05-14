@@ -361,6 +361,19 @@
 					<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_3" value1="News" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${siteTemplate}" arg2="Zoe Healthcare Theme" />
+				<then>
+					<execute action="Home#assertElementPresent" locator-key1="SITE_NAME_LOGO" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_1" value1="HOME" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_2" value1="ABOUT" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_3" value1="CLINIC" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_4" value1="SERVICES" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_5" value1="HEARLTH PLANS" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_6" value1="LOCATION" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_TEMPLATE_7" value1="CONTACT US" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 

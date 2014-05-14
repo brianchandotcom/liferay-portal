@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>PGVimeoConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGVimeoConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGVimeoConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIMEO_CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_LABEL</td>
+	<td>//label[@for='_86_url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_FIELD</td>
+	<td>//input[@class='field url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_OPTIONS</td>
+	<td>//div[contains(@class,'accordion-toggle')]/span[@class='title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_FULLSCREEN_OPTIONS_CHECKBOX</td>
+	<td>//input[@id='_86_enableFullscreenCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<definition>
+	<command name="addURL">
+		<execute action="PGVimeoConfiguration#selectFrame" locator-key1="VIMEO_CONFIGURATION_IFRAME" />
+		<execute action="PGVimeoConfiguration#assertTextEquals" locator-key1="URL_LABEL" value1="URL" />
+
+		<if>
+			<equals arg1="${enabledCheckbox}" arg2="true" />
+			<then>
+				<execute action="PGVimeoConfiguration#assertClick" locator-key1="ADVANCED_OPTIONS" value1="Advanced Options" />
+				<execute action="PGVimeoConfiguration#check" locator-key1="ENABLE_FULLSCREEN_OPTIONS_CHECKBOX" />
+				<execute action="PGVimeoConfiguration#assertChecked" locator-key1="ENABLE_FULLSCREEN_OPTIONS_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGVimeoConfiguration#type" locator-key1="URL_FIELD" value1="${vimeoURL}" />
+			</else>
+		</if>
+
+		<execute action="PGVimeoConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGVimeoConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGVimeoConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="view">
+		<execute action="PGVimeo#assertElementPresent" locator-key1="VIMEO_VIDEO" />
+	</command>
+</definition>

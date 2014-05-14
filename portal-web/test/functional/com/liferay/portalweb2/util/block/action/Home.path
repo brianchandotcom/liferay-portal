@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_NAME_LOGO</td>
+	<td>//h1[@class='site-title']/a/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCOPE_SELECTOR</td>
 	<td>//a[@id='_145_controlPanelSiteSelector']</td>
 	<td></td>
@@ -234,6 +239,26 @@
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_4</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_5</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_6</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_7</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[7]/a</td>
 	<td></td>
 </tr>
 <tr>

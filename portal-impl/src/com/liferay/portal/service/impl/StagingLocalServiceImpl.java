@@ -19,6 +19,7 @@ import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +31,9 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
@@ -211,28 +214,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		if (!liveGroup.hasStagingGroup()) {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
-			long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-
-			if (liveGroup.getParentGroupId() !=
-					GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-
-				Group parentGroup = liveGroup.getParentGroup();
-
-				if (parentGroup.hasStagingGroup()) {
-					parentGroup = parentGroup.getStagingGroup();
-				}
-
-				parentGroupId = parentGroup.getGroupId();
-			}
-
-			Group stagingGroup = groupLocalService.addGroup(
-				userId, parentGroupId, liveGroup.getClassName(),
-				liveGroup.getClassPK(), liveGroup.getGroupId(),
-				liveGroup.getDescriptiveName(), liveGroup.getDescription(),
-				liveGroup.getType(), liveGroup.isManualMembership(),
-				liveGroup.getMembershipRestriction(),
-				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
-				serviceContext);
+			Group stagingGroup = addStagingGroup(
+				userId, liveGroup, serviceContext);
 
 			Map<String, String[]> parameterMap =
 				StagingUtil.getStagingParameters();
@@ -397,6 +380,60 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
 		}
+	}
+
+	protected Group addStagingGroup(
+			long userId, Group liveGroup, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+
+		if (liveGroup.getParentGroupId() !=
+				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+
+			Group parentGroup = liveGroup.getParentGroup();
+
+			if (parentGroup.hasStagingGroup()) {
+				parentGroup = parentGroup.getStagingGroup();
+			}
+
+			parentGroupId = parentGroup.getGroupId();
+		}
+
+		Group stagingGroup = groupLocalService.addGroup(
+			userId, parentGroupId, liveGroup.getClassName(),
+			liveGroup.getClassPK(), liveGroup.getGroupId(),
+			liveGroup.getDescriptiveName(), liveGroup.getDescription(),
+			liveGroup.getType(), liveGroup.isManualMembership(),
+			liveGroup.getMembershipRestriction(), liveGroup.getFriendlyURL(),
+			false, liveGroup.isActive(), serviceContext);
+
+		// Copy localization settings
+
+		if (!LanguageUtil.isInheritLocales(liveGroup.getGroupId())) {
+			UnicodeProperties liveTypeSettingsProperties =
+				liveGroup.getTypeSettingsProperties();
+
+			String defaultLanguageId = liveTypeSettingsProperties.getProperty(
+				"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+			String locales = liveTypeSettingsProperties.getProperty(
+				PropsKeys.LOCALES);
+
+			UnicodeProperties stageTypeSettingsProperties =
+				stagingGroup.getTypeSettingsProperties();
+
+			stageTypeSettingsProperties.setProperty(
+				"inheritLocales", Boolean.FALSE.toString());
+			stageTypeSettingsProperties.setProperty(
+				"languageId", defaultLanguageId);
+			stageTypeSettingsProperties.setProperty(PropsKeys.LOCALES, locales);
+
+			stagingGroup = groupLocalService.updateGroup(
+				stagingGroup.getGroupId(),
+				stageTypeSettingsProperties.toString());
+		}
+
+		return stagingGroup;
 	}
 
 	protected void clearLastPublishDate(long groupId, boolean privateLayout)

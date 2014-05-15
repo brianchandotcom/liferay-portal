@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.social.RelationUserIdException;
 import com.liferay.portlet.social.model.SocialRelation;
-import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.base.SocialRelationLocalServiceBaseImpl;
+import com.liferay.portlet.social.util.SocialRelationTypesUtil;
 
 import java.util.List;
 
@@ -101,7 +101,7 @@ public class SocialRelationLocalServiceImpl
 			socialRelationPersistence.update(relation);
 		}
 
-		if (SocialRelationConstants.isTypeBi(type)) {
+		if (SocialRelationTypesUtil.isTypeBi(type)) {
 			SocialRelation biRelation =
 				socialRelationPersistence.fetchByU1_U2_T(
 					userId2, userId1, type);
@@ -178,7 +178,7 @@ public class SocialRelationLocalServiceImpl
 
 		socialRelationPersistence.remove(relation);
 
-		if (SocialRelationConstants.isTypeBi(relation.getType())) {
+		if (SocialRelationTypesUtil.isTypeBi(relation.getType())) {
 			SocialRelation biRelation = socialRelationPersistence.findByU1_U2_T(
 				relation.getUserId2(), relation.getUserId1(),
 				relation.getType());

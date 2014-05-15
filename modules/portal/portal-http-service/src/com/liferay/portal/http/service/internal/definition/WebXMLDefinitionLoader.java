@@ -199,7 +199,7 @@ public class WebXMLDefinitionLoader {
 			String servletClassName = servletElement.elementText(
 				"servlet-class");
 
-			Class<?> servletClass = null;;
+			Class<?> servletClass = null;
 
 			try {
 				servletClass = bundle.loadClass(servletClassName);

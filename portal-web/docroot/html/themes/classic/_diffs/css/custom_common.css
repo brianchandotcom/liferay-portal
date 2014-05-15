@@ -6,6 +6,12 @@
 
 @import url(custom_responsive.css);
 
+$dockbarGradientEnd: #1273C7;
+$dockbarGradientStart: #118ADE;
+
+$dockbarOpenGradientEnd: #0993DD;
+$dockbarOpenGradientStart: #0EA6F9;
+
 .aui {
 	body {
 		color: #555;
@@ -232,7 +238,7 @@
 
 	.dockbar-split {
 		.dockbar {
-			.navbar-inner .container .navbar-collapse > .nav {
+			.container > .nav {
 				&.nav-add-controls ul.dropdown-menu > li > a {
 					background: #45CBF5;
 
@@ -259,153 +265,150 @@
 					}
 				}
 			}
-
-			.navbar-inner {
-				background: none;
-				visibility: hidden;
-			}
-		}
-
-		&.dockbar-ready .dockbar .navbar-inner {
-			visibility: visible;
 		}
 	}
 
 	.dockbar {
-		&.navbar .navbar-inner {
+		&.navbar {
 			border-bottom-width: 0;
 			min-height: 40px;
 		}
 
-		.navbar-inner {
-			background: #333;
+		.container {
+			background-color: $dockbarGradientStart;
 
-			.container {
-				.navbar-btn {
-					color: #FFF;
+			@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 
-					&.active, &.open {
-						background-color: #3EA9DB;
-					}
+			.navbar-btn {
+				color: #FFF;
 
-					.user-avatar-image {
-						position: relative;
-						top: 2px;
-						width: 28px;
-					}
+				&.active, &.open {
+					background-color: #3EA9DB;
 				}
 
-				.navbar-collapse {
-					> .nav {
-						&.nav-add-controls, &.nav-navigation {
-							> li.dropdown ul.dropdown-menu {
-								background: transparent;
+				.user-avatar-image {
+					position: relative;
+					top: 2px;
+					width: 28px;
+				}
+			}
 
-								@include respond-to(phone, tablet) {
-									background: #009AE5;
-								}
-							}
-						}
+			> .nav {
+				&.nav-add-controls, &.nav-navigation {
+					> li.dropdown ul.dropdown-menu {
+						background: transparent;
 
 						@include respond-to(phone, tablet) {
-							&.nav-account-controls > li > a .nav-item-icon {
-								margin-top: 0;
-							}
-						}
-
-						> li {
-							> a {
-								color: #FFF;
-								line-height: 31px;
-
-								@include respond-to(phone, tablet) {
-									line-height: 20px;
-								}
-
-								&:focus, &:hover {
-									color: #FFF;
-								}
-							}
-
-							&.active > a {
-								color: #FFF;
-
-								&, &:hover, &:focus {
-									background: #0066B3;
-								}
-							}
-						}
-
-						%dockbar-caret {
-							&, &:hover {
-								.caret {
-									border-bottom-color: #FFF;
-									border-top-color: #FFF;
-								}
-							}
-						}
-
-						li.dropdown {
-							> .dropdown-toggle {
-								@extend %dockbar-caret;
-							}
-
-							&.active, &.open {
-								> .dropdown-toggle {
-									background-color: #2FA4F5;
-									color: #FFF;
-
-									@extend %dockbar-caret;
-								}
-							}
-
-							ul.dropdown-menu, .site-administration-menu {
-								border-width: 0;
-								margin: 0;
-
-								> li > a {
-									color: #FFF;
-									font-weight: 300;
-									line-height: 31px;
-
-									@include respond-to(phone, tablet) {
-										font-size: 16px;
-									}
-
-									&:focus, &:hover {
-										background: #2FA4F5;
-										color: #FFF;
-
-										@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
-									}
-
-									[class^="icon-"], [class*=" icon-"] {
-										margin-right: 3px;
-									}
-
-									.icon-spacer {
-										margin-right: 17px;
-									}
-								}
-
-								li.active > a {
-									background: #0066B3;
-								}
-							}
-
-							.dropdown-menu {
-								background: #009AE5;
-								max-height: 300px;
-								overflow-x: hidden;
-								overflow-y: auto;
-
-								&:after, &:before {
-									border-width: 0;
-								}
-							}
+							background: #009AE5;
 						}
 					}
 				}
+
+				@include respond-to(phone, tablet) {
+					&.nav-account-controls > li > a .nav-item-icon {
+						margin-top: 0;
+					}
+				}
+
+				> li {
+					> a {
+						color: #FFF;
+						line-height: 31px;
+
+						@include respond-to(phone, tablet) {
+							line-height: 20px;
+						}
+
+						&:focus, &:hover {
+							background-color: #2FA4F5;
+							color: #FFF;
+						}
+					}
+
+					&.active > a {
+						color: #FFF;
+
+						&, &:hover, &:focus {
+							background: #0066B3;
+						}
+					}
+				}
+
+				%dockbar-caret {
+					&, &:hover {
+						.caret {
+							border-bottom-color: #FFF;
+							border-top-color: #FFF;
+						}
+					}
+				}
+
+				li.dropdown {
+					> .dropdown-toggle {
+						@extend %dockbar-caret;
+					}
+
+					&.active, &.open {
+						> .dropdown-toggle {
+							background-color: #2FA4F5;
+							color: #FFF;
+
+							@extend %dockbar-caret;
+						}
+					}
+
+					ul.dropdown-menu, .site-administration-menu {
+						border-width: 0;
+						margin: 0;
+
+						> li > a {
+							color: #FFF;
+							font-weight: 300;
+							line-height: 31px;
+
+							@include respond-to(phone, tablet) {
+								font-size: 16px;
+							}
+
+							&:focus, &:hover {
+								background: #2FA4F5;
+								color: #FFF;
+
+								@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
+							}
+
+							[class^="icon-"], [class*=" icon-"] {
+								margin-right: 3px;
+							}
+
+							.icon-spacer {
+								margin-right: 17px;
+							}
+						}
+
+						li.active > a {
+							background: #0066B3;
+						}
+					}
+
+					.dropdown-menu {
+						background: #009AE5;
+						max-height: 300px;
+						overflow-x: hidden;
+						overflow-y: auto;
+						padding: 0;
+
+						&:after, &:before {
+							border-width: 0;
+						}
+					}
+				}
+			}
+		}
+
+		.nav > li {
+			@include respond-to(desktop) {
+				float: left;
 			}
 		}
 
@@ -418,6 +421,18 @@
 			border-left-color: #222;
 			border-right-color: #555;
 			display: none;
+		}
+
+		.dropdown-menu {
+			@include border-radius(0);
+
+			> li > a {
+				padding: 9px 15px;
+
+				@include respond-to(desktop) {
+					padding: 3px 20px;
+				}
+			}
 		}
 	}
 
@@ -765,10 +780,8 @@
 	}
 
 	&.ie {
-		.dockbar, #navigation {
-			.navbar-inner {
-				filter: none;
-			}
+		#navigation {
+			filter: none;
 		}
 	}
 
@@ -1032,16 +1045,6 @@
 			> li {
 				> a {
 					@include text-shadow(none);
-				}
-			}
-
-			li.dropdown {
-				.dropdown-menu {
-					@include border-radius(0);
-
-					> li > a {
-						@include border-radius(0);
-					}
 				}
 			}
 		}

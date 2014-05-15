@@ -18,12 +18,10 @@
 
 <c:if test="<%= Validator.isContent(bodyContentString) %>">
 	<div class="navbar <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-		<div class="navbar-inner">
-			<div class="container">
-				<%= responsiveButtons %>
+		<div class="container">
+			<%= responsiveButtons %>
 
-				<%= bodyContentString %>
-			</div>
+			<%= bodyContentString %>
 		</div>
 	</div>
 </c:if>

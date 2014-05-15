@@ -9,17 +9,13 @@ $editLayoutPanelWidth: 460px;
 .aui {
 	@include respond-to(phone, tablet) {
 		#navigation {
+			border-width: 0;
 			display: none;
 			left: 0;
 			position: absolute;
 			right: 0;
 			top: -5px;
 			z-index: 301;
-
-			@include respond-to(phone) {
-				left: -20px;
-				right: -20px;
-			}
 
 			&.open {
 				display: block;
@@ -57,6 +53,7 @@ $editLayoutPanelWidth: 460px;
 	.dockbar {
 		height: auto;
 		left: 0;
+		margin-bottom: 0;
 		position: relative;
 		right: 0;
 		top: 0;
@@ -96,337 +93,307 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.navbar-inner {
-			padding: 0 20px;
+		.container {
+			margin-left: 0;
+			margin-right: 0;
+			width: 100%;
 
 			@include respond-to(phone, tablet) {
-				border-width: 0;
-				padding: 0;
+				@include flexbox;
 			}
 
-			.navbar-brand h1 {
-				display: inline-block;
-				font-size: inherit;
-				line-height: 1;
-				margin-bottom: 0;
-				margin-top: 0;
+			> .nav {
+				margin: 0;
 
 				@include respond-to(phone, tablet) {
-					line-height: 16px;
-				}
-			}
+					clear: none;
+					display: inline-block;
 
-			.navbar-btn {
-				float: left;
-				padding: 12px 15px;
+					@include flex-shrink(1);
 
-				@include respond-to(phone, tablet) {
-					display: none;
-				}
-			}
-
-			.container {
-				margin-left: 0;
-				margin-right: 0;
-				width: 100%;
-
-				@include respond-to(phone, tablet) {
-					@include flexbox;
+					float: left;
+					height: auto;
+					max-width: 45px;
+					overflow: visible;
+					padding: 5px;
+					position: static;
+					width: 45px;
 				}
 
-				.navbar-collapse {
+				&#_145_navAccountControlsNavbarCollapse {
+					max-width: none;
+					min-width: 1px;
+					padding: 0;
+					width: auto;
+				}
+
+				> li {
 					@include respond-to(phone, tablet) {
-						clear: none;
-						display: inline-block;
-
 						@include flex-shrink(1);
 
 						float: left;
-						height: auto;
-						max-width: 45px;
-						overflow: visible;
-						padding: 5px;
 						position: static;
-						width: 45px;
+						width: 100%;
 
-						&#_145_navAccountControlsNavbarCollapse {
-							max-width: none;
-							min-width: 1px;
-							padding: 0;
-							width: auto;
+						&.info-link-container {
+							float: right;
 						}
 					}
 
-					> .nav {
+					&.dropdown .dropdown-menu {
+						@include respond-to(phone, tablet) {
+							background-color: #F6F6F6;
+							left: 0;
+							margin: 3px 0 0 0;
+							position: absolute;
+							top: 100%;
+							width: 100%;
+						}
+
+						> li a {
+							@include respond-to(phone, tablet) {
+								&:focus, &:hover {
+									background: #555;
+									color: #FFF;
+								}
+							}
+
+							@include respond-to(tablet) {
+								margin: 5px 0;
+							}
+						}
+					}
+
+					&.user-avatar {
+						> .dropdown-menu {
+							right: 0;
+
+							&, &:after, &:before {
+								left: auto;
+							}
+
+							&:after {
+								right: 11px;
+							}
+
+							&:before {
+								right: 10px;
+							}
+						}
+					}
+
+					&.info-items {
+						background-color: transparent;
+						left: 0;
+						position: absolute;
+						top: 100%;
+						width: 100%;
+					}
+
+					@include respond-to(phone, tablet) {
+						> a {
+							display: inline-block;
+							margin: 0;
+							padding: 0;
+							position: relative;
+							text-align: center;
+							width: 100%;
+
+							> .nav-item-label {
+								display: none;
+							}
+
+							&:focus, &:hover {
+								background: #555;
+								color: #FFF;
+
+								> .nav-item-label {
+									display: none;
+								}
+							}
+						}
+
+						&.user-avatar .user-avatar-link .nav-item-label {
+							display: inline;
+
+							.user-avatar-image {
+								background-size: auto 26px;
+								height: 26px;
+								margin-top: 0;
+								width: 26px;
+							}
+
+							.user-full-name {
+								display: none;
+							}
+						}
+
+						.icon-caret-down {
+							display: none;
+						}
+
+						&.sign-in {
+							> a {
+								float: right;
+								margin: 5px;
+								width: auto;
+
+								& > .nav-item-label {
+									display: block;
+								}
+							}
+						}
+					}
+				}
+
+				&.nav-account-controls {
+					float: right;
+					padding: 0 5px;
+					position: static;
+
+					@include respond-to(desktop) {
+						position: relative;
+					}
+
+					@include respond-to(phone, tablet) {
+						@include flexbox;
+
+						float: left;
+						max-width: 100%;
+						min-width: 0;
+						padding: 0;
+
+						.dropdown-menu .nav-item-label {
+							display: inline;
+						}
+
+						> li:not(.sign-in) {
+							margin: 5px;
+							max-width: 45px;
+							width: 45px;
+						}
+					}
+
+					> li {
+						> a > .nav-item-icon {
+							display: none;
+
+							@include respond-to(phone, tablet) {
+								display: inline-block;
+							}
+						}
+
+						&.sign-in > a > .nav-item-icon {
+							position: absolute;
+							right: 0;
+							width: auto;
+
+							@include respond-to(phone, tablet) {
+								display: none;
+							}
+						}
+					}
+				}
+
+				&.nav-add-controls, &.nav-navigation {
+					@include respond-to(phone, tablet) {
+						position: static;
+					}
+
+					> li > a {
+						display: none;
+
+						@include respond-to(phone, tablet) {
+							display: inline-block;
+						}
+					}
+
+					@include respond-to(phone, tablet) {
+						.open ul.dropdown-menu {
+							display: block;
+						}
+					}
+
+					ul.dropdown-menu {
+						background: transparent;
+						border-width: 0;
+						display: inline-block;
 						margin: 0;
+						padding: 0 5px;
+						position: static;
+						z-index: 350;
+
+						@include respond-to(phone, tablet) {
+							background-color: #F6F6F6;
+							display: none;
+							left: 0;
+							margin: 3px 0 0 0;
+							padding: 0;
+							position: absolute;
+							top: 100%;
+							width: 100%;
+						}
+
+						&:after, &:before {
+							border-width: 0;
+						}
 
 						> li {
-							@include respond-to(phone, tablet) {
-								@include flex-shrink(1);
+							display: inline-block;
+							float: left;
+							margin: 0;
 
-								float: left;
+							@include respond-to(phone, tablet) {
+								display: block;
+								float: none;
+
+								&.page-preview-controls {
+									display: none;
+								}
+							}
+
+							&.toggle-controls a {
+								clip: rect(auto auto auto auto);
 								position: static;
-								width: 100%;
-
-								&.info-link-container {
-									float: right;
-								}
+								visibility: visible;
 							}
 
-							&.dropdown .dropdown-menu {
+							> a {
+								margin: 0;
+								padding: 10px 15px;
+								white-space: nowrap;
+
 								@include respond-to(phone, tablet) {
-									background-color: #F6F6F6;
-									left: 0;
-									margin: 3px 0 0 0;
-									position: absolute;
-									top: 100%;
-									width: 100%;
-								}
-
-								> li a {
-									@include respond-to(phone, tablet) {
-										&:focus, &:hover {
-											background: #555;
-											color: #FFF;
-										}
-									}
-
-									@include respond-to(tablet) {
-										margin: 5px 0;
-									}
-								}
-							}
-
-							&.user-avatar {
-								> .dropdown-menu {
-									right: 0;
-
-									&, &:after, &:before {
-										left: auto;
-									}
-
-									&:after {
-										right: 11px;
-									}
-
-									&:before {
-										right: 10px;
-									}
-								}
-							}
-
-							&.info-items {
-								background-color: transparent;
-								left: 0;
-								position: absolute;
-								top: 100%;
-								width: 100%;
-							}
-
-							@include respond-to(phone, tablet) {
-								> a {
-									display: inline-block;
-									margin: 0;
-									padding: 0;
-									position: relative;
-									text-align: center;
-									width: 100%;
-
-									> .nav-item-label {
-										display: none;
-									}
+									line-height: inherit;
+									padding: 9px 15px;
 
 									&:focus, &:hover {
 										background: #555;
 										color: #FFF;
-
-										> .nav-item-label {
-											display: none;
-										}
 									}
 								}
 
-								&.user-avatar .user-avatar-link .nav-item-label {
-									display: inline;
-
-									.user-avatar-image {
-										background-size: auto 26px;
-										height: 26px;
-										margin-top: 0;
-										width: 26px;
-									}
-
-									.user-full-name {
-										display: none;
-									}
+								&:focus, &:hover {
+									background-color: transparent;
+									background-image: none;
+									color: #0077B3;
 								}
 
-								.icon-caret-down {
-									display: none;
-								}
-
-								&.sign-in {
-									> a {
-										float: right;
-										margin: 5px;
-										width: auto;
-
-										& > .nav-item-label {
-											display: block;
-										}
-									}
-								}
-							}
-						}
-
-						&.nav-account-controls {
-							float: right;
-							padding: 0 5px;
-							position: static;
-
-							@include respond-to(phone, tablet) {
-								@include flexbox;
-
-								float: left;
-								max-width: 100%;
-								min-width: 0;
-								padding: 0;
-
-								.dropdown-menu .nav-item-label {
-									display: inline;
-								}
-
-								> li:not(.sign-in) {
-									margin: 5px;
-									max-width: 45px;
-									width: 45px;
-								}
-							}
-
-							> li {
-								> a > .nav-item-icon {
-									display: none;
-								}
-
-								@include respond-to(phone, tablet) {
-									> a > .nav-item-icon {
-										display: inline-block;
-									}
-
-									&.sign-in {
-										position: absolute;
-										right: 0;
-										width: auto;
-
-										> a > .nav-item-icon {
-											display: none;
-										}
-									}
-								}
-							}
-						}
-
-						&.nav-add-controls, &.nav-navigation {
-							@include respond-to(phone, tablet) {
-								position: static;
-							}
-
-							> li > a {
-								display: none;
-
-								@include respond-to(phone, tablet) {
-									display: inline-block;
-								}
-							}
-
-							@include respond-to(phone, tablet) {
-								.open ul.dropdown-menu {
-									display: block;
-								}
-							}
-
-							ul.dropdown-menu {
-								background: transparent;
-								border-width: 0;
-								display: inline-block;
-								margin: 0;
-								padding: 0 5px;
-								position: static;
-								z-index: 350;
-
-								@include respond-to(phone, tablet) {
-									background-color: #F6F6F6;
-									display: none;
-									left: 0;
-									margin: 3px 0 0 0;
-									padding: 0;
-									position: absolute;
-									top: 100%;
-									width: 100%;
-								}
-
-								&:after, &:before {
-									border-width: 0;
-								}
-
-								> li {
-									display: inline-block;
-									float: left;
-									margin: 0;
+								> .nav-item-icon {
+									margin-right: 0;
+									margin-top: 3px;
 
 									@include respond-to(phone, tablet) {
-										display: block;
-										float: none;
-
-										&.page-preview-controls {
-											display: none;
-										}
+										margin-top: 0;
 									}
+								}
 
-									&.toggle-controls a {
-										clip: rect(auto auto auto auto);
-										position: static;
-										visibility: visible;
-									}
-
-									> a {
-										margin: 0;
-										padding: 10px 15px;
-										white-space: nowrap;
-
-										@include respond-to(phone, tablet) {
-											line-height: inherit;
-											padding: 9px 15px;
-
-											&:focus, &:hover {
-												background: #555;
-												color: #FFF;
-											}
-										}
-
-										&:focus, &:hover {
-											background-color: transparent;
-											background-image: none;
-											color: #0077B3;
-										}
-
-										> .nav-item-icon {
-											margin-right: 0;
-											margin-top: 3px;
-
-											@include respond-to(phone, tablet) {
-												margin-top: 0;
-											}
-										}
-
-										.nav-item-label {
-											left: 0;
-											margin-left: 0;
-											margin-top: 0;
-											padding: 0;
-											position: relative;
-										}
-									}
+								.nav-item-label {
+									left: 0;
+									margin-left: 0;
+									margin-top: 0;
+									padding: 0;
+									position: relative;
 								}
 							}
 						}
@@ -483,6 +450,43 @@ $editLayoutPanelWidth: 460px;
 					padding: 4px 10px;
 				}
 			}
+
+			.staging-controls {
+				position: static;
+			}
+		}
+
+		.nav-account-controls {
+			float: right;
+		}
+
+		.nav-add-controls {
+			float: left;
+		}
+
+		.navbar-brand h1 {
+			display: inline-block;
+			font-size: inherit;
+			line-height: 1;
+			margin-bottom: 0;
+			margin-top: 0;
+
+			@include respond-to(phone, tablet) {
+				line-height: 16px;
+			}
+		}
+
+		.navbar-btn {
+			float: left;
+			padding: 12px 15px;
+
+			@include respond-to(phone, tablet) {
+				display: none;
+			}
+		}
+
+		.nav-navigation {
+			float: left;
 		}
 
 		.page-customization-bar-container {
@@ -656,184 +660,174 @@ $editLayoutPanelWidth: 460px;
 				padding: 6px 10px;
 			}
 
-			.navbar-inner {
-				background-color: transparent;
-				padding: 0;
-				width: 0;
+			.container {
+				z-index: 400;
 
-				@include respond-to(phone, tablet) {
-					width: auto;
+				&.open {
+					overflow: visible;
 				}
 
-				.container .navbar-collapse {
-					z-index: 400;
+				> .nav {
+					&.nav-account-controls {
+						background: #333;
+						left: auto;
+						margin-right: 0;
+						padding: 0;
+						position: fixed;
+						right: 5em;
+						z-index: 325;
 
-					&.open {
-						overflow: visible;
+						@include respond-to(phone, tablet) {
+							background: transparent;
+							position: static;
+							right: auto;
+						}
 					}
 
-					> .nav {
-						&.nav-account-controls {
-							background: #333;
-							left: auto;
-							margin-right: 0;
-							padding: 0;
-							position: fixed;
-							right: 5em;
-							z-index: 325;
-
-							@include respond-to(phone, tablet) {
-								background: transparent;
-								position: static;
-								right: auto;
+					&.nav-add-controls {
+						@include respond-to(phone, tablet) {
+							.open ul.dropdown-menu {
+								display: block;
 							}
 						}
 
-						&.nav-add-controls {
+						ul.dropdown-menu {
+							background: transparent;
+							display: block;
+							min-width: 0;
+							position: fixed;
+							right: auto;
+							top: 10%;
+							z-index: 350;
+
 							@include respond-to(phone, tablet) {
-								.open ul.dropdown-menu {
-									display: block;
-								}
+								background-color: #F6F6F6;
+								display: none;
+								position: absolute;
+								top: 100%;
 							}
 
-							ul.dropdown-menu {
-								background: transparent;
+							> li {
 								display: block;
-								min-width: 0;
-								position: fixed;
-								right: auto;
-								top: 10%;
-								z-index: 350;
+								float: none;
+								margin: 10px;
+								position: relative;
 
 								@include respond-to(phone, tablet) {
-									background-color: #F6F6F6;
-									display: none;
-									position: absolute;
-									top: 100%;
+									margin: 0;
+
+									&.page-preview-controls {
+										display: none;
+									}
 								}
 
-								> li {
-									display: block;
-									float: none;
-									margin: 10px;
-									position: relative;
+								&.toggle-controls a {
+									clip: rect(0 0 0 0);
+									position: absolute;
 
 									@include respond-to(phone, tablet) {
-										margin: 0;
-
-										&.page-preview-controls {
-											display: none;
-										}
+										clip: rect(auto auto auto auto);
+										position: static;
 									}
 
-									&.toggle-controls a {
-										clip: rect(0 0 0 0);
-										position: absolute;
+									&:focus {
+										clip: rect(auto auto auto auto);
+										position: static;
+									}
+								}
+
+								> a {
+									background: #333;
+									color: #FFF;
+									padding: 6px 8px;
+									text-align: center;
+
+									@include respond-to(phone, tablet) {
+										background: transparent;
+										color: inherit;
+										padding: 9px 15px;
+										text-align: left;
+									}
+
+									.nav-item-icon {
+										font-size: 25px;
+										margin-right: 0;
+										position: relative;
+										vertical-align: middle;
 
 										@include respond-to(phone, tablet) {
-											clip: rect(auto auto auto auto);
-											position: static;
-										}
-
-										&:focus {
-											clip: rect(auto auto auto auto);
-											position: static;
+											font-size: inherit;
+											margin-top: 0;
 										}
 									}
 
-									> a {
+									.nav-item-label {
 										background: #333;
-										color: #FFF;
-										padding: 6px 8px;
-										text-align: center;
+										display: none;
+										left: 100%;
+										margin-left: 0.5em;
+										margin-top: -1em;
+										padding: 0 20px;
+										position: absolute;
+										top: 50%;
+										white-space: nowrap;
 
 										@include respond-to(phone, tablet) {
 											background: transparent;
-											color: inherit;
-											padding: 9px 15px;
-											text-align: left;
+											display: inline-block;
+											margin-left: 0;
+											margin-top: 0;
+											padding: 0;
+											position: static;
 										}
+									}
 
-										.nav-item-icon {
-											font-size: 25px;
-											margin-right: 0;
-											position: relative;
-											vertical-align: middle;
-
-											@include respond-to(phone, tablet) {
-												font-size: inherit;
-												margin-top: 0;
-											}
+									@include respond-to(phone, tablet) {
+										&:focus, &:hover {
+											background: #555;
+											color: #FFF;
 										}
+									}
 
-										.nav-item-label {
-											background: #333;
-											display: none;
-											left: 100%;
-											margin-left: 0.5em;
-											margin-top: -1em;
-											padding: 0 20px;
-											position: absolute;
-											top: 50%;
-											white-space: nowrap;
-
-											@include respond-to(phone, tablet) {
-												background: transparent;
-												display: inline-block;
-												margin-left: 0;
-												margin-top: 0;
-												padding: 0;
-												position: static;
-											}
-										}
+									&:hover .nav-item-label {
+										display: block;
 
 										@include respond-to(phone, tablet) {
-											&:focus, &:hover {
-												background: #555;
-												color: #FFF;
-											}
-										}
-
-										&:hover .nav-item-label {
-											display: block;
-
-											@include respond-to(phone, tablet) {
-												display: inline-block;
-											}
+											display: inline-block;
 										}
 									}
 								}
+							}
 
-								&:hover > li.toggle-controls a {
-									clip: rect(auto auto auto auto);
-									position: static;
-								}
+							&:hover > li.toggle-controls a {
+								clip: rect(auto auto auto auto);
+								position: static;
+							}
+						}
+					}
+
+					> li {
+						> a {
+							color: #FFF;
+							line-height: 31px;
+							padding: 6px 15px;
+
+							@include respond-to(phone, tablet) {
+								color: inherit;
 							}
 						}
 
-						> li {
-							> a {
-								color: #FFF;
-								line-height: 31px;
-								padding: 6px 15px;
+						&.active > a {
+							color: #FFF;
+						}
 
-								@include respond-to(phone, tablet) {
-									color: inherit;
-								}
-							}
+						&.info-items {
+							left: auto;
+							top: auto;
+						}
 
-							&.active > a {
-								color: #FFF;
-							}
-
-							&.info-items {
-								left: auto;
-								top: auto;
-							}
-
-							&.open > a {
-								color: #333;
-							}
+						&.open > a {
+							color: #333;
 						}
 					}
 				}
@@ -883,7 +877,7 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		&.controls-hidden .dockbar .navbar-inner .nav-add-controls li.toggle-controls > .toggle-controls-link {
+		&.controls-hidden .dockbar .nav-add-controls li.toggle-controls > .toggle-controls-link {
 			background: #F5AF45;
 		}
 
@@ -900,12 +894,12 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	&.dialog-iframe-root-node .dockbar .navbar-inner .container .navbar-collapse > .nav.nav-add-controls .dropdown-menu .page-preview-controls {
+	&.dialog-iframe-root-node .dockbar .container > .nav.nav-add-controls .dropdown-menu .page-preview-controls {
 		display: none;
 	}
 
 	.touch .dockbar-split, .controls-hidden.dockbar-split {
-		.dockbar .navbar-inner .container .navbar-collapse > .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
+		.dockbar .container > .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
 			clip: rect(auto auto auto auto);
 			position: static;
 		}
@@ -1080,7 +1074,7 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	&.ie6, &.ie7, &.ie8 {
-		.dockbar-split .dockbar .navbar-inner .nav-add-controls li.page-preview-controls {
+		.dockbar-split .dockbar .nav-add-controls li.page-preview-controls {
 			display: none;
 		}
 	}
@@ -1234,7 +1228,7 @@ $editLayoutPanelWidth: 460px;
 
 	/* -------- Extras -------- */
 
-	.dockbar .navbar-inner .container .navbar-collapse > .nav > li.info-items {
+	.dockbar .container > .nav > li.info-items {
 		@include background-image(none);
 	}
 
@@ -1311,7 +1305,7 @@ $editLayoutPanelWidth: 460px;
 				background-color: #FFF;
 			}
 
-			.navbar-inner .container .navbar-collapse > .nav > li.info-items {
+			.container > .nav > li.info-items {
 				left: 0;
 				top: 100%;
 			}

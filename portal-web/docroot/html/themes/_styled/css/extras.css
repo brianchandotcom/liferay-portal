@@ -75,13 +75,13 @@
 
 .dockbar {
 	@include respond-to(phone, tablet) {
-		.navbar-inner .navbar-btn {
+		.navbar-btn {
 			@include box-shadow(none);
 			@include text-shadow(none);
 		}
 	}
 
-	.navbar-inner .nav li.staging-toggle {
+	.nav li.staging-toggle {
 		&.active > a {
 			@include box-shadow(none);
 		}
@@ -100,8 +100,8 @@
 	}
 }
 
-.dockbar .navbar-inner {
-	.container .navbar-collapse > .nav {
+.dockbar {
+	.container > .nav {
 		@include respond-to(phone, tablet) {
 			&.nav-account-controls .info-link-container .info-link {
 				@include border-radius(3px);
@@ -112,7 +112,7 @@
 			> a, .info-button > a {
 				@include text-shadow(none);
 
-				@include respond-to(phone) {
+				@include respond-to(phone, tablet) {
 					@include border-radius(4px);
 				}
 			}
@@ -124,11 +124,13 @@
 	}
 }
 
-.dockbar-split .dockbar .navbar-inner .container .navbar-collapse > .nav {
+.dockbar-split .dockbar .container > .nav {
 	&.nav-add-controls {
 		> li {
 			a {
-				@include border-radius(4px);
+				@include respond-to(desktop) {
+					@include border-radius(4px);
+				}
 
 				.nav-item-label {
 					@include border-radius(30px);
@@ -136,7 +138,9 @@
 			}
 
 			&.open a {
-				@include border-radius(4px);
+				@include respond-to(desktop) {
+					@include border-radius(4px);
+				}
 			}
 
 			> ul {

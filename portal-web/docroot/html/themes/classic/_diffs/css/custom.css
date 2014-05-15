@@ -59,8 +59,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.lfr-nav-item {
 			span, a {
 				@include ellipsis;
-
-				max-width: 300px;
+				@include respond-to(desktop) {
+					display: inline;
+					float: left;
+					max-width: 300px;
+				}
 			}
 		}
 	}
@@ -113,20 +116,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				> li {
-					> a {
-						margin: 0 5px 0 0;
-
-						&:focus, &:hover {
-							background-color: #2FA4F5;
-						}
-					}
+				> li > a {
+					margin-right: 5px;
 				}
 			}
 		}
 
 		&.navbar-static-top .collapse .nav-account-controls {
 			position: relative;
+		}
+
+		.container > .nav.nav-add-controls ul.dropdown-menu > li > a {
+			&:focus, &:hover {
+				color: #FFF;
+			}
 		}
 
 		.info-button {
@@ -161,12 +164,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					color: #FFF;
 					font-size: 12px;
 				}
-			}
-		}
-
-		.navbar-inner .container .navbar-collapse > .nav.nav-add-controls ul.dropdown-menu > li > a {
-			&:focus, &:hover {
-				color: #FFF;
 			}
 		}
 
@@ -234,80 +231,78 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 2px 20px;
 		}
 
-		.navbar-inner {
-			.container .navbar-collapse > .nav {
-				&.nav-account-controls {
-					background-color: $dockbarGradientEnd;
-					border-top: 1px solid #00AEFF;
+		.container > .nav {
+			&.nav-account-controls {
+				background-color: $dockbarGradientEnd;
+				border-top: 1px solid #00AEFF;
 
-					@include respond-to(phone, tablet) {
-						background-color: transparent;
-						border-top-width: 0;
-					}
-
-					&.nav-account-controls-notice {
-						top: 50px;
-					}
+				@include respond-to(phone, tablet) {
+					background-color: transparent;
+					border-top-width: 0;
 				}
 
-				&.nav-add-controls ul.dropdown-menu {
-					overflow: visible;
+				&.nav-account-controls-notice {
+					top: 50px;
+				}
+			}
 
-					&.nav-add-controls-notice {
-						top: 70px;
-					}
+			&.nav-add-controls ul.dropdown-menu {
+				overflow: visible;
 
-					> li {
-						background-color: transparent;
+				&.nav-add-controls-notice {
+					top: 70px;
+				}
 
-						@include background-image(none);
+				> li {
+					background-color: transparent;
 
-						> a {
-							line-height: inherit;
-							padding: 6px 8px;
+					@include background-image(none);
+
+					> a {
+						line-height: inherit;
+						padding: 6px 8px;
+
+						@include respond-to(phone, tablet) {
+							background: transparent;
+							padding: 9px 15px;
+						}
+
+						&:focus, &:hover {
+							background: #5BBAE8;
+
+							@include respond-to(phone, tablet) {
+								background: #2FA4F5;
+							}
+						}
+
+						&.toggle-controls-link {
+							background: #80E000;
 
 							@include respond-to(phone, tablet) {
 								background: transparent;
-								padding: 9px 15px;
-							}
 
-							&:focus, &:hover {
-								background: #5BBAE8;
-
-								@include respond-to(phone, tablet) {
+								&:focus, &:hover {
 									background: #2FA4F5;
-								}
-							}
-
-							&.toggle-controls-link {
-								background: #80E000;
-
-								@include respond-to(phone, tablet) {
-									background: transparent;
-
-									&:focus, &:hover {
-										background: #2FA4F5;
-									}
 								}
 							}
 						}
 					}
 				}
 			}
+		}
 
-			.page-customization-bar {
-				background-color: #6DA4E4;
-				background-color: rgba(109, 168, 228, 0.9);
-				line-height: 20px;
-			}
+		.page-customization-bar {
+			background-color: #6DA4E4;
+			background-color: rgba(109, 168, 228, 0.9);
+			line-height: 20px;
+		}
 
-			.page-customization-bar-container {
-				top: -1px;
-			}
+		.page-customization-bar-container {
+			top: -1px;
+		}
 
-			.staging-bar {
-				margin: 6px 0;
-			}
+		.staging-bar {
+			margin: 6px 0;
 		}
 	}
 
@@ -332,6 +327,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.nav {
+			@include respond-to(desktop) {
+				background: #555;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+
 			li {
 				&.dropdown {
 					> .dropdown-toggle {
@@ -361,7 +362,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			> li > a {
-				padding: 4px 15px 5px;
+				@include respond-to(desktop) {
+					padding: 4px 15px 5px;
+				}
 
 				@include respond-to(phone, tablet) {
 					&:focus, &:hover {
@@ -390,14 +393,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.navbar-inner {
-			background: #555;
-			border-width: 0;
-			min-height: 36px;
-
-			li a {
-				color: #FFF;
-			}
+		li a {
+			color: #FFF;
 		}
 	}
 
@@ -647,13 +644,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.navbar-inner {
-			@include border-radius(0);
-			@include box-shadow(none);
-
-			li a {
-				@include text-shadow(none);
-			}
+		li a {
+			@include text-shadow(none);
 		}
 	}
 
@@ -675,15 +667,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 		}
-
-		.navbar-inner {
-			background-color: $dockbarGradientStart;
-
-			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-		}
 	}
 
-	.dockbar-split .dockbar .navbar-inner .nav > li {
+	.dockbar-split .dockbar .nav > li {
 		background-color: $dockbarGradientStart;
 
 		@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
@@ -691,6 +677,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include respond-to(phone, tablet) {
 			background-color: transparent;
 
+			@include background-image(none);
+		}
+
+		&.staging-toggle {
+			background-color: transparent;
 			@include background-image(none);
 		}
 	}
@@ -761,12 +752,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(3px 3px 0 0);
 	}
 
-	.dockbar .staging-bar .staging-toggle > a {
-		@include border-radius(3px);
-	}
-
 	.dockbar-split .dockbar {
-		.navbar-inner {
+		.container {
 			@include box-shadow(none);
 			@include text-shadow(none);
 
@@ -775,22 +762,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 			}
+		}
 
-			.nav {
-				li.dropdown.open {
-					> .dropdown-toggle {
-						background-color: $dockbarOpenGradientStart;
+		.nav {
+			li.dropdown.open {
+				> .dropdown-toggle {
+					background-color: $dockbarOpenGradientStart;
 
-						@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-						@include box-shadow(none);
-					}
+					@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+					@include box-shadow(none);
 				}
+			}
 
-				li.dropdown.active {
-					> .staging-link.dropdown-toggle {
-						background-color: #55B8EC;
-						background-image: none;
-					}
+			li.dropdown.active {
+				> .staging-link.dropdown-toggle {
+					background-color: #55B8EC;
+					background-image: none;
 				}
 			}
 		}
@@ -812,7 +799,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- IE8 ---------- */
 
 	&.ie8 {
-		.dockbar-split .dockbar .navbar-inner .info-button a {
+		.dockbar-split .dockbar .info-button a {
 			margin-top: -2px;
 		}
 	}

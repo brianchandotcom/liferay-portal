@@ -193,24 +193,37 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 5px 15px;
 		}
 
-		.navbar-inner {
-			background-color: $dockbarGradientEnd;
-			color: #FFF;
-			padding-left: 0;
-			padding-right: 0;
+		.navbar-brand {
+			height: auto;
+			letter-spacing: 1px;
+			padding: 20px 5px;
 
-			.navbar-brand {
-				letter-spacing: 1px;
+			&, h1, a {
+				color: #FFF;
+				font-weight: 100;
+				text-shadow: none;
 
-				&, h1, a {
-					color: #FFF;
-					font-weight: 100;
-					text-shadow: none;
-
-					@include respond-to(phone, tablet) {
-						letter-spacing: 0;
-					}
+				@include respond-to(phone, tablet) {
+					letter-spacing: 0;
 				}
+			}
+
+			@include respond-to(desktop) {
+				padding: 10px 15px;
+			}
+
+			@include respond-to(phone, tablet) {
+				h1 {
+					position: relative;
+				}
+			}
+
+			.control-panel-site-selector {
+				font-size: inherit;
+				margin-bottom: 0;
+				margin-top: 0;
+				position: static;
+				vertical-align: baseline;
 
 				h1 {
 					@include box-sizing(border-box);
@@ -222,247 +235,242 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				@include respond-to(phone, tablet) {
-					h1 {
-						position: relative;
-					}
-				}
-
-				.control-panel-site-selector {
-					font-size: inherit;
-					margin-bottom: 0;
-					margin-top: 0;
+					font-weight: 200;
 					position: static;
-					vertical-align: baseline;
-
-					@include respond-to(phone, tablet) {
-						font-weight: 200;
-						position: static;
-					}
-
-					a {
-						text-decoration: none;
-
-						@include respond-to(phone) {
-							.lfr-icon-menu-arrow {
-								display: none;
-							}
-						}
-
-						.lfr-icon-menu-icon {
-							display: none;
-
-							@include respond-to(phone) {
-								display: inline-block;
-								position: absolute;
-							}
-						}
-
-						.lfr-icon-menu-text {
-							@include respond-to(phone, tablet) {
-								font-weight: 200;
-								line-height: 22px;
-							}
-
-							&:hover, &:focus {
-								text-decoration: underline;
-							}
-						}
-					}
-
-					.caret {
-						border-top-color: #FFF;
-						margin-top: -4px;
-					}
 				}
-
-				.control-panel-back-link {
-					margin: 0 15px;
-
-					@include respond-to(phone, tablet) {
-						margin: 0 8px;
-					}
-
-					&:hover, &:focus {
-						text-decoration: none;
-					}
-				}
-			}
-
-			.container {
-				.nav-account-controls {
-					@include justify-content(flex-end);
-
-					> li.open > .dropdown-toggle {
-						background-color: $dockbarOpenGradientEnd;
-						margin: 0;
-						padding: 5px 15px;
-
-						@include respond-to(phone, tablet) {
-							padding: 12px 0;
-						}
-					}
-				}
-
-				.navbar-collapse {
-					@include respond-to(phone, tablet) {
-						float: right;
-					}
-
-					> .nav {
-						li.dropdown ul.dropdown-menu {
-							margin-top: 0;
-						}
-
-						&.nav-navigation ul.dropdown-menu > li {
-							margin-right: 5px;
-
-							> a {
-								line-height: 31px;
-								margin: 3px 0;
-								padding: 2px 15px;
-
-								&:focus, &:hover {
-									color: #FFF;
-								}
-							}
-
-							@include respond-to(phone, tablet) {
-								display: block;
-
-								&, > a {
-									margin: 0;
-								}
-
-								> a {
-									padding: 8px 15px;
-								}
-							}
-						}
-					}
-				}
-
-				.nav-navigation {
-					letter-spacing: 1px;
-
-					> li {
-						@include respond-to(phone, tablet) {
-							&.open ul.dropdown-menu {
-								display: block;
-							}
-						}
-					}
-
-					ul.dropdown-menu {
-						@include respond-to(phone, tablet) {
-							background: #009AE5;
-							display: none;
-							position: absolute;
-						}
-
-						> li {
-							&.active > a {
-								background: #0066B3;
-								color: #FFF;
-
-								@include border-radius(4px);
-
-								@include respond-to(phone, tablet) {
-									@include border-radius(0);
-								}
-							}
-
-							> a {
-								margin: 3px 0;
-								padding: 2px 15px;
-
-								@include respond-to(phone, tablet) {
-									font-size: 16px;
-									line-height: 32px;
-									margin: 0;
-									padding: 9px 15px;
-								}
-							}
-
-							a:hover {
-								background: #0993DD;
-							}
-						}
-
-						li {
-							margin-right: 5px;
-
-							@include respond-to(phone, tablet) {
-								margin-right: 0;
-							}
-
-							/* ---------- Menu icons ---------- */
-
-							&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
-								[class^="icon-"], [class*=" icon-"] {
-									&:before {
-										content: '';
-									}
-								}
-							}
-
-							.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
-								background: none no-repeat 50%;
-								height: 21px;
-								vertical-align: top;
-								width: 24px;
-							}
-
-							.icon-cog, .icon-globe, .icon-th, .icon-user {
-								height: 26px;
-								width: 29px;
-							}
-
-							.icon-arrow-left {
-								background-image: url(../images/custom/dockbar_back.png);
-								margin-top: 4px;
-							}
-
-							.icon-cog {
-								background-image: url(../images/custom/dockbar_configuration.png);
-							}
-
-							.icon-globe {
-								background-image: url(../images/custom/dockbar_sites.png);
-							}
-
-							.icon-list {
-								background-image: url(../images/custom/dockbar_home.png);
-								height: 24px;
-								margin-top: 3px;
-							}
-
-							.icon-th {
-								background-image: url(../images/custom/dockbar_apps.png);
-							}
-
-							.icon-user {
-								background-image: url(../images/custom/dockbar_users.png);
-								width: 40px;
-							}
-						}
-					}
-				}
-			}
-
-			.site-administration-menu li {
-				list-style: none;
 
 				a {
-					display: block;
-					padding: 3px 5px 3px 40px;
+					text-decoration: none;
 
-					&:hover {
-						text-decoration: none;
+					@include respond-to(phone) {
+						.lfr-icon-menu-arrow {
+							display: none;
+						}
 					}
 
-					i {
-						font-size: 0.8em;
+					.lfr-icon-menu-icon {
+						display: none;
+
+						@include respond-to(phone) {
+							display: inline-block;
+							position: absolute;
+						}
 					}
+
+					.lfr-icon-menu-text {
+						@include respond-to(phone, tablet) {
+							font-weight: 200;
+							line-height: 22px;
+						}
+
+						&:hover, &:focus {
+							text-decoration: underline;
+						}
+					}
+				}
+
+				.caret {
+					border-top-color: #FFF;
+					margin-top: -4px;
+				}
+			}
+
+			.control-panel-back-link {
+				margin: 0 15px;
+
+				@include respond-to(phone, tablet) {
+					margin: 0 8px;
+				}
+
+				&:hover, &:focus {
+					text-decoration: none;
+				}
+			}
+		}
+
+		.container {
+			padding-left: 5px;
+			padding-right: 5px;
+
+			.nav-account-controls {
+				float: right;
+
+				@include justify-content(flex-end);
+
+				> li.open > .dropdown-toggle {
+					background-color: $dockbarOpenGradientEnd;
+					margin: 0;
+					padding: 5px 15px;
+
+					@include respond-to(phone, tablet) {
+						margin: 5px 0 3px 5px;
+						padding: 12px 10px;
+					}
+				}
+			}
+
+			> .nav {
+				li.dropdown ul.dropdown-menu {
+					margin-top: 0;
+				}
+
+				&.nav-account-controls {
+					float: right;
+				}
+
+				&.nav-navigation ul.dropdown-menu > li {
+					margin-right: 5px;
+
+					> a {
+						line-height: 31px;
+						margin: 3px 0;
+						padding: 2px 15px;
+
+						&:focus, &:hover {
+							color: #FFF;
+						}
+					}
+
+					@include respond-to(phone, tablet) {
+						display: block;
+
+						&, > a {
+							margin: 0;
+						}
+
+						> a {
+							padding: 8px 15px;
+						}
+					}
+				}
+			}
+
+			.nav-navigation {
+				float: right;
+				letter-spacing: 1px;
+
+				@include respond-to(desktop) {
+					float: left;
+				}
+
+				> li {
+					@include respond-to(phone, tablet) {
+						&.open ul.dropdown-menu {
+							display: block;
+						}
+					}
+				}
+
+				ul.dropdown-menu {
+					@include respond-to(phone, tablet) {
+						background: #009AE5;
+						display: none;
+						position: absolute;
+					}
+
+					> li {
+						&.active > a {
+							background: #0066B3;
+							color: #FFF;
+
+							@include border-radius(4px);
+
+							@include respond-to(phone, tablet) {
+								@include border-radius(0);
+							}
+						}
+
+						> a {
+							margin: 3px 0;
+							padding: 2px 15px;
+
+							@include respond-to(phone, tablet) {
+								font-size: 16px;
+								line-height: 32px;
+								margin: 0;
+								padding: 9px 15px;
+							}
+						}
+
+						a:hover {
+							background: #0993DD;
+						}
+					}
+
+					li {
+						margin-right: 5px;
+
+						@include respond-to(phone, tablet) {
+							margin-right: 0;
+						}
+
+						/* ---------- Menu icons ---------- */
+
+						&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
+							[class^="icon-"], [class*=" icon-"] {
+								&:before {
+									content: '';
+								}
+							}
+						}
+
+						.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
+							background: none no-repeat 50%;
+							height: 21px;
+							vertical-align: top;
+							width: 24px;
+						}
+
+						.icon-cog, .icon-globe, .icon-th, .icon-user {
+							height: 26px;
+							width: 29px;
+						}
+
+						.icon-arrow-left {
+							background-image: url(../images/custom/dockbar_back.png);
+							margin-top: 4px;
+						}
+
+						.icon-cog {
+							background-image: url(../images/custom/dockbar_configuration.png);
+						}
+
+						.icon-globe {
+							background-image: url(../images/custom/dockbar_sites.png);
+						}
+
+						.icon-list {
+							background-image: url(../images/custom/dockbar_home.png);
+							height: 24px;
+							margin-top: 3px;
+						}
+
+						.icon-th {
+							background-image: url(../images/custom/dockbar_apps.png);
+						}
+
+						.icon-user {
+							background-image: url(../images/custom/dockbar_users.png);
+							width: 40px;
+						}
+					}
+				}
+			}
+		}
+
+		.site-administration-menu li {
+			list-style: none;
+
+			a {
+				display: block;
+				padding: 3px 5px 3px 40px;
+
+				&:hover {
+					text-decoration: none;
+				}
+
+				i {
+					font-size: 0.8em;
 				}
 			}
 		}
@@ -1010,39 +1018,30 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Extras dockbar ---------- */
 
 	.dockbar {
-		.navbar-inner {
-			background-color: $dockbarGradientStart;
+		ul.nav-account-controls {
+			li.open > .dropdown-toggle {
+				background-color: $dockbarGradientStart;
 
-			@include background-image(linear-gradient(top, $dockbarGradientStart, $dockbarGradientEnd));
-			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+				@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+				@include box-shadow(none);
+				@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
+			}
+		}
 
-			ul.nav-account-controls {
-				li.open > .dropdown-toggle {
-					background-color: $dockbarGradientStart;
-
-					@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-					@include box-shadow(none);
-					@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
-				}
-
-				> li:hover {
-					background-color: #2FA4F5;
-				}
+		ul.nav-navigation {
+			ul.dropdown-menu > li.active > a {
+				@include box-shadow(inset 0 3px 8px rgba(0, 0, 0, 0.125));
 			}
 
-			ul.nav-navigation {
-				ul.dropdown-menu > li.active > a {
-					@include box-shadow(inset 0 3px 8px rgba(0, 0, 0, 0.125));
+			> li {
+				@include respond-to(phone, tablet) {
+					&.open > a {
+						@include box-shadow(none);
+					}
 				}
 
-				> li {
-					@include respond-to(phone, tablet) {
-						&.open > a {
-							@include box-shadow(none);
-						}
-					}
-
-					a:hover {
+				a:hover {
+					@include respond-to(desktop) {
 						@include border-radius(4px);
 					}
 				}

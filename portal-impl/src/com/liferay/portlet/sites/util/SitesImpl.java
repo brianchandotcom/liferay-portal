@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -1063,22 +1064,14 @@ public class SitesImpl implements Sites {
 			List<String> organizationNames)
 		throws Exception {
 
-		List<Long> organizationIds =
-			OrganizationLocalServiceUtil.getGroupOrganizationIds(
-				group.getGroupId());
+		List<Organization> organizations =
+			OrganizationLocalServiceUtil.getGroupUserOrganizations(
+				group.getGroupId(), user.getUserId());
 
-		organizationIds.retainAll(
-			OrganizationLocalServiceUtil.getUserOrganizations(
-				user.getUserId()));
+		organizationNames.addAll(
+			ListUtil.toList(organizations, Organization.NAME_ACCESSOR));
 
-		for (Long orgId : organizationIds) {
-			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(orgId);
-
-			organizationNames.add(organization.getName());
-		}
-
-		return !organizationIds.isEmpty();
+		return !organizations.isEmpty();
 	}
 
 	@Override
@@ -1114,20 +1107,14 @@ public class SitesImpl implements Sites {
 			long companyId, Group group, User user, List<String> userGroupNames)
 		throws Exception {
 
-		List<Long> userGroupIds =
-			UserGroupLocalServiceUtil.getGroupUserGroupIds(group.getGroupId());
+		List<UserGroup> userGroups =
+			UserGroupLocalServiceUtil.getGroupUserUserGroups(
+				group.getGroupId(), user.getUserId());
 
-		userGroupIds.retainAll(
-			UserGroupLocalServiceUtil.getUserUserGroupIds(user.getUserId()));
+		userGroupNames.addAll(
+			ListUtil.toList(userGroups, UserGroup.NAME_ACCESSOR));
 
-		for (Long userGroupId : userGroupIds) {
-			UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
-				userGroupId);
-
-			userGroupNames.add(userGroup.getName());
-		}
-
-		return !userGroupIds.isEmpty();
+		return !userGroups.isEmpty();
 	}
 
 	@Override

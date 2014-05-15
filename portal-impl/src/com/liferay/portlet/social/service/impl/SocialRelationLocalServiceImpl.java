@@ -421,29 +421,19 @@ public class SocialRelationLocalServiceImpl
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		List<User> users = new ArrayList<User>();
-
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			List<SocialRelation> filteredSocialRelations =
-				new ArrayList<SocialRelation>();
+			List<SocialRelation> socialRelations =
+				socialRelationPersistence.findByU1_T(userId, type);
 
-			if (equal) {
-				filteredSocialRelations = getRelations(
-					userId, type, start, end);
-			}
-			else {
-				List<SocialRelation> socialRelations =
-					socialRelationPersistence.findByUserId1(userId);
-
-				List<SocialRelation> socialRelationEnemies =
-					socialRelationLocalService.getRelations(
-						userId, type, start, end);
-
-				filteredSocialRelations = ListUtil.remove(
-					socialRelations, socialRelationEnemies);
+			if (!equal) {
+				socialRelations = ListUtil.remove(
+					socialRelationPersistence.findByUserId1(userId),
+					socialRelations);
 			}
 
-			for (SocialRelation socialRelation : filteredSocialRelations) {
+			List<User> users = new ArrayList<User>();
+
+			for (SocialRelation socialRelation : socialRelations) {
 				User user = userPersistence.findByPrimaryKey(
 					socialRelation.getUserId2());
 
@@ -457,18 +447,17 @@ public class SocialRelationLocalServiceImpl
 			}
 
 			if (obc != null) {
-				ListUtil.sort(users, obc);
+				users = ListUtil.sort(users, obc);
 			}
-		}
-		else {
-			User user = userPersistence.findByPrimaryKey(userId);
 
-			users = socialRelationFinder.findSocialUsers(
-				user.getCompanyId(), userId, type, equal,
-				WorkflowConstants.STATUS_APPROVED, start, end, obc);
+			return users;
 		}
 
-		return users;
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		return socialRelationFinder.findSocialUsers(
+			user.getCompanyId(), userId, type, equal,
+			WorkflowConstants.STATUS_APPROVED, start, end, obc);
 	}
 
 	/**
@@ -480,7 +469,6 @@ public class SocialRelationLocalServiceImpl
 	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
 	 * @param  equal the value of type of social relation equals true or false
 	 * @return the number of users with a social relation with the user
-	 * @throws NoSuchUserException
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

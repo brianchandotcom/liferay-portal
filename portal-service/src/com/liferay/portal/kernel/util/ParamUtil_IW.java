@@ -232,6 +232,18 @@ public class ParamUtil_IW {
 	}
 
 	public java.util.Date getDate(
+		javax.servlet.http.HttpServletRequest request,
+		java.lang.String paramPrefix) {
+		return ParamUtil.getDate(request, paramPrefix);
+	}
+
+	public java.util.Date getDate(
+		javax.servlet.http.HttpServletRequest request,
+		java.lang.String paramPrefix, java.util.Date defaultValue) {
+		return ParamUtil.getDate(request, paramPrefix, defaultValue);
+	}
+
+	public java.util.Date getDate(
 		javax.servlet.http.HttpServletRequest request, java.lang.String param,
 		java.text.DateFormat dateFormat) {
 		return ParamUtil.getDate(request, param, dateFormat);
@@ -243,6 +255,29 @@ public class ParamUtil_IW {
 		return ParamUtil.getDate(request, param, dateFormat, defaultValue);
 	}
 
+	public java.util.Date getDate(
+		javax.servlet.http.HttpServletRequest request,
+		java.lang.String paramPrefix, java.util.TimeZone timeZone) {
+		return ParamUtil.getDate(request, paramPrefix, timeZone);
+	}
+
+	public java.util.Date getDate(
+		javax.servlet.http.HttpServletRequest request,
+		java.lang.String paramPrefix, java.util.TimeZone timeZone,
+		java.util.Date defaultValue) {
+		return ParamUtil.getDate(request, paramPrefix, timeZone, defaultValue);
+	}
+
+	public java.util.Date getDate(javax.portlet.PortletRequest portletRequest,
+		java.lang.String paramPrefix) {
+		return ParamUtil.getDate(portletRequest, paramPrefix);
+	}
+
+	public java.util.Date getDate(javax.portlet.PortletRequest portletRequest,
+		java.lang.String paramPrefix, java.util.Date defaultValue) {
+		return ParamUtil.getDate(portletRequest, paramPrefix, defaultValue);
+	}
+
 	public java.util.Date getDate(javax.portlet.PortletRequest portletRequest,
 		java.lang.String param, java.text.DateFormat dateFormat) {
 		return ParamUtil.getDate(portletRequest, param, dateFormat);
@@ -252,6 +287,18 @@ public class ParamUtil_IW {
 		java.lang.String param, java.text.DateFormat dateFormat,
 		java.util.Date defaultValue) {
 		return ParamUtil.getDate(portletRequest, param, dateFormat, defaultValue);
+	}
+
+	public java.util.Date getDate(javax.portlet.PortletRequest portletRequest,
+		java.lang.String paramPrefix, java.util.TimeZone timeZone) {
+		return ParamUtil.getDate(portletRequest, paramPrefix, timeZone);
+	}
+
+	public java.util.Date getDate(javax.portlet.PortletRequest portletRequest,
+		java.lang.String paramPrefix, java.util.TimeZone timeZone,
+		java.util.Date defaultValue) {
+		return ParamUtil.getDate(portletRequest, paramPrefix, timeZone,
+			defaultValue);
 	}
 
 	public java.util.Date getDate(

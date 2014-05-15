@@ -771,4 +771,38 @@
 				modifiedDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialRelationFinder.countSocialUsers">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT User_.userId) AS COUNT_VALUE
+			FROM
+				User_
+			INNER JOIN
+				SocialRelation ON
+					(SocialRelation.userId2 = User_.userId)
+			WHERE
+				([$TYPE]) AND
+				(SocialRelation.userId1 = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialRelationFinder.findSocialUsers">
+		<![CDATA[
+			SELECT
+				DISTINCT {User_.*}
+			FROM
+				User_
+			INNER JOIN
+				SocialRelation ON
+					(SocialRelation.userId2 = User_.userId)
+			WHERE
+				([$TYPE]) AND
+				(SocialRelation.userId1 = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
 </custom-sql>

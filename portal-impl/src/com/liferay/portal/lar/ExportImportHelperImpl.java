@@ -1874,14 +1874,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
+		if (portlet == null) {
+			return false;
+		}
+
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (exportPortletDataAll ||
-			(portlet == null) ||
-			(portletDataHandler == null) ||
-			!portletDataHandler.isDataSiteLevel()) {
+		if (portletDataHandler == null) {
+			return false;
+		}
 
+		if (exportPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
 			return true;
 		}
 
@@ -2134,14 +2138,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
+		if (portlet == null) {
+			return false;
+		}
+
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (importPortletDataAll ||
-			(portlet == null) ||
-			(portletDataHandler == null) ||
-			!portletDataHandler.isDataSiteLevel()) {
+		if (portletDataHandler == null) {
+			return false;
+		}
 
+		if (importPortletDataAll || !portletDataHandler.isDataSiteLevel()) {
 			return true;
 		}
 

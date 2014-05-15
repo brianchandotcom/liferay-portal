@@ -899,13 +899,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		content = replaceExportLayoutReferences(portletDataContext, content);
-		content = replaceExportLinksToLayouts(
-			portletDataContext, entityStagedModel, content);
-
 		content = replaceExportDLReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
+		content = replaceExportLayoutReferences(portletDataContext, content);
+		content = replaceExportLinksToLayouts(
+			portletDataContext, entityStagedModel, content);
 
 		String className = ExportImportClassedModelUtil.getClassName(
 			entityStagedModel);
@@ -1350,11 +1349,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		content = replaceImportLayoutReferences(portletDataContext, content);
-		content = replaceImportLinksToLayouts(portletDataContext, content);
-
 		content = replaceImportDLReferences(
 			portletDataContext, entityStagedModel, content);
+		content = replaceImportLayoutReferences(portletDataContext, content);
+		content = replaceImportLinksToLayouts(portletDataContext, content);
 
 		return content;
 	}

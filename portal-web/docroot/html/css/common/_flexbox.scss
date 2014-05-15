@@ -80,7 +80,7 @@
 
 	@include experimental(box-pack, $pack-value, not -moz, -webkit, not -o, not -ms, not -khtml, not official);
 	@include experimental(flex-pack, $pack-value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-	@include experimental(justify-content, flex-start, -moz, -webkit, not -o, not -ms, not -khtml, official);
+	@include experimental(justify-content, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
 }
 
 /* ---------- Flex items ---------- */
@@ -100,11 +100,13 @@
 }
 
 @mixin flex-grow($int: 0) {
+	@include experimental(box-flex, $int, -moz, -webkit, not -o, -ms, not -khtml, not official);
 	@include experimental(flex-grow, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
 	@include experimental(flex-positive, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
 }
 
 @mixin flex-shrink($int: 1) {
+	@include experimental(box-flex, $int, -moz, -webkit, not -o, -ms, not -khtml, not official);
 	@include experimental(flex-shrink, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
 	@include experimental(flex-negative, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
 }

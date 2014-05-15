@@ -8,33 +8,51 @@
 
 			padding: 0 5px;
 
-			#_145_navAddControlsNavbarBtn, #_145_navSiteNavigationNavbarBtn {
+			.nav-add-controls-btn {
 				display: none;
 			}
 
 			.nav-account-controls {
+				float: right;
 				text-align: top;
 			}
 
 			.brand {
+				@include flexbox();
+
+				@include flex-grow(1);
+				@include flex-shrink(500);
+
 				line-height: 16px;
+				min-width: 128px;
 				padding: 12px 0 0 0;
+				white-space: nowrap;
+				width: auto;
 
 				.control-panel-back-link {
 					float: left;
 					margin-top: 6px;
+					position: relative;
+					z-index: 2;
 
 					@include respond-to(phone) {
+						@include flex-shrink(0);
+
 						margin: 0;
 						padding: 6px 8px;
+						position: absolute;
 					}
 				}
 
 				h1 {
 					@include respond-to(phone) {
+						display: block;
 						height: 51px;
+						line-height: 16px;
 						margin-top: -5px;
-						max-width: 165px;
+						max-width: 100%;
+						min-width: 55px;
+						padding: 0 16px 0 33px;
 						position: relative;
 
 						a {
@@ -42,7 +60,11 @@
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
-							width: 75px;
+							width: 100%;
+
+							&:only-child {
+								padding-top: 12px;
+							}
 
 							.lfr-icon-menu-text {
 								font-size: 18px;
@@ -50,7 +72,10 @@
 						}
 
 						.control-panel-site-selector, .site-administration-title {
+							display: block;
+
 							@include ellipsis;
+
 							font-size: 16px;
 						}
 
@@ -60,7 +85,7 @@
 							i {
 								bottom: 4px;
 								position: absolute;
-								right: -15px;
+								right: 0;
 							}
 						}
 
@@ -81,6 +106,40 @@
 
 			.nav-account-controls > li:hover {
 				background-color: transparent;
+			}
+
+			.nav-collapse:not(#_145_navAccountControlsNavbarCollapse) {
+				@include flex-grow(100);
+			}
+		}
+	}
+
+	.ie9 {
+		.dockbar .navbar-inner .container {
+			.brand {
+				max-width: 45%;
+				width: auto;
+
+				& + .nav-collapse:not(#_145_navAddControlsNavbarCollapse) {
+					& ~ #_145_navAccountControlsNavbarCollapse {
+						width: 40%;
+
+						.nav-account-controls > li.dropdown {
+							width: 33%;
+						}
+					}
+				}
+			}
+
+			.nav-collapse .nav-account-controls {
+				text-align: right;
+
+				> li.dropdown {
+					display: inline-block;
+					float: none;
+					text-align: left;
+					vertical-align: top;
+				}
 			}
 		}
 	}

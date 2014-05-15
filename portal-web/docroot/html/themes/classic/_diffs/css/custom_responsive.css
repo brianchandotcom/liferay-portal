@@ -161,8 +161,7 @@
 									color: #FFF;
 									font-size: 16px;
 									line-height: 20px;
-									margin-bottom: 5px;
-									padding: 12px 10px;
+									padding: 12px 0;
 
 									&:focus, &:hover {
 										background-color: #5BBAE8;
@@ -177,14 +176,14 @@
 					}
 
 					.dockbar-user-notifications .user-notifications-count {
-						margin: 0;
+						margin: 0 auto;
+						max-width: 10px;
 					}
 				}
 			}
 		}
 
 		.portlet-dockbar {
-			display: inline-block;
 			width: 100%;
 		}
 

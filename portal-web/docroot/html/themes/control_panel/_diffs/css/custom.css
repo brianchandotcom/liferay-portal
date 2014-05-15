@@ -212,6 +212,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
+				h1 {
+					@include box-sizing(border-box);
+
+					display: inline-block;
+					font-size: inherit;
+					line-height: 1;
+					margin: 0;
+				}
+
 				@include respond-to(phone, tablet) {
 					h1 {
 						position: relative;
@@ -281,7 +290,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.container {
 				.nav-account-controls {
-					float: right;
+					@include justify-content(flex-end);
 
 					> li.open > .dropdown-toggle {
 						background-color: $dockbarOpenGradientEnd;
@@ -289,8 +298,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						padding: 5px 15px;
 
 						@include respond-to(phone, tablet) {
-							margin: 5px 0 3px 5px;
-							padding: 12px 10px;
+							padding: 12px 0;
 						}
 					}
 				}

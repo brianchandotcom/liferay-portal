@@ -44,6 +44,8 @@ public class Field implements Serializable {
 	@Deprecated
 	public static final String ASSET_CATEGORY_NAMES = "assetCategoryNames";
 
+	public static final String ASSET_CATEGORY_TITLE = "assetCategoryTitle";
+
 	public static final String ASSET_CATEGORY_TITLES = "assetCategoryTitles";
 
 	public static final String ASSET_TAG_IDS = "assetTagIds";

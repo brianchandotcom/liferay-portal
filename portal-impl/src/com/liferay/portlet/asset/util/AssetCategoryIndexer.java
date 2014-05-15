@@ -117,6 +117,11 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 
+			localizedQuery.addTerm(Field.ASSET_CATEGORY_TITLE, title);
+			localizedQuery.addTerm(
+				DocumentImpl.getLocalizedName(
+					searchContext.getLocale(), Field.ASSET_CATEGORY_TITLE),
+				title, true);
 			localizedQuery.addTerm(Field.TITLE, title, true);
 			localizedQuery.addTerm(
 				DocumentImpl.getLocalizedName(
@@ -151,6 +156,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		Document document = getBaseModelDocument(PORTLET_ID, category);
 
 		document.addKeyword(Field.ASSET_CATEGORY_ID, category.getCategoryId());
+		document.addLocalizedKeyword(
+			Field.ASSET_CATEGORY_TITLE, category.getTitleMap(), true);
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, category.getVocabularyId());
 		document.addLocalizedText(

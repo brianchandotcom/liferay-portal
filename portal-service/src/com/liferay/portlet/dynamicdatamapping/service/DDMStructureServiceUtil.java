@@ -309,7 +309,7 @@ public class DDMStructureServiceUtil {
 	*
 	* <p>
 	* This method first searches in the group. If the structure is still not
-	* found and <code>includeGlobalStructures</code> is set to
+	* found and <code>includeAncestorStructures</code> is set to
 	* <code>true</code>, this method searches the global group.
 	* </p>
 	*
@@ -317,7 +317,7 @@ public class DDMStructureServiceUtil {
 	* @param classNameId the primary key of the class name for the structure's
 	related model
 	* @param structureKey the unique string identifying the structure
-	* @param includeGlobalStructures whether to include the global scope in
+	* @param includeAncestorStructures whether to include the global scope in
 	the search
 	* @return the matching structure
 	* @throws PortalException if the user did not have permission to view the
@@ -326,12 +326,12 @@ public class DDMStructureServiceUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long groupId, long classNameId, java.lang.String structureKey,
-		boolean includeGlobalStructures)
+		boolean includeAncestorStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getStructure(groupId, classNameId, structureKey,
-			includeGlobalStructures);
+			includeAncestorStructures);
 	}
 
 	/**

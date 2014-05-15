@@ -762,7 +762,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
-	<#if entity.hasLocalizedColumn()>
+	<#if entity.isLocalizedModel()>
 		@Override
 		public String[] getAvailableLanguageIds() {
 			Set<String> availableLanguageIds = new TreeSet<String>();
@@ -802,8 +802,9 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 
 		@Override
+		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport() throws LocaleException {
-			prepareLocalizedFieldsForImport (null);
+			prepareLocalizedFieldsForImport(null);
 		}
 
 		@Override

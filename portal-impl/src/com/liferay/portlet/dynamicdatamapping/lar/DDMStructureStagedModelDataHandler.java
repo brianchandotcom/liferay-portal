@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -35,7 +33,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -231,8 +228,6 @@ public class DDMStructureStagedModelDataHandler
 			PortletDataContext portletDataContext, DDMStructure structure)
 		throws Exception {
 
-		prepareLanguagesForImport(structure);
-
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
 
 		if (structure.getParentStructureId() !=
@@ -324,22 +319,6 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		return existingStructure;
-	}
-
-	protected void prepareLanguagesForImport(DDMStructure structure)
-		throws PortalException {
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			structure.getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			structure.getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			DDMStructure.class.getName(), structure.getPrimaryKey(),
-			defaultLocale, availableLocales);
-
-		structure.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 }

@@ -555,16 +555,6 @@ public class Entity {
 		return false;
 	}
 
-	public boolean hasLocalizedColumn() {
-		for (EntityColumn col : _columnList) {
-			if (col.isLocalized()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public boolean hasLocalService() {
 		return _localService;
 	}
@@ -708,6 +698,16 @@ public class Entity {
 
 	public boolean isJsonEnabled() {
 		return _jsonEnabled;
+	}
+
+	public boolean isLocalizedModel() {
+		for (EntityColumn col : _columnList) {
+			if (col.isLocalized()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isMvccEnabled() {

@@ -17,6 +17,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.TrashedModel;
@@ -81,6 +82,10 @@ public interface ${entity.name}Model extends
 		, GroupedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "modifiedDate", "userId", "userName", "userUuid"]>
+	</#if>
+
+	<#if entity.isLocalizedModel()>
+		, LocalizedModel
 	</#if>
 
 	<#if entity.isMvccEnabled()>
@@ -564,13 +569,17 @@ public interface ${entity.name}Model extends
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
-	<#if entity.hasLocalizedColumn()>
+	<#if entity.isLocalizedModel()>
+		@Override
 		public String[] getAvailableLanguageIds();
 
+		@Override
 		public String getDefaultLanguageId();
 
+		@Override
 		public void prepareLocalizedFieldsForImport() throws LocaleException;
 
+		@Override
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException;
 	</#if>
 

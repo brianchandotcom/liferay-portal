@@ -40,6 +40,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
+import com.liferay.portlet.social.service.persistence.SocialRelationFinder;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 
 import java.io.Serializable;
@@ -381,6 +382,25 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the social relation finder.
+	 *
+	 * @return the social relation finder
+	 */
+	public SocialRelationFinder getSocialRelationFinder() {
+		return socialRelationFinder;
+	}
+
+	/**
+	 * Sets the social relation finder.
+	 *
+	 * @param socialRelationFinder the social relation finder
+	 */
+	public void setSocialRelationFinder(
+		SocialRelationFinder socialRelationFinder) {
+		this.socialRelationFinder = socialRelationFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -596,6 +616,8 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	protected com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService;
 	@BeanReference(type = SocialRelationPersistence.class)
 	protected SocialRelationPersistence socialRelationPersistence;
+	@BeanReference(type = SocialRelationFinder.class)
+	protected SocialRelationFinder socialRelationFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)

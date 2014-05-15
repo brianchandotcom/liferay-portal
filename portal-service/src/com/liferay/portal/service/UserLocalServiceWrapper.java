@@ -2041,7 +2041,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	#getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
 		long userId, int type, int start, int end,
@@ -2073,7 +2077,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @return the ordered range of users with a social relation with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	#getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
 		long userId, int start, int end,
@@ -2163,7 +2171,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @return the number of users with a social relation with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	#getSocialUsersCount(long, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2183,7 +2195,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	#getSocialUsersCount(long, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId, int type)
 		throws com.liferay.portal.kernel.exception.PortalException,

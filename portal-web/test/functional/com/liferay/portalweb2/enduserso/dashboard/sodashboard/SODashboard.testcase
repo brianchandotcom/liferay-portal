@@ -1111,11 +1111,14 @@
 			<var name="mentionUserMiddleName" value="${userMiddleName}" />
 			<var name="mentionUserName" value="${userName}" />
 			<var name="mentionUserScreenName" value="${userScreenName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryMention">
+			<var name="mentionUserEmailAddress" value="${userEmailAddress}" />
 			<var name="mentionUserName" value="${userName}" />
 			<var name="microblogsEntryAuthorName" value="${microblogsEntryAuthorName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1130,7 +1133,7 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${microblogsEntryAuthorName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-			<var name="microblogsEntryContent" value="${userName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent} ${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1160,7 +1163,7 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='user-name']/span/a)[2]" value1="${adminName}" />
-		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='content'])[2]" value1="${userName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='content'])[2]" value1="${microblogsEntryContent} ${userName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//span[@class='action comment']/a)[2]" value1="1 Comment" />
 		<execute action="SOMicroblogs#assertTextEquals" locator1="//span[@class='action repost']/a" value1="Repost" />
 	</command>

@@ -130,13 +130,17 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 			names.addAll(organizationNames);
 
-			row.setParameter("organizationUser", !organizationNames.isEmpty());
+			boolean organizationUser = !organizationNames.isEmpty();
+
+			row.setParameter("organizationUser", organizationUser);
 
 			List<String> userGroupNames = SitesUtil.getUserGroupNames(group, user2);
 
 			names.addAll(userGroupNames);
 
-			row.setParameter("userGroupUser", !userGroupNames.isEmpty());
+			boolean userGroupUser = !userGroupNames.isEmpty();
+
+			row.setParameter("userGroupUser", userGroupUser);
 
 			String message = StringPool.BLANK;
 

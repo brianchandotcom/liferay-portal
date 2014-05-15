@@ -720,6 +720,42 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static long exportLayoutsAsFileInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportLayoutsAsFileInBackground(userId,
+			exportImportConfiguration);
+	}
+
+	public static long exportLayoutsAsFileInBackground(long userId,
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportLayoutsAsFileInBackground(userId,
+			exportImportConfigurationId);
+	}
+
+	public static long exportLayoutsAsFileInBackground(long userId,
+		java.lang.String taskName, long groupId, boolean privateLayout,
+		long[] layoutIds,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportLayoutsAsFileInBackground(userId, taskName, groupId,
+			privateLayout, layoutIds, parameterMap, startDate, endDate);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#exportLayoutsAsFileInBackground(long, String, long, boolean,
+	long[], Map, Date, Date)}
+	*/
+	@Deprecated
+	public static long exportLayoutsAsFileInBackground(long userId,
 		java.lang.String taskName, long groupId, boolean privateLayout,
 		long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,

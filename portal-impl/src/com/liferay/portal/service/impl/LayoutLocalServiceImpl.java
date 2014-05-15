@@ -907,14 +907,49 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public long exportLayoutsAsFileInBackground(
-			long userId, String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate, String fileName)
+			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException, SystemException {
 
-		if (!DLStoreUtil.isValidName(fileName)) {
-			throw new LARFileNameException(fileName);
+		if (!DLStoreUtil.isValidName(exportImportConfiguration.getName())) {
+			throw new LARFileNameException(exportImportConfiguration.getName());
 		}
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		BackgroundTask backgroundTask =
+			backgroundTaskLocalService.addBackgroundTask(
+				userId, exportImportConfiguration.getGroupId(),
+				exportImportConfiguration.getName(), null,
+				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
+				new ServiceContext());
+
+		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
+	public long exportLayoutsAsFileInBackground(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
+
+		return exportLayoutsAsFileInBackground(
+			userId, exportImportConfiguration);
+	}
+
+	@Override
+	public long exportLayoutsAsFileInBackground(
+			long userId, String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
+		throws PortalException, SystemException {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
@@ -929,20 +964,26 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>();
+		return exportLayoutsAsFileInBackground(
+			userId, exportImportConfiguration);
+	}
 
-		taskContextMap.put(
-			"exportImportConfigurationId",
-			exportImportConfiguration.getExportImportConfigurationId());
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #exportLayoutsAsFileInBackground(long, String, long, boolean,
+	 *             long[], Map, Date, Date)}
+	 */
+	@Deprecated
+	@Override
+	public long exportLayoutsAsFileInBackground(
+			long userId, String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate, String fileName)
+		throws PortalException, SystemException {
 
-		BackgroundTask backgroundTask =
-			backgroundTaskLocalService.addBackgroundTask(
-				userId, groupId, taskName, null,
-				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
-				serviceContext);
-
-		return backgroundTask.getBackgroundTaskId();
+		return exportLayoutsAsFileInBackground(
+			userId, taskName, groupId, privateLayout, layoutIds, parameterMap,
+			startDate, endDate);
 	}
 
 	/**

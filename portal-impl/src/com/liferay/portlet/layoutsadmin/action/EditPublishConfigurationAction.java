@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -92,14 +93,11 @@ public class EditPublishConfigurationAction
 				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				ExportImportConfigurationHelper.
-					publishLocalLayoutByExportImportConfiguration(
-						themeDisplay.getUserId(), exportImportConfigurationId);
+				StagingUtil.publishLayouts(
+					themeDisplay.getUserId(), exportImportConfigurationId);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-				ExportImportConfigurationHelper.
-					publishRemoteLayoutByExportImportConfiguration(
-						exportImportConfigurationId);
+				StagingUtil.copyRemoteLayouts(exportImportConfigurationId);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
 				relaunchPublishLayoutConfiguration(
@@ -226,18 +224,13 @@ public class EditPublishConfigurationAction
 		if (exportImportConfiguration.getType() ==
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
 
-			ExportImportConfigurationHelper.
-				publishLocalLayoutByExportImportConfiguration(
-					userId,
-					exportImportConfiguration.getExportImportConfigurationId());
+			StagingUtil.publishLayouts(userId, exportImportConfiguration);
 		}
 		else if (exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE) {
 
-			ExportImportConfigurationHelper.
-				publishRemoteLayoutByExportImportConfiguration(
-					exportImportConfiguration.getExportImportConfigurationId());
+			StagingUtil.copyRemoteLayouts(exportImportConfiguration);
 		}
 	}
 

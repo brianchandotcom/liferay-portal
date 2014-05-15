@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
@@ -72,6 +73,13 @@ public interface Staging {
 			PortletRequest PortletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
 			String portletId)
+		throws PortalException, SystemException;
+
+	public void copyRemoteLayouts(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException;
+
+	public void copyRemoteLayouts(long exportImportConfigurationId)
 		throws PortalException, SystemException;
 
 	public void copyRemoteLayouts(
@@ -224,6 +232,13 @@ public interface Staging {
 
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
+		throws PortalException, SystemException;
+
+	public void publishLayouts(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException;
+
+	public void publishLayouts(long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException;
 
 	public void publishLayouts(

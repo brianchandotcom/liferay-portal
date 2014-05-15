@@ -82,7 +82,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
-		HttpPrincipal httpPrincipal = (HttpPrincipal)settingsMap.get(
+		HttpPrincipal httpPrincipal = (HttpPrincipal)taskContextMap.get(
 			"httpPrincipal");
 
 		clearBackgroundTaskStatus(backgroundTask);

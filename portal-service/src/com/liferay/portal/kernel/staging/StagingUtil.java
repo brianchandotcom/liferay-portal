@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
@@ -99,6 +100,19 @@ public class StagingUtil {
 		getStaging().copyPortlet(
 			PortletRequest, sourceGroupId, targetGroupId, sourcePlid,
 			targetPlid, portletId);
+	}
+
+	public static void copyRemoteLayouts(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		getStaging().copyRemoteLayouts(exportImportConfiguration);
+	}
+
+	public static void copyRemoteLayouts(long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		getStaging().copyRemoteLayouts(exportImportConfigurationId);
 	}
 
 	public static void copyRemoteLayouts(
@@ -362,6 +376,20 @@ public class StagingUtil {
 		throws PortalException, SystemException {
 
 		getStaging().publishLayout(userId, plid, liveGroupId, includeChildren);
+	}
+
+	public static void publishLayouts(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		getStaging().publishLayouts(userId, exportImportConfiguration);
+	}
+
+	public static void publishLayouts(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		getStaging().publishLayouts(userId, exportImportConfigurationId);
 	}
 
 	public static void publishLayouts(

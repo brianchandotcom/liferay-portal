@@ -606,6 +606,14 @@ public class ArrayUtil_IW {
 		return ArrayUtil.toLongArray(collection);
 	}
 
+	public java.lang.Long[] toLongArray(int[] array) {
+		return ArrayUtil.toLongArray(array);
+	}
+
+	public java.lang.Long[] toLongArray(long[] array) {
+		return ArrayUtil.toLongArray(array);
+	}
+
 	public java.lang.Long[] toLongArray(java.lang.Object[] array) {
 		return ArrayUtil.toLongArray(array);
 	}

@@ -2305,6 +2305,16 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of document library file entry types associated with the d d m structure.
+	*
+	* @param pk the primary key of the d d m structure
+	* @return List<Long> of the primaryKeys of document library file entry types associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getDLFileEntryTypeIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library file entry types associated with the d d m structure.
 	*
 	* @param pk the primary key of the d d m structure
@@ -2493,6 +2503,16 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	*/
 	public void setDLFileEntryTypes(long pk,
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of journal folders associated with the d d m structure.
+	*
+	* @param pk the primary key of the d d m structure
+	* @return List<Long> of the primaryKeys of journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getJournalFolderIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

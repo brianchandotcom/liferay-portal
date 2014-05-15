@@ -604,6 +604,16 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of s c product entries associated with the s c license.
+	*
+	* @param pk the primary key of the s c license
+	* @return List<Long> of the primaryKeys of s c product entries associated with the s c license
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getSCProductEntryIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the s c product entries associated with the s c license.
 	*
 	* @param pk the primary key of the s c license

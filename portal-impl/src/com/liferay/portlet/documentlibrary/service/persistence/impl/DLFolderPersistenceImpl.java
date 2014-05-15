@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -9777,6 +9778,20 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of document library file entry types associated with the document library folder.
+	 *
+	 * @param pk the primary key of the document library folder
+	 * @return List<Long> of the primaryKeys of document library file entry types associated with the document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getDLFileEntryTypeIds(long pk) throws SystemException {
+		long[] pks = dlFolderToDLFileEntryTypeTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -3915,6 +3916,20 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	/**
+	 * Returns the primaryKeys of asset categories associated with the asset entry.
+	 *
+	 * @param pk the primary key of the asset entry
+	 * @return List<Long> of the primaryKeys of asset categories associated with the asset entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getAssetCategoryIds(long pk) throws SystemException {
+		long[] pks = assetEntryToAssetCategoryTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
+	}
+
+	/**
 	 * Returns all the asset categories associated with the asset entry.
 	 *
 	 * @param pk the primary key of the asset entry
@@ -4204,6 +4219,20 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		catch (Exception e) {
 			throw processException(e);
 		}
+	}
+
+	/**
+	 * Returns the primaryKeys of asset tags associated with the asset entry.
+	 *
+	 * @param pk the primary key of the asset entry
+	 * @return List<Long> of the primaryKeys of asset tags associated with the asset entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getAssetTagIds(long pk) throws SystemException {
+		long[] pks = assetEntryToAssetTagTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

@@ -179,10 +179,22 @@ public class SitesUtil {
 		return getSites().getMergeFailFriendlyURLLayouts(layoutSet);
 	}
 
+	public static List<String> getOrganizationNames(Group group, User user)
+		throws Exception {
+
+		return getSites().getOrganizationNames(group, user);
+	}
+
 	public static Sites getSites() {
 		PortalRuntimePermission.checkGetBeanProperty(SitesUtil.class);
 
 		return _sites;
+	}
+
+	public static List<String> getUserGroupNames(Group group, User user)
+		throws Exception {
+
+		return getSites().getUserGroupNames(group, user);
 	}
 
 	public static void importLayoutSetPrototype(
@@ -235,29 +247,12 @@ public class SitesUtil {
 		return getSites().isLayoutUpdateable(layout);
 	}
 
-	public static boolean isOrganizationUser(
-			long companyId, Group group, User user,
-			List<String> organizationNames)
-		throws Exception {
-
-		return getSites().isOrganizationUser(
-			companyId, group, user, organizationNames);
-	}
-
 	public static boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
 
 		return getSites().isUserGroupLayoutSetViewable(
 			permissionChecker, userGroupGroup);
-	}
-
-	public static boolean isUserGroupUser(
-			long companyId, Group group, User user, List<String> userGroupNames)
-		throws Exception {
-
-		return getSites().isUserGroupUser(
-			companyId, group, user, userGroupNames);
 	}
 
 	public static void mergeLayoutPrototypeLayout(Group group, Layout layout)

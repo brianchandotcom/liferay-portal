@@ -579,6 +579,18 @@ public class AssetTagUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of asset entries associated with the asset tag.
+	*
+	* @param pk the primary key of the asset tag
+	* @return List<Long> of the primaryKeys of asset entries associated with the asset tag
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getAssetEntryIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getAssetEntryIds(pk);
+	}
+
+	/**
 	* Returns all the asset entries associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag

@@ -16,7 +16,6 @@ package com.liferay.portlet.sites.util;
 
 import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,7 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -48,7 +47,6 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
@@ -775,6 +773,28 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
+	public List<String> getOrganizationNames(Group group, User user)
+		throws Exception {
+
+		List<Organization> organizations =
+			OrganizationLocalServiceUtil.getGroupUserOrganizations(
+				group.getGroupId(), user.getUserId());
+
+		return ListUtil.toList(organizations, Organization.NAME_ACCESSOR);
+	}
+
+	@Override
+	public List<String> getUserGroupNames(Group group, User user)
+		throws Exception {
+
+		List<UserGroup> userGroups =
+			UserGroupLocalServiceUtil.getGroupUserUserGroups(
+				group.getGroupId(), user.getUserId());
+
+		return ListUtil.toList(userGroups, UserGroup.NAME_ACCESSOR);
+	}
+
+	@Override
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -1061,41 +1081,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public boolean isOrganizationUser(
-			long companyId, Group group, User user,
-			List<String> organizationNames)
-		throws Exception {
-
-		boolean organizationUser = false;
-
-		LinkedHashMap<String, Object> organizationParams =
-			new LinkedHashMap<String, Object>();
-
-		organizationParams.put(
-			"groupOrganization", new Long(group.getGroupId()));
-		organizationParams.put(
-			"organizationsGroups", new Long(group.getGroupId()));
-
-		List<Organization> organizationsGroups =
-			OrganizationLocalServiceUtil.search(
-				companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				null, null, null, null, organizationParams, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (Organization organization : organizationsGroups) {
-			for (long userOrganizationId : user.getOrganizationIds()) {
-				if (userOrganizationId == organization.getOrganizationId()) {
-					organizationNames.add(organization.getName());
-
-					organizationUser = true;
-				}
-			}
-		}
-
-		return organizationUser;
-	}
-
-	@Override
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
@@ -1121,35 +1106,6 @@ public class SitesImpl implements Sites {
 		else {
 			return false;
 		}
-	}
-
-	@Override
-	public boolean isUserGroupUser(
-			long companyId, Group group, User user, List<String> userGroupNames)
-		throws Exception {
-
-		boolean userGroupUser = false;
-
-		LinkedHashMap<String, Object> userGroupParams =
-			new LinkedHashMap<String, Object>();
-
-		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
-
-		List<UserGroup> userGroupsGroups = UserGroupLocalServiceUtil.search(
-			companyId, null, userGroupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, (OrderByComparator)null);
-
-		for (UserGroup userGroup : userGroupsGroups) {
-			for (long userGroupId : user.getUserGroupIds()) {
-				if (userGroupId == userGroup.getUserGroupId()) {
-					userGroupNames.add(userGroup.getName());
-
-					userGroupUser = true;
-				}
-			}
-		}
-
-		return userGroupUser;
 	}
 
 	@Override

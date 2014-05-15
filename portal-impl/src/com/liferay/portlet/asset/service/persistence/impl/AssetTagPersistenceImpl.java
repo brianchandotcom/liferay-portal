@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1809,6 +1810,20 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of asset entries associated with the asset tag.
+	 *
+	 * @param pk the primary key of the asset tag
+	 * @return List<Long> of the primaryKeys of asset entries associated with the asset tag
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getAssetEntryIds(long pk) throws SystemException {
+		long[] pks = assetTagToAssetEntryTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

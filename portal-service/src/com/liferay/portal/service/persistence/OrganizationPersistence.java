@@ -1748,6 +1748,16 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of groups associated with the organization.
+	*
+	* @param pk the primary key of the organization
+	* @return List<Long> of the primaryKeys of groups associated with the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getGroupIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the groups associated with the organization.
 	*
 	* @param pk the primary key of the organization
@@ -1934,6 +1944,16 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public void setGroups(long pk,
 		java.util.List<com.liferay.portal.model.Group> groups)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of users associated with the organization.
+	*
+	* @param pk the primary key of the organization
+	* @return List<Long> of the primaryKeys of users associated with the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getUserIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1791,6 +1792,20 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	/**
+	 * Returns the primaryKeys of users associated with the team.
+	 *
+	 * @param pk the primary key of the team
+	 * @return List<Long> of the primaryKeys of users associated with the team
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getUserIds(long pk) throws SystemException {
+		long[] pks = teamToUserTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
+	}
+
+	/**
 	 * Returns all the users associated with the team.
 	 *
 	 * @param pk the primary key of the team
@@ -2058,6 +2073,20 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		catch (Exception e) {
 			throw processException(e);
 		}
+	}
+
+	/**
+	 * Returns the primaryKeys of user groups associated with the team.
+	 *
+	 * @param pk the primary key of the team
+	 * @return List<Long> of the primaryKeys of user groups associated with the team
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getUserGroupIds(long pk) throws SystemException {
+		long[] pks = teamToUserGroupTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

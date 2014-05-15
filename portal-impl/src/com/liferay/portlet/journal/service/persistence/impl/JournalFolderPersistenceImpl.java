@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -7989,6 +7990,20 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of d d m structures associated with the journal folder.
+	 *
+	 * @param pk the primary key of the journal folder
+	 * @return List<Long> of the primaryKeys of d d m structures associated with the journal folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getDDMStructureIds(long pk) throws SystemException {
+		long[] pks = journalFolderToDDMStructureTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

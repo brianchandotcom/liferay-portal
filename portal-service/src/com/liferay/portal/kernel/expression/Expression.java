@@ -21,24 +21,22 @@ import java.util.Map;
  */
 public interface Expression<T> {
 
-	public void addBooleanVariable(String variableName, Boolean variableValue);
+	public void addBooleanVariable(String name, Boolean value);
 
-	public void addDoubleVariable(String variableName, Double variableValue);
+	public void addDoubleVariable(String name, Double value);
 
 	public void addExpressionVariable(
-		String variableName, Class<?> variableType,
-		String variableValueExpresion);
+		String name, Class<?> variableType, String valueExpresion);
 
-	public void addFloatVariable(String variableName, Float variableValue);
+	public void addFloatVariable(String name, Float value);
 
-	public void addIntegerVariable(String variableName, Integer variableValue);
+	public void addIntegerVariable(String name, Integer value);
 
-	public void addLongVariable(String variableName, Long variableValue);
+	public void addLongVariable(String name, Long value);
 
-	public void addStringVariable(String variableName, String variableValue);
+	public void addStringVariable(String name, String value);
 
-	public void addVariable(
-		String variableName, Class<?> variableType, Object variableValue);
+	public void addVariable(String name, Class<?> variableType, Object value);
 
 	public T evaluate() throws ExpressionEvaluationException;
 

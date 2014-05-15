@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.MathUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -39,73 +40,70 @@ public class ExpressionImpl<T> implements Expression<T> {
 		List<String> variableNames =
 			_expressionVariablesExtractor.extractVariables(expression);
 
-		for (String name : variableNames) {
+		for (String variableName : variableNames) {
 			ExpressionVariable expressionVariable = new ExpressionVariable(
-				name);
+				variableName);
 
-			_expressionVariablesMap.put(name, expressionVariable);
+			_expressionVariablesMap.put(variableName, expressionVariable);
 		}
 	}
 
 	@Override
-	public void addBooleanVariable(String variableName, Boolean variableValue) {
-		addVariable(variableName, Boolean.class, variableValue);
+	public void addBooleanVariable(String name, Boolean value) {
+		addVariable(name, Boolean.class, value);
 	}
 
 	@Override
-	public void addDoubleVariable(String variableName, Double variableValue) {
-		addVariable(variableName, Double.class, variableValue);
+	public void addDoubleVariable(String name, Double value) {
+		addVariable(name, Double.class, value);
 	}
 
 	@Override
 	public void addExpressionVariable(
-		String variableName, Class<?> variableType,
-		String variableValueExpresion) {
+		String name, Class<?> type, String valueExpression) {
 
 		ExpressionVariable expressionVariable = _expressionVariablesMap.get(
-			variableName);
+			name);
 
 		if (expressionVariable == null) {
 			return;
 		}
 
-		expressionVariable.setType(variableType);
-		expressionVariable.setValueExpression(variableValueExpresion);
+		expressionVariable.setType(type);
+		expressionVariable.setValueExpression(valueExpression);
 	}
 
 	@Override
-	public void addFloatVariable(String variableName, Float variableValue) {
-		addVariable(variableName, Float.class, variableValue);
+	public void addFloatVariable(String name, Float value) {
+		addVariable(name, Float.class, value);
 	}
 
 	@Override
-	public void addIntegerVariable(String variableName, Integer variableValue) {
-		addVariable(variableName, Integer.class, variableValue);
+	public void addIntegerVariable(String name, Integer value) {
+		addVariable(name, Integer.class, value);
 	}
 
 	@Override
-	public void addLongVariable(String variableName, Long variableValue) {
-		addVariable(variableName, Long.class, variableValue);
+	public void addLongVariable(String name, Long value) {
+		addVariable(name, Long.class, value);
 	}
 
 	@Override
-	public void addStringVariable(String variableName, String variableValue) {
-		addVariable(variableName, String.class, variableValue);
+	public void addStringVariable(String name, String value) {
+		addVariable(name, String.class, value);
 	}
 
 	@Override
-	public void addVariable(
-		String variableName, Class<?> variableType, Object variableValue) {
-
+	public void addVariable(String name, Class<?> type, Object value) {
 		ExpressionVariable expressionVariable = _expressionVariablesMap.get(
-			variableName);
+			name);
 
 		if (expressionVariable == null) {
 			return;
 		}
 
-		expressionVariable.setType(variableType);
-		expressionVariable.setValue(variableValue);
+		expressionVariable.setType(type);
+		expressionVariable.setValue(value);
 	}
 
 	@Override
@@ -128,11 +126,17 @@ public class ExpressionImpl<T> implements Expression<T> {
 
 	@Override
 	public Map<String, VariableDependencies> getVariableDependenciesMap() {
-		for (ExpressionVariable variable : _expressionVariablesMap.values()) {
-			populateVariableDependencies(variable);
+		Map<String, VariableDependencies> variableDependenciesMap =
+			new HashMap<String, VariableDependencies>();
+
+		for (ExpressionVariable expressionVariable :
+				_expressionVariablesMap.values()) {
+
+			populateVariableDependenciesMap(
+				expressionVariable, variableDependenciesMap);
 		}
 
-		return _variableDependenciesMap;
+		return variableDependenciesMap;
 	}
 
 	protected String[] getVariableNames() {
@@ -159,38 +163,56 @@ public class ExpressionImpl<T> implements Expression<T> {
 		return variableTypes.toArray(new Class<?>[variableTypes.size()]);
 	}
 
-	protected Object getVariableValue(ExpressionVariable variable)
+	protected Object getVariableValue(ExpressionVariable expressionVariable)
 		throws ExpressionEvaluationException {
 
-		if (_evaluatedVariableValues.containsKey(variable.getName())) {
-			return _evaluatedVariableValues.get(variable.getName());
-		}
+		Object variableValue = _evaluatedVariableValues.get(
+			expressionVariable.getName());
 
-		if (variable.getValueExpression() != null) {
-			Expression<?> expression = new ExpressionImpl(
-				variable.getValueExpression(), variable.getType());
-
-			List<String> variableNames =
-				_expressionVariablesExtractor.extractVariables(
-					variable.getValueExpression());
-
-			for (String variableName : variableNames) {
-				ExpressionVariable expressionVariable =
-					_expressionVariablesMap.get(variableName);
-
-				expression.addVariable(
-					variableName, variable.getType(),
-					getVariableValue(expressionVariable));
-			}
-
-			Object variableValue = expression.evaluate();
-
-			_evaluatedVariableValues.put(variable.getName(), variableValue);
-
+		if (variableValue != null) {
 			return variableValue;
 		}
 
-		return variable.getValue();
+		Expression<?> expression = getVariableValueExpression(
+			expressionVariable);
+
+		if (expression == null) {
+			return expressionVariable.getValue();
+		}
+
+		variableValue = expression.evaluate();
+
+		_evaluatedVariableValues.put(
+			expressionVariable.getName(), variableValue);
+
+		return variableValue;
+	}
+
+	protected Expression<?> getVariableValueExpression(
+			ExpressionVariable expressionVariable)
+		throws ExpressionEvaluationException {
+
+		if (expressionVariable.getValueExpression() == null) {
+			return null;
+		}
+
+		Expression<?> expression = new ExpressionImpl(
+			expressionVariable.getValueExpression(),
+			expressionVariable.getType());
+
+		List<String> variableNames =
+			_expressionVariablesExtractor.extractVariables(
+				expressionVariable.getValueExpression());
+
+		for (String variableName : variableNames) {
+			ExpressionVariable variable = _expressionVariablesMap.get(
+				variableName);
+
+			expression.addVariable(
+				variableName, variable.getType(), getVariableValue(variable));
+		}
+
+		return expression;
 	}
 
 	protected Object[] getVariableValues()
@@ -209,34 +231,33 @@ public class ExpressionImpl<T> implements Expression<T> {
 		return variableValues.toArray(new Object[variableValues.size()]);
 	}
 
-	protected VariableDependencies populateVariableDependencies(
-		ExpressionVariable expressionVariable) {
+	protected VariableDependencies populateVariableDependenciesMap(
+		ExpressionVariable expressionVariable,
+		Map<String, VariableDependencies> variableDependenciesMap) {
 
-		if (_variableDependenciesMap.containsKey(
-				expressionVariable.getName())) {
-
-			return _variableDependenciesMap.get(expressionVariable.getName());
-		}
-
-		VariableDependencies variableDependencies = new VariableDependencies(
+		VariableDependencies variableDependencies = variableDependenciesMap.get(
 			expressionVariable.getName());
 
-		_variableDependenciesMap.put(
+		if (variableDependencies != null) {
+			return variableDependencies;
+		}
+
+		variableDependencies = new VariableDependencies(
+			expressionVariable.getName());
+
+		variableDependenciesMap.put(
 			expressionVariable.getName(), variableDependencies);
 
 		if (expressionVariable.getValueExpression() != null) {
-			Expression<?> expression = new ExpressionImpl(
-				expressionVariable.getValueExpression(),
-				expressionVariable.getType());
-
 			List<String> variableNames =
 				_expressionVariablesExtractor.extractVariables(
 					expressionVariable.getValueExpression());
 
 			for (String variableName : variableNames) {
 				VariableDependencies populateVariableDependencies =
-					populateVariableDependencies(
-						_expressionVariablesMap.get(variableName));
+					populateVariableDependenciesMap(
+						_expressionVariablesMap.get(variableName),
+						variableDependenciesMap);
 
 				variableDependencies.addRequiredVariable(
 					populateVariableDependencies.getVariableName());
@@ -250,14 +271,12 @@ public class ExpressionImpl<T> implements Expression<T> {
 	}
 
 	private Map<String, Object> _evaluatedVariableValues =
-		new TreeMap<String, Object>();
+		new HashMap<String, Object>();
 	private String _expression;
 	private Class<?> _expressionType;
 	private ExpressionVariablesExtractor _expressionVariablesExtractor =
 		new ExpressionVariablesExtractor();
 	private Map<String, ExpressionVariable> _expressionVariablesMap =
 		new TreeMap<String, ExpressionVariable>();
-	private Map<String, VariableDependencies> _variableDependenciesMap =
-		new TreeMap<String, VariableDependencies>();
 
 }

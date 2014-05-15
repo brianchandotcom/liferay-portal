@@ -43,8 +43,8 @@ public class ExpressionVariable {
 		_name = name;
 	}
 
-	public void setType(Class<?> dataType) {
-		_type = dataType;
+	public void setType(Class<?> type) {
+		_type = type;
 	}
 
 	public void setValue(Object value) {

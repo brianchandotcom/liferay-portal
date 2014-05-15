@@ -14,7 +14,9 @@
 	</target>
 
 	<target name="run-selenium-resin">
-		<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
+		<app-server-update>
+			app.server.type=resin
+		</app-server-update>
 
 		<if>
 			<not>

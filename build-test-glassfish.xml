@@ -16,7 +16,9 @@
 	</target>
 
 	<target name="run-selenium-glassfish">
-		<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
+		<app-server-update>
+			app.server.type="glassfish"
+		</app-server-update>
 
 		<if>
 			<not>

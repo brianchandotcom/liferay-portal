@@ -16,7 +16,9 @@
 	</target>
 
 	<target name="run-selenium-geronimo">
-		<echo file="app.server.${user.name}.properties">app.server.type=geronimo</echo>
+		<app-server-update>
+			app.server.type="geronimo"
+		</app-server-update>
 
 		<if>
 			<not>

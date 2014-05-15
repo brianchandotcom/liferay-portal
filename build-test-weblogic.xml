@@ -4,7 +4,9 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-weblogic">
-		<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+		<app-server-update>
+			app.server.type=weblogic
+		</app-server-update>
 
 		<if>
 			<not>

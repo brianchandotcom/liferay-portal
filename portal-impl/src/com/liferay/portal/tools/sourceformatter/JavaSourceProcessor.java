@@ -1030,11 +1030,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent,
 			new String[] {
 				";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
-				"while(", "List <", "){\n", "]{\n"
+				"while(", "List <", "){\n", "]{\n", ";;\n"
 			},
 			new String[] {
 				";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (", "for (",
-				"while (", "List<", ") {\n", "] {\n"
+				"while (", "List<", ") {\n", "] {\n", ";\n"
 			});
 
 		while (true) {

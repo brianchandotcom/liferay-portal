@@ -394,16 +394,14 @@
 	</command>
 
 	<command name="replyPG">
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
 		<if>
 			<equals arg1="${displayStyle}" arg2="Question" />
 			<then>
 				<execute action="PGMessageboardsCategory#assertClick" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>
+				<var name="key_threadSubject" value="${threadSubject}" />
+
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>

@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>ADD_SUBCATEGORY_BUTTON</td>
-	<td>//button[contains(.,'Add Subcategory')]</td>
+	<td>//a[contains(.,'Add Subcategory')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[contains(.,'Permissions')]</td>
+	<td>//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,7 +182,6 @@
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[@title='Actions']</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

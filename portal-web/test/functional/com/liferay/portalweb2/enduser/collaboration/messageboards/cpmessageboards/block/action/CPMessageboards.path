@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>ADD_CATEGORY_BUTTON</td>
-	<td>//div[@class='category-buttons']/button[contains(.,'Add Category')]</td>
+	<td>//div[@class='category-buttons']/a[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>POST_NEW_THREAD_BUTTON</td>
-	<td>//div[@class='category-buttons']/button[contains(.,'Post New Thread')]</td>
+	<td>//div[@class='category-buttons']/a[contains(.,'Post New Thread')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//div[@class='category-buttons']/button[contains(.,'Permissions')]</td>
+	<td>//div[@class='category-buttons']/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

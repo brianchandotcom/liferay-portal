@@ -913,6 +913,12 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		return _userGroupLocalService.fetchUserGroup(companyId, name);
 	}
 
+	@Override
+	public java.util.List<java.lang.Long> getGroupUserGroupIds(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getGroupUserGroupIds(groupId);
+	}
+
 	/**
 	* Returns the user group with the name.
 	*
@@ -958,6 +964,12 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupLocalService.getUserGroups(userGroupIds);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getUserUserGroupIds(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getUserUserGroupIds(groupId);
 	}
 
 	/**

@@ -409,14 +409,6 @@ public class LayoutExporter {
 
 		List<Portlet> portlets = getDataSiteLevelPortlets(companyId);
 
-		long plid = LayoutConstants.DEFAULT_PLID;
-
-		if (!layouts.isEmpty()) {
-			Layout firstLayout = layouts.get(0);
-
-			plid = firstLayout.getPlid();
-		}
-
 		if (group.isStagingGroup()) {
 			group = group.getLiveGroup();
 		}
@@ -434,8 +426,8 @@ public class LayoutExporter {
 				portletIds.put(
 					key,
 					new Object[] {
-						portletId, plid, groupId, StringPool.BLANK,
-						StringPool.BLANK
+						portletId, LayoutConstants.DEFAULT_PLID, groupId,
+						StringPool.BLANK, StringPool.BLANK
 					});
 			}
 		}
@@ -477,7 +469,7 @@ public class LayoutExporter {
 			Object[] portletObjects = portletIdsEntry.getValue();
 
 			String portletId = null;
-			plid = LayoutConstants.DEFAULT_PLID;
+			long plid = LayoutConstants.DEFAULT_PLID;
 			long scopeGroupId = 0;
 			String scopeType = StringPool.BLANK;
 			String scopeLayoutUuid = null;

@@ -126,11 +126,19 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 			List<String> names = new ArrayList<String>();
 
-			boolean organizationUser = SitesUtil.isOrganizationUser(company.getCompanyId(), group, user2, names);
+			List<String> organizationNames = SitesUtil.getOrganizationNames(group, user2);
+
+			names.addAll(organizationNames);
+
+			boolean organizationUser = !organizationNames.isEmpty();
 
 			row.setParameter("organizationUser", organizationUser);
 
-			boolean userGroupUser = SitesUtil.isUserGroupUser(company.getCompanyId(), group, user2, names);
+			List<String> userGroupNames = SitesUtil.getUserGroupNames(group, user2);
+
+			names.addAll(userGroupNames);
+
+			boolean userGroupUser = !userGroupNames.isEmpty();
 
 			row.setParameter("userGroupUser", userGroupUser);
 

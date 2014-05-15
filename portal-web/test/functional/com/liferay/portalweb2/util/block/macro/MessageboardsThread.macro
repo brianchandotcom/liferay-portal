@@ -31,6 +31,30 @@
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addInvalidAttachmentPG">
+		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+
+		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
+
+		<if>
+			<condition action="PGMessageboardsPostthread#isElementPresent" locator-key1="ATTACHMENTS_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="ATTACHMENTS_DROPDOWN" value1="Attachments" />
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsPostthread#uploadCommonFile" locator-key1="ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+
+		<if>
+			<equals arg1="${invalidSize}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}k." />
+			</then>
+		</if>
+	</command>
+
 	<command name="addPG">
 		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
 
@@ -86,24 +110,6 @@
 		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addPGWithInvalidAttachmentSize">
-		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
-
-		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
-
-		<if>
-			<condition action="PGMessageboardsPostthread#isElementPresent" locator-key1="ATTACHMENTS_DROPDOWN_COLLAPSED" />
-			<then>
-				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="ATTACHMENTS_DROPDOWN" value1="Attachments" />
-			</then>
-		</if>
-
-		<execute action="PGMessageboardsPostthread#uploadCommonFile" locator-key1="ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
-		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
-		<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="ATTACHMENT_ERROR_MESSAGE" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}k." />
 	</command>
 
 	<command name="addTagPGCmd">

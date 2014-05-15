@@ -26,6 +26,8 @@
 		<execute macro="MessageboardsThread#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="ServerAdministration#tearDownDMFileUploadSettings" />
 	</tear-down>
 
 	<command name="AddMBCategories" priority="5">
@@ -389,6 +391,36 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+	</command>
+
+	<command name="AddMBThreadWithInvalidAttachmentSize" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureDMFileUploadMaxSize">
+			<var name="maxFileSize" value="10000" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addInvalidAttachmentPG">
+			<var name="invalidSize" value="true" />
+			<var name="maxAttachmentFileSize" value="10" />
+			<var name="mbThreadAttachment" value="Document_1.jpg" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 

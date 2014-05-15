@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CollectionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -517,10 +518,40 @@ public class OrganizationLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getGroupOrganizationIds(long groupId)
-		throws SystemException {
+	public List<Organization> getGroupUserOrganizations(
+			long groupId, long userId)
+		throws PortalException, SystemException {
 
-		return groupPersistence.getOrganizationIds(groupId);
+		List<Long> groupOrganizationIds = groupPersistence.getOrganizationIds(
+			groupId);
+
+		if (groupOrganizationIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Long> userOrganizationIds = userPersistence.getOrganizationIds(
+			userId);
+
+		if (userOrganizationIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Set<Long> organizationIds = CollectionUtil.intersect(
+			groupOrganizationIds, userOrganizationIds);
+
+		if (organizationIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Organization> organizations = new ArrayList<Organization>(
+			organizationIds.size());
+
+		for (Long organizationId : organizationIds) {
+			organizations.add(
+				organizationPersistence.findByPrimaryKey(organizationId));
+		}
+
+		return organizations;
 	}
 
 	@Override
@@ -821,13 +852,6 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return subsetOrganizations;
-	}
-
-	@Override
-	public List<Long> getUserOrganizatioIds(long userId)
-		throws SystemException {
-
-		return userPersistence.getOrganizationIds(userId);
 	}
 
 	/**

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.CollectionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,11 +58,13 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating user
@@ -432,10 +435,37 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Long> getGroupUserGroupIds(long groupId)
-		throws SystemException {
+	public List<UserGroup> getGroupUserUserGroups(long groupId, long userId)
+		throws PortalException, SystemException {
 
-		return groupPersistence.getUserGroupIds(groupId);
+		List<Long> groupUserGroupIds = groupPersistence.getUserGroupIds(
+			groupId);
+
+		if (groupUserGroupIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Long> userUserGroupIds = userPersistence.getUserGroupIds(userId);
+
+		if (userUserGroupIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Set<Long> userGroupIds = CollectionUtil.intersect(
+			groupUserGroupIds, userUserGroupIds);
+
+		if (userGroupIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<UserGroup> userGroups = new ArrayList<UserGroup>(
+			userGroupIds.size());
+
+		for (Long userGroupId : userGroupIds) {
+			userGroups.add(userGroupPersistence.findByPrimaryKey(userGroupId));
+		}
+
+		return userGroups;
 	}
 
 	/**
@@ -490,11 +520,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		return userGroups;
-	}
-
-	@Override
-	public List<Long> getUserUserGroupIds(long groupId) throws SystemException {
-		return userPersistence.getUserGroupIds(groupId);
 	}
 
 	/**

@@ -3,6 +3,20 @@
 <project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<macrodef name="app-server-reset">
+		<sequential>
+			<delete file="app.server.${user.name}.properties" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="app-server-update">
+		<text name="properties" />
+
+		<sequential>
+			<echo file="app.server.${user.name}.properties">@{properties}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-jrebel">
 		<sequential>
 			<echo file="${app.server.lib.global.dir}/rebel.xml"><![CDATA[<?xml version="1.0"?>

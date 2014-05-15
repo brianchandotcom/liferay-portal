@@ -2139,6 +2139,16 @@ public interface RolePersistence extends BasePersistence<Role> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of groups associated with the role.
+	*
+	* @param pk the primary key of the role
+	* @return List<Long> of the primaryKeys of groups associated with the role
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getGroupIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the groups associated with the role.
 	*
 	* @param pk the primary key of the role
@@ -2325,6 +2335,16 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public void setGroups(long pk,
 		java.util.List<com.liferay.portal.model.Group> groups)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of users associated with the role.
+	*
+	* @param pk the primary key of the role
+	* @return List<Long> of the primaryKeys of users associated with the role
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getUserIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -428,6 +428,16 @@ public interface TeamPersistence extends BasePersistence<Team> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of users associated with the team.
+	*
+	* @param pk the primary key of the team
+	* @return List<Long> of the primaryKeys of users associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getUserIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the users associated with the team.
 	*
 	* @param pk the primary key of the team
@@ -614,6 +624,16 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public void setUsers(long pk,
 		java.util.List<com.liferay.portal.model.User> users)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of user groups associated with the team.
+	*
+	* @param pk the primary key of the team
+	* @return List<Long> of the primaryKeys of user groups associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getUserGroupIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

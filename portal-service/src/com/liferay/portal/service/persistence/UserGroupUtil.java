@@ -1371,6 +1371,18 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of groups associated with the user group.
+	*
+	* @param pk the primary key of the user group
+	* @return List<Long> of the primaryKeys of groups associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getGroupIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getGroupIds(pk);
+	}
+
+	/**
 	* Returns all the groups associated with the user group.
 	*
 	* @param pk the primary key of the user group
@@ -1594,6 +1606,18 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of teams associated with the user group.
+	*
+	* @param pk the primary key of the user group
+	* @return List<Long> of the primaryKeys of teams associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getTeamIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getTeamIds(pk);
+	}
+
+	/**
 	* Returns all the teams associated with the user group.
 	*
 	* @param pk the primary key of the user group
@@ -1814,6 +1838,18 @@ public class UserGroupUtil {
 		java.util.List<com.liferay.portal.model.Team> teams)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().setTeams(pk, teams);
+	}
+
+	/**
+	* Returns the primaryKeys of users associated with the user group.
+	*
+	* @param pk the primary key of the user group
+	* @return List<Long> of the primaryKeys of users associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getUserIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getUserIds(pk);
 	}
 
 	/**

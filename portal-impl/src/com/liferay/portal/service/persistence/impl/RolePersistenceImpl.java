@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -9212,6 +9213,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	/**
+	 * Returns the primaryKeys of groups associated with the role.
+	 *
+	 * @param pk the primary key of the role
+	 * @return List<Long> of the primaryKeys of groups associated with the role
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getGroupIds(long pk) throws SystemException {
+		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
+	}
+
+	/**
 	 * Returns all the groups associated with the role.
 	 *
 	 * @param pk the primary key of the role
@@ -9481,6 +9496,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		catch (Exception e) {
 			throw processException(e);
 		}
+	}
+
+	/**
+	 * Returns the primaryKeys of users associated with the role.
+	 *
+	 * @param pk the primary key of the role
+	 * @return List<Long> of the primaryKeys of users associated with the role
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getUserIds(long pk) throws SystemException {
+		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

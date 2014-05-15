@@ -14,14 +14,19 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.social.RelationUserIdException;
 import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.service.base.SocialRelationLocalServiceBaseImpl;
 import com.liferay.portlet.social.util.SocialRelationTypesUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -384,6 +389,131 @@ public class SocialRelationLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the users with a social relation with the
+	 * user.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  equal the value of type of social relation equals true or false
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  obc the comparator to order the users by (optionally
+	 *         <code>null</code>)
+	 * @return the ordered range of users with a social relation with the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getSocialUsers(
+			long userId, int type, boolean equal, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		List<User> users = new ArrayList<User>();
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+			List<SocialRelation> filteredSocialRelations =
+				new ArrayList<SocialRelation>();
+
+			if (equal) {
+				filteredSocialRelations = getRelations(
+					userId, type, start, end);
+			}
+			else {
+				List<SocialRelation> socialRelations =
+					socialRelationPersistence.findByUserId1(userId);
+
+				List<SocialRelation> socialRelationEnemies =
+					socialRelationLocalService.getRelations(
+						userId, type, start, end);
+
+				filteredSocialRelations = ListUtil.remove(
+					socialRelations, socialRelationEnemies);
+			}
+
+			for (SocialRelation socialRelation : filteredSocialRelations) {
+				User user = userPersistence.findByPrimaryKey(
+					socialRelation.getUserId2());
+
+				if (user.isDefaultUser() ||
+					(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+					continue;
+				}
+
+				users.add(user);
+			}
+
+			if (obc != null) {
+				ListUtil.sort(users, obc);
+			}
+		}
+		else {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			users = socialRelationFinder.findSocialUsers(
+				user.getCompanyId(), userId, type, equal,
+				WorkflowConstants.STATUS_APPROVED, start, end, obc);
+		}
+
+		return users;
+	}
+
+	/**
+	 * Returns the number of users with a social relation with the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  type the type of social relation. The possible types can be found
+	 *         in {@link
+	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 * @param  equal the value of type of social relation equals true or false
+	 * @return the number of users with a social relation with the user
+	 * @throws NoSuchUserException
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSocialUsersCount(long userId, int type, boolean equal)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		return socialRelationFinder.countSocialUsers(
+			user.getCompanyId(), user.getUserId(), type, equal,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	/**
+	 * Returns <code>true</code> if the users can be in a relation of the given
+	 * type where the user with primary key <code>userId1</code> is User1 of the
+	 * relation and the user with the primary key <code>userId2</code> is User2
+	 * of the relation.
+	 *
+	 * <p>
+	 * This method returns <code>false</code> if User1 and User2 are the same,
+	 * if either user is the default user, or if a matching relation already
+	 * exists.
+	 * </p>
+	 *
+	 * @param  userId1 the user that is the subject of the relation
+	 * @param  userId2 the user at the other end of the relation
+	 * @param  type the relation's type
+	 * @return <code>true</code> if the two users can be in a new relation of
+	 *         the given type; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+
+	/**
 	 * Returns <code>true</code> if a relation of the given type exists where
 	 * the user with primary key <code>userId1</code> is User1 of the relation
 	 * and the user with the primary key <code>userId2</code> is User2 of the
@@ -411,25 +541,6 @@ public class SocialRelationLocalServiceImpl
 		}
 	}
 
-	/**
-	 * Returns <code>true</code> if the users can be in a relation of the given
-	 * type where the user with primary key <code>userId1</code> is User1 of the
-	 * relation and the user with the primary key <code>userId2</code> is User2
-	 * of the relation.
-	 *
-	 * <p>
-	 * This method returns <code>false</code> if User1 and User2 are the same,
-	 * if either user is the default user, or if a matching relation already
-	 * exists.
-	 * </p>
-	 *
-	 * @param  userId1 the user that is the subject of the relation
-	 * @param  userId2 the user at the other end of the relation
-	 * @param  type the relation's type
-	 * @return <code>true</code> if the two users can be in a new relation of
-	 *         the given type; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public boolean isRelatable(long userId1, long userId2, int type)
 		throws SystemException {

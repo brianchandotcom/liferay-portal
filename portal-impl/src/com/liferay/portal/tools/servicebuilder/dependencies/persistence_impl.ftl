@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -1023,6 +1024,20 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#list entity.columnList as column>
 		<#if column.isCollection() && column.isMappingManyToMany()>
 			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
+
+			/**
+			 * Returns the primaryKeys of ${tempEntity.humanNames} associated with the ${entity.humanName}.
+			 *
+			 * @param pk the primary key of the ${entity.humanName}
+			 * @return List<Long> of the primaryKeys of ${tempEntity.humanNames} associated with the ${entity.humanName}
+			 * @throws SystemException if a system exception occurred
+			 */
+			@Override
+			public List<Long> get${tempEntity.name}Ids(${entity.PKClassName} pk) throws SystemException {
+				long[] pks = ${entity.varName}To${tempEntity.name}TableMapper.getRightPrimaryKeys(pk);
+
+				return ListUtil.toList(pks);
+			}
 
 			/**
 			 * Returns all the ${tempEntity.humanNames} associated with the ${entity.humanName}.

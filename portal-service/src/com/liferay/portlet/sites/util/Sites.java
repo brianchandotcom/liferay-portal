@@ -139,6 +139,12 @@ public interface Sites {
 	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
 		throws PortalException, SystemException;
 
+	public List<String> getOrganizationNames(Group group, User user)
+		throws Exception;
+
+	public List<String> getUserGroupNames(Group group, User user)
+		throws Exception;
+
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -165,18 +171,9 @@ public interface Sites {
 
 	public boolean isLayoutUpdateable(Layout layout);
 
-	public boolean isOrganizationUser(
-			long companyId, Group group, User user,
-			List<String> organizationNames)
-		throws Exception;
-
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException;
-
-	public boolean isUserGroupUser(
-			long companyId, Group group, User user, List<String> userGroupNames)
-		throws Exception;
 
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception;

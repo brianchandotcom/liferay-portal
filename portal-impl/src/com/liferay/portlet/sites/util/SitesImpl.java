@@ -773,6 +773,28 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
+	public List<String> getOrganizationNames(Group group, User user)
+		throws Exception {
+
+		List<Organization> organizations =
+			OrganizationLocalServiceUtil.getGroupUserOrganizations(
+				group.getGroupId(), user.getUserId());
+
+		return ListUtil.toList(organizations, Organization.NAME_ACCESSOR);
+	}
+
+	@Override
+	public List<String> getUserGroupNames(Group group, User user)
+		throws Exception {
+
+		List<UserGroup> userGroups =
+			UserGroupLocalServiceUtil.getGroupUserUserGroups(
+				group.getGroupId(), user.getUserId());
+
+		return ListUtil.toList(userGroups, UserGroup.NAME_ACCESSOR);
+	}
+
+	@Override
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -1059,22 +1081,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public boolean isOrganizationUser(
-			long companyId, Group group, User user,
-			List<String> organizationNames)
-		throws Exception {
-
-		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getGroupUserOrganizations(
-				group.getGroupId(), user.getUserId());
-
-		organizationNames.addAll(
-			ListUtil.toList(organizations, Organization.NAME_ACCESSOR));
-
-		return !organizations.isEmpty();
-	}
-
-	@Override
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
@@ -1100,21 +1106,6 @@ public class SitesImpl implements Sites {
 		else {
 			return false;
 		}
-	}
-
-	@Override
-	public boolean isUserGroupUser(
-			long companyId, Group group, User user, List<String> userGroupNames)
-		throws Exception {
-
-		List<UserGroup> userGroups =
-			UserGroupLocalServiceUtil.getGroupUserUserGroups(
-				group.getGroupId(), user.getUserId());
-
-		userGroupNames.addAll(
-			ListUtil.toList(userGroups, UserGroup.NAME_ACCESSOR));
-
-		return !userGroups.isEmpty();
 	}
 
 	@Override

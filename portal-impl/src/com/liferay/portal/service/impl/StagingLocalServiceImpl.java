@@ -408,32 +408,30 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			liveGroup.getMembershipRestriction(), liveGroup.getFriendlyURL(),
 			false, liveGroup.isActive(), serviceContext);
 
-		// Copy localization settings
-
-		if (!LanguageUtil.isInheritLocales(liveGroup.getGroupId())) {
-			UnicodeProperties liveTypeSettingsProperties =
-				liveGroup.getTypeSettingsProperties();
-
-			String defaultLanguageId = liveTypeSettingsProperties.getProperty(
-				"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-			String locales = liveTypeSettingsProperties.getProperty(
-				PropsKeys.LOCALES);
-
-			UnicodeProperties stageTypeSettingsProperties =
-				stagingGroup.getTypeSettingsProperties();
-
-			stageTypeSettingsProperties.setProperty(
-				"inheritLocales", Boolean.FALSE.toString());
-			stageTypeSettingsProperties.setProperty(
-				"languageId", defaultLanguageId);
-			stageTypeSettingsProperties.setProperty(PropsKeys.LOCALES, locales);
-
-			stagingGroup = groupLocalService.updateGroup(
-				stagingGroup.getGroupId(),
-				stageTypeSettingsProperties.toString());
+		if (LanguageUtil.isInheritLocales(liveGroup.getGroupId())) {
+			return stagingGroup;
 		}
 
-		return stagingGroup;
+		// Copy localization settings
+
+		UnicodeProperties liveTypeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		String liveLanguageId = liveTypeSettingsProperties.getProperty(
+			"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		String liveLocales = liveTypeSettingsProperties.getProperty(
+			PropsKeys.LOCALES);
+
+		UnicodeProperties stageTypeSettingsProperties =
+			stagingGroup.getTypeSettingsProperties();
+
+		stageTypeSettingsProperties.setProperty(
+			"inheritLocales", Boolean.FALSE.toString());
+		stageTypeSettingsProperties.setProperty("languageId", liveLanguageId);
+		stageTypeSettingsProperties.setProperty(PropsKeys.LOCALES, liveLocales);
+
+		return groupLocalService.updateGroup(
+			stagingGroup.getGroupId(), stageTypeSettingsProperties.toString());
 	}
 
 	protected void clearLastPublishDate(long groupId, boolean privateLayout)

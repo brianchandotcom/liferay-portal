@@ -465,10 +465,19 @@ public class PortletAction extends Action {
 			Object json)
 		throws IOException {
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		String contentType = ContentTypes.APPLICATION_JSON;
+
+		if (BrowserSnifferUtil.isIe(request)) {
+			contentType = ContentTypes.TEXT_HTML;
+		}
+
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setContentType(contentType);
 
 		ServletResponseUtil.write(response, json.toString());
 
@@ -482,7 +491,16 @@ public class PortletAction extends Action {
 			Object json)
 		throws IOException {
 
-		mimeResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		String contentType = ContentTypes.APPLICATION_JSON;
+
+		if (BrowserSnifferUtil.isIe(request)) {
+			contentType = ContentTypes.TEXT_HTML;
+		}
+
+		mimeResponse.setContentType(contentType);
 
 		PortletResponseUtil.write(mimeResponse, json.toString());
 

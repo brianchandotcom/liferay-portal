@@ -55,24 +55,29 @@ public class ManifestSummary implements Serializable {
 		return modelName.concat(StringPool.POUND).concat(referrerModelName);
 	}
 
-	public void addConfigurationPortlet(
+	public void addDataPortlet(
 		Portlet portlet, String[] configurationPortletOptions) {
 
 		String rootPortletId = portlet.getRootPortletId();
 
 		if (!_configurationPortletOptions.containsKey(rootPortletId)) {
-			_configurationPortlets.add(portlet);
+			_dataPortlets.add(portlet);
+
 			_configurationPortletOptions.put(
 				rootPortletId, configurationPortletOptions);
 		}
 	}
 
-	public void addDataPortlet(Portlet portlet) {
+	public void addLayoutPortlet(
+		Portlet portlet, String[] configurationPortletOptions) {
+
 		String rootPortletId = portlet.getRootPortletId();
 
-		if (!_dataRootPortletIds.contains(rootPortletId)) {
-			_dataPortlets.add(portlet);
-			_dataRootPortletIds.add(rootPortletId);
+		if (!_configurationPortletOptions.containsKey(rootPortletId)) {
+			_layoutPortlets.add(portlet);
+
+			_configurationPortletOptions.put(
+				rootPortletId, configurationPortletOptions);
 		}
 	}
 
@@ -121,11 +126,9 @@ public class ManifestSummary implements Serializable {
 		manifestSummary._configurationPortletOptions =
 			new HashMap<String, String[]> (
 				manifestSummary._configurationPortletOptions);
-		manifestSummary._configurationPortlets = new ArrayList<Portlet>(
-			_configurationPortlets);
+		manifestSummary._layoutPortlets = new ArrayList<Portlet>(
+			_layoutPortlets);
 		manifestSummary._dataPortlets = new ArrayList<Portlet>(_dataPortlets);
-		manifestSummary._dataRootPortletIds = new HashSet<String>(
-			_dataRootPortletIds);
 
 		if (_exportDate != null) {
 			manifestSummary.setExportDate(new Date(_exportDate.getTime()));
@@ -145,16 +148,16 @@ public class ManifestSummary implements Serializable {
 		return _configurationPortletOptions.get(rootPortletId);
 	}
 
-	public List<Portlet> getConfigurationPortlets() {
-		return _configurationPortlets;
-	}
-
 	public List<Portlet> getDataPortlets() {
 		return _dataPortlets;
 	}
 
 	public Date getExportDate() {
 		return _exportDate;
+	}
+
+	public List<Portlet> getLayoutPortlets() {
+		return _layoutPortlets;
 	}
 
 	public Collection<String> getManifestSummaryKeys() {
@@ -316,10 +319,9 @@ public class ManifestSummary implements Serializable {
 
 	private Map<String, String[]> _configurationPortletOptions =
 		new HashMap<String, String[]>();
-	private List<Portlet> _configurationPortlets = new ArrayList<Portlet>();
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
-	private Set<String> _dataRootPortletIds = new HashSet<String>();
 	private Date _exportDate;
+	private List<Portlet> _layoutPortlets = new ArrayList<Portlet>();
 	private Set<String> _manifestSummaryKeys = new HashSet<String>();
 	private Map<String, LongWrapper> _modelAdditionCounters =
 		new HashMap<String, LongWrapper>();

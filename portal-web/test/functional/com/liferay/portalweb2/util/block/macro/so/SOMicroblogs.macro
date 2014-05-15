@@ -246,6 +246,48 @@
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 	</command>
 
+	<command name="addMicroblogsEntryHashtags">
+		<if>
+			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
+			<then>
+				<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
+			</then>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
+		<execute action="SOUserBar#selectFrameTop" />
+
+		<if>
+			<equals arg1="${microblogsEntryViewableBy}" arg2="Connections" />
+			<then>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Connections" />
+			</then>
+			<elseif>
+				<equals arg1="${microblogsEntryViewableBy}" arg2="Followers" />
+				<then>
+					<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Followers" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Everyone" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
+
+		<for list="${microblogsEntryTagValueList}" param="microblogsEntryTagValue">
+			<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
+		</for>
+
+		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="Post" />
+
+		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+	</command>
+
 	<command name="addMicroblogsEntryInvalid">
 		<if>
 			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
@@ -311,25 +353,100 @@
 		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
 
 		<if>
-			<isset var="microblogsEntryCharacterCountdown" />
+			<equals arg1="${hashTag}" arg2="true" />
 			<then>
-				<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown}" />
+				<if>
+					<isset var="microblogsEntryCharacterCountdown" />
+					<then>
+						<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown}" />
+					</then>
+					<else>
+						<var name="microblogsEntryCharacterCountdown" value="124" />
+					</else>
+				</if>
+
+				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryContent} @${mentionUserFirstName}" />
 			</then>
 			<else>
-				<var name="microblogsEntryCharacterCountdown" value="141" />
+				<if>
+					<isset var="microblogsEntryCharacterCountdown" />
+					<then>
+						<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown}" />
+					</then>
+					<else>
+						<var name="microblogsEntryCharacterCountdown" value="125" />
+					</else>
+				</if>
+
+				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} @${mentionUserFirstName}" />
 			</else>
 		</if>
 
-		<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="@${mentionUserFirstName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_EMAIL" value1="${mentionUserEmailAddress}" />
 		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_COUNTDOWN" value1="${microblogsEntryCharacterCountdown}" />
 		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
 
-		<var name="key_microblogsEntryContent" value="${mentionUserName}" />
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${mentionUserName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent} ${mentionUserName}" />
+	</command>
+
+	<command name="addMicroblogsEntryMentions">
+		<if>
+			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
+			<then>
+				<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
+			</then>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_FIELD" />
+		<execute action="SOUserBar#selectFrameTop" />
+
+		<if>
+			<equals arg1="${microblogsEntryViewableBy}" arg2="Connections" />
+			<then>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Connections" />
+			</then>
+			<elseif>
+				<equals arg1="${microblogsEntryViewableBy}" arg2="Followers" />
+				<then>
+					<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Followers" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOMicroblogs#select" locator-key1="MICROBLOGS_CONTENT_VIEW_FILTER" value1="Everyone" />
+			</else>
+		</if>
+
+		<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" />
+
+		<if>
+			<isset var="microblogsEntryTagValueList" />
+			<then>
+				<for list="${microblogsEntryTagValueList}" param="microblogsEntryTagValue">
+					<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
+				</for>
+			</then>
+			<elseif>
+				<isset var="microblogsEntryTagValueList" />
+				<then>
+					<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="#${microblogsEntryTagValue} " />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} " />
+			</else>
+		</if>
+
+		<for list="${mentionUserNameList}" param="mentionUserName">
+			<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1=" @${mentionUserName}" />
+			<execute action="SOMicroblogs#click" locator-key1="MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
+			<execute action="SOMicroblogs#type" locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD" value1=" " />
+		</for>
+
+		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
 	</command>
 
 	<command name="deleteMicroblogsEntry">
@@ -538,7 +655,7 @@
 	</command>
 
 	<command name="viewMicroblogsEntryMention">
-		<var name="microblogsEntryContent" value="${mentionUserName}" />
+		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -567,7 +684,47 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 
-		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG" value1="${microblogsEntryContent}" />
+		<var name="key_mentionUserName" value="${mentionUserName}" />
+
+		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_MENTION" value1="${mentionUserName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+	</command>
+
+	<command name="viewMicroblogsEntryMentions">
+		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<if>
+			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<then>
+				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+			</then>
+		</if>
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
+
+		<execute action="SOMicroblogs#assertClick" locator-key1="TAB_MENTIONS" value1="Mentions" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+
+		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
+
+		<var name="key_mentionUserName" value="${mentionUserName}" />
+
+		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_MENTION" value1="${mentionUserName}" />
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
@@ -760,17 +917,32 @@
 	</command>
 
 	<command name="viewOwnMicroblogsEntryMention">
-		<var name="microblogsEntryContent" value="${mentionUserName}" />
-		<var name="whatsHappeningEntryContent" value="${mentionUserName}" />
+		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
+		<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
 
-		<var name="key_microblogsEntryContent" value="${mentionUserName}" />
+		<var name="key_mentionUserName" value="${mentionUserName}" />
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry" />
 
-		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG" value1="${mentionUserName}" />
+		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_MENTION" value1="${mentionUserName}" />
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
+	</command>
+
+	<command name="viewOwnMicroblogsEntryMentions">
+		<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
+
+		<var name="key_mentionUserName" value="${mentionUserName}" />
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry" />
+
+		<execute action="SOMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_CONTENT_MENTION" value1="${mentionUserName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${mentionUserName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${mentionUserEmailAddress}" />
 	</command>
 
 	<command name="viewOwnMicroblogsEntryTag">

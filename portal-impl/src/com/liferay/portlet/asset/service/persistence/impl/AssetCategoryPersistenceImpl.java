@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -11354,6 +11355,20 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of asset entries associated with the asset category.
+	 *
+	 * @param pk the primary key of the asset category
+	 * @return List<Long> of the primaryKeys of asset entries associated with the asset category
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getAssetEntryIds(long pk) throws SystemException {
+		long[] pks = assetCategoryToAssetEntryTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

@@ -1235,6 +1235,18 @@ public class AssetEntryUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of asset categories associated with the asset entry.
+	*
+	* @param pk the primary key of the asset entry
+	* @return List<Long> of the primaryKeys of asset categories associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getAssetCategoryIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getAssetCategoryIds(pk);
+	}
+
+	/**
 	* Returns all the asset categories associated with the asset entry.
 	*
 	* @param pk the primary key of the asset entry
@@ -1458,6 +1470,18 @@ public class AssetEntryUtil {
 		java.util.List<com.liferay.portlet.asset.model.AssetCategory> assetCategories)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().setAssetCategories(pk, assetCategories);
+	}
+
+	/**
+	* Returns the primaryKeys of asset tags associated with the asset entry.
+	*
+	* @param pk the primary key of the asset entry
+	* @return List<Long> of the primaryKeys of asset tags associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getAssetTagIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getAssetTagIds(pk);
 	}
 
 	/**

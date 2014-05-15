@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -2958,6 +2959,20 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the primaryKeys of s c product versions associated with the s c framework version.
+	 *
+	 * @param pk the primary key of the s c framework version
+	 * @return List<Long> of the primaryKeys of s c product versions associated with the s c framework version
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getSCProductVersionIds(long pk) throws SystemException {
+		long[] pks = scFrameworkVersionToSCProductVersionTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

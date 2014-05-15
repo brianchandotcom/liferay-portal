@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -9430,6 +9431,20 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
+	 * Returns the primaryKeys of document library file entry types associated with the d d m structure.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @return List<Long> of the primaryKeys of document library file entry types associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getDLFileEntryTypeIds(long pk) throws SystemException {
+		long[] pks = ddmStructureToDLFileEntryTypeTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
+	}
+
+	/**
 	 * Returns all the document library file entry types associated with the d d m structure.
 	 *
 	 * @param pk the primary key of the d d m structure
@@ -9721,6 +9736,20 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		catch (Exception e) {
 			throw processException(e);
 		}
+	}
+
+	/**
+	 * Returns the primaryKeys of journal folders associated with the d d m structure.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @return List<Long> of the primaryKeys of journal folders associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Long> getJournalFolderIds(long pk) throws SystemException {
+		long[] pks = ddmStructureToJournalFolderTableMapper.getRightPrimaryKeys(pk);
+
+		return ListUtil.toList(pks);
 	}
 
 	/**

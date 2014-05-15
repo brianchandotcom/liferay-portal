@@ -1130,6 +1130,18 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of document library folders associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return List<Long> of the primaryKeys of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getDLFolderIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDLFolderIds(pk);
+	}
+
+	/**
 	* Returns all the document library folders associated with the document library file entry type.
 	*
 	* @param pk the primary key of the document library file entry type
@@ -1352,6 +1364,18 @@ public class DLFileEntryTypeUtil {
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().setDLFolders(pk, dlFolders);
+	}
+
+	/**
+	* Returns the primaryKeys of d d m structures associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return List<Long> of the primaryKeys of d d m structures associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getDDMStructureIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDDMStructureIds(pk);
 	}
 
 	/**

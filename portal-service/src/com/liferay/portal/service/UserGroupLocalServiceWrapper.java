@@ -914,9 +914,11 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getGroupUserGroupIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.getGroupUserGroupIds(groupId);
+	public java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getGroupUserUserGroups(groupId, userId);
 	}
 
 	/**
@@ -964,12 +966,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupLocalService.getUserGroups(userGroupIds);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getUserUserGroupIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userGroupLocalService.getUserUserGroupIds(groupId);
 	}
 
 	/**

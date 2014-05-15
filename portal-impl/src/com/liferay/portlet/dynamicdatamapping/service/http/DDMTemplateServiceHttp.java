@@ -408,7 +408,7 @@ public class DDMTemplateServiceHttp {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
-		java.lang.String templateKey, boolean includeGlobalTemplates)
+		java.lang.String templateKey, boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -416,7 +416,7 @@ public class DDMTemplateServiceHttp {
 					"getTemplate", _getTemplateParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId, templateKey, includeGlobalTemplates);
+					classNameId, templateKey, includeAncestorTemplates);
 
 			Object returnObj = null;
 

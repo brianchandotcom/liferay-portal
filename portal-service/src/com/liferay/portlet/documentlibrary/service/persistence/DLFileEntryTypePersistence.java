@@ -909,6 +909,16 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of document library folders associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return List<Long> of the primaryKeys of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getDLFolderIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library folders associated with the document library file entry type.
 	*
 	* @param pk the primary key of the document library file entry type
@@ -1097,6 +1107,16 @@ public interface DLFileEntryTypePersistence extends BasePersistence<DLFileEntryT
 	*/
 	public void setDLFolders(long pk,
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of d d m structures associated with the document library file entry type.
+	*
+	* @param pk the primary key of the document library file entry type
+	* @return List<Long> of the primaryKeys of d d m structures associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getDDMStructureIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -663,8 +663,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getGroupOrganizationIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Organization> getGroupUserOrganizations(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getNoAssetOrganizations()
@@ -845,10 +847,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Organization> getSubsetOrganizations(
 		java.util.List<com.liferay.portal.model.Organization> allOrganizations,
 		java.util.List<com.liferay.portal.model.Organization> availableOrganizations);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getUserOrganizatioIds(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the organizations associated with the user. If

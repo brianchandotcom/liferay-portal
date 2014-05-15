@@ -848,10 +848,11 @@ public class UserGroupLocalServiceUtil {
 		return getService().fetchUserGroup(companyId, name);
 	}
 
-	public static java.util.List<java.lang.Long> getGroupUserGroupIds(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getGroupUserGroupIds(groupId);
+	public static java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupUserUserGroups(groupId, userId);
 	}
 
 	/**
@@ -896,12 +897,6 @@ public class UserGroupLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroups(userGroupIds);
-	}
-
-	public static java.util.List<java.lang.Long> getUserUserGroupIds(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserUserGroupIds(groupId);
 	}
 
 	/**

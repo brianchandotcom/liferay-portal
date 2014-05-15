@@ -363,6 +363,16 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of s c framework versions associated with the s c product version.
+	*
+	* @param pk the primary key of the s c product version
+	* @return List<Long> of the primaryKeys of s c framework versions associated with the s c product version
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getSCFrameworkVersionIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the s c framework versions associated with the s c product version.
 	*
 	* @param pk the primary key of the s c product version

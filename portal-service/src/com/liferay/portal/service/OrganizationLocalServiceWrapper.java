@@ -828,9 +828,12 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getGroupOrganizationIds(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.getGroupOrganizationIds(groupId);
+	public java.util.List<com.liferay.portal.model.Organization> getGroupUserOrganizations(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getGroupUserOrganizations(groupId,
+			userId);
 	}
 
 	@Override
@@ -1044,12 +1047,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		java.util.List<com.liferay.portal.model.Organization> availableOrganizations) {
 		return _organizationLocalService.getSubsetOrganizations(allOrganizations,
 			availableOrganizations);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getUserOrganizatioIds(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.getUserOrganizatioIds(userId);
 	}
 
 	/**

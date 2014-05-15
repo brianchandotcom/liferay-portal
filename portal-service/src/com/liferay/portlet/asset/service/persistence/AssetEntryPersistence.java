@@ -981,6 +981,16 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the primaryKeys of asset categories associated with the asset entry.
+	*
+	* @param pk the primary key of the asset entry
+	* @return List<Long> of the primaryKeys of asset categories associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getAssetCategoryIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the asset categories associated with the asset entry.
 	*
 	* @param pk the primary key of the asset entry
@@ -1169,6 +1179,16 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*/
 	public void setAssetCategories(long pk,
 		java.util.List<com.liferay.portlet.asset.model.AssetCategory> assetCategories)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the primaryKeys of asset tags associated with the asset entry.
+	*
+	* @param pk the primary key of the asset entry
+	* @return List<Long> of the primaryKeys of asset tags associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<java.lang.Long> getAssetTagIds(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -293,7 +293,7 @@ public class DDMTemplateServiceUtil {
 	*
 	* <p>
 	* This method first searches in the group. If the template is still not
-	* found and <code>includeGlobalTemplates</code> is set to
+	* found and <code>includeAncestorTemplates</code> is set to
 	* <code>true</code>, this method searches the global group.
 	* </p>
 	*
@@ -301,7 +301,7 @@ public class DDMTemplateServiceUtil {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param templateKey the unique string identifying the template
-	* @param includeGlobalTemplates whether to include the global scope in the
+	* @param includeAncestorTemplates whether to include the global scope in the
 	search
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
@@ -309,12 +309,12 @@ public class DDMTemplateServiceUtil {
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
-		boolean includeGlobalTemplates)
+		boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getTemplate(groupId, classNameId, templateKey,
-			includeGlobalTemplates);
+			includeAncestorTemplates);
 	}
 
 	/**

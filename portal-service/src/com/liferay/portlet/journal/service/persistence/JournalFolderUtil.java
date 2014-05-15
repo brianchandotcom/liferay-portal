@@ -2454,6 +2454,18 @@ public class JournalFolderUtil {
 	}
 
 	/**
+	* Returns the primaryKeys of d d m structures associated with the journal folder.
+	*
+	* @param pk the primary key of the journal folder
+	* @return List<Long> of the primaryKeys of d d m structures associated with the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<java.lang.Long> getDDMStructureIds(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().getDDMStructureIds(pk);
+	}
+
+	/**
 	* Returns all the d d m structures associated with the journal folder.
 	*
 	* @param pk the primary key of the journal folder

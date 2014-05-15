@@ -542,8 +542,8 @@
 						path: 'menu_toggle.js',
 						requires: [
 							'aui-node',
-							'event-move',
 							'event-outside',
+							'event-tap',
 							'liferay-menu-filter',
 							'liferay-store'
 						]
@@ -590,6 +590,7 @@
 					'liferay-navigation-interaction-touch': {
 						path: 'navigation_interaction_touch.js',
 						requires: [
+							'event-tap',
 							'event-touch',
 							'liferay-navigation-interaction'
 						]

@@ -83,12 +83,14 @@ AUI.add(
 						if (!menuFilter) {
 							var menu = instance._content.one('.dropdown-menu');
 
-							var menuItems = menu.all('li');
+							if (menu) {
+								var menuItems = menu.all('li');
 
-							if (menuItems.size() > instance.get('maxDisplayItems')) {
-								menuFilter = instance._createMenuFilter(menu, menuItems);
+								if (menuItems.size() > instance.get('maxDisplayItems')) {
+									menuFilter = instance._createMenuFilter(menu, menuItems);
 
-								instance._inputFilterNode = menuFilter.get('inputNode');
+									instance._inputFilterNode = menuFilter.get('inputNode');
+								}
 							}
 						}
 						else {
@@ -101,9 +103,9 @@ AUI.add(
 
 						if (instance._triggerNode) {
 							instance._triggerNode.on(
-								['gesturemovestart', 'keyup'],
+								['keyup', 'tap'],
 								function(event) {
-									if ((event.type == 'gesturemovestart') || event.isKeyInSet('ENTER', 'SPACE')) {
+									if ((event.type == 'tap') || event.isKeyInSet('ENTER', 'SPACE')) {
 										instance._toggleMenu(event, event.currentTarget);
 									}
 								}
@@ -144,8 +146,8 @@ AUI.add(
 					_getEventOutside: function(event) {
 						var eventOutside = event._event.type;
 
-						if (eventOutside.toLowerCase().indexOf('pointerdown') !== -1) {
-							eventOutside = 'mousedown';
+						if (eventOutside.toLowerCase().indexOf('pointerup') !== -1) {
+							eventOutside = 'mouseup';
 						}
 
 						eventOutside = eventOutside + 'outside';
@@ -256,6 +258,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-menu-filter', 'liferay-store']
+		requires: ['aui-node', 'event-outside', 'event-tap', 'liferay-menu-filter', 'liferay-store']
 	}
 );

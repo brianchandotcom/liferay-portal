@@ -59,55 +59,66 @@ security-manager-enabled=true</echo>
 			</then>
 		</if>
 
-		<if>
-			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
-			<then>
-				<for list="${plugins.includes}" param="plugin.includes">
-					<sequential>
-						<pathconvert pathsep="," property="plugin.war" setonempty="false">
-							<path>
-								<fileset
-									dir="plugins"
-									includes="@{plugin.includes}*.war"
-								/>
-							</path>
-						</pathconvert>
-
-						<propertyregex
-							input="${plugin.war}"
-							override="true"
-							property="plugin.war"
-							regexp=",.*"
-							replace=""
+		<for list="${plugins.includes}" param="plugin">
+			<sequential>
+				<pathconvert pathsep="," property="plugin.war" setonempty="false">
+					<path>
+						<fileset
+							dir="plugins"
+							includes="@{plugin}*.war"
 						/>
+					</path>
+				</pathconvert>
 
-						<if>
-							<isset property="plugin.war" />
-							<then>
-								<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+				<propertyregex
+					input="${plugin.war}"
+					override="true"
+					property="plugin.war"
+					regexp=",.*"
+					replace=""
+				/>
 
-								<var name="plugin.war" unset="true" />
-							</then>
-							<else>
-								<ant dir="${lp.plugins.dir}/${plugin.types}/@{plugin.includes}" inheritAll="false">
-									<target name="clean" />
-									<target name="deploy" />
-								</ant>
-							</else>
-						</if>
-					</sequential>
-				</for>
-			</then>
-			<else>
-				<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-					<target name="clean" />
-					<target name="deploy" />
-				</ant>
-			</else>
-		</if>
+				<if>
+					<isset property="plugin.war" />
+					<then>
+						<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+
+						<var name="plugin.war" unset="true" />
+					</then>
+					<elseif>
+						<available file="${lp.plugins.dir}/${plugin.types}/@{plugin}/build.xml" />
+						<then>
+							<antcall target="deploy-simple-server-plugin">
+								<param name="plugin" value="@{plugin}" />
+								<param name="plugins.dir" value="${lp.plugins.dir}" />
+							</antcall>
+						</then>
+					</elseif>
+					<elseif>
+						<available file="${plugins.additional.dir}/${plugin.types}/@{plugin}/build.xml" />
+						<then>
+							<antcall target="deploy-simple-server-plugin">
+								<param name="plugin" value="@{plugin}" />
+								<param name="plugins.dir" value="${plugins.additional.dir}" />
+							</antcall>
+						</then>
+					</elseif>
+				</if>
+			</sequential>
+		</for>
 
 		<delete dir="${lp.plugins.dir}/dist" />
+
 		<mkdir dir="${lp.plugins.dir}/dist" />
+
+		<if>
+			<isset property="plugins.additional.dir" />
+			<then>
+				<delete dir="${plugins.additional.dir}/dist" />
+
+				<mkdir dir="${plugins.additional.dir}/dist" />
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-build-properties">

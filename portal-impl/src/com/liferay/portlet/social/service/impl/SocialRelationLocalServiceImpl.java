@@ -415,6 +415,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<User> getSocialUsers(
 			long userId, int type, boolean equal, int start, int end,
 			OrderByComparator obc)
@@ -483,6 +484,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getSocialUsersCount(long userId, int type, boolean equal)
 		throws PortalException, SystemException {
 

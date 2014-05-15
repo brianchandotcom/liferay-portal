@@ -45,6 +45,7 @@ public class SocialRelationFinderImpl
 	public static final String FIND_SOCIAL_USERS =
 		SocialRelationFinder.class.getName() + ".findSocialUsers";
 
+	@Override
 	public int countSocialUsers(
 			long companyId, long userId, int type, boolean equal, int status)
 		throws SystemException {
@@ -90,6 +91,7 @@ public class SocialRelationFinderImpl
 		}
 	}
 
+	@Override
 	public List<User> findSocialUsers(
 			long companyId, long userId, int type, boolean equal, int status,
 			int start, int end, OrderByComparator obc)

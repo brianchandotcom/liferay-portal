@@ -3,25 +3,20 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="deploy-simple-server-plugins">
+	<target name="deploy-simple-server-plugin">
 		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
+			<isset property="portlet.properties.${plugin}" />
 			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.type=${app.server.type}
-app.server.jboss.dir=${app.server.dir}
+				<propertycopy
+					from="portlet.properties.${plugin}"
+					name="portlet.properties"
+					override="true"
+				/>
 
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugins.includes}</echo>
+				<echo file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
 			</then>
 			<else>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.type=${app.server.type}
-
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugins.includes}</echo>
+				<delete file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/src/portlet-ext.properties" />
 			</else>
 		</if>
 
@@ -31,12 +26,12 @@ plugins.includes=${plugins.includes}</echo>
 				<if>
 					<not>
 						<resourcecontains
-							resource="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties"
+							resource="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/liferay-plugin-package.properties"
 							substring="security-manager-enabled=true"
 						/>
 					</not>
 					<then>
-						<echo append="true" file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties">
+						<echo append="true" file="${plugins.dir}/${plugin.types}/${plugin}/docroot/WEB-INF/liferay-plugin-package.properties">
 
 security-manager-enabled=true</echo>
 					</then>
@@ -44,36 +39,36 @@ security-manager-enabled=true</echo>
 			</then>
 		</if>
 
+		<ant dir="${plugins.dir}/${plugin.types}/${plugin}" inheritAll="false">
+			<target name="clean" />
+			<target name="deploy" />
+		</ant>
+	</target>
+
+	<target name="deploy-simple-server-plugins">
+		<antcall target="prepare-build-properties">
+			<param name="plugins.dir" value="${lp.plugins.dir}" />
+		</antcall>
+
+		<if>
+			<isset property="plugins.additional.dir" />
+			<then>
+				<antcall target="prepare-build-properties">
+					<param name="plugins.dir" value="${plugins.additional.dir}" />
+				</antcall>
+			</then>
+		</if>
+
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
 				<if>
-					<isset property="portlet.properties.@{plugin}" />
+					<available file="plugins" />
 					<then>
-						<propertycopy
-							from="portlet.properties.@{plugin}"
-							name="portlet.properties"
-							override="true"
-						/>
-
-						<echo file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
-					</then>
-					<else>
-						<delete file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties" />
-					</else>
-				</if>
-			</sequential>
-		</for>
-
-		<if>
-			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
-			<then>
-				<for list="${plugins.includes}" param="plugin.includes">
-					<sequential>
 						<pathconvert pathsep="," property="plugin.war" setonempty="false">
 							<path>
 								<fileset
 									dir="plugins"
-									includes="@{plugin.includes}*.war"
+									includes="@{plugin}*.war"
 								/>
 							</path>
 						</pathconvert>
@@ -85,33 +80,65 @@ security-manager-enabled=true</echo>
 							regexp=",.*"
 							replace=""
 						/>
+					</then>
+				</if>
 
-						<if>
-							<isset property="plugin.war" />
-							<then>
-								<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+				<if>
+					<isset property="plugin.war" />
+					<then>
+						<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
 
-								<var name="plugin.war" unset="true" />
-							</then>
-							<else>
-								<ant dir="${lp.plugins.dir}/${plugin.types}/@{plugin.includes}" inheritAll="false">
-									<target name="clean" />
-									<target name="deploy" />
-								</ant>
-							</else>
-						</if>
-					</sequential>
-				</for>
-			</then>
-			<else>
-				<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-					<target name="clean" />
-					<target name="deploy" />
-				</ant>
-			</else>
-		</if>
+						<var name="plugin.war" unset="true" />
+					</then>
+					<elseif>
+						<available file="${lp.plugins.dir}/${plugin.types}/@{plugin}/build.xml" />
+						<then>
+							<antcall target="deploy-simple-server-plugin">
+								<param name="plugin" value="@{plugin}" />
+								<param name="plugins.dir" value="${lp.plugins.dir}" />
+							</antcall>
+						</then>
+					</elseif>
+					<elseif>
+						<available file="${plugins.additional.dir}/${plugin.types}/@{plugin}/build.xml" />
+						<then>
+							<antcall target="deploy-simple-server-plugin">
+								<param name="plugin" value="@{plugin}" />
+								<param name="plugins.dir" value="${plugins.additional.dir}" />
+							</antcall>
+						</then>
+					</elseif>
+				</if>
+			</sequential>
+		</for>
 
 		<delete dir="${lp.plugins.dir}/dist" />
+
 		<mkdir dir="${lp.plugins.dir}/dist" />
+
+		<if>
+			<isset property="plugins.additional.dir" />
+			<then>
+				<delete dir="${plugins.additional.dir}/dist" />
+
+				<mkdir dir="${plugins.additional.dir}/dist" />
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-build-properties">
+		<echo file="${plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+
+auto.deploy.dir=${liferay.home}/deploy</echo>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo append="true" file="${plugins.dir}/build.${user.name}.properties">
+
+app.server.jboss.dir=${app.server.dir}</echo>
+			</then>
+		</if>
 	</target>
 </project>

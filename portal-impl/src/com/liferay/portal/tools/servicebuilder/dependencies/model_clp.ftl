@@ -803,7 +803,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 		@Override
 		public void prepareLocalizedFieldsForImport() throws LocaleException {
-			prepareLocalizedFieldsForImport (null);
+			prepareLocalizedFieldsForImport(null);
 		}
 
 		@Override

@@ -100,7 +100,7 @@ public class StagingLocalizationTest {
 
 	@Test(expected = LocaleException.class)
 	public void testRemoveSupportedLocale() throws Exception {
-		enableLocalStagingChangingLocales("es_ES", "de_DE, es_ES", "en_US");
+		enableLocalStagingChangingLocales("es_ES", "de_DE,es_ES", "en_US");
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class StagingLocalizationTest {
 			_sourceGroup.getGroupId(), "Title", "content",
 			LocaleUtil.fromLanguageId(contentDefaultLanguageId));
 
-		// Export-import group
+		// Export
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			_sourceGroup.getGroupId(), false, null,
@@ -133,6 +133,8 @@ public class StagingLocalizationTest {
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), languageIds, defaultLanguageId);
+
+		// Import
 
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), _targetGroup.getGroupId(), false,

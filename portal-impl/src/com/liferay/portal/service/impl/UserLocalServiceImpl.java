@@ -138,6 +138,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
@@ -2387,22 +2388,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	 * #getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public List<User> getSocialUsers(
 			long userId, int type, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelationType", new Long[] {userId, new Long(type)});
-
-		return search(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, obc);
+		return socialRelationLocalService.getSocialUsers(
+			userId, type, Boolean.TRUE, start, end, obc);
 	}
 
 	/**
@@ -2427,22 +2424,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the ordered range of users with a social relation with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	 * #getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public List<User> getSocialUsers(
 			long userId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelation", new Long[] {userId});
-
-		return search(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, obc);
+		return socialRelationLocalService.getSocialUsers(
+			userId, SocialRelationConstants.TYPE_UNI_ENEMY, Boolean.FALSE,
+			start, end, obc);
 	}
 
 	/**
@@ -2543,21 +2537,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the number of users with a social relation with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	 * #getSocialUsersCount(long, int, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelation", new Long[] {userId});
-
-		return searchCount(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params);
+		return socialRelationLocalService.getSocialUsersCount(
+			userId, SocialRelationConstants.TYPE_UNI_ENEMY, Boolean.FALSE);
 	}
 
 	/**
@@ -2572,21 +2562,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
+	 * #getSocialUsersCount(long, int, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId, int type)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("socialRelationType", new Long[] {userId, new Long(type)});
-
-		return searchCount(
-			user.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-			params);
+		return socialRelationLocalService.getSocialUsersCount(
+			userId, type, Boolean.TRUE);
 	}
 
 	/**

@@ -126,6 +126,8 @@
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>
+	<classpathentry kind="lib" path="lib/portal/commons-compiler.jar"/>
+	<classpathentry kind="lib" path="lib/portal/commons-compiler-jdk.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-compress.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-configuration.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-dbcp.jar"/>
@@ -179,6 +181,7 @@
 	<classpathentry kind="lib" path="lib/portal/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jakarta-regexp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jamwiki-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/janino.jar"/>
 	<classpathentry kind="lib" path="lib/portal/java-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxb-impl.jar"/>

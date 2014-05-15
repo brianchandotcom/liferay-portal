@@ -1384,6 +1384,30 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/portal/commons-compiler.jar</file-name>
+		<version>2.7.4</version>
+		<project-name>Commons Compiler</project-name>
+		<project-url>http://docs.codehaus.org/display/JANINO/Home</project-url>
+		<licenses>
+			<license>
+				<license-name>New BSD License</license-name>
+				<license-url>http://dist.codehaus.org/janino/new_bsd_license.txt</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/portal/commons-compiler-jdk.jar</file-name>
+		<version>2.7.4</version>
+		<project-name>Commons Compiler JDK</project-name>
+		<project-url>http://docs.codehaus.org/display/JANINO/Home</project-url>
+		<licenses>
+			<license>
+				<license-name>New BSD License</license-name>
+				<license-url>http://dist.codehaus.org/janino/new_bsd_license.txt</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/commons-compress.jar</file-name>
 		<version>1.4.1</version>
 		<project-name>Commons Compress</project-name>
@@ -2051,6 +2075,18 @@
 			<license>
 				<license-name>LGPL 2.1</license-name>
 				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+			</license>
+		</licenses>
+	</library>
+		<library>
+		<file-name>lib/portal/janino.jar</file-name>
+		<version>2.7.4</version>
+		<project-name>Janino</project-name>
+		<project-url>http://docs.codehaus.org/display/JANINO/Home</project-url>
+		<licenses>
+			<license>
+				<license-name>New BSD License</license-name>
+				<license-url>http://dist.codehaus.org/janino/new_bsd_license.txt</license-url>
 			</license>
 		</licenses>
 	</library>

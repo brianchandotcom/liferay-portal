@@ -30,13 +30,16 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.PortletCategory;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
@@ -401,8 +404,25 @@ public class PortalInstances {
 
 		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
 
+		Long currentThreadUserId = PrincipalThreadLocal.getUserId();
+
 		try {
 			CompanyThreadLocal.setCompanyId(companyId);
+
+			long userId = 0;
+
+			try {
+				User currentUser = UserLocalServiceUtil.getUser(
+					currentThreadUserId);
+
+				if (currentUser.getCompanyId() == companyId) {
+					userId = currentThreadUserId;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			PrincipalThreadLocal.setName(userId);
 
 			// Lucene
 
@@ -496,6 +516,8 @@ public class PortalInstances {
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
+
+			PrincipalThreadLocal.setName(currentThreadUserId);
 		}
 
 		return companyId;

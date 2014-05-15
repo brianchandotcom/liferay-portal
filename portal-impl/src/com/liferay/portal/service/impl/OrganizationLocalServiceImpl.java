@@ -517,6 +517,13 @@ public class OrganizationLocalServiceImpl
 	}
 
 	@Override
+	public List<Long> getGroupOrganizationIds(long groupId)
+		throws SystemException {
+
+		return groupPersistence.getOrganizationIds(groupId);
+	}
+
+	@Override
 	public List<Organization> getNoAssetOrganizations() throws SystemException {
 		return organizationFinder.findByNoAssets();
 	}
@@ -814,6 +821,13 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return subsetOrganizations;
+	}
+
+	@Override
+	public List<Long> getUserOrganizatioIds(long userId)
+		throws SystemException {
+
+		return userPersistence.getOrganizationIds(userId);
 	}
 
 	/**

@@ -431,6 +431,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroupPersistence.fetchByC_N(companyId, name);
 	}
 
+	@Override
+	public List<Long> getGroupUserGroupIds(long groupId)
+		throws SystemException {
+
+		return groupPersistence.getUserGroupIds(groupId);
+	}
+
 	/**
 	 * Returns the user group with the name.
 	 *
@@ -483,6 +490,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		return userGroups;
+	}
+
+	@Override
+	public List<Long> getUserUserGroupIds(long groupId) throws SystemException {
+		return userPersistence.getUserGroupIds(groupId);
 	}
 
 	/**

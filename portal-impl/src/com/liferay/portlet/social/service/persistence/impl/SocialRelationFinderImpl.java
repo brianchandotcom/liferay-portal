@@ -129,10 +129,11 @@ public class SocialRelationFinderImpl
 	protected String buildTypeSQL(String sql, boolean equal) {
 		if (equal) {
 			return StringUtil.replace(
-				sql, "[$TYPE]", "SocialRelation.type_ = ?");
+				sql, "[$SOCIAL_RELATION_TYPE$]", "SocialRelation.type_ = ?");
 		}
 
-		return StringUtil.replace(sql, "[$TYPE]", "SocialRelation.type_ <> ?");
+		return StringUtil.replace(
+			sql, "[$SOCIAL_RELATION_TYPE$]", "SocialRelation.type_ <> ?");
 	}
 
 }

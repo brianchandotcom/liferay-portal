@@ -781,7 +781,7 @@
 				SocialRelation ON
 					(SocialRelation.userId2 = User_.userId)
 			WHERE
-				([$TYPE]) AND
+				([$SOCIAL_RELATION_TYPE$]) AND
 				(SocialRelation.userId1 = ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
@@ -798,7 +798,7 @@
 				SocialRelation ON
 					(SocialRelation.userId2 = User_.userId)
 			WHERE
-				([$TYPE]) AND
+				([$SOCIAL_RELATION_TYPE$]) AND
 				(SocialRelation.userId1 = ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND

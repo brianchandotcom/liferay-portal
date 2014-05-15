@@ -61,22 +61,27 @@ security-manager-enabled=true</echo>
 
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
-				<pathconvert pathsep="," property="plugin.war" setonempty="false">
-					<path>
-						<fileset
-							dir="plugins"
-							includes="@{plugin}*.war"
-						/>
-					</path>
-				</pathconvert>
+				<if>
+					<available file="plugins" />
+					<then>
+						<pathconvert pathsep="," property="plugin.war" setonempty="false">
+							<path>
+								<fileset
+									dir="plugins"
+									includes="@{plugin}*.war"
+								/>
+							</path>
+						</pathconvert>
 
-				<propertyregex
-					input="${plugin.war}"
-					override="true"
-					property="plugin.war"
-					regexp=",.*"
-					replace=""
-				/>
+						<propertyregex
+							input="${plugin.war}"
+							override="true"
+							property="plugin.war"
+							regexp=",.*"
+							replace=""
+						/>
+					</then>
+				</if>
 
 				<if>
 					<isset property="plugin.war" />

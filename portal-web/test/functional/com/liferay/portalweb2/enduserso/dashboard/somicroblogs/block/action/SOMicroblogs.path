@@ -85,8 +85,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_MENTION</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//div[@class='content']/span/a[contains(.,'${key_mentionUserName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_TAG</td>
-	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//div[@class='content']/span/a</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//div[@class='content']/span/a[contains(.,'${key_microblogsEntryTagValue}')]</td>
 	<td></td>
 </tr>
 <tr>

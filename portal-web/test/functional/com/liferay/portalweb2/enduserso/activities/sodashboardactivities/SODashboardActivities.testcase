@@ -14,7 +14,7 @@
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
-		<var name="microblogsEntryCharacterCountdown1" value="141" />
+		<var name="microblogsEntryCharacterCountdown1" value="125" />
 		<var name="microblogsEntryCharacterCountdown2" value="134" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="microblogsEntryViewableBy" value="Everyone" />
@@ -68,6 +68,7 @@
 			<var name="mentionUserScreenName" value="${userScreenName1}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -97,7 +98,7 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent} ${userName1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -112,7 +113,7 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent} ${userName1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -175,7 +176,7 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent} ${userName1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -190,7 +191,7 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent} ${userName1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>

@@ -40,7 +40,8 @@
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
-		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="microblogsEntryContent1" value="Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="Microblogs Post2" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="soPage" value="true" />
 		<var name="taskDescription1" value="Task1 Description" />
@@ -129,15 +130,16 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryCharacterCountdown" value="133" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
-			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
+			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -151,12 +153,15 @@
 			<var name="mentionUserListName" value="${userListName1}" />
 			<var name="mentionUserName" value="${userName1}" />
 			<var name="mentionUserScreenName" value="${userScreenName1}" />
+			<var name="microblogsEntryCharacterCountdown" value="124" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryMention">
+			<var name="mentionUserEmailAddress" value="${userEmailAddress1}" />
 			<var name="mentionUserName" value="${userName1}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -170,13 +175,13 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2} ${userName1}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -188,7 +193,7 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
 		</execute>
 
@@ -198,6 +203,7 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorLastName" value="${adminLastName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -469,13 +475,13 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2} ${userName1}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -504,13 +510,13 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2} ${userName1}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>
@@ -537,14 +543,14 @@
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${userName1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2} ${userName1}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
-			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="row" value="02" />
 			<var name="userName" value="${adminName}" />
 		</execute>

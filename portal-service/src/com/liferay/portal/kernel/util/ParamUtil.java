@@ -981,25 +981,13 @@ public class ParamUtil {
 			parameterMap.containsKey(paramPrefix + "Minute");
 
 		if (hasDateParams || hasTimeParams) {
-			int year = 0;
-			int month = 0;
-			int day = 0;
-			int hour = 0;
-			int minute = 0;
-			int amPm = Calendar.AM;
-
-			if (hasDateParams) {
-				year = MapUtil.getInteger(parameterMap, paramPrefix + "Year");
-				month = MapUtil.getInteger(parameterMap, paramPrefix + "Month");
-				day = MapUtil.getInteger(parameterMap, paramPrefix + "Day");
-			}
-
-			if (hasTimeParams) {
-				hour = MapUtil.getInteger(parameterMap, paramPrefix + "Hour");
-				minute = MapUtil.getInteger(
-					parameterMap, paramPrefix + "Minute");
-				amPm = MapUtil.getInteger(parameterMap, paramPrefix + "AmPm");
-			}
+			int year = MapUtil.getInteger(parameterMap, paramPrefix + "Year");
+			int month = MapUtil.getInteger(parameterMap, paramPrefix + "Month");
+			int day = MapUtil.getInteger(parameterMap, paramPrefix + "Day");
+			int hour = MapUtil.getInteger(parameterMap, paramPrefix + "Hour");
+			int minute = MapUtil.getInteger(
+				parameterMap, paramPrefix + "Minute");
+			int amPm = MapUtil.getInteger(parameterMap, paramPrefix + "AmPm");
 
 			if (amPm == Calendar.PM) {
 				hour += 12;

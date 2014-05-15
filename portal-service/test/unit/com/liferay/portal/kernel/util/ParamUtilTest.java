@@ -22,7 +22,6 @@ import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -33,218 +32,240 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
  */
 public class ParamUtilTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		new CalendarFactoryUtil().setCalendarFactory(new CalendarFactoryImpl());
-	}
-
 	@Before
 	public void setUp() {
-		_portletRequest = new MockPortletRequest();
-		_request = new MockHttpServletRequest();
+		setupCalendarFactory();
 	}
 
 	@Test
-	public void testGetDatePortletRequestMissingOneDateParam()
+	public void testGetDateFromPortletRequestMissingOneDateParam()
 		throws Exception {
 
-		_portletRequest.setParameter("myDateYear", String.valueOf(_year));
-		_portletRequest.setParameter("myDateDay", String.valueOf(_day));
+		_mockPortletRequest.setParameter("myDateYear", String.valueOf(_YEAR));
+		_mockPortletRequest.setParameter("myDateDay", String.valueOf(_DAY));
 
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
 
-		Assert.assertEquals(_defaultDate, date);
+		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
 	@Test
-	public void testGetDatePortletRequestMissingOneTimeParam()
+	public void testGetDateFromPortletRequestMissingOneTimeParam()
 		throws Exception {
 
-		_portletRequest.setParameter("myDateHour", String.valueOf(_hour));
+		_mockPortletRequest.setParameter("myDateHour", String.valueOf(_HOUR));
 
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
 
-		Assert.assertEquals(_defaultDate, date);
+		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
 	@Test
-	public void testGetDatePortletRequestWithAmPmParam() throws Exception {
-		_portletRequest.setParameter("myDateHour", String.valueOf(_hour));
-		_portletRequest.setParameter("myDateMinute", String.valueOf(_minute));
-		_portletRequest.setParameter("myDateAmPm", String.valueOf(Calendar.PM));
+	public void testGetDateFromPortletRequestWithAmPmParam() throws Exception {
+		_mockPortletRequest.setParameter("myDateHour", String.valueOf(_HOUR));
+		_mockPortletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
+		_mockPortletRequest.setParameter(
+			"myDateAmPm", String.valueOf(Calendar.PM));
 
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			0, 0, 0, _hour + 12, _minute, 0, 0, _timeZone);
+			0, 0, 0, _HOUR + 12, _MINUTE, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDatePortletRequestWithDateAndTimeParams()
+	public void testGetDateFromPortletRequestWithDateAndTimeParams()
 		throws Exception {
 
-		_portletRequest.setParameter("myDateYear", String.valueOf(_year));
-		_portletRequest.setParameter("myDateMonth", String.valueOf(_month));
-		_portletRequest.setParameter("myDateDay", String.valueOf(_day));
-		_portletRequest.setParameter("myDateHour", String.valueOf(_hour));
-		_portletRequest.setParameter("myDateMinute", String.valueOf(_minute));
+		_mockPortletRequest.setParameter("myDateYear", String.valueOf(_YEAR));
+		_mockPortletRequest.setParameter("myDateMonth", String.valueOf(_MONTH));
+		_mockPortletRequest.setParameter("myDateDay", String.valueOf(_DAY));
+		_mockPortletRequest.setParameter("myDateHour", String.valueOf(_HOUR));
+		_mockPortletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
 
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
-
-		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			_year, _month, _day, _hour, _minute, 0, 0, _timeZone);
-
-		Assert.assertEquals(expectedCalendar.getTime(), date);
-	}
-
-	@Test
-	public void testGetDatePortletRequestWithDateParams() throws Exception {
-		_portletRequest.setParameter("myDateYear", String.valueOf(_year));
-		_portletRequest.setParameter("myDateMonth", String.valueOf(_month));
-		_portletRequest.setParameter("myDateDay", String.valueOf(_day));
-
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			_year, _month, _day, 0, 0, 0, 0, _timeZone);
+			_YEAR, _MONTH, _DAY, _HOUR, _MINUTE, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDatePortletRequestWithNoParam() throws Exception {
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+	public void testGetDateFromPortletRequestWithDateParams() throws Exception {
+		_mockPortletRequest.setParameter("myDateYear", String.valueOf(_YEAR));
+		_mockPortletRequest.setParameter("myDateMonth", String.valueOf(_MONTH));
+		_mockPortletRequest.setParameter("myDateDay", String.valueOf(_DAY));
 
-		Assert.assertEquals(_defaultDate, date);
-	}
-
-	@Test
-	public void testGetDatePortletRequestWithTimeParams() throws Exception {
-		_portletRequest.setParameter("myDateHour", String.valueOf(_hour));
-		_portletRequest.setParameter("myDateMinute", String.valueOf(_minute));
-
-		Date date = ParamUtil.getDate(
-			_portletRequest, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			0, 0, 0, _hour, _minute, 0, 0, _timeZone);
+			_YEAR, _MONTH, _DAY, 0, 0, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestMissingOneDateParam()
+	public void testGetDateFromPortletRequestWithNoParam() throws Exception {
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
+
+		Assert.assertEquals(_defaultDate, actualDate);
+	}
+
+	@Test
+	public void testGetDateFromPortletRequestWithTimeParams() throws Exception {
+		_mockPortletRequest.setParameter("myDateHour", String.valueOf(_HOUR));
+		_mockPortletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
+
+		Date actualDate = ParamUtil.getDate(
+			_mockPortletRequest, "myDate", _timeZone, _defaultDate);
+
+		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
+			0, 0, 0, _HOUR, _MINUTE, 0, 0, _timeZone);
+
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
+	}
+
+	@Test
+	public void testGetDateFromServletRequestMissingOneDateParam()
 		throws Exception {
 
-		_request.setParameter("myDateYear", String.valueOf(_year));
-		_request.setParameter("myDateDay", String.valueOf(_day));
+		_mockHttpServletRequest.setParameter(
+			"myDateYear", String.valueOf(_YEAR));
+		_mockHttpServletRequest.setParameter("myDateDay", String.valueOf(_DAY));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
-		Assert.assertEquals(_defaultDate, date);
+		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestMissingOneTimeParam()
+	public void testGetDateFromServletRequestMissingOneTimeParam()
 		throws Exception {
 
-		_request.setParameter("myDateHour", String.valueOf(_hour));
+		_mockHttpServletRequest.setParameter(
+			"myDateHour", String.valueOf(_HOUR));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
-		Assert.assertEquals(_defaultDate, date);
+		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestWithAmPmParam() throws Exception {
-		_request.setParameter("myDateHour", String.valueOf(_hour));
-		_request.setParameter("myDateMinute", String.valueOf(_minute));
-		_request.setParameter("myDateAmPm", String.valueOf(Calendar.PM));
+	public void testGetDateFromServletRequestWithAmPmParam() throws Exception {
+		_mockHttpServletRequest.setParameter(
+			"myDateHour", String.valueOf(_HOUR));
+		_mockHttpServletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
+		_mockHttpServletRequest.setParameter(
+			"myDateAmPm", String.valueOf(Calendar.PM));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			0, 0, 0, _hour + 12, _minute, 0, 0, _timeZone);
+			0, 0, 0, _HOUR + 12, _MINUTE, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestWithDateAndTimeParams()
+	public void testGetDateFromServletRequestWithDateAndTimeParams()
 		throws Exception {
 
-		_request.setParameter("myDateYear", String.valueOf(_year));
-		_request.setParameter("myDateMonth", String.valueOf(_month));
-		_request.setParameter("myDateDay", String.valueOf(_day));
-		_request.setParameter("myDateHour", String.valueOf(_hour));
-		_request.setParameter("myDateMinute", String.valueOf(_minute));
+		_mockHttpServletRequest.setParameter(
+			"myDateYear", String.valueOf(_YEAR));
+		_mockHttpServletRequest.setParameter(
+			"myDateMonth", String.valueOf(_MONTH));
+		_mockHttpServletRequest.setParameter("myDateDay", String.valueOf(_DAY));
+		_mockHttpServletRequest.setParameter(
+			"myDateHour", String.valueOf(_HOUR));
+		_mockHttpServletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			_year, _month, _day, _hour, _minute, 0, 0, _timeZone);
+			_YEAR, _MONTH, _DAY, _HOUR, _MINUTE, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestWithDateParams() throws Exception {
-		_request.setParameter("myDateYear", String.valueOf(_year));
-		_request.setParameter("myDateMonth", String.valueOf(_month));
-		_request.setParameter("myDateDay", String.valueOf(_day));
+	public void testGetDateFromServletRequestWithDateParams() throws Exception {
+		_mockHttpServletRequest.setParameter(
+			"myDateYear", String.valueOf(_YEAR));
+		_mockHttpServletRequest.setParameter(
+			"myDateMonth", String.valueOf(_MONTH));
+		_mockHttpServletRequest.setParameter("myDateDay", String.valueOf(_DAY));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			_year, _month, _day, 0, 0, 0, 0, _timeZone);
+			_YEAR, _MONTH, _DAY, 0, 0, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestWithNoParam() throws Exception {
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+	public void testGetDateFromServletRequestWithNoParam() throws Exception {
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
-		Assert.assertEquals(_defaultDate, date);
+		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
 	@Test
-	public void testGetDateServletRequestWithTimeParams() throws Exception {
-		_request.setParameter("myDateHour", String.valueOf(_hour));
-		_request.setParameter("myDateMinute", String.valueOf(_minute));
+	public void testGetDateFromServletRequestWithTimeParams() throws Exception {
+		_mockHttpServletRequest.setParameter(
+			"myDateHour", String.valueOf(_HOUR));
+		_mockHttpServletRequest.setParameter(
+			"myDateMinute", String.valueOf(_MINUTE));
 
-		Date date = ParamUtil.getDate(
-			_request, "myDate", _timeZone, _defaultDate);
+		Date actualDate = ParamUtil.getDate(
+			_mockHttpServletRequest, "myDate", _timeZone, _defaultDate);
 
 		Calendar expectedCalendar = CalendarFactoryUtil.getCalendar(
-			0, 0, 0, _hour, _minute, 0, 0, _timeZone);
+			0, 0, 0, _HOUR, _MINUTE, 0, 0, _timeZone);
 
-		Assert.assertEquals(expectedCalendar.getTime(), date);
+		Assert.assertEquals(expectedCalendar.getTime(), actualDate);
 	}
 
-	private static final int _day = 22;
-	private static final int _hour = 10;
-	private static final int _minute = 32;
-	private static final int _month = 11;
-	private static final int _year = 2014;
+	protected void setupCalendarFactory() {
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
+
+		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
+	}
+
+	private static final int _DAY = 22;
+
+	private static final int _HOUR = 10;
+
+	private static final int _MINUTE = 32;
+
+	private static final int _MONTH = 11;
+
+	private static final int _YEAR = 2014;
 
 	private Date _defaultDate  = DateUtil.newDate();
-	private MockPortletRequest _portletRequest;
-	private MockHttpServletRequest _request;
+	private MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
+	private MockPortletRequest _mockPortletRequest = new MockPortletRequest();
 	private TimeZone _timeZone = TimeZoneUtil.getTimeZone(
 		"America/Los_Angeles");
 

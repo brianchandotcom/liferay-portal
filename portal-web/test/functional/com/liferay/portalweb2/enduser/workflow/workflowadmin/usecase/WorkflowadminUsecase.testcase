@@ -196,6 +196,81 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="5">
+		<property name="portlet.plugins.includes" value="notifications-portlet" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByNotifications">
+			<var name="notificationContent" value="Test Test sent you a Blogs Entry for review in the workflow." />
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByNotifications">
+			<var name="notificationContent" value="Test Test sent you a Blogs Entry for review in the workflow." />
+			<var name="notificationCount" value="1" />
+			<var name="userName" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
 	<command name="ViewTaskCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>PGNotifications</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGNotifications</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGNotifications</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>RETURN_TO_FULL_PAGE</td>
+	<td>//menu[contains(@id,'notificationsportlet')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_COUNT</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_UNREAD</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Unread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ALL_NOTIFICATIONS</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'All Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_NOTIFICATION_DELIVERY</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Notification Delivery')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--UNREAD-->
+<tr>
+	<td>UNREAD_MARK_ALL_AS_READ</td>
+	<td>//ul[contains(@class,'user-notifications-list')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_THUMBNAIL_1</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//span[@class='user-thumbnail'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_THUMBNAIL_2</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//span[@class='user-thumbnail'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_THUMBNAIL_3</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//span[@class='user-thumbnail'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_1</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_2</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_CONTENT_3</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--READ-->
+<tr>
+	<td>READ_CONTENT_THUMBNAIL_1</td>
+	<td>xpath=(//div[@class='sender']/span[@class='user-thumbnail'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_CONTENT_THUMBNAIL_2</td>
+	<td>xpath=(//div[@class='sender']/span[@class='user-thumbnail'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_CONTENT_THUMBNAIL_3</td>
+	<td>xpath=(//div[@class='sender']/span[@class='user-thumbnail'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_CONTENT_1</td>
+	<td>xpath=(//div[@class='content']/div[@class='body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_CONTENT_2</td>
+	<td>xpath=(//div[@class='content']/div[@class='body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_CONTENT_3</td>
+	<td>xpath=(//div[@class='content']/div[@class='body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_STATUS_1</td>
+	<td>xpath=(//div[@class='content']/div[@class='read'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_STATUS_2</td>
+	<td>xpath=(//div[@class='content']/div[@class='read'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_NOTIFICATION_STATUS_3</td>
+	<td>xpath=(//div[@class='content']/div[@class='read'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

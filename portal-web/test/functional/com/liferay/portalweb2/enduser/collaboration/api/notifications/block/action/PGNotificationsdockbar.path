@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>PGNotificationsdockbar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGNotificationsdockbar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGNotificationsdockbar</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_COUNT</td>
+	<td>//span[contains(@id,'notificationsportlet_userNotificationsCount')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_GENERIC</td>
+	<td>//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_1</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_2</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_CONTENT_3</td>
+	<td>xpath=(//li[contains(@class,'user-notification') and contains(@class,'unread')]//div[@class='body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ALL_NOTIFICATIONS</td>
+	<td>//ul[contains(@class,'user-notifications-list')]/li/a[contains(.,'View All Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARK_ALL_AS_READ</td>
+	<td>//ul[contains(@class,'user-notifications-list')]/li/a[contains(.,'Mark All As Read')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

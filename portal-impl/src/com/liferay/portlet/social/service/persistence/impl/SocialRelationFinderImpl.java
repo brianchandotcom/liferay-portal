@@ -104,6 +104,8 @@ public class SocialRelationFinderImpl
 
 			sql = buildTypeSQL(sql, equal);
 
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("User_", UserImpl.class);

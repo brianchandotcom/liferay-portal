@@ -1762,6 +1762,19 @@ public interface UserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.User> getSocialUsersByKeywords(
+		java.lang.String keywords, long userId, int[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.User> getSocialUsersByKeywordsAndGroupIds(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the number of users with a social relation with the user.
 	*
@@ -2003,6 +2016,11 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String screenName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.User> getUsersByKeywordsAndGroupIds(
+		long companyId, java.lang.String keywords, long[] groupIds, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns <code>true</code> if the password policy has been assigned to the

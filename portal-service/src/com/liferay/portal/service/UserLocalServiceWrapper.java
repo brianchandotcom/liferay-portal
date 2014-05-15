@@ -2156,6 +2156,25 @@ public class UserLocalServiceWrapper implements UserLocalService,
 			obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getSocialUsersByKeywords(
+		java.lang.String keywords, long userId, int[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersByKeywords(keywords, userId,
+			types, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getSocialUsersByKeywordsAndGroupIds(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersByKeywordsAndGroupIds(keywords,
+			userId, types, groupIds, start, end);
+	}
+
 	/**
 	* Returns the number of users with a social relation with the user.
 	*
@@ -2428,6 +2447,14 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getUserIdByScreenName(companyId, screenName);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getUsersByKeywordsAndGroupIds(
+		long companyId, java.lang.String keywords, long[] groupIds, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getUsersByKeywordsAndGroupIds(companyId,
+			keywords, groupIds, start, end);
 	}
 
 	/**

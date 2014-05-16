@@ -15,4 +15,8 @@
 			padding-bottom: 0.5em;
 		}
 	}
+
+	.social-interactions-settings, .social-interactions-users, .social-interactions-social-relations {
+		margin-left: 20px;
+	}
 }

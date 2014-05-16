@@ -1,6 +1,10 @@
 AUI.add(
 	'liferay-navigation-interaction-touch',
 	function(A) {
+		var ANDROID = A.UA.android;
+
+		var ANDROID_LEGACY = (ANDROID && ANDROID < 4.4);
+
 		var STR_OPEN = 'open';
 
 		A.mix(
@@ -22,8 +26,14 @@ AUI.add(
 					if (!menuOpen) {
 						Liferay.fire('showNavigationMenu', mapHover);
 
+						var outsideEvents = ['clickoutside', 'touchendoutside'];
+
+						if (ANDROID_LEGACY) {
+							outsideEvents = outsideEvents[0];
+						}
+
 						handle = menuNew.on(
-							['clickoutside', 'touchstartoutside'],
+							outsideEvents,
 							function() {
 								Liferay.fire(
 									'hideNavigationMenu',
@@ -55,13 +65,11 @@ AUI.add(
 					var instance = this;
 
 					if (navigation) {
-						A.Event.defineOutside('touchstart');
+						A.Event.defineOutside('touchend');
 
 						navigation.delegate('tap', instance._onTouchClick, '.lfr-nav-child-toggle', instance);
 
-						var android = A.UA.android;
-
-						if (android && android < 4.4) {
+						if (ANDROID_LEGACY) {
 							navigation.delegate(
 								'click',
 								function(event) {

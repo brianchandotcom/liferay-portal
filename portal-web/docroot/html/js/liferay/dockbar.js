@@ -54,7 +54,9 @@ AUI.add(
 				if (dockBar) {
 					instance.dockBar = dockBar;
 
-					instance._namespace = dockBar.attr('data-namespace');
+					var namespace = dockBar.attr('data-namespace');
+
+					instance._namespace = namespace;
 
 					Liferay.once('initDockbar', instance._init, instance);
 
@@ -74,7 +76,7 @@ AUI.add(
 						}
 					);
 
-					var btnNavigation = A.one('#' + instance._namespace + 'navSiteNavigation');
+					var btnNavigation = A.one('#' + namespace + 'navSiteNavigation');
 
 					var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 

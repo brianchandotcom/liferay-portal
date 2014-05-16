@@ -26,7 +26,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -164,6 +164,6 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 
 	private Analyzer _analyzer;
 	private Map<String, ObjectValuePair<Pattern, Analyzer>> _analyzers =
-		new HashMap<String, ObjectValuePair<Pattern, Analyzer>>();
+		new LinkedHashMap<String, ObjectValuePair<Pattern, Analyzer>>();
 
 }

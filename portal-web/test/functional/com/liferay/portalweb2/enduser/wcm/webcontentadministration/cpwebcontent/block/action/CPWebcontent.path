@@ -239,22 +239,27 @@
 <!--FILTER-->
 <tr>
 	<td>FILTER_HOME</td>
-	<td></td>
+	<td>//a[@data-title='Home']/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_HOME_ARROW</td>
-	<td>//span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
+	<td>FILTER_HOME_ACTIONS</td>
+	<td>//span[contains(@class,'entry-action')]/div/a/i[contains(@class,'caret')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_RECENT</td>
-	<td></td>
+	<td>//a[@title='Recent']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_MINE</td>
+	<td>//a[@title='Mine']/span</td>
 	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_STRUCTURE</td>
+	<td>//a[@title='Browse by Structure']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -267,19 +272,24 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--HOME_MENULIST-->
+<!--HOME_ACTIONS-->
 <tr>
-	<td>HOME_MENULIST_ADD_FOLDER</td>
+	<td>HOME_ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_ACTIONS_MENULIST_ADD_FOLDER</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>HOME_MENULIST_SUBSCRIBE</td>
+	<td>HOME_ACTIONS_MENULIST_SUBSCRIBE</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>HOME_MENULIST_PERMISSIONS</td>
+	<td>HOME_ACTIONS_MENULIST_PERMISSIONS</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>

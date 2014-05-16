@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
+	<td>//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
 <tr>

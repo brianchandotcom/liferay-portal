@@ -156,6 +156,75 @@
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureDisplayConversionsPG">
+		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+
+		<if>
+			<equals arg1="${doc}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_DOC_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_DOC_CHECKBOX" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${odt}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_ODT_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_ODT_CHECKBOX" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${pdf}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_PDF_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_PDF_CHECKBOX" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${rtf}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_RTF_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_RTF_CHECKBOX" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${sxw}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_SXW_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_SXW_CHECKBOX" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${txt}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_TXT_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_TXT_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureDisplayFullContentPG">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 

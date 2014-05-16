@@ -1070,6 +1070,80 @@
 		<execute action="CPWebcontentCategorization#assertTextPresent" locator-key1="TYPE_SELECT" value1="${categorizationType}" />
 	</command>
 
+	<command name="viewConversionLinksPGViaAP">
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="key_assetTitle" value="${webContentTitle}" />
+		</execute>
+
+		<if>
+			<equals arg1="${doc}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_DOC" value1="DOC" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_DOC_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_DOC" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${odt}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_ODT" value1="ODT" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_ODT_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_ODT" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${pdf}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_PDF" value1="PDF" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_PDF_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_PDF" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${rtf}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_RTF" value1="RTF" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_RTF_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_RTF" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${sxw}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_SXW" value1="SXW" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_SXW_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_SXW" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${txt}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_TXT" value1="TXT" />
+				<execute action="PGAssetpublisherAsset#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_TXT_ICON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAsset#assertElementNotPresent" locator-key1="DOCUMENT_CONVERSION_TXT" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

@@ -2,14 +2,29 @@
 	<var name="password" value="test" />
 
 	<command name="sendMessage">
-		<var name="key_recipientName" value="${recipientName}" />
-
 		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
-		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
-		<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
-		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
+
+		<if>
+			<isset var="recipientNameList" />
+			<then>
+				<for list="${recipientNameList}" param="recipientName">
+					<var name="key_recipientName" value="${recipientName}" />
+
+					<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+					<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_recipientName" value="${recipientName}" />
+
+				<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+				<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+				<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
+			</else>
+		</if>
+
 		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
 		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
 
@@ -115,27 +130,62 @@
 			</else>
 		</if>
 
-		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+		<if>
+			<contains string="${connectionName}" substring=", " />
+			<then>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName}" />
+			</then>
+			<else>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+			</else>
+		</if>
+
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageBody}" />
 	</command>
 
 	<command name="viewMessageNotification">
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+
+		<if>
+			<isset var="numberOfNotifications" />
+			<then>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
+			</then>
+			<else>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+			</else>
+		</if>
+
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${messageBody}" />
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+
+		<if>
+			<isset var="numberOfNotifications" />
+			<then>
+				<execute action="SOUserBar#assertTextNotEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
+			</then>
+			<else>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewReplyMessage">
-		<var name="key_messageBody" value="${messageReplyBody}" />
+		<execute macro="SOMessages#viewReplyMessageList" />
 
-		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
-		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
-		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageReplyBody}" />
+		<if>
+			<isset var="messageReplyBodyListView" />
+			<then>
+				<var name="key_messageBody" value="${messageReplyBodyListView}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageReplyBody}" />
+			</else>
+		</if>
+
 		<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT" />
 
 		<var name="key_messageBody" value="${messageBody}" />
@@ -163,6 +213,40 @@
 				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
 				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageReplyAttachmentFile}" />
 			</then>
+		</if>
+	</command>
+
+	<command name="viewReplyMessageList">
+		<if>
+			<isset var="messageReplyBodyListView" />
+			<then>
+				<var name="key_messageBody" value="${messageReplyBodyListView}" />
+			</then>
+			<else>
+				<var name="key_messageBody" value="${messageReplyBody}" />
+			</else>
+		</if>
+
+		<if>
+			<contains string="${connectionName}" substring=", " />
+			<then>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName}" />
+			</then>
+			<else>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+			</else>
+		</if>
+
+		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
+
+		<if>
+			<isset var="messageReplyBodyListView" />
+			<then>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageReplyBodyListView}" />
+			</then>
+			<else>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageReplyBody}" />
+			</else>
 		</if>
 	</command>
 </definition>

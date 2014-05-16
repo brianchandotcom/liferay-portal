@@ -1196,6 +1196,8 @@ public class LayoutStagedModelDataHandler
 		layoutElement.addAttribute("layout-uuid", layout.getUuid());
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
+		layoutElement.addAttribute(
+			"layout-priority", String.valueOf(layout.getPriority()));
 
 		String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 

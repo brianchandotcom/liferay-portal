@@ -236,6 +236,12 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(
+		String keywords, boolean lowerCase, boolean escapeXml) {
+
+		return keywords(keywords, lowerCase, escapeXml, WildcardMode.SURROUND);
+	}
+
+	public String[] keywords(
 		String keywords, boolean lowerCase, boolean escapeXml,
 		WildcardMode wildcardMode) {
 

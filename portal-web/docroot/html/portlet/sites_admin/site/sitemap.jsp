@@ -22,7 +22,7 @@ Long liveGroupId = (Long)request.getAttribute("site.liveGroupId");
 
 String host = PortalUtil.getHost(request);
 
-String sitemapUrl = PortalUtil.getPortalURL(host, request.getServerPort(), request.isSecure()) + themeDisplay.getPathContext() + "/sitemap.xml";
+String sitemapUrl = PortalUtil.getPortalURL(request) + themeDisplay.getPathContext() + "/sitemap.xml";
 
 String publicSitemapUrl = sitemapUrl;
 

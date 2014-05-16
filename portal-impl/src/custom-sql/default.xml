@@ -2,6 +2,7 @@
 
 <custom-sql>
 	<sql file="custom-sql/portal.xml" />
+	<sql file="custom-sql/portal-oracle.xml" />
 	<sql file="custom-sql/announcements.xml" />
 	<sql file="custom-sql/asset.xml" />
 	<sql file="custom-sql/blogs.xml" />

@@ -244,7 +244,7 @@ public class CustomSQL {
 		}
 
 		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
-			keywords = escapeWildCards(keywords);
+			keywords = _escapeWildCards(keywords);
 		}
 
 		if (lowerCase) {
@@ -271,7 +271,7 @@ public class CustomSQL {
 					String keyword = keywords.substring(pos, i);
 
 					if (escapeXml) {
-						keyword = escapeXml(keyword);
+						keyword = _escapeXml(keyword);
 					}
 
 					keywordsList.add(insertWildcard(keyword, wildcardMode));
@@ -299,7 +299,7 @@ public class CustomSQL {
 				String keyword = keywords.substring(pos, i);
 
 				if (escapeXml) {
-					keyword = escapeXml(keyword);
+					keyword = _escapeXml(keyword);
 				}
 
 				keywordsList.add(insertWildcard(keyword, wildcardMode));
@@ -833,7 +833,7 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
-	private String escapeWildCards(String keywords) {
+	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
 		}
@@ -861,7 +861,7 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
-	private String escapeXml(String xml) {
+	private String _escapeXml(String xml) {
 		return StringUtil.replace(
 			xml, _XML_REPLACE_CHARACTERS, _XML_REPLACEMENT_CHARACTERS);
 	}

@@ -829,6 +829,80 @@
 		</execute>
 	</command>
 
+	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="4">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="ServerAdministration#enableOpenOfficeIntegration" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="${webContentContent}" />
+	 		<var name="webContentTitle" value="${webContentTitle}" />
+	 	</execute>
+
+	 	<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
+	 		<var name="doc" value="true" />
+	 		<var name="odt" value="true" />
+	 		<var name="pdf" value="true" />
+	 		<var name="rtf" value="true" />
+	 		<var name="sxw" value="true" />
+	 		<var name="txt" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewConversionLinksPGViaAP">
+			<var name="doc" value="true" />
+			<var name="odt" value="true" />
+			<var name="pdf" value="true" />
+			<var name="rtf" value="true" />
+			<var name="sxw" value="true" />
+			<var name="txt" value="true" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
+			<var name="doc" value="true" />
+			<var name="pdf" value="true" />
+			<var name="txt" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewConversionLinksPGViaAP">
+			<var name="doc" value="true" />
+			<var name="pdf" value="true" />
+			<var name="txt" value="true" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewConversionLinksPGViaAP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />

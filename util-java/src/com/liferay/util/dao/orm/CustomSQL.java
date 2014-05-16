@@ -14,6 +14,8 @@
 
 package com.liferay.util.dao.orm;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -759,6 +762,27 @@ public class CustomSQL {
 		}
 	}
 
+	protected boolean isApplicableCustomSQLFile(String file) {
+		DB db = DBFactoryUtil.getDB();
+
+		String fileName = FileUtil.getShortFileName(file);
+
+		if (fileName.contains(StringPool.DASH)) {
+			String dbVendor = StringUtil.split(fileName, CharPool.DASH)[1];
+
+			dbVendor = FileUtil.stripExtension(dbVendor);
+
+			if (db.getType().equals(dbVendor)) {
+				return true;
+			}
+		}
+		else {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void read(ClassLoader classLoader, String source)
 		throws Exception {
 
@@ -780,7 +804,9 @@ public class CustomSQL {
 			String file = sqlElement.attributeValue("file");
 
 			if (Validator.isNotNull(file)) {
-				read(classLoader, file);
+				if (isApplicableCustomSQLFile(file)) {
+					read(classLoader, file);
+				}
 			}
 			else {
 				String id = sqlElement.attributeValue("id");

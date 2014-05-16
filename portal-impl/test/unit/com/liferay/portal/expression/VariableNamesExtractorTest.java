@@ -23,14 +23,14 @@ import org.testng.Assert;
 /**
  * @author Marcellus Tavares
  */
-public class ExpressionVariablesExtractorTest {
+public class VariableNamesExtractorTest {
 
 	@Test
 	public void testExpressionWithMultipleVariables() {
 		String expression = "((a + b) * variable_3) / var4  > 5";
 
-		List<String> variableNames =
-			_expressionVariablesExtractor.extractVariables(expression);
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expression);
 
 		Assert.assertEquals(variableNames.size(), 4);
 
@@ -44,8 +44,8 @@ public class ExpressionVariablesExtractorTest {
 	public void testExpressionWithNoVariables() {
 		String expression = "(1 + 2) * 3";
 
-		List<String> variableNames =
-			_expressionVariablesExtractor.extractVariables(expression);
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expression);
 
 		Assert.assertEquals(variableNames.size(), 0);
 	}
@@ -54,15 +54,15 @@ public class ExpressionVariablesExtractorTest {
 	public void testExpressionWithOneVariable() {
 		String expression = "((1 + 2) * variable) > 5";
 
-		List<String> variableNames =
-			_expressionVariablesExtractor.extractVariables(expression);
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expression);
 
 		Assert.assertEquals(variableNames.size(), 1);
 
 		Assert.assertEquals("variable", variableNames.get(0));
 	}
 
-	private ExpressionVariablesExtractor _expressionVariablesExtractor =
-		new ExpressionVariablesExtractor();
+	private VariableNamesExtractor _variableNamesExtractor =
+		new VariableNamesExtractor();
 
 }

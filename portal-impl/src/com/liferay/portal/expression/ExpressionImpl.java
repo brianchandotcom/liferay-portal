@@ -37,8 +37,8 @@ public class ExpressionImpl<T> implements Expression<T> {
 		_expression = expression;
 		_expressionType = expressionType;
 
-		List<String> variableNames =
-			_expressionVariablesExtractor.extractVariables(expression);
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expression);
 
 		for (String variableName : variableNames) {
 			ExpressionVariable expressionVariable = new ExpressionVariable(
@@ -200,9 +200,8 @@ public class ExpressionImpl<T> implements Expression<T> {
 			expressionVariable.getValueExpression(),
 			expressionVariable.getType());
 
-		List<String> variableNames =
-			_expressionVariablesExtractor.extractVariables(
-				expressionVariable.getValueExpression());
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expressionVariable.getValueExpression());
 
 		for (String variableName : variableNames) {
 			ExpressionVariable variable = _expressionVariablesMap.get(
@@ -249,9 +248,8 @@ public class ExpressionImpl<T> implements Expression<T> {
 			expressionVariable.getName(), variableDependencies);
 
 		if (expressionVariable.getValueExpression() != null) {
-			List<String> variableNames =
-				_expressionVariablesExtractor.extractVariables(
-					expressionVariable.getValueExpression());
+			List<String> variableNames = _variableNamesExtractor.extract(
+				expressionVariable.getValueExpression());
 
 			for (String variableName : variableNames) {
 				VariableDependencies populateVariableDependencies =
@@ -274,9 +272,9 @@ public class ExpressionImpl<T> implements Expression<T> {
 		new HashMap<String, Object>();
 	private String _expression;
 	private Class<?> _expressionType;
-	private ExpressionVariablesExtractor _expressionVariablesExtractor =
-		new ExpressionVariablesExtractor();
 	private Map<String, ExpressionVariable> _expressionVariablesMap =
 		new TreeMap<String, ExpressionVariable>();
+	private VariableNamesExtractor _variableNamesExtractor =
+		new VariableNamesExtractor();
 
 }

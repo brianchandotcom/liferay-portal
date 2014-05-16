@@ -23,9 +23,9 @@ import java.util.regex.Pattern;
 /**
  * @author Marcellus Tavares
  */
-public class ExpressionVariablesExtractor {
+public class VariableNamesExtractor {
 
-	public List<String> extractVariables(String expression) {
+	public List<String> extract(String expression) {
 		if (expression == null) {
 			return Collections.emptyList();
 		}

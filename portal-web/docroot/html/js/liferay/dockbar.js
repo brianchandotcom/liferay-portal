@@ -37,8 +37,6 @@ AUI.add(
 
 		var STR_PREVIEW_PANEL = 'previewPanel';
 
-		var STR_TOUCHSTART = 'touchstart';
-
 		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />';
 
 		var TPL_EDIT_LAYOUT_PANEL = '<div class="lfr-admin-panel lfr-edit-layout-panel" id="{0}" />';
@@ -61,17 +59,12 @@ AUI.add(
 					Liferay.once('initDockbar', instance._init, instance);
 
 					var eventHandle = dockBar.on(
-						['focus', 'mousemove', STR_TOUCHSTART],
+						['focus', 'mousemove', 'touchstart'],
 						function(event) {
 							var target = event.target;
 							var type = event.type;
 
-							Liferay.fire(
-								'initDockbar',
-								{
-									siteNavTouch: ((type === STR_TOUCHSTART) && (target.ancestor('.site-navigation-btn', true, '.nav-navigation')))
-								}
-							);
+							Liferay.fire('initDockbar');
 
 							eventHandle.detach();
 
@@ -324,7 +317,7 @@ AUI.add(
 		Liferay.provide(
 			Dockbar,
 			'_init',
-			function(event) {
+			function() {
 				var instance = this;
 
 				var dockBar = instance.dockBar;
@@ -353,12 +346,6 @@ AUI.add(
 							trigger: btnNavigation
 						}
 					);
-
-					if (event.siteNavTouch) {
-						event._event.type = STR_TOUCHSTART;
-
-						toggleMenu._toggleMenu(event, btnNavigation);
-					}
 				}
 
 				Liferay.fire('dockbarLoaded');

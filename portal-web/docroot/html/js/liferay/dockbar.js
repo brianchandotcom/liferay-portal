@@ -74,6 +74,22 @@ AUI.add(
 						}
 					);
 
+					var btnNavigation = A.one('#' + instance._namespace + 'navSiteNavigation');
+
+					var navigation = A.one(Liferay.Data.NAV_SELECTOR);
+
+					if (btnNavigation && navigation) {
+						btnNavigation.setData('menuItem', navigation);
+
+						new Liferay.MenuToggle(
+							{
+								content: [btnNavigation, navigation],
+								toggleTouch: false,
+								trigger: btnNavigation
+							}
+						);
+					}
+
 					BODY.addClass('dockbar-ready');
 
 					Liferay.on(['noticeHide', 'noticeShow'], instance._toggleControlsOffset, instance);
@@ -321,7 +337,6 @@ AUI.add(
 				var instance = this;
 
 				var dockBar = instance.dockBar;
-				var namespace = instance._namespace;
 
 				Liferay.Util.toggleControls(dockBar);
 
@@ -332,25 +347,9 @@ AUI.add(
 
 				instance._registerPanels();
 
-				var btnNavigation = A.oneNS(namespace, '#navSiteNavigation');
-
-				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
-
-				if (btnNavigation && navigation) {
-					btnNavigation.setData('menuItem', navigation);
-
-					var toggleMenu = new Liferay.MenuToggle(
-						{
-							content: [btnNavigation, navigation],
-							toggleTouch: false,
-							trigger: btnNavigation
-						}
-					);
-				}
-
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'liferay-menu-toggle', 'liferay-node', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
@@ -498,6 +497,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-move', 'event-touch']
+		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-move', 'event-touch', 'liferay-menu-toggle']
 	}
 );

@@ -1,6 +1,10 @@
 <definition>
 	<command name="assertTextEquals">
-		<case locator-key1="PORTLET_BODY">
+		<case locator-key1="DROOLS_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="WELCOME_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

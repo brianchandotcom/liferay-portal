@@ -1,24 +1,18 @@
 <definition>
 	<command name="viewContentPG">
-		<var name="key_userLoginFullName" value="${userLoginFullName}" />
-
-		<execute action="Drools#assertTextEquals" locator-key1="PORTLET_BODY" value1="Welcome ${userLoginFullName}!" />
-		<execute action="Drools#assertTextEquals" locator-key1="PORTLET_BODY" value1="${droolsContent}" />
+		<execute action="Drools#assertTextEquals" locator-key1="WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute action="Drools#assertTextEquals" locator-key1="DROOLS_CONTENT" value1="${droolsContent}" />
 
 		<if>
 			<isset var="screenshotFileName" />
 			<then>
-				<var name="key_screenshotFileName" value="${screenshotFileName}" />
-
 				<execute action="Drools#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewDefaultPG">
-		<var name="key_userLoginFullName" value="${userLoginFullName}" />
-
-		<execute action="Drools#assertTextEquals" locator-key1="PORTLET_BODY" value1="Welcome ${userLoginFullName}!" />
-		<execute action="Drools#assertTextEquals" locator-key1="PORTLET_BODY" value1="There are no results." />
+		<execute action="Drools#assertTextEquals" locator-key1="WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute action="Drools#assertTextEquals" locator-key1="DROOLS_CONTENT" value1="There are no results." />
 	</command>
 </definition>

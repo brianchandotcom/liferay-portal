@@ -34,8 +34,11 @@
 		<var name="webContentText" value="WC WebContent Text" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="MyAccount#addAddress">
-			<var name="userAddressCity" value="Walnut" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Addresses" />
+		</execute>
+
+		<execute macro="User#addAddressViaMyAccount">
 			<var name="userAddressCountry" value="United States" />
 			<var name="userAddressPostalCode" value="91789" />
 			<var name="userAddressRegion" value="California" />
@@ -104,7 +107,7 @@
 		</execute>
 
 		<execute macro="Drools#viewDefaultPG">
-			<var name="userLoginFullName" value="Test Test" />
+			<var name="welcomeMessage" value="Welcome Test Test!" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -158,8 +161,11 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="MyAccount#addAddress">
-			<var name="userAddressCity" value="Berlin" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Addresses" />
+		</execute>
+
+		<execute macro="User#addAddressViaMyAccount">
 			<var name="userAddressCountry" value="Germany" />
 			<var name="userAddressPostalCode" value="91789" />
 			<var name="userAddressRegion" value="Berlin" />
@@ -174,7 +180,7 @@
 		<execute macro="Drools#viewContentPG">
 			<var name="droolsContent" value="${webContentText}" />
 			<var name="screenshotFileName" value="web_content_image_field.png" />
-			<var name="userLoginFullName" value="userfn userln" />
+			<var name="welcomeMessage" value="Welcome userfn userln!" />
 		</execute>
 	</command>
 </definition>

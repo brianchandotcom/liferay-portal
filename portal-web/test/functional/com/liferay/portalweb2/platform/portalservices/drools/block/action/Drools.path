@@ -19,7 +19,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_BODY</td>
+	<td>DROOLS_CONTENT</td>
+	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_MESSAGE</td>
 	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
@@ -28,10 +33,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SIKULI-->
+<!--SCREENSHOTS-->
 <tr>
 	<td>SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG</td>
-	<td>portal/screenshots/sampledrools/${key_screenshotFileName}</td>
+	<td>portal/screenshots/sampledrools/web_content_image_field.png</td>
 	<td></td>
 </tr>
 </tbody>

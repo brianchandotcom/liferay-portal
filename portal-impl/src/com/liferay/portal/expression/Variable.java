@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.expression;
+package com.liferay.portal.expression;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public class ExpressionVariable {
+public class Variable {
 
-	public ExpressionVariable(String name) {
+	public Variable(String name) {
 		_name = name;
 	}
 

@@ -1,4 +1,21 @@
 <definition>
+	<command name="configureDisplaySettingsLanguage">
+		<var name="key_myAccount" value="${myAccount}" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
+		<execute action="Myaccount#select" locator-key1="LANGUAGE_SELECT" value1="${languageName}" />
+
+		<var name="key_saveButton" value="${saveButton}" />
+
+		<execute action="Myaccount#assertClick" locator-key1="SAVE_BUTTON_LOCALIZED" value1="${saveButton}" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="${successMessage}" />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="view">
 		<execute action="Myaccount#assertTextEquals" locator-key1="MENU_USER_INFORMATION_DETAILS" value1="Details" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />

@@ -191,6 +191,15 @@
 		<execute action="CPSiteWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="configureWebContentWorkflow">
+		<execute action="CPWebcontent#click" locator-key1="FILTER_HOME_ACTIONS" />
+		<execute action="CPWebcontent#assertClick" locator-key1="HOME_ACTIONS_MENULIST_EDIT" value1="Edit" />
+		
+		<execute action="CPWebcontentEditWorkflow#select" locator-key1="ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+		<execute action="CPWebcontentEditWorkflow#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="rejectTaskByActions">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -325,7 +334,6 @@
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${noWorkflow}" />
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_USER_SELECT" value1="${noWorkflow}" />
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${noWorkflow}" />
-		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="${noWorkflow}" />
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="${noWorkflow}" />
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT" value1="${noWorkflow}" />
 		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="${noWorkflow}" />
@@ -341,11 +349,18 @@
 
 		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${defaultWorkflow}" />
 		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${defaultWorkflow}" />
-		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="${defaultWorkflow}" />
 		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="${defaultWorkflow}" />
 		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT" value1="${defaultWorkflow}" />
 		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="${defaultWorkflow}" />
 		<execute action="CPSiteWorkflowconfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="Workflow#configureWebContentWorkflow">
+			<var name="workflowDefinition" value="No Workflow" />
+		</execute>
 	</command>
 
 	<command name="updateDueDateTaskByActions">

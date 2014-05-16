@@ -67,4 +67,8 @@ String controlGroupCssClass = AUIUtil.buildControlGroupCss(inlineField, inlineLa
 String baseTypeCssClass = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);
 String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
 String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel);
+
+if (type.equals("email") || type.equals("password") || type.equals("text") || type.equals("textarea")) {
+	fieldCssClass += " form-control";
+}
 %>

@@ -62,7 +62,7 @@ public class AUIUtil {
 
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("control-group");
+		sb.append("form-group");
 
 		if (inlineField) {
 			sb.append(" control-group-inline");

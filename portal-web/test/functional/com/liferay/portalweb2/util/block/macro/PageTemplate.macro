@@ -88,6 +88,12 @@
 		</while>
 	</command>
 
+	<command name="viewCP">
+		<var name="key_pageTemplateName" value="Page Template Name" />
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+	</command>
+
 	<command name="viewDefaultCP">
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />
@@ -102,13 +108,6 @@
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRITPION_1" value1="${blogDescriptionTranslation}" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${contentDisplayPageDescriptionTranslation}" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_DESCRIPTION_3" value1="${wikiDescripionTranslation}" />
-	</command>
-	
-	<command name="viewPageTemplateCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
-		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
 	</command>
 
 	<command name="viewDefaultPortletPG">

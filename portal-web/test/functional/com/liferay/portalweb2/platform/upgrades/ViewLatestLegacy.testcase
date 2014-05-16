@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
- 	<command name="ViewAnnouncementEntry" priority="5">
+	<command name="ViewAnnouncementEntry" priority="5">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -28,10 +28,9 @@
 		</execute>
 	</command>
 
- 	<command name="ViewBlogsEntry" priority="5">
+	<command name="ViewBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<var name="pageName" value="Blogs Page" />
 		<var name="siteName" value="Blogs Site" />
 
@@ -45,6 +44,22 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="tagName" value="blue" />
+		</execute>
+	</command>
+
+	<command name="ViewBookmark" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Bookmarks Page" />
+		</execute>
+
+		<execute macro="Bookmark#viewPG">
+			<var name="bookmarkName" value="Test Bookmark Name" />
+			<var name="bookmarkURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="BookmarksFolder#viewPG">
+			<var name="folderDescription" value="Test Folder Description" />
+			<var name="folderName" value="Test Folder Name" />
 		</execute>
 	</command>
 
@@ -79,21 +94,21 @@
 
 		<execute macro="DDLRecord#viewPGViaDDLDisplay">
 			<var name="ddlListName" value="List Name" />
-			<var name="fieldFieldLabel" value="Text" />
 			<var name="ddlRecordFieldData" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 	</command>
 
 	<command name="ViewDocumentPG" priority="5">
 		<execute macro="Page#gotoPG">
-				<var name="pageName" value="Documents and Media Page" />
-				<var name="siteName" value="Documents and Media Site" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Documents and Media Site" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="DM Folder Name" />
-	</execute>
+		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description Edit" />
@@ -123,22 +138,6 @@
 		<execute macro="MessageboardsPortlet#viewBannedUserPG">
 			<var name="userScreenName" value="userAPfn userAPln" />
 		</execute>
-		</command>
-
-		<command name="ViewBookmark" priority="5">
-			<execute macro="Page#gotoPG">
-				<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-			<execute macro="Bookmark#viewPG">
-				<var name="bookmarkName" value="Test Bookmark Name" />
-				<var name="bookmarkURL" value="http://www.liferay.com" />
-		</execute>
-
-		<execute macro="BookmarksFolder#viewPG">
-			<var name="folderDescription" value="Test Folder Description" />
-			<var name="folderName" value="Test Folder Name" />
-		</execute>
 	</command>
 
 	<command name="ViewPageTemplate" priority="5">
@@ -146,9 +145,9 @@
 			<var name="portletName" value="Page Template" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="Page Template Name" />
-
-		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name" />
+		<execute macro="PageTemplate#viewCP" >
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
 	</command>
 
 	<command name="ViewPasswordPolicy" priority="5">
@@ -156,7 +155,7 @@
 			<var name="portletName" value="Password Policies" />
 		</execute>
 
-		<execute macro="PasswordPolicies#viewPasswordPolicyAssignedMembers" >
+		<execute macro="PasswordPolicies#viewAssignMemberCP" >
 			<var name="passwordPolicyName" value="Password Policy Name" />
 			<var name="userScreenName" value="userpp" />
 		</execute>

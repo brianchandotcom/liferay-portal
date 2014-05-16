@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -66,6 +67,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -580,7 +582,10 @@ public class LayoutStagedModelDataHandler
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
-		importedLayout.setPriority(layout.getPriority());
+		int priority = _layoutLocalServiceHelper.getNextPriority(
+			groupId, privateLayout, parentLayoutId, null, -1);
+
+		importedLayout.setPriority(priority);
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
@@ -1255,5 +1260,9 @@ public class LayoutStagedModelDataHandler
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
+
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper =
+		(LayoutLocalServiceHelper)PortalBeanLocatorUtil.locate(
+			LayoutLocalServiceHelper.class.getName());
 
 }

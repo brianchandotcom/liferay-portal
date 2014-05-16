@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2013-07-25 09:25:45
+// $ANTLR 3.0.1 Creole10.g 2014-05-16 14:56:48
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -120,8 +120,8 @@ public class Creole10Parser extends Parser {
     public static final int EQUAL=18;
     public static final int TABULATOR=36;
     public static final int LINK_CLOSE=29;
-    public static final int LIST_ITEM_PART=8;
     public static final int PIPE=19;
+    public static final int LIST_ITEM_PART=8;
     public static final int LINK_OPEN=21;
     public static final int CR=33;
     public static final int EXTENSION=24;
@@ -157,7 +157,7 @@ public class Creole10Parser extends Parser {
 
     	public WikiPageNode getWikiPageNode() {
     		if (_wikipage == null)
-    			throw new IllegalStateException("No succesful parsing process");
+    			throw new IllegalStateException("No successful parsing process");
 
     		return _wikipage;
     	}
@@ -15722,8 +15722,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_9 = input.LA(2);
 
-                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15742,8 +15742,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_10 = input.LA(2);
 
-                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {

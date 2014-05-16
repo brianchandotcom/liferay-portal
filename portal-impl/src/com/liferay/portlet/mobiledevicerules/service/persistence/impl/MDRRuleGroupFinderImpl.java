@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -61,8 +60,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
+			names = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -77,8 +75,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 
 		return countByG_N(groupId, names, params, andOperator);
 	}
@@ -147,8 +144,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
+			names = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -174,8 +170,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			boolean andOperator, int start, int end)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}

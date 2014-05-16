@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -63,10 +62,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			int scope, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
+			description, false, true);
 
 		return doCountByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, false);
@@ -86,10 +84,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			int scope, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
+			description, false, true);
 
 		return doCountByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, true);
@@ -106,10 +103,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -127,10 +122,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
+			description, false, true);
 
 		return filterFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -160,10 +154,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -181,10 +173,9 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(
-			name, true, true, WildcardMode.SURROUND);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
+			description, false, true);
 
 		return findByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
@@ -290,10 +281,8 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;

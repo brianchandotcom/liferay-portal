@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
@@ -110,12 +109,9 @@ public class JournalArticleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
-			contents = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			titles = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
+			contents = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -191,12 +187,10 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(
-			title, true, true, WildcardMode.SURROUND);
+		String[] titles = CustomSQLUtil.keywords(title, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
-		String[] contents = CustomSQLUtil.keywords(
-			content, false, true, WildcardMode.SURROUND);
+			description, false, true);
+		String[] contents = CustomSQLUtil.keywords(content, false, true);
 
 		return countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -242,12 +236,9 @@ public class JournalArticleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
-			contents = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			titles = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
+			contents = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -323,12 +314,10 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(
-			title, true, true, WildcardMode.SURROUND);
+		String[] titles = CustomSQLUtil.keywords(title, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
-		String[] contents = CustomSQLUtil.keywords(
-			content, false, true, WildcardMode.SURROUND);
+			description, false, true);
+		String[] contents = CustomSQLUtil.keywords(content, false, true);
 
 		return filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -375,12 +364,9 @@ public class JournalArticleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
-			contents = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			titles = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
+			contents = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -457,12 +443,10 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(
-			title, true, true, WildcardMode.SURROUND);
+		String[] titles = CustomSQLUtil.keywords(title, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
-		String[] contents = CustomSQLUtil.keywords(
-			content, false, true, WildcardMode.SURROUND);
+			description, false, true);
+		String[] contents = CustomSQLUtil.keywords(content, false, true);
 
 		return filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -547,12 +531,9 @@ public class JournalArticleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			articleIds = CustomSQLUtil.keywords(keywords, false);
-			titles = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
-			contents = CustomSQLUtil.keywords(
-				keywords, false, true, WildcardMode.SURROUND);
+			titles = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
+			contents = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -690,12 +671,10 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(
-			title, true, true, WildcardMode.SURROUND);
+		String[] titles = CustomSQLUtil.keywords(title, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
-		String[] contents = CustomSQLUtil.keywords(
-			content, false, true, WildcardMode.SURROUND);
+			description, false, true);
+		String[] contents = CustomSQLUtil.keywords(content, false, true);
 		String[] ddmStructureKeys = CustomSQLUtil.keywords(
 			ddmStructureKey, false);
 		String[] ddmTemplateKeys = CustomSQLUtil.keywords(
@@ -719,12 +698,10 @@ public class JournalArticleFinderImpl
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
-		String[] titles = CustomSQLUtil.keywords(
-			title, true, true, WildcardMode.SURROUND);
+		String[] titles = CustomSQLUtil.keywords(title, true, true);
 		String[] descriptions = CustomSQLUtil.keywords(
-			description, false, true, WildcardMode.SURROUND);
-		String[] contents = CustomSQLUtil.keywords(
-			content, false, true, WildcardMode.SURROUND);
+			description, false, true);
+		String[] contents = CustomSQLUtil.keywords(content, false, true);
 
 		return findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,

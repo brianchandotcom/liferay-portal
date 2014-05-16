@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -179,8 +178,7 @@ public class RoleFinderImpl
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(
-			description, true, true, WildcardMode.SURROUND);
+		String[] descriptions = CustomSQLUtil.keywords(description, true, true);
 
 		return countByC_N_D_T(
 			companyId, names, descriptions, types, params, andOperator);
@@ -270,8 +268,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
+			descriptions = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -514,8 +511,7 @@ public class RoleFinderImpl
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(
-			description, true, true, WildcardMode.SURROUND);
+		String[] descriptions = CustomSQLUtil.keywords(description, true, true);
 
 		return findByC_N_D_T(
 			companyId, names, descriptions, types, params, andOperator, start,
@@ -697,8 +693,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(
-				keywords, true, true, WildcardMode.SURROUND);
+			descriptions = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;

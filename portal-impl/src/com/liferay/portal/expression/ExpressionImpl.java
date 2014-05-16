@@ -144,6 +144,26 @@ public class ExpressionImpl<T> implements Expression<T> {
 		variable.setValue(variableValue);
 	}
 
+	protected <V> Expression<V> createVariableValueExpression(
+			String expression, Class<V> expressionType)
+		throws ExpressionEvaluationException {
+
+		Expression<V> variableValueExpression = new ExpressionImpl<V>(
+			expression, expressionType);
+
+		List<String> variableNames = _variableNamesExtractor.extract(
+			expression);
+
+		for (String variableName : variableNames) {
+			Variable variable = _variablesMap.get(variableName);
+
+			variableValueExpression.setVariableValue(
+				variableName, variable.getType(), getVariableValue(variable));
+		}
+
+		return variableValueExpression;
+	}
+
 	protected String[] getVariableNames() {
 		List<String> variableNames = new ArrayList<String>();
 
@@ -194,20 +214,10 @@ public class ExpressionImpl<T> implements Expression<T> {
 			return null;
 		}
 
-		Expression<?> expression = new ExpressionImpl(
+		Expression<?> variableValueExpression = createVariableValueExpression(
 			variable.getValueExpression(), variable.getType());
 
-		List<String> variableNames = _variableNamesExtractor.extract(
-			variable.getValueExpression());
-
-		for (String variableName : variableNames) {
-			Variable var = _variablesMap.get(variableName);
-
-			expression.setVariableValue(
-				variableName, var.getType(), getVariableValue(var));
-		}
-
-		return expression;
+		return variableValueExpression;
 	}
 
 	protected Object[] getVariableValues()

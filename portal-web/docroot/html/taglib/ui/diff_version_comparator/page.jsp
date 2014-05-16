@@ -23,6 +23,7 @@ DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("life
 boolean hideControls = (Boolean)request.getAttribute("liferay-ui:diff-version-comparator:hideControls");
 String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:portletURL");
+PortletURL resourceURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:resourceURL");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
 
@@ -33,6 +34,8 @@ PortletURL iteratorURL = PortletURLUtil.clone(portletURL, liferayPortletResponse
 
 if (Validator.isNotNull(languageId)) {
 	iteratorURL.setParameter("languageId", languageId);
+
+	resourceURL.setParameter("languageId", languageId);
 }
 %>
 

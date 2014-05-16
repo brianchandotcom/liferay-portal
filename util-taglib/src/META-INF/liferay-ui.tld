@@ -884,6 +884,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>resourceURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>sourceVersion</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

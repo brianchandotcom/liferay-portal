@@ -50,11 +50,18 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 	<portlet:param name="title" value="<%= title %>" />
 </liferay-portlet:renderURL>
 
+<liferay-portlet:resourceURL varImpl="resourceURL">
+	<portlet:param name="struts_action" value="/wiki/compare_versions" />
+	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
+	<portlet:param name="title" value="<%= title %>" />
+</liferay-portlet:resourceURL>
+
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	diffVersionsInfo="<%= WikiUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext) %>"
 	hideControls="<%= hideControls %>"
 	portletURL="<%= portletURL %>"
+	resourceURL="<%= portletURL %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
 />

@@ -58,6 +58,10 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
+	public void setResourceURL(PortletURL resourceURL) {
+		_resourceURL = resourceURL;
+	}
+
 	public void setSourceVersion(double sourceVersion) {
 		_sourceVersion = sourceVersion;
 	}
@@ -74,6 +78,7 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_hideControls = false;
 		_languageId = null;
 		_portletURL = null;
+		_resourceURL = null;
 		_sourceVersion = 0;
 		_targetVersion = 0;
 	}
@@ -106,6 +111,8 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:portletURL", _portletURL);
 		request.setAttribute(
+			"liferay-ui:diff-version-comparator:resourceURL", _resourceURL);
+		request.setAttribute(
 			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:targetVersion", _targetVersion);
@@ -122,6 +129,7 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	private boolean _hideControls;
 	private String _languageId;
 	private PortletURL _portletURL;
+	private PortletURL _resourceURL;
 	private double _sourceVersion;
 	private double _targetVersion;
 

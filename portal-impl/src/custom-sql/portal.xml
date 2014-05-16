@@ -1415,7 +1415,22 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT
-				DISTINCT User_.userId AS userId
+				DISTINCT User_.mvccVersion, User_.uuid_, User_.userId,
+				User_.companyId, User_.createDate, User_.modifiedDate,
+				User_.defaultUser, User_.contactId, User_.password_,
+				User_.passwordEncrypted, User_.passwordReset,
+				User_.passwordModifiedDate, User_.digest,
+				User_.reminderQueryQuestion, User_.reminderQueryAnswer,
+				User_.graceLoginCount, User_.screenName, User_.emailAddress,
+				User_.facebookId, User_.ldapServerId, User_.openId,
+				User_.portraitId, User_.languageId, User_.timeZoneId,
+				User_.greeting, User_.comments, User_.firstName,
+				User_.middleName, User_.lastName, User_.jobTitle,
+				User_.loginDate, User_.loginIP, User_.lastLoginDate,
+				User_.lastLoginIP, User_.lastFailedLoginDate,
+				User_.failedLoginAttempts, User_.lockout, User_.lockoutDate,
+				User_.agreedToTermsOfUse, User_.emailAddressVerified,
+				User_.status
 			FROM
 				User_
 			[$JOIN$]

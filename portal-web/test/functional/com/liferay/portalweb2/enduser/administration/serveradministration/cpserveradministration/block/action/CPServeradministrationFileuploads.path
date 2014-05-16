@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>CPServeradministrationFileuploads</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPServeradministrationFileuploads</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPServeradministrationFileuploads</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPServeradministration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE</td>
+	<td>//input[contains(@id,'_dlFileMaxSize')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

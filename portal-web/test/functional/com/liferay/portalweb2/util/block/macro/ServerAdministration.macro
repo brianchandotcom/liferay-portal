@@ -1,4 +1,15 @@
 <definition>
+	<command name="configureDMFileUploadMaxSize">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministrationFileuploads#type" locator-key1="DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE" value1="${maxFileSize}" />
+		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationFileuploads#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="configureMailServerSettings">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_MAIL" value1="Mail" />
 
@@ -39,6 +50,16 @@
 				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
 			</else>
 		</if>
+	</command>
+
+	<command name="tearDownDMFileUploadSettings">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministrationFileuploads#type" locator-key1="DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE" value1="" />
+		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="tearDownMailServerSettings">

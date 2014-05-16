@@ -209,10 +209,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#
-	 *             checkDefaultLayoutSetBranches(
-	 *             long, Group, boolean, boolean, boolean, ServiceContext))}
+	 * @deprecated As of 7.0.0, replaced by {@link StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext))}
 	 */
 	@Deprecated
 	@Override
@@ -222,54 +221,9 @@ public class StagingImpl implements Staging {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long targetGroupId = 0;
-
-		if (remote) {
-			targetGroupId = liveGroup.getGroupId();
-		}
-		else {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			if (stagingGroup == null) {
-				return;
-			}
-
-			targetGroupId = stagingGroup.getGroupId();
-		}
-
-		if (branchingPublic) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(),
-					false, serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, false, true);
-		}
-
-		if (branchingPrivate) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, true,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
-					serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, true, true);
-		}
+		StagingLocalServiceUtil.checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, remote,
+			serviceContext);
 	}
 
 	@Override

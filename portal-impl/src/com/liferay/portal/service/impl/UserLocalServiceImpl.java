@@ -2661,7 +2661,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		return userFinder.countBySocialUsers(
-			user.getCompanyId(), user.getUserId(), type, equal,
+			user.getCompanyId(), userId, type, equal,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 

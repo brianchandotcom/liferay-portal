@@ -80,6 +80,7 @@ public class EditCompanyAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				validateCAS(actionRequest);
 				validateLDAP(actionRequest);
+				validateSocialInteractions(actionRequest);
 
 				if (!SessionErrors.isEmpty(actionRequest)) {
 					setForward(
@@ -272,6 +273,47 @@ public class EditCompanyAction extends PortletAction {
 		if (ldapExportEnabled && ldapImportEnabled) {
 			SessionErrors.add(
 				actionRequest, "ldapExportAndImportOnPasswordAutogeneration");
+		}
+	}
+
+	protected void validateSocialInteractions(ActionRequest actionRequest)
+		throws Exception {
+
+		boolean socialInteractionsEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--socialInteractionsEnabled--");
+
+		if (!socialInteractionsEnabled) {
+			return;
+		}
+
+		boolean socialInteractionsAnyUserEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--socialInteractionsAnyUserEnabled--");
+
+		if (socialInteractionsAnyUserEnabled) {
+			return;
+		}
+
+		boolean socialInteractionsSocialRelationTypesEnabled =
+			ParamUtil.getBoolean(
+				actionRequest,
+				"settings--socialInteractionsSocialRelationTypesEnabled--");
+		String socialInteractionsSocialRelationTypes = ParamUtil.getString(
+			actionRequest, "settings--socialInteractionsSocialRelationTypes--");
+
+		if (socialInteractionsSocialRelationTypesEnabled &&
+			Validator.isNull(socialInteractionsSocialRelationTypes)) {
+
+			SessionErrors.add(
+				actionRequest, "socialInteractionsSocialRelationTypes");
+		}
+
+		boolean socialInteractionsSitesEnabled = ParamUtil.getBoolean(
+			actionRequest, "settings--socialInteractionsSitesEnabled--");
+
+		if (!socialInteractionsSocialRelationTypesEnabled &&
+			!socialInteractionsSitesEnabled) {
+
+			SessionErrors.add(actionRequest, "socialInteractionsInvalid");
 		}
 	}
 

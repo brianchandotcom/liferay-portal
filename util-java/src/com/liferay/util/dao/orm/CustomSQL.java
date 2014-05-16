@@ -869,6 +869,10 @@ public class CustomSQL {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
 
+	private static final String[] _ESCAPED_CHARS = new String[] {
+		StringPool.AMPERSAND_ENCODED, StringPool.LESS_THAN_ENCODED
+	};
+
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
@@ -884,10 +888,6 @@ public class CustomSQL {
 
 	private static final String[] _UNESCAPED_CHARS = new String[] {
 		StringPool.AMPERSAND, StringPool.LESS_THAN
-	};
-
-	private static final String[] _ESCAPED_CHARS = new String[] {
-		StringPool.AMPERSAND_ENCODED, StringPool.LESS_THAN_ENCODED
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);

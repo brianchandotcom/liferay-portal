@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Drools</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Drools</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Drools</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_BODY</td>
+	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIKULI-->
+<tr>
+	<td>SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG</td>
+	<td>portal/screenshots/sampledrools/${key_screenshotFileName}</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -9,7 +9,7 @@
 		</case>
 
 		<case comparator="startsWith" locator-key1="MENU_">
-			<execute function="AssertClick#assertTextClickAtCKEditor" />
+			<execute function="AssertClick#assertTextClickAtViewHistory" />
 		</case>
 	</command>
 

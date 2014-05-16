@@ -149,10 +149,10 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			}
 
 			jsonWebServiceActionMappingMap.put(
-				"id", _getId(jsonWebServiceActionMapping));
+				"method", jsonWebServiceActionMapping.getMethod());
 
 			jsonWebServiceActionMappingMap.put(
-				"method", jsonWebServiceActionMapping.getMethod());
+				"name", _getName(jsonWebServiceActionMapping));
 
 			MethodParameter[] methodParameters =
 				jsonWebServiceActionMapping.getMethodParameters();
@@ -425,7 +425,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return genericReturnTypes;
 	}
 
-	private String _getId(
+	private String _getName(
 		JSONWebServiceActionMapping jsonWebServiceActionMapping) {
 
 		Class<?> clazz = jsonWebServiceActionMapping.getActionClass();

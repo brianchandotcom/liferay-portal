@@ -38,12 +38,10 @@ public class SetUtilTest {
 	public void testIntersectEmptyShortcut() {
 		Assert.assertSame(
 			Collections.emptySet(),
-			SetUtil.intersect(
-				new ArrayList<String>(), Arrays.asList("a")));
+			SetUtil.intersect(new ArrayList<String>(), Arrays.asList("a")));
 		Assert.assertSame(
 			Collections.emptySet(),
-			SetUtil.intersect(
-				Arrays.asList("a"), new ArrayList<String>()));
+			SetUtil.intersect(Arrays.asList("a"), new ArrayList<String>()));
 	}
 
 	@Test

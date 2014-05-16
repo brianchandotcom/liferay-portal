@@ -296,6 +296,69 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
+	public void testExportImportLayoutsPriorities() throws Exception {
+		Layout layout1 = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
+		Layout layout2 = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
+		Layout layout3 = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
+
+		int priority = layout1.getPriority();
+
+		layout1.setPriority(layout3.getPriority());
+		layout3.setPriority(priority);
+
+		layout1 = LayoutLocalServiceUtil.updateLayout(layout1);
+		layout3 = LayoutLocalServiceUtil.updateLayout(layout3);
+
+		long[] layoutIds = new long[] {
+			layout1.getLayoutId(), layout2.getLayoutId()
+		};
+
+		exportImportLayouts(layoutIds, getImportParameterMap());
+
+		Layout importedLayout1 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout1.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotEquals(
+			layout1.getPriority(), importedLayout1.getPriority());
+
+		Layout importedLayout2 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout2.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotEquals(
+			layout2.getPriority(), importedLayout2.getPriority());
+
+		layoutIds = new long[0];
+
+		exportImportLayouts(layoutIds, getImportParameterMap());
+
+		importedLayout1 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout1.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertEquals(
+			layout1.getPriority(), importedLayout1.getPriority());
+
+		importedLayout2 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout2.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertEquals(
+			layout2.getPriority(), importedLayout2.getPriority());
+
+		Layout importedLayout3 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout3.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertEquals(
+			layout3.getPriority(), importedLayout3.getPriority());
+	}
+
+	@Test
 	public void testExportImportLayoutsValidAvailableLocales()
 		throws Exception {
 

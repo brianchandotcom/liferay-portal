@@ -1107,6 +1107,10 @@ public class UsersAdminImpl implements UsersAdmin {
 			User updatingUser, User updatedUser, String field)
 		throws PortalException, SystemException {
 
+		if (updatedUser == null) {
+			return true;
+		}
+
 		if (updatingUser == null) {
 			long updatingUserId = PrincipalThreadLocal.getUserId();
 
@@ -1130,10 +1134,6 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 
 			return false;
-		}
-
-		if (updatedUser == null) {
-			return true;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {

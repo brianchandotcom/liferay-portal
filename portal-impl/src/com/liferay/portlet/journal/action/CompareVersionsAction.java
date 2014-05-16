@@ -116,11 +116,15 @@ public class CompareVersionsAction extends PortletAction {
 		if ((sourceVersion == 0) && (targetVersion == 0)) {
 			List<JournalArticle> articles =
 				JournalArticleServiceUtil.getArticlesByArticleId(
-					groupId, articleId, 0, 2,
+					groupId, articleId, 0, 1,
 					new ArticleVersionComparator(false));
 
 			sourceVersion = articles.get(0).getVersion();
-			targetVersion = articles.get(1).getVersion();
+
+			articles = JournalArticleServiceUtil.getArticlesByArticleId(
+				groupId, articleId, 0, 1, new ArticleVersionComparator(true));
+
+			targetVersion = articles.get(0).getVersion();
 		}
 
 		if (sourceVersion > targetVersion) {

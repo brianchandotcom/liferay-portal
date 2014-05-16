@@ -90,6 +90,8 @@ import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersist
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.social.service.persistence.SocialRelationFinder;
+import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
@@ -2827,6 +2829,63 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the social relation local service.
+	 *
+	 * @return the social relation local service
+	 */
+	public com.liferay.portlet.social.service.SocialRelationLocalService getSocialRelationLocalService() {
+		return socialRelationLocalService;
+	}
+
+	/**
+	 * Sets the social relation local service.
+	 *
+	 * @param socialRelationLocalService the social relation local service
+	 */
+	public void setSocialRelationLocalService(
+		com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService) {
+		this.socialRelationLocalService = socialRelationLocalService;
+	}
+
+	/**
+	 * Returns the social relation persistence.
+	 *
+	 * @return the social relation persistence
+	 */
+	public SocialRelationPersistence getSocialRelationPersistence() {
+		return socialRelationPersistence;
+	}
+
+	/**
+	 * Sets the social relation persistence.
+	 *
+	 * @param socialRelationPersistence the social relation persistence
+	 */
+	public void setSocialRelationPersistence(
+		SocialRelationPersistence socialRelationPersistence) {
+		this.socialRelationPersistence = socialRelationPersistence;
+	}
+
+	/**
+	 * Returns the social relation finder.
+	 *
+	 * @return the social relation finder
+	 */
+	public SocialRelationFinder getSocialRelationFinder() {
+		return socialRelationFinder;
+	}
+
+	/**
+	 * Sets the social relation finder.
+	 *
+	 * @param socialRelationFinder the social relation finder
+	 */
+	public void setSocialRelationFinder(
+		SocialRelationFinder socialRelationFinder) {
+		this.socialRelationFinder = socialRelationFinder;
+	}
+
+	/**
 	 * Returns the social request local service.
 	 *
 	 * @return the social request local service
@@ -3349,6 +3408,12 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRelationLocalService.class)
+	protected com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService;
+	@BeanReference(type = SocialRelationPersistence.class)
+	protected SocialRelationPersistence socialRelationPersistence;
+	@BeanReference(type = SocialRelationFinder.class)
+	protected SocialRelationFinder socialRelationFinder;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
 	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)

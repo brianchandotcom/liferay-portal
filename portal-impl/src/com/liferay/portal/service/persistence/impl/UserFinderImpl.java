@@ -114,12 +114,6 @@ public class UserFinderImpl
 	public static final String JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialMutualRelationType";
 
-	public static final String JOIN_BY_SOCIAL_RELATION =
-		UserFinder.class.getName() + ".joinBySocialRelation";
-
-	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
-		UserFinder.class.getName() + ".joinBySocialRelationType";
-
 	@Override
 	public int countByUser(long userId, LinkedHashMap<String, Object> params)
 		throws SystemException {
@@ -994,12 +988,6 @@ public class UserFinderImpl
 		else if (key.equals("socialMutualRelationType")) {
 			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE);
 		}
-		else if (key.equals("socialRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
-		}
-		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
-		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;
 
@@ -1178,12 +1166,6 @@ public class UserFinderImpl
 		}
 		else if (key.equals("socialMutualRelationType")) {
 			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_MUTUAL_RELATION_TYPE);
-		}
-		else if (key.equals("socialRelation")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
-		}
-		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;

@@ -431,6 +431,7 @@
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialRelationLocalService" class="com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialRelationPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRelationPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialRelationFinder" class="com.liferay.portlet.social.service.persistence.impl.SocialRelationFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialRequestLocalService" class="com.liferay.portlet.social.service.impl.SocialRequestLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.SocialRequestService" class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialRequestPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" parent="basePersistence" />

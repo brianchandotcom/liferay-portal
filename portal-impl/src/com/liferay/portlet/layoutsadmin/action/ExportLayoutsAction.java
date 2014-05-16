@@ -98,7 +98,7 @@ public class ExportLayoutsAction extends PortletAction {
 			LayoutServiceUtil.exportLayoutsAsFileInBackground(
 				fileName, groupId, privateLayout, layoutIds,
 				actionRequest.getParameterMap(), dateRange.getStartDate(),
-				dateRange.getEndDate(), fileName);
+				dateRange.getEndDate());
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

@@ -37,149 +37,162 @@ if (Validator.isNotNull(languageId)) {
 %>
 
 <div class="diff-version-comparator">
-	<div class="toolbar">
-		<c:if test="<%= !hideControls %>">
-			<c:choose>
-				<c:when test="<%= previousVersion != 0 %>">
+	<span class="diff-version-title">
+		<liferay-ui:message key="you-are-comparing-these-versions" />:
+	</span>
+
+	<aui:row cssClass="diff-version-head">
+		<aui:col cssClass="diff-source-selector" width="30">
+			<div class="diff-selector">
+				<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="sourceVersionSelector" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 					<%
-					iteratorURL.setParameter("sourceVersion", String.valueOf(previousVersion));
-					iteratorURL.setParameter("targetVersion", String.valueOf(sourceVersion));
+					for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
 					%>
 
-					<aui:a cssClass="icon-caret-left previous" href="<%= iteratorURL.toString() %>" label="previous-change" />
-				</c:when>
-				<c:otherwise>
-					<span class="icon-caret-left previous"><liferay-ui:message key="previous-change" /></span>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-
-		<div class="central-info">
-
-			<%
-			String sourceVersionMessage = (previousVersion != 0) ? String.valueOf(sourceVersion) : String.valueOf(sourceVersion) + " (" + LanguageUtil.get(pageContext, "first-version") + ")";
-			String targetVersionMessage = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
-			%>
-
-			<liferay-ui:icon
-				iconCssClass="icon-copy"
-				cssClass="central-title"
-				label="<%= true %>"
-				message='<%= LanguageUtil.format(pageContext, "comparing-versions-x-and-x", new Object[] {sourceVersionMessage, targetVersionMessage}, false) %>'
-			/>
-
-			<div class="central-author">
-
-				<%
-				List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
-
-				for (DiffVersion diffVersion : diffVersions) {
-					User diffVersionUser = UserLocalServiceUtil.getUser(diffVersion.getUserId());
-				%>
-
-					<liferay-ui:icon
-						iconCssClass="icon-user"
-						label="<%= true %>"
-						message="<%= HtmlUtil.escape(diffVersionUser.getFullName()) %>"
-						toolTip="author"
-					/>
-
-					(<%= diffVersion.getVersion() %>)
-
-					<c:if test="<%= diffVersions.size() == 1 %>">
-
-						<%
-						String summary = diffVersion.getSummary();
-						%>
-
-						<c:if test="<%= Validator.isNotNull(summary) %>">
-							<%= summary %>
-						</c:if>
-
-						<%
-						String extraInfo = diffVersion.getExtraInfo();
-						%>
-
-						<c:if test="<%= Validator.isNotNull(extraInfo) %>">
-							<%= extraInfo %>
-						</c:if>
-					</c:if>
-
-				<%
-				}
-				%>
-
-			</div>
-		</div>
-
-		<c:if test="<%= !hideControls %>">
-			<c:choose>
-				<c:when test="<%= nextVersion != 0 %>">
-
-					<%
-					iteratorURL.setParameter("sourceVersion", String.valueOf(targetVersion));
-					iteratorURL.setParameter("targetVersion", String.valueOf(nextVersion));
-					%>
-
-					<aui:a cssClass="icon-caret-right next" href="<%= iteratorURL.toString() %>" label="next-change" />
-				</c:when>
-				<c:otherwise>
-					<span class="icon-caret-right next"><liferay-ui:message key="next-change" /></span>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-	</div>
-
-	<c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">
-
-		<%
-		portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
-		portletURL.setParameter("targetVersion", String.valueOf(targetVersion));
-		%>
-
-		<div class="language-selector">
-			<aui:form action="<%= portletURL %>" method="post" name="fm">
-				<aui:select label="" name="languageId" title="language">
-
-					<%
-					for (Locale availableLocale : availableLocales) {
-					%>
-
-						<aui:option label="<%= availableLocale.getDisplayName(locale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(availableLocale)) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+						<liferay-ui:icon
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(pageContext, "version-x", diffVersion.getVersion()) %>'
+						/>
 
 					<%
 					}
 					%>
 
-				</aui:select>
-			</aui:form>
-		</div>
-
-		<aui:script use="aui-base">
-			A.one('#<portlet:namespace />languageId').on(
-				'change',
-				function(event) {
-					submitForm(document.<portlet:namespace />fm);
-				}
-			);
-		</aui:script>
-	</c:if>
-
-	<div class="legend">
-		<h3><liferay-ui:message key="legend" />:</h3>
-
-		<div class="info">
-			<div class="delete">
-				<i class="icon-stop"></i>
-				<liferay-ui:message key="deleted-content" />
+				</liferay-ui:icon-menu>
 			</div>
-			<div class="add">
-				<i class="icon-stop"></i>
-				<liferay-ui:message key="added-content" />
-			</div>
-		</div>
-	</div>
 
-	<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+			<c:if test="<%= previousVersion == 0 %>">
+				<div class="diff-selector-version-info">
+					(<liferay-ui:message key="first-version" />)
+				</div>
+			</c:if>
+		</aui:col>
+
+		<aui:col cssClass="diff-target-selector" width="70">
+			<div class="diff-selector">
+				<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="targetVersionSelector" message='<%= LanguageUtil.format(pageContext, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+
+					<%
+					for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
+					%>
+
+						<liferay-ui:icon
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(pageContext, "version-x", diffVersion.getVersion()) %>'
+						/>
+
+					<%
+					}
+					%>
+
+				</liferay-ui:icon-menu>
+			</div>
+
+			<c:if test="<%= nextVersion == 0 %>">
+				<div class="diff-selector-version-info">
+					(<liferay-ui:message key="last-version" />)
+				</div>
+			</c:if>
+		</aui:col>
+	</aui:row>
+
+	<aui:row>
+		<aui:col cssClass="search-container-column" width="30">
+			<div class="search-panels">
+				<div class="search-panels-bar">
+					<i class="search-panel-icon"></i>
+
+					<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+				</div>
+			</div>
+
+			<c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">
+
+				<%
+				portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
+				portletURL.setParameter("targetVersion", String.valueOf(targetVersion));
+				%>
+
+				<div class="language-selector">
+					<aui:form action="<%= portletURL %>" method="post" name="fm">
+						<aui:select label="" name="languageId" title="language">
+
+							<%
+							for (Locale availableLocale : availableLocales) {
+							%>
+
+								<aui:option label="<%= availableLocale.getDisplayName(locale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(availableLocale)) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</aui:form>
+				</div>
+
+				<aui:script use="aui-base">
+					A.one('#<portlet:namespace />languageId').on(
+						'change',
+						function(event) {
+							submitForm(document.<portlet:namespace />fm);
+						}
+					);
+				</aui:script>
+			</c:if>
+
+			<%
+			List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
+
+			for (int i = 0; i < diffVersions.size(); i++) {
+				DiffVersion diffVersion = diffVersions.get(i);
+			%>
+
+				<div class='version-item <%= (i == (diffVersions.size() - 1)) ? "last" : StringPool.BLANK %>'>
+					<span class="version-title">
+						<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
+					</span>
+
+					<%
+					User userDisplay = UserLocalServiceUtil.getUser(diffVersion.getUserId());
+					%>
+
+					<div class="version-avatar">
+						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+					</div>
+
+					<div class="version-info">
+						<span class="user-info"><%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %></span>
+						<span class="date-info"><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" /></span>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
+		</aui:col>
+		<aui:col cssClass="diff-container-column" width="70">
+			<div class="diff-container">
+				<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+
+				<div class="legend-info">
+					<liferay-ui:icon
+						cssClass="legend-item"
+						iconCssClass="delete icon-stop"
+						label="<%= true %>"
+						message="deleted"
+					/>
+
+					<liferay-ui:icon
+						cssClass="legend-item"
+						iconCssClass="add icon-stop"
+						label="<%= true %>"
+						message="added"
+					/>
+				</div>
+			</div>
+		</aui:col>
+	</aui:row>
 </div>

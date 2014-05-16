@@ -1,71 +1,194 @@
 .diff-version-comparator {
-	.language-selector {
-		.control-group {
-			margin-bottom: 10px;
-		}
-	}
+	.diff-version-head {
+		border-bottom: 1px solid #E5E5E5;
+		margin-bottom: 40px;
+		padding-bottom: 10px;
 
-	.legend {
-		border: #ccc solid 1px;
-		display: inline-block;
-		margin-bottom: 10px;
-		padding: 10px;
+		.diff-selector-version {
+			font-size: inherit;
+			margin-bottom: 0;
+			margin-top: 0;
+			position: static;
+			vertical-align: baseline;
 
-		.info {
-			margin-left: 20px;
+			a {
+				text-decoration: none;
 
-			.add .icon-stop {
-				color: #CFC;
+				.lfr-icon-menu-icon {
+					display: none;
+				}
+
+				.lfr-icon-menu-text {
+					&:hover, &:focus {
+						text-decoration: underline;
+					}
+				}
 			}
 
-			.delete .icon-stop {
-				color: #FDC6C6;
-				text-decoration: line-through;
-			}
-		}
-	}
-
-	.toolbar {
-		background: #EEE;
-		border-top: 1px solid #CCC;
-		margin: 15px 0 20px;
-		overflow: hidden;
-		padding: 5px;
-
-		.central-info {
-			float: left;
-			padding-left: 10px;
-			padding-right: 10px;
-			text-align: center;
-			width: 66%;
-
-			a.change-mode {
-				font-weight: bold;
-			}
-
-			span.change-mode {
-				color: #999;
-				font-weight: bold;
+			.caret {
+				border-top-color: #FFF;
+				margin-top: -4px;
 			}
 		}
 
-		.central-title {
-			font-weight: bold;
+		.diff-source-selector {
 			padding-right: 20px;
+
+			.diff-selector {
+				overflow: hidden;
+
+				.diff-selector-version {
+					float: right;
+				}
+			}
+
+			.diff-selector-version-info {
+				float: right;
+				margin-right: 16px;
+			}
 		}
 
-		.central-username {
-			font-weight: bold;
+		.diff-target-selector {
+			border-left: 1px solid #E5E5E5;
+			padding-left: 40px;
 		}
 
-		.next {
-			float: right;
-			padding-right: 15px;
+		.diff-source-selector, .diff-target-selector {
+			font-size: 20px;
+			font-weight: 200;
+			padding-bottom: 20px;
+
+			.diff-selector-version-info {
+				color: #8C8C8C;
+				font-size: 12px;
+			}
+		}
+	}
+
+	.search-container-column {
+		padding-left: 10px;
+
+		.language-selector {
+			.control-group {
+				margin-bottom: 10px;
+
+				select {
+					font-size: 13px;
+				}
+			}
 		}
 
-		.previous {
-			float: left;
-			padding-left: 15px;
+		.search-panels {
+			padding: 0;
+			position: relative;
+
+			.search-panels-bar {
+				.control-group {
+					margin-bottom: 10px;
+
+					.search-panels-input {
+						border-radius: 0;
+					}
+				}
+
+				.search-panel-icon {
+					background: url(@theme_image_path@/custom/search_panel_icon.png) no-repeat 0 50%;
+					color: #D4D4D4;
+					font-size: 0;
+					height: 18px;
+					margin-left: 8px;
+					margin-top: 6px;
+					position: absolute;
+					width: 27px;
+				}
+
+				input {
+					padding-left: 40px;
+				}
+			}
 		}
+
+		.version-item {
+			border-bottom: 1px solid #E5E5E5;
+			cursor: pointer;
+			margin-top: 10px;
+			overflow: hidden;
+			padding: 10px;
+
+			&.last {
+	        	border-width: 0;
+			}
+
+			.version-avatar {
+				float: left;
+				padding-right: 5px;
+
+				.avatar {
+					width: 45px;
+				}
+			}
+
+			.version-title {
+				color: #009AE5;
+				display: block;
+				font-weight: 400;
+				margin-bottom: 5px;
+			}
+
+			.version-info {
+				margin-top: 14px;
+
+				.user-info {
+					color: #009AE5;
+					display: block;
+					font-size: 13px;
+					line-height: 13px;
+				}
+
+				.date-info {
+					color: #8C8C8C;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+
+	.diff-container-column {
+		background-color: #F1F1F1;
+		border: 1px solid #EBEBEB;
+		padding: 25px;
+
+		.diff-container {
+			background-color: #FFF;
+			border: 1px solid #E5E5E5;
+			min-height: 400px;
+			padding: 25px 20px;
+			position: relative;
+
+			.legend-info {
+				bottom: 0;
+				padding-bottom: 10px;
+				position: absolute;
+
+				.legend-item {
+					margin-right: 15px;
+				}
+
+				.add.icon-stop {
+					color: #CFC;
+				}
+
+				.delete.icon-stop {
+					color: #FDC6C6;
+				}
+			}
+		}
+	}
+
+	.diff-version-title {
+		color: #8C8C8C;
+		display: block;
+		font-size: 12px;
+		margin-bottom: 10px;
 	}
 }

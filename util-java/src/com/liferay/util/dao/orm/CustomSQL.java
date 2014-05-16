@@ -862,8 +862,7 @@ public class CustomSQL {
 	}
 
 	private String _escapeXml(String xml) {
-		return StringUtil.replace(
-			xml, _XML_REPLACE_CHARACTERS, _XML_REPLACEMENT_CHARACTERS);
+		return StringUtil.replace(xml, _UNESCAPED_CHARS, _ESCAPED_CHARS);
 	}
 
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
@@ -883,11 +882,11 @@ public class CustomSQL {
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
 
-	private static final String[] _XML_REPLACE_CHARACTERS = new String[] {
+	private static final String[] _UNESCAPED_CHARS = new String[] {
 		StringPool.AMPERSAND, StringPool.LESS_THAN
 	};
 
-	private static final String[] _XML_REPLACEMENT_CHARACTERS = new String[] {
+	private static final String[] _ESCAPED_CHARS = new String[] {
 		StringPool.AMPERSAND_ENCODED, StringPool.LESS_THAN_ENCODED
 	};
 

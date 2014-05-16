@@ -1994,37 +1994,32 @@
 				);
 
 				trigger.on(
-					'gesturemovestart',
+					'tap',
 					function(event) {
-						event.currentTarget.once(
-							'gesturemoveend',
-							function(event) {
-								if (icon) {
-									icon.toggleClass(iconVisibleClass);
-									icon.toggleClass(iconHiddenClass);
-								}
+						if (icon) {
+							icon.toggleClass(iconVisibleClass);
+							icon.toggleClass(iconHiddenClass);
+						}
 
-								docBody.toggleClass(visibleClass);
-								docBody.toggleClass(hiddenClass);
+						docBody.toggleClass(visibleClass);
+						docBody.toggleClass(hiddenClass);
 
-								Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
+						Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
 
-								Liferay.Store('liferay_toggle_controls', Liferay._editControlsState);
+						Liferay.Store('liferay_toggle_controls', Liferay._editControlsState);
 
-								Liferay.fire(
-									'toggleControls',
-									{
-										enabled: (Liferay._editControlsState === 'visible'),
-										src: 'ui'
-									}
-								);
+						Liferay.fire(
+							'toggleControls',
+							{
+								enabled: (Liferay._editControlsState === 'visible'),
+								src: 'ui'
 							}
 						);
 					}
 				);
 			}
 		},
-		['event-move', 'liferay-store']
+		['event-tap', 'liferay-store']
 	);
 
 	Liferay.provide(

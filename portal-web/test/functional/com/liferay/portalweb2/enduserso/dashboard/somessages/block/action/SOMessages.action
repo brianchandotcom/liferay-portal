@@ -26,4 +26,10 @@
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
 </definition>

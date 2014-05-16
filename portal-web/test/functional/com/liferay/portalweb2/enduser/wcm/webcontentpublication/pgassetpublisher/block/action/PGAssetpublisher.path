@@ -179,7 +179,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
-	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']/p</td>
+	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
 	<td></td>
 </tr>
 <tr>

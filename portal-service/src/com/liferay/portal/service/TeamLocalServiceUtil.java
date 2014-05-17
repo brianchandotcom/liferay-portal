@@ -257,6 +257,18 @@ public class TeamLocalServiceUtil {
 	}
 
 	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getUserPrimaryKeys(long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPrimaryKeys(teamId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserTeam(long userId, long teamId)
@@ -389,6 +401,18 @@ public class TeamLocalServiceUtil {
 	public static void setUserTeams(long userId, long[] teamIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setUserTeams(userId, teamIds);
+	}
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userGroupIds of user groups associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getUserGroupPrimaryKeys(long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupPrimaryKeys(teamId);
 	}
 
 	/**

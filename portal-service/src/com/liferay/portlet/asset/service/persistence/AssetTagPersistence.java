@@ -439,10 +439,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* Returns the primaryKeys of asset entries associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag
-	* @return List<Long> of the primaryKeys of asset entries associated with the asset tag
+	* @return long[] of the primaryKeys of asset entries associated with the asset tag
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getAssetEntryPrimaryKeys(long pk)
+	public long[] getAssetEntryPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

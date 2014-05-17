@@ -427,6 +427,18 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the groupIds of the groups associated with the role.
+	 *
+	 * @param roleId the roleId of the role
+	 * @return long[] the groupIds of groups associated with the role
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long[] getGroupPrimaryKeys(long roleId) throws SystemException {
+		return rolePersistence.getGroupPrimaryKeys(roleId);
+	}
+
+	/**
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -563,6 +575,18 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setGroupRoles(long groupId, long[] roleIds)
 		throws SystemException {
 		groupPersistence.setRoles(groupId, roleIds);
+	}
+
+	/**
+	 * Returns the userIds of the users associated with the role.
+	 *
+	 * @param roleId the roleId of the role
+	 * @return long[] the userIds of users associated with the role
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long[] getUserPrimaryKeys(long roleId) throws SystemException {
+		return rolePersistence.getUserPrimaryKeys(roleId);
 	}
 
 	/**

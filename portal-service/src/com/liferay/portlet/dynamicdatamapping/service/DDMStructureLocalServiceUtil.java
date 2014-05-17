@@ -325,6 +325,18 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
+	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
+	*
+	* @param structureId the structureId of the d d m structure
+	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getDLFileEntryTypePrimaryKeys(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDLFileEntryTypePrimaryKeys(structureId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
@@ -477,6 +489,18 @@ public class DDMStructureLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.setDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
+	}
+
+	/**
+	* Returns the folderIds of the journal folders associated with the d d m structure.
+	*
+	* @param structureId the structureId of the d d m structure
+	* @return long[] the folderIds of journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getJournalFolderPrimaryKeys(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getJournalFolderPrimaryKeys(structureId);
 	}
 
 	/**

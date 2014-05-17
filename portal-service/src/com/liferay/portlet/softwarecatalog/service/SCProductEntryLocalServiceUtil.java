@@ -259,6 +259,18 @@ public class SCProductEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the licenseIds of the s c licenses associated with the s c product entry.
+	*
+	* @param productEntryId the productEntryId of the s c product entry
+	* @return long[] the licenseIds of s c licenses associated with the s c product entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getSCLicensePrimaryKeys(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSCLicensePrimaryKeys(productEntryId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addSCLicenseSCProductEntry(long licenseId,

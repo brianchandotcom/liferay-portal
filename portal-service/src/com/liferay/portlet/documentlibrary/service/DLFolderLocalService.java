@@ -298,6 +298,17 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the fileEntryTypeIds of the document library file entry types associated with the document library folder.
+	*
+	* @param folderId the folderId of the document library folder
+	* @return long[] the fileEntryTypeIds of document library file entry types associated with the document library folder
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getDLFileEntryTypePrimaryKeys(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId)

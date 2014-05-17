@@ -505,11 +505,11 @@ public class SCProductVersionUtil {
 	* Returns the primaryKeys of s c framework versions associated with the s c product version.
 	*
 	* @param pk the primary key of the s c product version
-	* @return List<Long> of the primaryKeys of s c framework versions associated with the s c product version
+	* @return long[] of the primaryKeys of s c framework versions associated with the s c product version
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getSCFrameworkVersionPrimaryKeys(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getSCFrameworkVersionPrimaryKeys(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getSCFrameworkVersionPrimaryKeys(pk);
 	}
 

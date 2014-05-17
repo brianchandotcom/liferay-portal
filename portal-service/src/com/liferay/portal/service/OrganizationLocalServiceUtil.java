@@ -297,6 +297,18 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	* Returns the groupIds of the groups associated with the organization.
+	*
+	* @param organizationId the organizationId of the organization
+	* @return long[] the groupIds of groups associated with the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getGroupPrimaryKeys(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupPrimaryKeys(organizationId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupOrganization(long groupId, long organizationId)
@@ -440,6 +452,18 @@ public class OrganizationLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().setGroupOrganizations(groupId, organizationIds);
+	}
+
+	/**
+	* Returns the userIds of the users associated with the organization.
+	*
+	* @param organizationId the organizationId of the organization
+	* @return long[] the userIds of users associated with the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getUserPrimaryKeys(long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPrimaryKeys(organizationId);
 	}
 
 	/**

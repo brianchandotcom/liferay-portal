@@ -293,6 +293,18 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the groupIds of the groups associated with the user.
+	*
+	* @param userId the userId of the user
+	* @return long[] the groupIds of groups associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getGroupPrimaryKeys(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupPrimaryKeys(userId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupUser(long groupId, long userId)
@@ -430,6 +442,18 @@ public class UserLocalServiceUtil {
 	public static void setGroupUsers(long groupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setGroupUsers(groupId, userIds);
+	}
+
+	/**
+	* Returns the organizationIds of the organizations associated with the user.
+	*
+	* @param userId the userId of the user
+	* @return long[] the organizationIds of organizations associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getOrganizationPrimaryKeys(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOrganizationPrimaryKeys(userId);
 	}
 
 	/**
@@ -573,6 +597,18 @@ public class UserLocalServiceUtil {
 	public static void setOrganizationUsers(long organizationId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setOrganizationUsers(organizationId, userIds);
+	}
+
+	/**
+	* Returns the roleIds of the roles associated with the user.
+	*
+	* @param userId the userId of the user
+	* @return long[] the roleIds of roles associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getRolePrimaryKeys(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRolePrimaryKeys(userId);
 	}
 
 	/**
@@ -721,6 +757,18 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the teamIds of the teams associated with the user.
+	*
+	* @param userId the userId of the user
+	* @return long[] the teamIds of teams associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getTeamPrimaryKeys(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTeamPrimaryKeys(userId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addTeamUser(long teamId, long userId)
@@ -857,6 +905,18 @@ public class UserLocalServiceUtil {
 	public static void setTeamUsers(long teamId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setTeamUsers(teamId, userIds);
+	}
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the user.
+	*
+	* @param userId the userId of the user
+	* @return long[] the userGroupIds of user groups associated with the user
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getUserGroupPrimaryKeys(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupPrimaryKeys(userId);
 	}
 
 	/**

@@ -305,6 +305,19 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	/**
+	* Returns the groupIds of the groups associated with the user group.
+	*
+	* @param userGroupId the userGroupId of the user group
+	* @return long[] the groupIds of groups associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getGroupPrimaryKeys(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getGroupPrimaryKeys(userGroupId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
@@ -458,6 +471,19 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	}
 
 	/**
+	* Returns the teamIds of the teams associated with the user group.
+	*
+	* @param userGroupId the userGroupId of the user group
+	* @return long[] the teamIds of teams associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getTeamPrimaryKeys(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getTeamPrimaryKeys(userGroupId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
@@ -607,6 +633,19 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	public void setTeamUserGroups(long teamId, long[] userGroupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_userGroupLocalService.setTeamUserGroups(teamId, userGroupIds);
+	}
+
+	/**
+	* Returns the userIds of the users associated with the user group.
+	*
+	* @param userGroupId the userGroupId of the user group
+	* @return long[] the userIds of users associated with the user group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getUserPrimaryKeys(long userGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupLocalService.getUserPrimaryKeys(userGroupId);
 	}
 
 	/**

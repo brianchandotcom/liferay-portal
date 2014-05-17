@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -7233,14 +7232,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Returns the primaryKeys of groups associated with the organization.
 	 *
 	 * @param pk the primary key of the organization
-	 * @return List<Long> of the primaryKeys of groups associated with the organization
+	 * @return long[] of the primaryKeys of groups associated with the organization
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Long> getGroupPrimaryKeys(long pk) throws SystemException {
+	public long[] getGroupPrimaryKeys(long pk) throws SystemException {
 		long[] pks = organizationToGroupTableMapper.getRightPrimaryKeys(pk);
 
-		return ListUtil.toList(pks);
+		return pks.clone();
 	}
 
 	/**
@@ -7522,14 +7521,14 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Returns the primaryKeys of users associated with the organization.
 	 *
 	 * @param pk the primary key of the organization
-	 * @return List<Long> of the primaryKeys of users associated with the organization
+	 * @return long[] of the primaryKeys of users associated with the organization
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Long> getUserPrimaryKeys(long pk) throws SystemException {
+	public long[] getUserPrimaryKeys(long pk) throws SystemException {
 		long[] pks = organizationToUserTableMapper.getRightPrimaryKeys(pk);
 
-		return ListUtil.toList(pks);
+		return pks.clone();
 	}
 
 	/**

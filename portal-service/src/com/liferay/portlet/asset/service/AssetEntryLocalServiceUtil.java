@@ -259,6 +259,18 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the categoryIds of the asset categories associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the categoryIds of asset categories associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getAssetCategoryPrimaryKeys(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAssetCategoryPrimaryKeys(entryId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addAssetCategoryAssetEntry(long categoryId, long entryId)
@@ -399,6 +411,18 @@ public class AssetEntryLocalServiceUtil {
 		long[] entryIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setAssetCategoryAssetEntries(categoryId, entryIds);
+	}
+
+	/**
+	* Returns the tagIds of the asset tags associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the tagIds of asset tags associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getAssetTagPrimaryKeys(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAssetTagPrimaryKeys(entryId);
 	}
 
 	/**

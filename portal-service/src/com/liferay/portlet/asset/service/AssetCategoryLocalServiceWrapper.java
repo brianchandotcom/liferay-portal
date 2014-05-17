@@ -345,6 +345,19 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	/**
+	* Returns the entryIds of the asset entries associated with the asset category.
+	*
+	* @param categoryId the categoryId of the asset category
+	* @return long[] the entryIds of asset entries associated with the asset category
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getAssetEntryPrimaryKeys(long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getAssetEntryPrimaryKeys(categoryId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override

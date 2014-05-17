@@ -578,10 +578,10 @@ public class TeamUtil {
 	* Returns the primaryKeys of users associated with the team.
 	*
 	* @param pk the primary key of the team
-	* @return List<Long> of the primaryKeys of users associated with the team
+	* @return long[] of the primaryKeys of users associated with the team
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getUserPrimaryKeys(long pk)
+	public static long[] getUserPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getUserPrimaryKeys(pk);
 	}
@@ -813,11 +813,11 @@ public class TeamUtil {
 	* Returns the primaryKeys of user groups associated with the team.
 	*
 	* @param pk the primary key of the team
-	* @return List<Long> of the primaryKeys of user groups associated with the team
+	* @return long[] of the primaryKeys of user groups associated with the team
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getUserGroupPrimaryKeys(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getUserGroupPrimaryKeys(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getUserGroupPrimaryKeys(pk);
 	}
 

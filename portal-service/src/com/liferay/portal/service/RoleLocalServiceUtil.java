@@ -293,6 +293,18 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
+	* Returns the groupIds of the groups associated with the role.
+	*
+	* @param roleId the roleId of the role
+	* @return long[] the groupIds of groups associated with the role
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getGroupPrimaryKeys(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupPrimaryKeys(roleId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addGroupRole(long groupId, long roleId)
@@ -426,6 +438,18 @@ public class RoleLocalServiceUtil {
 	public static void setGroupRoles(long groupId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().setGroupRoles(groupId, roleIds);
+	}
+
+	/**
+	* Returns the userIds of the users associated with the role.
+	*
+	* @param roleId the roleId of the role
+	* @return long[] the userIds of users associated with the role
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getUserPrimaryKeys(long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPrimaryKeys(roleId);
 	}
 
 	/**

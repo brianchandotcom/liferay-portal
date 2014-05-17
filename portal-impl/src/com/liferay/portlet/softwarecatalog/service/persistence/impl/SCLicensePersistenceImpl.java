@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -2419,15 +2418,15 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 * Returns the primaryKeys of s c product entries associated with the s c license.
 	 *
 	 * @param pk the primary key of the s c license
-	 * @return List<Long> of the primaryKeys of s c product entries associated with the s c license
+	 * @return long[] of the primaryKeys of s c product entries associated with the s c license
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Long> getSCProductEntryPrimaryKeys(long pk)
+	public long[] getSCProductEntryPrimaryKeys(long pk)
 		throws SystemException {
 		long[] pks = scLicenseToSCProductEntryTableMapper.getRightPrimaryKeys(pk);
 
-		return ListUtil.toList(pks);
+		return pks.clone();
 	}
 
 	/**

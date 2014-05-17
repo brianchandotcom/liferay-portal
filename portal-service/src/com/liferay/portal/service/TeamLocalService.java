@@ -232,6 +232,17 @@ public interface TeamLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrimaryKeys(long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public void addUserTeam(long userId, long teamId)
@@ -336,6 +347,17 @@ public interface TeamLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void setUserTeams(long userId, long[] teamIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userGroupIds of user groups associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserGroupPrimaryKeys(long teamId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

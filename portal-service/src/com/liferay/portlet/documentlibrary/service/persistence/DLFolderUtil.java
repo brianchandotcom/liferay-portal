@@ -3029,11 +3029,11 @@ public class DLFolderUtil {
 	* Returns the primaryKeys of document library file entry types associated with the document library folder.
 	*
 	* @param pk the primary key of the document library folder
-	* @return List<Long> of the primaryKeys of document library file entry types associated with the document library folder
+	* @return long[] of the primaryKeys of document library file entry types associated with the document library folder
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getDLFileEntryTypePrimaryKeys(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getDLFileEntryTypePrimaryKeys(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getDLFileEntryTypePrimaryKeys(pk);
 	}
 

@@ -725,11 +725,11 @@ public class DLImpl implements DL {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<img style=\"border-width: 0; text-align: left;\" src=\"");
+		sb.append("<img src=\"");
 		sb.append(themeDisplay.getPathThemeImages());
 		sb.append("/file_system/small/");
 		sb.append(fileEntry.getIcon());
-		sb.append(".png\">");
+		sb.append(".png\" style=\"border-width: 0; text-align: left;\">");
 
 		return sb.toString();
 	}

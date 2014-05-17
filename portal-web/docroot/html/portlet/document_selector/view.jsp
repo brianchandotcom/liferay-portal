@@ -350,7 +350,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 				href="<%= rowHREF %>"
 				name="document"
 			>
-				<img align="left" alt="" border="0" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle() %>" />
+				<img align="left" alt="" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle() %>" />
 				<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 			</liferay-ui:search-container-column-text>
 

@@ -212,7 +212,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			sb.append("<br />");
 			sb.append("<img alt=\"");
 			sb.append(item.getSku());
-			sb.append("\" border=\"0\" src=\"");
+			sb.append("\" src=\"");
 
 			if (Validator.isNotNull(item.getSmallImageURL())) {
 				sb.append(item.getSmallImageURL());

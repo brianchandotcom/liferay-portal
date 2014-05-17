@@ -854,7 +854,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 					</portlet:resourceURL>
 
-					<img alt="<liferay-ui:message key="memory-used-vs-total-memory" />" border="0" src="<%= totalMemoryChartURL %>" />
+					<img alt="<liferay-ui:message key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
 
 					<portlet:resourceURL var="maxMemoryChartURL">
 						<portlet:param name="struts_action" value="/admin_server/view_chart" />
@@ -863,7 +863,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
 					</portlet:resourceURL>
 
-					<img alt="<liferay-ui:message key="memory-used-vs-max-memory" />" border="0" src="<%= maxMemoryChartURL %>" />
+					<img alt="<liferay-ui:message key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
 				</div>
 
 				<br />

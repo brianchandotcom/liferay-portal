@@ -931,6 +931,10 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.countByExtraSettings();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 *             boolean)}
+	 */
 	@Deprecated
 	@Override
 	public File getFile(
@@ -941,6 +945,10 @@ public class DLFileEntryLocalServiceImpl
 		return getFile(fileEntryId, version, incrementCounter, 1);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 *             boolean, int)}
+	 */
 	@Deprecated
 	@Override
 	public File getFile(

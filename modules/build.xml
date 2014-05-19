@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<import file="../tools/sdk/build-common.xml" />
+
 	<path id="plugins.includes.path">
 		<dirset dir="apps" includes="*" />
 		<dirset dir="core" includes="*" />
@@ -9,6 +11,4 @@
 	</path>
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
-
-	<import file="../tools/sdk/build-common.xml" />
 </project>

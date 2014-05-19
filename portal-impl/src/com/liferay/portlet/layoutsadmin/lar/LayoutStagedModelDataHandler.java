@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -807,8 +806,7 @@ public class LayoutStagedModelDataHandler
 
 		typeSettings.setProperty(
 			"url",
-			url.substring(0, x) + LayoutExporter.SAME_GROUP_FRIENDLY_URL +
-				url.substring(y));
+			url.substring(0, x) + _SAME_GROUP_FRIENDLY_URL + url.substring(y));
 	}
 
 	protected void fixImportTypeSettings(Layout layout) throws Exception {
@@ -820,7 +818,7 @@ public class LayoutStagedModelDataHandler
 
 		String friendlyURL = (String)friendlyURLInfo[0];
 
-		if (!friendlyURL.equals(LayoutExporter.SAME_GROUP_FRIENDLY_URL)) {
+		if (!friendlyURL.equals(_SAME_GROUP_FRIENDLY_URL)) {
 			return;
 		}
 
@@ -1249,6 +1247,9 @@ public class LayoutStagedModelDataHandler
 			layout.setGroupId(groupId);
 		}
 	}
+
+	private static final String _SAME_GROUP_FRIENDLY_URL =
+		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);

@@ -112,6 +112,10 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class LayoutImporter {
 
+	public static LayoutImporter getInstance() {
+		return _instance;
+	}
+
 	public void importLayouts(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
@@ -1167,7 +1171,12 @@ public class LayoutImporter {
 		}
 	}
 
+	private LayoutImporter() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LayoutImporter.class);
+
+	private static LayoutImporter _instance = new LayoutImporter();
 
 	private DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();

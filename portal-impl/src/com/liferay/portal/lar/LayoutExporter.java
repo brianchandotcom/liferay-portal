@@ -99,9 +99,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class LayoutExporter {
 
-	public static final String SAME_GROUP_FRIENDLY_URL =
-		"/[$SAME_GROUP_FRIENDLY_URL$]";
-
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
@@ -138,6 +135,10 @@ public class LayoutExporter {
 		}
 
 		return portlets;
+	}
+
+	public static LayoutExporter getInstance() {
+		return _instance;
 	}
 
 	public static List<Portlet> getPortletDataHandlerPortlets(
@@ -683,7 +684,12 @@ public class LayoutExporter {
 		}
 	}
 
+	private LayoutExporter() {
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
+
+	private static LayoutExporter _instance = new LayoutExporter();
 
 	private DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();

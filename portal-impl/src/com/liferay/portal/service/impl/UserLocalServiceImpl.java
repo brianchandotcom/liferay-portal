@@ -2537,49 +2537,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			params, start, end, obc);
 	}
 
-	@Override
-	public List<User> getSocialUsersByKeywords(
-			String keywords, long userId, int[] types, int start, int end)
-		throws PortalException, SystemException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put(
-			"socialRelationType",
-			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
-		params.put("wildcardMode", WildcardMode.TRAILING);
-
-		return userFinder.findByKeywords(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, null);
-	}
-
-	@Override
-	public List<User> getSocialUsersByKeywordsAndGroupIds(
-			String keywords, long userId, int[] types, long[] groupIds,
-			int start, int end)
-		throws PortalException, SystemException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put(
-			"socialRelationType",
-			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
-		params.put("socialRelationTypeUnionUserGroups", true);
-		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
-		params.put("wildcardMode", WildcardMode.TRAILING);
-
-		return userFinder.findByKeywords(
-			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
-			params, start, end, null);
-	}
-
 	/**
 	 * Returns the number of users with a social relation with the user.
 	 *
@@ -2942,23 +2899,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.findByC_SN(companyId, screenName);
 
 		return user.getUserId();
-	}
-
-	@Override
-	public List<User> getUsersByKeywordsAndGroupIds(
-			long companyId, String keywords, long[] groupIds, int start,
-			int end)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
-		params.put("wildcardMode", WildcardMode.TRAILING);
-
-		return userFinder.findByKeywords(
-			companyId, keywords, WorkflowConstants.STATUS_APPROVED, params,
-			start, end, null);
 	}
 
 	/**
@@ -3488,6 +3428,66 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	@Override
+	public List<User> searchSocial(
+			long companyId, String keywords, long[] groupIds, int start,
+			int end)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
+		params.put("wildcardMode", WildcardMode.TRAILING);
+
+		return userFinder.findByKeywords(
+			companyId, keywords, WorkflowConstants.STATUS_APPROVED, params,
+			start, end, null);
+	}
+
+	@Override
+	public List<User> searchSocial(
+			String keywords, long userId, int[] types, int start, int end)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put(
+			"socialRelationType",
+			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
+		params.put("wildcardMode", WildcardMode.TRAILING);
+
+		return userFinder.findByKeywords(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, null);
+	}
+
+	@Override
+	public List<User> searchSocial(
+			String keywords, long userId, int[] types, long[] groupIds,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put(
+			"socialRelationType",
+			new Long[][] {new Long[] {userId}, ArrayUtil.toLongArray(types)});
+		params.put("socialRelationTypeUnionUserGroups", true);
+		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
+		params.put("wildcardMode", WildcardMode.TRAILING);
+
+		return userFinder.findByKeywords(
+			user.getCompanyId(), keywords, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, null);
 	}
 
 	@Override

@@ -251,7 +251,7 @@ public class SocialRelationLocalServiceTest {
 
 		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[]{}));
 
-		List<User> users = UserLocalServiceUtil.getUsersByKeywordsAndGroupIds(
+		List<User> users = UserLocalServiceUtil.searchSocial(
 			TestPropsValues.getCompanyId(), "dlc", groupIds, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -280,7 +280,7 @@ public class SocialRelationLocalServiceTest {
 		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc2");
 
-		List<User> users = UserLocalServiceUtil.getSocialUsersByKeywords(
+		List<User> users = UserLocalServiceUtil.searchSocial(
 			"dlc", dlc2User.getUserId(), types, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 

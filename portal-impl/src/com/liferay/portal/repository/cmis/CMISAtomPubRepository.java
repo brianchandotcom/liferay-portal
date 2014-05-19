@@ -55,7 +55,7 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
 
 		String login = getLogin();
-		String password;
+		String password = null;
 
 		if (Validator.isNotNull(login)) {
 			password = PrincipalThreadLocal.getPassword();
@@ -66,8 +66,8 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 			password = PropsValues.DL_REPOSITORY_GUEST_PASSWORD;
 		}
 
-		parameters.put(SessionParameter.USER, login);
 		parameters.put(SessionParameter.PASSWORD, password);
+		parameters.put(SessionParameter.USER, login);
 
 		CMISRepositoryUtil.checkRepository(
 			getRepositoryId(), parameters, getTypeSettingsProperties(),

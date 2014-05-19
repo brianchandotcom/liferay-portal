@@ -803,6 +803,10 @@ public interface PropsKeys {
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
 
+	public static final String DL_REPOSITORY_GUEST_PASSWORD = "dl.repository.guest.password";
+
+	public static final String DL_REPOSITORY_GUEST_USERNAME = "dl.repository.guest.username";
+
 	public static final String DL_REPOSITORY_IMPL = "dl.repository.impl";
 
 	public static final String DL_SHOW_LIFERAY_SYNC_MESSAGE = "dl.show.liferay.sync.message";

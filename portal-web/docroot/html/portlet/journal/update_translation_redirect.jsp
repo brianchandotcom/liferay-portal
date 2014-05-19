@@ -35,19 +35,15 @@ if (cmd.equals(Constants.TRANSLATE)) {
 <aui:script use="aui-base">
 	var openingWindow = Liferay.Util.getOpener();
 
-	openingWindow.<portlet:namespace />postProcessTranslation(
-		'<%= System.currentTimeMillis() %>',
-		'<%= HtmlUtil.escapeJS(cmd) %>',
-		'<%= article.getVersion() %>',
-		'<%= HtmlUtil.escapeJS(toLanguageId) %>',
-		'<%= toLanguageDisplayName %>',
-		'<%= WorkflowConstants.getStatusLabel(article.getStatus()) %>'
-	);
-
-	Liferay.fire(
-		'closeWindow',
+	openingWindow.Liferay.fire(
+		'<portlet:namespace />postProcessTranslation',
 		{
-			id: '<%= HtmlUtil.escapeJS(renderResponse.getNamespace() + "journal-article-translation-" + toLanguageId) %>'
+			cmd: '<%= HtmlUtil.escapeJS(cmd) %>',
+			formDate: '<%= System.currentTimeMillis() %>',
+			newLanguage: '<%= toLanguageDisplayName %>',
+			newLanguageId: '<%= HtmlUtil.escapeJS(toLanguageId) %>',
+			newStatusMessage: '<%= WorkflowConstants.getStatusLabel(article.getStatus()) %>',
+			newVersion: '<%= article.getVersion() %>'
 		}
 	);
 </aui:script>

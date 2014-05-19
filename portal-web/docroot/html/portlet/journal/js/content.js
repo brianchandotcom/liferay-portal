@@ -107,14 +107,14 @@ AUI.add(
 						var instance = this;
 
 						instance._bindUI();
-
-						Liferay.provide(WIN, instance.ns('postProcessTranslation'), A.bind('_postProcessTranslation', instance));
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
-						instance._eventHandles = [];
+						instance._eventHandles = [
+							Liferay.on(instance.ns('postProcessTranslation'), instance._postProcessTranslation, instance)
+						];
 
 						var changeDefaultLanguage = instance.get(STR_CHANGE_DEFAULT_LANGUAGE);
 
@@ -350,31 +350,33 @@ AUI.add(
 						event.preventDefault();
 					},
 
-					_postProcessTranslation: function(formDate, cmd, newVersion, newLanguageId, newLanguage, newStatusMessage) {
+					_postProcessTranslation: function(event) {
 						var instance = this;
+
+						var newLanguageId = event.newLanguageId;
 
 						var strings = instance.get(STR_STRINGS);
 
 						var form = instance._getPrincipalForm();
 
-						form.one(STR_HASH + instance.ns('formDate')).val(formDate);
-						form.one(STR_HASH + instance.ns('version')).val(newVersion);
+						form.one(STR_HASH + instance.ns('formDate')).val(event.formDate);
+						form.one(STR_HASH + instance.ns('version')).val(event.newVersion);
 
 						var taglibWorkflowStatus = A.one(STR_HASH + instance.ns('journalArticleWrapper') + ' .taglib-workflow-status');
 
 						var statusNode = taglibWorkflowStatus.one('.workflow-status strong');
 
-						statusNode.html(newStatusMessage);
+						statusNode.html(event.newStatusMessage);
 
 						var versionNode = taglibWorkflowStatus.one('.workflow-version strong');
 
-						versionNode.html(newVersion);
+						versionNode.html(event.newVersion);
 
 						var availableTranslationContainer = A.one(STR_HASH + instance.ns('availableTranslationContainer'));
 
 						var translationLink = availableTranslationContainer.one(STR_HASH + instance.ns('journal-article-translation-' + newLanguageId));
 
-						if (cmd == 'delete_translation') {
+						if (event.cmd == 'delete_translation') {
 							var availableLocales = A.one(STR_HASH + instance.ns('availableLocales') + newLanguageId);
 
 							if (availableLocales) {
@@ -424,7 +426,7 @@ AUI.add(
 								Lang.sub(
 									TPL_TRANSLATION,
 									{
-										language: newLanguage,
+										language: event.newLanguage,
 										languageId: newLanguageId,
 										namespace: instance.NS,
 										pathThemeImages: themeDisplay.getPathThemeImages(),
@@ -447,6 +449,13 @@ AUI.add(
 
 							form.append(languageInput);
 						}
+
+						Liferay.fire(
+							'closeWindow',
+							{
+								id: instance.ns('journal-article-translation-') + newLanguageId
+							}
+						);
 					}
 				}
 			}

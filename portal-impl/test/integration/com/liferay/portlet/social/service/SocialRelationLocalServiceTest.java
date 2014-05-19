@@ -16,7 +16,10 @@ package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -26,6 +29,7 @@ import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -222,6 +226,67 @@ public class SocialRelationLocalServiceTest {
 		SocialRelationLocalServiceUtil.addRelation(
 			fra5User.getUserId(), fra1User.getUserId(),
 			SocialRelationConstants.TYPE_UNI_CHILD);
+	}
+
+	@Test
+	public void testGetMultipleGroups() throws Exception {
+		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc3");
+
+		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc4");
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
+
+		long[] dlc3GroupIds = dlc3User.getGroupIds();
+		long[] dlc4GroupIds = dlc4User.getGroupIds();
+
+		Set<Long> groupIdsSet = SetUtil.fromArray(dlc3GroupIds);
+
+		groupIdsSet.retainAll(SetUtil.fromArray(dlc4GroupIds));
+
+		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[]{}));
+
+		List<User> users = UserLocalServiceUtil.searchSocial(
+			TestPropsValues.getCompanyId(), "dlc", groupIds, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(2, users.size());
+	}
+
+	@Test
+	public void testGetMultipleRelations() throws Exception {
+		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc3");
+
+		User dlc4User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc4");
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+
+		GroupLocalServiceUtil.addUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
+
+		int[] types = {
+			SocialRelationConstants.TYPE_BI_FRIEND,
+			SocialRelationConstants.TYPE_BI_COWORKER
+		};
+
+		User dlc2User = UserLocalServiceUtil.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "dlc2");
+
+		List<User> users = UserLocalServiceUtil.searchSocial(
+			"dlc", dlc2User.getUserId(), types, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		// dlc2 should have 1 coworker and 4 friends.
+
+		Assert.assertEquals(5, users.size());
 	}
 
 	@Test

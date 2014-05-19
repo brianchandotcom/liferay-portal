@@ -2766,6 +2766,33 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.User> searchSocial(
+		long companyId, java.lang.String keywords, long[] groupIds, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.searchSocial(companyId, keywords, groupIds,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> searchSocial(
+		java.lang.String keywords, long userId, int[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.searchSocial(keywords, userId, types, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.User> searchSocial(
+		java.lang.String keywords, long userId, int[] types, long[] groupIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.searchSocial(keywords, userId, types,
+			groupIds, start, end);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
 		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,

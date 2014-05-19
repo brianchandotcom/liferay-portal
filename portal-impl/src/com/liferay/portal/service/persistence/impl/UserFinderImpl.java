@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -444,11 +445,14 @@ public class UserFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
+			WildcardMode wildcardMode = (WildcardMode)GetterUtil.getObject(
+				params.get("wildcardMode"), WildcardMode.SURROUND);
+
+			firstNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			middleNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			lastNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			screenNames = CustomSQLUtil.keywords(keywords, wildcardMode);
+			emailAddresses = CustomSQLUtil.keywords(keywords, wildcardMode);
 		}
 		else {
 			andOperator = true;
@@ -607,7 +611,12 @@ public class UserFinderImpl
 
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		if (ArrayUtil.isNotEmpty(groupIds) && inherit) {
+		boolean socialRelationTypeUnionUserGroups = GetterUtil.getBoolean(
+			params.get("socialRelationTypeUnionUserGroups"));
+
+		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
+			!socialRelationTypeUnionUserGroups) {
+
 			List<Long> organizationIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
 
@@ -660,7 +669,9 @@ public class UserFinderImpl
 			}
 		}
 
-		if (ArrayUtil.isNotEmpty(roleIds) && inherit) {
+		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
+			!socialRelationTypeUnionUserGroups) {
+
 			List<Long> organizationIds = new ArrayList<Long>();
 			List<Long> roleGroupIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
@@ -723,6 +734,18 @@ public class UserFinderImpl
 				params4.put(
 					"usersOrgs",
 					organizationIds.toArray(new Long[organizationIds.size()]));
+			}
+		}
+
+		if (socialRelationTypeUnionUserGroups) {
+			boolean hasSocialRelationTypes = Validator.isNotNull(
+				params.get("socialRelationType"));
+
+			if (hasSocialRelationTypes && ArrayUtil.isNotEmpty(groupIds)) {
+				params2 = new LinkedHashMap<String, Object>(params1);
+
+				params1.remove("socialRelationType");
+				params2.remove("usersGroups");
 			}
 		}
 
@@ -1183,7 +1206,31 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION);
 		}
 		else if (key.equals("socialRelationType")) {
-			join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			if (value instanceof Long[]) {
+				join = CustomSQLUtil.get(JOIN_BY_SOCIAL_RELATION_TYPE);
+			}
+			else if (value instanceof Long[][]) {
+				Long[][] doubleArrayValue = (Long[][])value;
+
+				Long[] socialRelationTypes = doubleArrayValue[1];
+
+				StringBundler sb = new StringBundler(
+					socialRelationTypes.length * 2 + 2);
+
+				sb.append("WHERE (SocialRelation.userId1 = ?) AND ");
+				sb.append("(SocialRelation.type_ IN (");
+
+				for (long socialRelationType : socialRelationTypes) {
+					sb.append(StringPool.QUESTION);
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
+
+				join = sb.toString();
+			}
 		}
 		else if (value instanceof CustomSQLParam) {
 			CustomSQLParam customSQLParam = (CustomSQLParam)value;

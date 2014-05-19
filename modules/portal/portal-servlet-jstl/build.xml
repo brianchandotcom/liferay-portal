@@ -2,15 +2,14 @@
 <!DOCTYPE project>
 
 <project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 	<property name="original.lib.name" value="org.apache.taglibs.standard.glassfish" />
 	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/orbit/" />
 	<property name="original.lib.version" value="1.2.0.v201112081803" />
 	<property name="plugin.full.version" value="7.0.0.1" />
 	<property name="plugin.name" value="com.liferay.portal.servlet.jstl" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<target name="compile">
 		<antcall target="patch">

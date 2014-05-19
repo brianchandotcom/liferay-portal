@@ -93,11 +93,9 @@ SocialInteractionsConfiguration socialInteractionsConfiguration = SocialInteract
 
 	var form = A.one('#<portlet:namespace />fm');
 
-	form.on(
-		'submit',
-		function(e) {
-			var socialInteractionsSocialRelationTypesInputName = '<portlet:namespace />settings--socialInteractionsSocialRelationTypes--';
+	form.on('submit', function(e) {
+		var socialInteractionsSocialRelationTypesInputName = '<portlet:namespace />settings--socialInteractionsSocialRelationTypes--';
 
-			document.<portlet:namespace />fm[socialInteractionsSocialRelationTypesInputName].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentSocialInteractionsSocialRelationTypes);
-		});
+		document.<portlet:namespace />fm[socialInteractionsSocialRelationTypesInputName].value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentSocialInteractionsSocialRelationTypes);
+	});
 </aui:script>

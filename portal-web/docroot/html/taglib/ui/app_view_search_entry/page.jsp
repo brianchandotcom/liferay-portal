@@ -182,7 +182,7 @@ summary.setQueryTerms(queryTerms);
 	</c:if>
 
 	<c:if test="<%= showCheckbox %>">
-		<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
+		<aui:input cssClass="entry-selector overlay" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">

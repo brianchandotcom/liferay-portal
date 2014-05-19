@@ -105,6 +105,17 @@ public class TableNameOrderByComparatorTest {
 			"table.column ASC", tableNameOrderByComparator.getOrderBy());
 	}
 
+	@Test
+	public void testToStringReturnsSameAsGetOrderBy() {
+		TableNameOrderByComparator tableNameOrderByComparator =
+			new TableNameOrderByComparator(
+				new TestGetOrderByComparator("column ASC"), "table");
+
+		Assert.assertEquals(
+			tableNameOrderByComparator.getOrderBy(),
+			tableNameOrderByComparator.toString());
+	}
+
 	private class TestGetOrderByComparator extends OrderByComparator {
 
 		public TestGetOrderByComparator(String orderBy) {

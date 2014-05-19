@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.EntityNameOrderByComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -38,14 +39,12 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupUtil;
 import com.liferay.portal.service.persistence.RoleUtil;
 import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -779,7 +778,8 @@ public class UserFinderImpl
 
 			if (obc != null) {
 				sb.append(" ORDER BY ");
-				sb.append(obc.toString());
+				sb.append(
+					new EntityNameOrderByComparator(obc, "User_").getOrderBy());
 			}
 
 			sql = sb.toString();
@@ -788,7 +788,7 @@ public class UserFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("userId", Type.LONG);
+			q.addEntity("User_", UserImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -854,18 +854,7 @@ public class UserFinderImpl
 				}
 			}
 
-			Set<Long> userIds = new LinkedHashSet<Long>(
-				(List<Long>)QueryUtil.list(q, getDialect(), start, end));
-
-			List<User> users = new ArrayList<User>(userIds.size());
-
-			for (Long userId : userIds) {
-				User user = UserUtil.findByPrimaryKey(userId);
-
-				users.add(user);
-			}
-
-			return users;
+			return (List<User>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -906,7 +895,7 @@ public class UserFinderImpl
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-		q.addScalar("userId", Type.LONG);
+		q.addEntity("User_", UserImpl.class);
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
@@ -924,7 +913,15 @@ public class UserFinderImpl
 			qPos.add(status);
 		}
 
-		return q.list(true);
+		List<User> users = q.list(true);
+
+		List<Long> userIds = new ArrayList<Long>(users.size());
+
+		for (User user : users) {
+			userIds.add(user.getUserId());
+		}
+
+		return userIds;
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {

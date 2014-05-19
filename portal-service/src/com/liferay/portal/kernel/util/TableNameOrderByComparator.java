@@ -42,17 +42,37 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 		String[] columnNames = StringUtil.split(orderBy);
 
-		StringBundler sb = new StringBundler((3 * columnNames.length) - 1);
+		StringBundler sb = new StringBundler((4 * columnNames.length) - 1);
 
 		for (int i = 0; i < columnNames.length; ++i) {
 			String columnName = columnNames[i];
+			String[] parts;
+			String direction;
 
-			if (columnName.indexOf(CharPool.PERIOD) != -1) {
-				columnName = StringUtil.split(columnName, CharPool.PERIOD)[1];
+			parts = StringUtil.split(columnName, CharPool.PERIOD);
+
+			if (parts.length > 1) {
+				columnName = parts[1];
 			}
 
-			sb.append(_tableName);
-			sb.append(StringUtil.trim(columnName));
+			parts = StringUtil.split(columnName, CharPool.SPACE);
+
+			if (parts.length > 1) {
+				columnName = parts[0];
+				direction = parts[1];
+			}
+			else {
+				direction = null;
+			}
+
+			columnName = getWrappedColumnName(columnName);
+
+			sb.append(columnName);
+
+			if (direction != null) {
+				sb.append(StringPool.SPACE);
+				sb.append(direction);
+			}
 
 			if (i < (columnNames.length - 1)) {
 				sb.append(StringPool.COMMA_AND_SPACE);
@@ -75,6 +95,10 @@ public class TableNameOrderByComparator extends OrderByComparator {
 	@Override
 	public String[] getOrderByFields() {
 		return _orderByComparator.getOrderByFields();
+	}
+
+	public String getTableName() {
+		return _tableName;
 	}
 
 	public OrderByComparator getWrappedOrderByComparator() {
@@ -107,7 +131,11 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	@Override
 	public String toString() {
-		return _orderByComparator.toString();
+		return getOrderBy();
+	}
+
+	protected String getWrappedColumnName(String columnName) {
+		return _tableName + StringUtil.trim(columnName);
 	}
 
 	private OrderByComparator _orderByComparator;

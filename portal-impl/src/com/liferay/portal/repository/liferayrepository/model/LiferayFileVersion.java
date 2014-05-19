@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -145,8 +144,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		throws PortalException, SystemException {
 
 		return DLFileEntryLocalServiceUtil.getFile(
-			PrincipalThreadLocal.getUserId(), _dlFileVersion.getFileEntryId(),
-			_dlFileVersion.getVersion(), incrementCounter);
+			_dlFileVersion.getFileEntryId(), _dlFileVersion.getVersion(),
+			incrementCounter);
 	}
 
 	@Override

@@ -962,6 +962,10 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getName(), version);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 *             String)}
+	 */
 	@Deprecated
 	@Override
 	public InputStream getFileAsStream(
@@ -971,6 +975,10 @@ public class DLFileEntryLocalServiceImpl
 		return getFileAsStream(fileEntryId, version, true, 1);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 *             String, boolean)}
+	 */
 	@Deprecated
 	@Override
 	public InputStream getFileAsStream(
@@ -981,6 +989,10 @@ public class DLFileEntryLocalServiceImpl
 		return getFileAsStream(fileEntryId, version, incrementCounter, 1);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	 *             String, boolean, int)}
+	 */
 	@Deprecated
 	@Override
 	public InputStream getFileAsStream(

@@ -2,6 +2,9 @@
 <!DOCTYPE project>
 
 <project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 	<property name="original.lib.name" value="org.apache.jasper.glassfish" />
 	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/orbit" />
 	<property name="original.lib.version" value="2.1.0.v201110031002" />
@@ -10,10 +13,6 @@
 	<property name="plugin.name" value="com.liferay.portal.servlet.jsp.compiler" />
 	<property name="schemas.dir" value="src/javax/servlet/jsp/resources" />
 	<property name="schemas.url" value="http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<target name="compile">
 		<antcall target="patch">

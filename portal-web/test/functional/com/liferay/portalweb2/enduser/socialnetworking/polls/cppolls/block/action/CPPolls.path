@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>ADD_POLL</td>
-	<td>//button[contains(.,'Add Poll')]</td>
+	<td>//a[contains(.,'Add Poll')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[contains(.,'Permissions')]</td>
+	<td>//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -49,28 +49,6 @@ import javax.servlet.http.HttpSession;
 public class BreadcrumbImpl implements Breadcrumb {
 
 	@Override
-	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
-
-		Layout layout = themeDisplay.getLayout();
-
-		_addGroupsBreadcrumbEntries(
-			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
-
-		BreadcrumbEntry breadcrumbEntry = null;
-
-		if (!breadcrumbEntries.isEmpty()) {
-			breadcrumbEntry = breadcrumbEntries.get(0);
-		}
-
-		return breadcrumbEntry;
-	}
-
-	@Override
 	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -117,8 +95,8 @@ public class BreadcrumbImpl implements Breadcrumb {
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutPrototype()) {
-			_addLayoutBreadcrumbEntries(breadcrumbEntries, themeDisplay,
-				layout);
+			_addLayoutBreadcrumbEntries(
+				breadcrumbEntries, themeDisplay, layout);
 		}
 
 		return breadcrumbEntries;
@@ -186,6 +164,28 @@ public class BreadcrumbImpl implements Breadcrumb {
 		}
 
 		return breadcrumbEntries;
+	}
+
+	@Override
+	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		List<BreadcrumbEntry> breadcrumbEntries =
+			new ArrayList<BreadcrumbEntry>();
+
+		Layout layout = themeDisplay.getLayout();
+
+		_addGroupsBreadcrumbEntries(
+			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
+
+		BreadcrumbEntry breadcrumbEntry = null;
+
+		if (!breadcrumbEntries.isEmpty()) {
+			breadcrumbEntry = breadcrumbEntries.get(0);
+		}
+
+		return breadcrumbEntry;
 	}
 
 	private void _addGroupsBreadcrumbEntries(

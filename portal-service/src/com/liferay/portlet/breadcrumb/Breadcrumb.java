@@ -26,10 +26,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Breadcrumb {
 
-	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
-			ThemeDisplay themeDisplay)
-		throws Exception;
-
 	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception;
@@ -44,5 +40,9 @@ public interface Breadcrumb {
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request);
+
+	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
+			ThemeDisplay themeDisplay)
+		throws Exception;
 
 }

@@ -15,6 +15,23 @@ AUI.add(
 				'<span class="display-date">{2}</span>' +
 			'</div>';
 
+		var DiffVersionSearch = A.Component.create(
+			{
+				AUGMENTS: [A.AutoCompleteBase],
+
+				EXTENDS: A.Base,
+
+				NAME: 'diffversionsearch',
+
+				prototype: {
+					initializer: function() {
+						this._bindUIACBase();
+						this._syncUIACBase();
+					}
+				}
+			}
+		);
+
 		var DiffVersionComparator = A.Component.create(
 			{
 				ATTRS: {
@@ -35,6 +52,10 @@ AUI.add(
 					},
 
 					resourceURL: {
+						value: ''
+					},
+
+					searchBoxSelector: {
 						value: ''
 					},
 
@@ -62,16 +83,21 @@ AUI.add(
 						instance._resourceURL = instance.get('resourceURL');
 
 						var diffContainerHtmlResultsSelector = instance.get('diffContainerHtmlResultsSelector');
+						var searchBoxSelector = instance.get('searchBoxSelector');
 						var versionFilterSelector = instance.get('versionFilterSelector');
 						var versionItemsSelector = instance.get('versionItemsSelector');
 
 						instance._diffContainerHtmlResults = instance.byId(diffContainerHtmlResultsSelector);
+						instance._searchBox = instance.byId(searchBoxSelector);
 						instance._versionFilter = instance.byId(versionFilterSelector);
 						instance._versionItems = instance.byId(versionItemsSelector);
 
+						instance._diffVersionSearch = instance._createDiffVersionSearch();
+
 						var eventHandles = [
 							instance._versionFilter.delegate('click', instance._onCloseFilter, '.close-version-filter', instance),
-							instance._versionItems.delegate('click', instance._onSelectVersionItem, '.version-item', instance)
+							instance._versionItems.delegate('click', instance._onSelectVersionItem, '.version-item', instance),
+							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
 						];
 
 						instance._eventHandles = eventHandles;
@@ -81,6 +107,36 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					_createDiffVersionSearch: function() {
+						var instance = this;
+
+						var results = [];
+
+						instance._versionItems.all('.version-item').each(
+							function(node) {
+								results.push(
+									{
+										node: node,
+										searchData: node.one('.version-title').text()
+									}
+								);
+							}
+						);
+
+						var diffVersionSearch = new DiffVersionSearch(
+							{
+								inputNode: instance._searchBox,
+								minQueryLength: 0,
+								queryDelay: 0,
+								source: results,
+								resultTextLocator: 'searchData',
+								resultFilters: 'phraseMatch'
+							}
+						);
+
+						return diffVersionSearch;
 					},
 
 					_loadDiffHTML: function(sourceVersion, targetVersion) {
@@ -102,6 +158,19 @@ AUI.add(
 										targetVersion: targetVersion
 									}
 								)
+							}
+						);
+					},
+
+					_onDiffVersionSearchResults: function(event) {
+						var instance = this;
+
+						instance._versionItems.all('.version-item').addClass('hide');
+
+						A.Array.each(
+							event.results,
+							function(result) {
+								result.raw.node.removeClass('hide');
 							}
 						);
 					},
@@ -140,10 +209,11 @@ AUI.add(
 			}
 		);
 
+		Liferay.DiffVersionSearch = DiffVersionSearch;
 		Liferay.DiffVersionComparator = DiffVersionComparator;
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-io-request', 'aui-parse-content', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
 	}
 );

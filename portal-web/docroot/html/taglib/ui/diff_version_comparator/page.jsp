@@ -219,6 +219,7 @@ if (Validator.isNotNull(languageId)) {
 			initialTargetVersion: '<%= targetVersion %>',
 			namespace: '<portlet:namespace />',
 			resourceURL: '<%= resourceURL.toString() %>',
+			searchBoxSelector: 'searchPanel',
 			versionFilterSelector: 'versionFilter',
 			versionItemsSelector: 'versionItems'
 		}

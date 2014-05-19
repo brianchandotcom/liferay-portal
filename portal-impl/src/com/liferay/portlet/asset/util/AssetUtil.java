@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -56,6 +57,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -82,6 +84,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -250,28 +253,31 @@ public class AssetUtil {
 	}
 
 	public static List<AssetVocabulary> filterVocabularies(
-		List<AssetVocabulary> vocabularies, String className) {
+		List<AssetVocabulary> vocabularies, String className,
+		final long classTypePK) {
 
-		List<AssetVocabulary> filteredVocabularies =
-			new ArrayList<AssetVocabulary>();
+		final long classNameId = PortalUtil.getClassNameId(className);
 
-		for (AssetVocabulary vocabulary : vocabularies) {
-			UnicodeProperties settingsProperties =
-				vocabulary.getSettingsProperties();
+		PredicateFilter<AssetVocabulary> associatedVocabulariesFilter =
+			new PredicateFilter<AssetVocabulary>() {
 
-			long[] selectedClassNameIds = StringUtil.split(
-				settingsProperties.getProperty("selectedClassNameIds"), 0L);
-			long classNameId = PortalUtil.getClassNameId(className);
-
-			if ((selectedClassNameIds.length == 0) ||
-				(selectedClassNameIds[0] == 0) ||
-				ArrayUtil.contains(selectedClassNameIds, classNameId)) {
-
-				filteredVocabularies.add(vocabulary);
+			@Override
+			public boolean filter(AssetVocabulary assetVocabulary) {
+				if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_IDS) {
+					return assetVocabulary.isAssociatedToAsset(classNameId);
+				}
+				else {
+					return assetVocabulary.isAssociatedToAsset(
+						classNameId, classTypePK);
+				}
 			}
-		}
 
-		return filteredVocabularies;
+		};
+
+		Collection<AssetVocabulary> filteredVocabularies = ListUtil.filter(
+			vocabularies, associatedVocabulariesFilter);
+
+		return ListUtil.fromCollection(filteredVocabularies);
 	}
 
 	public static long[] filterVocabularyIds(

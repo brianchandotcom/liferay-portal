@@ -798,14 +798,45 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public java.lang.String[] getAssociatedAssetClassNameIds() {
+		return _assetVocabulary.getAssociatedAssetClassNameIds();
+	}
+
+	@Override
+	public java.lang.String[] getAssociatedRequiredAssetClassNameIds() {
+		return _assetVocabulary.getAssociatedRequiredAssetClassNameIds();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabulary.getCategories();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
-		return _assetVocabulary.getSettingsProperties();
+	public boolean isAssociatedToAsset(long assetClassNameId) {
+		return _assetVocabulary.isAssociatedToAsset(assetClassNameId);
+	}
+
+	@Override
+	public boolean isAssociatedToAsset(long assetClassNameId,
+		long assetClassTypeId) {
+		return _assetVocabulary.isAssociatedToAsset(assetClassNameId,
+			assetClassTypeId);
+	}
+
+	@Override
+	public boolean isDuplicatedCategory(long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.isDuplicatedCategory(selectedCategoryIds);
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(long classNameId,
+		long classTypeId, long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.isMissingRequiredCategory(classNameId,
+			classTypeId, selectedCategoryIds);
 	}
 
 	@Override
@@ -819,9 +850,8 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
-		_assetVocabulary.setSettingsProperties(settingsProperties);
+	public boolean isRequired(long classNameId, long classTypeId) {
+		return _assetVocabulary.isRequired(classNameId, classTypeId);
 	}
 
 	@Override

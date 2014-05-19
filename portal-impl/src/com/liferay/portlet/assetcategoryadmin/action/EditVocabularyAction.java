@@ -28,11 +28,12 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -91,51 +92,37 @@ public class EditVocabularyAction extends PortletAction {
 	protected UnicodeProperties getSettingsProperties(
 		ActionRequest actionRequest) {
 
-		UnicodeProperties settingsProperties = new UnicodeProperties();
-
-		boolean multiValued = ParamUtil.getBoolean(
-			actionRequest, "multiValued");
-
-		settingsProperties.setProperty(
-			"multiValued", String.valueOf(multiValued));
-
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
-		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
-		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
+		List<Long> classNameIds = new ArrayList<Long>(indexes.length);
+		List<Long> classTypeIds = new ArrayList<Long>(indexes.length);
+		List<Boolean> required = new ArrayList<Boolean>(indexes.length);
 
 		for (int index : indexes) {
-			long classNameId = ParamUtil.getLong(
+			Long classNameId = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
-			boolean required = ParamUtil.getBoolean(
-				actionRequest, "required" + index);
+			classNameIds.add(classNameId);
 
-			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
-				selectedClassNameIds.clear();
-				selectedClassNameIds.add(classNameId);
+			Long classTypeId = ParamUtil.getLong(
+				actionRequest, "subtype" + classNameId + "-classNameId" + index,
+				AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
 
-				if (required) {
-					requiredClassNameIds.clear();
-					requiredClassNameIds.add(classNameId);
-				}
+			classTypeIds.add(classTypeId);
 
-				break;
-			}
-			else {
-				selectedClassNameIds.add(classNameId);
-
-				if (required) {
-					requiredClassNameIds.add(classNameId);
-				}
-			}
+			required.add(
+				ParamUtil.getBoolean(actionRequest, "required" + index));
 		}
 
-		settingsProperties.setProperty(
-			"selectedClassNameIds", StringUtil.merge(selectedClassNameIds));
-		settingsProperties.setProperty(
-			"requiredClassNameIds", StringUtil.merge(requiredClassNameIds));
+		AssetVocabularySettingsProperties settingsProperties =
+			new AssetVocabularySettingsProperties();
+
+		settingsProperties.setMultiValued(
+			ParamUtil.getBoolean(actionRequest, "multiValued"));
+
+		settingsProperties.addAssociatedAssets(
+			classNameIds, classTypeIds, required);
 
 		return settingsProperties;
 	}

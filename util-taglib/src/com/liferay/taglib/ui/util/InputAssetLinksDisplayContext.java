@@ -102,12 +102,9 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory> assetRendererFactories = ListUtil.filter(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId());
-
-		assetRendererFactories = ListUtil.filter(
-			assetRendererFactories,
+				_themeDisplay.getCompanyId()),
 			new PredicateFilter<AssetRendererFactory>() {
 
 			@Override

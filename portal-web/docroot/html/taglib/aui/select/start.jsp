@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/select/init.jsp" %>
 
-<div class="<%= controlGroupCss %>">
+<div class="<%= controlGroupCssClass %>">
 	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 		<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
 			<liferay-ui:message key="<%= label %>" />

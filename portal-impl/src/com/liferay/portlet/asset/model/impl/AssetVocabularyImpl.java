@@ -17,12 +17,12 @@ package com.liferay.portlet.asset.model.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
 import java.util.List;
 
@@ -33,6 +33,17 @@ import java.util.List;
 public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	public AssetVocabularyImpl() {
+		super();
+	}
+
+	@Override
+	public String[] getAssociatedAssetClassNameIds() {
+		return getSettingProperties().getAssociatedAssetIds();
+	}
+
+	@Override
+	public String[] getAssociatedRequiredAssetClassNameIds() {
+		return getSettingProperties().getAssociatedRequiredAssetIds();
 	}
 
 	@Override
@@ -49,17 +60,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		else {
 			return _settingsProperties.toString();
 		}
-	}
-
-	@Override
-	public UnicodeProperties getSettingsProperties() {
-		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
-
-			_settingsProperties.fastLoad(super.getSettings());
-		}
-
-		return _settingsProperties;
 	}
 
 	@Override
@@ -85,25 +85,95 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isMultiValued() {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
+	public boolean isAssociatedToAsset(long assetClassNameId) {
+		return getSettingProperties().isAssociatedToAsset(assetClassNameId);
+	}
+
+	@Override
+	public boolean isAssociatedToAsset(
+		long assetClassNameId, long assetClassTypeId) {
+
+		return getSettingProperties().isAssociatedToAsset(
+			assetClassNameId, assetClassTypeId);
+	}
+
+	@Override
+	public boolean isDuplicatedCategory(final long[] selectedCategoryIds)
+		throws SystemException {
+
+		PredicateFilter<AssetCategory> existingCategoryFilter =
+			new PredicateFilter<AssetCategory>() {
+
+			@Override
+			public boolean filter(AssetCategory assetCategory) {
+				if (ArrayUtil.contains(
+					selectedCategoryIds, assetCategory.getCategoryId())) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		if (ListUtil.count(getCategories(), existingCategoryFilter) > 1) {
+			return true;
 		}
 
-		return GetterUtil.getBoolean(
-			_settingsProperties.getProperty("multiValued"), true);
+		return false;
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(
+			long classNameId, long classTypeId,
+			final long[] selectedCategoryIds)
+		throws SystemException {
+
+		if (isRequired(classNameId, classTypeId)) {
+			List<AssetCategory> categories = getCategories();
+
+			if (ListUtil.isEmpty(categories)) {
+				return false;
+			}
+
+			PredicateFilter<AssetCategory> categoryFilter =
+				new PredicateFilter<AssetCategory>() {
+
+				@Override
+				public boolean filter(AssetCategory assetCategory) {
+					if (ArrayUtil.contains(
+						selectedCategoryIds, assetCategory.getCategoryId())) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			};
+
+			if (!ListUtil.exists(categories, categoryFilter)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isMultiValued() {
+		return getSettingProperties().isMultiValued();
 	}
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
+		return getSettingProperties().isRequired(classNameId);
+	}
 
-		long[] requiredClassNameIds = StringUtil.split(
-			_settingsProperties.getProperty("requiredClassNameIds"), 0L);
-
-		return ArrayUtil.contains(requiredClassNameIds, classNameId);
+	@Override
+	public boolean isRequired(long classNameId, long classTypeId) {
+		return getSettingProperties().isRequired(classNameId, classTypeId);
 	}
 
 	@Override
@@ -113,13 +183,15 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		super.setSettings(settings);
 	}
 
-	@Override
-	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		_settingsProperties = settingsProperties;
+	protected AssetVocabularySettingsProperties getSettingProperties() {
+		if (_settingsProperties == null) {
+			_settingsProperties = new AssetVocabularySettingsProperties();
+			_settingsProperties.fastLoad(super.getSettings());
+		}
 
-		super.setSettings(settingsProperties.toString());
+		return _settingsProperties;
 	}
 
-	private UnicodeProperties _settingsProperties;
+	private AssetVocabularySettingsProperties _settingsProperties;
 
 }

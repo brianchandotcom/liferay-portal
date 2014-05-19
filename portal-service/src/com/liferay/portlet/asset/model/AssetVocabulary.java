@@ -34,15 +34,28 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.asset.model.impl.AssetVocabularyImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String[] getAssociatedAssetClassNameIds();
+
+	public java.lang.String[] getAssociatedRequiredAssetClassNameIds();
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
+	public boolean isAssociatedToAsset(long assetClassNameId);
+
+	public boolean isAssociatedToAsset(long assetClassNameId,
+		long assetClassTypeId);
+
+	public boolean isDuplicatedCategory(long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public boolean isMissingRequiredCategory(long classNameId,
+		long classTypeId, long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isMultiValued();
 
 	public boolean isRequired(long classNameId);
 
-	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+	public boolean isRequired(long classNameId, long classTypeId);
 }

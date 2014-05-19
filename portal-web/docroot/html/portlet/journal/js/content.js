@@ -83,7 +83,17 @@ AUI.add(
 
 					strings: {
 						validator: Lang.isObject,
-						value: {}
+						value: {
+							changeDefaultLanguage: Liferay.Language.get('changing-the-default-language-will-delete-all-unsaved-content'),
+							draft: Liferay.Language.get('draft'),
+							editStructure: Liferay.Language.get('editing-the-current-structure-will-delete-all-unsaved-content'),
+							editTemplate: Liferay.Language.get('editing-the-current-template-will-delete-all-unsaved-content'),
+							selectStructure: Liferay.Language.get('selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates'),
+							selectTemplate: Liferay.Language.get('selecting-a-new-template-will-delete-all-unsaved-content'),
+							structures: Liferay.Language.get('structures'),
+							templates: Liferay.Language.get('templates'),
+							webContentTranslation: Liferay.Language.get('web-content-translation')
+						}
 					},
 
 					urls: {

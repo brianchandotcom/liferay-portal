@@ -409,16 +409,6 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 			selectStructure: '#<portlet:namespace />selectStructure',
 			selectTemplate: '#<portlet:namespace />selectTemplate',
 
-			'strings.changeDefaultLanguage': '<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>',
-			'strings.draft': '<%= UnicodeLanguageUtil.get(pageContext, "draft") %>',
-			'strings.editStructure': '<%= UnicodeLanguageUtil.get(pageContext, "editing-the-current-structure-will-delete-all-unsaved-content") %>',
-			'strings.editTemplate': '<%= UnicodeLanguageUtil.get(pageContext, "editing-the-current-template-will-delete-all-unsaved-content") %>',
-			'strings.selectStructure': '<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>',
-			'strings.selectTemplate': '<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-template-will-delete-all-unsaved-content") %>',
-			'strings.structures': '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>',
-			'strings.templates': '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
-			'strings.webContentTranslation': '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>',
-
 			'urls.editStructure': '<%= editStructureURL %>',
 			'urls.editTemplate': '<%= editTemplateURL %>',
 			'urls.editTranslation': '<%= editArticleRenderPopUpURL %>',

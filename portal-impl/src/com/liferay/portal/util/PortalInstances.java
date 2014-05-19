@@ -404,24 +404,25 @@ public class PortalInstances {
 
 		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
 
-		Long currentThreadUserId = PrincipalThreadLocal.getUserId();
+		String currentThreadName = PrincipalThreadLocal.getName();
 
 		try {
 			CompanyThreadLocal.setCompanyId(companyId);
 
-			long userId = 0;
+			String name = null;
 
 			try {
-				User user = UserLocalServiceUtil.getUser(currentThreadUserId);
+				User user = UserLocalServiceUtil.getUser(
+					PrincipalThreadLocal.getUserId());
 
 				if (user.getCompanyId() == companyId) {
-					userId = currentThreadUserId;
+					name = currentThreadName;
 				}
 			}
 			catch (Exception e) {
 			}
 
-			PrincipalThreadLocal.setName(userId);
+			PrincipalThreadLocal.setName(name);
 
 			// Lucene
 
@@ -516,7 +517,7 @@ public class PortalInstances {
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
 
-			PrincipalThreadLocal.setName(currentThreadUserId);
+			PrincipalThreadLocal.setName(currentThreadName);
 		}
 
 		return companyId;

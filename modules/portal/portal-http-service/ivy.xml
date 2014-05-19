@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
 >
-	<info module="${plugin.name}" organisation="com.liferay" />
+	<info module="portal-http-service" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
 		<dependency name="org.eclipse.osgi.services" org="org.eclipse.birt.runtime" rev="3.3.100.v20120522-1822" />

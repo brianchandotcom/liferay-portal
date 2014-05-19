@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-diff-version-comparator',
 	function(A) {
+		var BODY = A.getBody();
+
 		var Lang = A.Lang;
 
 		var TPL_VERSION =
@@ -39,6 +41,10 @@ AUI.add(
 						value: ''
 					},
 
+					diffFormSelector: {
+						value: ''
+					},
+
 					initialSourceVersion: {
 						value: ''
 					},
@@ -56,6 +62,14 @@ AUI.add(
 					},
 
 					searchBoxSelector: {
+						value: ''
+					},
+
+					sourceVersionSelector: {
+						value: ''
+					},
+
+					targetVersionSelector: {
 						value: ''
 					},
 
@@ -83,18 +97,26 @@ AUI.add(
 						instance._resourceURL = instance.get('resourceURL');
 
 						var diffContainerHtmlResultsSelector = instance.get('diffContainerHtmlResultsSelector');
+						var diffFormSelector = instance.get('diffFormSelector');
 						var searchBoxSelector = instance.get('searchBoxSelector');
+						var sourceVersionSelector = instance.get('sourceVersionSelector');
+						var targetVersionSelector = instance.get('targetVersionSelector');
 						var versionFilterSelector = instance.get('versionFilterSelector');
 						var versionItemsSelector = instance.get('versionItemsSelector');
 
 						instance._diffContainerHtmlResults = instance.byId(diffContainerHtmlResultsSelector);
+						instance._diffForm = instance.byId(diffFormSelector);
 						instance._searchBox = instance.byId(searchBoxSelector);
+						instance._sourceVersionSelector = instance.byId(sourceVersionSelector);
+						instance._targetVersionSelector = instance.byId(targetVersionSelector);
 						instance._versionFilter = instance.byId(versionFilterSelector);
 						instance._versionItems = instance.byId(versionItemsSelector);
 
 						instance._diffVersionSearch = instance._createDiffVersionSearch();
 
 						var eventHandles = [
+							BODY.delegate('click', instance._onSourceVersionSelected, '.source-version', instance),
+							BODY.delegate('click', instance._onTargetVersionSelected, '.target-version', instance),
 							instance._versionFilter.delegate('click', instance._onCloseFilter, '.close-version-filter', instance),
 							instance._versionItems.delegate('click', instance._onSelectVersionItem, '.version-item', instance),
 							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
@@ -185,6 +207,15 @@ AUI.add(
 						instance._loadDiffHTML(instance._initialSourceVersion, instance._initialTargetVersion);
 					},
 
+					_onSourceVersionSelected: function(event) {
+						var instance = this;
+
+						var sourceVersion = event.currentTarget.attr('data-version');
+
+						instance.byId('sourceVersion').val(sourceVersion);
+
+						submitForm(instance._diffForm);
+					},
 
 					_onSelectVersionItem: function(event) {
 						var instance = this;
@@ -204,6 +235,16 @@ AUI.add(
 						instance._versionFilter.show();
 
 						instance._loadDiffHTML(currentTarget.attr('data-source-version'), currentTarget.attr('data-version'));
+					},
+
+					_onTargetVersionSelected: function(event) {
+						var instance = this;
+
+						var targetVersion = event.currentTarget.attr('data-version');
+
+						instance.byId('targetVersion').val(targetVersion);
+
+						submitForm(instance._diffForm);
 					}
 				}
 			}

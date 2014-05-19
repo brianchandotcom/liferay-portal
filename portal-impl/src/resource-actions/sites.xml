@@ -13,11 +13,11 @@
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
+			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>

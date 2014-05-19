@@ -119,6 +119,22 @@
 	        	border-width: 0;
 			}
 
+			&.selected {
+			 	.version-title {
+					color: #555;
+			 	}
+
+				.version-info {
+					.user-info {
+						color: #555;
+					}
+
+					.date-info {
+						color: #555;
+					}
+				}
+			}
+
 			.version-avatar {
 				float: left;
 				padding-right: 5px;
@@ -147,7 +163,7 @@
 
 				.date-info {
 					color: #8C8C8C;
-					font-size: 12px;
+					font-size: 10px;
 				}
 			}
 		}
@@ -181,6 +197,35 @@
 				.delete.icon-stop {
 					color: #FDC6C6;
 				}
+			}
+		}
+
+		.diff-version-filter {
+			background-color: #F9F9F9;
+			border: 1px solid #E5E5E5;
+			border-bottom-width: 0;
+			padding: 10px 15px;
+
+			.close-version-filter {
+				color: #CCC;
+				cursor: pointer;
+				float: right;
+			}
+
+			.display-date {
+				color: #8C8C8C;
+				font-size: 10px;
+			}
+
+			.user-name {
+				color: #009AE5;
+				font-size: 13px;
+				margin-right: 5px;
+			}
+
+			.version {
+				color: #555;
+				font-weight: 400;
 			}
 		}
 	}

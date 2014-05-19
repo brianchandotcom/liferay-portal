@@ -225,6 +225,13 @@
 							'aui-parse-content'
 						]
 					},
+					'liferay-diff-version-comparator': {
+						path: 'diff_version_comparator.js',
+						requires: [
+							'aui-io-request',
+							'liferay-portlet-base'
+						]
+					},
 					'liferay-dockbar': {
 						path: 'dockbar.js',
 						requires: [

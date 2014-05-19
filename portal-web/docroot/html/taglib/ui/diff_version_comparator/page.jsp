@@ -145,40 +145,51 @@ if (Validator.isNotNull(languageId)) {
 				</aui:script>
 			</c:if>
 
-			<%
-			List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
+			<div id="<portlet:namespace />versionItems">
 
-			for (int i = 0; i < diffVersions.size(); i++) {
-				DiffVersion diffVersion = diffVersions.get(i);
-			%>
+				<%
+				double previousSourceVersion = sourceVersion;
 
-				<div class='version-item <%= (i == (diffVersions.size() - 1)) ? "last" : StringPool.BLANK %>'>
-					<span class="version-title">
-						<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
-					</span>
+				List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
 
-					<%
+				for (int i = 0; i < diffVersions.size(); i++) {
+					DiffVersion diffVersion = diffVersions.get(i);
+
 					User userDisplay = UserLocalServiceUtil.getUser(diffVersion.getUserId());
-					%>
 
-					<div class="version-avatar">
-						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+					String displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true), false);
+				%>
+
+					<div class='version-item <%= (i == (diffVersions.size() - 1)) ? "last" : StringPool.BLANK %>' data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>">
+						<span class="version-title">
+							<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
+						</span>
+
+						<div class="version-avatar">
+							<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+						</div>
+
+						<div class="version-info">
+							<span class="user-info"><%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %></span>
+							<span class="date-info"><%= displayDate %></span>
+						</div>
 					</div>
 
-					<div class="version-info">
-						<span class="user-info"><%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %></span>
-						<span class="date-info"><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" /></span>
-					</div>
-				</div>
+				<%
+					previousSourceVersion = diffVersion.getVersion();
+				}
+				%>
 
-			<%
-			}
-			%>
-
+			</div>
 		</aui:col>
 		<aui:col cssClass="diff-container-column" width="70">
+			<div class="diff-version-filter hide" id="<portlet:namespace />versionFilter">
+			</div>
+
 			<div class="diff-container">
-				<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+				<div id="<portlet:namespace />diffContainerHtmlResults">
+					<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+				</div>
 
 				<div class="legend-info">
 					<liferay-ui:icon
@@ -199,3 +210,17 @@ if (Validator.isNotNull(languageId)) {
 		</aui:col>
 	</aui:row>
 </div>
+
+<aui:script use="liferay-diff-version-comparator">
+	new Liferay.DiffVersionComparator(
+		{
+			diffContainerHtmlResultsSelector: 'diffContainerHtmlResults',
+			initialSourceVersion: '<%= sourceVersion %>',
+			initialTargetVersion: '<%= targetVersion %>',
+			namespace: '<portlet:namespace />',
+			resourceURL: '<%= resourceURL.toString() %>',
+			versionFilterSelector: 'versionFilter',
+			versionItemsSelector: 'versionItems'
+		}
+	);
+</aui:script>

@@ -61,7 +61,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 	diffVersionsInfo="<%= WikiUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext) %>"
 	hideControls="<%= hideControls %>"
 	portletURL="<%= portletURL %>"
-	resourceURL="<%= portletURL %>"
+	resourceURL="<%= resourceURL %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
 />

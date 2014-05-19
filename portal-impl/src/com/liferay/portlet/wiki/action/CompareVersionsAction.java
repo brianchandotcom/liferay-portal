@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -26,9 +29,15 @@ import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiUtil;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,12 +76,30 @@ public class CompareVersionsAction extends PortletAction {
 		return actionMapping.findForward("portlet.wiki.compare_versions");
 	}
 
+	@Override
+	public void serveResource(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws Exception {
+
+		String htmlDiffResult = getHtmlDiffResult(
+			resourceRequest, resourceResponse);
+
+		resourceRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(
+				"/html/taglib/ui/diff_version_comparator/diff_html.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+	}
+
 	protected void compareVersions(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
 		String title = ParamUtil.getString(renderRequest, "title");
@@ -81,12 +108,43 @@ public class CompareVersionsAction extends PortletAction {
 		double targetVersion = ParamUtil.getDouble(
 			renderRequest, "targetVersion");
 
+		String htmlDiffResult = getHtmlDiffResult(
+			renderRequest, renderResponse);
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
+		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
+		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+		renderRequest.setAttribute(WebKeys.TITLE, title);
+		renderRequest.setAttribute(WebKeys.WIKI_NODE_ID, nodeId);
+	}
+
+	protected String getHtmlDiffResult(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		LiferayPortletRequest liferayPortletRequest =
+			PortalUtil.getLiferayPortletRequest(portletRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long nodeId = ParamUtil.getLong(liferayPortletRequest, "nodeId");
+		String title = ParamUtil.getString(liferayPortletRequest, "title");
+		double sourceVersion = ParamUtil.getDouble(
+			liferayPortletRequest, "sourceVersion");
+		double targetVersion = ParamUtil.getDouble(
+			liferayPortletRequest, "targetVersion");
+
 		WikiPage sourcePage = WikiPageServiceUtil.getPage(
 			nodeId, title, sourceVersion);
 		WikiPage targetPage = WikiPageServiceUtil.getPage(
 			nodeId, title, targetVersion);
 
-		PortletURL viewPageURL = renderResponse.createRenderURL();
+		PortletURL viewPageURL = liferayPortletResponse.createRenderURL();
 
 		viewPageURL.setParameter("struts_action", "/wiki/view");
 
@@ -94,7 +152,7 @@ public class CompareVersionsAction extends PortletAction {
 
 		viewPageURL.setParameter("nodeName", sourceNode.getName());
 
-		PortletURL editPageURL = renderResponse.createRenderURL();
+		PortletURL editPageURL = liferayPortletResponse.createRenderURL();
 
 		editPageURL.setParameter("struts_action", "/wiki/edit_page");
 		editPageURL.setParameter("nodeId", String.valueOf(nodeId));
@@ -103,15 +161,9 @@ public class CompareVersionsAction extends PortletAction {
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
-		String htmlDiffResult = WikiUtil.diffHtml(
+		return WikiUtil.diffHtml(
 			sourcePage, targetPage, viewPageURL, editPageURL,
 			attachmentURLPrefix);
-
-		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
-		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
-		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
-		renderRequest.setAttribute(WebKeys.TITLE, title);
-		renderRequest.setAttribute(WebKeys.WIKI_NODE_ID, nodeId);
 	}
 
 }

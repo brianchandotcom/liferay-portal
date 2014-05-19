@@ -35,8 +35,12 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -71,6 +75,44 @@ public class CompareVersionsAction extends PortletAction {
 		}
 
 		return actionMapping.findForward("portlet.journal.compare_versions");
+	}
+
+	@Override
+	public void serveResource(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+		String articleId = ParamUtil.getString(resourceRequest, "articleId");
+
+		double sourceVersion = ParamUtil.getDouble(
+			resourceRequest, "sourceVersion");
+
+		double targetVersion = ParamUtil.getDouble(
+			resourceRequest, "targetVersion");
+
+		String languageId = ParamUtil.getString(resourceRequest, "languageId");
+
+		String diffHtmlResults = JournalUtil.diffHtml(
+			groupId, articleId, sourceVersion, targetVersion, languageId,
+			new PortletRequestModel(resourceRequest, resourceResponse),
+			themeDisplay);
+
+		resourceRequest.setAttribute(
+			WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(
+				"/html/taglib/ui/diff_version_comparator/diff_html.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 	protected void compareVersions(

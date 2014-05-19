@@ -19,8 +19,6 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
-boolean hideControls = ParamUtil.getBoolean(request, "hideControls");
-
 long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
 String title = (String)request.getAttribute(WebKeys.TITLE);
 
@@ -59,7 +57,6 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	diffVersionsInfo="<%= WikiUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext) %>"
-	hideControls="<%= hideControls %>"
 	portletURL="<%= portletURL %>"
 	resourceURL="<%= resourceURL %>"
 	sourceVersion="<%= sourceVersion %>"

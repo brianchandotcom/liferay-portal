@@ -235,7 +235,7 @@ if (group != null) {
 
 		<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 			<div class="lfr-asset-summary">
-				<img alt="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" class="avatar" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
+				<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="avatar" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
 
 				<div class="lfr-asset-name">
 					<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>

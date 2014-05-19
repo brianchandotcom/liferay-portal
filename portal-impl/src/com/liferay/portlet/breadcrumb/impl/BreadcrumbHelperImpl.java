@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.breadcrumb.impl;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Group;
@@ -33,8 +32,13 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,10 +50,53 @@ import javax.servlet.http.HttpSession;
 /**
  * @author José Manuel Navarro
  */
-@ProviderType
-public class BreadcrumbUtil {
+public class BreadcrumbHelperImpl implements BreadcrumbHelper {
 
-	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
+	@Override
+	public List<BreadcrumbEntry> getBreadcrumbEntries(
+			HttpServletRequest request, long typeMask)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+
+		BreadcrumbEntry entry;
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_GUEST_GROUP) != 0) {
+			entry = getGuestGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_PARENT_GROUP) != 0) {
+			entries.addAll(getParentGroupBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_CURRENT_GROUP) != 0) {
+			entry = getScopeGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_LAYOUT) != 0) {
+			entries.addAll(getLayoutBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & BreadcrumbEntry.ENTRY_TYPE_PORTLET) != 0) {
+			entries.addAll(getPortletBreadcrumbEntries(request));
+		}
+
+		return entries;
+	}
+
+	@Override
+	public BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -82,7 +129,8 @@ public class BreadcrumbUtil {
 		return breadcrumbEntry;
 	}
 
-	public static List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
+	@Override
+	public List<BreadcrumbEntry> getLayoutBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -101,7 +149,8 @@ public class BreadcrumbUtil {
 		return breadcrumbEntries;
 	}
 
-	public static List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
+	@Override
+	public List<BreadcrumbEntry> getParentGroupBreadcrumbEntries(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -120,50 +169,53 @@ public class BreadcrumbUtil {
 		return breadcrumbEntries;
 	}
 
-	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
+	@Override
+	public List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 		HttpServletRequest request) {
 
-		List<BreadcrumbEntry> portletBreadcrumbEntries =
-			PortalUtil.getPortletBreadcrumbs(request);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (portletBreadcrumbEntries == null) {
-			return Collections.emptyList();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String name = WebKeys.PORTLET_BREADCRUMBS;
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletName.equals(PortletKeys.BREADCRUMB) &&
+			!portletDisplay.isFocused()) {
+
+			name = name.concat(
+				StringPool.UNDERLINE.concat(portletDisplay.getId()));
 		}
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+			(List<BreadcrumbEntry>)request.getAttribute(name);
 
-		for (int i = 0; i < portletBreadcrumbEntries.size(); i++) {
-			BreadcrumbEntry portletBreadcrumbEntry =
-				portletBreadcrumbEntries.get(i);
+		if (breadcrumbEntries == null) {
+			return Collections.emptyList();
+		}
 
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+		for (int i = 0; i < breadcrumbEntries.size() - 1; i++) {
+			BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(i);
 
-			breadcrumbEntry.setBaseModel(portletBreadcrumbEntry.getBaseModel());
-			breadcrumbEntry.setData(portletBreadcrumbEntry.getData());
-			breadcrumbEntry.setTitle(portletBreadcrumbEntry.getTitle());
+			String url = breadcrumbEntry.getURL();
 
-			String url = portletBreadcrumbEntry.getURL();
+			if (Validator.isNotNull(url) && !CookieKeys.hasSessionId(request)) {
+				HttpSession session = request.getSession();
 
-			if (Validator.isNotNull(url) &&
-				((i + 1) < portletBreadcrumbEntries.size())) {
-
-				if (!CookieKeys.hasSessionId(request)) {
-					HttpSession session = request.getSession();
-
-					url = PortalUtil.getURLWithSessionId(url, session.getId());
-				}
+				url = PortalUtil.getURLWithSessionId(url, session.getId());
 
 				breadcrumbEntry.setURL(url);
 			}
-
-			breadcrumbEntries.add(breadcrumbEntry);
 		}
 
 		return breadcrumbEntries;
 	}
 
-	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(
+	@Override
+	public BreadcrumbEntry getScopeGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -175,14 +227,16 @@ public class BreadcrumbUtil {
 		_addGroupsBreadcrumbEntries(
 			breadcrumbEntries, themeDisplay, layout.getLayoutSet(), false);
 
-		if (breadcrumbEntries.isEmpty()) {
-			return null;
+		BreadcrumbEntry breadcrumbEntry = null;
+
+		if (!breadcrumbEntries.isEmpty()) {
+			breadcrumbEntry = breadcrumbEntries.get(0);
 		}
 
-		return breadcrumbEntries.get(0);
+		return breadcrumbEntry;
 	}
 
-	private static void _addGroupsBreadcrumbEntries(
+	private void _addGroupsBreadcrumbEntries(
 			List<BreadcrumbEntry> breadcrumbEntries, ThemeDisplay themeDisplay,
 			LayoutSet layoutSet, boolean includeParentGroups)
 		throws Exception {
@@ -229,7 +283,7 @@ public class BreadcrumbUtil {
 		}
 	}
 
-	private static void _addLayoutBreadcrumbEntries(
+	private void _addLayoutBreadcrumbEntries(
 			List<BreadcrumbEntry> breadcrumbEntries, ThemeDisplay themeDisplay,
 			Layout layout)
 		throws Exception {
@@ -276,7 +330,7 @@ public class BreadcrumbUtil {
 		breadcrumbEntries.add(breadcrumbEntry);
 	}
 
-	private static LayoutSet _getParentLayoutSet(LayoutSet layoutSet)
+	private LayoutSet _getParentLayoutSet(LayoutSet layoutSet)
 		throws Exception {
 
 		Group group = layoutSet.getGroup();

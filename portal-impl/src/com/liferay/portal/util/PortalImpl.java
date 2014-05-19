@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -193,6 +192,8 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -4329,28 +4330,16 @@ public class PortalImpl implements Portal {
 		return getPortletBreadcrumbs(request);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil#getPortletBreadcrumbs(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String name = WebKeys.PORTLET_BREADCRUMBS;
-
-		String portletName = portletDisplay.getPortletName();
-
-		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!portletName.equals(PortletKeys.BREADCRUMB) &&
-			!portletDisplay.isFocused()) {
-
-			name = name.concat(
-				StringPool.UNDERLINE.concat(portletDisplay.getId()));
-		}
-
-		return (List<BreadcrumbEntry>)request.getAttribute(name);
+		return BreadcrumbHelperUtil.getPortletBreadcrumbEntries(request);
 	}
 
 	@Override

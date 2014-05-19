@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.model.BaseModel;
@@ -40,6 +39,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
@@ -1541,6 +1541,11 @@ public class PortalUtil {
 		return getPortal().getPortletBreadcrumbList(request);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil#getPortletBreadcrumbs(HttpServletRequest)}
+	 */
+	@Deprecated
 	public static List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 

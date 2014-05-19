@@ -14,63 +14,13 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.model.BaseModel;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portlet.breadcrumb.BreadcrumbEntry}
  */
-public class BreadcrumbEntry {
-
-	public BaseModel<?> getBaseModel() {
-		return _baseModel;
-	}
-
-	public Map<String, Object> getData() {
-		return _data;
-	}
-
-	public Object getData(String key) {
-		return _data.get(key);
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getURL() {
-		return _url;
-	}
-
-	public void putData(String key, Object value) {
-		if (_data == null) {
-			_data = new HashMap<String, Object>();
-		}
-
-		_data.put(key, value);
-	}
-
-	public void setBaseModel(BaseModel<?> baseModel) {
-		_baseModel = baseModel;
-	}
-
-	public void setData(Map<String, Object> data) {
-		_data = data;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public void setURL(String url) {
-		_url = url;
-	}
-
-	private BaseModel<?> _baseModel;
-	private Map<String, Object> _data;
-	private String _title;
-	private String _url;
+@Deprecated
+public class BreadcrumbEntry
+	extends com.liferay.portlet.breadcrumb.BreadcrumbEntry {
 
 }

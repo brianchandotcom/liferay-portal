@@ -16,8 +16,6 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -34,6 +32,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.breadcrumb.BreadcrumbEntry;
+import com.liferay.portlet.breadcrumb.BreadcrumbHelperUtil;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -79,7 +79,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		BreadcrumbEntry breadcrumbEntry =
-			BreadcrumbUtil.getGuestGroupBreadcrumbEntry(themeDisplay);
+			BreadcrumbHelperUtil.getGuestGroupBreadcrumbEntry(themeDisplay);
 
 		if (breadcrumbEntry == null) {
 			return;
@@ -97,7 +97,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getLayoutBreadcrumbEntries(themeDisplay);
+			BreadcrumbHelperUtil.getLayoutBreadcrumbEntries(themeDisplay);
 
 		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
 			sb.append("<li><a href=\"");
@@ -124,7 +124,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getParentGroupBreadcrumbEntries(themeDisplay);
+			BreadcrumbHelperUtil.getParentGroupBreadcrumbEntries(themeDisplay);
 
 		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
 			sb.append("<li><a href=\"");
@@ -141,7 +141,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries =
-			BreadcrumbUtil.getPortletBreadcrumbEntries(request);
+			BreadcrumbHelperUtil.getPortletBreadcrumbEntries(request);
 
 		for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
 			if (!_showCurrentGroup) {
@@ -190,7 +190,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		BreadcrumbEntry breadcrumbEntry =
-			BreadcrumbUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
+			BreadcrumbHelperUtil.getScopeGroupBreadcrumbEntry(themeDisplay);
 
 		if (breadcrumbEntry == null) {
 			return;

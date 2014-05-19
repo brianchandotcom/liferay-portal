@@ -194,7 +194,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:row>
 							<c:if test="<%= smallImage && (entry != null) %>">
 								<aui:col width="<%= 50 %>">
-									<img alt="<liferay-ui:message key="preview" />" class="lfr-blogs-small-image-preview" src="<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>" />
+									<img alt="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(pageContext, "preview")) %>" class="lfr-blogs-small-image-preview" src="<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>" />
 								</aui:col>
 							</c:if>
 

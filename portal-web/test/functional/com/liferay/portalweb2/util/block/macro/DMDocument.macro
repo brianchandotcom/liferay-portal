@@ -42,6 +42,27 @@
 			</else>
 		</if>
 
+		<if>
+			<isset var="vocabularyName" />
+			<then>
+				<var name="key_vocabularyName" value="${vocabularyName}" />
+
+				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+
+				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
+
+				<for list="${categoryNameList}" param="categoryName">
+					<var name="key_categoryName" value="${categoryName}" />
+					<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
+					<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
+					<execute action="PGDocumentsandmediaAdddocument#check" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" value1="${categoryName}" />
+					<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="" />
+				</for>
+
+				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_CATEGORIES_CLOSE_BUTTON" />
+			</then>
+		</if>
+
 		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />

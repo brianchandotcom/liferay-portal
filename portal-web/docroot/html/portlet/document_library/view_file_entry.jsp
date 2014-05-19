@@ -193,7 +193,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							}
 							%>
 
-							<img alt="<liferay-ui:message key="thumbnail" />" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
+							<img alt="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(pageContext, "thumbnail")) %>" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 						</span>
 
 						<span class="user-date">

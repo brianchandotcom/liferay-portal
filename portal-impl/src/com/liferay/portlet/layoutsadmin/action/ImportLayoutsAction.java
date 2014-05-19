@@ -348,8 +348,7 @@ public class ImportLayoutsAction extends PortletAction {
 
 		try {
 			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
-				fileEntry.getVersion(), false);
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 			importData(actionRequest, fileEntry.getTitle(), inputStream);
 
@@ -393,8 +392,7 @@ public class ImportLayoutsAction extends PortletAction {
 
 		try {
 			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
-				fileEntry.getVersion(), false);
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 			MissingReferences missingReferences = validateFile(
 				actionRequest, inputStream);

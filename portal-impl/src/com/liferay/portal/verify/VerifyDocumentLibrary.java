@@ -157,7 +157,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					try {
 						inputStream =
 							DLFileEntryLocalServiceUtil.getFileAsStream(
-								dlFileEntry.getUserId(),
 								dlFileEntry.getFileEntryId(),
 								dlFileEntry.getVersion(), false);
 					}
@@ -218,7 +217,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					try {
 						inputStream =
 							DLFileEntryLocalServiceUtil.getFileAsStream(
-								dlFileVersion.getUserId(),
 								dlFileVersion.getFileEntryId(),
 								dlFileVersion.getVersion(), false);
 					}

@@ -597,6 +597,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			incrementCounter, increment);
 	}
 
+	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version)
@@ -606,6 +607,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			version);
 	}
 
+	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
@@ -615,6 +617,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			version, incrementCounter);
 	}
 
+	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
@@ -622,6 +625,32 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileAsStream(userId, fileEntryId,
 			version, incrementCounter, increment);
+	}
+
+	@Override
+	public java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileAsStream(fileEntryId, version);
+	}
+
+	@Override
+	public java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileAsStream(fileEntryId, version,
+			incrementCounter);
+	}
+
+	@Override
+	public java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileAsStream(fileEntryId, version,
+			incrementCounter, increment);
 	}
 
 	@Override

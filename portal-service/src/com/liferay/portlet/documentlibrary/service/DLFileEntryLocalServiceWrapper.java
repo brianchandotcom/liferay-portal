@@ -579,6 +579,11 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.getExtraSettingsFileEntriesCount();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	boolean)}
+	*/
+	@Deprecated
 	@Override
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
@@ -588,6 +593,11 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			incrementCounter);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	boolean, int)}
+	*/
+	@Deprecated
 	@Override
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
@@ -597,6 +607,28 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			incrementCounter, increment);
 	}
 
+	@Override
+	public java.io.File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFile(fileEntryId, version,
+			incrementCounter);
+	}
+
+	@Override
+	public java.io.File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFile(fileEntryId, version,
+			incrementCounter, increment);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String)}
+	*/
 	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
@@ -607,6 +639,10 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			version);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String, boolean)}
+	*/
 	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
@@ -617,6 +653,10 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			version, incrementCounter);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String, boolean, int)}
+	*/
 	@Deprecated
 	@Override
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,

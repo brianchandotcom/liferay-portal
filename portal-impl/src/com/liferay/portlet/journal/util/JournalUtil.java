@@ -599,9 +599,6 @@ public class JournalUtil {
 			double targetVersion)
 		throws SystemException {
 
-		List<JournalArticle> intermediateArticles =
-			new ArrayList<JournalArticle>();
-
 		double previousVersion = 0;
 		double nextVersion = 0;
 
@@ -622,17 +619,11 @@ public class JournalUtil {
 
 				nextVersion = article.getVersion();
 			}
-
-			if ((article.getVersion() > sourceVersion) &&
-				(article.getVersion() <= targetVersion)) {
-
-				intermediateArticles.add(article);
-			}
 		}
 
 		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
 
-		for (JournalArticle article : intermediateArticles) {
+		for (JournalArticle article : articles) {
 			DiffVersion diffVersion = new DiffVersion(
 				article.getUserId(), article.getVersion(),
 				article.getModifiedDate());

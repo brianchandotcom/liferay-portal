@@ -149,12 +149,16 @@ if (Validator.isNotNull(languageId)) {
 					for (int i = 0; i < diffVersions.size(); i++) {
 						DiffVersion diffVersion = diffVersions.get(i);
 
+						if ((diffVersion.getVersion() <= sourceVersion) || (diffVersion.getVersion() > targetVersion)) {
+							continue;
+						}
+
 						User userDisplay = UserLocalServiceUtil.getUser(diffVersion.getUserId());
 
 						String displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true), false);
 					%>
 
-						<div class='version-item <%= (i == (diffVersions.size() - 1)) ? "last" : StringPool.BLANK %>' data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>">
+						<div class='version-item <%= (diffVersion.getVersion() >= targetVersion) ? "last" : StringPool.BLANK %>' data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>">
 							<span class="version-title">
 								<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
 							</span>

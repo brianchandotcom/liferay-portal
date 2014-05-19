@@ -386,9 +386,15 @@ public class DDMTemplateStagedModelDataHandler
 				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
-					importedTemplate = addTemplate(
-						userId, portletDataContext.getScopeGroupId(), template,
-						classPK, smallFile, serviceContext);
+					importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
+						userId, portletDataContext.getScopeGroupId(),
+						template.getClassNameId(), classPK,
+						template.getTemplateKey(), template.getNameMap(),
+						template.getDescriptionMap(), template.getType(),
+						template.getMode(), template.getLanguage(),
+						template.getScript(), template.isCacheable(),
+						template.isSmallImage(), template.getSmallImageURL(),
+						smallFile, serviceContext);
 				}
 				else {
 					importedTemplate =
@@ -404,9 +410,14 @@ public class DDMTemplateStagedModelDataHandler
 				}
 			}
 			else {
-				importedTemplate = addTemplate(
-					userId, portletDataContext.getScopeGroupId(), template,
-					classPK, smallFile, serviceContext);
+				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
+					userId, portletDataContext.getScopeGroupId(),
+					template.getClassNameId(), classPK, null,
+					template.getNameMap(), template.getDescriptionMap(),
+					template.getType(), template.getMode(),
+					template.getLanguage(), template.getScript(),
+					template.isCacheable(), template.isSmallImage(),
+					template.getSmallImageURL(), smallFile, serviceContext);
 			}
 
 			portletDataContext.importClassedModel(template, importedTemplate);

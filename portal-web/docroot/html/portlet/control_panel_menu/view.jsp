@@ -136,14 +136,12 @@
 							<a href="<%= portletURL %>" id="<portlet:namespace />portlet_<%= portletId %>" role="menuitem">
 								<c:choose>
 									<c:when test="<%= Validator.isNull(portlet.getIcon()) %>">
-										<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />
+										<liferay-ui:icon label="<%= true %>" message="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />
 									</c:when>
 									<c:otherwise>
-										<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
+										<liferay-portlet:icon-portlet label="<%= true %>" portlet="<%= portlet %>" />
 									</c:otherwise>
 								</c:choose>
-
-								<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
 							</a>
 						</li>
 

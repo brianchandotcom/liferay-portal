@@ -58,7 +58,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DOCUMENT_CONVERSION_LINKS-->
+<!--DOCUMENT_CONVERSION-->
 <tr>
 	<td>DOCUMENT_CONVERSION_DOC</td>
 	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]</td>

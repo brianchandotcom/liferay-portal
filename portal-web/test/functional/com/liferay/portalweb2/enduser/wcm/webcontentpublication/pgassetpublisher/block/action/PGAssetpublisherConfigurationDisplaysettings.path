@@ -83,7 +83,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENABLE_CONVERSION_CHECKBOXES-->
+<!--ENABLE_CONVERSION-->
 <tr>
 	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
 	<td>//input[@id='_86_extensionsdocCheckbox']</td>

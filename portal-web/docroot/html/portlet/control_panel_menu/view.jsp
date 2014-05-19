@@ -131,11 +131,15 @@
 								portletName="<%= portlet.getRootPortletId() %>"
 								var="portletURL"
 								windowState="<%= WindowState.MAXIMIZED.toString() %>"
-								/>
+							/>
 
-							<a href="<%= portletURL %>" id="<portlet:namespace />portlet_<%= portletId %>" role="menuitem">
-								<liferay-portlet:icon-portlet label="<%= true %>" portlet="<%= portlet %>" />
-							</a>
+							<liferay-portlet:icon-portlet
+								ariaRole="menuitem"
+								id='<%= "portlet_" + portletId %>'
+								label="<%= true %>"
+								portlet="<%= portlet %>"
+								url="<%= portletURL %>"
+							/>
 						</li>
 
 						<c:if test="<%= !ppid.equals(portletId) %>">

@@ -2,12 +2,11 @@
 <!DOCTYPE project>
 
 <project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 	<property name="osgi.ide.dependencies" value="hibernate3.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-orm.jar,spring-transaction.jar" />
 	<property name="osgi.runtime.dependencies" value="org.eclipse.gemini.*.jar" />
 	<property name="plugin.full.version" value="7.0.0.1" />
 	<property name="plugin.name" value="com.liferay.portal.spring.extender" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 </project>

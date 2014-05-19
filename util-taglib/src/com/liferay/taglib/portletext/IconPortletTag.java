@@ -16,6 +16,7 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -57,7 +58,14 @@ public class IconPortletTag extends IconTag {
 			message = PortalUtil.getPortletTitle(
 				_portlet, pageContext.getServletContext(),
 				themeDisplay.getLocale());
-			src = _portlet.getStaticResourcePath().concat(_portlet.getIcon());
+
+			if (Validator.isNotNull(_portlet.getIcon())) {
+				src = _portlet.getStaticResourcePath().concat(
+					_portlet.getIcon());
+			}
+			else {
+				src = themeDisplay.getPathContext() + _DEFAULT_PORTLET_ICON;
+			}
 		}
 		else {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -83,6 +91,9 @@ public class IconPortletTag extends IconTag {
 
 		request.setAttribute("liferay-portlet:icon_portlet:portlet", _portlet);
 	}
+
+	private static final String _DEFAULT_PORTLET_ICON =
+		"/html/icons/default.png";
 
 	private static final String _PAGE =
 		"/html/taglib/portlet/icon_portlet/page.jsp";

@@ -130,23 +130,28 @@
 				value="${ivy.pom.property.list}"
 			/>
 
-			<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-				<sequential>
-					<propertycopy
-						from="ivy.pom.@{ivy.pom.property}"
-						name="temp.ivy.pom"
-					/>
+			<if>
+				<isset property="${ivy.pom.property.list}"/>
+				<then>
+					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+						<sequential>
+							<propertycopy
+								from="ivy.pom.@{ivy.pom.property}"
+								name="temp.ivy.pom"
+							/>
 
-					<echo
-						append="true"
-						file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-					>
-						ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
-					</echo>
+							<echo
+								append="true"
+								file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+							>
+								ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
+							</echo>
 
-					<var name="temp.ivy.pom" unset="true" />
-				</sequential>
-			</for>
+							<var name="temp.ivy.pom" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
 
 			<propertyselector
 				casesensitive="false"
@@ -162,23 +167,28 @@
 				value="${sonatype.property.list}"
 			/>
 
-			<for list="${sonatype.property.list}" param="sonatype.property">
-				<sequential>
-					<propertycopy
-						from="sonatype.@{sonatype.property}"
-						name="temp.sonatype"
-					/>
+			<if>
+				<isset property="${sonatype.property.list}"/>
+				<then>
+					<for list="${sonatype.property.list}" param="sonatype.property">
+						<sequential>
+							<propertycopy
+								from="sonatype.@{sonatype.property}"
+								name="temp.sonatype"
+							/>
 
-					<echo
-						append="true"
-						file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-					>
-						sonatype.@{sonatype.property}=${temp.sonatype}
-					</echo>
+							<echo
+								append="true"
+								file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+							>
+								sonatype.@{sonatype.property}=${temp.sonatype}
+							</echo>
 
-					<var name="temp.sonatype" unset="true" />
-				</sequential>
-			</for>
+							<var name="temp.sonatype" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
 
 			<echo
 				append="true"

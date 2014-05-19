@@ -1343,6 +1343,23 @@
 				(Users_Teams.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.countBySocialUsers">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT User_.userId) AS COUNT_VALUE
+			FROM
+				User_
+			INNER JOIN
+				SocialRelation ON
+					(SocialRelation.userId2 = User_.userId)
+			WHERE
+				([$SOCIAL_RELATION_TYPE$]) AND
+				(SocialRelation.userId1 = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.countByUser">
 		<![CDATA[
 			SELECT
@@ -1410,6 +1427,23 @@
 							(Group_.classPK = User_.userId)
 				)) AND
 				(defaultUser = [$FALSE$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findBySocialUsers">
+		<![CDATA[
+			SELECT
+				DISTINCT {User_.*}
+			FROM
+				User_
+			INNER JOIN
+				SocialRelation ON
+					(SocialRelation.userId2 = User_.userId)
+			WHERE
+				([$SOCIAL_RELATION_TYPE$]) AND
+				(SocialRelation.userId1 = ?) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
@@ -1564,26 +1598,6 @@
 				(socialRelation1.type_ = ?) AND
 				(socialRelation2.userId1 = ?) AND
 				(socialRelation2.type_ = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelation">
-		<![CDATA[
-			INNER JOIN
-				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
-			WHERE
-				(SocialRelation.userId1 = ?) AND
-				(SocialRelation.type_ != [$SOCIAL_RELATION_TYPE_UNI_ENEMY$])
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserFinder.joinBySocialRelationType">
-		<![CDATA[
-			INNER JOIN
-				SocialRelation ON
-					(SocialRelation.userId2 = User_.userId)
-			WHERE
-				(SocialRelation.userId1 = ?) AND
-				(SocialRelation.type_ = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.countByC_N_D">

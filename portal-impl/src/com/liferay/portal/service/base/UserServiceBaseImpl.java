@@ -73,6 +73,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersist
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
 
 import javax.sql.DataSource;
@@ -1768,6 +1769,44 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the social relation local service.
+	 *
+	 * @return the social relation local service
+	 */
+	public com.liferay.portlet.social.service.SocialRelationLocalService getSocialRelationLocalService() {
+		return socialRelationLocalService;
+	}
+
+	/**
+	 * Sets the social relation local service.
+	 *
+	 * @param socialRelationLocalService the social relation local service
+	 */
+	public void setSocialRelationLocalService(
+		com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService) {
+		this.socialRelationLocalService = socialRelationLocalService;
+	}
+
+	/**
+	 * Returns the social relation persistence.
+	 *
+	 * @return the social relation persistence
+	 */
+	public SocialRelationPersistence getSocialRelationPersistence() {
+		return socialRelationPersistence;
+	}
+
+	/**
+	 * Sets the social relation persistence.
+	 *
+	 * @param socialRelationPersistence the social relation persistence
+	 */
+	public void setSocialRelationPersistence(
+		SocialRelationPersistence socialRelationPersistence) {
+		this.socialRelationPersistence = socialRelationPersistence;
+	}
+
+	/**
 	 * Returns the social request local service.
 	 *
 	 * @return the social request local service
@@ -2286,6 +2325,10 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	protected SocialActivityPersistence socialActivityPersistence;
 	@BeanReference(type = SocialActivityFinder.class)
 	protected SocialActivityFinder socialActivityFinder;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRelationLocalService.class)
+	protected com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService;
+	@BeanReference(type = SocialRelationPersistence.class)
+	protected SocialRelationPersistence socialRelationPersistence;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
 	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)

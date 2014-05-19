@@ -122,6 +122,14 @@ AUI.add(
 							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
 						];
 
+						instance._languageSelector = instance.byId('languageId');
+
+						if (instance._languageSelector) {
+							eventHandles.push(
+								instance._languageSelector.on('change', instance._onLanguageSelectorChange, instance)
+							);
+						}
+
 						instance._eventHandles = eventHandles;
 					},
 
@@ -205,6 +213,12 @@ AUI.add(
 						instance._versionFilter.hide();
 
 						instance._loadDiffHTML(instance._initialSourceVersion, instance._initialTargetVersion);
+					},
+
+					_onLanguageSelectorChange: function(event) {
+						var instance = this;
+
+						submitForm(instance._diffForm);
 					},
 
 					_onSourceVersionSelected: function(event) {

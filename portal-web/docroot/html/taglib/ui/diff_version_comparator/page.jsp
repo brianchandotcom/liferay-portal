@@ -137,15 +137,6 @@ if (Validator.isNotNull(languageId)) {
 
 						</aui:select>
 					</div>
-
-					<aui:script use="aui-base">
-						A.one('#<portlet:namespace />languageId').on(
-							'change',
-							function(event) {
-								submitForm(document.<portlet:namespace />fm);
-							}
-						);
-					</aui:script>
 				</c:if>
 
 				<div id="<portlet:namespace />versionItems">

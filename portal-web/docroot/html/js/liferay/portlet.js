@@ -303,6 +303,7 @@
 
 					Layout.syncDraggableClassUI();
 					Layout.updatePortletDropZones(portletBoundary);
+					Layout.maybeAddTouchHandle(portletBoundary);
 				}
 
 				if (onComplete) {

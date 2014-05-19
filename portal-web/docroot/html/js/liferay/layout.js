@@ -13,6 +13,8 @@ AUI.add(
 
 		var LAYOUT_CONFIG = Liferay.Data.layoutConfig;
 
+		var CSS_TOUCH_DRAG_HANDLE = Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || 'portlet-touch-drag-handle';
+
 		var Layout = {
 			EMPTY_COLUMNS: {},
 
@@ -157,6 +159,14 @@ AUI.add(
 				return !!columnNode.one(options.portletBoundary);
 			},
 
+			maybeAddTouchHandle: function(portletBoundary) {
+				if (A.UA.touchEnabled) {
+					var portletTitle = portletBoundary.one('.portlet-title');
+
+					portletTitle.append('<div class="' + CSS_TOUCH_DRAG_HANDLE + '"></div>');
+				}
+			},
+
 			on: function() {
 				var layoutHandler = Layout.getLayoutHandler();
 
@@ -269,6 +279,35 @@ AUI.add(
 					}
 				);
 			},
+
+			updatePortletTouchDragHandles: function(event) {
+				var layoutHandler = Layout.getLayoutHandler();
+				var options = Layout.options;
+
+				var drag = layoutHandler.delegate.dd;
+				var dragNodeTitles = A.all(options.dragNodes + ' .portlet-title');
+
+				var touchHandles = ['.' + CSS_TOUCH_DRAG_HANDLE, '.portlet-borderless-bar .portlet-title-default'];
+
+				dragNodeTitles.append('<div class="' + CSS_TOUCH_DRAG_HANDLE + '"></div>');
+
+				A.Array.each(
+					options.handles,
+					function(handle) {
+						drag.removeHandle(handle);
+					}
+				);
+
+				A.Array.each(
+					touchHandles,
+					function(handle) {
+						drag.addHandle(handle);
+					}
+				);
+
+				Layout.options.handles = touchHandles;
+			},
+
 
 			updatePortletDropZones: function(portletBoundary) {
 				var options = Layout.options;
@@ -393,6 +432,10 @@ AUI.add(
 				Layout.bindDragDropListeners();
 
 				Layout.updateEmptyColumnsInfo();
+
+				if (A.UA.touchEnabled) {
+					Layout.updatePortletTouchDragHandles();
+				}
 
 				Liferay.after('closePortlet', Layout._afterPortletClose);
 				Liferay.on('closePortlet', Layout._onPortletClose);

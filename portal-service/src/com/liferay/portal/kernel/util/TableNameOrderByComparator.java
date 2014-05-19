@@ -107,7 +107,7 @@ public class TableNameOrderByComparator extends OrderByComparator {
 
 	@Override
 	public String toString() {
-		return _orderByComparator.toString();
+		return getOrderBy();
 	}
 
 	private OrderByComparator _orderByComparator;

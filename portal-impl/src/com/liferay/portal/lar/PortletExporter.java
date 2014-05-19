@@ -1019,30 +1019,30 @@ public class PortletExporter {
 			Element rootElement, boolean exportServiceSetup)
 		throws Exception {
 
-		if (exportServiceSetup) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		if (!exportServiceSetup) {
+			return;
+		}
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-			String serviceName = portletDataHandler.getServiceName();
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
 
-			if (Validator.isNotNull(serviceName)) {
+		String serviceName = portletDataHandler.getServiceName();
 
-				// Company service
+		if (Validator.isNotNull(serviceName)) {
 
-				exportServicePortletPreferences(
-					portletDataContext, portletDataContext.getCompanyId(),
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY, serviceName,
-					rootElement);
+			// Company service
 
-				// Group service
+			exportServicePortletPreferences(
+				portletDataContext, portletDataContext.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY, serviceName, rootElement);
 
-				exportServicePortletPreferences(
-					portletDataContext, portletDataContext.getScopeGroupId(),
-					PortletKeys.PREFS_OWNER_TYPE_GROUP, serviceName,
-					rootElement);
-			}
+			// Group service
+
+			exportServicePortletPreferences(
+				portletDataContext, portletDataContext.getScopeGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_GROUP, serviceName, rootElement);
 		}
 	}
 

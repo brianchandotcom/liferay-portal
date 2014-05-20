@@ -135,7 +135,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	A.Array.each(
 		records,
-		function(item, index, collection) {
+		function(item, index) {
 			data.splice(item.displayIndex, 0, item);
 		}
 	);

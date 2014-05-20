@@ -202,7 +202,7 @@ AUI.add(
 
 						A.each(
 							val,
-							function(item, index, collection) {
+							function(item, index) {
 								var values = {
 									id: A.guid(),
 									label: index,
@@ -251,7 +251,7 @@ AUI.add(
 
 						AArray.each(
 							layouts,
-							function(item, index, collection) {
+							function(item, index) {
 								options[prefix + item.name] = {
 									groupId: item.groupId,
 									layoutId: item.layoutId,
@@ -436,7 +436,7 @@ AUI.add(
 
 						A.each(
 							structure,
-							function(item, index, collection) {
+							function(item, index) {
 								var type = item.type;
 								var value = record.get(item.name);
 
@@ -772,7 +772,7 @@ AUI.add(
 
 									AArray.each(
 										value,
-										function(item1, index1, collection1) {
+										function(item1, index1) {
 											label.push(options[item1]);
 										}
 									);
@@ -841,7 +841,7 @@ AUI.add(
 
 					AArray.each(
 						options,
-						function(item, index, collection) {
+						function(item, index) {
 							normalized[item.value] = item.label;
 						}
 					);
@@ -856,7 +856,7 @@ AUI.add(
 
 					AArray.each(
 						keys,
-						function(item, index, collection) {
+						function(item, index) {
 							recordModel[item] = STR_EMPTY;
 						}
 					);

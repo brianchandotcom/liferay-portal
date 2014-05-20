@@ -401,8 +401,8 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 			defaultLanguage: '#<portlet:namespace />defaultLanguage',
 			defaultLanguageSelector: '#<portlet:namespace />defaultLanguageSelector',
-			editStructure: '#<portlet:namespace />editDDMTemplate',
-			editTemplate: '#<portlet:namespace />editDDMStructure',
+			editStructure: '#<portlet:namespace />editDDMStructure',
+			editTemplate: '#<portlet:namespace />editDDMTemplate',
 
 			namespace: '<portlet:namespace />',
 

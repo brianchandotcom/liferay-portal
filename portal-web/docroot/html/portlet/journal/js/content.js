@@ -37,7 +37,7 @@ AUI.add(
 
 		var TPL_TRANSLATION = '<a class="journal-article-translation lfr-token" href="{uri}" id="{namespace}journal-article-translation-link-{languageId}">' +
 			'<img alt="" src="{pathThemeImages}/language/{languageId}.png" />{language}' +
-			'</a>';
+		'</a>';
 
 		var JournalContent = A.Component.create(
 			{
@@ -112,14 +112,14 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._eventHandles = [
+						var eventHandles = [
 							Liferay.on(instance.ns('postProcessTranslation'), instance._postProcessTranslation, instance)
 						];
 
 						var changeDefaultLanguage = instance.get(STR_CHANGE_DEFAULT_LANGUAGE);
 
 						if (changeDefaultLanguage) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								changeDefaultLanguage.on(STR_CLICK, instance._changeDefaultLanguage, instance)
 							);
 						}
@@ -127,7 +127,7 @@ AUI.add(
 						var defaultLanguageSelector = instance.get(STR_DEFAULT_LANGUAGE_SELECTOR);
 
 						if (defaultLanguageSelector) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								defaultLanguageSelector.on('change', instance._changeArticleDefaultLocale, instance)
 							);
 						}
@@ -135,7 +135,7 @@ AUI.add(
 						var editTemplate = instance.get('editTemplate');
 
 						if (editTemplate) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								editTemplate.on(STR_CLICK, instance._editTemplate, instance)
 							);
 						}
@@ -143,7 +143,7 @@ AUI.add(
 						var editStructure = instance.get('editStructure');
 
 						if (editStructure) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								editStructure.on(STR_CLICK, instance._editStructure, instance)
 							);
 						}
@@ -151,7 +151,7 @@ AUI.add(
 						var selectTemplate = instance.get(STR_SELECT_TEMPLATE);
 
 						if (selectTemplate) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								selectTemplate.on(STR_CLICK, instance._openDDMTemplateSelector, instance)
 							);
 						}
@@ -159,16 +159,16 @@ AUI.add(
 						var selectStructure = instance.get(STR_SELECT_STRUCTURE);
 
 						if (selectStructure) {
-							instance._eventHandles.push(
+							eventHandles.push(
 								selectStructure.on(STR_CLICK, instance._openDDMStructureSelector, instance)
 							);
 						}
 
-						var availableTranslationContainer = instance.one('#availableTranslationContainer');
+						eventHandles.push(
+							A.getBody().delegate(STR_CLICK, instance._openEditTranslationWindow, '.journal-article-translation', instance)
+						);
 
-						if (availableTranslationContainer) {
-							A.getBody().delegate(STR_CLICK, instance._openEditTranslationWindow, '.journal-article-translation', instance);
-						}
+						instance._eventHandles = eventHandles;
 					},
 
 					destructor: function() {

@@ -495,6 +495,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-blogs .entry-body, .portlet-journal-content .journal-content-article, .portlet-message-boards .thread-body {
+		line-height: 1;
 		word-wrap: break-word;
 	}
 

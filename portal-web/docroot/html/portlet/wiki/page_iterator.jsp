@@ -483,7 +483,7 @@ for (int i = 0; i < results.size(); i++) {
 						index = 1;
 					}
 
-					rowsChecked.item(index).set('checked', false);
+					rowsChecked.item(index).attr('checked', false);
 				}
 			},
 			['aui-base', 'selector-css3']

@@ -1049,7 +1049,7 @@
 			var checkbox = A.one(form[name]);
 
 			if (checkbox) {
-				checkbox.set(STR_CHECKED, checked);
+				checkbox.attr(STR_CHECKED, checked);
 			}
 		},
 		['aui-base']
@@ -1070,7 +1070,7 @@
 
 			form = A.one(form);
 
-			form.all(selector).set(STR_CHECKED, A.one(allBox).get(STR_CHECKED));
+			form.all(selector).attr(STR_CHECKED, A.one(allBox).get(STR_CHECKED));
 
 			if (selectClassName) {
 				form.all(selectClassName).toggleClass('info', A.one(allBox).get(STR_CHECKED));
@@ -1105,7 +1105,7 @@
 				}
 			);
 
-			allBox.set(STR_CHECKED, (totalBoxes == totalOn));
+			allBox.attr(STR_CHECKED, (totalBoxes == totalOn));
 		},
 		['aui-base']
 	);
@@ -1240,7 +1240,7 @@
 						visible = value(currentValue, value);
 					}
 
-					toggleBox.set('disabled', !visible);
+					toggleBox.attr('disabled', !visible);
 				};
 
 				disabled();
@@ -1275,16 +1275,16 @@
 
 			if (checkBox && toggleBox) {
 				if (checkBox.get(STR_CHECKED) && checkDisabled) {
-					toggleBox.set('disabled', true);
+					toggleBox.attr('disabled', true);
 				}
 				else {
-					toggleBox.set('disabled', false);
+					toggleBox.attr('disabled', false);
 				}
 
 				checkBox.on(
 					EVENT_CLICK,
 					function() {
-						toggleBox.set('disabled', !toggleBox.get('disabled'));
+						toggleBox.attr('disabled', !toggleBox.get('disabled'));
 					}
 				);
 			}
@@ -1605,7 +1605,7 @@
 			var selectedIndex = box.get('selectedIndex');
 
 			if (selectedIndex == -1) {
-				box.set('selectedIndex', 0);
+				box.attr('selectedIndex', 0);
 			}
 			else {
 				var selectedItems = box.all(':selected');
@@ -1861,7 +1861,7 @@
 			var option = A.one(col).one('option[value=' + value + STR_RIGHT_SQUARE_BRACKET);
 
 			if (option) {
-				option.set('selected', true);
+				option.attr('selected', true);
 			}
 		},
 		['aui-base']
@@ -1956,7 +1956,7 @@
 						if (toggleChildCheckboxes) {
 							var childCheckboxes = toggleBox.all('input[type=checkbox]');
 
-							childCheckboxes.set(STR_CHECKED, checkBox.get(STR_CHECKED));
+							childCheckboxes.attr(STR_CHECKED, checkBox.get(STR_CHECKED));
 						}
 					}
 				);

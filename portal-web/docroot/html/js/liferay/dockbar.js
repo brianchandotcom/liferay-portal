@@ -122,7 +122,7 @@ AUI.add(
 
 							BODY.prepend(panelNode);
 
-							panelNode.set('id', panelSidebarId);
+							panelNode.attr('id', panelSidebarId);
 
 							panel.node = panelNode;
 						}

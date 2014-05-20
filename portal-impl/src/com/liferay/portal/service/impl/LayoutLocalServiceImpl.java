@@ -1547,17 +1547,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return count;
 		}
 
-		List<UserGroup> userGroups = userPersistence.getUserGroups(
+		long[] userGroupIds = userPersistence.getUserGroupPrimaryKeys(
 			group.getClassPK());
 
-		if (!userGroups.isEmpty()) {
+		if (userGroupIds.length != 0) {
 			long userGroupClassNameId = classNameLocalService.getClassNameId(
 				UserGroup.class);
 
-			for (UserGroup userGroup : userGroups) {
+			for (long userGroupId : userGroupIds) {
 				Group userGroupGroup = groupPersistence.findByC_C_C(
-					group.getCompanyId(), userGroupClassNameId,
-					userGroup.getUserGroupId());
+					group.getCompanyId(), userGroupClassNameId, userGroupId);
 
 				layoutSet = layoutSetPersistence.findByG_P(
 					userGroupGroup.getGroupId(), privateLayout);
@@ -1720,17 +1719,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return false;
 		}
 
-		List<UserGroup> userGroups = userPersistence.getUserGroups(
+		long[] userGroupIds = userPersistence.getUserGroupPrimaryKeys(
 			group.getClassPK());
 
-		if (!userGroups.isEmpty()) {
+		if (userGroupIds.length != 0) {
 			long userGroupClassNameId = classNameLocalService.getClassNameId(
 				UserGroup.class);
 
-			for (UserGroup userGroup : userGroups) {
+			for (long userGroupId : userGroupIds) {
 				Group userGroupGroup = groupPersistence.findByC_C_C(
-					group.getCompanyId(), userGroupClassNameId,
-					userGroup.getUserGroupId());
+					group.getCompanyId(), userGroupClassNameId, userGroupId);
 
 				layoutSet = layoutSetPersistence.findByG_P(
 					userGroupGroup.getGroupId(), privateLayout);

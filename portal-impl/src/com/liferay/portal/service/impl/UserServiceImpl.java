@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -67,8 +68,10 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, authenticating, deleting,
@@ -1067,15 +1070,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
+		Set<Long> unsetUserIds =
+			SetUtil.fromArray(rolePersistence.getUserPrimaryKeys(roleId));
 
-		List<User> users = rolePersistence.getUsers(roleId);
-
-		for (User user : users) {
-			if (!ArrayUtil.contains(userIds, user.getUserId())) {
-				unsetUserIds.add(user.getUserId());
-			}
-		}
+		unsetUserIds.removeAll(SetUtil.fromArray(userIds));
 
 		if (!unsetUserIds.isEmpty()) {
 			RoleMembershipPolicyUtil.checkRoles(
@@ -1117,15 +1115,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
 
-		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
+		Set<Long> unsetUserIds =
+			SetUtil.fromArray(
+				userGroupPersistence.getUserPrimaryKeys(userGroupId));
 
-		List<User> users = userGroupPersistence.getUsers(userGroupId);
-
-		for (User user : users) {
-			if (!ArrayUtil.contains(userIds, user.getUserId())) {
-				unsetUserIds.add(user.getUserId());
-			}
-		}
+		unsetUserIds.removeAll(SetUtil.fromArray(userIds));
 
 		if (!unsetUserIds.isEmpty()) {
 			UserGroupMembershipPolicyUtil.checkMembership(

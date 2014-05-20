@@ -144,8 +144,8 @@ if (Validator.isNotNull(target)) {
 					boolean disabled = false;
 
 					if (selUser != null) {
-						for (Organization curOrganization : selUser.getOrganizations()) {
-							if (curOrganization.getOrganizationId() == organization.getOrganizationId()) {
+						for (long curOrganizationId : selUser.getOrganizationIds()) {
+							if (curOrganizationId == organization.getOrganizationId()) {
 								disabled = true;
 
 								break;

@@ -182,8 +182,8 @@ portletURL.setParameter("target", target);
 					boolean disabled = false;
 
 					if (selUser != null) {
-						for (Group curGroup : selUser.getGroups()) {
-							if (curGroup.getGroupId() == group.getGroupId()) {
+						for (long curGroupId : selUser.getGroupIds()) {
+							if (curGroupId == group.getGroupId()) {
 								disabled = true;
 
 								break;

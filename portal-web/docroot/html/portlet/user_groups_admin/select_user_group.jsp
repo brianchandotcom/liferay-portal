@@ -100,8 +100,8 @@ portletURL.setParameter("eventName", eventName);
 
 					boolean disabled = false;
 
-					for (UserGroup curUserGroup : selUser.getUserGroups()) {
-						if (curUserGroup.getUserGroupId() == userGroup.getUserGroupId()) {
+					for (long curUserGroupId : selUser.getUserGroupIds()) {
+						if (curUserGroupId == userGroup.getUserGroupId()) {
 							disabled = true;
 
 							break;

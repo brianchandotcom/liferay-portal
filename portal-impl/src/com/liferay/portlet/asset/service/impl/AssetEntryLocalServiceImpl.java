@@ -39,6 +39,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -839,6 +840,21 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		return updateVisible(entry, visible);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	 */
+	@Deprecated
+	@Override
+	public void validate(
+			long groupId, String className, long[] categoryIds,
+			String[] tagNames)
+		throws PortalException, SystemException {
+
+		return validate(
+			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+			tagNames);
 	}
 
 	@Override

@@ -352,7 +352,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (owns(state, index)) {
 									var historyEntry = item.historyEntry;
 
@@ -956,7 +956,7 @@ AUI.add(
 
 									A.each(
 										vocabularies,
-										function(item, index, collection) {
+										function(item, index) {
 											if (index === 0) {
 												item.cssClassSelected = STR_SELECTED;
 											}
@@ -1408,7 +1408,7 @@ AUI.add(
 
 							AObject.each(
 								paginationMap,
-								function(item, index, collection) {
+								function(item, index) {
 									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
 								}
 							);
@@ -1816,7 +1816,7 @@ AUI.add(
 
 								A.each(
 									vocabularies,
-									function(item, index, collection) {
+									function(item, index) {
 										if (item.vocabularyId === selectedVocabularyId) {
 											selectedVocabularyIndex = index;
 										}
@@ -2148,7 +2148,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								var historyEntry = item.historyEntry;
 
 								var value;
@@ -2321,7 +2321,7 @@ AUI.add(
 
 							AObject.each(
 								result,
-								function(item, index, collection) {
+								function(item, index) {
 									errorVocabularies[toInt(item.categoryId)] = true;
 								}
 							);

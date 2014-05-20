@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var WIN = A.config.win;
-
 		var SELECTOR_AVAILABLE_TRANSLATIONS_LINKS = '#availableTranslationsLinks';
 
 		var SELECTOR_TRANSLATIONS_MESSAGE = '#translationsMessage';
@@ -38,6 +36,8 @@ AUI.add(
 		var TPL_TRANSLATION = '<a class="journal-article-translation lfr-token" href="{uri}" id="{namespace}journal-article-translation-link-{languageId}">' +
 			'<img alt="" src="{pathThemeImages}/language/{languageId}.png" />{language}' +
 		'</a>';
+
+		var WIN = A.config.win;
 
 		var JournalContent = A.Component.create(
 			{
@@ -109,6 +109,12 @@ AUI.add(
 						instance._bindUI();
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -169,12 +175,6 @@ AUI.add(
 						);
 
 						instance._eventHandles = eventHandles;
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_changeArticleDefaultLocale: function() {

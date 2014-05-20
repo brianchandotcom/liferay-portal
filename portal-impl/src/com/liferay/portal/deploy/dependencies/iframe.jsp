@@ -105,11 +105,11 @@ portletURL.setParameter("appURL", StringPool.BLANK);
 			}
 
 			var resizeIframe = function() {
-				iframe.set('height', getHeight());
+				iframe.attr('height', getHeight());
 			};
 
 			var updateIframe = function() {
-				bookmarkLink.set('href', '<%= portletURL.toString() %>' + escape(getURL()));
+				bookmarkLink.attr('href', '<%= portletURL.toString() %>' + escape(getURL()));
 
 				resizeIframe();
 			};

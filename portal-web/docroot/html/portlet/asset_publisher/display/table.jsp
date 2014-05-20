@@ -22,7 +22,6 @@ List results = (List)request.getAttribute("view.jsp-results");
 int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
-AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
 Group stageableGroup = themeDisplay.getScopeGroup();
@@ -39,36 +38,9 @@ if (Validator.isNull(title)) {
 
 PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse);
 
-PortletURL viewFullContentURL = renderResponse.createRenderURL();
-
-viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
-viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-	if (assetRenderer.getGroupId() != scopeGroupId) {
-		viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-	}
-
-	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
-}
-
-String viewURL = null;
-
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
-if (viewInContext) {
-	String viewFullContentURLString = viewFullContentURL.toString();
-
-	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
-
-	viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
-}
-else {
-	viewURL = viewFullContentURL.toString();
-}
-
-viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+String viewURL = AssetPublisherHelperUtil.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 
 request.setAttribute("view.jsp-showIconLabel", false);
 %>

@@ -68,27 +68,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</liferay-ui:search-container-results>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.search.Document"
+				className="com.liferay.portlet.asset.model.AssetEntry"
 				escapedModel="<%= true %>"
-				modelVar="doc"
+				modelVar="assetEntry"
 			>
 
 				<%
-				long assetEntryId = 0;
-
-				if (typeSelection.equals(JournalArticle.class.getName())) {
-					assetEntryId = GetterUtil.getLong(doc.get(Field.ROOT_ENTRY_CLASS_PK));
-				}
-				else {
-					assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-				}
-
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
-
-				if ((assetEntry == null) || !assetEntry.isVisible()) {
-					continue;
-				}
-
 				Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 				%>
 
@@ -133,7 +118,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 					</c:if>
 				</liferay-ui:search-container-column-text>
-
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator />

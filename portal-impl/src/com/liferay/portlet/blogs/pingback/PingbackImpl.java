@@ -107,7 +107,7 @@ public class PingbackImpl implements Pingback {
 			new PingbackServiceContextFunction(companyId, groupId, urlTitle));
 	}
 
-	protected String buildBody() {
+	protected String buildBody() throws UnavailableSourceURIException {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("[...] ");

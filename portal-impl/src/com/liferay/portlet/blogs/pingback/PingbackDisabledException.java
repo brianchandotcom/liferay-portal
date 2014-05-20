@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.blogs.pingback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marcellus Tavares
  */
-public class PingbackDisabledException extends RuntimeException {
+public class PingbackDisabledException extends PortalException {
 
 	public PingbackDisabledException() {
 		super();

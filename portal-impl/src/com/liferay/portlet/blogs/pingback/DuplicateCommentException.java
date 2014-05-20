@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.blogs.pingback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author André de Oliveira
  */
-public class DuplicateCommentException extends RuntimeException {
+public class DuplicateCommentException extends PortalException {
 
 	public DuplicateCommentException() {
 		super();

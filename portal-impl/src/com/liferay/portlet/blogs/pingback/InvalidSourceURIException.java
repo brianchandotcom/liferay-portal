@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.blogs.pingback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marcellus Tavares
  */
-public class InvalidSourceURIException extends RuntimeException {
+public class InvalidSourceURIException extends PortalException {
 
 	public InvalidSourceURIException() {
 		super();

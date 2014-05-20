@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.blogs.pingback;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marcellus Tavares
  */
-public class UnavailableSourceURIException extends RuntimeException {
+public class UnavailableSourceURIException extends PortalException {
 
 	public UnavailableSourceURIException() {
 		super();

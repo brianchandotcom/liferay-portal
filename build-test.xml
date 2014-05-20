@@ -2181,13 +2181,15 @@ plugins.includes=marketplace-portlet</echo>
 			<elseif>
 				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
 				<then>
-					<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+					<app-server-update>
+						app.server.type=weblogic
+					</app-server-update>
 
 					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
 
 					<antcall target="deploy" inheritAll="false" />
 
-					<delete file="app.server.${user.name}.properties" />
+					<app-server-reset />
 				</then>
 			</elseif>
 		</if>

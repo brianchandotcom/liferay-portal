@@ -16,10 +16,12 @@
 	</target>
 
 	<target name="run-selenium-jboss-eap">
-		<echo file="app.server.${user.name}.properties">app.server.type=jboss
-app.server.jboss.version=${app.server.jboss.version}
-app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.major.version}
-app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip</echo>
+		<app-server-update>
+			app.server.type=jboss
+			app.server.jboss.version=${app.server.jboss.version}
+			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.major.version}
+			app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
+		</app-server-update>
 
 		<if>
 			<not>

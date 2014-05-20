@@ -16,7 +16,9 @@
 	</target>
 
 	<target name="run-selenium-jetty">
-		<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
+		<app-server-update>
+			app.server.type=jetty
+		</app-server-update>
 
 		<if>
 			<not>

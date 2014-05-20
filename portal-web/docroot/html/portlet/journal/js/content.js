@@ -31,7 +31,7 @@ AUI.add(
 
 		var TPL_EDIT_TRANSLATION_URL = '{baseURL}&{namespace}toLanguageId={languageId}';
 
-		var TPL_LANGUAGE_INPUT = '<input name={namespace}available_locales" type="hidden" value="{languageId}" />';
+		var TPL_LANGUAGE_INPUT = '<input name="{namespace}available_locales" type="hidden" value="{languageId}" />';
 
 		var TPL_TRANSLATION = '<a class="journal-article-translation lfr-token" href="{uri}" id="{namespace}journal-article-translation-link-{languageId}">' +
 			'<img alt="" src="{pathThemeImages}/language/{languageId}.png" />{language}' +
@@ -336,14 +336,14 @@ AUI.add(
 
 						var strings = instance.get(STR_STRINGS);
 
-						var target = event.currentTarget;
+						var currentTarget = event.currentTarget;
 
 						Liferay.Util.openWindow(
 							{
 								destroyOnHide: true,
 								id: instance.ns('journalArticleTranslationDialog'),
 								title: strings.webContentTranslation,
-								uri: target.attr('href')
+								uri: currentTarget.attr('href')
 							}
 						);
 
@@ -404,7 +404,6 @@ AUI.add(
 							var translationsMessage = instance.one(SELECTOR_TRANSLATIONS_MESSAGE);
 
 							statusNode.replaceClass('workflow-status-approved', 'workflow-status-draft');
-
 							statusNode.replaceClass('label-success', 'label-info');
 
 							statusNode.html(strings.draft);

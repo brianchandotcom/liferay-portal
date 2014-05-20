@@ -31,45 +31,13 @@ if (Validator.isNull(title)) {
 	title = assetRenderer.getTitle(locale);
 }
 
-PortletURL viewFullContentURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, true);
-
-viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
-viewFullContentURL.setParameter("redirect", currentURL);
-viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-
-if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-	if (assetRenderer.getGroupId() != scopeGroupId) {
-		viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-	}
-
-	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
-}
-
-String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
-
-String viewURL = null;
-
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
-if (viewInContext) {
-	String viewFullContentURLString = viewFullContentURL.toString();
-
-	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
-
-	viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
-}
-else {
-	viewURL = viewFullContentURL.toString();
-}
-
-if (Validator.isNull(viewURL)) {
-	viewURL = viewFullContentURL.toString();
-}
+String viewURL = AssetPublisherHelperUtil.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 
 String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() : "read-more-x-about-x";
 
-viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 %>
 
 <c:if test="<%= show %>">

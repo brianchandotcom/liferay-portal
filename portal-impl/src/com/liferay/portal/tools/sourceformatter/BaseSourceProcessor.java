@@ -971,7 +971,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
-		if (absolutePath.contains("/sync-engine-shared/")) {
+		if (absolutePath.contains("/ant-bnd/") ||
+			absolutePath.contains("/sync-engine-shared/")) {
+
 			return true;
 		}
 		else {

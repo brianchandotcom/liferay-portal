@@ -19,7 +19,11 @@ package com.liferay.portlet.asset.model;
  */
 public class AssetCategoryConstants {
 
+	public static final String ALL_CLASS_NAME_AND_TYPE_IDS = "0:0";
+
 	public static final long ALL_CLASS_NAME_IDS = 0;
+
+	public static final long ALL_CLASS_TYPE_IDS = 0;
 
 	public static final long DEFAULT_PARENT_CATEGORY_ID = 0;
 

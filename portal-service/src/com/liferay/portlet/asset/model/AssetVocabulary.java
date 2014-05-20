@@ -39,7 +39,19 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
+	public boolean isAssociatedToAsset(long assetClassNameId);
+
+	public boolean isAssociatedToAsset(long assetClassNameId,
+		long assetClassTypeId);
+
+	public boolean isDuplicatedCategory(long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isMultiValued();
+
+	public boolean isMissingRequiredCategory(long assetClassNameId,
+		long assetClassTypeId, long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isRequired(long classNameId);
 

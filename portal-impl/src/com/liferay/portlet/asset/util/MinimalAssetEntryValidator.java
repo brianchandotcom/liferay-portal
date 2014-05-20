@@ -26,12 +26,12 @@ public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
 
 	@Override
 	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
+			long groupId, String className, long classTypeId,
+			long[] categoryIds, String[] entryNames)
 		throws PortalException {
 
 		if (!className.equals(MBDiscussion.class.getName()) &&
-			ArrayUtil.isEmpty(tagNames)) {
+			ArrayUtil.isEmpty(entryNames)) {
 
 			throw new AssetTagException(AssetTagException.AT_LEAST_ONE_TAG);
 		}

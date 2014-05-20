@@ -809,8 +809,34 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public boolean isAssociatedToAsset(long assetClassNameId) {
+		return _assetVocabulary.isAssociatedToAsset(assetClassNameId);
+	}
+
+	@Override
+	public boolean isAssociatedToAsset(long assetClassNameId,
+		long assetClassTypeId) {
+		return _assetVocabulary.isAssociatedToAsset(assetClassNameId,
+			assetClassTypeId);
+	}
+
+	@Override
+	public boolean isDuplicatedCategory(long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.isDuplicatedCategory(selectedCategoryIds);
+	}
+
+	@Override
 	public boolean isMultiValued() {
 		return _assetVocabulary.isMultiValued();
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(long assetClassNameId,
+		long assetClassTypeId, long[] selectedCategoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.isMissingRequiredCategory(assetClassNameId,
+			assetClassTypeId, selectedCategoryIds);
 	}
 
 	@Override

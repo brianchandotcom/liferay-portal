@@ -880,7 +880,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntryValidator validator = (AssetEntryValidator)InstancePool.get(
 			PropsValues.ASSET_ENTRY_VALIDATOR);
 
-		validator.validate(groupId, className, categoryIds, tagNames);
+		validator.validate(groupId, className, 0, categoryIds, tagNames);
 	}
 
 	protected long[] getClassNameIds(long companyId, String className) {

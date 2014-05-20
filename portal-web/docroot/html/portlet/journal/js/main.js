@@ -30,6 +30,20 @@ AUI.add(
 						alert(Liferay.Language.get('please-add-a-template-to-render-this-structure'));
 					},
 
+					getByName: function(currentForm, name, withoutNamespace) {
+						var instance = this;
+
+						var inputName = withoutNamespace ? name : instance.NS + name;
+
+						return A.one(currentForm).one('[name=' + inputName + ']');
+					},
+
+					getPrincipalForm: function(formName) {
+						var instance = this;
+
+						return A.one('form[name=' + instance.NS + (formName || 'fm1') + ']');
+					},
+
 					hasStructure: function() {
 						var instance = this;
 
@@ -48,30 +62,6 @@ AUI.add(
 						var templateId = instance.getByName(form, 'templateId');
 
 						return templateId && templateId.val();
-					},
-
-					updateStructureDefaultValues: function() {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						var classNameId = instance.getByName(form, 'classNameId');
-
-						return (classNameId && classNameId.val() > 0);
-					},
-
-					getByName: function(currentForm, name, withoutNamespace) {
-						var instance = this;
-
-						var inputName = withoutNamespace ? name : instance.NS + name;
-
-						return A.one(currentForm).one('[name=' + inputName + ']');
-					},
-
-					getPrincipalForm: function(formName) {
-						var instance = this;
-
-						return A.one('form[name=' + instance.NS + (formName || 'fm1') + ']');
 					},
 
 					saveArticle: function(cmd) {
@@ -120,6 +110,16 @@ AUI.add(
 						cmdInput.val('translate');
 
 						submitForm(form);
+					},
+
+					updateStructureDefaultValues: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var classNameId = instance.getByName(form, 'classNameId');
+
+						return (classNameId && classNameId.val() > 0);
 					}
 				}
 			}

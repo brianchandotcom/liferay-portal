@@ -27,14 +27,27 @@ if (liveGroup != null) {
 else {
 	groupTypeSettings = new UnicodeProperties();
 }
+
+String mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", "openStreetMap");
+
+String googleMapsApiKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsApiKey", "");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
 
 <h3><liferay-ui:message key="maps" /></h3>
 
-<%
-String googleMapsApiKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsApiKey");
-%>
+<p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
-<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="TypeSettingsProperties--googleMapsApiKey--" size="40" type="text" value="<%= googleMapsApiKey %>" />
+<aui:input checked='<%= mapsAPIProvider.equals("openStreetMap") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="openStreetMap" />
+
+<aui:input checked='<%= mapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="googleMaps" />
+
+<div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsApiKey">
+	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="TypeSettingsProperties--googleMapsApiKey--" size="40" type="text" value="<%= googleMapsApiKey %>" />
+</div>
+
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />mapsGoogleMapsEnabled', '<portlet:namespace />googleMapsApiKey', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />mapsOpenStreetMapEnabled', '', '<portlet:namespace />googleMapsApiKey');
+</aui:script>

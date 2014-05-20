@@ -17,7 +17,7 @@
 
 	<target name="run-selenium-geronimo">
 		<app-server-update>
-			app.server.type="geronimo"
+			app.server.type=geronimo
 		</app-server-update>
 
 		<if>

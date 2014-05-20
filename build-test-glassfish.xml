@@ -17,7 +17,7 @@
 
 	<target name="run-selenium-glassfish">
 		<app-server-update>
-			app.server.type="glassfish"
+			app.server.type=glassfish
 		</app-server-update>
 
 		<if>

@@ -354,7 +354,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 </c:if>
 
 <aui:script use="liferay-portlet-journal">
-	window['<portlet:namespace />journalPortlet'] = new Liferay.Portlet.Journal(
+	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(
 		{
 			articleId: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 			namespace: '<portlet:namespace />'

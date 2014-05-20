@@ -360,28 +360,17 @@ public class ExportImportPathUtil {
 			PATH_PREFIX_GROUP, portletDataContext.getScopeGroupId());
 	}
 
-	public static String getServicePath(
-		PortletDataContext portletDataContext, String serviceName) {
+	public static String getServicePortletPreferencesPath(
+		PortletDataContext portletDataContext, String serviceName, long ownerId,
+		int ownerType) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(getRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(PATH_PREFIX_SERVICE);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(serviceName);
-
-		return sb.toString();
-	}
-
-	public static String getServicePortletPreferencesPath(
-		PortletDataContext portletDataContext, String serviceName, long ownerId,
-		int ownerType) {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(getServicePath(portletDataContext, serviceName));
-		sb.append("/preferences/");
 		sb.append(getOwnerTypeSubPath(ownerType));
 		sb.append(ownerId);
 		sb.append(CharPool.FORWARD_SLASH);

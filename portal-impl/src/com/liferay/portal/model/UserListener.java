@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.ldap.LDAPUserTransactionThreadLocal;
 import com.liferay.portal.security.ldap.PortalLDAPExporterUtil;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @author Scott Lee
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Vilmos Papp
  */
 public class UserListener extends BaseModelListener<User> {
 
@@ -74,6 +76,18 @@ public class UserListener extends BaseModelListener<User> {
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
+	}
+
+	@Override
+	public void onBeforeUpdate(User user) throws ModelListenerException {
+		if (!(user instanceof UserModelImpl)) {
+			return;
+		}
+
+		UserModelImpl userModel = (UserModelImpl)user;
+
+		LDAPUserTransactionThreadLocal.setOriginalEmailAddress(
+			userModel.getOriginalEmailAddress());
 	}
 
 	protected void exportToLDAP(User user) throws Exception {

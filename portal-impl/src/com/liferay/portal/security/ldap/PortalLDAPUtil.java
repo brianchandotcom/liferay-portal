@@ -434,6 +434,15 @@ public class PortalLDAPUtil {
 			String emailAddress)
 		throws Exception {
 
+		return getUser(
+			ldapServerId, companyId, screenName, emailAddress, false);
+	}
+
+	public static Binding getUser(
+			long ldapServerId, long companyId, String screenName,
+			String emailAddress, boolean checkOriginalEmail)
+		throws Exception {
+
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
 		LdapContext ldapContext = getContext(ldapServerId, companyId);
@@ -504,6 +513,19 @@ public class PortalLDAPUtil {
 
 			if (enu.hasMoreElements()) {
 				return enu.nextElement();
+			}
+
+			if (checkOriginalEmail) {
+				String originalEmailAddress =
+					LDAPUserTransactionThreadLocal.getOriginalEmailAddress();
+
+				if (Validator.isNotNull(originalEmailAddress) &&
+					!emailAddress.equals(originalEmailAddress)) {
+
+					return PortalLDAPUtil.getUser(
+						ldapServerId, companyId, screenName,
+						originalEmailAddress, false);
+				}
 			}
 
 			return null;

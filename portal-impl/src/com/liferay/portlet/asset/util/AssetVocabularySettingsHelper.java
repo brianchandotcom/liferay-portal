@@ -76,23 +76,11 @@ public class AssetVocabularySettingsHelper {
 			classNameId, classTypeId, getClassNameAndTypeIds());
 	}
 
-	public boolean hasClassNameId(long classNameId) {
-		return isClassNameAndTypeIdSpecified(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
-			getClassNameAndTypeIds());
-	}
-
 	public boolean isClassNameAndTypeIdRequired(
 		long classNameId, long classTypeId) {
 
 		return isClassNameAndTypeIdSpecified(
 			classNameId, classTypeId, getRequiredClassNameAndTypeIds());
-	}
-
-	public boolean isClassNameIdRequired(long classNameId) {
-		return isClassNameAndTypeIdSpecified(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
-			getRequiredClassNameAndTypeIds());
 	}
 
 	public boolean isMultiValued() {

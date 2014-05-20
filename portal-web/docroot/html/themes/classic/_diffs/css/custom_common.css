@@ -302,6 +302,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 							background: #009AE5;
 						}
 					}
+
+					ul.dropdown-menu > li > a {
+						padding: 6px 15px;
+					}
 				}
 
 				@include respond-to(phone, tablet) {
@@ -406,17 +410,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.nav > li {
-			@include respond-to(desktop) {
-				float: left;
-			}
-		}
-
-		.nav-account-controls li ul li a:hover i {
-			background-image: none;
-			text-decoration: none;
-		}
-
 		.divider-vertical {
 			border-left-color: #222;
 			border-right-color: #555;
@@ -433,6 +426,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 					padding: 3px 20px;
 				}
 			}
+		}
+
+		.nav-account-controls li ul li a:hover i {
+			background-image: none;
+			text-decoration: none;
+		}
+
+		.navbar-nav > li > a {
+			padding-bottom: 6px;
+			padding-top: 6px;
+		}
+
+		.user-avatar .user-avatar-image {
+			background-size: auto 26px;
+			height: 26px;
+			margin: 0;
+			width: 26px;
 		}
 	}
 

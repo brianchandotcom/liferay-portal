@@ -60,8 +60,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			span, a {
 				@include ellipsis;
 				@include respond-to(desktop) {
-					display: inline;
-					float: left;
 					max-width: 300px;
 				}
 			}
@@ -115,10 +113,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						}
 					}
 				}
-
-				> li > a {
-					margin-right: 5px;
-				}
 			}
 		}
 
@@ -150,23 +144,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.staging-bar {
-			.staging-toggle {
-				color: #FFF;
-
-				li a {
-					color: #FFF;
-					font-weight: 300;
-					text-decoration: none;
-				}
-
-				.btn-link {
-					color: #FFF;
-					font-size: 12px;
-				}
-			}
-		}
-
 		.nav > li.staging-toggle {
 			&.active a, > a {
 				color: #FFF;
@@ -174,6 +151,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			> a {
 				padding: 2px 20px;
+			}
+		}
+
+		.page-customization-bar .btn {
+			border-color: transparent;
+
+			&:focus, &:hover {
+				background: transparent;
+				text-decoration: underline;
 			}
 		}
 
@@ -208,14 +194,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
-		}
 
-		.page-customization-bar .btn {
-			border-color: transparent;
+			.staging-toggle {
+				color: #FFF;
 
-			&:focus, &:hover {
-				background: transparent;
-				text-decoration: underline;
+				li a {
+					color: #FFF;
+					font-weight: 300;
+					text-decoration: none;
+				}
+
+				.btn-link {
+					color: #FFF;
+					font-size: 12px;
+				}
 			}
 		}
 	}

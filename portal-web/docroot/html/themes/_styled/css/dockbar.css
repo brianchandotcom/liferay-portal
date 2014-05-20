@@ -94,6 +94,8 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.container {
+			background-color: #F3F3F3;
+			border-color: #DDD;
 			margin-left: 0;
 			margin-right: 0;
 			width: 100%;
@@ -113,18 +115,8 @@ $editLayoutPanelWidth: 460px;
 
 					float: left;
 					height: auto;
-					max-width: 45px;
 					overflow: visible;
-					padding: 5px;
 					position: static;
-					width: 45px;
-				}
-
-				&#_145_navAccountControlsNavbarCollapse {
-					max-width: none;
-					min-width: 1px;
-					padding: 0;
-					width: auto;
 				}
 
 				> li {
@@ -132,8 +124,8 @@ $editLayoutPanelWidth: 460px;
 						@include flex-shrink(1);
 
 						float: left;
+						margin: 5px;
 						position: static;
-						width: 100%;
 
 						&.info-link-container {
 							float: right;
@@ -197,7 +189,7 @@ $editLayoutPanelWidth: 460px;
 							padding: 0;
 							position: relative;
 							text-align: center;
-							width: 100%;
+							width: 45px;
 
 							> .nav-item-label {
 								display: none;
@@ -216,13 +208,6 @@ $editLayoutPanelWidth: 460px;
 						&.user-avatar .user-avatar-link .nav-item-label {
 							display: inline;
 
-							.user-avatar-image {
-								background-size: auto 26px;
-								height: 26px;
-								margin-top: 0;
-								width: 26px;
-							}
-
 							.user-full-name {
 								display: none;
 							}
@@ -233,9 +218,10 @@ $editLayoutPanelWidth: 460px;
 						}
 
 						&.sign-in {
+							width: 100%;
+
 							> a {
 								float: right;
-								margin: 5px;
 								width: auto;
 
 								& > .nav-item-label {
@@ -250,6 +236,7 @@ $editLayoutPanelWidth: 460px;
 					float: right;
 					padding: 0 5px;
 					position: static;
+					width: auto;
 
 					@include respond-to(desktop) {
 						position: relative;
@@ -265,12 +252,6 @@ $editLayoutPanelWidth: 460px;
 
 						.dropdown-menu .nav-item-label {
 							display: inline;
-						}
-
-						> li:not(.sign-in) {
-							margin: 5px;
-							max-width: 45px;
-							width: 45px;
 						}
 					}
 
@@ -360,7 +341,7 @@ $editLayoutPanelWidth: 460px;
 
 							> a {
 								margin: 0;
-								padding: 10px 15px;
+								padding: 15px;
 								white-space: nowrap;
 
 								@include respond-to(phone, tablet) {
@@ -524,12 +505,12 @@ $editLayoutPanelWidth: 460px;
 
 		.user-avatar .user-avatar-image {
 			background: #333 no-repeat center;
-			background-size: auto 20px;
+			background-size: auto 16px;
 			display: inline-block;
-			height: 20px;
+			height: 16px;
 			margin-top: -2px;
 			vertical-align: middle;
-			width: 20px;
+			width: 16px;
 		}
 
 		.diamond {
@@ -898,6 +879,27 @@ $editLayoutPanelWidth: 460px;
 		display: none;
 	}
 
+	.signed-out {
+		.dockbar .container > .nav-account-controls {
+			position: absolute;
+			right: 0;
+
+			@include respond-to(desktop) {
+				position: relative;
+			}
+		}
+
+		&.dockbar-split .dockbar .container > .nav-account-controls {
+			position: absolute;
+			right: 0;
+
+			@include respond-to(desktop) {
+				position: fixed;
+				right: 5em;
+			}
+		}
+	}
+
 	.touch .dockbar-split, .controls-hidden.dockbar-split {
 		.dockbar .container > .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
 			clip: rect(auto auto auto auto);
@@ -1074,8 +1076,24 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	&.ie6, &.ie7, &.ie8 {
+		.dockbar .container .nav-account-controls > li {
+			float: left;
+		}
+
 		.dockbar-split .dockbar .nav-add-controls li.page-preview-controls {
 			display: none;
+		}
+	}
+
+	&.ie6, &.ie7, &.ie8, &.ie9 {
+		.dockbar .container .nav-account-controls {
+			width: auto;
+		}
+
+		.signed-out {
+			.dockbar .container .nav-account-controls {
+				float: right;
+			}
 		}
 	}
 
@@ -1226,10 +1244,18 @@ $editLayoutPanelWidth: 460px;
 		width: 320px;
 	}
 
-	/* -------- Extras -------- */
+/* -------- Extras -------- */
 
-	.dockbar .container > .nav > li.info-items {
-		@include background-image(none);
+	.dockbar {
+		.container > .nav > li.info-items {
+			@include background-image(none);
+		}
+
+		.nav-navigation {
+			.dropdown-menu {
+				@include box-shadow(none);
+			}
+		}
 	}
 
 	/* -------- Media queries -------- */
@@ -1343,55 +1369,6 @@ $editLayoutPanelWidth: 460px;
 	@include respond-to(phone) {
 		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
 			margin-left: -5px;
-		}
-	}
-
-	/* LPS-42547 */
-
-	.dockbar .navbar-collapse {
-		-webkit-transform: none;
-	}
-
-	/* -------- Flexbox fallback for IE 9 -------- */
-
-	@include respond-to(phone, tablet) {
-		&.ie9 {
-			.dockbar .navbar-inner .container .nav-collapse {
-				&#_145_navAccountControlsNavbarCollapse {
-					max-width: 220px;
-					width: 55%;
-
-					.nav-account-controls {
-						white-space: nowrap;
-						width: 100%;
-
-						> li.dropdown {
-							@include box-sizing(border-box);
-
-							margin: 0;
-							max-width: 55px;
-							padding: 5px;
-							width: 25%;
-						}
-
-						li.sign-in a {
-							position: absolute;
-							right: 0;
-						}
-					}
-				}
-
-				&:not(#_145_navAccountControlsNavbarCollapse) {
-					@include box-sizing(border-box);
-
-					max-width: 55px;
-					width: 15%;
-
-					li {
-						width: 100%;
-					}
-				}
-			}
 		}
 	}
 }

@@ -16,19 +16,25 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -44,9 +50,11 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -394,7 +402,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		layouts.add(stagingLayout);
 
-		List<Portlet> portlets = LayoutExporter.getPortletDataHandlerPortlets(
+		List<Portlet> portlets = getPortletDataHandlerPortlets(
 			group.getGroupId(), layouts);
 
 		Assert.assertEquals(2, portlets.size());
@@ -412,6 +420,35 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	protected void addPortlet(
+			List<Portlet> portlets, Set<String> rootPortletIds, Portlet portlet,
+			long groupId, long plid, boolean privateLayout)
+		throws Exception {
+
+		if ((portlet == null) ||
+			rootPortletIds.contains(portlet.getRootPortletId())) {
+
+			return;
+		}
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler == null) {
+			return;
+		}
+
+		PortletDataHandlerControl[] portletDataHandlerControls =
+			portletDataHandler.getExportConfigurationControls(
+				portlet.getCompanyId(), groupId, portlet, plid, privateLayout);
+
+		if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
+			rootPortletIds.add(portlet.getRootPortletId());
+
+			portlets.add(portlet);
+		}
+	}
+
 	protected void exportImportLayouts(
 			long[] layoutIds, Map<String, String[]> parameterMap)
 		throws Exception {
@@ -423,6 +460,45 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), importedGroup.getGroupId(), false,
 			parameterMap, larFile);
+	}
+
+	protected List<Portlet> getPortletDataHandlerPortlets(
+			long groupId, List<Layout> layouts)
+		throws Exception {
+
+		List<Portlet> portlets = new ArrayList<Portlet>();
+		Set<String> rootPortletIds = new HashSet<String>();
+
+		for (Layout layout : layouts) {
+			if (!layout.isTypePortlet()) {
+				continue;
+			}
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			for (String portletId : layoutTypePortlet.getPortletIds()) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					layout.getCompanyId(), portletId);
+
+				addPortlet(
+					portlets, rootPortletIds, portlet, layout.getGroupId(),
+					layout.getPlid(), layout.getPrivateLayout());
+			}
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		List<Portlet> dataSiteLevelPortlets =
+			LayoutExporter.getDataSiteLevelPortlets(group.getCompanyId());
+
+		for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
+			addPortlet(
+				portlets, rootPortletIds, dataSiteLevelPortlet, groupId, -1,
+				false);
+		}
+
+		return portlets;
 	}
 
 	protected void testAvailableLocales(

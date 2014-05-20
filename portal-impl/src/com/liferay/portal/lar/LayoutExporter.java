@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -74,14 +73,12 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.io.File;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -141,43 +138,15 @@ public class LayoutExporter {
 		return _instance;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static List<Portlet> getPortletDataHandlerPortlets(
 			long groupId, List<Layout> layouts)
 		throws Exception {
 
-		List<Portlet> portlets = new ArrayList<Portlet>();
-		Set<String> rootPortletIds = new HashSet<String>();
-
-		for (Layout layout : layouts) {
-			if (!layout.isTypePortlet()) {
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			for (String portletId : layoutTypePortlet.getPortletIds()) {
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					layout.getCompanyId(), portletId);
-
-				addPortlet(
-					portlets, rootPortletIds, portlet, layout.getGroupId(),
-					layout.getPlid(), layout.getPrivateLayout());
-			}
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		List<Portlet> dataSiteLevelPortlets = getDataSiteLevelPortlets(
-			group.getCompanyId());
-
-		for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
-			addPortlet(
-				portlets, rootPortletIds, dataSiteLevelPortlet, groupId, -1,
-				false);
-		}
-
-		return portlets;
+		return Collections.emptyList();
 	}
 
 	public byte[] exportLayouts(
@@ -679,35 +648,6 @@ public class LayoutExporter {
 					scopeLayoutUuid
 				}
 			);
-		}
-	}
-
-	private static void addPortlet(
-			List<Portlet> portlets, Set<String> rootPortletIds, Portlet portlet,
-			long groupId, long plid, boolean privateLayout)
-		throws Exception {
-
-		if ((portlet == null) ||
-			rootPortletIds.contains(portlet.getRootPortletId())) {
-
-			return;
-		}
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if (portletDataHandler == null) {
-			return;
-		}
-
-		PortletDataHandlerControl[] portletDataHandlerControls =
-			portletDataHandler.getExportConfigurationControls(
-				portlet.getCompanyId(), groupId, portlet, plid, privateLayout);
-
-		if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
-			rootPortletIds.add(portlet.getRootPortletId());
-
-			portlets.add(portlet);
 		}
 	}
 

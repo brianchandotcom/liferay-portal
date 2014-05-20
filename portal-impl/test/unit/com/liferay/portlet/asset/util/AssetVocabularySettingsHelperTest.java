@@ -115,21 +115,6 @@ public class AssetVocabularySettingsHelperTest {
 	}
 
 	@Test
-	public void testHasClassNameId() {
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			getVocabularySettingsHelper(
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS, true);
-
-		Assert.assertTrue(vocabularySettingsHelper.hasClassNameId(1));
-		Assert.assertTrue(vocabularySettingsHelper.hasClassNameId(2));
-
-		vocabularySettingsHelper = getVocabularySettingsHelper(1, true);
-
-		Assert.assertTrue(vocabularySettingsHelper.hasClassNameId(1));
-		Assert.assertFalse(vocabularySettingsHelper.hasClassNameId(2));
-	}
-
-	@Test
 	public void testIsClassNameAndTypeIdRequired() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
@@ -161,32 +146,6 @@ public class AssetVocabularySettingsHelperTest {
 			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
 		Assert.assertFalse(
 			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
-	}
-
-	@Test
-	public void testIsClassNameIdRequired() {
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			getVocabularySettingsHelper(
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS, false);
-
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(1));
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(2));
-
-		vocabularySettingsHelper = getVocabularySettingsHelper(
-			AssetCategoryConstants.ALL_CLASS_NAME_IDS, true);
-
-		Assert.assertTrue(vocabularySettingsHelper.isClassNameIdRequired(1));
-		Assert.assertTrue(vocabularySettingsHelper.isClassNameIdRequired(2));
-
-		vocabularySettingsHelper = getVocabularySettingsHelper(1, false);
-
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(1));
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(2));
-
-		vocabularySettingsHelper = getVocabularySettingsHelper(1, true);
-
-		Assert.assertTrue(vocabularySettingsHelper.isClassNameIdRequired(1));
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(2));
 	}
 
 	@Test

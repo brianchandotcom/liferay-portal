@@ -209,7 +209,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 					AArray.each(
 						event.results,
-						function(item, index, collection) {
+						function(item, index) {
 							item.raw.node.removeClass('hide');
 						}
 					);

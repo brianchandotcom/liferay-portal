@@ -972,7 +972,7 @@ public class PortletExporter {
 			document.remove(node);
 		}
 
-		String path = getPortletPreferencesPath(
+		String path = ExportImportPathUtil.getPortletPreferencesPath(
 			portletDataContext, portletId, ownerId, ownerType, plid);
 
 		portletPreferencesElement.addAttribute("path", path);
@@ -1052,7 +1052,7 @@ public class PortletExporter {
 			Element parentElement)
 		throws Exception {
 
-		String path = getServicePortletPreferencesPath(
+		String path = ExportImportPathUtil.getServicePortletPreferencesPath(
 			portletDataContext, serviceName, ownerId, ownerType);
 
 		if (portletDataContext.isPathNotProcessed(path)) {
@@ -1200,76 +1200,7 @@ public class PortletExporter {
 		return portletPreferences;
 	}
 
-	protected String getPortletPreferencesPath(
-		PortletDataContext portletDataContext, String portletId, long ownerId,
-		int ownerType, long plid) {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(portletDataContext, portletId));
-		sb.append("/preferences/");
-
-		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
-			sb.append("company/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-			sb.append("group/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-			sb.append("layout/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-			sb.append("user/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-			sb.append("archived/");
-		}
-
-		sb.append(ownerId);
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(plid);
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append("portlet-preferences.xml");
-
-		return sb.toString();
-	}
-
 	private PortletExporter() {
-	}
-
-	private String getServicePortletPreferencesPath(
-		PortletDataContext portletDataContext, String serviceName, long ownerId,
-		int ownerType) {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(
-			ExportImportPathUtil.getServicePath(
-				portletDataContext, serviceName));
-		sb.append("/preferences/");
-
-		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
-			sb.append("company/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-			sb.append("group/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-			sb.append("layout/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-			sb.append("user/");
-		}
-		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-			sb.append("archived/");
-		}
-
-		sb.append(ownerId);
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append("portlet-preferences.xml");
-
-		return sb.toString();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletExporter.class);

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -253,28 +252,11 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 			Binding binding = PortalLDAPUtil.getUser(
 				ldapServerId, user.getCompanyId(), user.getScreenName(),
-				user.getEmailAddress());
+				user.getEmailAddress(), true);
 
 			if (binding == null) {
-				String emailAddress = user.getEmailAddress();
-
-				String originalEmailAddress =
-					LDAPUserTransactionThreadLocal.getOriginalEmailAddress();
-
-				if (Validator.isNotNull(originalEmailAddress) &&
-					!emailAddress.equals(originalEmailAddress)) {
-
-					emailAddress = originalEmailAddress;
-				}
-
-				binding = PortalLDAPUtil.getUser(
-					ldapServerId, user.getCompanyId(), user.getScreenName(),
-					emailAddress);
-
-				if (binding == null) {
-					binding = addUser(
-						ldapServerId, ldapContext, user, userMappings);
-				}
+				binding = addUser(
+					ldapServerId, ldapContext, user, userMappings);
 			}
 
 			Name name = new CompositeName();

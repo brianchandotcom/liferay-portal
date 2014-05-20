@@ -10,19 +10,11 @@
 		<cacheable>false</cacheable>
 	</template>
 	<template>
-		<template-key>asset-publisher-geolocalized-google-maps</template-key>
-		<name>portlet-display-template-name-google-maps</name>
-		<description>portlet-display-template-description-geolocalized-google-maps</description>
+		<template-key>asset-publisher-geolocalized</template-key>
+		<name>portlet-display-template-name-geolocalized</name>
+		<description>portlet-display-template-description-geolocalized</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_google_maps.ftl</script-file>
-		<cacheable>false</cacheable>
-	</template>
-	<template>
-		<template-key>asset-publisher-geolocalized-osm-leaflet</template-key>
-		<name>portlet-display-template-name-openstreetmap</name>
-		<description>portlet-display-template-description-geolocalized-osm-leaflet</description>
-		<language>ftl</language>
-		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_openstreetmap.ftl</script-file>
+		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_geolocalized.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

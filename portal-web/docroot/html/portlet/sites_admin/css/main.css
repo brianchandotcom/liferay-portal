@@ -14,4 +14,8 @@
 	.membership-restriction-container {
 		margin-top: 1em;
 	}
+
+	.maps-google-maps-api-key {
+		margin-left: 20px;
+	}
 }

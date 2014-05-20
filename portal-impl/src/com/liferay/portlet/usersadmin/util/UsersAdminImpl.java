@@ -49,6 +49,7 @@ import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -71,6 +72,7 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -1120,20 +1122,16 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		if ((updatingUser != null) && (updatingUser != updatedUser)) {
-			for (String roleName : PropsValues.FIELD_ALL_USERS_EDITABLE_ROLES) {
-				Role role = RoleLocalServiceUtil.fetchRole(
-					updatingUser.getCompanyId(), roleName);
+		if ((updatingUser != null) && !updatingUser.equals(updatedUser)) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-				if ((role != null) &&
-					RoleLocalServiceUtil.hasUserRole(
-						updatingUser.getUserId(), role.getRoleId())) {
+			if (UserPermissionUtil.contains(
+					permissionChecker, updatingUser.getUserId(),
+					ActionKeys.UPDATE_USER)) {
 
-					return true;
-				}
+				return true;
 			}
-
-			return false;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {

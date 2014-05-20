@@ -139,7 +139,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		serviceContext.setUserId(userId);
 
-		StagingUtil.checkDefaultLayoutSetBranches(
+		StagingLocalServiceUtil.checkDefaultLayoutSetBranches(
 			userId, sourceGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
 	}

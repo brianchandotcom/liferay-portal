@@ -83,8 +83,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -104,7 +102,6 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -208,6 +205,12 @@ public class StagingImpl implements Staging {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext))}
+	 */
+	@Deprecated
 	@Override
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
@@ -215,54 +218,9 @@ public class StagingImpl implements Staging {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long targetGroupId = 0;
-
-		if (remote) {
-			targetGroupId = liveGroup.getGroupId();
-		}
-		else {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			if (stagingGroup == null) {
-				return;
-			}
-
-			targetGroupId = stagingGroup.getGroupId();
-		}
-
-		if (branchingPublic) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(),
-					false, serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, false, true);
-		}
-
-		if (branchingPrivate) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, true,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
-					serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, true, true);
-		}
+		StagingLocalServiceUtil.checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, remote,
+			serviceContext);
 	}
 
 	@Override
@@ -1934,53 +1892,6 @@ public class StagingImpl implements Staging {
 	public void validateRemote(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId) {
-	}
-
-	protected void addDefaultLayoutSetBranch(
-			long userId, long groupId, String groupName, boolean privateLayout,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String masterBranchDescription =
-			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
-
-		if (privateLayout) {
-			masterBranchDescription =
-				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE;
-		}
-
-		String description = LanguageUtil.format(
-			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
-			groupName, false);
-
-		try {
-			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
-
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-					userId, groupId, privateLayout,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
-					true, LayoutSetBranchConstants.ALL_BRANCHES,
-					serviceContext);
-
-			List<LayoutRevision> layoutRevisions =
-				LayoutRevisionLocalServiceUtil.getLayoutRevisions(
-					layoutSetBranch.getLayoutSetBranchId(), false);
-
-			for (LayoutRevision layoutRevision : layoutRevisions) {
-				LayoutRevisionLocalServiceUtil.updateStatus(
-					userId, layoutRevision.getLayoutRevisionId(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create master branch for " +
-						(privateLayout ? "private" : "public") + " layouts",
-					pe);
-			}
-		}
 	}
 
 	protected void deleteRecentLayoutRevisionId(

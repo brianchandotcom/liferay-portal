@@ -2422,6 +2422,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 		<reference package-path="com.liferay.portal" entity="LayoutSetBranch" />
 	</entity>

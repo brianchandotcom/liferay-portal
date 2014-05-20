@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
@@ -110,14 +111,12 @@ public class LanguageFilter extends BasePortalFilter {
 
 		Matcher matcher = _pattern.matcher(content);
 
-		ResourceBundle resourceBundle = null;
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			locale);
 
 		if (_portletConfig != null) {
-			resourceBundle = _portletConfig.getResourceBundle(locale);
-		}
-
-		if (resourceBundle == null) {
-			resourceBundle = LanguageResources.getResourceBundle(locale);
+			resourceBundle = new AggregateResourceBundle(
+				_portletConfig.getResourceBundle(locale), resourceBundle);
 		}
 
 		int x = 0;

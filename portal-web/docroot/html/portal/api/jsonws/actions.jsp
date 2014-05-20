@@ -269,7 +269,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 				if (query) {
 					AArray.each(
 						results,
-						function(item, index, collection) {
+						function(item, index) {
 							var raw = item.raw;
 							var el = raw.el;
 							var node = raw.node;

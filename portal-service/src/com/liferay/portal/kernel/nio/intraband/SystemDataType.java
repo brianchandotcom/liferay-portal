@@ -19,7 +19,8 @@ package com.liferay.portal.kernel.nio.intraband;
  */
 public enum SystemDataType {
 
-	MAILBOX((byte)3), MESSAGE((byte)2), PORTAL_CACHE((byte)1), RPC((byte)0);
+	MAILBOX((byte)3), MESSAGE((byte)2), PORTAL_CACHE((byte)1), PROXY((byte)4),
+	RPC((byte)0);
 
 	public byte getValue() {
 		return _value;

@@ -112,44 +112,45 @@
 	<@liferay_aui.script>
 	(function() {
 		var putMarkers = function(map) {
+			var bounds;
+
 			var points = ${jsonArray};
 
 			var len = points.length;
 
-			if (len == 0) {
-				return null;
-			}
+			if (len) {
+				bounds = new google.maps.LatLngBounds();
 
-			var bounds = new google.maps.LatLngBounds();
+				for (var i = 0; i < len; i++) {
+					var point = points[i];
 
-			for (var i = 0; i < len; i++) {
-				var point = points[i];
-
-				var marker = new google.maps.Marker(
-					{
-						icon: point['icon'],
-						map: map,
-						position: new google.maps.LatLng(point['latitude'], point['longitude']),
-						title: point['title']
-					}
-				);
-
-				bounds.extend(marker.position);
-
-				(function(marker) {
-					var infoWindow = new google.maps.InfoWindow(
+					var marker = new google.maps.Marker(
 						{
-							content: point['abstract'] || point['title']
+							icon: point['icon'],
+							map: map,
+							position: new google.maps.LatLng(point['latitude'], point['longitude']),
+							title: point['title']
 						}
 					);
 
-					google.maps.event.addListener(
-						marker, 'click',
-						function() {
-							infoWindow.open(map, marker);
-						}
-					);
-				})(marker);
+					bounds.extend(marker.position);
+
+					(function(marker) {
+						var infoWindow = new google.maps.InfoWindow(
+							{
+								content: point['abstract'] || point['title']
+							}
+						);
+
+						google.maps.event.addListener(
+							marker,
+							'click',
+							function() {
+								infoWindow.open(map, marker);
+							}
+						);
+					})(marker);
+				}
 			}
 
 			return bounds;
@@ -222,6 +223,8 @@
 	<@liferay_aui.script>
 	(function() {
 		var putMarkers = function(map) {
+			var bounds;
+
 			L.tileLayer(
 				'${uriScheme}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				{
@@ -229,24 +232,27 @@
 				}
 			).addTo(map);
 
-			var bounds = L.latLngBounds([]);
 			var points = ${jsonArray};
 
 			var len = points.length;
 
-			for (var i = 0; i < len; i++) {
-				var point = points[i];
+			if (len) {
+				bounds = L.latLngBounds([]);
 
-				var latLng = L.latLng(point['latitude'], point['longitude']);
+				for (var i = 0; i < len; i++) {
+					var point = points[i];
 
-				L.marker(latLng).addTo(map).bindPopup(
-					point['abstract'],
-					{
-						maxWidth: ${maxWidth}
-					}
-				);
+					var latLng = L.latLng(point['latitude'], point['longitude']);
 
-				bounds.extend(latLng);
+					L.marker(latLng).addTo(map).bindPopup(
+						point['abstract'],
+						{
+							maxWidth: ${maxWidth}
+						}
+					);
+
+					bounds.extend(latLng);
+				}
 			}
 
 			return bounds;
@@ -255,7 +261,11 @@
 		var drawMap = function(lat, lng) {
 			var map = L.map('${namespace}mapCanvas').setView([lat, lng], 8);
 
-			map.fitBounds(putMarkers(map));
+			var bounds = putMarkers(map);
+
+			if (bounds) {
+				map.fitBounds(bounds);
+			}
 		};
 
 		var drawDefaultMap = function() {

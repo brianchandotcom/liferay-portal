@@ -171,7 +171,7 @@ AUI.add(
 
 				AArray.each(
 					files,
-					function(item, index, collection) {
+					function(item, index) {
 						queue.addToQueueBottom(item);
 					}
 				);
@@ -323,7 +323,7 @@ AUI.add(
 
 				AArray.each(
 					queuedFiles,
-					function(item, index, collection) {
+					function(item, index) {
 						fileList.push(item);
 					}
 				);
@@ -488,7 +488,7 @@ AUI.add(
 				if (!currentUploadData.folder) {
 					AArray.each(
 						fileList,
-						function(item, index, collection) {
+						function(item, index) {
 							item.overlay.destroy();
 
 							item.progressBar.destroy();

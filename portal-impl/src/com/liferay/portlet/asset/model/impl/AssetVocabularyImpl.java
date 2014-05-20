@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -178,18 +179,41 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isAssociatedToClassNameId(long classNameId) {
+	public boolean isAssociatedToClassNameAndTypeId(
+		long classNameId, long classTypeId) {
+
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.hasClassNameId(classNameId);
+		return vocabularySettingsHelper.hasClassNameAndTypeId(
+			classNameId, classTypeId);
 	}
 
+	@Override
+	public boolean isAssociatedToClassNameId(long classNameId) {
+		return isAssociatedToClassNameAndTypeId(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #isMissingRequiredCategory(long, long, final long[])}
+	 */
+	@Deprecated
 	@Override
 	public boolean isMissingRequiredCategory(
 		long classNameId, final long[] categoryIds) {
 
-		if (!isRequired(classNameId)) {
+		return isMissingRequiredCategory(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+			categoryIds);
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(
+			long classNameId, long classTypeId, final long[] categoryIds)
+		throws SystemException {
+
+		if (!isRequired(classNameId, classTypeId)) {
 			return false;
 		}
 
@@ -215,12 +239,23 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		return vocabularySettingsHelper.isMultiValued();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
+		return isRequired(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+	}
+
+	@Override
+	public boolean isRequired(long classNameId, long classTypeId) {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 
-		return vocabularySettingsHelper.isClassNameIdRequired(classNameId);
+		return vocabularySettingsHelper.isClassNameAndTypeIdRequired(
+			classNameId, classTypeId);
 	}
 
 	@Override

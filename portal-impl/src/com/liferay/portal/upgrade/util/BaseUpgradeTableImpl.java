@@ -42,10 +42,6 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		return _indexesSQL;
 	}
 
-	public String getTempFileName() {
-		return _tempFileName;
-	}
-
 	public boolean isAllowUniqueIndexes() throws Exception {
 		return _allowUniqueIndexes;
 	}
@@ -81,12 +77,14 @@ public abstract class BaseUpgradeTableImpl extends Table {
 	public void updateTable() throws Exception {
 		_calledUpdateTable = true;
 
-		_tempFileName = generateTempFile();
+		generateTempFile();
+
+		String tempFileName = getTempFileName();
 
 		try {
 			DB db = DBFactoryUtil.getDB();
 
-			if (Validator.isNotNull(_tempFileName)) {
+			if (Validator.isNotNull(tempFileName)) {
 				String deleteSQL = getDeleteSQL();
 
 				db.runSQL(deleteSQL);
@@ -100,9 +98,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 				db.runSQL(createSQL);
 			}
 
-			if (Validator.isNotNull(_tempFileName)) {
-				populateTable(_tempFileName);
-			}
+			populateTable();
 
 			String[] indexesSQL = getIndexesSQL();
 
@@ -133,8 +129,8 @@ public abstract class BaseUpgradeTableImpl extends Table {
 			}
 		}
 		finally {
-			if (Validator.isNotNull(_tempFileName) && _deleteTempFile) {
-				FileUtil.delete(_tempFileName);
+			if (Validator.isNotNull(tempFileName) && _deleteTempFile) {
+				FileUtil.delete(tempFileName);
 			}
 		}
 	}
@@ -145,6 +141,5 @@ public abstract class BaseUpgradeTableImpl extends Table {
 	private boolean _calledUpdateTable;
 	private boolean _deleteTempFile;
 	private String[] _indexesSQL = new String[0];
-	private String _tempFileName;
 
 }

@@ -88,6 +88,12 @@
 		</while>
 	</command>
 
+	<command name="viewCP">
+		<var name="key_pageTemplateName" value="Page Template Name" />
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+	</command>
+
 	<command name="viewDefaultCP">
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />

@@ -56,17 +56,17 @@
 </tr>
 <tr>
 	<td>ICON_VIEW_BUTTON</td>
-	<td>//button[@data-displaystyle='icon']</td>
+	<td>//a[@data-displaystyle='icon']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VIEW_BUTTON</td>
-	<td>//button[@data-displaystyle='list']</td>
+	<td>//a[@data-displaystyle='descriptive']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_VIEW_BUTTON</td>
-	<td>//button[@title='List View']</td>
+	<td>//a[@data-displaystyle='list']</td>
 	<td></td>
 </tr>
 <tr>

@@ -523,7 +523,7 @@
 <!--CUSTOM_FIELDS-->
 <tr>
 	<td>CUSTOM_FIELDS_LABEL</td>
-	<td>//div/label[@class='control-label' and contains(.,'${customFieldName}')]</td>
+	<td>//div/span[@class='control-label' and contains(.,'${customFieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

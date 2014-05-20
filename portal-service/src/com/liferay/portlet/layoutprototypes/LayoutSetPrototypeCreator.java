@@ -52,7 +52,7 @@ public class LayoutSetPrototypeCreator {
 	public Layout addLayout(
 			LayoutSetPrototype layoutSetPrototype, String nameKey,
 			String friendlyURL, String layoutTemplateId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 

@@ -29,7 +29,6 @@ import java.io.IOException;
 
 import java.util.Map;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
@@ -43,24 +42,9 @@ public class LayoutConfigurator {
 		_layout = layout;
 	}
 
-	public String addPortlet(String portletId, String columnId)
-		throws PortalException, SystemException {
-
-		try {
-			return addPortlet(null, portletId, columnId);
-		}
-		catch (PortletException pe) {
-			throw new SystemException(pe);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
 	public String addPortlet(
 			Map<String, String> preferences, String portletId, String columnId)
-		throws PortalException, SystemException, ReadOnlyException,
-			ValidatorException, IOException {
+		throws PortalException, SystemException {
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)_layout.getLayoutType();
@@ -77,6 +61,12 @@ public class LayoutConfigurator {
 		}
 
 		return portletId;
+	}
+
+	public String addPortlet(String portletId, String columnId)
+		throws PortalException, SystemException {
+
+		return addPortlet(null, portletId, columnId);
 	}
 
 	public Layout getLayout() {
@@ -116,8 +106,7 @@ public class LayoutConfigurator {
 
 	protected PortletPreferences updatePortletSetup(
 			Layout layout, String portletId, Map<String, String> preferences)
-		throws SystemException, ReadOnlyException, ValidatorException,
-			IOException {
+		throws SystemException {
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
@@ -127,10 +116,23 @@ public class LayoutConfigurator {
 			String key = entry.getKey();
 			String value = entry.getValue();
 
-			portletSetup.setValue(key, value);
+			try {
+				portletSetup.setValue(key, value);
+			}
+			catch (ReadOnlyException roe) {
+				throw new SystemException(roe);
+			}
 		}
 
-		portletSetup.store();
+		try {
+			portletSetup.store();
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		catch (ValidatorException ve) {
+			throw new SystemException(ve);
+		}
 
 		return portletSetup;
 	}

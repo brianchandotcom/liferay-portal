@@ -58,7 +58,7 @@ AUI.add(
 
 						AArray.some(
 							MENU_ITEM_CSS_CLASSES,
-							function(item, index, collection) {
+							function(item, index) {
 								if (menuItem.hasClass(item)) {
 									menuItem.addClass(CSS_OPEN);
 
@@ -163,7 +163,7 @@ AUI.add(
 
 									AArray.some(
 										MENU_ITEM_CSS_CLASSES,
-										function(item, index, collection) {
+										function(item, index) {
 											if (menuItem.hasClass(item)) {
 												menuItem.addClass(CSS_OPEN);
 

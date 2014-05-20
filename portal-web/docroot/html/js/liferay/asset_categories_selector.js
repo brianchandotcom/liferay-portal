@@ -183,7 +183,7 @@ AUI.add(
 
 						A.each(
 							curEntryIds,
-							function(item, index, collection) {
+							function(item, index) {
 								var entry = {
 									categoryId: item
 								};
@@ -233,7 +233,7 @@ AUI.add(
 
 						A.each(
 							json,
-							function(item, index, collection) {
+							function(item, index) {
 								var checked = false;
 								var treeId = 'category' + item.categoryId;
 
@@ -525,7 +525,7 @@ AUI.add(
 
 							A.each(
 								categories,
-								function(item, index, collection) {
+								function(item, index) {
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
 									item.inputName = inputName;
@@ -604,7 +604,7 @@ AUI.add(
 
 						AObject.each(
 							treeViews,
-							function(item, index, collection) {
+							function(item, index) {
 								item.toggle(!searchValue);
 							}
 						);
@@ -632,7 +632,7 @@ AUI.add(
 
 								A.each(
 									instance.TREEVIEWS,
-									function(item, index, collection) {
+									function(item, index) {
 										item.expandAll();
 									}
 								);
@@ -646,7 +646,7 @@ AUI.add(
 						instance._bindSearchHandle = popup.searchField.once('focus', instance._initSearch, instance);
 					},
 
-					_vocabulariesIterator: function(item, index, collection) {
+					_vocabulariesIterator: function(item, index) {
 						var instance = this;
 
 						var popup = instance._popup;

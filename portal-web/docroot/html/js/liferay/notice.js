@@ -236,7 +236,7 @@ AUI.add(
 
 				A.Array.each(
 					instance._noticeClass.split(' '),
-					function(item, index, collection) {
+					function(item, index) {
 						notice.addClass(item);
 					}
 				);

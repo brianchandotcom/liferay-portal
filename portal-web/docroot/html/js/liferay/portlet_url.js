@@ -57,7 +57,7 @@ AUI.add(
 
 			A.each(
 				params,
-				function(item, index, collection) {
+				function(item, index) {
 					if (Lang.isValue(item)) {
 						if (instance._isReservedParam(index)) {
 							instance.reservedParams[index] = item;
@@ -162,7 +162,7 @@ AUI.add(
 
 				A.each(
 					parameters,
-					function(item, index, collection) {
+					function(item, index) {
 						instance.setParameter(index, item);
 					}
 				);
@@ -246,7 +246,7 @@ AUI.add(
 
 				A.each(
 					reservedParams,
-					function(item, index, collection) {
+					function(item, index) {
 						if (Lang.isValue(item)) {
 							resultURL.setParameter(index, item);
 						}
@@ -255,7 +255,7 @@ AUI.add(
 
 				A.each(
 					instance.params,
-					function(item, index, collection) {
+					function(item, index) {
 						if (Lang.isValue(item)) {
 							resultURL.setParameter(namespacePrefix + index, item);
 						}
@@ -282,7 +282,7 @@ AUI.add(
 
 				A.each(
 					instance.reservedParams,
-					function(item, index, collection) {
+					function(item, index) {
 						if (index === paramName) {
 							result = true;
 						}

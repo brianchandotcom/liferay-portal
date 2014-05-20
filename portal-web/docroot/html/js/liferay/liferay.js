@@ -186,7 +186,7 @@ Liferay = window.Liferay || {};
 
 	A.each(
 		['get', 'delete', 'post', 'put', 'update'],
-		function(item, index, collection) {
+		function(item, index) {
 			var methodName = item;
 
 			if (item === 'delete') {

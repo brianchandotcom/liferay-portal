@@ -203,7 +203,7 @@ AUI.add(
 
 							AArray.each(
 								CSS_VALIDATION_HELPER_CLASSES,
-								function(item, index, collection) {
+								function(item, index) {
 									var disabledClass = item + '-disabled';
 
 									node.all('.' + item).replaceClass(item, disabledClass);
@@ -243,7 +243,7 @@ AUI.add(
 									if (rules) {
 										AObject.each(
 											deletedRules,
-											function(item, index, collection) {
+											function(item, index) {
 												rules[index] = item;
 											}
 										);
@@ -251,7 +251,7 @@ AUI.add(
 
 									AArray.each(
 										CSS_VALIDATION_HELPER_CLASSES,
-										function(item, index, collection) {
+										function(item, index) {
 											var disabledClass = item + '-disabled';
 
 											node.all('.' + disabledClass).replaceClass(disabledClass, item);
@@ -382,7 +382,7 @@ AUI.add(
 
 						AArray.each(
 							CSS_VALIDATION_HELPER_CLASSES,
-							function(item, index, collection) {
+							function(item, index) {
 								node.all('.' + item).removeClass(item);
 							}
 						);

@@ -275,7 +275,7 @@ AUI.add(
 												start: function(event) {
 													AObject.each(
 														instance.get(STR_DEVICES),
-														function(item, index, collection) {
+														function(item, index) {
 															if (item.skin) {
 																dialogBoundingBox.removeClass(item.skin);
 															}

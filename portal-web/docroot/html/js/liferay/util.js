@@ -566,7 +566,7 @@
 
 				A.Object.each(
 					obj,
-					function(item, index, collection) {
+					function(item, index) {
 						index = ns(namespace, index);
 
 						value[index] = item;
@@ -1880,7 +1880,7 @@
 
 			A.each(
 				newBox,
-				function(item, index, collection) {
+				function(item, index) {
 					boxObj.append('<option value="' + item[0] + '">' + item[1] + '</option>');
 				}
 			);

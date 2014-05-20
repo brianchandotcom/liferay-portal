@@ -79,7 +79,7 @@ AUI.add(
 
 						AArray.each(
 							items,
-							function(item, index, collection) {
+							function(item, index) {
 								if (REGEX_DECLARATIVE_OPEN.test(item)) {
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 

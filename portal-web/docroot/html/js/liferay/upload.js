@@ -358,7 +358,7 @@ AUI.add(
 
 						A.each(
 							queue.queuedFiles,
-							function(item, index, collection) {
+							function(item, index) {
 								var li = A.one('#' + item.id);
 
 								if (li && !li.hasClass('upload-complete')) {

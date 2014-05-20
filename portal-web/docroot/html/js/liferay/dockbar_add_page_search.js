@@ -50,7 +50,7 @@ AUI.add(
 				if (query) {
 					AArray.each(
 						event.results,
-						function(item, index, collection) {
+						function(item, index) {
 							item.raw.node.show();
 						}
 					);

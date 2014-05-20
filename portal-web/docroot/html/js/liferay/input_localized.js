@@ -423,7 +423,7 @@ AUI.add(
 
 						AArray.each(
 							flags,
-							function(item, index, collection) {
+							function(item, index) {
 								var flagNode = instance.getItemByIndex(index);
 
 								flagNode.toggleClass(

@@ -209,7 +209,7 @@ AUI.add(
 
 								A.each(
 									items,
-									function(item, index, collection) {
+									function(item, index) {
 										instance.entries.add(item, {});
 									}
 								);
@@ -555,7 +555,7 @@ AUI.add(
 								if (results) {
 									data = AArray.map(
 										AArray(results.Result),
-										function(item, index, collection) {
+										function(item, index) {
 											return {
 												name: item
 											};

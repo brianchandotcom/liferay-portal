@@ -280,7 +280,7 @@ AUI.add(
 
 						A.each(
 							instance._locales,
-							function(item, index, collection) {
+							function(item, index) {
 								tplBuffer[0] = item;
 								tplBuffer[1] = localesMap[item];
 
@@ -382,7 +382,7 @@ AUI.add(
 
 						AArray.each(
 							val,
-							function(item, index, collection) {
+							function(item, index) {
 								if (defaultLocale !== item) {
 									tplBuffer.cssClass = (editingLocale === item) ? CSS_TRANSLATION_EDITING : STR_BLANK;
 

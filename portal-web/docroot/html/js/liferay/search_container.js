@@ -175,7 +175,7 @@ AUI.add(
 
 								A.each(
 									arr,
-									function(item, index, collection) {
+									function(item, index) {
 										var cell = cells.item(index);
 
 										if (cell) {

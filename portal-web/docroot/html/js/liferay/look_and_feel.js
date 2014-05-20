@@ -471,7 +471,7 @@ AUI.add(
 
 				A.each(
 					[cTopColor, cRightColor, cBottomColor, cLeftColor],
-					function(item, index, collection) {
+					function(item, index) {
 						var hexValue = item.val().replace('#', EMPTY);
 
 						var borderLocation = '_borderColorPicker' + index;
@@ -1512,7 +1512,7 @@ AUI.add(
 					if (portletData.titles) {
 						A.each(
 							portletData.titles,
-							function(item, index, collection) {
+							function(item, index) {
 								instance._languageClasses(item);
 							}
 						);

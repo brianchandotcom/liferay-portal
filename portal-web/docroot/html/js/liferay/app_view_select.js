@@ -336,7 +336,7 @@ AUI.add(
 
 							A.each(
 								selectedEntries,
-								function(item, index, collection) {
+								function(item, index) {
 									var entry = entriesContainer.one('input[value="' + item + '"]');
 
 									if (entry) {

@@ -208,7 +208,7 @@ AUI.add(
 					function() {
 						A.Array.each(
 							buffer,
-							function(item, index, collection) {
+							function(item, index) {
 								var handle = item.container.on(
 									EVENT_INTERACTIONS_RENDER,
 									function(event) {

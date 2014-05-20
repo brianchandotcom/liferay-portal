@@ -16,6 +16,7 @@ package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -23,6 +24,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import javax.portlet.PortletURL;
 
@@ -36,15 +38,21 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
 
+		return getAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetEntry, false);
+	}
+
+	@Override
+	public String getAssetViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry,
+		boolean viewInContext) {
+
 		PortletURL viewFullContentURL =
 			liferayPortletResponse.createRenderURL();
 
 		viewFullContentURL.setParameter(
 			"struts_action", "/asset_publisher/view_content");
-
-		String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
-
-		viewFullContentURL.setParameter("redirect", currentURL);
 
 		viewFullContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
@@ -56,11 +64,11 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 
-		if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 			if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()) {
 				viewFullContentURL.setParameter(
 					"groupId", String.valueOf(assetRenderer.getGroupId()));
@@ -70,7 +78,33 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				"urlTitle", assetRenderer.getUrlTitle());
 		}
 
-		return viewFullContentURL.toString();
+		String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
+
+		String viewURL = null;
+
+		if (viewInContext) {
+			String viewFullContentURLString = viewFullContentURL.toString();
+
+			viewFullContentURLString = HttpUtil.setParameter(
+				viewFullContentURLString, "redirect", currentURL);
+
+			try {
+				viewURL = assetRenderer.getURLViewInContext(
+					liferayPortletRequest, liferayPortletResponse,
+					viewFullContentURLString);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (Validator.isNull(viewURL)) {
+			viewURL = viewFullContentURL.toString();
+		}
+
+		viewURL = AssetUtil.checkViewURL(
+			assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+
+		return viewURL;
 	}
 
 }

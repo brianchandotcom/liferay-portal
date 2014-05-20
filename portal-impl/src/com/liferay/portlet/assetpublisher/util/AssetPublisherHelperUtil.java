@@ -35,6 +35,16 @@ public class AssetPublisherHelperUtil {
 			liferayPortletRequest, liferayPortletResponse, assetEntry);
 	}
 
+	public static String getAssetViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry,
+		boolean viewInContext) {
+
+		return getAssetPublisherHelper().getAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetEntry,
+			viewInContext);
+	}
+
 	public void setAssetPublisherHelper(
 		AssetPublisherHelper assetPublisherHelper) {
 

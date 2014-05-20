@@ -124,18 +124,18 @@ public class Table {
 		appendColumn(sb, value, last);
 	}
 
-	public String generateTempFile() throws Exception {
+	public void generateTempFile() throws Exception {
 		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
-			return generateTempFile(con);
+			generateTempFile(con);
 		}
 		finally {
 			DataAccess.cleanUp(con);
 		}
 	}
 
-	public String generateTempFile(Connection con) throws Exception {
+	public void generateTempFile(Connection con) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -201,12 +201,12 @@ public class Table {
 		}
 
 		if (!empty) {
-			return tempFileName;
+			_tempFileName = tempFileName;
+
+			return;
 		}
 
 		FileUtil.delete(tempFileName);
-
-		return null;
 	}
 
 	public Object[][] getColumns() {
@@ -331,6 +331,10 @@ public class Table {
 		return _tableName;
 	}
 
+	public String getTempFileName() {
+		return _tempFileName;
+	}
+
 	public long getTotalRows() {
 		return _totalRows;
 	}
@@ -427,26 +431,28 @@ public class Table {
 		return value;
 	}
 
-	public void populateTable(String tempFileName) throws Exception {
+	public void populateTable() throws Exception {
 		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
-			populateTable(tempFileName, con);
+			populateTable(con);
 		}
 		finally {
 			DataAccess.cleanUp(con);
 		}
 	}
 
-	public void populateTable(String tempFileName, Connection con)
-		throws Exception {
+	public void populateTable(Connection con) throws Exception {
+		if (_tempFileName == null) {
+			return;
+		}
 
 		PreparedStatement ps = null;
 
 		String insertSQL = getInsertSQL();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(tempFileName));
+			new FileReader(_tempFileName));
 
 		String line = null;
 
@@ -647,6 +653,7 @@ public class Table {
 	private int[] _order;
 	private String _selectSQL;
 	private String _tableName;
+	private String _tempFileName;
 	private long _totalRows;
 
 }

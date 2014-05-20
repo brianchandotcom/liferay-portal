@@ -65,6 +65,11 @@
 </tr>
 <!--FILTER-->
 <tr>
+	<td>MESSAGE</td>
+	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_SENDER</td>
 	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]//span[@class='author-sender']</td>
 	<td></td>

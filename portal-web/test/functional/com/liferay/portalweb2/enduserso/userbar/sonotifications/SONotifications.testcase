@@ -324,6 +324,310 @@
 		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
 	</command>
 
+	<command name="ViewMessageAttachmentNotificationsMultipleUsers" priority="5">
+		<var name="messageAttachmentFile1" value="Document_1.jpg" />
+		<var name="messageAttachmentFile2" value="Document_2.jpg" />
+		<var name="messageAttachmentFile3" value="Document_3.jpg" />
+		<var name="messageAttachmentFile4" value="Document_4.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody1" value="Message Reply1 Body" />
+		<var name="messageReplyBody2" value="Message Reply2 Body" />
+		<var name="messageReplyBody3" value="Message Reply3 Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userListName1" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientNameList" value="${userName1},${userName2},${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="numberOfNotifications" value="3" />
+			<var name="senderName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile4}" />
+			<var name="messageReplyBody" value="${messageReplyBody3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody3}" />
+			<var name="numberOfNotifications" value="3" />
+			<var name="senderName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+	</command>
+
+	<command name="ViewMessageNotificationsMultipleUsers" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody1" value="Message Reply1 Body" />
+		<var name="messageReplyBody2" value="Message Reply2 Body" />
+		<var name="messageReplyBody3" value="Message Reply3 Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userListName1" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientNameList" value="${userName1},${userName2},${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="numberOfNotifications" value="3" />
+			<var name="senderName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyBody" value="${messageReplyBody3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody3}" />
+			<var name="numberOfNotifications" value="3" />
+			<var name="senderName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="numberOfNotifications" value="2" />
+			<var name="senderName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="senderName" value="${userName1}" />
+		</execute>
+	</command>
+
 	<command name="ViewMicroblogsEntryViewableByConnectionsCommentNotification" priority="5">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />

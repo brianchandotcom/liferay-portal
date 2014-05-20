@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DATE</td>
-	<td>//div[@class='lfr-asset-icon lfr-asset-date']</td>
+	<td>//div[contains(@class,'lfr-asset-icon') and contains(@class,'lfr-asset-date')]</td>
 	<td></td>
 </tr>
 <tr>

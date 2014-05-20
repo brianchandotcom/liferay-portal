@@ -1896,10 +1896,11 @@
 			<var name="microblogsEntryAuthorName" value="${userName}" />
 		</execute>
 
+		<var name="key_mentionUserName" value="${adminName}" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryCommentContent} ${adminName}" />
 
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryCommentContent} ${adminName}" />
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG" value1="${adminName}" />
+		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT_MENTION" value1="${adminName}" />
 	</command>
 
 	<command name="AddMicroblogsEntryViewableByEveryoneSpecialCharacters" priority="3">

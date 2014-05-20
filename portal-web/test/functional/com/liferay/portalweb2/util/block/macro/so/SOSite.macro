@@ -262,7 +262,7 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
 		<if>
-			<equals arg1="siteAdmin" arg2="true" />
+			<equals arg1="${siteAdmin}" arg2="true" />
 			<then>
 				<if>
 					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
@@ -315,7 +315,7 @@
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
 
 		<if>
-			<equals arg1="siteAdmin" arg2="true" />
+			<equals arg1="${siteAdmin}" arg2="true" />
 			<then>
 				<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="DELETE_SITE_ICON" />
 			</then>

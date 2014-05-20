@@ -584,7 +584,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 							&.taglib-icon:hover .taglib-text {
 								text-decoration: none;
 							}
-
 						}
 
 						&.selected-portlet {

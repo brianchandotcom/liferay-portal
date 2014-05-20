@@ -87,7 +87,7 @@
 					%>
 
 					<c:if test="<%= !scopeLayouts.isEmpty() && siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
-						<div class="nobr lfr-title-scope-selector">
+						<div class="lfr-title-scope-selector nobr">
 							<liferay-ui:message key="scope" />:
 							<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
 								<liferay-ui:icon

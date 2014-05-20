@@ -30,14 +30,14 @@ SocialInteractionsConfiguration socialInteractionsConfiguration = SocialInteract
 <aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" label="enable-social-interactions" name="settings--socialInteractionsEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" />
 
 <div class="social-interactions-settings" id="<portlet:namespace />socialInteractionsSettings">
-	<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label="each-user-can-interact-with-any-user" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= true %>" />
+	<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label="all-users-can-interact-with-each-other" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= true %>" />
 
-	<aui:input checked="<%= !socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsChooseUsers" label="each-user-can-interact-only-with" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= false %>" />
+	<aui:input checked="<%= !socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsChooseUsers" label="define-social-interactions-for-users" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= false %>" />
 
 	<div class="social-interactions-users" id="<portlet:namespace />socialInteractionsUsersWrapper">
-		<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" label="users-that-belong-to-the-sites-that-the-user-also-belongs-to" name="settings--socialInteractionsSitesEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" />
+		<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" label="site-members-can-interact-with-each-other" name="settings--socialInteractionsSitesEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" />
 
-		<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsSocialRelationTypesEnabled() %>" label="users-with-the-following-social-relations" name="settings--socialInteractionsSocialRelationTypesEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsSocialRelationTypesEnabled() %>" />
+		<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsSocialRelationTypesEnabled() %>" label="define-social-relation-types-for-interaction" name="settings--socialInteractionsSocialRelationTypesEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsSocialRelationTypesEnabled() %>" />
 
 		<aui:input name="settings--socialInteractionsSocialRelationTypes--" type="hidden" value="<%= socialInteractionsConfiguration.getSocialInteractionsSocialRelationTypes() %>" />
 

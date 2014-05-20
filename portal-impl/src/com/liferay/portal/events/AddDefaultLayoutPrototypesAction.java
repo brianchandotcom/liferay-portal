@@ -24,7 +24,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.layoutprototypes.LayoutConfigurator;
-import com.liferay.portlet.layoutprototypes.LayoutPrototypesCreator;
+import com.liferay.portlet.layoutprototypes.LayoutPrototypeCreator;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.HashMap;
@@ -47,11 +47,11 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		}
 	}
 
-	protected void addBlogPage(LayoutPrototypesCreator layoutPrototypesCreator)
+	protected void addBlogPage(LayoutPrototypeCreator layoutPrototypeCreator)
 		throws Exception {
 
 		LayoutPrototype layoutPrototype =
-			layoutPrototypesCreator.addLayoutPrototype(
+			layoutPrototypeCreator.addLayoutPrototype(
 					"layout-prototype-blog-title",
 					"layout-prototype-blog-description", "2_columns_iii");
 
@@ -72,11 +72,11 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 	}
 
 	protected void addWebContentPage(
-			LayoutPrototypesCreator layoutPrototypesCreator)
+			LayoutPrototypeCreator layoutPrototypeCreator)
 		throws Exception {
 
 		LayoutPrototype layoutPrototype =
-			layoutPrototypesCreator.addLayoutPrototype(
+			layoutPrototypeCreator.addLayoutPrototype(
 					"layout-prototype-web-content-title",
 					"layout-prototype-web-content-description", "2_columns_ii");
 
@@ -104,11 +104,11 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			assetPublisherPortletId);
 	}
 
-	protected void addWikiPage(LayoutPrototypesCreator layoutPrototypesCreator)
+	protected void addWikiPage(LayoutPrototypeCreator layoutPrototypeCreator)
 		throws Exception {
 
 		LayoutPrototype layoutPrototype =
-			layoutPrototypesCreator.addLayoutPrototype(
+			layoutPrototypeCreator.addLayoutPrototype(
 				"layout-prototype-wiki-title",
 				"layout-prototype-wiki-description", "2_columns_iii");
 
@@ -131,12 +131,12 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		LayoutPrototypesCreator layoutPrototypesCreator =
-			new LayoutPrototypesCreator(companyId);
+		LayoutPrototypeCreator layoutPrototypeCreator =
+			new LayoutPrototypeCreator(companyId);
 
-		addBlogPage(layoutPrototypesCreator);
-		addWebContentPage(layoutPrototypesCreator);
-		addWikiPage(layoutPrototypesCreator);
+		addBlogPage(layoutPrototypeCreator);
+		addWebContentPage(layoutPrototypeCreator);
+		addWikiPage(layoutPrototypeCreator);
 	}
 
 	private Map<String, String> _getAssetTagsNavigationPortletSetup() {

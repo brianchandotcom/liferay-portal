@@ -22,7 +22,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.layoutprototypes.LayoutConfigurator;
-import com.liferay.portlet.layoutprototypes.LayoutSetPrototypesCreator;
+import com.liferay.portlet.layoutprototypes.LayoutSetPrototypeCreator;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -45,11 +45,11 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 	}
 
 	protected void addPrivateSite(
-			LayoutSetPrototypesCreator layoutSetPrototypesCreator)
+			LayoutSetPrototypeCreator layoutSetPrototypeCreator)
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypesCreator.addLayoutSetPrototype(
+			layoutSetPrototypeCreator.addLayoutSetPrototype(
 					"layout-set-prototype-intranet-site-title",
 					"layout-set-prototype-intranet-site-description");
 
@@ -59,7 +59,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Home layout
 
-		Layout layout = layoutSetPrototypesCreator.addLayout(
+		Layout layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "home", "/home", "2_columns_i");
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
@@ -79,7 +79,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Documents layout
 
-		layout = layoutSetPrototypesCreator.addLayout(
+		layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "documents-and-media", "/documents",
 			"1_column");
 
@@ -95,7 +95,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// News layout
 
-		layout = layoutSetPrototypesCreator.addLayout(
+		layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "news", "/news", "2_columns_iii");
 
 		layoutConfigurator = new LayoutConfigurator(layout);
@@ -108,11 +108,11 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 	}
 
 	protected void addPublicSite(
-			LayoutSetPrototypesCreator layoutSetPrototypesCreator)
+			LayoutSetPrototypeCreator layoutSetPrototypeCreator)
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypesCreator.addLayoutSetPrototype(
+			layoutSetPrototypeCreator.addLayoutSetPrototype(
 					"layout-set-prototype-community-site-title",
 					"layout-set-prototype-community-site-description");
 
@@ -122,7 +122,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Home layout
 
-		Layout layout = layoutSetPrototypesCreator.addLayout(
+		Layout layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "home", "/home", "2_columns_iii");
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
@@ -142,7 +142,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		// Wiki layout
 
-		layout = layoutSetPrototypesCreator.addLayout(
+		layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "wiki", "/wiki", "2_columns_iii");
 
 		layoutConfigurator.addPortlet("column-1", PortletKeys.WIKI);
@@ -154,11 +154,11 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		LayoutSetPrototypesCreator layoutSetPrototypesCreator =
-			new LayoutSetPrototypesCreator(companyId);
+		LayoutSetPrototypeCreator layoutSetPrototypeCreator =
+			new LayoutSetPrototypeCreator(companyId);
 
-		addPublicSite(layoutSetPrototypesCreator);
-		addPrivateSite(layoutSetPrototypesCreator);
+		addPublicSite(layoutSetPrototypeCreator);
+		addPrivateSite(layoutSetPrototypeCreator);
 	}
 
 	private Map<String, String> _getDocumentLibraryPortletSetup() {

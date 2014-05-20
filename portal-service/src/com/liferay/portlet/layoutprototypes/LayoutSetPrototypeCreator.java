@@ -39,9 +39,9 @@ import java.util.Map;
 /**
  * @author Iván Zaera
  */
-public class LayoutSetPrototypesCreator {
+public class LayoutSetPrototypeCreator {
 
-	public LayoutSetPrototypesCreator(long companyId)
+	public LayoutSetPrototypeCreator(long companyId)
 		throws PortalException, SystemException {
 
 		_companyId = companyId;

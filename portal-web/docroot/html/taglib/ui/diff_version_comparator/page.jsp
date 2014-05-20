@@ -46,7 +46,7 @@ if (Validator.isNotNull(languageId)) {
 		<aui:row cssClass="diff-version-head">
 			<aui:col cssClass="diff-source-selector" width="30">
 				<div class="diff-selector">
-					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="sourceVersionSelector" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -79,7 +79,7 @@ if (Validator.isNotNull(languageId)) {
 
 			<aui:col cssClass="diff-target-selector" width="70">
 				<div class="diff-selector">
-					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="targetVersionSelector" message='<%= LanguageUtil.format(pageContext, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -158,7 +158,7 @@ if (Validator.isNotNull(languageId)) {
 						String displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true), false);
 					%>
 
-						<div class='version-item <%= (diffVersion.getVersion() >= targetVersion) ? "last" : StringPool.BLANK %>' data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>">
+						<div class="version-item <%= (diffVersion.getVersion() >= targetVersion) ? "last" : StringPool.BLANK %>" data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>" data-version-name="<%= LanguageUtil.format(pageContext, "version-x", diffVersion.getVersion()) %>">
 							<span class="version-title">
 								<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
 							</span>
@@ -213,17 +213,15 @@ if (Validator.isNotNull(languageId)) {
 <aui:script use="liferay-diff-version-comparator">
 	new Liferay.DiffVersionComparator(
 		{
-			diffContainerHtmlResultsSelector: 'diffContainerHtmlResults',
-			diffFormSelector: 'diffVersionFm',
+			diffContainerHtmlResults: '#<portlet:namespace />diffContainerHtmlResults',
+			diffForm: '#<portlet:namespace />diffVersionFm',
 			initialSourceVersion: '<%= sourceVersion %>',
 			initialTargetVersion: '<%= targetVersion %>',
 			namespace: '<portlet:namespace />',
 			resourceURL: '<%= resourceURL.toString() %>',
-			searchBoxSelector: 'searchPanel',
-			sourceVersionSelector: 'sourceVersionSelector',
-			targetVersionSelector: 'targetVersionSelector',
-			versionFilterSelector: 'versionFilter',
-			versionItemsSelector: 'versionItems'
+			searchBox: '#<portlet:namespace />searchPanel',
+			versionFilter: '#<portlet:namespace />versionFilter',
+			versionItems: '#<portlet:namespace />versionItems'
 		}
 	);
 </aui:script>

@@ -5,17 +5,30 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var TPL_VERSION =
-			'<div class="close-version-filter">' +
-				'<i class="icon-remove"></i>' +
-			'</div>' +
-			'<div>' +
-				'<span class="version"><liferay-ui:message key="version" /> {0}</span>' +
-			'</div>' +
-			'<div>' +
-				'<span class="user-name">{1}</span>' +
-				'<span class="display-date">{2}</span>' +
-			'</div>';
+		var SELECTOR_VERSION_ITEM = '.version-item';
+
+		var STR_CLICK = 'click';
+
+		var STR_DATA_VERSION = 'data-version';
+
+		var STR_DIFF_FORM = 'diffForm';
+
+		var STR_SELECTED = 'selected';
+
+		var STR_VERSION_FILTER = 'versionFilter';
+
+		var STR_VERSION_ITEMS = 'versionItems';
+
+		var TPL_VERSION ='<div class="close-version-filter">' +
+			'<i class="icon-remove"></i>' +
+		'</div>' +
+		'<div>' +
+			'<span class="version">{version}</span>' +
+		'</div>' +
+		'<div>' +
+			'<span class="user-name">{userName}</span>' +
+			'<span class="display-date">{displayDate}</span>' +
+		'</div>';
 
 		var DiffVersionSearch = A.Component.create(
 			{
@@ -37,48 +50,36 @@ AUI.add(
 		var DiffVersionComparator = A.Component.create(
 			{
 				ATTRS: {
-					diffContainerHtmlResultsSelector: {
-						value: ''
+					diffContainerHtmlResults: {
+						setter: A.one
 					},
 
-					diffFormSelector: {
-						value: ''
+					diffForm: {
+						setter: A.one
 					},
 
 					initialSourceVersion: {
-						value: ''
+						validator: Lang.isString
 					},
 
 					initialTargetVersion: {
-						value: ''
-					},
-
-					namespace: {
-						value: ''
+						validator: Lang.isString
 					},
 
 					resourceURL: {
-						value: ''
+						validator: Lang.isString
 					},
 
-					searchBoxSelector: {
-						value: ''
+					searchBox: {
+						setter: A.one
 					},
 
-					sourceVersionSelector: {
-						value: ''
+					versionFilter: {
+						setter: A.one
 					},
 
-					targetVersionSelector: {
-						value: ''
-					},
-
-					versionFilterSelector: {
-						value: ''
-					},
-
-					versionItemsSelector: {
-						value: ''
+					versionItems: {
+						setter: A.one
 					}
 				},
 
@@ -92,45 +93,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._initialSourceVersion = instance.get('initialSourceVersion');
-						instance._initialTargetVersion = instance.get('initialTargetVersion');
-						instance._resourceURL = instance.get('resourceURL');
-
-						var diffContainerHtmlResultsSelector = instance.get('diffContainerHtmlResultsSelector');
-						var diffFormSelector = instance.get('diffFormSelector');
-						var searchBoxSelector = instance.get('searchBoxSelector');
-						var sourceVersionSelector = instance.get('sourceVersionSelector');
-						var targetVersionSelector = instance.get('targetVersionSelector');
-						var versionFilterSelector = instance.get('versionFilterSelector');
-						var versionItemsSelector = instance.get('versionItemsSelector');
-
-						instance._diffContainerHtmlResults = instance.byId(diffContainerHtmlResultsSelector);
-						instance._diffForm = instance.byId(diffFormSelector);
-						instance._searchBox = instance.byId(searchBoxSelector);
-						instance._sourceVersionSelector = instance.byId(sourceVersionSelector);
-						instance._targetVersionSelector = instance.byId(targetVersionSelector);
-						instance._versionFilter = instance.byId(versionFilterSelector);
-						instance._versionItems = instance.byId(versionItemsSelector);
-
-						instance._diffVersionSearch = instance._createDiffVersionSearch();
-
-						var eventHandles = [
-							BODY.delegate('click', instance._onSourceVersionSelected, '.source-version', instance),
-							BODY.delegate('click', instance._onTargetVersionSelected, '.target-version', instance),
-							instance._versionFilter.delegate('click', instance._onCloseFilter, '.close-version-filter', instance),
-							instance._versionItems.delegate('click', instance._onSelectVersionItem, '.version-item', instance),
-							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
-						];
-
-						instance._languageSelector = instance.byId('languageId');
-
-						if (instance._languageSelector) {
-							eventHandles.push(
-								instance._languageSelector.on('change', instance._onLanguageSelectorChange, instance)
-							);
-						}
-
-						instance._eventHandles = eventHandles;
+						instance._createDiffVersionSearch();
+						instance._bindUI();
 					},
 
 					destructor: function() {
@@ -139,25 +103,47 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_bindUI: function() {
+						var instance = this;
+
+						var eventHandles = [
+							BODY.delegate(STR_CLICK, instance._onSourceVersionSelected, '.source-version', instance),
+							BODY.delegate(STR_CLICK, instance._onTargetVersionSelected, '.target-version', instance),
+							instance.get(STR_VERSION_FILTER).delegate(STR_CLICK, instance._onCloseFilter, '.close-version-filter', instance),
+							instance.get(STR_VERSION_ITEMS).delegate(STR_CLICK, instance._onSelectVersionItem, SELECTOR_VERSION_ITEM, instance),
+							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
+						];
+
+						var languageSelector = instance.byId('languageId');
+
+						if (languageSelector) {
+							eventHandles.push(
+								languageSelector.on('change', instance._onLanguageSelectorChange, instance)
+							);
+						}
+
+						instance._eventHandles = eventHandles;
+					},
+
 					_createDiffVersionSearch: function() {
 						var instance = this;
 
 						var results = [];
 
-						instance._versionItems.all('.version-item').each(
-							function(node) {
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).each(
+							function(item, index, collection) {
 								results.push(
 									{
-										node: node,
-										searchData: node.one('.version-title').text()
+										node: item,
+										searchData: item.one('.version-title').text()
 									}
 								);
 							}
 						);
 
-						var diffVersionSearch = new DiffVersionSearch(
+						instance._diffVersionSearch = new DiffVersionSearch(
 							{
-								inputNode: instance._searchBox,
+								inputNode: instance.get('searchBox'),
 								minQueryLength: 0,
 								queryDelay: 0,
 								source: results,
@@ -165,21 +151,19 @@ AUI.add(
 								resultFilters: 'phraseMatch'
 							}
 						);
-
-						return diffVersionSearch;
 					},
 
 					_loadDiffHTML: function(sourceVersion, targetVersion) {
 						var instance = this;
 
 						A.io.request(
-							instance._resourceURL,
+							instance.get('resourceURL'),
 							{
 								after: {
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');
 
-										instance._diffContainerHtmlResults.html(responseData);
+										instance.get('diffContainerHtmlResults').html(responseData);
 									}
 								},
 								data: instance.ns(
@@ -195,12 +179,12 @@ AUI.add(
 					_onDiffVersionSearchResults: function(event) {
 						var instance = this;
 
-						instance._versionItems.all('.version-item').addClass('hide');
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).hide();
 
 						A.Array.each(
 							event.results,
-							function(result) {
-								result.raw.node.removeClass('hide');
+							function(item, index, collection) {
+								item.raw.node.show();
 							}
 						);
 					},
@@ -208,27 +192,27 @@ AUI.add(
 					_onCloseFilter: function(event) {
 						var instance = this;
 
-						instance._versionItems.all('.version-item').removeClass('selected');
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_SELECTED);
 
-						instance._versionFilter.hide();
+						instance.get(STR_VERSION_FILTER).hide();
 
-						instance._loadDiffHTML(instance._initialSourceVersion, instance._initialTargetVersion);
+						instance._loadDiffHTML(instance.get('initialSourceVersion'), instance.get('initialTargetVersion'));
 					},
 
 					_onLanguageSelectorChange: function(event) {
 						var instance = this;
 
-						submitForm(instance._diffForm);
+						submitForm(instance.get(STR_DIFF_FORM));
 					},
 
 					_onSourceVersionSelected: function(event) {
 						var instance = this;
 
-						var sourceVersion = event.currentTarget.attr('data-version');
+						var sourceVersion = event.currentTarget.attr(STR_DATA_VERSION);
 
 						instance.byId('sourceVersion').val(sourceVersion);
 
-						submitForm(instance._diffForm);
+						submitForm(instance.get(STR_DIFF_FORM));
 					},
 
 					_onSelectVersionItem: function(event) {
@@ -236,29 +220,36 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						instance._versionItems.all('.version-item').removeClass('selected');
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_SELECTED);
 
-						currentTarget.addClass('selected');
+						currentTarget.addClass(STR_SELECTED);
 
-						var version = currentTarget.attr('data-version');
-						var userName = currentTarget.attr('data-user-name');
-						var displayDate = currentTarget.attr('data-display-date');
+						var versionFilter = instance.get(STR_VERSION_FILTER);
 
-						instance._versionFilter.html(Lang.sub(TPL_VERSION, [version, userName, displayDate]));
+						versionFilter.html(
+							Lang.sub(
+								TPL_VERSION,
+								{
+									displayDate: currentTarget.attr('data-display-date'),
+									userName: currentTarget.attr('data-user-name'),
+									version: currentTarget.attr('data-version-name')
+								}
+							)
+						);
 
-						instance._versionFilter.show();
+						versionFilter.show();
 
-						instance._loadDiffHTML(currentTarget.attr('data-source-version'), currentTarget.attr('data-version'));
+						instance._loadDiffHTML(currentTarget.attr('data-source-version'), currentTarget.attr(STR_DATA_VERSION));
 					},
 
 					_onTargetVersionSelected: function(event) {
 						var instance = this;
 
-						var targetVersion = event.currentTarget.attr('data-version');
+						var targetVersion = event.currentTarget.attr(STR_DATA_VERSION);
 
 						instance.byId('targetVersion').val(targetVersion);
 
-						submitForm(instance._diffForm);
+						submitForm(instance.get(STR_DIFF_FORM));
 					}
 				}
 			}
@@ -269,6 +260,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-parse-content', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
+		requires: ['aui-io-request', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
 	}
 );

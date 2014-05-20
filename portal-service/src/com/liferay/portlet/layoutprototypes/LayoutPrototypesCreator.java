@@ -27,7 +27,6 @@ import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -44,10 +43,6 @@ public class LayoutPrototypesCreator {
 		_companyId = companyId;
 
 		_defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		_layoutPrototypes = new ArrayList<LayoutPrototype>(
-			LayoutPrototypeLocalServiceUtil.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 	}
 
 	public LayoutPrototype addLayoutPrototype(
@@ -58,7 +53,11 @@ public class LayoutPrototypesCreator {
 		String description = LanguageUtil.get(
 			LocaleUtil.getDefault(), descriptionKey);
 
-		for (LayoutPrototype layoutPrototype : _layoutPrototypes) {
+		List<LayoutPrototype> layoutPrototypes =
+			LayoutPrototypeLocalServiceUtil.search(
+				_companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
 			String curDescription = layoutPrototype.getDescription(
 				LocaleUtil.getDefault());
@@ -84,8 +83,6 @@ public class LayoutPrototypesCreator {
 				_defaultUserId, _companyId, nameMap, descriptionMap, true,
 				new ServiceContext());
 
-		_layoutPrototypes.add(layoutPrototype);
-
 		Layout layout = layoutPrototype.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -102,6 +99,5 @@ public class LayoutPrototypesCreator {
 
 	private long _companyId;
 	private long _defaultUserId;
-	private List<LayoutPrototype> _layoutPrototypes;
 
 }

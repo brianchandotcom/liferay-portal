@@ -31,7 +31,6 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -48,10 +47,6 @@ public class LayoutSetPrototypesCreator {
 		_companyId = companyId;
 
 		_defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		_layoutSetPrototypes = new ArrayList<LayoutSetPrototype>(
-			LayoutSetPrototypeLocalServiceUtil.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 	}
 
 	public Layout addLayout(
@@ -100,7 +95,11 @@ public class LayoutSetPrototypesCreator {
 		String description = LanguageUtil.get(
 			LocaleUtil.getDefault(), descriptionKey);
 
-		for (LayoutSetPrototype layoutSetPrototype : _layoutSetPrototypes) {
+		List<LayoutSetPrototype> layoutSetPrototypes =
+			LayoutSetPrototypeLocalServiceUtil.search(
+				_companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 			String curName = layoutSetPrototype.getName(
 				LocaleUtil.getDefault());
 			String curDescription = layoutSetPrototype.getDescription(
@@ -127,8 +126,6 @@ public class LayoutSetPrototypesCreator {
 				_defaultUserId, _companyId, nameMap, descriptionMap, true, true,
 				new ServiceContext());
 
-		_layoutSetPrototypes.add(layoutSetPrototype);
-
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -142,6 +139,5 @@ public class LayoutSetPrototypesCreator {
 
 	private long _companyId;
 	private long _defaultUserId;
-	private List<LayoutSetPrototype> _layoutSetPrototypes;
 
 }

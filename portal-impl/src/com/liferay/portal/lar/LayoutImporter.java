@@ -709,7 +709,7 @@ public class LayoutImporter {
 			serviceElement = serviceDocument.getRootElement();
 
 			_portletImporter.importServicePortletPreferences(
-				companyId, serviceElement);
+				portletDataContext, serviceElement);
 		}
 
 		// Asset links

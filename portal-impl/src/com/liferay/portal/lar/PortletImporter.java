@@ -537,10 +537,6 @@ public class PortletImporter {
 		boolean importPortletSetup = importPortletControlsMap.get(
 			PortletDataHandlerKeys.PORTLET_SETUP);
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		long companyId = group.getCompanyId();
-
 		if (importPortletSetup) {
 			List<Element> serviceElements = null;
 
@@ -555,7 +551,7 @@ public class PortletImporter {
 							serviceElement.attributeValue("path")));
 
 					importServicePortletPreferences(
-						companyId, serviceDocument.getRootElement());
+						portletDataContext, serviceDocument.getRootElement());
 				}
 			}
 			catch (DocumentException de) {
@@ -883,7 +879,7 @@ public class PortletImporter {
 	}
 
 	protected void importServicePortletPreferences(
-			long companyId, Element serviceElement)
+			PortletDataContext portletDataContext, Element serviceElement)
 		throws PortalException, SystemException {
 
 		long ownerId = GetterUtil.getLong(
@@ -893,8 +889,8 @@ public class PortletImporter {
 		String serviceName = serviceElement.attributeValue("service-name");
 
 		PortletPreferences portletPreferences = getPortletPreferences(
-			companyId, ownerId, ownerType, LayoutConstants.DEFAULT_PLID,
-			serviceName);
+			portletDataContext.getCompanyId(), ownerId, ownerType,
+			LayoutConstants.DEFAULT_PLID, serviceName);
 
 		for (Attribute attribute : serviceElement.attributes()) {
 			serviceElement.remove(attribute);

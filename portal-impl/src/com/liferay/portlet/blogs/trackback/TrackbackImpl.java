@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.trackback;
 
+import com.liferay.portal.comments.CommentsImpl;
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
@@ -23,8 +25,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 
 /**
  * @author Alexander Chow
@@ -33,7 +36,9 @@ import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 public class TrackbackImpl implements Trackback {
 
 	public TrackbackImpl() {
-		_trackbackComments = new TrackbackCommentsImpl();
+		_comments = new CommentsImpl();
+
+		_linkbackConsumer = LinkbackConsumerUtil.getLinkbackConsumer();
 	}
 
 	@Override
@@ -51,17 +56,20 @@ public class TrackbackImpl implements Trackback {
 
 		String body = buildBody(themeDisplay, excerpt, url);
 
-		long messageId = _trackbackComments.addTrackbackComment(
+		long messageId = _comments.addComment(
 			userId, groupId, className, classPK, blogName, title, body,
 			serviceContextFunction);
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		LinkbackConsumerUtil.addNewTrackback(messageId, url, entryURL);
+		_linkbackConsumer.addNewTrackback(messageId, url, entryURL);
 	}
 
-	protected TrackbackImpl(TrackbackComments trackbackComments) {
-		_trackbackComments = trackbackComments;
+	protected TrackbackImpl(
+		Comments comments, LinkbackConsumer linkbackConsumer) {
+
+		_comments = comments;
+		_linkbackConsumer = linkbackConsumer;
 	}
 
 	protected String buildBody(
@@ -93,6 +101,7 @@ public class TrackbackImpl implements Trackback {
 		return sb.toString();
 	}
 
-	private TrackbackComments _trackbackComments;
+	private Comments _comments;
+	private LinkbackConsumer _linkbackConsumer;
 
 }

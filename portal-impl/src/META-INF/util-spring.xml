@@ -1015,6 +1015,11 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterUtil">
+		<property name="XSDToFormConverter">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterImpl" />
+		</property>
+	</bean>
 	<util:map id="baseModelPermissionCheckers" key-type="java.lang.String" value-type="com.liferay.portal.security.permission.BaseModelPermissionChecker">
 		<entry key="com.liferay.portlet.blogs.model.BlogsEntry">
 			<bean class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />

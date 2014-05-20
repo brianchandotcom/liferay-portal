@@ -42,7 +42,7 @@ if (assetTagNames.length == 0) {
 					portletURL.setParameter("tag", assetTagNames[i]);
 				%>
 
-					<a class="tag" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetTagNames[i] %></a>
+					<a class=" icon-tag tag" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetTagNames[i] %></a>
 
 				<%
 				}
@@ -55,7 +55,7 @@ if (assetTagNames.length == 0) {
 				for (int i = 0; i < assetTagNames.length; i++) {
 				%>
 
-					<span class="tag"><%= assetTagNames[i] %></span>
+					<span class="icon-tag tag"><%= assetTagNames[i] %></span>
 
 				<%
 				}

@@ -25,13 +25,18 @@ String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:flags:label"), true);
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:flags:message"), "flag[action]");
 long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:flags:reportedUserId"));
+
+String cssClass = randomNamespace;
+
+if (!TrashUtil.isInTrash(className, classPK)) {
+	cssClass = randomNamespace + " flag-enable";
+}
 %>
 
 <div class="taglib-flags" title="<liferay-ui:message key='<%= !TrashUtil.isInTrash(className, classPK) ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
 	<liferay-ui:icon
-		cssClass="<%= randomNamespace %>"
-		image="../ratings/flagged_icon"
-		imageHover='<%= !TrashUtil.isInTrash(className, classPK) ? "../ratings/flagged_icon_hover" : StringPool.BLANK %>'
+		cssClass="<%= cssClass %>"
+		iconCssClass="icon-flag"
 		label="<%= label %>"
 		message="<%= message %>"
 		url='<%= !TrashUtil.isInTrash(className, classPK) ? "javascript:;" : null %>'

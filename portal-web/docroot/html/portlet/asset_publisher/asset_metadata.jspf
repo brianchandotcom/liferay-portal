@@ -15,18 +15,21 @@
 --%>
 
 <%
-boolean previous = false;
-
 for (int j = 0; j < metadataFields.length; j++) {
 	String value = null;
+	String iconCssClass = StringPool.BLANK;
 
 	if (metadataFields[j].equals("create-date")) {
+		iconCssClass = "icon-calendar";
 		value = dateFormatDate.format(assetEntry.getCreateDate());
 	}
 	else if (metadataFields[j].equals("modified-date")) {
+		iconCssClass = "icon-calendar";
 		value = dateFormatDate.format(assetEntry.getModifiedDate());
 	}
 	else if (metadataFields[j].equals("publish-date")) {
+		iconCssClass = "icon-calendar";
+
 		if (assetEntry.getPublishDate() == null) {
 			value = StringPool.BLANK;
 		}
@@ -35,6 +38,8 @@ for (int j = 0; j < metadataFields.length; j++) {
 		}
 	}
 	else if (metadataFields[j].equals("expiration-date")) {
+		iconCssClass = "icon-calendar";
+
 		if (assetEntry.getExpirationDate() == null) {
 			value = StringPool.BLANK;
 		}
@@ -43,9 +48,13 @@ for (int j = 0; j < metadataFields.length; j++) {
 		}
 	}
 	else if (metadataFields[j].equals("priority")) {
+		iconCssClass = "icon-long-arrow-up";
+
 		value = LanguageUtil.get(pageContext, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
 	}
 	else if (metadataFields[j].equals("author")) {
+		iconCssClass = "icon-user";
+
 		String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
 
 		value = LanguageUtil.get(pageContext, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
@@ -63,22 +72,9 @@ for (int j = 0; j < metadataFields.length; j++) {
 	}
 
 	if (Validator.isNotNull(value)) {
-		boolean hasCategoriesOrTags = !(value.equals("categories") && assetEntry.getCategories().isEmpty()) && !(value.equals("tags") && assetEntry.getTags().isEmpty());
-
-		if (previous && hasCategoriesOrTags) {
 %>
 
-			<span class="vertical-separator"><!-- --></span>
-
-<%
-		}
-
-		if (previous || hasCategoriesOrTags) {
-			previous = true;
-		}
-%>
-
-		<span class="metadata-entry <%= "metadata-" + metadataFields[j] %>">
+		<span class="metadata-entry <%= "metadata-" + metadataFields[j] %> <%= iconCssClass %>">
 			<c:choose>
 				<c:when test='<%= value.equals("categories") %>' >
 					<liferay-ui:asset-categories-summary

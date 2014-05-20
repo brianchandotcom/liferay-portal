@@ -4,4 +4,14 @@
 	span a {
 		margin-right: 2px;
 	}
+
+	.icon-flag {
+		color: #999;
+	}
+
+	.flag-enable:hover {
+		.icon-flag {
+			color: #C00;
+		}
+	}
 }

@@ -55,7 +55,7 @@ if (selLayout != null) {
 
 			A.each(
 				json.children.list,
-				function(item, index, collection) {
+				function(item, index) {
 					var childPortlets = [];
 					var total = 0;
 

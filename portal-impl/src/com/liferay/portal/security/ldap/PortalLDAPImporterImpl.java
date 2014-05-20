@@ -1250,7 +1250,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
-		if (Validator.isNull(ldapUser.getScreenName())) {
+		if (Validator.isNull(ldapUser.getScreenName()) ||
+			ldapUser.isAutoScreenName()) {
+
 			ldapUser.setScreenName(user.getScreenName());
 		}
 

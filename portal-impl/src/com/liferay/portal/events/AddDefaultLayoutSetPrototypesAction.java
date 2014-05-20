@@ -50,8 +50,8 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypeCreator.addLayoutSetPrototype(
-					"layout-set-prototype-intranet-site-title",
-					"layout-set-prototype-intranet-site-description");
+				"layout-set-prototype-intranet-site-title",
+				"layout-set-prototype-intranet-site-description");
 
 		if (layoutSetPrototype == null) {
 			return;
@@ -113,8 +113,8 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypeCreator.addLayoutSetPrototype(
-					"layout-set-prototype-community-site-title",
-					"layout-set-prototype-community-site-description");
+				"layout-set-prototype-community-site-title",
+				"layout-set-prototype-community-site-description");
 
 		if (layoutSetPrototype == null) {
 			return;

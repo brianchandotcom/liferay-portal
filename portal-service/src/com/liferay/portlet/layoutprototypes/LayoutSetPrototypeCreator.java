@@ -51,7 +51,7 @@ public class LayoutSetPrototypeCreator {
 
 	public Layout addLayout(
 			LayoutSetPrototype layoutSetPrototype, String nameKey,
-			String friendlyURL, String layouteTemplateId)
+			String friendlyURL, String layoutTemplateId)
 		throws Exception {
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
@@ -82,7 +82,7 @@ public class LayoutSetPrototypeCreator {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
+		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
 
 		return layout;
 	}

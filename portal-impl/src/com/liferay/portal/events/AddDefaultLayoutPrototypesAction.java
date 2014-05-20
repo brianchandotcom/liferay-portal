@@ -52,8 +52,8 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypeCreator.addLayoutPrototype(
-					"layout-prototype-blog-title",
-					"layout-prototype-blog-description", "2_columns_iii");
+				"layout-prototype-blog-title",
+				"layout-prototype-blog-description", "2_columns_iii");
 
 		if (layoutPrototype == null) {
 			return;
@@ -77,8 +77,8 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypeCreator.addLayoutPrototype(
-					"layout-prototype-web-content-title",
-					"layout-prototype-web-content-description", "2_columns_ii");
+				"layout-prototype-web-content-title",
+				"layout-prototype-web-content-description", "2_columns_ii");
 
 		if (layoutPrototype == null) {
 			return;
@@ -145,7 +145,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		preferences.put(
 			"classNameId",
 			String.valueOf(PortalUtil.getClassNameId(WikiPage.class)));
-
 		preferences.put("showAssetCount", Boolean.TRUE.toString());
 
 		return preferences;
@@ -157,7 +156,6 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		preferences.put(
 			"classNameId",
 			String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class)));
-
 		preferences.put("showAssetCount", Boolean.TRUE.toString());
 
 		return preferences;

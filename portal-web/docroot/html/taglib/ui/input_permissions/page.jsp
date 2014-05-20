@@ -267,16 +267,16 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					var groupViewCheckbox = A.one('#<%= uniqueNamespace %>groupPermissions_VIEW');
 
 					if (viewableBySelect.val() == '<%= RoleConstants.GUEST %>') {
-						guestViewCheckbox.set('checked', true);
-						groupViewCheckbox.set('checked', false);
+						guestViewCheckbox.attr('checked', true);
+						groupViewCheckbox.attr('checked', false);
 					}
 					else if (viewableBySelect.val() == '<%= defaultGroupRole.getName() %>') {
-						guestViewCheckbox.set('checked', false);
-						groupViewCheckbox.set('checked', true);
+						guestViewCheckbox.attr('checked', false);
+						groupViewCheckbox.attr('checked', true);
 					}
 					else {
-						guestViewCheckbox.set('checked', false);
-						groupViewCheckbox.set('checked', false);
+						guestViewCheckbox.attr('checked', false);
+						groupViewCheckbox.attr('checked', false);
 					}
 				},
 				['aui-base']

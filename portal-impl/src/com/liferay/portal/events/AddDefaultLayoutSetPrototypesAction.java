@@ -64,18 +64,18 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
 
-		layoutConfigurator.addPortlet("column-1", PortletKeys.ACTIVITIES);
+		layoutConfigurator.addPortlet(PortletKeys.ACTIVITIES, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.SEARCH,
-			_getPrivateHomeSearchPortletSetup());
+			_getPrivateHomeSearchPortletSetup(), PortletKeys.SEARCH,
+			"column-2");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.LANGUAGE, _getLanguagePortletSetup());
+			_getLanguagePortletSetup(), PortletKeys.LANGUAGE, "column-2");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_PUBLISHER,
-			_getHomeAssetPublisherPortletSetup());
+			_getHomeAssetPublisherPortletSetup(), PortletKeys.ASSET_PUBLISHER,
+			"column-2");
 
 		// Documents layout
 
@@ -86,12 +86,12 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		layoutConfigurator = new LayoutConfigurator(layout);
 
 		layoutConfigurator.addPortlet(
-			"column-1", PortletKeys.DOCUMENT_LIBRARY,
-			_getDocumentLibraryPortletSetup());
+			_getDocumentLibraryPortletSetup(), PortletKeys.DOCUMENT_LIBRARY,
+			"column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_PUBLISHER,
-			_getDocumentsAssetPublisherPortletSetup());
+			_getDocumentsAssetPublisherPortletSetup(),
+			PortletKeys.ASSET_PUBLISHER, "column-2");
 
 		// News layout
 
@@ -101,10 +101,10 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		layoutConfigurator = new LayoutConfigurator(layout);
 
 		layoutConfigurator.addPortlet(
-			"column-1", PortletKeys.RSS, _getNewsColumn1RssPortletSetup());
+			_getNewsColumn1RssPortletSetup(), PortletKeys.RSS, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.RSS, _getNewsColumn2RssPortletSetup());
+			_getNewsColumn2RssPortletSetup(), PortletKeys.RSS, "column-2");
 	}
 
 	protected void addPublicSite(
@@ -127,30 +127,30 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
 
-		layoutConfigurator.addPortlet("column-1", PortletKeys.MESSAGE_BOARDS);
+		layoutConfigurator.addPortlet(PortletKeys.MESSAGE_BOARDS, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.SEARCH, _getPublicHomeSearchPortletSetup());
+			_getPublicHomeSearchPortletSetup(), PortletKeys.SEARCH, "column-2");
 
-		layoutConfigurator.addPortlet("column-2", PortletKeys.POLLS_DISPLAY);
+		layoutConfigurator.addPortlet(PortletKeys.POLLS_DISPLAY, "column-2");
 
-		layoutConfigurator.addPortlet("column-2", PortletKeys.USER_STATISTICS);
+		layoutConfigurator.addPortlet(PortletKeys.USER_STATISTICS, "column-2");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_PUBLISHER,
-			_getPrivateHomeAssetPublisherPortletSetup());
+			_getPrivateHomeAssetPublisherPortletSetup(),
+			PortletKeys.ASSET_PUBLISHER, "column-2");
 
 		// Wiki layout
 
 		layout = layoutSetPrototypeCreator.addLayout(
 			layoutSetPrototype, "wiki", "/wiki", "2_columns_iii");
 
-		layoutConfigurator.addPortlet("column-1", PortletKeys.WIKI);
+		layoutConfigurator.addPortlet(PortletKeys.WIKI, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_CATEGORIES_NAVIGATION);
+			PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-2");
 
-		layoutConfigurator.addPortlet("column-2", PortletKeys.TAGS_CLOUD);
+		layoutConfigurator.addPortlet(PortletKeys.TAGS_CLOUD, "column-2");
 	}
 
 	protected void doRun(long companyId) throws Exception {

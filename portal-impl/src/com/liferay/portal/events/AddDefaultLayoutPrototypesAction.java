@@ -63,12 +63,12 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
 
-		layoutConfigurator.addPortlet("column-1", PortletKeys.BLOGS);
+		layoutConfigurator.addPortlet(PortletKeys.BLOGS, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.TAGS_CLOUD, _getTagsCloudPortletSetup());
+			_getTagsCloudPortletSetup(), PortletKeys.TAGS_CLOUD, "column-2");
 
-		layoutConfigurator.addPortlet("column-2", PortletKeys.RECENT_BLOGGERS);
+		layoutConfigurator.addPortlet(PortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	protected void addWebContentPage(
@@ -89,15 +89,15 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
 
 		layoutConfigurator.addPortlet(
-			"column-1", PortletKeys.ASSET_TAGS_NAVIGATION);
+			PortletKeys.ASSET_TAGS_NAVIGATION, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-1", PortletKeys.ASSET_CATEGORIES_NAVIGATION);
+			PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-1");
 
-		layoutConfigurator.addPortlet("column-2", PortletKeys.SEARCH);
+		layoutConfigurator.addPortlet(PortletKeys.SEARCH, "column-2");
 
 		String assetPublisherPortletId = layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_PUBLISHER);
+			PortletKeys.ASSET_PUBLISHER, "column-2");
 
 		layoutConfigurator.setTypeSettingsProperty(
 			LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
@@ -120,14 +120,14 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 		LayoutConfigurator layoutConfigurator = new LayoutConfigurator(layout);
 
-		layoutConfigurator.addPortlet("column-1", PortletKeys.WIKI);
+		layoutConfigurator.addPortlet(PortletKeys.WIKI, "column-1");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_CATEGORIES_NAVIGATION);
+			PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-2");
 
 		layoutConfigurator.addPortlet(
-			"column-2", PortletKeys.ASSET_TAGS_NAVIGATION,
-			_getAssetTagsNavigationPortletSetup());
+			_getAssetTagsNavigationPortletSetup(),
+			PortletKeys.ASSET_TAGS_NAVIGATION, "column-2");
 	}
 
 	protected void doRun(long companyId) throws Exception {

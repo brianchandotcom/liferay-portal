@@ -43,11 +43,11 @@ public class LayoutConfigurator {
 		_layout = layout;
 	}
 
-	public String addPortlet(String columnId, String portletId)
+	public String addPortlet(String portletId, String columnId)
 		throws PortalException, SystemException {
 
 		try {
-			return addPortlet(columnId, portletId, null);
+			return addPortlet(null, portletId, columnId);
 		}
 		catch (PortletException pe) {
 			throw new SystemException(pe);
@@ -58,7 +58,7 @@ public class LayoutConfigurator {
 	}
 
 	public String addPortlet(
-			String columnId, String portletId, Map<String, String> preferences)
+			Map<String, String> preferences, String portletId, String columnId)
 		throws PortalException, SystemException, ReadOnlyException,
 			ValidatorException, IOException {
 

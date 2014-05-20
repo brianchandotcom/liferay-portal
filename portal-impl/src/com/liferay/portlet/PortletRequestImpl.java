@@ -63,6 +63,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.ccpp.Profile;
 
@@ -545,7 +546,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
 			name.startsWith(
 				PortletQName.REMOVE_PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
-			PortalUtil.isReservedParameter(name)) {
+			PortalUtil.isReservedParameter(name) ||
+			(_strutsBasedPortlet && _CVE_2014_0114.matcher(name).matches())) {
 
 			return true;
 		}
@@ -662,6 +664,13 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portlet = portlet;
 		_portletName = portlet.getPortletId();
 		_publicRenderParameters = PublicRenderParametersPool.get(request, plid);
+
+		// LPS-46552
+
+		if (invokerPortlet != null) {
+			_strutsBasedPortlet = invokerPortlet.isStrutsPortlet() ||
+				invokerPortlet.isStrutsBridgePortlet();
+		}
 
 		String portletNamespace = PortalUtil.getPortletNamespace(_portletName);
 
@@ -946,6 +955,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return name;
 	}
 
+	private static final Pattern _CVE_2014_0114 = Pattern.compile(
+		"(.*\\.|^|.*|\\[('|\"))(c|C)lass(\\.|('|\")]|\\[).*");
+
 	private static Log _log = LogFactoryUtil.getLog(PortletRequestImpl.class);
 
 	private boolean _invalidSession;
@@ -965,6 +977,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private long _remoteUserId;
 	private HttpServletRequest _request;
 	private PortletSessionImpl _session;
+	private boolean _strutsBasedPortlet;
 	private boolean _triggeredByActionURL;
 	private Principal _userPrincipal;
 	private boolean _wapTheme;

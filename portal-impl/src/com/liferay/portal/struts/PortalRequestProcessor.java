@@ -20,6 +20,7 @@ import com.liferay.portal.UserActiveException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.LastPath;
@@ -68,9 +69,11 @@ import com.liferay.portlet.RenderResponseImpl;
 import java.io.IOException;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -88,6 +91,7 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
@@ -832,6 +836,45 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 	}
 
 	@Override
+	protected void processPopulate(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionForm actionForm, ActionMapping actionMapping)
+		throws ServletException {
+
+		if (actionForm == null) {
+			return;
+		}
+
+		// LPS-46552
+
+		boolean isVulnerable = false;
+
+		Set<Map.Entry<String, String[]>> originalParameters =
+			request.getParameterMap().entrySet();
+
+		Map<String, String[]> validParameters = new HashMap<String, String[]>(
+			originalParameters.size());
+
+		for (Map.Entry<String, String[]> entry : originalParameters) {
+			String parameterName = entry.getKey();
+
+			if (_CVE_2014_0114.matcher(parameterName).matches()) {
+				isVulnerable = true;
+			}
+			else {
+				validParameters.put(parameterName, entry.getValue());
+			}
+		}
+
+		if (isVulnerable) {
+			request = new DynamicServletRequest(
+				request, validParameters, false);
+		}
+
+		super.processPopulate(request, response, actionForm, actionMapping);
+	}
+
+	@Override
 	protected boolean processRoles(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
@@ -926,6 +969,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return true;
 		}
 	}
+
+	private static final Pattern _CVE_2014_0114 = Pattern.compile(
+		"(.*\\.|^|.*|\\[('|\"))(c|C)lass(\\.|('|\")]|\\[).*");
 
 	private static final String _PATH_C = "/c";
 

@@ -53,8 +53,12 @@ import com.liferay.registry.impl.RegistryImpl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 
 import java.net.JarURLConnection;
@@ -747,11 +751,34 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (cacheFile.exists() && hashcodeFile.exists() &&
 			_hasMatchingHashcode(hashcodeFile, hashcode)) {
 
+			ObjectInputStream objectInputStream = null;
+
 			try {
-				return FileUtil.read(cacheFile);
+				objectInputStream = new ObjectInputStream(
+					new FileInputStream(cacheFile));
+
+				_extraPackageMap =
+					(Map<String, List<URL>>)objectInputStream.readObject();
+
+				String extraPackages = (String)objectInputStream.readObject();
+
+				return extraPackages;
 			}
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);
+			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error(cnfe, cnfe);
+			}
+			finally {
+				if (objectInputStream != null) {
+					try {
+						objectInputStream.close();
+					}
+					catch (IOException ioe) {
+						_log.error(ioe, ioe);
+					}
+				}
 			}
 		}
 
@@ -815,12 +842,33 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					"packages:\n" +s);
 		}
 
+		if (!coreDir.exists()) {
+			coreDir.mkdir();
+		}
+
+		ObjectOutputStream objectOutputStream = null;
+
 		try {
-			FileUtil.write(cacheFile, sb.toString());
+			objectOutputStream = new ObjectOutputStream(
+				new FileOutputStream(cacheFile));
+
+			objectOutputStream.writeObject(_extraPackageMap);
+			objectOutputStream.writeObject(sb.toString());
+
 			FileUtil.write(hashcodeFile, hashcode);
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
+		}
+		finally {
+			if (objectOutputStream != null) {
+				try {
+					objectOutputStream.close();
+				}
+				catch (IOException ioe) {
+					_log.error(ioe, ioe);
+				}
+			}
 		}
 
 		return sb.toString();

@@ -38,6 +38,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.DuplicateVocabularyException;
 import com.liferay.portlet.asset.VocabularyNameException;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
@@ -265,6 +266,15 @@ public class AssetVocabularyLocalServiceImpl
 	public List<AssetVocabulary> getGroupsVocabularies(
 		long[] groupIds, String className) {
 
+		return getGroupsVocabularies(
+			groupIds, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+	}
+
+	@Override
+	public List<AssetVocabulary> getGroupsVocabularies(
+			long[] groupIds, String className, long classTypeId)
+		throws SystemException {
+
 		List<AssetVocabulary> vocabularies =
 			assetVocabularyPersistence.findByGroupId(groupIds);
 
@@ -272,7 +282,8 @@ public class AssetVocabularyLocalServiceImpl
 			return vocabularies;
 		}
 
-		return AssetUtil.filterVocabularies(vocabularies, className);
+		return AssetUtil.filterVocabularies(
+			vocabularies, className, classTypeId);
 	}
 
 	@Override

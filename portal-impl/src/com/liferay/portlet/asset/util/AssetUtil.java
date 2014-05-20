@@ -252,21 +252,23 @@ public class AssetUtil {
 	}
 
 	public static List<AssetVocabulary> filterVocabularies(
-		List<AssetVocabulary> vocabularies, String className) {
+		List<AssetVocabulary> vocabularies, String className,
+		final long classTypeId) {
 
 		final long classNameId = PortalUtil.getClassNameId(className);
 
-		PredicateFilter<AssetVocabulary> predicateFilter =
+		PredicateFilter<AssetVocabulary> associatedVocabulariesFilter =
 			new PredicateFilter<AssetVocabulary>() {
 
 				@Override
-				public boolean filter(AssetVocabulary vocabulary) {
-					return vocabulary.isAssociatedToClassNameId(classNameId);
+				public boolean filter(AssetVocabulary assetVocabulary) {
+					return assetVocabulary.isAssociatedToClassNameAndTypeId(
+						classNameId, classTypeId);
 				}
 
 			};
 
-		return ListUtil.filter(vocabularies, predicateFilter);
+		return ListUtil.filter(vocabularies, associatedVocabulariesFilter);
 	}
 
 	public static long[] filterVocabularyIds(

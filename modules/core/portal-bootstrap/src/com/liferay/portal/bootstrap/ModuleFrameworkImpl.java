@@ -745,19 +745,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		File coreDir = new File(
 			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
 
-		if (!coreDir.exists()) {
-			coreDir.mkdir();
-		}
-
 		File cacheFile = new File(coreDir, "system-packages.txt");
 		File hashcodeFile = new File(coreDir, "system-packages.hash");
 
 		if (cacheFile.exists() && hashcodeFile.exists() &&
 			_hasMatchingHashcode(hashcodeFile, hashcode)) {
 
+			ObjectInputStream objectInputStream = null;
+
 			try {
-				ObjectInputStream objectInputStream =
-					new ObjectInputStream(new FileInputStream(cacheFile));
+				objectInputStream = new ObjectInputStream(
+					new FileInputStream(cacheFile));
 
 				_extraPackageMap =
 					(Map<String, List<URL>>)objectInputStream.readObject();
@@ -771,6 +769,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 			catch (ClassNotFoundException cnfe) {
 				_log.error(cnfe, cnfe);
+			}
+			finally {
+				if (objectInputStream != null) {
+					try {
+						objectInputStream.close();
+					}
+					catch (IOException ioe) {
+						_log.error(ioe, ioe);
+					}
+				}
 			}
 		}
 
@@ -834,8 +842,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					"packages:\n" +s);
 		}
 
+		if (!coreDir.exists()) {
+			coreDir.mkdir();
+		}
+
+		ObjectOutputStream objectOutputStream = null;
+
 		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			objectOutputStream = new ObjectOutputStream(
 				new FileOutputStream(cacheFile));
 
 			objectOutputStream.writeObject(_extraPackageMap);
@@ -845,6 +859,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
+		}
+		finally {
+			if (objectOutputStream != null) {
+				try {
+					objectOutputStream.close();
+				}
+				catch (IOException ioe) {
+					_log.error(ioe, ioe);
+				}
+			}
 		}
 
 		return sb.toString();

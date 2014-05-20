@@ -696,7 +696,7 @@ public class LayoutImporter {
 			}
 		}
 
-		Element servicesElement = _rootElement.element("services");
+		Element servicesElement = rootElement.element("services");
 
 		List<Element> serviceElements = servicesElement.elements("service");
 

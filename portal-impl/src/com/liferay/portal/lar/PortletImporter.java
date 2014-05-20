@@ -68,7 +68,6 @@ import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -415,11 +414,11 @@ public class PortletImporter {
 		// Read asset tags, expando tables, locks and permissions to make them
 		// available to the data handlers through the context
 
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
 		Element portletElement = null;
 
 		try {
-			Element rootElement = portletDataContext.getImportDataRootElement();
-
 			portletElement = rootElement.element("portlet");
 
 			Document portletDocument = SAXReaderUtil.read(
@@ -538,12 +537,8 @@ public class PortletImporter {
 			PortletDataHandlerKeys.PORTLET_SETUP);
 
 		if (importPortletSetup) {
-			List<Element> serviceElements = null;
-
 			try {
-				serviceElements =
-					portletDataContext.getImportDataRootElement().elements(
-						"service");
+				List<Element> serviceElements = rootElement.elements("service");
 
 				for (Element serviceElement : serviceElements) {
 					Document serviceDocument = SAXReaderUtil.read(

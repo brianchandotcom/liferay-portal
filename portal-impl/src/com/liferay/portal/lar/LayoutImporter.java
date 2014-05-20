@@ -690,10 +690,8 @@ public class LayoutImporter {
 
 		// Import services
 
-		if (_log.isDebugEnabled()) {
-			if (!portletElements.isEmpty()) {
-				_log.debug("Importing services");
-			}
+		if (_log.isDebugEnabled() && !portletElements.isEmpty()) {
+			_log.debug("Importing services");
 		}
 
 		Element servicesElement = rootElement.element("services");
@@ -701,10 +699,10 @@ public class LayoutImporter {
 		List<Element> serviceElements = servicesElement.elements("service");
 
 		for (Element serviceElement : serviceElements) {
-			String servicePath = serviceElement.attributeValue("path");
+			String path = serviceElement.attributeValue("path");
 
 			Document serviceDocument = SAXReaderUtil.read(
-				portletDataContext.getZipEntryAsString(servicePath));
+				portletDataContext.getZipEntryAsString(path));
 
 			serviceElement = serviceDocument.getRootElement();
 

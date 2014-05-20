@@ -1057,61 +1057,62 @@ public class PortletExporter {
 		String path = ExportImportPathUtil.getServicePortletPreferencesPath(
 			portletDataContext, serviceName, ownerId, ownerType);
 
-		if (portletDataContext.isPathNotProcessed(path)) {
-			String preferencesXML = portletPreferences.getPreferences();
-
-			if (Validator.isNull(preferencesXML)) {
-				preferencesXML = PortletConstants.DEFAULT_PREFERENCES;
-			}
-
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
-
-			Element serviceElement = parentElement.addElement("service");
-
-			serviceElement.addAttribute("service-name", serviceName);
-
-			Document document = SAXReaderUtil.read(
-				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
-
-			Element rootElement = document.getRootElement();
-
-			rootElement.addAttribute("owner-id", String.valueOf(ownerId));
-			rootElement.addAttribute("owner-type", String.valueOf(ownerType));
-			rootElement.addAttribute("default-user", String.valueOf(false));
-			rootElement.addAttribute("service-name", serviceName);
-
-			if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-				PortletItem portletItem =
-					PortletItemLocalServiceUtil.getPortletItem(ownerId);
-
-				rootElement.addAttribute(
-					"archive-user-uuid", portletItem.getUserUuid());
-				rootElement.addAttribute("archive-name", portletItem.getName());
-			}
-			else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-				User user = UserLocalServiceUtil.fetchUserById(ownerId);
-
-				if (user == null) {
-					return;
-				}
-
-				rootElement.addAttribute("user-uuid", user.getUserUuid());
-			}
-
-			List<Node> nodes = document.selectNodes(
-				"/portlet-preferences/preference[name/text() = " +
-					"'last-publish-date']");
-
-			for (Node node : nodes) {
-				document.remove(node);
-			}
-
-			serviceElement.addAttribute("path", path);
-
-			portletDataContext.addZipEntry(
-				path, document.formattedString(StringPool.TAB, false, false));
+		if (portletDataContext.isPathProcessed(path)) {
+			return;
 		}
+
+		String preferencesXML = portletPreferences.getPreferences();
+
+		if (Validator.isNull(preferencesXML)) {
+			preferencesXML = PortletConstants.DEFAULT_PREFERENCES;
+		}
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
+
+		Element serviceElement = parentElement.addElement("service");
+
+		serviceElement.addAttribute("service-name", serviceName);
+
+		Document document = SAXReaderUtil.read(
+			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+
+		Element rootElement = document.getRootElement();
+
+		rootElement.addAttribute("owner-id", String.valueOf(ownerId));
+		rootElement.addAttribute("owner-type", String.valueOf(ownerType));
+		rootElement.addAttribute("default-user", String.valueOf(false));
+		rootElement.addAttribute("service-name", serviceName);
+
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+			PortletItem portletItem =
+				PortletItemLocalServiceUtil.getPortletItem(ownerId);
+
+			rootElement.addAttribute(
+				"archive-user-uuid", portletItem.getUserUuid());
+			rootElement.addAttribute("archive-name", portletItem.getName());
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+			User user = UserLocalServiceUtil.fetchUserById(ownerId);
+
+			if (user == null) {
+				return;
+			}
+
+			rootElement.addAttribute("user-uuid", user.getUserUuid());
+		}
+
+		List<Node> nodes = document.selectNodes(
+			"/portlet-preferences/preference[name/text() = " +
+				"'last-publish-date']");
+
+		for (Node node : nodes) {
+			document.remove(node);
+		}
+
+		serviceElement.addAttribute("path", path);
+
+		portletDataContext.addZipEntry(path, document.formattedString());
 	}
 
 	protected void exportServicePortletPreferences(

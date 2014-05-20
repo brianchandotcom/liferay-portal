@@ -22,7 +22,7 @@
 	<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
 
 	<#if assetLinkBehavior != "showFullContent">
-		<#assign viewURL = assetRenderer.getURLViewInContext(renderRequest, renderResponse, viewURL) />
+		<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry, true) />
 	</#if>
 
 	<div class="asset-abstract">

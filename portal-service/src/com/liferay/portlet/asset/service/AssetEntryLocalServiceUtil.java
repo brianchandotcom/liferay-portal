@@ -772,11 +772,23 @@ public class AssetEntryLocalServiceUtil {
 		return getService().updateVisible(className, classPK, visible);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	*/
+	@Deprecated
 	public static void validate(long groupId, java.lang.String className,
 		long[] categoryIds, java.lang.String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().validate(groupId, className, categoryIds, tagNames);
+	}
+
+	public static void validate(long groupId, java.lang.String className,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.validate(groupId, className, classTypeId, categoryIds, tagNames);
 	}
 
 	public static AssetEntryLocalService getService() {

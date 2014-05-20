@@ -598,8 +598,17 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	*/
+	@Deprecated
 	public void validate(long groupId, java.lang.String className,
 		long[] categoryIds, java.lang.String[] tagNames)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void validate(long groupId, java.lang.String className,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

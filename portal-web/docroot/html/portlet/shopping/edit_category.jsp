@@ -137,7 +137,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 
 			if (mergeWithParentCategory) {
-				mergeWithParentCategory.set('checked', false);
+				mergeWithParentCategory.attr('checked', false);
 			}
 		},
 		['aui-base']

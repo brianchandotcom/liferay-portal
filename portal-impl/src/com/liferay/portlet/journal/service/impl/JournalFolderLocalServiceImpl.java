@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -154,6 +156,13 @@ public class JournalFolderLocalServiceImpl
 
 		// Folder
 
+		Set<Long> ddmStructureIds = getDDMStructureIds(
+			journalFolderPersistence.getDDMStructures(folder.getFolderId()));
+
+		if (ddmStructureIds.isEmpty()) {
+			ddmStructureIds.add(JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+		}
+
 		journalFolderPersistence.remove(folder);
 
 		// Resources
@@ -185,6 +194,21 @@ public class JournalFolderLocalServiceImpl
 		else {
 			trashVersionLocalService.deleteTrashVersion(
 				JournalFolder.class.getName(), folder.getFolderId());
+		}
+
+		// Workflow
+
+		for (long ddmStructureId : ddmStructureIds) {
+			WorkflowDefinitionLink workflowDefinitionLink =
+				workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					folder.getCompanyId(), folder.getGroupId(),
+					JournalFolder.class.getName(), folder.getFolderId(),
+					ddmStructureId);
+
+			if (workflowDefinitionLink != null) {
+				workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+					workflowDefinitionLink);
+			}
 		}
 
 		return folder;

@@ -1944,8 +1944,8 @@ this task.
 		>
 			<mapper
 				type="glob"
-				from="${app.server.tcserver.zip.name}"
-				to="tcserver-${app.server.tcserver.version}/*"
+				from="vfabric-tc-server-standard-${app.server.tcserver.version}.RELEASE/*"
+				to="tc-server-${app.server.tcserver.version}/*"
 			/>
 		</unzip>
 

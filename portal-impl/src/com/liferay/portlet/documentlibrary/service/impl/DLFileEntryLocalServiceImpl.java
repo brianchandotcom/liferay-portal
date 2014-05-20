@@ -931,19 +931,46 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.countByExtraSettings();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	@Override
 	public File getFile(
 			long userId, long fileEntryId, String version,
 			boolean incrementCounter)
 		throws PortalException, SystemException {
 
-		return getFile(userId, fileEntryId, version, incrementCounter, 1);
+		return getFile(fileEntryId, version, incrementCounter, 1);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
+	 *             boolean, int)}
+	 */
+	@Deprecated
 	@Override
 	public File getFile(
 			long userId, long fileEntryId, String version,
 			boolean incrementCounter, int increment)
+		throws PortalException, SystemException {
+
+		return getFile(fileEntryId, version, incrementCounter, increment);
+	}
+
+	@Override
+	public File getFile(
+			long fileEntryId, String version, boolean incrementCounter)
+		throws PortalException, SystemException {
+
+		return getFile(fileEntryId, version, incrementCounter, 1);
+	}
+
+	@Override
+	public File getFile(
+			long fileEntryId, String version, boolean incrementCounter,
+			int increment)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -953,9 +980,6 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntryLocalService.incrementViewCounter(
 				dlFileEntry, increment);
 		}
-
-		dlAppHelperLocalService.getFileAsStream(
-			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
 
 		return DLStoreUtil.getFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),

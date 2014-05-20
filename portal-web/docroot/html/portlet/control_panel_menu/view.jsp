@@ -87,7 +87,7 @@
 					%>
 
 					<c:if test="<%= !scopeLayouts.isEmpty() && siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
-						<div class="nobr lfr-title-scope-selector">
+						<div class="lfr-title-scope-selector nobr">
 							<liferay-ui:message key="scope" />:
 							<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
 								<liferay-ui:icon
@@ -131,20 +131,15 @@
 								portletName="<%= portlet.getRootPortletId() %>"
 								var="portletURL"
 								windowState="<%= WindowState.MAXIMIZED.toString() %>"
-								/>
+							/>
 
-							<a href="<%= portletURL %>" id="<portlet:namespace />portlet_<%= portletId %>" role="menuitem">
-								<c:choose>
-									<c:when test="<%= Validator.isNull(portlet.getIcon()) %>">
-										<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />
-									</c:when>
-									<c:otherwise>
-										<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
-									</c:otherwise>
-								</c:choose>
-
-								<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-							</a>
+							<liferay-portlet:icon-portlet
+								ariaRole="menuitem"
+								id='<%= "portlet_" + portletId %>'
+								label="<%= true %>"
+								portlet="<%= portlet %>"
+								url="<%= portletURL %>"
+							/>
 						</li>
 
 						<c:if test="<%= !ppid.equals(portletId) %>">

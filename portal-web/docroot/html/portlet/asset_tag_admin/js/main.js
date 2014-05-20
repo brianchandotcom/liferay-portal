@@ -283,7 +283,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (owns(state, index)) {
 									var historyEntry = item.historyEntry;
 
@@ -808,7 +808,7 @@ AUI.add(
 
 							AObject.each(
 								paginationMap,
-								function(item, index, collection) {
+								function(item, index) {
 									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
 								}
 							);
@@ -1288,7 +1288,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								var historyEntry = item.historyEntry;
 
 								var value;
@@ -1494,7 +1494,7 @@ AUI.add(
 
 							A.each(
 								tags,
-								function(item, index, collection) {
+								function(item, index) {
 									if (index === 0) {
 										item.cssClassSelected = 'active';
 									}

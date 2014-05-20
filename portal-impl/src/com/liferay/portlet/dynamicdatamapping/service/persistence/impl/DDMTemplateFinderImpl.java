@@ -73,8 +73,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -100,8 +100,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -131,8 +131,9 @@ public class DDMTemplateFinderImpl
 			String language, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -165,8 +166,9 @@ public class DDMTemplateFinderImpl
 			String mode, String language, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -203,8 +205,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -230,8 +232,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -250,8 +252,9 @@ public class DDMTemplateFinderImpl
 			String language, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -284,8 +287,9 @@ public class DDMTemplateFinderImpl
 			String mode, String language, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -344,8 +348,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -373,8 +377,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(languages, false);
 		}
 		else {
@@ -395,8 +399,9 @@ public class DDMTemplateFinderImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -433,8 +438,9 @@ public class DDMTemplateFinderImpl
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -502,8 +508,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
@@ -531,8 +537,8 @@ public class DDMTemplateFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 			languages = CustomSQLUtil.keywords(languages, false);
 		}
 		else {
@@ -580,8 +586,9 @@ public class DDMTemplateFinderImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);
@@ -618,8 +625,9 @@ public class DDMTemplateFinderImpl
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] types = CustomSQLUtil.keywords(type, false);
 		String[] modes = CustomSQLUtil.keywords(mode, false);
 		String[] languages = CustomSQLUtil.keywords(language, false);

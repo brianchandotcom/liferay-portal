@@ -60,7 +60,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
+			names = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -75,7 +75,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 
 		return countByG_N(groupId, names, params, andOperator);
 	}
@@ -144,7 +144,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
+			names = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -170,7 +170,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			boolean andOperator, int start, int end)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
 
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}

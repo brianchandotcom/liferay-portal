@@ -124,6 +124,8 @@ public class StringPool {
 
 	public static final String LESS_THAN = "<";
 
+	public static final String LESS_THAN_ENCODED = "&lt;";
+
 	public static final String LESS_THAN_OR_EQUAL = "<=";
 
 	public static final String LIKE = "LIKE";

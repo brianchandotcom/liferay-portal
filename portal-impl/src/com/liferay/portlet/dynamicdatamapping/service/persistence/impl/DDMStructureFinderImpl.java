@@ -62,8 +62,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -81,8 +81,9 @@ public class DDMStructureFinderImpl
 			boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] storageTypes = CustomSQLUtil.keywords(storageType, false);
 
 		return countByC_G_C_N_D_S_T(
@@ -113,8 +114,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -132,8 +133,9 @@ public class DDMStructureFinderImpl
 			boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] storageTypes = CustomSQLUtil.keywords(storageType, false);
 
 		return filterCountByC_G_C_N_D_S_T(
@@ -165,8 +167,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -186,8 +188,9 @@ public class DDMStructureFinderImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] storageTypes = CustomSQLUtil.keywords(storageType, false);
 
 		return filterFindByC_G_C_N_D_S_T(
@@ -221,8 +224,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = CustomSQLUtil.keywords(keywords, true, true);
+			descriptions = CustomSQLUtil.keywords(keywords, false, true);
 		}
 		else {
 			andOperator = true;
@@ -242,8 +245,9 @@ public class DDMStructureFinderImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = CustomSQLUtil.keywords(name, true, true);
+		String[] descriptions = CustomSQLUtil.keywords(
+			description, false, true);
 		String[] storageTypes = CustomSQLUtil.keywords(storageType, false);
 
 		return findByC_G_C_N_D_S_T(

@@ -236,14 +236,21 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(
-		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+		String keywords, boolean lowerCase, boolean escapeXml) {
+
+		return keywords(keywords, lowerCase, escapeXml, WildcardMode.SURROUND);
+	}
+
+	public String[] keywords(
+		String keywords, boolean lowerCase, boolean escapeXml,
+		WildcardMode wildcardMode) {
 
 		if (Validator.isNull(keywords)) {
 			return new String[] {null};
 		}
 
 		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
-			keywords = escapeWildCards(keywords);
+			keywords = _escapeWildCards(keywords);
 		}
 
 		if (lowerCase) {
@@ -269,6 +276,10 @@ public class CustomSQL {
 				if (i > pos) {
 					String keyword = keywords.substring(pos, i);
 
+					if (escapeXml) {
+						keyword = _escapeXml(keyword);
+					}
+
 					keywordsList.add(insertWildcard(keyword, wildcardMode));
 				}
 			}
@@ -293,11 +304,21 @@ public class CustomSQL {
 
 				String keyword = keywords.substring(pos, i);
 
+				if (escapeXml) {
+					keyword = _escapeXml(keyword);
+				}
+
 				keywordsList.add(insertWildcard(keyword, wildcardMode));
 			}
 		}
 
 		return keywordsList.toArray(new String[keywordsList.size()]);
+	}
+
+	public String[] keywords(
+		String keywords, boolean lowerCase, WildcardMode wildcardMode) {
+
+		return keywords(keywords, lowerCase, false, wildcardMode);
 	}
 
 	public String[] keywords(String keywords, WildcardMode wildcardMode) {
@@ -818,7 +839,7 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
-	private String escapeWildCards(String keywords) {
+	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
 		}
@@ -846,9 +867,17 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
+	private String _escapeXml(String xml) {
+		return StringUtil.replace(xml, _UNESCAPED_CHARS, _ESCAPED_CHARS);
+	}
+
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
+
+	private static final String[] _ESCAPED_CHARS = new String[] {
+		StringPool.AMPERSAND_ENCODED, StringPool.LESS_THAN_ENCODED
+	};
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
@@ -862,6 +891,10 @@ public class CustomSQL {
 	private static final String _STATUS_CONDITION_INVERSE = "status != ?";
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
+
+	private static final String[] _UNESCAPED_CHARS = new String[] {
+		StringPool.AMPERSAND, StringPool.LESS_THAN
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);
 

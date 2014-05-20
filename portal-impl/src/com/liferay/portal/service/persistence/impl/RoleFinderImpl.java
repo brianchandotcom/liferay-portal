@@ -178,7 +178,7 @@ public class RoleFinderImpl
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] descriptions = CustomSQLUtil.keywords(description, true, true);
 
 		return countByC_N_D_T(
 			companyId, names, descriptions, types, params, andOperator);
@@ -268,7 +268,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;
@@ -511,7 +511,7 @@ public class RoleFinderImpl
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
+		String[] descriptions = CustomSQLUtil.keywords(description, true, true);
 
 		return findByC_N_D_T(
 			companyId, names, descriptions, types, params, andOperator, start,
@@ -693,7 +693,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, true, true);
 		}
 		else {
 			andOperator = true;

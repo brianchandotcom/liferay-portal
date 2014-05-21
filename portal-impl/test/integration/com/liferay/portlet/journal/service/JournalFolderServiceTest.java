@@ -28,11 +28,13 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.InvalidDDMStructureException;
@@ -42,6 +44,8 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -109,6 +113,18 @@ public class JournalFolderServiceTest {
 			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
 			false, serviceContext);
 
+		List<DDMStructure> ddmStructures =
+			DDMStructureLocalServiceUtil.getJournalFolderStructures(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					_group.getGroupId()),
+				folder.getFolderId(),
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
+
+		if (ddmStructures.isEmpty()) {
+			Assert.fail();
+		}
+
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"Test Article");
 
@@ -142,6 +158,18 @@ public class JournalFolderServiceTest {
 			Assert.fail();
 		}
 		catch (InvalidDDMStructureException iddmse) {
+		}
+
+		JournalFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
+
+		ddmStructures = DDMStructureLocalServiceUtil.getJournalFolderStructures(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(_group.getGroupId()),
+			folder.getFolderId(),
+			JournalFolderConstants.
+				RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
+
+		if (!ddmStructures.isEmpty()) {
+			Assert.fail();
 		}
 	}
 

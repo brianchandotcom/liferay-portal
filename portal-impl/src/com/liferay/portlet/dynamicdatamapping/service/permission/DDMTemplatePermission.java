@@ -25,6 +25,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 
 /**
  * @author Eduardo Lundgren
+ * @author Levente Hudák
  */
 public class DDMTemplatePermission {
 
@@ -34,6 +35,30 @@ public class DDMTemplatePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, template, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long groupId,
+			DDMTemplate template, String portletId, String actionId)
+		throws PortalException {
+
+		if (!contains(
+				permissionChecker, groupId, template, portletId, actionId)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long groupId, long templateId,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		if (!contains(
+				permissionChecker, groupId, templateId, portletId, actionId)) {
+
 			throw new PrincipalException();
 		}
 	}
@@ -52,27 +77,9 @@ public class DDMTemplatePermission {
 		PermissionChecker permissionChecker, DDMTemplate template,
 		String actionId) {
 
-		return contains(permissionChecker, template, null, actionId);
-	}
-
-	public static boolean contains(
-		PermissionChecker permissionChecker, DDMTemplate template,
-		String portletId, String actionId) {
-
-		if (Validator.isNotNull(portletId)) {
-			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, template.getGroupId(),
-				DDMTemplate.class.getName(), template.getTemplateId(),
-				portletId, actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
 		if (permissionChecker.hasOwnerPermission(
 				template.getCompanyId(), DDMTemplate.class.getName(),
-				template.getTemplateId(), template.getUserId(), actionId)) {
+			template.getTemplateId(), template.getUserId(), actionId)) {
 
 			return true;
 		}
@@ -82,23 +89,69 @@ public class DDMTemplatePermission {
 			template.getTemplateId(), actionId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             DDMTemplate, String)}
+	 */
+	@Deprecated
 	public static boolean contains(
-			PermissionChecker permissionChecker, long templateId,
-			String actionId)
-		throws PortalException, SystemException {
+		PermissionChecker permissionChecker, DDMTemplate template,
+		String portletId, String actionId) {
 
-		return contains(permissionChecker, templateId, null, actionId);
+		return contains(permissionChecker, template, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long templateId,
+		PermissionChecker permissionChecker, long groupId, DDMTemplate template,
+		String portletId, String actionId) {
+
+		if (Validator.isNotNull(portletId)) {
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, groupId, DDMTemplate.class.getName(),
+				template.getTemplateId(), portletId, actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
+		}
+
+		return contains(permissionChecker, template, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, long templateId,
 			String portletId, String actionId)
 		throws PortalException, SystemException {
 
 		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 			templateId);
 
-		return contains(permissionChecker, template, portletId, actionId);
+		return contains(
+			permissionChecker, groupId, template, portletId, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long templateId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
+			templateId);
+
+		return contains(permissionChecker, template, actionId);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
+	 *             long, String)}
+	 */
+	@Deprecated
+	public static boolean contains(
+			PermissionChecker permissionChecker, long templateId,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
+		return contains(permissionChecker, templateId, actionId);
 	}
 
 }

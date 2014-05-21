@@ -27,7 +27,7 @@
 SocialInteractionsConfiguration socialInteractionsConfiguration = SocialInteractionsConfigurationUtil.getSocialInteractionsConfiguration(company.getCompanyId(), request);
 %>
 
-<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" label="enable-social-interactions" name="settings--socialInteractionsEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" />
+<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" label="enabled-social-interactions" name="settings--socialInteractionsEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" />
 
 <div class="social-interactions-settings" id="<portlet:namespace />socialInteractionsSettings">
 	<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label="all-users-can-interact-with-each-other" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= true %>" />

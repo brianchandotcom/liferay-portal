@@ -75,15 +75,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		}
 	}
 
-	protected void validate(
-			long classNameId, final long[] categoryIds,
-			AssetVocabulary vocabulary)
-		throws PortalException, SystemException {
-
-		if (!vocabulary.isAssociatedToAssetRendererFactory(classNameId)) {
-			return;
-		}
-
+	protected boolean isAssetCategorizable(long classNameId) {
 		String className = PortalUtil.getClassName(classNameId);
 
 		AssetRendererFactory assetRendererFactory =
@@ -93,6 +85,22 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		if ((assetRendererFactory == null) ||
 			!assetRendererFactory.isCategorizable()) {
 
+			return false;
+		}
+
+		return true;
+	}
+
+	protected void validate(
+			long classNameId, final long[] categoryIds,
+			AssetVocabulary vocabulary)
+		throws PortalException, SystemException {
+
+		if (!vocabulary.isAssociatedToAssetRendererFactory(classNameId)) {
+			return;
+		}
+
+		if (!isAssetCategorizable(classNameId)) {
 			return;
 		}
 

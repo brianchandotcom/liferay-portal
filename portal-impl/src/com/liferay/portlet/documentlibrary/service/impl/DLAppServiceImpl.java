@@ -2245,6 +2245,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			FileEntry fileEntry = fromRepository.moveFileEntry(
 				fileEntryId, newFolderId, serviceContext);
 
+			dlAppHelperLocalService.moveFileEntry(fileEntry);
+
 			return fileEntry;
 		}
 

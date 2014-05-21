@@ -403,6 +403,9 @@ public class Table {
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(rs.getInt(name));
 		}
+		else if (t == Types.LONGVARCHAR) {
+			value = GetterUtil.getString(rs.getString(name));
+		}
 		else if (t == Types.NUMERIC) {
 			value = GetterUtil.getLong(rs.getLong(name));
 		}
@@ -419,6 +422,9 @@ public class Table {
 			if (value == null) {
 				value = StringPool.NULL;
 			}
+		}
+		else if (t == Types.TINYINT) {
+			value = GetterUtil.getShort(rs.getShort(name));
 		}
 		else if (t == Types.VARCHAR) {
 			value = GetterUtil.getString(rs.getString(name));
@@ -555,7 +561,9 @@ public class Table {
 		else if (t == Types.BOOLEAN) {
 			ps.setBoolean(paramIndex, GetterUtil.getBoolean(value));
 		}
-		else if ((t == Types.CLOB) || (t == Types.VARCHAR)) {
+		else if ((t == Types.CLOB) || (t == Types.VARCHAR) ||
+				 (t == Types.LONGVARCHAR)) {
+
 			value = StringUtil.replace(
 				value, _SAFE_TABLE_CHARS[1], _SAFE_TABLE_CHARS[0]);
 
@@ -583,6 +591,9 @@ public class Table {
 				ps.setTimestamp(
 					paramIndex, new Timestamp(df.parse(value).getTime()));
 			}
+		}
+		else if (t == Types.TINYINT) {
+			ps.setShort(paramIndex, GetterUtil.getShort(value));
 		}
 		else {
 			throw new UpgradeException(

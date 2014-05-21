@@ -895,12 +895,8 @@ public class PortletImporter {
 
 		portletPreferences.setPreferences(xml);
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
-			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
-
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			ownerId, ownerType, LayoutConstants.DEFAULT_PLID, serviceName,
-			jxPortletPreferences);
+		PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+			portletPreferences);
 	}
 
 	protected void readAssetLinks(PortletDataContext portletDataContext)

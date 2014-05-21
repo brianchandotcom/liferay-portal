@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -82,11 +80,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			AssetVocabulary vocabulary)
 		throws PortalException, SystemException {
 
-		UnicodeProperties settingsProperties =
-			vocabulary.getSettingsProperties();
-
-		long[] selectedClassNameIds = StringUtil.split(
-			settingsProperties.getProperty("selectedClassNameIds"), 0L);
+		long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
 
 		if (selectedClassNameIds.length == 0) {
 			return;
@@ -111,8 +105,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			return;
 		}
 
-		long[] requiredClassNameIds = StringUtil.split(
-			settingsProperties.getProperty("requiredClassNameIds"), 0L);
+		long[] requiredClassNameIds = vocabulary.getRequiredClassNameIds();
 
 		List<AssetCategory> categories =
 			AssetCategoryLocalServiceUtil.getVocabularyCategories(

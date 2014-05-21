@@ -42,6 +42,22 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
+	public long[] getRequiredClassNameIds() {
+		UnicodeProperties settingsProperties = getSettingsProperties();
+
+		return StringUtil.split(
+			settingsProperties.getProperty("requiredClassNameIds"), 0L);
+	}
+
+	@Override
+	public long[] getSelectedClassNameIds() {
+		UnicodeProperties settingsProperties = getSettingsProperties();
+
+		return StringUtil.split(
+			settingsProperties.getProperty("selectedClassNameIds"), 0L);
+	}
+
+	@Override
 	public String getSettings() {
 		if (_settingsProperties == null) {
 			return super.getSettings();
@@ -96,14 +112,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
-
-		long[] requiredClassNameIds = StringUtil.split(
-			_settingsProperties.getProperty("requiredClassNameIds"), 0L);
-
-		return ArrayUtil.contains(requiredClassNameIds, classNameId);
+		return ArrayUtil.contains(getRequiredClassNameIds(), classNameId);
 	}
 
 	@Override

@@ -121,7 +121,7 @@
 	organizationParams.put("groupOrganization", new Long(curGroup.getGroupId()));
 	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
 
-	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchTerms.getKeywords(), null, null, null, organizationParams);
+	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
 	%>
 
 	<c:if test="<%= organizationsCount > 0 %>">

@@ -20,26 +20,17 @@ $editLayoutPanelWidth: 460px;
 			&.open {
 				display: block;
 
-				.navbar-inner {
-					padding: 0;
+				li a {
+					font-size: 16px;
+					font-weight: 300;
+					line-height: 27px;
+					margin: 0;
+					max-width: none;
+					padding: 9px 15px;
 
-					.navbar-collapse {
-						height: auto;
-						overflow: visible;
-
-						li a {
-							font-size: 16px;
-							font-weight: 300;
-							line-height: 27px;
-							margin: 0;
-							max-width: none;
-							padding: 9px 15px;
-
-							b {
-								position: absolute;
-								right: 5px;
-							}
-						}
+					b {
+						position: absolute;
+						right: 5px;
 					}
 				}
 			}
@@ -59,23 +50,8 @@ $editLayoutPanelWidth: 460px;
 		top: 0;
 		z-index: 400;
 
-		@include respond-to(phone, tablet) {
-			#_145_navSiteNavigationNavbarBtn {
-				display: inline-block;
-				padding: 12px;
-
-				> i {
-					margin-top: 2px;
-				}
-			}
-		}
-
 		&.navbar-static-top {
 			position: relative;
-
-			.collapse {
-				position: static;
-			}
 		}
 
 		.btn-link {
@@ -609,20 +585,6 @@ $editLayoutPanelWidth: 460px;
 						left: 0;
 						margin-left: 0;
 						width: 100%;
-					}
-				}
-			}
-
-			&.navbar-static-top {
-				.collapse {
-					position: relative;
-
-					@include respond-to(phone, tablet) {
-						position: static;
-					}
-
-					.nav-account-controls {
-						position: fixed;
 					}
 				}
 			}
@@ -1369,6 +1331,42 @@ $editLayoutPanelWidth: 460px;
 	@include respond-to(phone) {
 		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
 			margin-left: -5px;
+		}
+	}
+
+	/* -------- Bootstrap3 Navbar Overrides -------- */
+
+	.dropdown-menu {
+		float: none;
+		position: static;
+
+		@include respond-to(desktop) {
+			float: left;
+			position: absolute;
+		}
+
+		> li > a {
+			padding: 10px 15px;
+
+			@include respond-to(desktop) {
+				padding: 3px 20px;
+			}
+		}
+	}
+
+	.navbar-nav {
+		float: none;
+
+		@include respond-to(desktop) {
+			float: left;
+		}
+
+		> li {
+			float: none;
+
+			@include respond-to(desktop) {
+				float: left;
+			}
 		}
 	}
 }

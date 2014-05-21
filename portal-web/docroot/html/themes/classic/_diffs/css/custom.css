@@ -17,6 +17,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 .aui {
 	background-color: transparent;
 
+	.navbar-nav {
+		float: none;
+
+		@include respond-to(desktop) {
+			float: left;
+		}
+
+		> li {
+			float: none;
+
+			@include respond-to(desktop) {
+				float: left;
+			}
+		}
+	}
+
 	.separator {
 		border-color: #BFBFBF transparent #FFF;
 		border-style: solid;
@@ -301,20 +317,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Main navigation ---------- */
 
 	#navigation {
+		background-color: #555;
+		border-width: 0;
+		min-height: 0;
+
 		.add-page-editor {
 			input {
 				margin-top: 0;
-			}
-		}
-
-		.navbar-brand {
-			margin-left: 0;
-			padding: 0;
-			padding-right: 20px;
-
-			img {
-				height: 40px;
-				width: auto;
 			}
 		}
 
@@ -337,7 +346,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				&.open {
+				&.hover, &.open {
 					> a {
 						background-color: #A3A3A3;
 						color: #FFF;
@@ -355,13 +364,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			> li > a {
 				@include respond-to(desktop) {
-					padding: 4px 15px 5px;
-				}
-
-				@include respond-to(phone, tablet) {
-					&:focus, &:hover {
-						background-color: #2FA4F5;
-					}
+					padding: 8px 15px;
 				}
 			}
 
@@ -394,11 +397,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.delete-tab {
 			background: #555;
 			border: 2px solid #FFF;
+
+			@include box-sizing(content-box);
+
 			color: #FFF;
-			font-size: 16px;
-			padding: 4px;
-			right: -10px;
-			top: 0;
+			font-size: 14px;
+			height: auto;
+			line-height: normal;
+			padding: 0 6px 3px;
+			right: -9px;
+			top: -1px;
 			z-index: 300;
 		}
 
@@ -420,6 +428,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.drag-handle {
 			background-color: rgba(255, 255, 255, 0.75);
+
+			@include box-sizing(content-box);
+
 			color: #009AE5;
 		}
 	}
@@ -614,6 +625,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Extras ---------- */
 
 	#navigation {
+		&.navbar {
+			@include border-radius(0);
+		}
+
 		.nav {
 			li {
 				&.open {
@@ -634,10 +649,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				@include box-shadow(none);
 				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 			}
-		}
-
-		li a {
-			@include text-shadow(none);
 		}
 	}
 

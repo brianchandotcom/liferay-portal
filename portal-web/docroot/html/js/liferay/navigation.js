@@ -541,7 +541,7 @@ AUI.add(
 					}
 				);
 
-				var toolbarBoundingBox = editorContainer.one('.input-append');
+				var toolbarBoundingBox = editorContainer.one('.input-group');
 
 				var toolbar = new A.Toolbar(
 					{

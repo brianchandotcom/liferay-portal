@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -45,6 +46,60 @@ import javax.servlet.http.HttpSession;
  * @author José Manuel Navarro
  */
 public class BreadcrumbUtil {
+
+	public static final long ENTRY_TYPE_ANY = 0xFFFFFFFF;
+
+	public static final long ENTRY_TYPE_CURRENT_GROUP = 1 << 1;
+
+	public static final long ENTRY_TYPE_GUEST_GROUP = 1 << 2;
+
+	public static final long ENTRY_TYPE_LAYOUT = 1 << 3;
+
+	public static final long ENTRY_TYPE_PARENT_GROUP = 1 << 4;
+
+	public static final long ENTRY_TYPE_PORTLET = 1 << 5;
+
+	public static List<BreadcrumbEntry> getBreadcrumbEntries(
+			HttpServletRequest request, long typeMask)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<BreadcrumbEntry> entries = new ArrayList<BreadcrumbEntry>();
+
+		BreadcrumbEntry entry;
+
+		if ((typeMask & ENTRY_TYPE_GUEST_GROUP) != 0) {
+			entry = getGuestGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & ENTRY_TYPE_PARENT_GROUP) != 0) {
+			entries.addAll(getParentGroupBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & ENTRY_TYPE_CURRENT_GROUP) != 0) {
+			entry = getScopeGroupBreadcrumbEntry(themeDisplay);
+
+			if (entry != null) {
+				entries.add(entry);
+			}
+		}
+
+		if ((typeMask & ENTRY_TYPE_LAYOUT) != 0) {
+			entries.addAll(getLayoutBreadcrumbEntries(themeDisplay));
+		}
+
+		if ((typeMask & ENTRY_TYPE_PORTLET) != 0) {
+			entries.addAll(getPortletBreadcrumbEntries(request));
+		}
+
+		return entries;
+	}
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(
 			ThemeDisplay themeDisplay)

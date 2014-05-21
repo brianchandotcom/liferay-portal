@@ -80,16 +80,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			AssetVocabulary vocabulary)
 		throws PortalException, SystemException {
 
-		long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
-
-		if (selectedClassNameIds.length == 0) {
-			return;
-		}
-
-		if ((selectedClassNameIds[0] !=
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
-			!ArrayUtil.contains(selectedClassNameIds, classNameId)) {
-
+		if (!vocabulary.isAssociatedToAssetRendererFactory(classNameId)) {
 			return;
 		}
 

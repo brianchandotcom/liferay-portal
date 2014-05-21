@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
@@ -98,6 +99,24 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		return value;
+	}
+
+	@Override
+	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
+		long[] selectedClassNameIds = getSelectedClassNameIds();
+
+		if (selectedClassNameIds.length == 0) {
+			return false;
+		}
+
+		if ((selectedClassNameIds[0] !=
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
+			!ArrayUtil.contains(selectedClassNameIds, classNameId)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

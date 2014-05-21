@@ -1451,6 +1451,24 @@
 		</if>
 	</command>
 
+	<command name="viewLoginPG">
+		<if>
+			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+			<then>
+				<execute action="PGLogin#assertElementPresent" locator-key1="SCREEN_NAME_FIELD" />
+			</then>
+			<else>
+				<execute action="PGLogin#assertElementPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
+			</else>
+		</if>
+
+		<execute action="PGLogin#assertElementPresent" locator-key1="PASSWORD_FIELD" />
+
+		<execute action="PGLogin#assertElementPresent" locator-key1="REMEMBER_ME_CHECKBOX" />
+
+		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+	</command>
+
 	<command name="viewUserInfomationOrganizationSitesCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 

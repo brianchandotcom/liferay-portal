@@ -244,6 +244,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${viewableBy}" arg2="true" />
+			<then>
+				<execute action="PGBlogsAdd#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
+			</then>
+		</if>
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -960,7 +967,20 @@
 	</command>
 
 	<command name="viewDetailsPG">
-		<execute action="PGBlogs#click" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+		<if>
+			<isset var="blogEntryURL" />
+			<then>
+				<var method="selenium#getLocation()" name="currentURL" />
+
+				<execute macro="TestUtils#assertEquals">
+					<var name="actual" value="${currentURL}" />
+					<var name="expected" value="${blogEntryURL}" />
+				</execute>
+			</then>
+			<else>
+				<execute action="PGBlogs#click" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+			</else>
+		</if>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />

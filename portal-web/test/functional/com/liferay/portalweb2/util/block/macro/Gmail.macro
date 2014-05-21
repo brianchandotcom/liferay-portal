@@ -5,6 +5,14 @@
 		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
+	<command name="gotoMail">
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+		<execute action="Gmail#pause" locator1="3000" />
+	</command>
+
 	<command name="login">
 		<execute action="Home#open" locator1="http://www.gmail.com" />
 		<execute action="Home#pause" locator1="5000" />
@@ -32,6 +40,25 @@
 		</if>
 	</command>
 
+	<command name="openMessageLink">
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+
+		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
+
+		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="${pageNameURL}" />
+
+		<if>
+			<isset var="contentTitle" />
+			<then>
+				<execute action="Home#selectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+			</then>
+			<else>
+				<execute action="Home#selectWindow" locator1="title=${pageName} - Liferay" />
+			</else>
+		</if>
+	</command>
+
 	<command name="tearDown">
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -51,11 +78,13 @@
 	</command>
 
 	<command name="viewMail">
-		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+		<execute macro="Gmail#gotoMail">
+			<var name="emailFromUserName" value="${emailFromUserName}" />
+			<var name="gmailAssetType" value="${gmailAssetType}" />
+			<var name="gmailMessageTitle" value="${gmailMessageTitle}" />
+		</execute>
 
-		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
-		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
-		<execute action="Gmail#pause" locator1="3000" />
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
 		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />

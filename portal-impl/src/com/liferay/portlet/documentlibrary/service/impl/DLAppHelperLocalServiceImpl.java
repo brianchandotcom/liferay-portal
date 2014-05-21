@@ -826,7 +826,9 @@ public class DLAppHelperLocalServiceImpl
 	public void registerDLSyncEventCallback(String event, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		if (isStagingGroup(fileEntry.getGroupId())) {
+		if (isStagingGroup(fileEntry.getGroupId()) ||
+			!(fileEntry instanceof LiferayFileEntry)) {
+
 			return;
 		}
 
@@ -848,7 +850,9 @@ public class DLAppHelperLocalServiceImpl
 	public void registerDLSyncEventCallback(String event, Folder folder)
 		throws SystemException {
 
-		if (isStagingGroup(folder.getGroupId())) {
+		if (isStagingGroup(folder.getGroupId()) ||
+			!(folder instanceof LiferayFolder)) {
+
 			return;
 		}
 

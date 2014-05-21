@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>breadcrumb-arrows-ftl</template-key>
+		<name>portlet-display-template-name-arrows</name>
+		<description>portlet-display-template-description-arrows</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/breadcrumb/dependencies/portlet_display_template_arrows.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

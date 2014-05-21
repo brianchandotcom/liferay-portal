@@ -260,18 +260,9 @@ public class AssetUtil {
 
 				@Override
 				public boolean filter(AssetVocabulary vocabulary) {
-					long[] selectedClassNameIds =
-						vocabulary.getSelectedClassNameIds();
-					
-					if ((selectedClassNameIds.length == 0) ||
-						(selectedClassNameIds[0] == 0) ||
-						ArrayUtil.contains(selectedClassNameIds, classNameId)) {
-
-						return true;
-					}
-
-					return false;
+					return vocabulary.isAssociatedToAsset(classNameId);
 				}
+
 			};
 
 		return ListUtil.filter(vocabularies, vocabulariesFilter);

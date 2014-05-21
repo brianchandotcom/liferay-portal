@@ -31,6 +31,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPermission;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
+import com.liferay.portlet.wiki.util.WikiConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,11 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				},
 				WikiPage.class.getName()));
 		setImportControls(getExportControls());
+	}
+
+	@Override
+	public String getServiceName() {
+		return WikiConstants.SERVICE_NAME;
 	}
 
 	@Override

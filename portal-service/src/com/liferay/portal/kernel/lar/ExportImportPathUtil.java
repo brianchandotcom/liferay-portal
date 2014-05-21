@@ -16,11 +16,13 @@ package com.liferay.portal.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.util.PortletKeys;
 
 import java.io.Serializable;
 
@@ -55,6 +57,11 @@ public class ExportImportPathUtil {
 	 * The portlet prefix used in generating paths.
 	 */
 	public static final String PATH_PREFIX_PORTLET = "portlet";
+
+	/**
+	 * The service prefix used in generating paths.
+	 */
+	public static final String PATH_PREFIX_SERVICE = "service";
 
 	/**
 	 * Returns the expando-specific path for the entity path. The entity path
@@ -308,6 +315,24 @@ public class ExportImportPathUtil {
 		return sb.toString();
 	}
 
+	public static String getPortletPreferencesPath(
+		PortletDataContext portletDataContext, String portletId, long ownerId,
+		int ownerType, long plid) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(getPortletPath(portletDataContext, portletId));
+		sb.append("/preferences/");
+		sb.append(getOwnerTypeSubPath(ownerType));
+		sb.append(ownerId);
+		sb.append(CharPool.FORWARD_SLASH);
+		sb.append(plid);
+		sb.append(CharPool.FORWARD_SLASH);
+		sb.append("portlet-preferences.xml");
+
+		return sb.toString();
+	}
+
 	/**
 	 * Returns a root path, or fragment, of the model path based on the scope
 	 * group ID from the portlet data context.
@@ -333,6 +358,25 @@ public class ExportImportPathUtil {
 	public static String getRootPath(PortletDataContext portletDataContext) {
 		return getRootPath(
 			PATH_PREFIX_GROUP, portletDataContext.getScopeGroupId());
+	}
+
+	public static String getServicePortletPreferencesPath(
+		PortletDataContext portletDataContext, String serviceName, long ownerId,
+		int ownerType) {
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(getRootPath(portletDataContext));
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(PATH_PREFIX_SERVICE);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(serviceName);
+		sb.append(getOwnerTypeSubPath(ownerType));
+		sb.append(ownerId);
+		sb.append(CharPool.FORWARD_SLASH);
+		sb.append("portlet-preferences.xml");
+
+		return sb.toString();
 	}
 
 	/**
@@ -423,6 +467,27 @@ public class ExportImportPathUtil {
 		}
 
 		return sb.toString();
+	}
+
+	protected static String getOwnerTypeSubPath(int ownerType) {
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+			return "company/";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
+			return "group/";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+			return "layout/";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+			return "user/";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+			return "archived/";
+		}
+		else {
+			return StringPool.BLANK;
+		}
 	}
 
 	protected static String getRootPath(

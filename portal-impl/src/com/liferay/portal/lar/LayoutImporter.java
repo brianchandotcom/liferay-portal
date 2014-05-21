@@ -688,6 +688,28 @@ public class LayoutImporter {
 			}
 		}
 
+		// Import services
+
+		if (_log.isDebugEnabled() && !portletElements.isEmpty()) {
+			_log.debug("Importing services");
+		}
+
+		Element servicesElement = rootElement.element("services");
+
+		List<Element> serviceElements = servicesElement.elements("service");
+
+		for (Element serviceElement : serviceElements) {
+			String path = serviceElement.attributeValue("path");
+
+			Document serviceDocument = SAXReaderUtil.read(
+				portletDataContext.getZipEntryAsString(path));
+
+			serviceElement = serviceDocument.getRootElement();
+
+			_portletImporter.importServicePortletPreferences(
+				portletDataContext, serviceElement);
+		}
+
 		// Asset links
 
 		_portletImporter.readAssetLinks(portletDataContext);

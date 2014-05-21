@@ -434,6 +434,34 @@
 		</execute>
 	</command>
 
+	<command name="RemoveCurrentDisplayStyleViews" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute macro="DMPortlet#configureCurrentDisplayStyleViewsPG">
+			<var name="currentDisplayStyleViews" value="" />
+		</execute>
+	</command>
+
 	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

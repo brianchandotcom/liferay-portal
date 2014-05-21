@@ -215,6 +215,7 @@
 			<entry key="sample.sql.output.dir" value="${tstamp.value}" />
 			<entry key="sample.sql.output.merge" value="true" />
 			<entry key="sample.sql.script" value="com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl" />
+			<entry key="sample.sql.virtual.host.name" value="localhost" />
 		</propertyfile>
 
 		<java

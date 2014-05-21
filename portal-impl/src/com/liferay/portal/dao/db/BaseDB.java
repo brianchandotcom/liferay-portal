@@ -973,9 +973,7 @@ public abstract class BaseDB implements DB {
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (!line.startsWith("insert into Image (") &&
-				!line.startsWith("insert into JournalArticle (") &&
-				!line.startsWith("insert into JournalStructure (") &&
-				!line.startsWith("insert into JournalTemplate (")) {
+				!line.startsWith("insert into JournalArticle (")) {
 
 				sb.append(line);
 				sb.append("\n");

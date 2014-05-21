@@ -68,8 +68,6 @@ public class OracleDB extends BaseDB {
 
 		StringBundler imageSB = new StringBundler();
 		StringBundler journalArticleSB = new StringBundler();
-		StringBundler journalStructureSB = new StringBundler();
-		StringBundler journalTemplateSB = new StringBundler();
 
 		String line = null;
 
@@ -79,12 +77,6 @@ public class OracleDB extends BaseDB {
 			}
 			else if (line.startsWith("insert into JournalArticle (")) {
 				_convertToOracleCSV(line, journalArticleSB);
-			}
-			else if (line.startsWith("insert into JournalStructure (")) {
-				_convertToOracleCSV(line, journalStructureSB);
-			}
-			else if (line.startsWith("insert into JournalTemplate (")) {
-				_convertToOracleCSV(line, journalTemplateSB);
 			}
 		}
 
@@ -101,20 +93,6 @@ public class OracleDB extends BaseDB {
 				sqlDir + "/" + fileName + "/" + fileName +
 					"-oracle-journalarticle.csv",
 				journalArticleSB.toString());
-		}
-
-		if (journalStructureSB.length() > 0) {
-			FileUtil.write(
-				sqlDir + "/" + fileName + "/" + fileName +
-					"-oracle-journalstructure.csv",
-				journalStructureSB.toString());
-		}
-
-		if (journalTemplateSB.length() > 0) {
-			FileUtil.write(
-				sqlDir + "/" + fileName + "/" + fileName +
-					"-oracle-journaltemplate.csv",
-				journalTemplateSB.toString());
 		}
 
 		oracle = _postBuildSQL(oracle);

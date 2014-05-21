@@ -561,22 +561,6 @@
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
 	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalTemplateService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalTemplateService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalTemplateService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalTemplateService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalTemplateService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalTemplateService" />
-	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBBanService" />

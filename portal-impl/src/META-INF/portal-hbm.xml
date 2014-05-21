@@ -124,8 +124,6 @@
 	<import class="com.liferay.portlet.journal.model.JournalContentSearch" />
 	<import class="com.liferay.portlet.journal.model.JournalFeed" />
 	<import class="com.liferay.portlet.journal.model.JournalFolder" />
-	<import class="com.liferay.portlet.journal.model.JournalStructure" />
-	<import class="com.liferay.portlet.journal.model.JournalTemplate" />
 	<import class="com.liferay.portlet.messageboards.model.MBBan" />
 	<import class="com.liferay.portlet.messageboards.model.MBCategory" />
 	<import class="com.liferay.portlet.messageboards.model.MBDiscussion" />

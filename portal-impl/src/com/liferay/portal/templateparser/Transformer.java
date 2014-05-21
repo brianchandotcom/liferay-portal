@@ -175,7 +175,6 @@ public class Transformer {
 
 			String templatesPath = getTemplatesPath(companyId, scopeGroupId);
 
-			template.put("journalTemplatesPath", templatesPath);
 			template.put(
 				"permissionChecker",
 				PermissionThreadLocal.getPermissionChecker());
@@ -189,6 +188,7 @@ public class Transformer {
 			// Deprecated variables
 
 			template.put("groupId", scopeGroupId);
+			template.put("journalTemplatesPath", templatesPath);
 
 			mergeTemplate(template, unsyncStringWriter);
 		}
@@ -346,8 +346,6 @@ public class Transformer {
 				String templatesPath = getTemplatesPath(
 					companyId, articleGroupId);
 
-				template.put("journalTemplatesPath", templatesPath);
-
 				Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 				template.put("locale", locale);
@@ -366,6 +364,7 @@ public class Transformer {
 				// Deprecated variables
 
 				template.put("groupId", articleGroupId);
+				template.put("journalTemplatesPath", templatesPath);
 
 				mergeTemplate(template, unsyncStringWriter);
 			}

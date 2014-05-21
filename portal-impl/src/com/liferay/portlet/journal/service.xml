@@ -526,26 +526,6 @@
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
-	<entity name="JournalStructure" local-service="true" remote-service="true" deprecated="true">
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="ClassName" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-	</entity>
-	<entity name="JournalTemplate" local-service="true" remote-service="true" deprecated="true">
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="ClassName" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalStructure" />
-	</entity>
 	<exceptions>
 		<exception>ArticleContent</exception>
 		<exception>ArticleDisplayDate</exception>

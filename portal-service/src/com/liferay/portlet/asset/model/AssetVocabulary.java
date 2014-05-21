@@ -37,7 +37,20 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public long[] getRequiredClassNameIds();
+
+	public long[] getSelectedClassNameIds();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
+
+	public boolean hasMoreThanOneCategorySelected(long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public boolean isAssociatedToAssetRendererFactory(long classNameId);
+
+	public boolean isMissingRequiredCategory(long classNameId,
+		long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isMultiValued();
 

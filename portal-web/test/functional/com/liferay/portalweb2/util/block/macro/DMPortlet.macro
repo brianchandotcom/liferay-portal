@@ -1,4 +1,47 @@
 <definition>
+	<command name="configureCurrentDisplayStyleViewsPG">
+		<if>
+			<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_DROPDOWN" value1="Display Settings" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="currentDisplayStyleViews" />
+			<then>
+				<while>
+					<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
+					<then>
+						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
+						<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+					</then>
+				</while>
+
+				<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
+					<var name="currentDisplayStyleView" value="${currentDisplayStyleView}" />
+
+					<execute action="PGDocumentsandmediaConfiguration#select" locator-key1="DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
+					<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+					<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
+				</for>
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<equals arg1="${currentDisplayStyleViews}" arg2="" />
+			<then>
+				<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ERROR_MESSAGE_2" value1="Display style views cannot be empty." />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewDefaultPG">
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Documents and Media" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />

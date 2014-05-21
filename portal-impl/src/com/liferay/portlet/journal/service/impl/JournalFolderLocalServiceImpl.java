@@ -971,8 +971,9 @@ public class JournalFolderLocalServiceImpl
 
 		// Merge folders
 
-		if (restrictionType ==
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+		if (restrictionType !=
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
 
 			ddmStructureIds = new long[0];
 		}

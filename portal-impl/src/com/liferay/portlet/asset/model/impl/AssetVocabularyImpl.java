@@ -104,6 +104,28 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
+	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds)
+		throws SystemException {
+
+		PredicateFilter<AssetCategory> existingCategoryFilter =
+			new PredicateFilter<AssetCategory>() {
+
+			@Override
+			public boolean filter(AssetCategory assetCategory) {
+				return ArrayUtil.contains(
+					categoryIds, assetCategory.getCategoryId());
+			}
+
+		};
+
+		if (ListUtil.count(getCategories(), existingCategoryFilter) > 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
 		long[] selectedClassNameIds = getSelectedClassNameIds();
 

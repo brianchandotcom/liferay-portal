@@ -103,11 +103,10 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 				vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
 		}
 
-		if (!vocabulary.isMultiValued()) {
-			if (ListUtil.count(categories, existingCategoryFilter) > 1) {
+		if (!vocabulary.isMultiValued() &&
+			vocabulary.hasMoreThanOneCategorySelected(categoryIds)) {
 				throw new AssetCategoryException(
 					vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
-			}
 		}
 	}
 

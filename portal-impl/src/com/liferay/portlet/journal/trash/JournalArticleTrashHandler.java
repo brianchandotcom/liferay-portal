@@ -37,6 +37,7 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.List;
@@ -325,6 +326,10 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			PortalUtil.getSiteGroupId(article.getGroupId()),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			article.getStructureId(), true);
+
+		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
+			containerModelId = article.getFolderId();
+		}
 
 		int restrictionType = JournalUtil.getRestrictionType(containerModelId);
 

@@ -3,6 +3,10 @@
 		<case locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
+
+		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
 	</command>
 
 	<command name="assertTextEquals">
@@ -21,5 +25,11 @@
 		<case locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_GREETING">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+	</command>
+
+	<command name="close">
+		<default>
+			<execute function="Close#closeWindow" />
+		</default>
 	</command>
 </definition>

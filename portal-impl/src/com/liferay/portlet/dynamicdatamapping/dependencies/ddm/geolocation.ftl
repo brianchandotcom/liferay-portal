@@ -5,6 +5,8 @@
 
 <#assign coordinatesContainerCssClass = "hide">
 
+<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
+
 <#if (fieldRawValue != "")>
 	<#assign geolocationJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 

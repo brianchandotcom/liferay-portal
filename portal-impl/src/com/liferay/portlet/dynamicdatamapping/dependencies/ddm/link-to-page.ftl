@@ -19,13 +19,9 @@
 		<#list layouts as curLayout>
 			<#assign curLayoutJSON = escapeAttribute("{ \"layoutId\": ${curLayout.getLayoutId()}, \"groupId\": ${groupId}, \"privateLayout\": ${privateLayout?string} }")>
 
-			<#assign selected = false>
+			<#assign selected = (selectedPlid == curLayout.getPlid())>
 
-			<#if selectedLayout??>
-				<#assign selected = (selectedPlid == curLayout.getPlid())>
-			</#if>
-
-			<@aui.option selected=selected value=curLayoutJSON>
+			<@aui.option selected=selected useModelValue=false value=curLayoutJSON>
 				<#list 0..level as i>
 					&ndash;&nbsp;
 				</#list>
@@ -50,8 +46,10 @@
 
 </#macro>
 
-<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+<@aui["field-wrapper"] data=data>
 	<#assign selectedPlid = 0>
+
+	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
 
 	<#if (fieldRawValue?? && fieldRawValue != "")>
 		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
@@ -69,7 +67,7 @@
 		</#if>
 	</#if>
 
-	<select name="${namespacedFieldName}">
+	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required>
 		<@getLayoutsOptions
 			groupId = scopeGroupId
 			parentLayoutId = 0
@@ -83,7 +81,7 @@
 			privateLayout = true
 			selectedPlid = selectedPlid
 		/>
-	</select>
+	</@aui.select>
 
 	${fieldStructure.children}
 </@>

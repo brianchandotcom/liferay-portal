@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="original.lib.name" value="org.eclipse.equinox.console" />
+	<property name="original.lib.url" value="https://repository.liferay.com/nexus/content/groups/public/org/eclipse/equinox/console/" />
+	<property name="original.lib.version" value="1.0.0.v20120522-1841" />
+	<property name="osgi.runtime.dependencies" value="org.apache.felix.gogo*.jar" />
+	<property name="plugin.name" value="org.eclipse.equinox.console" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+
+	<target name="compile">
+		<mkdir dir="classes"/>
+
+		<unjar
+			dest="classes"
+			src="lib/${original.lib.name}.jar"
+		/>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+
+</project>

@@ -122,11 +122,9 @@ public class AssetCategoryIndexer extends BaseIndexer {
 				DocumentImpl.getLocalizedName(
 					searchContext.getLocale(), Field.ASSET_CATEGORY_TITLE),
 				title, true);
-			localizedQuery.addTerm(Field.TITLE, title, true);
-			localizedQuery.addTerm(
-				DocumentImpl.getLocalizedName(
-					searchContext.getLocale(), Field.TITLE),
-				title, true);
+
+			addSearchLocalizedTerm(
+				localizedQuery, searchContext, Field.TITLE, true);
 
 			searchQuery.add(localizedQuery, BooleanClauseOccur.SHOULD);
 		}

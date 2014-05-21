@@ -262,11 +262,8 @@ public class AssetUtil {
 
 				@Override
 				public boolean filter(AssetVocabulary vocabulary) {
-					UnicodeProperties settingsProperties =
-						vocabulary.getSettingsProperties();
-		
-					long[] selectedClassNameIds = StringUtil.split(
-						settingsProperties.getProperty("selectedClassNameIds"), 0L);
+					long[] selectedClassNameIds =
+						vocabulary.getSelectedClassNameIds();
 					
 					if ((selectedClassNameIds.length == 0) ||
 						(selectedClassNameIds[0] == 0) ||

@@ -132,10 +132,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		&.navbar-static-top .collapse .nav-account-controls {
-			position: relative;
-		}
-
 		.container > .nav.nav-add-controls ul.dropdown-menu > li > a {
 			&:focus, &:hover {
 				color: #FFF;
@@ -804,6 +800,42 @@ $dockbarOpenGradientStart: #0EA6F9;
 	&.ie8 {
 		.dockbar-split .dockbar .info-button a {
 			margin-top: -2px;
+		}
+	}
+
+	/* -------- Bootstrap3 Navbar Overrides -------- */
+
+	.dropdown-menu {
+		float: none;
+		position: static;
+
+		@include respond-to(desktop) {
+			float: left;
+			position: absolute;
+		}
+
+		> li > a {
+			padding: 10px 15px;
+
+			@include respond-to(desktop) {
+				padding: 3px 20px;
+			}
+		}
+	}
+
+	.navbar-nav {
+		float: none;
+
+		@include respond-to(desktop) {
+			float: left;
+		}
+
+		> li {
+			float: none;
+
+			@include respond-to(desktop) {
+				float: left;
+			}
 		}
 	}
 }

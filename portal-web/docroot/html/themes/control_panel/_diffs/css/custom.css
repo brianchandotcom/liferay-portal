@@ -1073,6 +1073,29 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Media queries ---------- */
 
 	@include respond-to(phone, tablet) {
+		&.ie9 {
+			.dockbar {
+				.container {
+					font-size: 0;
+					text-align: right;
+
+					.navbar-brand {
+						max-width: 45%;
+						width: auto;
+					}
+
+					.nav-account-controls, .nav-navigation {
+						display: inline-block;
+						float: none;
+
+						.dropdown {
+							text-align: left;
+						}
+					}
+				}
+			}
+		}
+
 		.portlet-title {
 			display: inline-block;
 			width: 85%;

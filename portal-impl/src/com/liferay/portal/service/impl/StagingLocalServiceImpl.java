@@ -630,12 +630,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			GroupServiceHttp.disableStaging(httpPrincipal, remoteGroupId);
 		}
 		catch (NoSuchGroupException nsge) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.NO_GROUP);
 
-			ree.setGroupId(remoteGroupId);
+			// Disable staging even if no remote group exists
 
-			throw ree;
 		}
 		catch (PrincipalException pe) {
 			RemoteExportException ree = new RemoteExportException(

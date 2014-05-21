@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>PGDocumentsandmediaConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortletConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DROPDOWN</td>
+	<td>//div[@id='documentLibraryItemsListingPanel']/div[contains(@class,'toggler-header-expanded')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DROPDOWN_COLLAPSED</td>
+	<td>//div[@id='documentLibraryItemsListingPanel']/div[contains(@class,'toggler-header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_VIEWS_CURRENT_SELECT</td>
+	<td>//select[contains(@id,'_currentDisplayViews')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT</td>
+	<td>//select[contains(@id,'_availableDisplayViews')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_VIEW_CURRENT_PRESENT</td>
+	<td>//select[contains(@id,'_currentDisplayViews')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_VIEW_AVAILABLE_PRESENT</td>
+	<td>//select[contains(@id,'_availableDisplayViews')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -439,6 +439,14 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getLocalRepositoryImplByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryLocalService.getLocalRepositoryImplByGroupId(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.model.Repository getRepository(long groupId,
 		java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException,

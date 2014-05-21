@@ -32,6 +32,7 @@ import com.liferay.portal.service.persistence.LockFinder;
 import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
@@ -463,6 +464,63 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	public void setPortletPreferencesFinder(
 		PortletPreferencesFinder portletPreferencesFinder) {
 		this.portletPreferencesFinder = portletPreferencesFinder;
+	}
+
+	/**
+	 * Returns the repository local service.
+	 *
+	 * @return the repository local service
+	 */
+	public com.liferay.portal.service.RepositoryLocalService getRepositoryLocalService() {
+		return repositoryLocalService;
+	}
+
+	/**
+	 * Sets the repository local service.
+	 *
+	 * @param repositoryLocalService the repository local service
+	 */
+	public void setRepositoryLocalService(
+		com.liferay.portal.service.RepositoryLocalService repositoryLocalService) {
+		this.repositoryLocalService = repositoryLocalService;
+	}
+
+	/**
+	 * Returns the repository remote service.
+	 *
+	 * @return the repository remote service
+	 */
+	public com.liferay.portal.service.RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+	/**
+	 * Sets the repository remote service.
+	 *
+	 * @param repositoryService the repository remote service
+	 */
+	public void setRepositoryService(
+		com.liferay.portal.service.RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
+
+	/**
+	 * Returns the repository persistence.
+	 *
+	 * @return the repository persistence
+	 */
+	public RepositoryPersistence getRepositoryPersistence() {
+		return repositoryPersistence;
+	}
+
+	/**
+	 * Sets the repository persistence.
+	 *
+	 * @param repositoryPersistence the repository persistence
+	 */
+	public void setRepositoryPersistence(
+		RepositoryPersistence repositoryPersistence) {
+		this.repositoryPersistence = repositoryPersistence;
 	}
 
 	/**
@@ -1874,6 +1932,12 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@BeanReference(type = PortletPreferencesFinder.class)
 	protected PortletPreferencesFinder portletPreferencesFinder;
+	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
+	protected com.liferay.portal.service.RepositoryLocalService repositoryLocalService;
+	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
+	protected com.liferay.portal.service.RepositoryService repositoryService;
+	@BeanReference(type = RepositoryPersistence.class)
+	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
 	@BeanReference(type = SubscriptionPersistence.class)

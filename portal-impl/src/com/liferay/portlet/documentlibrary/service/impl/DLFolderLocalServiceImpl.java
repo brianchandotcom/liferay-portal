@@ -277,10 +277,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(dlFolder.getFolderId());
 
-		// App helper
-
-		dlAppHelperLocalService.deleteFolder(new LiferayFolder(dlFolder));
-
 		// Folder
 
 		dlFolderPersistence.remove(dlFolder);
@@ -481,6 +477,19 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		return folderId;
+	}
+
+	@Override
+	public List<Long> getFolderIds(long groupId, long parentFolderId)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(parentFolderId);
+
+		getSubfolderIds(folderIds, groupId, parentFolderId);
+
+		return folderIds;
 	}
 
 	@Override

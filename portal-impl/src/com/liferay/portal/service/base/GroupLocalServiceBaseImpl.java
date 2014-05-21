@@ -54,7 +54,6 @@ import com.liferay.portal.service.persistence.OrganizationPersistence;
 import com.liferay.portal.service.persistence.PortletPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
-import com.liferay.portal.service.persistence.RepositoryPersistence;
 import com.liferay.portal.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.service.persistence.ResourceBlockFinder;
 import com.liferay.portal.service.persistence.ResourceBlockPersistence;
@@ -1640,6 +1639,44 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the d l app local service.
+	 *
+	 * @return the d l app local service
+	 */
+	public com.liferay.portlet.documentlibrary.service.DLAppLocalService getDLAppLocalService() {
+		return dlAppLocalService;
+	}
+
+	/**
+	 * Sets the d l app local service.
+	 *
+	 * @param dlAppLocalService the d l app local service
+	 */
+	public void setDLAppLocalService(
+		com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService) {
+		this.dlAppLocalService = dlAppLocalService;
+	}
+
+	/**
+	 * Returns the d l app remote service.
+	 *
+	 * @return the d l app remote service
+	 */
+	public com.liferay.portlet.documentlibrary.service.DLAppService getDLAppService() {
+		return dlAppService;
+	}
+
+	/**
+	 * Sets the d l app remote service.
+	 *
+	 * @param dlAppService the d l app remote service
+	 */
+	public void setDLAppService(
+		com.liferay.portlet.documentlibrary.service.DLAppService dlAppService) {
+		this.dlAppService = dlAppService;
+	}
+
+	/**
 	 * Returns the expando row local service.
 	 *
 	 * @return the expando row local service
@@ -2794,63 +2831,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the repository local service.
-	 *
-	 * @return the repository local service
-	 */
-	public com.liferay.portal.service.RepositoryLocalService getRepositoryLocalService() {
-		return repositoryLocalService;
-	}
-
-	/**
-	 * Sets the repository local service.
-	 *
-	 * @param repositoryLocalService the repository local service
-	 */
-	public void setRepositoryLocalService(
-		com.liferay.portal.service.RepositoryLocalService repositoryLocalService) {
-		this.repositoryLocalService = repositoryLocalService;
-	}
-
-	/**
-	 * Returns the repository remote service.
-	 *
-	 * @return the repository remote service
-	 */
-	public com.liferay.portal.service.RepositoryService getRepositoryService() {
-		return repositoryService;
-	}
-
-	/**
-	 * Sets the repository remote service.
-	 *
-	 * @param repositoryService the repository remote service
-	 */
-	public void setRepositoryService(
-		com.liferay.portal.service.RepositoryService repositoryService) {
-		this.repositoryService = repositoryService;
-	}
-
-	/**
-	 * Returns the repository persistence.
-	 *
-	 * @return the repository persistence
-	 */
-	public RepositoryPersistence getRepositoryPersistence() {
-		return repositoryPersistence;
-	}
-
-	/**
-	 * Sets the repository persistence.
-	 *
-	 * @param repositoryPersistence the repository persistence
-	 */
-	public void setRepositoryPersistence(
-		RepositoryPersistence repositoryPersistence) {
-		this.repositoryPersistence = repositoryPersistence;
-	}
-
-	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -3811,6 +3791,10 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
 	@BeanReference(type = AssetVocabularyFinder.class)
 	protected AssetVocabularyFinder assetVocabularyFinder;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLAppService dlAppService;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoRowLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)
@@ -3933,12 +3917,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@BeanReference(type = PortletPreferencesFinder.class)
 	protected PortletPreferencesFinder portletPreferencesFinder;
-	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
-	protected com.liferay.portal.service.RepositoryLocalService repositoryLocalService;
-	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
-	protected com.liferay.portal.service.RepositoryService repositoryService;
-	@BeanReference(type = RepositoryPersistence.class)
-	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceActionLocalService.class)

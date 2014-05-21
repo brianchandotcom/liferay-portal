@@ -47,6 +47,7 @@ import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -286,6 +287,26 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryEntryId, localRepositoryImpl);
 
 		return localRepositoryImpl;
+	}
+
+	@Override
+	public List<LocalRepository> getLocalRepositoryImplByGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		List<Repository> repositories = repositoryPersistence.findByGroupId(
+			groupId);
+
+		List<LocalRepository> localRepositories =
+			new ArrayList<LocalRepository>(repositories.size() + 1);
+
+		for (Repository repository : repositories) {
+			localRepositories.add(
+				getLocalRepositoryImpl(repository.getRepositoryId()));
+		}
+
+		localRepositories.add(getLocalRepositoryImpl(groupId));
+
+		return localRepositories;
 	}
 
 	@Override

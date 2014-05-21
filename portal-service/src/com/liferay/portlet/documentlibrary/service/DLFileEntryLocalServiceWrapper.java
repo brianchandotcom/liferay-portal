@@ -868,6 +868,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long rootFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getGroupFileEntries(groupId, userId,
+			rootFolderId, start, end, obc);
+	}
+
+	@Override
 	public int getGroupFileEntriesCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getGroupFileEntriesCount(groupId);

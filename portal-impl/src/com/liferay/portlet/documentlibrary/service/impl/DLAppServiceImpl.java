@@ -800,7 +800,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFolderRepository(folderId);
 
+		List<FileEntry> fileEntries = repository.getRepositoryFileEntries(
+			0, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Folder folder = repository.getFolder(folderId);
+
 		repository.deleteFolder(folderId);
+
+		for (FileEntry fileEntry : fileEntries) {
+			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+		}
+
+		dlAppHelperLocalService.deleteFolder(folder);
 	}
 
 	/**

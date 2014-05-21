@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -70,6 +73,10 @@ public interface LocalRepository {
 		throws PortalException, SystemException;
 
 	public Folder getFolder(long parentFolderId, String title)
+		throws PortalException, SystemException;
+
+	public List<FileEntry> getRepositoryFileEntries(
+			long rootFolderId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException;
 
 	public long getRepositoryId();

@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -26,7 +30,11 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.Assert;
@@ -52,6 +60,13 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
+	public void testAddFileEntry() throws Exception {
+		FileEntry fileEntry = addFileEntry();
+
+		Assert.assertNotNull(fileEntry);
+	}
+
+	@Test
 	public void testAddFolder() throws Exception {
 		Folder folder = addFolder(true);
 
@@ -63,6 +78,79 @@ public class DLAppLocalServiceTest {
 		Folder folder = addFolder(false);
 
 		Assert.assertTrue(folder != null);
+	}
+
+	@Test
+	public void testFileEntryAssetExistsAfterAdding() throws Exception {
+		FileEntry fileEntry = addFileEntry();
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		Assert.assertNotNull(assetEntry);
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testFileEntryAssetIsRemovedAfterDeleting() throws Exception {
+		FileEntry fileEntry = addFileEntry();
+
+		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
+		AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testFileEntryAssetIsRemovedAfterDeletingAllEntries()
+		throws Exception {
+
+		FileEntry fileEntry = addFileEntry();
+
+		DLAppLocalServiceUtil.deleteAll(_group.getGroupId());
+
+		AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testFileEntryAssetIsRemovedAfterDeletingFolder()
+		throws Exception {
+
+		Folder folder = addFolder(true);
+
+		FileEntry fileEntry = addFileEntry(folder.getFolderId());
+
+		DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+
+		AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testFileEntryIsRemovedAfterDeletingFolder() throws Exception {
+		Folder folder = addFolder(true);
+
+		FileEntry fileEntry = addFileEntry(folder.getFolderId());
+
+		DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+
+		DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+	}
+
+	protected FileEntry addFileEntry() throws PortalException, SystemException {
+		return addFileEntry(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	protected FileEntry addFileEntry(long folderId)
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			"foo.txt", "text/plain", "foo", StringPool.BLANK, StringPool.BLANK,
+			"foo".getBytes(), serviceContext);
 	}
 
 	protected Folder addFolder(boolean rootFolder) throws Exception {

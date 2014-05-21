@@ -811,7 +811,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Repositories
 
-			repositoryLocalService.deleteRepositories(group.getGroupId());
+			dlAppLocalService.deleteAllRepositories(group.getGroupId());
 
 			// Subscriptions
 

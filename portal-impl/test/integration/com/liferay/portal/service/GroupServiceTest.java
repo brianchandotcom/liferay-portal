@@ -16,9 +16,11 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,10 +52,16 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -206,6 +214,17 @@ public class GroupServiceTest {
 			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
 				blogsEntry.getEntryId()));
 
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(
+			DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId()));
+		Assert.assertNotNull(
+			AssetEntryLocalServiceUtil.getEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId()));
+
 		GroupLocalServiceUtil.deleteGroup(group.getGroupId());
 
 		Assert.assertEquals(
@@ -214,6 +233,18 @@ public class GroupServiceTest {
 		Assert.assertNull(
 			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
 				blogsEntry.getEntryId()));
+		Assert.assertNull(
+			AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId()));
+
+		try {
+			DLAppLocalServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
+			Assert.fail();
+		}
+		catch (NoSuchFileEntryException nsfee) {
+		}
 	}
 
 	@Test

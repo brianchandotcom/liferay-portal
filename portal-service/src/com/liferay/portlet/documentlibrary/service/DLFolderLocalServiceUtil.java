@@ -646,6 +646,12 @@ public class DLFolderLocalServiceUtil {
 		return getService().getFolderId(companyId, folderId);
 	}
 
+	public static java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long parentFolderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFolderIds(groupId, parentFolderId);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -247,7 +247,7 @@ public class SocialRelationLocalServiceTest {
 		}
 
 		List<User> users = UserLocalServiceUtil.searchSocial(
-			TestPropsValues.getCompanyId(), "dlc", groupIds, QueryUtil.ALL_POS,
+			TestPropsValues.getCompanyId(), groupIds, "dlc", QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(2, users.size());
@@ -278,7 +278,7 @@ public class SocialRelationLocalServiceTest {
 		// Does dlc2 should have 1 coworker and 4 friends?
 
 		List<User> users = UserLocalServiceUtil.searchSocial(
-			"dlc", dlc2User.getUserId(), socialRelationTypes, QueryUtil.ALL_POS,
+			dlc2User.getUserId(), socialRelationTypes, "dlc", QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(5, users.size());

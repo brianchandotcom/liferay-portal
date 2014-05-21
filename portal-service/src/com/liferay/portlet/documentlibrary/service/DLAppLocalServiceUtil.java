@@ -292,6 +292,12 @@ public class DLAppLocalServiceUtil {
 		getService().deleteAll(repositoryId);
 	}
 
+	public static void deleteAllRepositories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAllRepositories(groupId);
+	}
+
 	/**
 	* Deletes the file entry.
 	*

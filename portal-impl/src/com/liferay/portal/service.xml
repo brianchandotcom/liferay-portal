@@ -637,7 +637,6 @@
 		<reference package-path="com.liferay.portal" entity="Organization" />
 		<reference package-path="com.liferay.portal" entity="Portlet" />
 		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
-		<reference package-path="com.liferay.portal" entity="Repository" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="ResourceAction" />
 		<reference package-path="com.liferay.portal" entity="ResourceBlock" />
@@ -656,6 +655,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetVocabulary" />
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />

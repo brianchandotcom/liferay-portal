@@ -15,23 +15,17 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.List;
@@ -104,33 +98,9 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			return;
 		}
 
-		long[] requiredClassNameIds = vocabulary.getRequiredClassNameIds();
-
-		List<AssetCategory> categories =
-			AssetCategoryLocalServiceUtil.getVocabularyCategories(
-				vocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		PredicateFilter<AssetCategory> existingCategoryFilter =
-			new PredicateFilter<AssetCategory>() {
-
-				@Override
-				public boolean filter(AssetCategory assetCategory) {
-					return ArrayUtil.contains(
-						categoryIds, assetCategory.getCategoryId());
-				}
-
-			};
-
-		if ((requiredClassNameIds.length > 0) &&
-			((requiredClassNameIds[0] ==
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
-			 ArrayUtil.contains(requiredClassNameIds, classNameId))) {
-
-			if (!ListUtil.exists(categories, existingCategoryFilter)) {
-				throw new AssetCategoryException(
-					vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
-			}
+		if (vocabulary.isMissingRequiredCategory(classNameId, categoryIds)) {
+			throw new AssetCategoryException(
+				vocabulary, AssetCategoryException.AT_LEAST_ONE_CATEGORY);
 		}
 
 		if (!vocabulary.isMultiValued()) {

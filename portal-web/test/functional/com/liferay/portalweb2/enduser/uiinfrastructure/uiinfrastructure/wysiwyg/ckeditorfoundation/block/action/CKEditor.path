@@ -148,6 +148,43 @@
 	<td>//div[@class='cke_panel_block' and contains(.,'Format')]//li/a[contains(.,'${key_format}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_IMAGE_LINK-->
+<tr>
+	<td>CONTENT_IMAGE_LINK</td>
+	<td>//span[@class='cke_toolbox']//span/a[contains(.,'Image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON</td>
+	<td>//td/a[@title='Browse Server']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_IMAGE_LINK_OK_BUTTON</td>
+	<td>//a/span[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCES_BROWSER-->
+<tr>
+	<td>RESOURCES_BROWSER_DOCUMENTS_AND_MEDIA_DOCUMENT_PNG</td>
+	<td>portal/links/resources_browser_documents_and_media_document.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES_BROWSER_LIFERAY_PNG</td>
+	<td>portal/links/resources_browser_liferay.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

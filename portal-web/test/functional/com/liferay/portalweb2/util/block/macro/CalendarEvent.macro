@@ -28,22 +28,83 @@
 			</elseif>
 		</if>
 
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertSelectedLabel" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
+		<execute macro="CalendarEvent#assertDialogBoxPresentCmd" />
+
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
 		<execute action="PGCalendarVieweventdetails#selectFrame" locator-key1="VIEW_EVENT_IFRAME" />
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 		<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute action="PGCalendarVieweventdetails#type" locator-key1="COMMENTS_TEXT_AREA" value1="${eventComment}" />
-		<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
 
-		<var name="key_eventComment" value="${eventComment}" />
-		<var name="key_user" value="${user}" />
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
 
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+					<if>
+						<condition action="PGCalendarVieweventdetails#isElementPresent" locator-key1="COMMENTS_ADD_COMMENT_LINK" />
+						<then>
+							<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_ADD_COMMENT_LINK" value1="Add Comment" />
+							<execute action="PGCalendarVieweventdetails#makeVisible" locator-key1="COMMENTS_TEXT_AREA" />
+							<execute action="PGCalendarVieweventdetails#type" locator-key1="COMMENTS_TEXT_AREA" value1="${eventComment}" />
+						</then>
+						<else>
+							<execute action="PGCalendarVieweventdetails#type" locator-key1="COMMENTS_TEXT_AREA" value1="${eventComment}" />
+						</else>
+					</if>
+
+					<if>
+						<condition action="PGCalendarVieweventdetails#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" />
+						<then>
+							<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+						</then>
+						<else>
+							<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+						</else>
+					</if>
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+				</for>
+			</then>
+			<else>
+				<execute action="PGCalendarVieweventdetails#type" locator-key1="COMMENTS_TEXT_AREA" value1="${eventComment}" />
+
+				<if>
+					<condition action="PGCalendarVieweventdetails#isElementPresent" locator-key1="COMMENTS_SUBMIT_BUTTON" />
+					<then>
+						<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_SUBMIT_BUTTON" value1="Submit" />
+					</then>
+					<else>
+						<execute action="PGCalendarVieweventdetails#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+					</else>
+				</if>
+
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+			</else>
+		</if>
+
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_eventComment" value="${eventComment}" />
+				<var name="key_user" value="${user}" />
+
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+			</else>
+		</if>
+
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 
@@ -200,11 +261,117 @@
 		</if>
 	</command>
 
+	<command name="addPGSetTime">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute action="PGCalendar#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
+
+		<execute action="PGCalendarAddevent#selectFrame" locator-key1="ADD_EVENT_IFRAME" />
+		<execute action="PGCalendarAddevent#type" locator-key1="TITLE_FIELD" value1="${eventTitle}" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE_TIME" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="END_DATE" />
+		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="END_DATE_TIME" />
+
+		<if>
+			<equals arg1="${eventType}" arg2="Regular" />
+			<then>
+				<execute action="PGCalendarAddevent#assertNotChecked" locator-key1="ALL_DAY_CHECKBOX" />
+				<execute action="PGCalendarAddevent#assertNotChecked" locator-key1="REPEAT_CHECKBOX" />
+				<execute action="PGCalendarAddevent#type" locator-key1="START_DATE_TIME" value1="${setStartDateTime}" />
+				<execute action="PGCalendarAddevent#type" locator-key1="END_DATE_TIME" value1="${setEndDateTime}" />
+
+				<var locator-key="START_DATE" name="startDate" path="PGCalendarAddevent" />
+				<var name="endDate" value="${startDate}" />
+
+				<execute action="PGCalendarAddevent#type" locator-key1="END_DATE" value1="${endDate}" />
+
+				<execute macro="CalendarEvent#selectCalendarPG" />
+
+				<if>
+					<equals arg1="${optionSet}" arg2="true" />
+					<then>
+						<execute macro="CalendarEvent#optionsCmd" />
+					</then>
+				</if>
+
+				<execute macro="CalendarEvent#savePGCmd" />
+
+				<var name="key_endDate" value="${endDate}" />
+				<var name="key_endDateTime" value="${setEndDateTime}" />
+				<var name="key_startDate" value="${startDate}" />
+				<var name="key_startDateTime" value="${setStartDateTime}" />
+
+				<execute action="PGCalendar#assertElementPresent" locator-key1="SCHEDULER_EVENT_REGULAR" />
+				<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_REGULAR_TITLE" value1="${eventTitle}" />
+			</then>
+			<elseif>
+				<equals arg1="${eventType}" arg2="Repeating" />
+				<then>
+					<execute action="PGCalendarAddevent#type" locator-key1="START_DATE_TIME" value1="${setStartDateTime}" />
+					<execute action="PGCalendarAddevent#type" locator-key1="END_DATE_TIME" value1="${setEndDateTime}" />
+
+					<var locator-key="START_DATE" name="startDate" path="PGCalendarAddevent" />
+
+					<var name="endDate" value="${startDate}" />
+
+					<execute action="PGCalendarAddevent#type" locator-key1="END_DATE" value1="${endDate}" />
+					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
+					<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEATS_DROPDOWN" value1="Daily" />
+					<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
+					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_ENDS_AFTER_CHECKBOX" />
+					<execute action="PGCalendarAddevent#type" locator-key1="REPEAT_ENDS_AFTER_FIELD" value1="1" />
+					<execute action="PGCalendarAddevent#click" locator-key1="REPEAT_SUMMARY_2" />
+					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_2" value1="Daily, 1 Times" />
+					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_DONE_BUTTON" value1="Done" />
+					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
+					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_1" value1="Daily, 1 Times" />
+
+					<execute macro="CalendarEvent#selectCalendarPG" />
+
+					<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
+					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
+
+					<execute macro="Page#gotoPG">
+						<var name="pageName" value="${pageName}" />
+					</execute>
+
+					<var name="key_endDate" value="${endDate}" />
+					<var name="key_endDateTime" value="${setEndDateTime}" />
+					<var name="key_startDate" value="${startDate}" />
+					<var name="key_startDateTime" value="${setStartDateTime}" />
+
+					<execute action="PGCalendar#assertElementPresent" locator-key1="SCHEDULER_EVENT_REPEAT" />
+					<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_REPEAT_TITLE" value1="${eventTitle}" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${eventCommentEnabled}" arg2="true" />
+			<then>
+				<execute macro="CalendarEvent#addCommentPG">
+					<var name="calendarName" value="${calendarName}" />
+					<var name="endDate" value="${endDate}" />
+					<var name="endDateTime" value="${setEndDateTime}" />
+					<var name="eventComment" value="${eventComment}" />
+					<var name="eventTitle" value="${eventTitle}" />
+					<var name="eventType" value="${eventType}" />
+					<var name="startDate" value="${startDate}" />
+					<var name="startDateTime" value="${setStartDateTime}" />
+					<var name="user" value="${user}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="addRSVPPG">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
 
 		<var name="key_rsvp" value="${rsvp}" />
@@ -213,6 +380,18 @@
 		<execute action="PGCalendar#pause" locator1="3000" />
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
+	</command>
+
+	<command name="assertDialogBoxPresentCmd">
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
+			<then>
+				<execute action="PGCalendar#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+			</then>
+			<else>
+				<execute action="PGCalendar#assertSelectedLabel" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="changeCalendarViaQuickEditPG">
@@ -303,10 +482,11 @@
 		</execute>
 
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-
 		<execute action="PGCalendar#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_SPECIFIC" />
 		<execute action="PGCalendar#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
@@ -320,7 +500,8 @@
 
 		<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
@@ -353,10 +534,8 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<var name="key_eventTitle" value="${eventTitle}" />
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
 
-		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute action="PGCalendarEditevent#selectFrame" locator-key1="EDIT_EVENT_IFRAME" />
@@ -422,7 +601,8 @@
 
 		<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute action="PGCalendarEditevent#selectFrame" locator-key1="EDIT_EVENT_IFRAME" />
@@ -478,6 +658,13 @@
 
 	<command name="optionsCmd">
 		<if>
+			<equals arg1="${viewPermission}" arg2="true" />
+			<then>
+				<execute action="PGCalendarAddevent#select" locator-key1="DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewPermissionValue}" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${inviteResource}" arg2="true" />
 			<then>
 				<execute macro="CalendarEvent#inviteResource" />
@@ -497,6 +684,24 @@
 				<execute macro="CalendarEvent#tag" />
 			</then>
 		</if>
+	</command>
+
+	<command name="rate4StarsPG">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
+		<execute macro="CalendarEvent#assertDialogBoxPresentCmd" />
+
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+
+		<execute action="PGCalendarVieweventdetails#selectFrame" locator-key1="VIEW_EVENT_IFRAME" />
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="PGCalendarVieweventdetails#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+
+		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="resourcesAvailability">
@@ -549,11 +754,25 @@
 
 		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="CATEGORIZATION_TAG_FIELD" />
 
-		<var name="key_tagText" value="${tagText}" />
+		<if>
+			<isset var="tagTextList" />
+			<then>
+				<for list="${tagTextList}" param="tagText">
+					<var name="key_tagText" value="${tagText}" />
 
-		<execute action="PGCalendarAddevent#type" locator-key1="CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
-		<execute action="PGCalendarAddevent#assertClick" locator-key1="CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
-		<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
+					<execute action="PGCalendarAddevent#type" locator-key1="CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
+					<execute action="PGCalendarAddevent#assertClick" locator-key1="CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
+					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_tagText" value="${tagText}" />
+
+				<execute action="PGCalendarAddevent#type" locator-key1="CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
+				<execute action="PGCalendarAddevent#assertClick" locator-key1="CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
+				<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="tearDownPG">
@@ -624,11 +843,26 @@
 	<command name="viewCommentPG">
 		<execute macro="CalendarEvent#viewEventDetailsPG" />
 
-		<var name="key_eventComment" value="${eventComment}" />
-		<var name="key_user" value="${user}" />
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
 
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_eventComment" value="${eventComment}" />
+				<var name="key_user" value="${user}" />
+
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+			</else>
+		</if>
+
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 
@@ -673,6 +907,20 @@
 		</execute>
 	</command>
 
+	<command name="viewEventDetailsCmd">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<if>
+			<condition action="PGCalendar#isVisible" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" />
+			<then>
+				<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+			</then>
+			<else>
+				<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE_GUEST" value1="${eventTitle}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewEventDetailsPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -681,8 +929,11 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="PGCalendar#assertSelectedLabel" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
+		<execute macro="CalendarEvent#assertDialogBoxPresentCmd" />
+
 		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
 		<execute action="PGCalendarVieweventdetails#selectFrame" locator-key1="VIEW_EVENT_IFRAME" />
@@ -692,10 +943,24 @@
 	<command name="viewEventDetailsWithTagPG">
 		<execute macro="CalendarEvent#viewEventDetailsPG" />
 
-		<var name="key_tagText" value="${tagText}" />
+		<if>
+			<isset var="tagTextList" />
+			<then>
+				<for list="${tagTextList}" param="tagText">
+					<var name="key_tagText" value="${tagText}" />
 
-		<execute action="PGCalendarVieweventdetails#assertVisible" locator-key1="TAGS_LABEL" />
-		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="TAGS_TAG_SPECIFIC" value1="${tagText}" />
+					<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="TAGS_LABEL" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="TAGS_TAG_SPECIFIC" value1="${tagText}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_tagText" value="${tagText}" />
+
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="TAGS_LABEL" />
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="TAGS_TAG_SPECIFIC" value1="${tagText}" />
+			</else>
+		</if>
+
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 
@@ -795,5 +1060,64 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
+	</command>
+
+	<command name="viewRate4StarsPG">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsCmd" />
+
+		<execute macro="CalendarEvent#assertDialogBoxPresentCmd" />
+
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+
+		<execute action="PGCalendarVieweventdetails#selectFrame" locator-key1="VIEW_EVENT_IFRAME" />
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
+
+		<if>
+			<equals arg1="${yourRating}" arg2="false" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="YOUR_RATING"  value1="Your Rating" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_1" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_2" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_3" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_4" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_2" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_3" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_5" />
+			</then>
+			<else>
+				<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="YOUR_RATING"  value1="Your Rating" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_2" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_3" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+				<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_5" />
+			</else>
+		</if>
+
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="AVERAGE"  value1="Average (1 Vote)" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="AVERAGE_STAR_1" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="AVERAGE_STAR_EMPTY_1" />
+		<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
+		<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_3" />
+		<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_4" />
+		<execute action="PGCalendarVieweventdetails#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_5" />
+
+		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 </definition>

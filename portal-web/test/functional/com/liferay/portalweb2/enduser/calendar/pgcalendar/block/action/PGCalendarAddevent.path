@@ -183,6 +183,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

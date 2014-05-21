@@ -555,6 +555,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE_GUEST</td>
+	<td>//form[@id='schedulerEventRecorderForm']/div/div/div/div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE</td>
 	<td>//form[@id='schedulerEventRecorderForm']//a[contains(@class,'calendar-event-answer-true') and contains(.,'${key_rsvp}')]</td>
 	<td></td>

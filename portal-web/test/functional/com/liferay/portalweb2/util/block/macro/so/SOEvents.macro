@@ -67,6 +67,37 @@
 		</if>
 
 		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="eventCommentList" />
+			<then>
+				<for list="${eventCommentList}" param="eventComment">
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</for>
+			</then>
+			<elseif>
+				<isset var="eventComment" />
+				<then>
+					<var name="key_eventComment" value="${eventComment}" />
+					<var name="key_user" value="${user}" />
+
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_USER_NAME" value1="${user}" />
+					<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${eventComment}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewUpcomingEventSiteEvent">

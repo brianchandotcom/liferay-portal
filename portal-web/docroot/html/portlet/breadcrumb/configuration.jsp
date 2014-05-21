@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/breadcrumb/init.jsp" %>
 
+<%
+TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(Layout.class.getName());
+%>
+
 <aui:row>
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -27,19 +31,18 @@
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 			<aui:fieldset>
-				<aui:select name="preferences--displayStyle--">
 
-					<%
-					for (String displayStyleOption : PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS) {
-					%>
+				<div class="display-template">
+					<liferay-ui:ddm-template-selector
+						classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+						displayStyle="<%= displayStyle %>"
+						displayStyleGroupId="<%= displayStyleGroupId %>"
+						displayStyles="<%= Arrays.asList(PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS) %>"
+						refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
+						showEmptyOption="<%= true %>"
+					/>
+				</div>
 
-						<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="checkBoxes">

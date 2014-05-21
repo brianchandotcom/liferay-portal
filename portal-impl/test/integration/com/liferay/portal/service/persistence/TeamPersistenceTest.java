@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +98,7 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Team team = _persistence.create(pk);
 
@@ -127,27 +125,27 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Team newTeam = _persistence.create(pk);
 
-		newTeam.setMvccVersion(ServiceTestUtil.nextLong());
+		newTeam.setMvccVersion(RandomTestUtil.nextLong());
 
-		newTeam.setCompanyId(ServiceTestUtil.nextLong());
+		newTeam.setCompanyId(RandomTestUtil.nextLong());
 
-		newTeam.setUserId(ServiceTestUtil.nextLong());
+		newTeam.setUserId(RandomTestUtil.nextLong());
 
-		newTeam.setUserName(ServiceTestUtil.randomString());
+		newTeam.setUserName(RandomTestUtil.randomString());
 
-		newTeam.setCreateDate(ServiceTestUtil.nextDate());
+		newTeam.setCreateDate(RandomTestUtil.nextDate());
 
-		newTeam.setModifiedDate(ServiceTestUtil.nextDate());
+		newTeam.setModifiedDate(RandomTestUtil.nextDate());
 
-		newTeam.setGroupId(ServiceTestUtil.nextLong());
+		newTeam.setGroupId(RandomTestUtil.nextLong());
 
-		newTeam.setName(ServiceTestUtil.randomString());
+		newTeam.setName(RandomTestUtil.randomString());
 
-		newTeam.setDescription(ServiceTestUtil.randomString());
+		newTeam.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(newTeam);
 
@@ -173,7 +171,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -185,7 +183,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testCountByG_N() {
 		try {
-			_persistence.countByG_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_N(0L, StringPool.NULL);
 
@@ -207,7 +205,7 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -258,7 +256,7 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Team missingTeam = _persistence.fetchByPrimaryKey(pk);
 
@@ -313,7 +311,7 @@ public class TeamPersistenceTest {
 				Team.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -352,7 +350,7 @@ public class TeamPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("teamId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -378,27 +376,27 @@ public class TeamPersistenceTest {
 	}
 
 	protected Team addTeam() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Team team = _persistence.create(pk);
 
-		team.setMvccVersion(ServiceTestUtil.nextLong());
+		team.setMvccVersion(RandomTestUtil.nextLong());
 
-		team.setCompanyId(ServiceTestUtil.nextLong());
+		team.setCompanyId(RandomTestUtil.nextLong());
 
-		team.setUserId(ServiceTestUtil.nextLong());
+		team.setUserId(RandomTestUtil.nextLong());
 
-		team.setUserName(ServiceTestUtil.randomString());
+		team.setUserName(RandomTestUtil.randomString());
 
-		team.setCreateDate(ServiceTestUtil.nextDate());
+		team.setCreateDate(RandomTestUtil.nextDate());
 
-		team.setModifiedDate(ServiceTestUtil.nextDate());
+		team.setModifiedDate(RandomTestUtil.nextDate());
 
-		team.setGroupId(ServiceTestUtil.nextLong());
+		team.setGroupId(RandomTestUtil.nextLong());
 
-		team.setName(ServiceTestUtil.randomString());
+		team.setName(RandomTestUtil.randomString());
 
-		team.setDescription(ServiceTestUtil.randomString());
+		team.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(team);
 

@@ -32,13 +32,11 @@ import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
 import com.liferay.portal.service.BrowserTrackerLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,7 +95,7 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BrowserTracker browserTracker = _persistence.create(pk);
 
@@ -124,15 +122,15 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BrowserTracker newBrowserTracker = _persistence.create(pk);
 
-		newBrowserTracker.setMvccVersion(ServiceTestUtil.nextLong());
+		newBrowserTracker.setMvccVersion(RandomTestUtil.nextLong());
 
-		newBrowserTracker.setUserId(ServiceTestUtil.nextLong());
+		newBrowserTracker.setUserId(RandomTestUtil.nextLong());
 
-		newBrowserTracker.setBrowserKey(ServiceTestUtil.nextLong());
+		newBrowserTracker.setBrowserKey(RandomTestUtil.nextLong());
 
 		_persistence.update(newBrowserTracker);
 
@@ -151,7 +149,7 @@ public class BrowserTrackerPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -171,7 +169,7 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -211,7 +209,7 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BrowserTracker missingBrowserTracker = _persistence.fetchByPrimaryKey(pk);
 
@@ -266,7 +264,7 @@ public class BrowserTrackerPersistenceTest {
 				BrowserTracker.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -307,7 +305,7 @@ public class BrowserTrackerPersistenceTest {
 				"browserTrackerId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -331,15 +329,15 @@ public class BrowserTrackerPersistenceTest {
 	}
 
 	protected BrowserTracker addBrowserTracker() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BrowserTracker browserTracker = _persistence.create(pk);
 
-		browserTracker.setMvccVersion(ServiceTestUtil.nextLong());
+		browserTracker.setMvccVersion(RandomTestUtil.nextLong());
 
-		browserTracker.setUserId(ServiceTestUtil.nextLong());
+		browserTracker.setUserId(RandomTestUtil.nextLong());
 
-		browserTracker.setBrowserKey(ServiceTestUtil.nextLong());
+		browserTracker.setBrowserKey(RandomTestUtil.nextLong());
 
 		_persistence.update(browserTracker);
 

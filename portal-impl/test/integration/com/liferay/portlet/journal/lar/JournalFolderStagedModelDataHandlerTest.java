@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portlet.journal.util.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +54,7 @@ public class JournalFolderStagedModelDataHandlerTest
 			new HashMap<String, List<StagedModel>>();
 
 		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, JournalFolder.class, folder);
@@ -75,7 +75,7 @@ public class JournalFolderStagedModelDataHandlerTest
 
 		return JournalTestUtil.addFolder(
 			group.getGroupId(), folder.getFolderId(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 	}
 
 	@Override

@@ -29,19 +29,19 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.GroupFinderUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.ResourcePermissionTestUtil;
-import com.liferay.portal.util.ResourceTypePermissionTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.ResourcePermissionTestUtil;
+import com.liferay.test.portal.util.ResourceTypePermissionTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -164,25 +164,25 @@ public class GroupFinderTest {
 
 		int initialGroupCount = groups.size();
 
-		GroupTestUtil.addGroup(ServiceTestUtil.randomString());
+		GroupTestUtil.addGroup(RandomTestUtil.randomString());
 
 		Group parentGroup = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			parentGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+			parentGroup.getGroupId(), RandomTestUtil.randomString(), false);
 
 		Group childGroup1 = GroupTestUtil.addGroup(
-			parentGroup.getGroupId(), ServiceTestUtil.randomString());
+			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			childGroup1.getGroupId(), ServiceTestUtil.randomString(), false);
+			childGroup1.getGroupId(), RandomTestUtil.randomString(), false);
 
 		Group childGroup2 = GroupTestUtil.addGroup(
-			parentGroup.getGroupId(), ServiceTestUtil.randomString());
+			parentGroup.getGroupId(), RandomTestUtil.randomString());
 
 		LayoutTestUtil.addLayout(
-			childGroup2.getGroupId(), ServiceTestUtil.randomString(), true);
+			childGroup2.getGroupId(), RandomTestUtil.randomString(), true);
 
 		groups = findByLayouts(GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -198,10 +198,9 @@ public class GroupFinderTest {
 	}
 
 	protected void addLayout(long groupId) throws Exception {
-		LayoutTestUtil.addLayout(
-			groupId, ServiceTestUtil.randomString(), false);
+		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), false);
 
-		LayoutTestUtil.addLayout(groupId, ServiceTestUtil.randomString(), true);
+		LayoutTestUtil.addLayout(groupId, RandomTestUtil.randomString(), true);
 	}
 
 	protected List<Group> findByC_C_N_D(

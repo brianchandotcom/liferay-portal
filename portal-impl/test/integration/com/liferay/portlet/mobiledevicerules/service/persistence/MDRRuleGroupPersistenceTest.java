@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class MDRRuleGroupPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MDRRuleGroup mdrRuleGroup = _persistence.create(pk);
 
@@ -128,27 +128,27 @@ public class MDRRuleGroupPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MDRRuleGroup newMDRRuleGroup = _persistence.create(pk);
 
-		newMDRRuleGroup.setUuid(ServiceTestUtil.randomString());
+		newMDRRuleGroup.setUuid(RandomTestUtil.randomString());
 
-		newMDRRuleGroup.setGroupId(ServiceTestUtil.nextLong());
+		newMDRRuleGroup.setGroupId(RandomTestUtil.nextLong());
 
-		newMDRRuleGroup.setCompanyId(ServiceTestUtil.nextLong());
+		newMDRRuleGroup.setCompanyId(RandomTestUtil.nextLong());
 
-		newMDRRuleGroup.setUserId(ServiceTestUtil.nextLong());
+		newMDRRuleGroup.setUserId(RandomTestUtil.nextLong());
 
-		newMDRRuleGroup.setUserName(ServiceTestUtil.randomString());
+		newMDRRuleGroup.setUserName(RandomTestUtil.randomString());
 
-		newMDRRuleGroup.setCreateDate(ServiceTestUtil.nextDate());
+		newMDRRuleGroup.setCreateDate(RandomTestUtil.nextDate());
 
-		newMDRRuleGroup.setModifiedDate(ServiceTestUtil.nextDate());
+		newMDRRuleGroup.setModifiedDate(RandomTestUtil.nextDate());
 
-		newMDRRuleGroup.setName(ServiceTestUtil.randomString());
+		newMDRRuleGroup.setName(RandomTestUtil.randomString());
 
-		newMDRRuleGroup.setDescription(ServiceTestUtil.randomString());
+		newMDRRuleGroup.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(newMDRRuleGroup);
 
@@ -196,7 +196,7 @@ public class MDRRuleGroupPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -211,7 +211,7 @@ public class MDRRuleGroupPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -225,7 +225,7 @@ public class MDRRuleGroupPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -245,7 +245,7 @@ public class MDRRuleGroupPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -296,7 +296,7 @@ public class MDRRuleGroupPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MDRRuleGroup missingMDRRuleGroup = _persistence.fetchByPrimaryKey(pk);
 
@@ -351,7 +351,7 @@ public class MDRRuleGroupPersistenceTest {
 				MDRRuleGroup.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MDRRuleGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -390,7 +390,7 @@ public class MDRRuleGroupPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleGroupId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleGroupId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -417,27 +417,27 @@ public class MDRRuleGroupPersistenceTest {
 	}
 
 	protected MDRRuleGroup addMDRRuleGroup() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MDRRuleGroup mdrRuleGroup = _persistence.create(pk);
 
-		mdrRuleGroup.setUuid(ServiceTestUtil.randomString());
+		mdrRuleGroup.setUuid(RandomTestUtil.randomString());
 
-		mdrRuleGroup.setGroupId(ServiceTestUtil.nextLong());
+		mdrRuleGroup.setGroupId(RandomTestUtil.nextLong());
 
-		mdrRuleGroup.setCompanyId(ServiceTestUtil.nextLong());
+		mdrRuleGroup.setCompanyId(RandomTestUtil.nextLong());
 
-		mdrRuleGroup.setUserId(ServiceTestUtil.nextLong());
+		mdrRuleGroup.setUserId(RandomTestUtil.nextLong());
 
-		mdrRuleGroup.setUserName(ServiceTestUtil.randomString());
+		mdrRuleGroup.setUserName(RandomTestUtil.randomString());
 
-		mdrRuleGroup.setCreateDate(ServiceTestUtil.nextDate());
+		mdrRuleGroup.setCreateDate(RandomTestUtil.nextDate());
 
-		mdrRuleGroup.setModifiedDate(ServiceTestUtil.nextDate());
+		mdrRuleGroup.setModifiedDate(RandomTestUtil.nextDate());
 
-		mdrRuleGroup.setName(ServiceTestUtil.randomString());
+		mdrRuleGroup.setName(RandomTestUtil.randomString());
 
-		mdrRuleGroup.setDescription(ServiceTestUtil.randomString());
+		mdrRuleGroup.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(mdrRuleGroup);
 

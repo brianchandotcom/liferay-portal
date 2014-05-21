@@ -31,12 +31,10 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,7 +93,7 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ClusterGroup clusterGroup = _persistence.create(pk);
 
@@ -122,17 +120,17 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ClusterGroup newClusterGroup = _persistence.create(pk);
 
-		newClusterGroup.setMvccVersion(ServiceTestUtil.nextLong());
+		newClusterGroup.setMvccVersion(RandomTestUtil.nextLong());
 
-		newClusterGroup.setName(ServiceTestUtil.randomString());
+		newClusterGroup.setName(RandomTestUtil.randomString());
 
-		newClusterGroup.setClusterNodeIds(ServiceTestUtil.randomString());
+		newClusterGroup.setClusterNodeIds(RandomTestUtil.randomString());
 
-		newClusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
+		newClusterGroup.setWholeCluster(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newClusterGroup);
 
@@ -161,7 +159,7 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -201,7 +199,7 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ClusterGroup missingClusterGroup = _persistence.fetchByPrimaryKey(pk);
 
@@ -256,7 +254,7 @@ public class ClusterGroupPersistenceTest {
 				ClusterGroup.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -297,7 +295,7 @@ public class ClusterGroupPersistenceTest {
 				"clusterGroupId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -305,17 +303,17 @@ public class ClusterGroupPersistenceTest {
 	}
 
 	protected ClusterGroup addClusterGroup() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ClusterGroup clusterGroup = _persistence.create(pk);
 
-		clusterGroup.setMvccVersion(ServiceTestUtil.nextLong());
+		clusterGroup.setMvccVersion(RandomTestUtil.nextLong());
 
-		clusterGroup.setName(ServiceTestUtil.randomString());
+		clusterGroup.setName(RandomTestUtil.randomString());
 
-		clusterGroup.setClusterNodeIds(ServiceTestUtil.randomString());
+		clusterGroup.setClusterNodeIds(RandomTestUtil.randomString());
 
-		clusterGroup.setWholeCluster(ServiceTestUtil.randomBoolean());
+		clusterGroup.setWholeCluster(RandomTestUtil.randomBoolean());
 
 		_persistence.update(clusterGroup);
 

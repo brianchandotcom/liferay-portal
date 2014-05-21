@@ -33,14 +33,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		VirtualHost virtualHost = _persistence.create(pk);
 
@@ -126,17 +124,17 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		VirtualHost newVirtualHost = _persistence.create(pk);
 
-		newVirtualHost.setMvccVersion(ServiceTestUtil.nextLong());
+		newVirtualHost.setMvccVersion(RandomTestUtil.nextLong());
 
-		newVirtualHost.setCompanyId(ServiceTestUtil.nextLong());
+		newVirtualHost.setCompanyId(RandomTestUtil.nextLong());
 
-		newVirtualHost.setLayoutSetId(ServiceTestUtil.nextLong());
+		newVirtualHost.setLayoutSetId(RandomTestUtil.nextLong());
 
-		newVirtualHost.setHostname(ServiceTestUtil.randomString());
+		newVirtualHost.setHostname(RandomTestUtil.randomString());
 
 		_persistence.update(newVirtualHost);
 
@@ -171,8 +169,8 @@ public class VirtualHostPersistenceTest {
 	@Test
 	public void testCountByC_L() {
 		try {
-			_persistence.countByC_L(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_L(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_L(0L, 0L);
 		}
@@ -192,7 +190,7 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -232,7 +230,7 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		VirtualHost missingVirtualHost = _persistence.fetchByPrimaryKey(pk);
 
@@ -287,7 +285,7 @@ public class VirtualHostPersistenceTest {
 				VirtualHost.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -328,7 +326,7 @@ public class VirtualHostPersistenceTest {
 				"virtualHostId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -358,17 +356,17 @@ public class VirtualHostPersistenceTest {
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		VirtualHost virtualHost = _persistence.create(pk);
 
-		virtualHost.setMvccVersion(ServiceTestUtil.nextLong());
+		virtualHost.setMvccVersion(RandomTestUtil.nextLong());
 
-		virtualHost.setCompanyId(ServiceTestUtil.nextLong());
+		virtualHost.setCompanyId(RandomTestUtil.nextLong());
 
-		virtualHost.setLayoutSetId(ServiceTestUtil.nextLong());
+		virtualHost.setLayoutSetId(RandomTestUtil.nextLong());
 
-		virtualHost.setHostname(ServiceTestUtil.randomString());
+		virtualHost.setHostname(RandomTestUtil.randomString());
 
 		_persistence.update(virtualHost);
 

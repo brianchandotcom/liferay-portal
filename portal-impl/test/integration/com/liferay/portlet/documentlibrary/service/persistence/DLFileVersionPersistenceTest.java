@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
@@ -128,59 +128,59 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileVersion newDLFileVersion = _persistence.create(pk);
 
-		newDLFileVersion.setUuid(ServiceTestUtil.randomString());
+		newDLFileVersion.setUuid(RandomTestUtil.randomString());
 
-		newDLFileVersion.setGroupId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setGroupId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setCompanyId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setCompanyId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setUserId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setUserId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setUserName(ServiceTestUtil.randomString());
+		newDLFileVersion.setUserName(RandomTestUtil.randomString());
 
-		newDLFileVersion.setCreateDate(ServiceTestUtil.nextDate());
+		newDLFileVersion.setCreateDate(RandomTestUtil.nextDate());
 
-		newDLFileVersion.setModifiedDate(ServiceTestUtil.nextDate());
+		newDLFileVersion.setModifiedDate(RandomTestUtil.nextDate());
 
-		newDLFileVersion.setRepositoryId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setRepositoryId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setFolderId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setFolderId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setFileEntryId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setFileEntryId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setTreePath(ServiceTestUtil.randomString());
+		newDLFileVersion.setTreePath(RandomTestUtil.randomString());
 
-		newDLFileVersion.setExtension(ServiceTestUtil.randomString());
+		newDLFileVersion.setExtension(RandomTestUtil.randomString());
 
-		newDLFileVersion.setMimeType(ServiceTestUtil.randomString());
+		newDLFileVersion.setMimeType(RandomTestUtil.randomString());
 
-		newDLFileVersion.setTitle(ServiceTestUtil.randomString());
+		newDLFileVersion.setTitle(RandomTestUtil.randomString());
 
-		newDLFileVersion.setDescription(ServiceTestUtil.randomString());
+		newDLFileVersion.setDescription(RandomTestUtil.randomString());
 
-		newDLFileVersion.setChangeLog(ServiceTestUtil.randomString());
+		newDLFileVersion.setChangeLog(RandomTestUtil.randomString());
 
-		newDLFileVersion.setExtraSettings(ServiceTestUtil.randomString());
+		newDLFileVersion.setExtraSettings(RandomTestUtil.randomString());
 
-		newDLFileVersion.setFileEntryTypeId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setFileEntryTypeId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setVersion(ServiceTestUtil.randomString());
+		newDLFileVersion.setVersion(RandomTestUtil.randomString());
 
-		newDLFileVersion.setSize(ServiceTestUtil.nextLong());
+		newDLFileVersion.setSize(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setChecksum(ServiceTestUtil.randomString());
+		newDLFileVersion.setChecksum(RandomTestUtil.randomString());
 
-		newDLFileVersion.setStatus(ServiceTestUtil.nextInt());
+		newDLFileVersion.setStatus(RandomTestUtil.nextInt());
 
-		newDLFileVersion.setStatusByUserId(ServiceTestUtil.nextLong());
+		newDLFileVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setStatusByUserName(ServiceTestUtil.randomString());
+		newDLFileVersion.setStatusByUserName(RandomTestUtil.randomString());
 
-		newDLFileVersion.setStatusDate(ServiceTestUtil.nextDate());
+		newDLFileVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newDLFileVersion);
 
@@ -261,7 +261,7 @@ public class DLFileVersionPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -276,7 +276,7 @@ public class DLFileVersionPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -290,7 +290,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -302,7 +302,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByFileEntryId() {
 		try {
-			_persistence.countByFileEntryId(ServiceTestUtil.nextLong());
+			_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 
 			_persistence.countByFileEntryId(0L);
 		}
@@ -328,8 +328,8 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByC_NotS() {
 		try {
-			_persistence.countByC_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByC_NotS(0L, 0);
 		}
@@ -341,7 +341,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByF_V() {
 		try {
-			_persistence.countByF_V(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByF_V(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByF_V(0L, StringPool.NULL);
 
@@ -355,8 +355,8 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByF_S() {
 		try {
-			_persistence.countByF_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByF_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByF_S(0L, 0);
 		}
@@ -368,8 +368,8 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByG_F_S() {
 		try {
-			_persistence.countByG_F_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_F_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_F_S(0L, 0L, 0);
 		}
@@ -381,8 +381,8 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testCountByG_F_T_V() {
 		try {
-			_persistence.countByG_F_T_V(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+			_persistence.countByG_F_T_V(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
 			_persistence.countByG_F_T_V(0L, 0L, StringPool.NULL, StringPool.NULL);
 
@@ -404,7 +404,7 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -450,7 +450,7 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileVersion missingDLFileVersion = _persistence.fetchByPrimaryKey(pk);
 
@@ -505,7 +505,7 @@ public class DLFileVersionPersistenceTest {
 				DLFileVersion.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DLFileVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -546,7 +546,7 @@ public class DLFileVersionPersistenceTest {
 				"fileVersionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileVersionId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -579,59 +579,59 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	protected DLFileVersion addDLFileVersion() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
-		dlFileVersion.setUuid(ServiceTestUtil.randomString());
+		dlFileVersion.setUuid(RandomTestUtil.randomString());
 
-		dlFileVersion.setGroupId(ServiceTestUtil.nextLong());
+		dlFileVersion.setGroupId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setCompanyId(ServiceTestUtil.nextLong());
+		dlFileVersion.setCompanyId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setUserId(ServiceTestUtil.nextLong());
+		dlFileVersion.setUserId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setUserName(ServiceTestUtil.randomString());
+		dlFileVersion.setUserName(RandomTestUtil.randomString());
 
-		dlFileVersion.setCreateDate(ServiceTestUtil.nextDate());
+		dlFileVersion.setCreateDate(RandomTestUtil.nextDate());
 
-		dlFileVersion.setModifiedDate(ServiceTestUtil.nextDate());
+		dlFileVersion.setModifiedDate(RandomTestUtil.nextDate());
 
-		dlFileVersion.setRepositoryId(ServiceTestUtil.nextLong());
+		dlFileVersion.setRepositoryId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setFolderId(ServiceTestUtil.nextLong());
+		dlFileVersion.setFolderId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setFileEntryId(ServiceTestUtil.nextLong());
+		dlFileVersion.setFileEntryId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setTreePath(ServiceTestUtil.randomString());
+		dlFileVersion.setTreePath(RandomTestUtil.randomString());
 
-		dlFileVersion.setExtension(ServiceTestUtil.randomString());
+		dlFileVersion.setExtension(RandomTestUtil.randomString());
 
-		dlFileVersion.setMimeType(ServiceTestUtil.randomString());
+		dlFileVersion.setMimeType(RandomTestUtil.randomString());
 
-		dlFileVersion.setTitle(ServiceTestUtil.randomString());
+		dlFileVersion.setTitle(RandomTestUtil.randomString());
 
-		dlFileVersion.setDescription(ServiceTestUtil.randomString());
+		dlFileVersion.setDescription(RandomTestUtil.randomString());
 
-		dlFileVersion.setChangeLog(ServiceTestUtil.randomString());
+		dlFileVersion.setChangeLog(RandomTestUtil.randomString());
 
-		dlFileVersion.setExtraSettings(ServiceTestUtil.randomString());
+		dlFileVersion.setExtraSettings(RandomTestUtil.randomString());
 
-		dlFileVersion.setFileEntryTypeId(ServiceTestUtil.nextLong());
+		dlFileVersion.setFileEntryTypeId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setVersion(ServiceTestUtil.randomString());
+		dlFileVersion.setVersion(RandomTestUtil.randomString());
 
-		dlFileVersion.setSize(ServiceTestUtil.nextLong());
+		dlFileVersion.setSize(RandomTestUtil.nextLong());
 
-		dlFileVersion.setChecksum(ServiceTestUtil.randomString());
+		dlFileVersion.setChecksum(RandomTestUtil.randomString());
 
-		dlFileVersion.setStatus(ServiceTestUtil.nextInt());
+		dlFileVersion.setStatus(RandomTestUtil.nextInt());
 
-		dlFileVersion.setStatusByUserId(ServiceTestUtil.nextLong());
+		dlFileVersion.setStatusByUserId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setStatusByUserName(ServiceTestUtil.randomString());
+		dlFileVersion.setStatusByUserName(RandomTestUtil.randomString());
 
-		dlFileVersion.setStatusDate(ServiceTestUtil.nextDate());
+		dlFileVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(dlFileVersion);
 

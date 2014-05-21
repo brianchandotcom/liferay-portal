@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class MBThreadFlagPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
@@ -128,25 +128,25 @@ public class MBThreadFlagPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBThreadFlag newMBThreadFlag = _persistence.create(pk);
 
-		newMBThreadFlag.setUuid(ServiceTestUtil.randomString());
+		newMBThreadFlag.setUuid(RandomTestUtil.randomString());
 
-		newMBThreadFlag.setGroupId(ServiceTestUtil.nextLong());
+		newMBThreadFlag.setGroupId(RandomTestUtil.nextLong());
 
-		newMBThreadFlag.setCompanyId(ServiceTestUtil.nextLong());
+		newMBThreadFlag.setCompanyId(RandomTestUtil.nextLong());
 
-		newMBThreadFlag.setUserId(ServiceTestUtil.nextLong());
+		newMBThreadFlag.setUserId(RandomTestUtil.nextLong());
 
-		newMBThreadFlag.setUserName(ServiceTestUtil.randomString());
+		newMBThreadFlag.setUserName(RandomTestUtil.randomString());
 
-		newMBThreadFlag.setCreateDate(ServiceTestUtil.nextDate());
+		newMBThreadFlag.setCreateDate(RandomTestUtil.nextDate());
 
-		newMBThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
+		newMBThreadFlag.setModifiedDate(RandomTestUtil.nextDate());
 
-		newMBThreadFlag.setThreadId(ServiceTestUtil.nextLong());
+		newMBThreadFlag.setThreadId(RandomTestUtil.nextLong());
 
 		_persistence.update(newMBThreadFlag);
 
@@ -192,7 +192,7 @@ public class MBThreadFlagPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -207,7 +207,7 @@ public class MBThreadFlagPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -221,7 +221,7 @@ public class MBThreadFlagPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -233,7 +233,7 @@ public class MBThreadFlagPersistenceTest {
 	@Test
 	public void testCountByThreadId() {
 		try {
-			_persistence.countByThreadId(ServiceTestUtil.nextLong());
+			_persistence.countByThreadId(RandomTestUtil.nextLong());
 
 			_persistence.countByThreadId(0L);
 		}
@@ -245,8 +245,8 @@ public class MBThreadFlagPersistenceTest {
 	@Test
 	public void testCountByU_T() {
 		try {
-			_persistence.countByU_T(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByU_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByU_T(0L, 0L);
 		}
@@ -266,7 +266,7 @@ public class MBThreadFlagPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -307,7 +307,7 @@ public class MBThreadFlagPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBThreadFlag missingMBThreadFlag = _persistence.fetchByPrimaryKey(pk);
 
@@ -362,7 +362,7 @@ public class MBThreadFlagPersistenceTest {
 				MBThreadFlag.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadFlagId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MBThreadFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -403,7 +403,7 @@ public class MBThreadFlagPersistenceTest {
 				"threadFlagId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("threadFlagId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,25 +435,25 @@ public class MBThreadFlagPersistenceTest {
 	}
 
 	protected MBThreadFlag addMBThreadFlag() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
-		mbThreadFlag.setUuid(ServiceTestUtil.randomString());
+		mbThreadFlag.setUuid(RandomTestUtil.randomString());
 
-		mbThreadFlag.setGroupId(ServiceTestUtil.nextLong());
+		mbThreadFlag.setGroupId(RandomTestUtil.nextLong());
 
-		mbThreadFlag.setCompanyId(ServiceTestUtil.nextLong());
+		mbThreadFlag.setCompanyId(RandomTestUtil.nextLong());
 
-		mbThreadFlag.setUserId(ServiceTestUtil.nextLong());
+		mbThreadFlag.setUserId(RandomTestUtil.nextLong());
 
-		mbThreadFlag.setUserName(ServiceTestUtil.randomString());
+		mbThreadFlag.setUserName(RandomTestUtil.randomString());
 
-		mbThreadFlag.setCreateDate(ServiceTestUtil.nextDate());
+		mbThreadFlag.setCreateDate(RandomTestUtil.nextDate());
 
-		mbThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
+		mbThreadFlag.setModifiedDate(RandomTestUtil.nextDate());
 
-		mbThreadFlag.setThreadId(ServiceTestUtil.nextLong());
+		mbThreadFlag.setThreadId(RandomTestUtil.nextLong());
 
 		_persistence.update(mbThreadFlag);
 

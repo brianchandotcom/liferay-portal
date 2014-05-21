@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class DDMStorageLinkPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
 
@@ -126,17 +126,17 @@ public class DDMStorageLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStorageLink newDDMStorageLink = _persistence.create(pk);
 
-		newDDMStorageLink.setUuid(ServiceTestUtil.randomString());
+		newDDMStorageLink.setUuid(RandomTestUtil.randomString());
 
-		newDDMStorageLink.setClassNameId(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setClassNameId(RandomTestUtil.nextLong());
 
-		newDDMStorageLink.setClassPK(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setClassPK(RandomTestUtil.nextLong());
 
-		newDDMStorageLink.setStructureId(ServiceTestUtil.nextLong());
+		newDDMStorageLink.setStructureId(RandomTestUtil.nextLong());
 
 		_persistence.update(newDDMStorageLink);
 
@@ -171,7 +171,7 @@ public class DDMStorageLinkPersistenceTest {
 	@Test
 	public void testCountByClassPK() {
 		try {
-			_persistence.countByClassPK(ServiceTestUtil.nextLong());
+			_persistence.countByClassPK(RandomTestUtil.nextLong());
 
 			_persistence.countByClassPK(0L);
 		}
@@ -183,7 +183,7 @@ public class DDMStorageLinkPersistenceTest {
 	@Test
 	public void testCountByStructureId() {
 		try {
-			_persistence.countByStructureId(ServiceTestUtil.nextLong());
+			_persistence.countByStructureId(RandomTestUtil.nextLong());
 
 			_persistence.countByStructureId(0L);
 		}
@@ -203,7 +203,7 @@ public class DDMStorageLinkPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -243,7 +243,7 @@ public class DDMStorageLinkPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStorageLink missingDDMStorageLink = _persistence.fetchByPrimaryKey(pk);
 
@@ -298,7 +298,7 @@ public class DDMStorageLinkPersistenceTest {
 				DDMStorageLink.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DDMStorageLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -339,7 +339,7 @@ public class DDMStorageLinkPersistenceTest {
 				"storageLinkId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("storageLinkId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -363,17 +363,17 @@ public class DDMStorageLinkPersistenceTest {
 	}
 
 	protected DDMStorageLink addDDMStorageLink() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
 
-		ddmStorageLink.setUuid(ServiceTestUtil.randomString());
+		ddmStorageLink.setUuid(RandomTestUtil.randomString());
 
-		ddmStorageLink.setClassNameId(ServiceTestUtil.nextLong());
+		ddmStorageLink.setClassNameId(RandomTestUtil.nextLong());
 
-		ddmStorageLink.setClassPK(ServiceTestUtil.nextLong());
+		ddmStorageLink.setClassPK(RandomTestUtil.nextLong());
 
-		ddmStorageLink.setStructureId(ServiceTestUtil.nextLong());
+		ddmStorageLink.setStructureId(RandomTestUtil.nextLong());
 
 		_persistence.update(ddmStorageLink);
 

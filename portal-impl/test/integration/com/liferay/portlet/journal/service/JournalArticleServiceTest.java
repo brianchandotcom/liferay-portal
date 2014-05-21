@@ -24,23 +24,24 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.test.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
+import com.liferay.test.portlet.journal.util.JournalTestUtil;
 
 import java.io.InputStream;
 
@@ -273,7 +274,7 @@ public class JournalArticleServiceTest {
 		throws Exception {
 
 		List<JournalArticle> expectedArticles = addArticles(
-			2, ServiceTestUtil.randomString());
+			2, RandomTestUtil.randomString());
 
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);
@@ -300,7 +301,7 @@ public class JournalArticleServiceTest {
 		throws Exception {
 
 		List<JournalArticle> expectedArticles = addArticles(
-			2, ServiceTestUtil.randomString());
+			2, RandomTestUtil.randomString());
 
 		expectedArticles.add(0, _article);
 
@@ -329,7 +330,7 @@ public class JournalArticleServiceTest {
 		throws Exception {
 
 		List<JournalArticle> expectedArticles = addArticles(
-			2, ServiceTestUtil.randomString());
+			2, RandomTestUtil.randomString());
 
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);
@@ -356,7 +357,7 @@ public class JournalArticleServiceTest {
 		throws Exception {
 
 		List<JournalArticle> expectedArticles = addArticles(
-			2, ServiceTestUtil.randomString());
+			2, RandomTestUtil.randomString());
 
 		expectedArticles.add(0, _article);
 
@@ -432,7 +433,7 @@ public class JournalArticleServiceTest {
 			JournalArticle article = JournalTestUtil.addArticle(
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ServiceTestUtil.randomString(), content);
+				RandomTestUtil.randomString(), content);
 
 			articles.add(article);
 		}
@@ -456,7 +457,7 @@ public class JournalArticleServiceTest {
 	protected List<JournalArticle> createArticlesWithKeyword(int count)
 		throws Exception {
 
-		_keyword = ServiceTestUtil.randomString();
+		_keyword = RandomTestUtil.randomString();
 
 		List<JournalArticle> articles = searchArticlesByKeyword(
 			_keyword, WorkflowConstants.STATUS_ANY);
@@ -525,8 +526,8 @@ public class JournalArticleServiceTest {
 
 		String xmlContent = readText(journalArticleContent);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		for (String requiredFieldName : requiredFields.keySet()) {
 			Assert.assertTrue(ddmStructure.getFieldRequired(requiredFieldName));
@@ -560,7 +561,8 @@ public class JournalArticleServiceTest {
 			JournalArticle article, int status)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
 		if (status == WorkflowConstants.STATUS_DRAFT) {
 			serviceContext.setWorkflowAction(

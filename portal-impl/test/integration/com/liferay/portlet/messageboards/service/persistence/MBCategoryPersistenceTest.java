@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBCategory mbCategory = _persistence.create(pk);
 
@@ -128,45 +128,45 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBCategory newMBCategory = _persistence.create(pk);
 
-		newMBCategory.setUuid(ServiceTestUtil.randomString());
+		newMBCategory.setUuid(RandomTestUtil.randomString());
 
-		newMBCategory.setGroupId(ServiceTestUtil.nextLong());
+		newMBCategory.setGroupId(RandomTestUtil.nextLong());
 
-		newMBCategory.setCompanyId(ServiceTestUtil.nextLong());
+		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
 
-		newMBCategory.setUserId(ServiceTestUtil.nextLong());
+		newMBCategory.setUserId(RandomTestUtil.nextLong());
 
-		newMBCategory.setUserName(ServiceTestUtil.randomString());
+		newMBCategory.setUserName(RandomTestUtil.randomString());
 
-		newMBCategory.setCreateDate(ServiceTestUtil.nextDate());
+		newMBCategory.setCreateDate(RandomTestUtil.nextDate());
 
-		newMBCategory.setModifiedDate(ServiceTestUtil.nextDate());
+		newMBCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		newMBCategory.setParentCategoryId(ServiceTestUtil.nextLong());
+		newMBCategory.setParentCategoryId(RandomTestUtil.nextLong());
 
-		newMBCategory.setName(ServiceTestUtil.randomString());
+		newMBCategory.setName(RandomTestUtil.randomString());
 
-		newMBCategory.setDescription(ServiceTestUtil.randomString());
+		newMBCategory.setDescription(RandomTestUtil.randomString());
 
-		newMBCategory.setDisplayStyle(ServiceTestUtil.randomString());
+		newMBCategory.setDisplayStyle(RandomTestUtil.randomString());
 
-		newMBCategory.setThreadCount(ServiceTestUtil.nextInt());
+		newMBCategory.setThreadCount(RandomTestUtil.nextInt());
 
-		newMBCategory.setMessageCount(ServiceTestUtil.nextInt());
+		newMBCategory.setMessageCount(RandomTestUtil.nextInt());
 
-		newMBCategory.setLastPostDate(ServiceTestUtil.nextDate());
+		newMBCategory.setLastPostDate(RandomTestUtil.nextDate());
 
-		newMBCategory.setStatus(ServiceTestUtil.nextInt());
+		newMBCategory.setStatus(RandomTestUtil.nextInt());
 
-		newMBCategory.setStatusByUserId(ServiceTestUtil.nextLong());
+		newMBCategory.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newMBCategory.setStatusByUserName(ServiceTestUtil.randomString());
+		newMBCategory.setStatusByUserName(RandomTestUtil.randomString());
 
-		newMBCategory.setStatusDate(ServiceTestUtil.nextDate());
+		newMBCategory.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newMBCategory);
 
@@ -234,7 +234,7 @@ public class MBCategoryPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -249,7 +249,7 @@ public class MBCategoryPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -263,7 +263,7 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -275,7 +275,7 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -287,8 +287,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByG_P() {
 		try {
-			_persistence.countByG_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_P(0L, 0L);
 		}
@@ -300,8 +300,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByG_PArrayable() {
 		try {
-			_persistence.countByG_P(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L });
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -311,8 +311,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByG_S() {
 		try {
-			_persistence.countByG_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_S(0L, 0);
 		}
@@ -324,8 +324,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByC_S() {
 		try {
-			_persistence.countByC_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByC_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByC_S(0L, 0);
 		}
@@ -337,8 +337,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByG_P_S() {
 		try {
-			_persistence.countByG_P_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_P_S(0L, 0L, 0);
 		}
@@ -350,9 +350,9 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByG_P_SArrayable() {
 		try {
-			_persistence.countByG_P_S(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -362,8 +362,8 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByNotC_G_P() {
 		try {
-			_persistence.countByNotC_G_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByNotC_G_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByNotC_G_P(0L, 0L, 0L);
 		}
@@ -376,9 +376,9 @@ public class MBCategoryPersistenceTest {
 	public void testCountByNotC_G_PArrayable() {
 		try {
 			_persistence.countByNotC_G_P(new long[] {
-					ServiceTestUtil.nextLong(), 0L
-				}, ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L });
+					RandomTestUtil.nextLong(), 0L
+				}, RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -388,9 +388,9 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testCountByNotC_G_P_S() {
 		try {
-			_persistence.countByNotC_G_P_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByNotC_G_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByNotC_G_P_S(0L, 0L, 0L, 0);
 		}
@@ -403,10 +403,10 @@ public class MBCategoryPersistenceTest {
 	public void testCountByNotC_G_P_SArrayable() {
 		try {
 			_persistence.countByNotC_G_P_S(new long[] {
-					ServiceTestUtil.nextLong(), 0L
-				}, ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextInt());
+					RandomTestUtil.nextLong(), 0L
+				}, RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -424,7 +424,7 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -478,7 +478,7 @@ public class MBCategoryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBCategory missingMBCategory = _persistence.fetchByPrimaryKey(pk);
 
@@ -533,7 +533,7 @@ public class MBCategoryPersistenceTest {
 				MBCategory.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -572,7 +572,7 @@ public class MBCategoryPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -599,45 +599,45 @@ public class MBCategoryPersistenceTest {
 	}
 
 	protected MBCategory addMBCategory() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBCategory mbCategory = _persistence.create(pk);
 
-		mbCategory.setUuid(ServiceTestUtil.randomString());
+		mbCategory.setUuid(RandomTestUtil.randomString());
 
-		mbCategory.setGroupId(ServiceTestUtil.nextLong());
+		mbCategory.setGroupId(RandomTestUtil.nextLong());
 
-		mbCategory.setCompanyId(ServiceTestUtil.nextLong());
+		mbCategory.setCompanyId(RandomTestUtil.nextLong());
 
-		mbCategory.setUserId(ServiceTestUtil.nextLong());
+		mbCategory.setUserId(RandomTestUtil.nextLong());
 
-		mbCategory.setUserName(ServiceTestUtil.randomString());
+		mbCategory.setUserName(RandomTestUtil.randomString());
 
-		mbCategory.setCreateDate(ServiceTestUtil.nextDate());
+		mbCategory.setCreateDate(RandomTestUtil.nextDate());
 
-		mbCategory.setModifiedDate(ServiceTestUtil.nextDate());
+		mbCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		mbCategory.setParentCategoryId(ServiceTestUtil.nextLong());
+		mbCategory.setParentCategoryId(RandomTestUtil.nextLong());
 
-		mbCategory.setName(ServiceTestUtil.randomString());
+		mbCategory.setName(RandomTestUtil.randomString());
 
-		mbCategory.setDescription(ServiceTestUtil.randomString());
+		mbCategory.setDescription(RandomTestUtil.randomString());
 
-		mbCategory.setDisplayStyle(ServiceTestUtil.randomString());
+		mbCategory.setDisplayStyle(RandomTestUtil.randomString());
 
-		mbCategory.setThreadCount(ServiceTestUtil.nextInt());
+		mbCategory.setThreadCount(RandomTestUtil.nextInt());
 
-		mbCategory.setMessageCount(ServiceTestUtil.nextInt());
+		mbCategory.setMessageCount(RandomTestUtil.nextInt());
 
-		mbCategory.setLastPostDate(ServiceTestUtil.nextDate());
+		mbCategory.setLastPostDate(RandomTestUtil.nextDate());
 
-		mbCategory.setStatus(ServiceTestUtil.nextInt());
+		mbCategory.setStatus(RandomTestUtil.nextInt());
 
-		mbCategory.setStatusByUserId(ServiceTestUtil.nextLong());
+		mbCategory.setStatusByUserId(RandomTestUtil.nextLong());
 
-		mbCategory.setStatusByUserName(ServiceTestUtil.randomString());
+		mbCategory.setStatusByUserName(RandomTestUtil.randomString());
 
-		mbCategory.setStatusDate(ServiceTestUtil.nextDate());
+		mbCategory.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(mbCategory);
 

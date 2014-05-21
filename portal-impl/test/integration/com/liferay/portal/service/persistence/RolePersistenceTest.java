@@ -35,13 +35,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +98,7 @@ public class RolePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Role role = _persistence.create(pk);
 
@@ -127,37 +125,37 @@ public class RolePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Role newRole = _persistence.create(pk);
 
-		newRole.setMvccVersion(ServiceTestUtil.nextLong());
+		newRole.setMvccVersion(RandomTestUtil.nextLong());
 
-		newRole.setUuid(ServiceTestUtil.randomString());
+		newRole.setUuid(RandomTestUtil.randomString());
 
-		newRole.setCompanyId(ServiceTestUtil.nextLong());
+		newRole.setCompanyId(RandomTestUtil.nextLong());
 
-		newRole.setUserId(ServiceTestUtil.nextLong());
+		newRole.setUserId(RandomTestUtil.nextLong());
 
-		newRole.setUserName(ServiceTestUtil.randomString());
+		newRole.setUserName(RandomTestUtil.randomString());
 
-		newRole.setCreateDate(ServiceTestUtil.nextDate());
+		newRole.setCreateDate(RandomTestUtil.nextDate());
 
-		newRole.setModifiedDate(ServiceTestUtil.nextDate());
+		newRole.setModifiedDate(RandomTestUtil.nextDate());
 
-		newRole.setClassNameId(ServiceTestUtil.nextLong());
+		newRole.setClassNameId(RandomTestUtil.nextLong());
 
-		newRole.setClassPK(ServiceTestUtil.nextLong());
+		newRole.setClassPK(RandomTestUtil.nextLong());
 
-		newRole.setName(ServiceTestUtil.randomString());
+		newRole.setName(RandomTestUtil.randomString());
 
-		newRole.setTitle(ServiceTestUtil.randomString());
+		newRole.setTitle(RandomTestUtil.randomString());
 
-		newRole.setDescription(ServiceTestUtil.randomString());
+		newRole.setDescription(RandomTestUtil.randomString());
 
-		newRole.setType(ServiceTestUtil.nextInt());
+		newRole.setType(RandomTestUtil.nextInt());
 
-		newRole.setSubtype(ServiceTestUtil.randomString());
+		newRole.setSubtype(RandomTestUtil.randomString());
 
 		_persistence.update(newRole);
 
@@ -204,7 +202,7 @@ public class RolePersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -218,7 +216,7 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -244,7 +242,7 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByType() {
 		try {
-			_persistence.countByType(ServiceTestUtil.nextInt());
+			_persistence.countByType(RandomTestUtil.nextInt());
 
 			_persistence.countByType(0);
 		}
@@ -270,7 +268,7 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByC_N() {
 		try {
-			_persistence.countByC_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_N(0L, StringPool.NULL);
 
@@ -284,8 +282,8 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByC_T() {
 		try {
-			_persistence.countByC_T(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByC_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByC_T(0L, 0);
 		}
@@ -297,8 +295,8 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByC_TArrayable() {
 		try {
-			_persistence.countByC_T(ServiceTestUtil.nextLong(),
-				new int[] { ServiceTestUtil.nextInt(), 0 });
+			_persistence.countByC_T(RandomTestUtil.nextLong(),
+				new int[] { RandomTestUtil.nextInt(), 0 });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -308,7 +306,7 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByT_S() {
 		try {
-			_persistence.countByT_S(ServiceTestUtil.nextInt(), StringPool.BLANK);
+			_persistence.countByT_S(RandomTestUtil.nextInt(), StringPool.BLANK);
 
 			_persistence.countByT_S(0, StringPool.NULL);
 
@@ -322,8 +320,8 @@ public class RolePersistenceTest {
 	@Test
 	public void testCountByC_C_C() {
 		try {
-			_persistence.countByC_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByC_C_C(0L, 0L, 0L);
 		}
@@ -343,7 +341,7 @@ public class RolePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -384,7 +382,7 @@ public class RolePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Role missingRole = _persistence.fetchByPrimaryKey(pk);
 
@@ -439,7 +437,7 @@ public class RolePersistenceTest {
 				Role.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("roleId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Role> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -478,7 +476,7 @@ public class RolePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("roleId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("roleId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -511,37 +509,37 @@ public class RolePersistenceTest {
 	}
 
 	protected Role addRole() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Role role = _persistence.create(pk);
 
-		role.setMvccVersion(ServiceTestUtil.nextLong());
+		role.setMvccVersion(RandomTestUtil.nextLong());
 
-		role.setUuid(ServiceTestUtil.randomString());
+		role.setUuid(RandomTestUtil.randomString());
 
-		role.setCompanyId(ServiceTestUtil.nextLong());
+		role.setCompanyId(RandomTestUtil.nextLong());
 
-		role.setUserId(ServiceTestUtil.nextLong());
+		role.setUserId(RandomTestUtil.nextLong());
 
-		role.setUserName(ServiceTestUtil.randomString());
+		role.setUserName(RandomTestUtil.randomString());
 
-		role.setCreateDate(ServiceTestUtil.nextDate());
+		role.setCreateDate(RandomTestUtil.nextDate());
 
-		role.setModifiedDate(ServiceTestUtil.nextDate());
+		role.setModifiedDate(RandomTestUtil.nextDate());
 
-		role.setClassNameId(ServiceTestUtil.nextLong());
+		role.setClassNameId(RandomTestUtil.nextLong());
 
-		role.setClassPK(ServiceTestUtil.nextLong());
+		role.setClassPK(RandomTestUtil.nextLong());
 
-		role.setName(ServiceTestUtil.randomString());
+		role.setName(RandomTestUtil.randomString());
 
-		role.setTitle(ServiceTestUtil.randomString());
+		role.setTitle(RandomTestUtil.randomString());
 
-		role.setDescription(ServiceTestUtil.randomString());
+		role.setDescription(RandomTestUtil.randomString());
 
-		role.setType(ServiceTestUtil.nextInt());
+		role.setType(RandomTestUtil.nextInt());
 
-		role.setSubtype(ServiceTestUtil.randomString());
+		role.setSubtype(RandomTestUtil.randomString());
 
 		_persistence.update(role);
 

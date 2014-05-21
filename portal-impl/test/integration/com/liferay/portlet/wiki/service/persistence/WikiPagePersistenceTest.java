@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -44,6 +43,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -102,7 +102,7 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPage wikiPage = _persistence.create(pk);
 
@@ -129,53 +129,53 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPage newWikiPage = _persistence.create(pk);
 
-		newWikiPage.setUuid(ServiceTestUtil.randomString());
+		newWikiPage.setUuid(RandomTestUtil.randomString());
 
-		newWikiPage.setResourcePrimKey(ServiceTestUtil.nextLong());
+		newWikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
-		newWikiPage.setGroupId(ServiceTestUtil.nextLong());
+		newWikiPage.setGroupId(RandomTestUtil.nextLong());
 
-		newWikiPage.setCompanyId(ServiceTestUtil.nextLong());
+		newWikiPage.setCompanyId(RandomTestUtil.nextLong());
 
-		newWikiPage.setUserId(ServiceTestUtil.nextLong());
+		newWikiPage.setUserId(RandomTestUtil.nextLong());
 
-		newWikiPage.setUserName(ServiceTestUtil.randomString());
+		newWikiPage.setUserName(RandomTestUtil.randomString());
 
-		newWikiPage.setCreateDate(ServiceTestUtil.nextDate());
+		newWikiPage.setCreateDate(RandomTestUtil.nextDate());
 
-		newWikiPage.setModifiedDate(ServiceTestUtil.nextDate());
+		newWikiPage.setModifiedDate(RandomTestUtil.nextDate());
 
-		newWikiPage.setNodeId(ServiceTestUtil.nextLong());
+		newWikiPage.setNodeId(RandomTestUtil.nextLong());
 
-		newWikiPage.setTitle(ServiceTestUtil.randomString());
+		newWikiPage.setTitle(RandomTestUtil.randomString());
 
-		newWikiPage.setVersion(ServiceTestUtil.nextDouble());
+		newWikiPage.setVersion(RandomTestUtil.nextDouble());
 
-		newWikiPage.setMinorEdit(ServiceTestUtil.randomBoolean());
+		newWikiPage.setMinorEdit(RandomTestUtil.randomBoolean());
 
-		newWikiPage.setContent(ServiceTestUtil.randomString());
+		newWikiPage.setContent(RandomTestUtil.randomString());
 
-		newWikiPage.setSummary(ServiceTestUtil.randomString());
+		newWikiPage.setSummary(RandomTestUtil.randomString());
 
-		newWikiPage.setFormat(ServiceTestUtil.randomString());
+		newWikiPage.setFormat(RandomTestUtil.randomString());
 
-		newWikiPage.setHead(ServiceTestUtil.randomBoolean());
+		newWikiPage.setHead(RandomTestUtil.randomBoolean());
 
-		newWikiPage.setParentTitle(ServiceTestUtil.randomString());
+		newWikiPage.setParentTitle(RandomTestUtil.randomString());
 
-		newWikiPage.setRedirectTitle(ServiceTestUtil.randomString());
+		newWikiPage.setRedirectTitle(RandomTestUtil.randomString());
 
-		newWikiPage.setStatus(ServiceTestUtil.nextInt());
+		newWikiPage.setStatus(RandomTestUtil.nextInt());
 
-		newWikiPage.setStatusByUserId(ServiceTestUtil.nextLong());
+		newWikiPage.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newWikiPage.setStatusByUserName(ServiceTestUtil.randomString());
+		newWikiPage.setStatusByUserName(RandomTestUtil.randomString());
 
-		newWikiPage.setStatusDate(ServiceTestUtil.nextDate());
+		newWikiPage.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newWikiPage);
 
@@ -247,7 +247,7 @@ public class WikiPagePersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -262,7 +262,7 @@ public class WikiPagePersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -276,7 +276,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByResourcePrimKey() {
 		try {
-			_persistence.countByResourcePrimKey(ServiceTestUtil.nextLong());
+			_persistence.countByResourcePrimKey(RandomTestUtil.nextLong());
 
 			_persistence.countByResourcePrimKey(0L);
 		}
@@ -288,7 +288,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByNodeId() {
 		try {
-			_persistence.countByNodeId(ServiceTestUtil.nextLong());
+			_persistence.countByNodeId(RandomTestUtil.nextLong());
 
 			_persistence.countByNodeId(0L);
 		}
@@ -314,8 +314,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByR_N() {
 		try {
-			_persistence.countByR_N(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByR_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByR_N(0L, 0L);
 		}
@@ -327,8 +327,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByR_S() {
 		try {
-			_persistence.countByR_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByR_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByR_S(0L, 0);
 		}
@@ -340,7 +340,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_T() {
 		try {
-			_persistence.countByN_T(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByN_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByN_T(0L, StringPool.NULL);
 
@@ -354,10 +354,10 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H() {
 		try {
-			_persistence.countByN_H(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByN_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-			_persistence.countByN_H(0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByN_H(0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -367,7 +367,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_P() {
 		try {
-			_persistence.countByN_P(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByN_P(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByN_P(0L, StringPool.NULL);
 
@@ -381,7 +381,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_R() {
 		try {
-			_persistence.countByN_R(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByN_R(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByN_R(0L, StringPool.NULL);
 
@@ -395,8 +395,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_S() {
 		try {
-			_persistence.countByN_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByN_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByN_S(0L, 0);
 		}
@@ -408,8 +408,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByR_N_V() {
 		try {
-			_persistence.countByR_N_V(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextDouble());
+			_persistence.countByR_N_V(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextDouble());
 
 			_persistence.countByR_N_V(0L, 0L, 0D);
 		}
@@ -421,10 +421,10 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByR_N_H() {
 		try {
-			_persistence.countByR_N_H(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+			_persistence.countByR_N_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-			_persistence.countByR_N_H(0L, 0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByR_N_H(0L, 0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -434,8 +434,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByR_N_S() {
 		try {
-			_persistence.countByR_N_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByR_N_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByR_N_S(0L, 0L, 0);
 		}
@@ -447,10 +447,10 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_N_H() {
 		try {
-			_persistence.countByG_N_H(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+			_persistence.countByG_N_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_N_H(0L, 0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByG_N_H(0L, 0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -460,8 +460,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_N_S() {
 		try {
-			_persistence.countByG_N_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_N_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_N_S(0L, 0L, 0);
 		}
@@ -473,8 +473,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByU_N_S() {
 		try {
-			_persistence.countByU_N_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByU_N_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByU_N_S(0L, 0L, 0);
 		}
@@ -486,8 +486,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_T_V() {
 		try {
-			_persistence.countByN_T_V(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextDouble());
+			_persistence.countByN_T_V(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextDouble());
 
 			_persistence.countByN_T_V(0L, StringPool.NULL, 0D);
 
@@ -501,14 +501,14 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_T_H() {
 		try {
-			_persistence.countByN_T_H(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.randomBoolean());
+			_persistence.countByN_T_H(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.randomBoolean());
 
 			_persistence.countByN_T_H(0L, StringPool.NULL,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 
 			_persistence.countByN_T_H(0L, (String)null,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -518,8 +518,8 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_T_S() {
 		try {
-			_persistence.countByN_T_S(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextInt());
+			_persistence.countByN_T_S(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextInt());
 
 			_persistence.countByN_T_S(0L, StringPool.NULL, 0);
 
@@ -533,13 +533,13 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_P() {
 		try {
-			_persistence.countByN_H_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByN_H_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK);
 
-			_persistence.countByN_H_P(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL);
 
-			_persistence.countByN_H_P(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P(0L, RandomTestUtil.randomBoolean(),
 				(String)null);
 		}
 		catch (Exception e) {
@@ -550,13 +550,13 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_R() {
 		try {
-			_persistence.countByN_H_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByN_H_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK);
 
-			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL);
 
-			_persistence.countByN_H_R(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R(0L, RandomTestUtil.randomBoolean(),
 				(String)null);
 		}
 		catch (Exception e) {
@@ -567,10 +567,10 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_S() {
 		try {
-			_persistence.countByN_H_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextInt());
+			_persistence.countByN_H_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_S(0L, ServiceTestUtil.randomBoolean(), 0);
+			_persistence.countByN_H_S(0L, RandomTestUtil.randomBoolean(), 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -580,10 +580,10 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_NotS() {
 		try {
-			_persistence.countByN_H_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextInt());
+			_persistence.countByN_H_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_NotS(0L, ServiceTestUtil.randomBoolean(), 0);
+			_persistence.countByN_H_NotS(0L, RandomTestUtil.randomBoolean(), 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -593,9 +593,9 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_U_N_S() {
 		try {
-			_persistence.countByG_U_N_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_U_N_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_U_N_S(0L, 0L, 0L, 0);
 		}
@@ -607,15 +607,15 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_N_T_H() {
 		try {
-			_persistence.countByG_N_T_H(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK,
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByG_N_T_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK,
+				RandomTestUtil.randomBoolean());
 
 			_persistence.countByG_N_T_H(0L, 0L, StringPool.NULL,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 
 			_persistence.countByG_N_T_H(0L, 0L, (String)null,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -625,12 +625,12 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_N_H_S() {
 		try {
-			_persistence.countByG_N_H_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_N_H_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_N_H_S(0L, 0L,
-				ServiceTestUtil.randomBoolean(), 0);
+				RandomTestUtil.randomBoolean(), 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -640,14 +640,14 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_P_S() {
 		try {
-			_persistence.countByN_H_P_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK,
-				ServiceTestUtil.nextInt());
+			_persistence.countByN_H_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK,
+				RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_P_S(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P_S(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL, 0);
 
-			_persistence.countByN_H_P_S(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P_S(0L, RandomTestUtil.randomBoolean(),
 				(String)null, 0);
 		}
 		catch (Exception e) {
@@ -658,14 +658,14 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_P_NotS() {
 		try {
-			_persistence.countByN_H_P_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK,
-				ServiceTestUtil.nextInt());
+			_persistence.countByN_H_P_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK,
+				RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_P_NotS(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P_NotS(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL, 0);
 
-			_persistence.countByN_H_P_NotS(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_P_NotS(0L, RandomTestUtil.randomBoolean(),
 				(String)null, 0);
 		}
 		catch (Exception e) {
@@ -676,14 +676,14 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_R_S() {
 		try {
-			_persistence.countByN_H_R_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK,
-				ServiceTestUtil.nextInt());
+			_persistence.countByN_H_R_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK,
+				RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_R_S(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R_S(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL, 0);
 
-			_persistence.countByN_H_R_S(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R_S(0L, RandomTestUtil.randomBoolean(),
 				(String)null, 0);
 		}
 		catch (Exception e) {
@@ -694,14 +694,14 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByN_H_R_NotS() {
 		try {
-			_persistence.countByN_H_R_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK,
-				ServiceTestUtil.nextInt());
+			_persistence.countByN_H_R_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK,
+				RandomTestUtil.nextInt());
 
-			_persistence.countByN_H_R_NotS(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R_NotS(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL, 0);
 
-			_persistence.countByN_H_R_NotS(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByN_H_R_NotS(0L, RandomTestUtil.randomBoolean(),
 				(String)null, 0);
 		}
 		catch (Exception e) {
@@ -712,15 +712,15 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testCountByG_N_H_P_S() {
 		try {
-			_persistence.countByG_N_H_P_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean(),
-				StringPool.BLANK, ServiceTestUtil.nextInt());
+			_persistence.countByG_N_H_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+				StringPool.BLANK, RandomTestUtil.nextInt());
 
 			_persistence.countByG_N_H_P_S(0L, 0L,
-				ServiceTestUtil.randomBoolean(), StringPool.NULL, 0);
+				RandomTestUtil.randomBoolean(), StringPool.NULL, 0);
 
 			_persistence.countByG_N_H_P_S(0L, 0L,
-				ServiceTestUtil.randomBoolean(), (String)null, 0);
+				RandomTestUtil.randomBoolean(), (String)null, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -738,7 +738,7 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -782,7 +782,7 @@ public class WikiPagePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPage missingWikiPage = _persistence.fetchByPrimaryKey(pk);
 
@@ -837,7 +837,7 @@ public class WikiPagePersistenceTest {
 				WikiPage.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -876,7 +876,7 @@ public class WikiPagePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -918,53 +918,53 @@ public class WikiPagePersistenceTest {
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPage wikiPage = _persistence.create(pk);
 
-		wikiPage.setUuid(ServiceTestUtil.randomString());
+		wikiPage.setUuid(RandomTestUtil.randomString());
 
-		wikiPage.setResourcePrimKey(ServiceTestUtil.nextLong());
+		wikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
-		wikiPage.setGroupId(ServiceTestUtil.nextLong());
+		wikiPage.setGroupId(RandomTestUtil.nextLong());
 
-		wikiPage.setCompanyId(ServiceTestUtil.nextLong());
+		wikiPage.setCompanyId(RandomTestUtil.nextLong());
 
-		wikiPage.setUserId(ServiceTestUtil.nextLong());
+		wikiPage.setUserId(RandomTestUtil.nextLong());
 
-		wikiPage.setUserName(ServiceTestUtil.randomString());
+		wikiPage.setUserName(RandomTestUtil.randomString());
 
-		wikiPage.setCreateDate(ServiceTestUtil.nextDate());
+		wikiPage.setCreateDate(RandomTestUtil.nextDate());
 
-		wikiPage.setModifiedDate(ServiceTestUtil.nextDate());
+		wikiPage.setModifiedDate(RandomTestUtil.nextDate());
 
-		wikiPage.setNodeId(ServiceTestUtil.nextLong());
+		wikiPage.setNodeId(RandomTestUtil.nextLong());
 
-		wikiPage.setTitle(ServiceTestUtil.randomString());
+		wikiPage.setTitle(RandomTestUtil.randomString());
 
-		wikiPage.setVersion(ServiceTestUtil.nextDouble());
+		wikiPage.setVersion(RandomTestUtil.nextDouble());
 
-		wikiPage.setMinorEdit(ServiceTestUtil.randomBoolean());
+		wikiPage.setMinorEdit(RandomTestUtil.randomBoolean());
 
-		wikiPage.setContent(ServiceTestUtil.randomString());
+		wikiPage.setContent(RandomTestUtil.randomString());
 
-		wikiPage.setSummary(ServiceTestUtil.randomString());
+		wikiPage.setSummary(RandomTestUtil.randomString());
 
-		wikiPage.setFormat(ServiceTestUtil.randomString());
+		wikiPage.setFormat(RandomTestUtil.randomString());
 
-		wikiPage.setHead(ServiceTestUtil.randomBoolean());
+		wikiPage.setHead(RandomTestUtil.randomBoolean());
 
-		wikiPage.setParentTitle(ServiceTestUtil.randomString());
+		wikiPage.setParentTitle(RandomTestUtil.randomString());
 
-		wikiPage.setRedirectTitle(ServiceTestUtil.randomString());
+		wikiPage.setRedirectTitle(RandomTestUtil.randomString());
 
-		wikiPage.setStatus(ServiceTestUtil.nextInt());
+		wikiPage.setStatus(RandomTestUtil.nextInt());
 
-		wikiPage.setStatusByUserId(ServiceTestUtil.nextLong());
+		wikiPage.setStatusByUserId(RandomTestUtil.nextLong());
 
-		wikiPage.setStatusByUserName(ServiceTestUtil.randomString());
+		wikiPage.setStatusByUserName(RandomTestUtil.randomString());
 
-		wikiPage.setStatusDate(ServiceTestUtil.nextDate());
+		wikiPage.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(wikiPage);
 

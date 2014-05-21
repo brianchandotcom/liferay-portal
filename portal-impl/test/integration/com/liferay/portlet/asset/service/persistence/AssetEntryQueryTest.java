@@ -25,12 +25,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -42,10 +39,14 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.blogs.util.BlogsTestUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,11 +72,12 @@ public class AssetEntryQueryTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				serviceContext);
 
 		_vocabularyId = vocabulary.getVocabularyId();
@@ -335,7 +337,7 @@ public class AssetEntryQueryTest {
 		int[] orderedViewCounts = new int[10];
 
 		for (int i = 0; i < viewCounts.length; i++) {
-			int randomInt = ServiceTestUtil.randomInt();
+			int randomInt = RandomTestUtil.randomInt();
 
 			viewCounts[i] = randomInt;
 			orderedViewCounts[i] = randomInt;
@@ -352,7 +354,7 @@ public class AssetEntryQueryTest {
 		int[] orderedViewCounts = new int[10];
 
 		for (int i = 0; i < viewCounts.length; i++) {
-			int randomInt = ServiceTestUtil.randomInt();
+			int randomInt = RandomTestUtil.randomInt();
 
 			viewCounts[i] = randomInt;
 			orderedViewCounts[i] = randomInt;
@@ -464,8 +466,8 @@ public class AssetEntryQueryTest {
 		int initialEntries = AssetEntryServiceUtil.getEntriesCount(
 			assetEntryQuery);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		if (assetCategoryIds1 != null) {
 			serviceContext.setAssetCategoryIds(assetCategoryIds1);

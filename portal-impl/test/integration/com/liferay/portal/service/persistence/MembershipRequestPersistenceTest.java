@@ -32,12 +32,10 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
 
@@ -123,29 +121,29 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MembershipRequest newMembershipRequest = _persistence.create(pk);
 
-		newMembershipRequest.setMvccVersion(ServiceTestUtil.nextLong());
+		newMembershipRequest.setMvccVersion(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setGroupId(ServiceTestUtil.nextLong());
+		newMembershipRequest.setGroupId(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setCompanyId(ServiceTestUtil.nextLong());
+		newMembershipRequest.setCompanyId(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setUserId(ServiceTestUtil.nextLong());
+		newMembershipRequest.setUserId(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setCreateDate(ServiceTestUtil.nextDate());
+		newMembershipRequest.setCreateDate(RandomTestUtil.nextDate());
 
-		newMembershipRequest.setComments(ServiceTestUtil.randomString());
+		newMembershipRequest.setComments(RandomTestUtil.randomString());
 
-		newMembershipRequest.setReplyComments(ServiceTestUtil.randomString());
+		newMembershipRequest.setReplyComments(RandomTestUtil.randomString());
 
-		newMembershipRequest.setReplyDate(ServiceTestUtil.nextDate());
+		newMembershipRequest.setReplyDate(RandomTestUtil.nextDate());
 
-		newMembershipRequest.setReplierUserId(ServiceTestUtil.nextLong());
+		newMembershipRequest.setReplierUserId(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setStatusId(ServiceTestUtil.nextInt());
+		newMembershipRequest.setStatusId(RandomTestUtil.nextInt());
 
 		_persistence.update(newMembershipRequest);
 
@@ -180,7 +178,7 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -192,7 +190,7 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -204,8 +202,8 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testCountByG_S() {
 		try {
-			_persistence.countByG_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_S(0L, 0);
 		}
@@ -217,8 +215,8 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testCountByG_U_S() {
 		try {
-			_persistence.countByG_U_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_U_S(0L, 0L, 0);
 		}
@@ -238,7 +236,7 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -280,7 +278,7 @@ public class MembershipRequestPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MembershipRequest missingMembershipRequest = _persistence.fetchByPrimaryKey(pk);
 
@@ -335,7 +333,7 @@ public class MembershipRequestPersistenceTest {
 				MembershipRequest.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MembershipRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -376,7 +374,7 @@ public class MembershipRequestPersistenceTest {
 				"membershipRequestId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("membershipRequestId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -385,29 +383,29 @@ public class MembershipRequestPersistenceTest {
 
 	protected MembershipRequest addMembershipRequest()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MembershipRequest membershipRequest = _persistence.create(pk);
 
-		membershipRequest.setMvccVersion(ServiceTestUtil.nextLong());
+		membershipRequest.setMvccVersion(RandomTestUtil.nextLong());
 
-		membershipRequest.setGroupId(ServiceTestUtil.nextLong());
+		membershipRequest.setGroupId(RandomTestUtil.nextLong());
 
-		membershipRequest.setCompanyId(ServiceTestUtil.nextLong());
+		membershipRequest.setCompanyId(RandomTestUtil.nextLong());
 
-		membershipRequest.setUserId(ServiceTestUtil.nextLong());
+		membershipRequest.setUserId(RandomTestUtil.nextLong());
 
-		membershipRequest.setCreateDate(ServiceTestUtil.nextDate());
+		membershipRequest.setCreateDate(RandomTestUtil.nextDate());
 
-		membershipRequest.setComments(ServiceTestUtil.randomString());
+		membershipRequest.setComments(RandomTestUtil.randomString());
 
-		membershipRequest.setReplyComments(ServiceTestUtil.randomString());
+		membershipRequest.setReplyComments(RandomTestUtil.randomString());
 
-		membershipRequest.setReplyDate(ServiceTestUtil.nextDate());
+		membershipRequest.setReplyDate(RandomTestUtil.nextDate());
 
-		membershipRequest.setReplierUserId(ServiceTestUtil.nextLong());
+		membershipRequest.setReplierUserId(RandomTestUtil.nextLong());
 
-		membershipRequest.setStatusId(ServiceTestUtil.nextInt());
+		membershipRequest.setStatusId(RandomTestUtil.nextInt());
 
 		_persistence.update(membershipRequest);
 

@@ -17,17 +17,17 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +51,7 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
@@ -73,11 +73,11 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder grandparentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
 			group.getGroupId(), grandparentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		JournalTestUtil.addArticle(
 			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
@@ -98,11 +98,11 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
 			TestPropsValues.getUserId(), folder.getFolderId());
@@ -120,15 +120,15 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder grandparentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
 			group.getGroupId(), grandparentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		JournalTestUtil.addFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
 			TestPropsValues.getUserId(), parentFolder.getFolderId());

@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.impl.TicketModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +98,7 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Ticket ticket = _persistence.create(pk);
 
@@ -127,27 +125,27 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Ticket newTicket = _persistence.create(pk);
 
-		newTicket.setMvccVersion(ServiceTestUtil.nextLong());
+		newTicket.setMvccVersion(RandomTestUtil.nextLong());
 
-		newTicket.setCompanyId(ServiceTestUtil.nextLong());
+		newTicket.setCompanyId(RandomTestUtil.nextLong());
 
-		newTicket.setCreateDate(ServiceTestUtil.nextDate());
+		newTicket.setCreateDate(RandomTestUtil.nextDate());
 
-		newTicket.setClassNameId(ServiceTestUtil.nextLong());
+		newTicket.setClassNameId(RandomTestUtil.nextLong());
 
-		newTicket.setClassPK(ServiceTestUtil.nextLong());
+		newTicket.setClassPK(RandomTestUtil.nextLong());
 
-		newTicket.setKey(ServiceTestUtil.randomString());
+		newTicket.setKey(RandomTestUtil.randomString());
 
-		newTicket.setType(ServiceTestUtil.nextInt());
+		newTicket.setType(RandomTestUtil.nextInt());
 
-		newTicket.setExtraInfo(ServiceTestUtil.randomString());
+		newTicket.setExtraInfo(RandomTestUtil.randomString());
 
-		newTicket.setExpirationDate(ServiceTestUtil.nextDate());
+		newTicket.setExpirationDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newTicket);
 
@@ -199,7 +197,7 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -239,7 +237,7 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Ticket missingTicket = _persistence.fetchByPrimaryKey(pk);
 
@@ -294,7 +292,7 @@ public class TicketPersistenceTest {
 				Ticket.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ticketId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Ticket> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -333,7 +331,7 @@ public class TicketPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ticketId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("ticketId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -357,27 +355,27 @@ public class TicketPersistenceTest {
 	}
 
 	protected Ticket addTicket() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Ticket ticket = _persistence.create(pk);
 
-		ticket.setMvccVersion(ServiceTestUtil.nextLong());
+		ticket.setMvccVersion(RandomTestUtil.nextLong());
 
-		ticket.setCompanyId(ServiceTestUtil.nextLong());
+		ticket.setCompanyId(RandomTestUtil.nextLong());
 
-		ticket.setCreateDate(ServiceTestUtil.nextDate());
+		ticket.setCreateDate(RandomTestUtil.nextDate());
 
-		ticket.setClassNameId(ServiceTestUtil.nextLong());
+		ticket.setClassNameId(RandomTestUtil.nextLong());
 
-		ticket.setClassPK(ServiceTestUtil.nextLong());
+		ticket.setClassPK(RandomTestUtil.nextLong());
 
-		ticket.setKey(ServiceTestUtil.randomString());
+		ticket.setKey(RandomTestUtil.randomString());
 
-		ticket.setType(ServiceTestUtil.nextInt());
+		ticket.setType(RandomTestUtil.nextInt());
 
-		ticket.setExtraInfo(ServiceTestUtil.randomString());
+		ticket.setExtraInfo(RandomTestUtil.randomString());
 
-		ticket.setExpirationDate(ServiceTestUtil.nextDate());
+		ticket.setExpirationDate(RandomTestUtil.nextDate());
 
 		_persistence.update(ticket);
 

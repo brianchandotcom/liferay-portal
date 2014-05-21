@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -42,6 +41,7 @@ import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class JournalContentSearchPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
 
@@ -127,21 +127,21 @@ public class JournalContentSearchPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalContentSearch newJournalContentSearch = _persistence.create(pk);
 
-		newJournalContentSearch.setGroupId(ServiceTestUtil.nextLong());
+		newJournalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalContentSearch.setCompanyId(ServiceTestUtil.nextLong());
+		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
 
-		newJournalContentSearch.setPrivateLayout(ServiceTestUtil.randomBoolean());
+		newJournalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
-		newJournalContentSearch.setLayoutId(ServiceTestUtil.nextLong());
+		newJournalContentSearch.setLayoutId(RandomTestUtil.nextLong());
 
-		newJournalContentSearch.setPortletId(ServiceTestUtil.randomString());
+		newJournalContentSearch.setPortletId(RandomTestUtil.randomString());
 
-		newJournalContentSearch.setArticleId(ServiceTestUtil.randomString());
+		newJournalContentSearch.setArticleId(RandomTestUtil.randomString());
 
 		_persistence.update(newJournalContentSearch);
 
@@ -194,10 +194,10 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_P() {
 		try {
-			_persistence.countByG_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_P(0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -207,7 +207,7 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_A() {
 		try {
-			_persistence.countByG_A(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_A(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_A(0L, StringPool.NULL);
 
@@ -221,10 +221,10 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_P_L() {
 		try {
-			_persistence.countByG_P_L(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong());
+			_persistence.countByG_P_L(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
-			_persistence.countByG_P_L(0L, ServiceTestUtil.randomBoolean(), 0L);
+			_persistence.countByG_P_L(0L, RandomTestUtil.randomBoolean(), 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -234,13 +234,13 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_P_A() {
 		try {
-			_persistence.countByG_P_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByG_P_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK);
 
-			_persistence.countByG_P_A(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_A(0L, RandomTestUtil.randomBoolean(),
 				StringPool.NULL);
 
-			_persistence.countByG_P_A(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_A(0L, RandomTestUtil.randomBoolean(),
 				(String)null);
 		}
 		catch (Exception e) {
@@ -251,14 +251,14 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_P_L_P() {
 		try {
-			_persistence.countByG_P_L_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong(),
+			_persistence.countByG_P_L_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
 				StringPool.BLANK);
 
-			_persistence.countByG_P_L_P(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_L_P(0L, RandomTestUtil.randomBoolean(),
 				0L, StringPool.NULL);
 
-			_persistence.countByG_P_L_P(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_L_P(0L, RandomTestUtil.randomBoolean(),
 				0L, (String)null);
 		}
 		catch (Exception e) {
@@ -269,14 +269,14 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testCountByG_P_L_P_A() {
 		try {
-			_persistence.countByG_P_L_P_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong(),
+			_persistence.countByG_P_L_P_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
 				StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByG_P_L_P_A(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_L_P_A(0L, RandomTestUtil.randomBoolean(),
 				0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByG_P_L_P_A(0L, ServiceTestUtil.randomBoolean(),
+			_persistence.countByG_P_L_P_A(0L, RandomTestUtil.randomBoolean(),
 				0L, (String)null, (String)null);
 		}
 		catch (Exception e) {
@@ -296,7 +296,7 @@ public class JournalContentSearchPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -338,7 +338,7 @@ public class JournalContentSearchPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalContentSearch missingJournalContentSearch = _persistence.fetchByPrimaryKey(pk);
 
@@ -394,7 +394,7 @@ public class JournalContentSearchPersistenceTest {
 				JournalContentSearch.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,7 +435,7 @@ public class JournalContentSearchPersistenceTest {
 				"contentSearchId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentSearchId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -470,21 +470,21 @@ public class JournalContentSearchPersistenceTest {
 
 	protected JournalContentSearch addJournalContentSearch()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalContentSearch journalContentSearch = _persistence.create(pk);
 
-		journalContentSearch.setGroupId(ServiceTestUtil.nextLong());
+		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
-		journalContentSearch.setCompanyId(ServiceTestUtil.nextLong());
+		journalContentSearch.setCompanyId(RandomTestUtil.nextLong());
 
-		journalContentSearch.setPrivateLayout(ServiceTestUtil.randomBoolean());
+		journalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
-		journalContentSearch.setLayoutId(ServiceTestUtil.nextLong());
+		journalContentSearch.setLayoutId(RandomTestUtil.nextLong());
 
-		journalContentSearch.setPortletId(ServiceTestUtil.randomString());
+		journalContentSearch.setPortletId(RandomTestUtil.randomString());
 
-		journalContentSearch.setArticleId(ServiceTestUtil.randomString());
+		journalContentSearch.setArticleId(RandomTestUtil.randomString());
 
 		_persistence.update(journalContentSearch);
 

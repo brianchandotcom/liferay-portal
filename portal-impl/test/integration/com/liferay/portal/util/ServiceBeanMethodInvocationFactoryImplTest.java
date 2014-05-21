@@ -20,9 +20,10 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.EmailAddressUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
 
 import java.lang.reflect.Method;
 
@@ -98,7 +99,7 @@ public class ServiceBeanMethodInvocationFactoryImplTest {
 	}
 
 	protected EmailAddress newEmailAddress(String address) throws Exception {
-		long emailAddressId = ServiceTestUtil.nextLong();
+		long emailAddressId = RandomTestUtil.nextLong();
 
 		EmailAddress emailAddress = EmailAddressUtil.create(emailAddressId);
 

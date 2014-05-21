@@ -25,7 +25,7 @@ import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
-import com.liferay.portlet.polls.util.PollsTestUtil;
+import com.liferay.test.portlet.polls.util.PollsTestUtil;
 
 import java.util.HashMap;
 import java.util.List;

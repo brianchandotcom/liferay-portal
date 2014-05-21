@@ -32,12 +32,10 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.AccountLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class AccountPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Account account = _persistence.create(pk);
 
@@ -123,41 +121,41 @@ public class AccountPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Account newAccount = _persistence.create(pk);
 
-		newAccount.setMvccVersion(ServiceTestUtil.nextLong());
+		newAccount.setMvccVersion(RandomTestUtil.nextLong());
 
-		newAccount.setCompanyId(ServiceTestUtil.nextLong());
+		newAccount.setCompanyId(RandomTestUtil.nextLong());
 
-		newAccount.setUserId(ServiceTestUtil.nextLong());
+		newAccount.setUserId(RandomTestUtil.nextLong());
 
-		newAccount.setUserName(ServiceTestUtil.randomString());
+		newAccount.setUserName(RandomTestUtil.randomString());
 
-		newAccount.setCreateDate(ServiceTestUtil.nextDate());
+		newAccount.setCreateDate(RandomTestUtil.nextDate());
 
-		newAccount.setModifiedDate(ServiceTestUtil.nextDate());
+		newAccount.setModifiedDate(RandomTestUtil.nextDate());
 
-		newAccount.setParentAccountId(ServiceTestUtil.nextLong());
+		newAccount.setParentAccountId(RandomTestUtil.nextLong());
 
-		newAccount.setName(ServiceTestUtil.randomString());
+		newAccount.setName(RandomTestUtil.randomString());
 
-		newAccount.setLegalName(ServiceTestUtil.randomString());
+		newAccount.setLegalName(RandomTestUtil.randomString());
 
-		newAccount.setLegalId(ServiceTestUtil.randomString());
+		newAccount.setLegalId(RandomTestUtil.randomString());
 
-		newAccount.setLegalType(ServiceTestUtil.randomString());
+		newAccount.setLegalType(RandomTestUtil.randomString());
 
-		newAccount.setSicCode(ServiceTestUtil.randomString());
+		newAccount.setSicCode(RandomTestUtil.randomString());
 
-		newAccount.setTickerSymbol(ServiceTestUtil.randomString());
+		newAccount.setTickerSymbol(RandomTestUtil.randomString());
 
-		newAccount.setIndustry(ServiceTestUtil.randomString());
+		newAccount.setIndustry(RandomTestUtil.randomString());
 
-		newAccount.setType(ServiceTestUtil.randomString());
+		newAccount.setType(RandomTestUtil.randomString());
 
-		newAccount.setSize(ServiceTestUtil.randomString());
+		newAccount.setSize(RandomTestUtil.randomString());
 
 		_persistence.update(newAccount);
 
@@ -208,7 +206,7 @@ public class AccountPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -250,7 +248,7 @@ public class AccountPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Account missingAccount = _persistence.fetchByPrimaryKey(pk);
 
@@ -305,7 +303,7 @@ public class AccountPersistenceTest {
 				Account.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("accountId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Account> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -344,7 +342,7 @@ public class AccountPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("accountId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("accountId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -352,41 +350,41 @@ public class AccountPersistenceTest {
 	}
 
 	protected Account addAccount() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Account account = _persistence.create(pk);
 
-		account.setMvccVersion(ServiceTestUtil.nextLong());
+		account.setMvccVersion(RandomTestUtil.nextLong());
 
-		account.setCompanyId(ServiceTestUtil.nextLong());
+		account.setCompanyId(RandomTestUtil.nextLong());
 
-		account.setUserId(ServiceTestUtil.nextLong());
+		account.setUserId(RandomTestUtil.nextLong());
 
-		account.setUserName(ServiceTestUtil.randomString());
+		account.setUserName(RandomTestUtil.randomString());
 
-		account.setCreateDate(ServiceTestUtil.nextDate());
+		account.setCreateDate(RandomTestUtil.nextDate());
 
-		account.setModifiedDate(ServiceTestUtil.nextDate());
+		account.setModifiedDate(RandomTestUtil.nextDate());
 
-		account.setParentAccountId(ServiceTestUtil.nextLong());
+		account.setParentAccountId(RandomTestUtil.nextLong());
 
-		account.setName(ServiceTestUtil.randomString());
+		account.setName(RandomTestUtil.randomString());
 
-		account.setLegalName(ServiceTestUtil.randomString());
+		account.setLegalName(RandomTestUtil.randomString());
 
-		account.setLegalId(ServiceTestUtil.randomString());
+		account.setLegalId(RandomTestUtil.randomString());
 
-		account.setLegalType(ServiceTestUtil.randomString());
+		account.setLegalType(RandomTestUtil.randomString());
 
-		account.setSicCode(ServiceTestUtil.randomString());
+		account.setSicCode(RandomTestUtil.randomString());
 
-		account.setTickerSymbol(ServiceTestUtil.randomString());
+		account.setTickerSymbol(RandomTestUtil.randomString());
 
-		account.setIndustry(ServiceTestUtil.randomString());
+		account.setIndustry(RandomTestUtil.randomString());
 
-		account.setType(ServiceTestUtil.randomString());
+		account.setType(RandomTestUtil.randomString());
 
-		account.setSize(ServiceTestUtil.randomString());
+		account.setSize(RandomTestUtil.randomString());
 
 		_persistence.update(account);
 

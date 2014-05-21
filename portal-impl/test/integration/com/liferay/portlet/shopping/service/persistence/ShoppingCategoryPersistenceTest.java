@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -39,6 +38,7 @@ import com.liferay.portlet.shopping.NoSuchCategoryException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,7 +97,7 @@ public class ShoppingCategoryPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCategory shoppingCategory = _persistence.create(pk);
 
@@ -124,27 +124,27 @@ public class ShoppingCategoryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCategory newShoppingCategory = _persistence.create(pk);
 
-		newShoppingCategory.setGroupId(ServiceTestUtil.nextLong());
+		newShoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingCategory.setCompanyId(ServiceTestUtil.nextLong());
+		newShoppingCategory.setCompanyId(RandomTestUtil.nextLong());
 
-		newShoppingCategory.setUserId(ServiceTestUtil.nextLong());
+		newShoppingCategory.setUserId(RandomTestUtil.nextLong());
 
-		newShoppingCategory.setUserName(ServiceTestUtil.randomString());
+		newShoppingCategory.setUserName(RandomTestUtil.randomString());
 
-		newShoppingCategory.setCreateDate(ServiceTestUtil.nextDate());
+		newShoppingCategory.setCreateDate(RandomTestUtil.nextDate());
 
-		newShoppingCategory.setModifiedDate(ServiceTestUtil.nextDate());
+		newShoppingCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		newShoppingCategory.setParentCategoryId(ServiceTestUtil.nextLong());
+		newShoppingCategory.setParentCategoryId(RandomTestUtil.nextLong());
 
-		newShoppingCategory.setName(ServiceTestUtil.randomString());
+		newShoppingCategory.setName(RandomTestUtil.randomString());
 
-		newShoppingCategory.setDescription(ServiceTestUtil.randomString());
+		newShoppingCategory.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(newShoppingCategory);
 
@@ -177,7 +177,7 @@ public class ShoppingCategoryPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -189,8 +189,8 @@ public class ShoppingCategoryPersistenceTest {
 	@Test
 	public void testCountByG_P() {
 		try {
-			_persistence.countByG_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_P(0L, 0L);
 		}
@@ -210,7 +210,7 @@ public class ShoppingCategoryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -261,7 +261,7 @@ public class ShoppingCategoryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCategory missingShoppingCategory = _persistence.fetchByPrimaryKey(pk);
 
@@ -316,7 +316,7 @@ public class ShoppingCategoryPersistenceTest {
 				ShoppingCategory.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ShoppingCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -355,7 +355,7 @@ public class ShoppingCategoryPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -363,27 +363,27 @@ public class ShoppingCategoryPersistenceTest {
 	}
 
 	protected ShoppingCategory addShoppingCategory() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCategory shoppingCategory = _persistence.create(pk);
 
-		shoppingCategory.setGroupId(ServiceTestUtil.nextLong());
+		shoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingCategory.setCompanyId(ServiceTestUtil.nextLong());
+		shoppingCategory.setCompanyId(RandomTestUtil.nextLong());
 
-		shoppingCategory.setUserId(ServiceTestUtil.nextLong());
+		shoppingCategory.setUserId(RandomTestUtil.nextLong());
 
-		shoppingCategory.setUserName(ServiceTestUtil.randomString());
+		shoppingCategory.setUserName(RandomTestUtil.randomString());
 
-		shoppingCategory.setCreateDate(ServiceTestUtil.nextDate());
+		shoppingCategory.setCreateDate(RandomTestUtil.nextDate());
 
-		shoppingCategory.setModifiedDate(ServiceTestUtil.nextDate());
+		shoppingCategory.setModifiedDate(RandomTestUtil.nextDate());
 
-		shoppingCategory.setParentCategoryId(ServiceTestUtil.nextLong());
+		shoppingCategory.setParentCategoryId(RandomTestUtil.nextLong());
 
-		shoppingCategory.setName(ServiceTestUtil.randomString());
+		shoppingCategory.setName(RandomTestUtil.randomString());
 
-		shoppingCategory.setDescription(ServiceTestUtil.randomString());
+		shoppingCategory.setDescription(RandomTestUtil.randomString());
 
 		_persistence.update(shoppingCategory);
 

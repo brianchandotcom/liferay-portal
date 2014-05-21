@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -42,6 +41,7 @@ import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class SocialActivitySettingPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySetting socialActivitySetting = _persistence.create(pk);
 
@@ -127,21 +127,21 @@ public class SocialActivitySettingPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySetting newSocialActivitySetting = _persistence.create(pk);
 
-		newSocialActivitySetting.setGroupId(ServiceTestUtil.nextLong());
+		newSocialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivitySetting.setCompanyId(ServiceTestUtil.nextLong());
+		newSocialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
 
-		newSocialActivitySetting.setClassNameId(ServiceTestUtil.nextLong());
+		newSocialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 
-		newSocialActivitySetting.setActivityType(ServiceTestUtil.nextInt());
+		newSocialActivitySetting.setActivityType(RandomTestUtil.nextInt());
 
-		newSocialActivitySetting.setName(ServiceTestUtil.randomString());
+		newSocialActivitySetting.setName(RandomTestUtil.randomString());
 
-		newSocialActivitySetting.setValue(ServiceTestUtil.randomString());
+		newSocialActivitySetting.setValue(RandomTestUtil.randomString());
 
 		_persistence.update(newSocialActivitySetting);
 
@@ -166,7 +166,7 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -178,8 +178,8 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testCountByG_C() {
 		try {
-			_persistence.countByG_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_C(0L, 0L);
 		}
@@ -191,8 +191,8 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testCountByG_A() {
 		try {
-			_persistence.countByG_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_A(0L, 0);
 		}
@@ -204,8 +204,8 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testCountByG_C_A() {
 		try {
-			_persistence.countByG_C_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_C_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_C_A(0L, 0L, 0);
 		}
@@ -217,8 +217,8 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testCountByG_C_A_N() {
 		try {
-			_persistence.countByG_C_A_N(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
+			_persistence.countByG_C_A_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
 				StringPool.BLANK);
 
 			_persistence.countByG_C_A_N(0L, 0L, 0, StringPool.NULL);
@@ -242,7 +242,7 @@ public class SocialActivitySettingPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -284,7 +284,7 @@ public class SocialActivitySettingPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySetting missingSocialActivitySetting = _persistence.fetchByPrimaryKey(pk);
 
@@ -340,7 +340,7 @@ public class SocialActivitySettingPersistenceTest {
 				SocialActivitySetting.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activitySettingId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<SocialActivitySetting> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -381,7 +381,7 @@ public class SocialActivitySettingPersistenceTest {
 				"activitySettingId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activitySettingId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -413,21 +413,21 @@ public class SocialActivitySettingPersistenceTest {
 
 	protected SocialActivitySetting addSocialActivitySetting()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySetting socialActivitySetting = _persistence.create(pk);
 
-		socialActivitySetting.setGroupId(ServiceTestUtil.nextLong());
+		socialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivitySetting.setCompanyId(ServiceTestUtil.nextLong());
+		socialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
 
-		socialActivitySetting.setClassNameId(ServiceTestUtil.nextLong());
+		socialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 
-		socialActivitySetting.setActivityType(ServiceTestUtil.nextInt());
+		socialActivitySetting.setActivityType(RandomTestUtil.nextInt());
 
-		socialActivitySetting.setName(ServiceTestUtil.randomString());
+		socialActivitySetting.setName(RandomTestUtil.randomString());
 
-		socialActivitySetting.setValue(ServiceTestUtil.randomString());
+		socialActivitySetting.setValue(RandomTestUtil.randomString());
 
 		_persistence.update(socialActivitySetting);
 

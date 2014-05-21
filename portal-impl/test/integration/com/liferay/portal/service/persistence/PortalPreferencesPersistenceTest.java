@@ -32,13 +32,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,7 +95,7 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		PortalPreferences portalPreferences = _persistence.create(pk);
 
@@ -124,17 +122,17 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		PortalPreferences newPortalPreferences = _persistence.create(pk);
 
-		newPortalPreferences.setMvccVersion(ServiceTestUtil.nextLong());
+		newPortalPreferences.setMvccVersion(RandomTestUtil.nextLong());
 
-		newPortalPreferences.setOwnerId(ServiceTestUtil.nextLong());
+		newPortalPreferences.setOwnerId(RandomTestUtil.nextLong());
 
-		newPortalPreferences.setOwnerType(ServiceTestUtil.nextInt());
+		newPortalPreferences.setOwnerType(RandomTestUtil.nextInt());
 
-		newPortalPreferences.setPreferences(ServiceTestUtil.randomString());
+		newPortalPreferences.setPreferences(RandomTestUtil.randomString());
 
 		_persistence.update(newPortalPreferences);
 
@@ -155,8 +153,8 @@ public class PortalPreferencesPersistenceTest {
 	@Test
 	public void testCountByO_O() {
 		try {
-			_persistence.countByO_O(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByO_O(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByO_O(0L, 0);
 		}
@@ -176,7 +174,7 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -216,7 +214,7 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		PortalPreferences missingPortalPreferences = _persistence.fetchByPrimaryKey(pk);
 
@@ -271,7 +269,7 @@ public class PortalPreferencesPersistenceTest {
 				PortalPreferences.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<PortalPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -312,7 +310,7 @@ public class PortalPreferencesPersistenceTest {
 				"portalPreferencesId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portalPreferencesId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -339,17 +337,17 @@ public class PortalPreferencesPersistenceTest {
 
 	protected PortalPreferences addPortalPreferences()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		PortalPreferences portalPreferences = _persistence.create(pk);
 
-		portalPreferences.setMvccVersion(ServiceTestUtil.nextLong());
+		portalPreferences.setMvccVersion(RandomTestUtil.nextLong());
 
-		portalPreferences.setOwnerId(ServiceTestUtil.nextLong());
+		portalPreferences.setOwnerId(RandomTestUtil.nextLong());
 
-		portalPreferences.setOwnerType(ServiceTestUtil.nextInt());
+		portalPreferences.setOwnerType(RandomTestUtil.nextInt());
 
-		portalPreferences.setPreferences(ServiceTestUtil.randomString());
+		portalPreferences.setPreferences(RandomTestUtil.randomString());
 
 		_persistence.update(portalPreferences);
 

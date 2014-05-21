@@ -22,8 +22,9 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.OrganizationTestUtil;
-import com.liferay.portal.util.TestPropsValues;
+import com.liferay.test.portal.util.OrganizationTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
 
 import org.junit.runner.RunWith;
 
@@ -54,7 +55,7 @@ public class OrganizationLocalServiceTreeTest
 		}
 
 		Organization organization = OrganizationTestUtil.addOrganization(
-			parentOrganizationId, ServiceTestUtil.randomString(), false);
+			parentOrganizationId, RandomTestUtil.randomString(), false);
 
 		organization.setTreePath(null);
 

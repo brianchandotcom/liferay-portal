@@ -33,14 +33,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.impl.ShardModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.ShardLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class ShardPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Shard shard = _persistence.create(pk);
 
@@ -126,17 +124,17 @@ public class ShardPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Shard newShard = _persistence.create(pk);
 
-		newShard.setMvccVersion(ServiceTestUtil.nextLong());
+		newShard.setMvccVersion(RandomTestUtil.nextLong());
 
-		newShard.setClassNameId(ServiceTestUtil.nextLong());
+		newShard.setClassNameId(RandomTestUtil.nextLong());
 
-		newShard.setClassPK(ServiceTestUtil.nextLong());
+		newShard.setClassPK(RandomTestUtil.nextLong());
 
-		newShard.setName(ServiceTestUtil.randomString());
+		newShard.setName(RandomTestUtil.randomString());
 
 		_persistence.update(newShard);
 
@@ -168,8 +166,8 @@ public class ShardPersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -189,7 +187,7 @@ public class ShardPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -228,7 +226,7 @@ public class ShardPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Shard missingShard = _persistence.fetchByPrimaryKey(pk);
 
@@ -283,7 +281,7 @@ public class ShardPersistenceTest {
 				Shard.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Shard> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -322,7 +320,7 @@ public class ShardPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("shardId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("shardId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -351,17 +349,17 @@ public class ShardPersistenceTest {
 	}
 
 	protected Shard addShard() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Shard shard = _persistence.create(pk);
 
-		shard.setMvccVersion(ServiceTestUtil.nextLong());
+		shard.setMvccVersion(RandomTestUtil.nextLong());
 
-		shard.setClassNameId(ServiceTestUtil.nextLong());
+		shard.setClassNameId(RandomTestUtil.nextLong());
 
-		shard.setClassPK(ServiceTestUtil.nextLong());
+		shard.setClassPK(RandomTestUtil.nextLong());
 
-		shard.setName(ServiceTestUtil.randomString());
+		shard.setName(RandomTestUtil.randomString());
 
 		_persistence.update(shard);
 

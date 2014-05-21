@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -40,6 +39,7 @@ import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class SCProductScreenshotPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCProductScreenshot scProductScreenshot = _persistence.create(pk);
 
@@ -125,21 +125,21 @@ public class SCProductScreenshotPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCProductScreenshot newSCProductScreenshot = _persistence.create(pk);
 
-		newSCProductScreenshot.setCompanyId(ServiceTestUtil.nextLong());
+		newSCProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
 
-		newSCProductScreenshot.setGroupId(ServiceTestUtil.nextLong());
+		newSCProductScreenshot.setGroupId(RandomTestUtil.nextLong());
 
-		newSCProductScreenshot.setProductEntryId(ServiceTestUtil.nextLong());
+		newSCProductScreenshot.setProductEntryId(RandomTestUtil.nextLong());
 
-		newSCProductScreenshot.setThumbnailId(ServiceTestUtil.nextLong());
+		newSCProductScreenshot.setThumbnailId(RandomTestUtil.nextLong());
 
-		newSCProductScreenshot.setFullImageId(ServiceTestUtil.nextLong());
+		newSCProductScreenshot.setFullImageId(RandomTestUtil.nextLong());
 
-		newSCProductScreenshot.setPriority(ServiceTestUtil.nextInt());
+		newSCProductScreenshot.setPriority(RandomTestUtil.nextInt());
 
 		_persistence.update(newSCProductScreenshot);
 
@@ -164,7 +164,7 @@ public class SCProductScreenshotPersistenceTest {
 	@Test
 	public void testCountByProductEntryId() {
 		try {
-			_persistence.countByProductEntryId(ServiceTestUtil.nextLong());
+			_persistence.countByProductEntryId(RandomTestUtil.nextLong());
 
 			_persistence.countByProductEntryId(0L);
 		}
@@ -176,7 +176,7 @@ public class SCProductScreenshotPersistenceTest {
 	@Test
 	public void testCountByThumbnailId() {
 		try {
-			_persistence.countByThumbnailId(ServiceTestUtil.nextLong());
+			_persistence.countByThumbnailId(RandomTestUtil.nextLong());
 
 			_persistence.countByThumbnailId(0L);
 		}
@@ -188,7 +188,7 @@ public class SCProductScreenshotPersistenceTest {
 	@Test
 	public void testCountByFullImageId() {
 		try {
-			_persistence.countByFullImageId(ServiceTestUtil.nextLong());
+			_persistence.countByFullImageId(RandomTestUtil.nextLong());
 
 			_persistence.countByFullImageId(0L);
 		}
@@ -200,8 +200,8 @@ public class SCProductScreenshotPersistenceTest {
 	@Test
 	public void testCountByP_P() {
 		try {
-			_persistence.countByP_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByP_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByP_P(0L, 0);
 		}
@@ -221,7 +221,7 @@ public class SCProductScreenshotPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -262,7 +262,7 @@ public class SCProductScreenshotPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCProductScreenshot missingSCProductScreenshot = _persistence.fetchByPrimaryKey(pk);
 
@@ -317,7 +317,7 @@ public class SCProductScreenshotPersistenceTest {
 				SCProductScreenshot.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productScreenshotId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<SCProductScreenshot> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -358,7 +358,7 @@ public class SCProductScreenshotPersistenceTest {
 				"productScreenshotId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productScreenshotId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -391,21 +391,21 @@ public class SCProductScreenshotPersistenceTest {
 
 	protected SCProductScreenshot addSCProductScreenshot()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCProductScreenshot scProductScreenshot = _persistence.create(pk);
 
-		scProductScreenshot.setCompanyId(ServiceTestUtil.nextLong());
+		scProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
 
-		scProductScreenshot.setGroupId(ServiceTestUtil.nextLong());
+		scProductScreenshot.setGroupId(RandomTestUtil.nextLong());
 
-		scProductScreenshot.setProductEntryId(ServiceTestUtil.nextLong());
+		scProductScreenshot.setProductEntryId(RandomTestUtil.nextLong());
 
-		scProductScreenshot.setThumbnailId(ServiceTestUtil.nextLong());
+		scProductScreenshot.setThumbnailId(RandomTestUtil.nextLong());
 
-		scProductScreenshot.setFullImageId(ServiceTestUtil.nextLong());
+		scProductScreenshot.setFullImageId(RandomTestUtil.nextLong());
 
-		scProductScreenshot.setPriority(ServiceTestUtil.nextInt());
+		scProductScreenshot.setPriority(RandomTestUtil.nextInt());
 
 		_persistence.update(scProductScreenshot);
 

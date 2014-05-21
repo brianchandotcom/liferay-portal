@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl;
 import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBStatsUser mbStatsUser = _persistence.create(pk);
 
@@ -126,17 +126,17 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBStatsUser newMBStatsUser = _persistence.create(pk);
 
-		newMBStatsUser.setGroupId(ServiceTestUtil.nextLong());
+		newMBStatsUser.setGroupId(RandomTestUtil.nextLong());
 
-		newMBStatsUser.setUserId(ServiceTestUtil.nextLong());
+		newMBStatsUser.setUserId(RandomTestUtil.nextLong());
 
-		newMBStatsUser.setMessageCount(ServiceTestUtil.nextInt());
+		newMBStatsUser.setMessageCount(RandomTestUtil.nextInt());
 
-		newMBStatsUser.setLastPostDate(ServiceTestUtil.nextDate());
+		newMBStatsUser.setLastPostDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newMBStatsUser);
 
@@ -158,7 +158,7 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -170,7 +170,7 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -182,8 +182,8 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testCountByG_U() {
 		try {
-			_persistence.countByG_U(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_U(0L, 0L);
 		}
@@ -195,8 +195,8 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testCountByG_NotU_NotM() {
 		try {
-			_persistence.countByG_NotU_NotM(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_NotU_NotM(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_NotU_NotM(0L, 0L, 0);
 		}
@@ -216,7 +216,7 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -255,7 +255,7 @@ public class MBStatsUserPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBStatsUser missingMBStatsUser = _persistence.fetchByPrimaryKey(pk);
 
@@ -310,7 +310,7 @@ public class MBStatsUserPersistenceTest {
 				MBStatsUser.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MBStatsUser> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -349,7 +349,7 @@ public class MBStatsUserPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("statsUserId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -375,17 +375,17 @@ public class MBStatsUserPersistenceTest {
 	}
 
 	protected MBStatsUser addMBStatsUser() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBStatsUser mbStatsUser = _persistence.create(pk);
 
-		mbStatsUser.setGroupId(ServiceTestUtil.nextLong());
+		mbStatsUser.setGroupId(RandomTestUtil.nextLong());
 
-		mbStatsUser.setUserId(ServiceTestUtil.nextLong());
+		mbStatsUser.setUserId(RandomTestUtil.nextLong());
 
-		mbStatsUser.setMessageCount(ServiceTestUtil.nextInt());
+		mbStatsUser.setMessageCount(RandomTestUtil.nextInt());
 
-		mbStatsUser.setLastPostDate(ServiceTestUtil.nextDate());
+		mbStatsUser.setLastPostDate(RandomTestUtil.nextDate());
 
 		_persistence.update(mbStatsUser);
 

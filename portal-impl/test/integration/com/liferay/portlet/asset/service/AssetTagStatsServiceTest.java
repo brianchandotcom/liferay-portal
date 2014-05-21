@@ -18,17 +18,18 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,14 +55,14 @@ public class AssetTagStatsServiceTest {
 
 	@Test
 	public void testGetTagStats() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setAssetTagNames(new String[] {"basketball"});
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(100), serviceContext);
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(100), serviceContext);
 
 		AssetTag tag = AssetTagLocalServiceUtil.getTag(
 			_group.getGroupId(), "basketball");

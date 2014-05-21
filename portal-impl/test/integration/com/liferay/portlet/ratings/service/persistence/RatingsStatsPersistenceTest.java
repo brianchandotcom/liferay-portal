@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class RatingsStatsPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		RatingsStats ratingsStats = _persistence.create(pk);
 
@@ -126,19 +126,19 @@ public class RatingsStatsPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		RatingsStats newRatingsStats = _persistence.create(pk);
 
-		newRatingsStats.setClassNameId(ServiceTestUtil.nextLong());
+		newRatingsStats.setClassNameId(RandomTestUtil.nextLong());
 
-		newRatingsStats.setClassPK(ServiceTestUtil.nextLong());
+		newRatingsStats.setClassPK(RandomTestUtil.nextLong());
 
-		newRatingsStats.setTotalEntries(ServiceTestUtil.nextInt());
+		newRatingsStats.setTotalEntries(RandomTestUtil.nextInt());
 
-		newRatingsStats.setTotalScore(ServiceTestUtil.nextDouble());
+		newRatingsStats.setTotalScore(RandomTestUtil.nextDouble());
 
-		newRatingsStats.setAverageScore(ServiceTestUtil.nextDouble());
+		newRatingsStats.setAverageScore(RandomTestUtil.nextDouble());
 
 		_persistence.update(newRatingsStats);
 
@@ -161,8 +161,8 @@ public class RatingsStatsPersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -182,7 +182,7 @@ public class RatingsStatsPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -221,7 +221,7 @@ public class RatingsStatsPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		RatingsStats missingRatingsStats = _persistence.fetchByPrimaryKey(pk);
 
@@ -276,7 +276,7 @@ public class RatingsStatsPersistenceTest {
 				RatingsStats.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<RatingsStats> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -315,7 +315,7 @@ public class RatingsStatsPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("statsId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -341,19 +341,19 @@ public class RatingsStatsPersistenceTest {
 	}
 
 	protected RatingsStats addRatingsStats() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		RatingsStats ratingsStats = _persistence.create(pk);
 
-		ratingsStats.setClassNameId(ServiceTestUtil.nextLong());
+		ratingsStats.setClassNameId(RandomTestUtil.nextLong());
 
-		ratingsStats.setClassPK(ServiceTestUtil.nextLong());
+		ratingsStats.setClassPK(RandomTestUtil.nextLong());
 
-		ratingsStats.setTotalEntries(ServiceTestUtil.nextInt());
+		ratingsStats.setTotalEntries(RandomTestUtil.nextInt());
 
-		ratingsStats.setTotalScore(ServiceTestUtil.nextDouble());
+		ratingsStats.setTotalScore(RandomTestUtil.nextDouble());
 
-		ratingsStats.setAverageScore(ServiceTestUtil.nextDouble());
+		ratingsStats.setAverageScore(RandomTestUtil.nextDouble());
 
 		_persistence.update(ratingsStats);
 

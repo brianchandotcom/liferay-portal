@@ -35,13 +35,11 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LockModelImpl;
 import com.liferay.portal.service.LockLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +98,7 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Lock lock = _persistence.create(pk);
 
@@ -127,31 +125,31 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Lock newLock = _persistence.create(pk);
 
-		newLock.setMvccVersion(ServiceTestUtil.nextLong());
+		newLock.setMvccVersion(RandomTestUtil.nextLong());
 
-		newLock.setUuid(ServiceTestUtil.randomString());
+		newLock.setUuid(RandomTestUtil.randomString());
 
-		newLock.setCompanyId(ServiceTestUtil.nextLong());
+		newLock.setCompanyId(RandomTestUtil.nextLong());
 
-		newLock.setUserId(ServiceTestUtil.nextLong());
+		newLock.setUserId(RandomTestUtil.nextLong());
 
-		newLock.setUserName(ServiceTestUtil.randomString());
+		newLock.setUserName(RandomTestUtil.randomString());
 
-		newLock.setCreateDate(ServiceTestUtil.nextDate());
+		newLock.setCreateDate(RandomTestUtil.nextDate());
 
-		newLock.setClassName(ServiceTestUtil.randomString());
+		newLock.setClassName(RandomTestUtil.randomString());
 
-		newLock.setKey(ServiceTestUtil.randomString());
+		newLock.setKey(RandomTestUtil.randomString());
 
-		newLock.setOwner(ServiceTestUtil.randomString());
+		newLock.setOwner(RandomTestUtil.randomString());
 
-		newLock.setInheritable(ServiceTestUtil.randomBoolean());
+		newLock.setInheritable(RandomTestUtil.randomBoolean());
 
-		newLock.setExpirationDate(ServiceTestUtil.nextDate());
+		newLock.setExpirationDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newLock);
 
@@ -194,7 +192,7 @@ public class LockPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -208,9 +206,9 @@ public class LockPersistenceTest {
 	@Test
 	public void testCountByLtExpirationDate() {
 		try {
-			_persistence.countByLtExpirationDate(ServiceTestUtil.nextDate());
+			_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 
-			_persistence.countByLtExpirationDate(ServiceTestUtil.nextDate());
+			_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -242,7 +240,7 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -283,7 +281,7 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Lock missingLock = _persistence.fetchByPrimaryKey(pk);
 
@@ -338,7 +336,7 @@ public class LockPersistenceTest {
 				Lock.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -377,7 +375,7 @@ public class LockPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -404,31 +402,31 @@ public class LockPersistenceTest {
 	}
 
 	protected Lock addLock() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Lock lock = _persistence.create(pk);
 
-		lock.setMvccVersion(ServiceTestUtil.nextLong());
+		lock.setMvccVersion(RandomTestUtil.nextLong());
 
-		lock.setUuid(ServiceTestUtil.randomString());
+		lock.setUuid(RandomTestUtil.randomString());
 
-		lock.setCompanyId(ServiceTestUtil.nextLong());
+		lock.setCompanyId(RandomTestUtil.nextLong());
 
-		lock.setUserId(ServiceTestUtil.nextLong());
+		lock.setUserId(RandomTestUtil.nextLong());
 
-		lock.setUserName(ServiceTestUtil.randomString());
+		lock.setUserName(RandomTestUtil.randomString());
 
-		lock.setCreateDate(ServiceTestUtil.nextDate());
+		lock.setCreateDate(RandomTestUtil.nextDate());
 
-		lock.setClassName(ServiceTestUtil.randomString());
+		lock.setClassName(RandomTestUtil.randomString());
 
-		lock.setKey(ServiceTestUtil.randomString());
+		lock.setKey(RandomTestUtil.randomString());
 
-		lock.setOwner(ServiceTestUtil.randomString());
+		lock.setOwner(RandomTestUtil.randomString());
 
-		lock.setInheritable(ServiceTestUtil.randomBoolean());
+		lock.setInheritable(RandomTestUtil.randomBoolean());
 
-		lock.setExpirationDate(ServiceTestUtil.nextDate());
+		lock.setExpirationDate(RandomTestUtil.nextDate());
 
 		_persistence.update(lock);
 

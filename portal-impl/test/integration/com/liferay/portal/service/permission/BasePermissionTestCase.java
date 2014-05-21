@@ -23,12 +23,13 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.RoleTestUtil;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portal.util.UserTestUtil;
+import com.liferay.test.portal.service.ServiceTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RoleTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +44,8 @@ public abstract class BasePermissionTestCase {
 		group = GroupTestUtil.addGroup();
 		user = UserTestUtil.addUser();
 
-		serviceContext = ServiceTestUtil.getServiceContext(group.getGroupId());
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			group.getGroupId());
 
 		doSetUp();
 

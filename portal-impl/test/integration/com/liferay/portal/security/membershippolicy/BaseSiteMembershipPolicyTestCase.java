@@ -15,9 +15,9 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.RoleTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.RoleTestUtil;
 
 import org.junit.After;
 
@@ -66,12 +66,12 @@ public abstract class BaseSiteMembershipPolicyTestCase
 
 	protected long[] addForbiddenGroups() throws Exception {
 		Group forbiddenGroup1 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_forbiddenGroupIds[0] = forbiddenGroup1.getGroupId();
 
 		Group forbiddenGroup2 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_forbiddenGroupIds[1] = forbiddenGroup2.getGroupId();
 
@@ -87,12 +87,12 @@ public abstract class BaseSiteMembershipPolicyTestCase
 
 	protected long[] addRequiredGroups() throws Exception {
 		Group requiredGroup1 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_requiredGroupIds[0] = requiredGroup1.getGroupId();
 
 		Group requiredGroup2 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_requiredGroupIds[1] = requiredGroup2.getGroupId();
 
@@ -108,12 +108,12 @@ public abstract class BaseSiteMembershipPolicyTestCase
 
 	protected long[] addStandardGroups() throws Exception {
 		Group standardGroup1 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_standardGroupIds[0] = standardGroup1.getGroupId();
 
 		Group standardGroup2 = GroupTestUtil.addGroup(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		_standardGroupIds[1] = standardGroup2.getGroupId();
 

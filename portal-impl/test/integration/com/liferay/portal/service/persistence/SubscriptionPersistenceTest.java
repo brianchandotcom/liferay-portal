@@ -32,14 +32,12 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +96,7 @@ public class SubscriptionPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Subscription subscription = _persistence.create(pk);
 
@@ -125,27 +123,27 @@ public class SubscriptionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Subscription newSubscription = _persistence.create(pk);
 
-		newSubscription.setMvccVersion(ServiceTestUtil.nextLong());
+		newSubscription.setMvccVersion(RandomTestUtil.nextLong());
 
-		newSubscription.setCompanyId(ServiceTestUtil.nextLong());
+		newSubscription.setCompanyId(RandomTestUtil.nextLong());
 
-		newSubscription.setUserId(ServiceTestUtil.nextLong());
+		newSubscription.setUserId(RandomTestUtil.nextLong());
 
-		newSubscription.setUserName(ServiceTestUtil.randomString());
+		newSubscription.setUserName(RandomTestUtil.randomString());
 
-		newSubscription.setCreateDate(ServiceTestUtil.nextDate());
+		newSubscription.setCreateDate(RandomTestUtil.nextDate());
 
-		newSubscription.setModifiedDate(ServiceTestUtil.nextDate());
+		newSubscription.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSubscription.setClassNameId(ServiceTestUtil.nextLong());
+		newSubscription.setClassNameId(RandomTestUtil.nextLong());
 
-		newSubscription.setClassPK(ServiceTestUtil.nextLong());
+		newSubscription.setClassPK(RandomTestUtil.nextLong());
 
-		newSubscription.setFrequency(ServiceTestUtil.randomString());
+		newSubscription.setFrequency(RandomTestUtil.randomString());
 
 		_persistence.update(newSubscription);
 
@@ -178,7 +176,7 @@ public class SubscriptionPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -190,8 +188,8 @@ public class SubscriptionPersistenceTest {
 	@Test
 	public void testCountByU_C() {
 		try {
-			_persistence.countByU_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByU_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByU_C(0L, 0L);
 		}
@@ -203,8 +201,8 @@ public class SubscriptionPersistenceTest {
 	@Test
 	public void testCountByC_C_C() {
 		try {
-			_persistence.countByC_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByC_C_C(0L, 0L, 0L);
 		}
@@ -216,9 +214,9 @@ public class SubscriptionPersistenceTest {
 	@Test
 	public void testCountByC_U_C_C() {
 		try {
-			_persistence.countByC_U_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_U_C_C(0L, 0L, 0L, 0L);
 		}
@@ -230,9 +228,9 @@ public class SubscriptionPersistenceTest {
 	@Test
 	public void testCountByC_U_C_CArrayable() {
 		try {
-			_persistence.countByC_U_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L });
+			_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -250,7 +248,7 @@ public class SubscriptionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -292,7 +290,7 @@ public class SubscriptionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Subscription missingSubscription = _persistence.fetchByPrimaryKey(pk);
 
@@ -347,7 +345,7 @@ public class SubscriptionPersistenceTest {
 				Subscription.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("subscriptionId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Subscription> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -388,7 +386,7 @@ public class SubscriptionPersistenceTest {
 				"subscriptionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("subscriptionId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -418,27 +416,27 @@ public class SubscriptionPersistenceTest {
 	}
 
 	protected Subscription addSubscription() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Subscription subscription = _persistence.create(pk);
 
-		subscription.setMvccVersion(ServiceTestUtil.nextLong());
+		subscription.setMvccVersion(RandomTestUtil.nextLong());
 
-		subscription.setCompanyId(ServiceTestUtil.nextLong());
+		subscription.setCompanyId(RandomTestUtil.nextLong());
 
-		subscription.setUserId(ServiceTestUtil.nextLong());
+		subscription.setUserId(RandomTestUtil.nextLong());
 
-		subscription.setUserName(ServiceTestUtil.randomString());
+		subscription.setUserName(RandomTestUtil.randomString());
 
-		subscription.setCreateDate(ServiceTestUtil.nextDate());
+		subscription.setCreateDate(RandomTestUtil.nextDate());
 
-		subscription.setModifiedDate(ServiceTestUtil.nextDate());
+		subscription.setModifiedDate(RandomTestUtil.nextDate());
 
-		subscription.setClassNameId(ServiceTestUtil.nextLong());
+		subscription.setClassNameId(RandomTestUtil.nextLong());
 
-		subscription.setClassPK(ServiceTestUtil.nextLong());
+		subscription.setClassPK(RandomTestUtil.nextLong());
 
-		subscription.setFrequency(ServiceTestUtil.randomString());
+		subscription.setFrequency(RandomTestUtil.randomString());
 
 		_persistence.update(subscription);
 

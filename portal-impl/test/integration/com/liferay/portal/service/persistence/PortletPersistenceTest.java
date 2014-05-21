@@ -34,13 +34,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletModelImpl;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class PortletPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Portlet portlet = _persistence.create(pk);
 
@@ -126,19 +124,19 @@ public class PortletPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Portlet newPortlet = _persistence.create(pk);
 
-		newPortlet.setMvccVersion(ServiceTestUtil.nextLong());
+		newPortlet.setMvccVersion(RandomTestUtil.nextLong());
 
-		newPortlet.setCompanyId(ServiceTestUtil.nextLong());
+		newPortlet.setCompanyId(RandomTestUtil.nextLong());
 
-		newPortlet.setPortletId(ServiceTestUtil.randomString());
+		newPortlet.setPortletId(RandomTestUtil.randomString());
 
-		newPortlet.setRoles(ServiceTestUtil.randomString());
+		newPortlet.setRoles(RandomTestUtil.randomString());
 
-		newPortlet.setActive(ServiceTestUtil.randomBoolean());
+		newPortlet.setActive(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newPortlet);
 
@@ -158,7 +156,7 @@ public class PortletPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -170,7 +168,7 @@ public class PortletPersistenceTest {
 	@Test
 	public void testCountByC_P() {
 		try {
-			_persistence.countByC_P(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_P(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_P(0L, StringPool.NULL);
 
@@ -192,7 +190,7 @@ public class PortletPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -231,7 +229,7 @@ public class PortletPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Portlet missingPortlet = _persistence.fetchByPrimaryKey(pk);
 
@@ -285,7 +283,7 @@ public class PortletPersistenceTest {
 				Portlet.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Portlet> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -323,7 +321,7 @@ public class PortletPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -350,19 +348,19 @@ public class PortletPersistenceTest {
 	}
 
 	protected Portlet addPortlet() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Portlet portlet = _persistence.create(pk);
 
-		portlet.setMvccVersion(ServiceTestUtil.nextLong());
+		portlet.setMvccVersion(RandomTestUtil.nextLong());
 
-		portlet.setCompanyId(ServiceTestUtil.nextLong());
+		portlet.setCompanyId(RandomTestUtil.nextLong());
 
-		portlet.setPortletId(ServiceTestUtil.randomString());
+		portlet.setPortletId(RandomTestUtil.randomString());
 
-		portlet.setRoles(ServiceTestUtil.randomString());
+		portlet.setRoles(RandomTestUtil.randomString());
 
-		portlet.setActive(ServiceTestUtil.randomBoolean());
+		portlet.setActive(RandomTestUtil.randomBoolean());
 
 		_persistence.update(portlet);
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsFlag announcementsFlag = _persistence.create(pk);
 
@@ -126,17 +126,17 @@ public class AnnouncementsFlagPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsFlag newAnnouncementsFlag = _persistence.create(pk);
 
-		newAnnouncementsFlag.setUserId(ServiceTestUtil.nextLong());
+		newAnnouncementsFlag.setUserId(RandomTestUtil.nextLong());
 
-		newAnnouncementsFlag.setCreateDate(ServiceTestUtil.nextDate());
+		newAnnouncementsFlag.setCreateDate(RandomTestUtil.nextDate());
 
-		newAnnouncementsFlag.setEntryId(ServiceTestUtil.nextLong());
+		newAnnouncementsFlag.setEntryId(RandomTestUtil.nextLong());
 
-		newAnnouncementsFlag.setValue(ServiceTestUtil.nextInt());
+		newAnnouncementsFlag.setValue(RandomTestUtil.nextInt());
 
 		_persistence.update(newAnnouncementsFlag);
 
@@ -158,7 +158,7 @@ public class AnnouncementsFlagPersistenceTest {
 	@Test
 	public void testCountByEntryId() {
 		try {
-			_persistence.countByEntryId(ServiceTestUtil.nextLong());
+			_persistence.countByEntryId(RandomTestUtil.nextLong());
 
 			_persistence.countByEntryId(0L);
 		}
@@ -170,8 +170,8 @@ public class AnnouncementsFlagPersistenceTest {
 	@Test
 	public void testCountByU_E_V() {
 		try {
-			_persistence.countByU_E_V(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByU_E_V(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByU_E_V(0L, 0L, 0);
 		}
@@ -191,7 +191,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -230,7 +230,7 @@ public class AnnouncementsFlagPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsFlag missingAnnouncementsFlag = _persistence.fetchByPrimaryKey(pk);
 
@@ -285,7 +285,7 @@ public class AnnouncementsFlagPersistenceTest {
 				AnnouncementsFlag.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("flagId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<AnnouncementsFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -324,7 +324,7 @@ public class AnnouncementsFlagPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("flagId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("flagId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -353,17 +353,17 @@ public class AnnouncementsFlagPersistenceTest {
 
 	protected AnnouncementsFlag addAnnouncementsFlag()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsFlag announcementsFlag = _persistence.create(pk);
 
-		announcementsFlag.setUserId(ServiceTestUtil.nextLong());
+		announcementsFlag.setUserId(RandomTestUtil.nextLong());
 
-		announcementsFlag.setCreateDate(ServiceTestUtil.nextDate());
+		announcementsFlag.setCreateDate(RandomTestUtil.nextDate());
 
-		announcementsFlag.setEntryId(ServiceTestUtil.nextLong());
+		announcementsFlag.setEntryId(RandomTestUtil.nextLong());
 
-		announcementsFlag.setValue(ServiceTestUtil.nextInt());
+		announcementsFlag.setValue(RandomTestUtil.nextInt());
 
 		_persistence.update(announcementsFlag);
 

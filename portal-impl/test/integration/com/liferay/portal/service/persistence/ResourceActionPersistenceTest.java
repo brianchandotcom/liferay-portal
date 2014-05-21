@@ -34,13 +34,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceAction resourceAction = _persistence.create(pk);
 
@@ -126,17 +124,17 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceAction newResourceAction = _persistence.create(pk);
 
-		newResourceAction.setMvccVersion(ServiceTestUtil.nextLong());
+		newResourceAction.setMvccVersion(RandomTestUtil.nextLong());
 
-		newResourceAction.setName(ServiceTestUtil.randomString());
+		newResourceAction.setName(RandomTestUtil.randomString());
 
-		newResourceAction.setActionId(ServiceTestUtil.randomString());
+		newResourceAction.setActionId(RandomTestUtil.randomString());
 
-		newResourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
+		newResourceAction.setBitwiseValue(RandomTestUtil.nextLong());
 
 		_persistence.update(newResourceAction);
 
@@ -193,7 +191,7 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -233,7 +231,7 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceAction missingResourceAction = _persistence.fetchByPrimaryKey(pk);
 
@@ -288,7 +286,7 @@ public class ResourceActionPersistenceTest {
 				ResourceAction.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceActionId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ResourceAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -329,7 +327,7 @@ public class ResourceActionPersistenceTest {
 				"resourceActionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceActionId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -357,17 +355,17 @@ public class ResourceActionPersistenceTest {
 	}
 
 	protected ResourceAction addResourceAction() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceAction resourceAction = _persistence.create(pk);
 
-		resourceAction.setMvccVersion(ServiceTestUtil.nextLong());
+		resourceAction.setMvccVersion(RandomTestUtil.nextLong());
 
-		resourceAction.setName(ServiceTestUtil.randomString());
+		resourceAction.setName(RandomTestUtil.randomString());
 
-		resourceAction.setActionId(ServiceTestUtil.randomString());
+		resourceAction.setActionId(RandomTestUtil.randomString());
 
-		resourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
+		resourceAction.setBitwiseValue(RandomTestUtil.nextLong());
 
 		_persistence.update(resourceAction);
 

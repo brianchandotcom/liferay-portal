@@ -20,14 +20,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.test.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -274,7 +274,8 @@ public class UserGroupMembershipPolicyMembershipsTest
 
 		UserGroupServiceUtil.updateUserGroup(
 			userGroup.getUserGroupId(), userGroup.getName(),
-			userGroup.getDescription(), ServiceTestUtil.getServiceContext());
+			userGroup.getDescription(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertTrue(isVerify());
 	}

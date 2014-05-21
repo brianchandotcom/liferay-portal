@@ -17,9 +17,9 @@ package com.liferay.portal.security.membershippolicy;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.UserTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -76,12 +76,12 @@ public abstract class BaseMembershipPolicyTestCase {
 
 	protected long[] addUsers() throws Exception {
 		User user1 = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+			RandomTestUtil.randomString(), group.getGroupId());
 
 		_userIds[0] = user1.getUserId();
 
 		User user2 = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+			RandomTestUtil.randomString(), group.getGroupId());
 
 		_userIds[1] = user2.getUserId();
 

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -40,6 +39,7 @@ import com.liferay.portlet.announcements.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
@@ -125,41 +125,41 @@ public class AnnouncementsEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsEntry newAnnouncementsEntry = _persistence.create(pk);
 
-		newAnnouncementsEntry.setUuid(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setUuid(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setCompanyId(ServiceTestUtil.nextLong());
+		newAnnouncementsEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		newAnnouncementsEntry.setUserId(ServiceTestUtil.nextLong());
+		newAnnouncementsEntry.setUserId(RandomTestUtil.nextLong());
 
-		newAnnouncementsEntry.setUserName(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setUserName(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setCreateDate(ServiceTestUtil.nextDate());
+		newAnnouncementsEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		newAnnouncementsEntry.setModifiedDate(ServiceTestUtil.nextDate());
+		newAnnouncementsEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newAnnouncementsEntry.setClassNameId(ServiceTestUtil.nextLong());
+		newAnnouncementsEntry.setClassNameId(RandomTestUtil.nextLong());
 
-		newAnnouncementsEntry.setClassPK(ServiceTestUtil.nextLong());
+		newAnnouncementsEntry.setClassPK(RandomTestUtil.nextLong());
 
-		newAnnouncementsEntry.setTitle(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setTitle(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setContent(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setContent(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setUrl(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setUrl(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setType(ServiceTestUtil.randomString());
+		newAnnouncementsEntry.setType(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setDisplayDate(ServiceTestUtil.nextDate());
+		newAnnouncementsEntry.setDisplayDate(RandomTestUtil.nextDate());
 
-		newAnnouncementsEntry.setExpirationDate(ServiceTestUtil.nextDate());
+		newAnnouncementsEntry.setExpirationDate(RandomTestUtil.nextDate());
 
-		newAnnouncementsEntry.setPriority(ServiceTestUtil.nextInt());
+		newAnnouncementsEntry.setPriority(RandomTestUtil.nextInt());
 
-		newAnnouncementsEntry.setAlert(ServiceTestUtil.randomBoolean());
+		newAnnouncementsEntry.setAlert(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newAnnouncementsEntry);
 
@@ -223,7 +223,7 @@ public class AnnouncementsEntryPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -237,7 +237,7 @@ public class AnnouncementsEntryPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -249,8 +249,8 @@ public class AnnouncementsEntryPersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -262,10 +262,10 @@ public class AnnouncementsEntryPersistenceTest {
 	@Test
 	public void testCountByC_C_A() {
 		try {
-			_persistence.countByC_C_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+			_persistence.countByC_C_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-			_persistence.countByC_C_A(0L, 0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByC_C_A(0L, 0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -283,7 +283,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -325,7 +325,7 @@ public class AnnouncementsEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsEntry missingAnnouncementsEntry = _persistence.fetchByPrimaryKey(pk);
 
@@ -380,7 +380,7 @@ public class AnnouncementsEntryPersistenceTest {
 				AnnouncementsEntry.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<AnnouncementsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -419,7 +419,7 @@ public class AnnouncementsEntryPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -428,41 +428,41 @@ public class AnnouncementsEntryPersistenceTest {
 
 	protected AnnouncementsEntry addAnnouncementsEntry()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AnnouncementsEntry announcementsEntry = _persistence.create(pk);
 
-		announcementsEntry.setUuid(ServiceTestUtil.randomString());
+		announcementsEntry.setUuid(RandomTestUtil.randomString());
 
-		announcementsEntry.setCompanyId(ServiceTestUtil.nextLong());
+		announcementsEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		announcementsEntry.setUserId(ServiceTestUtil.nextLong());
+		announcementsEntry.setUserId(RandomTestUtil.nextLong());
 
-		announcementsEntry.setUserName(ServiceTestUtil.randomString());
+		announcementsEntry.setUserName(RandomTestUtil.randomString());
 
-		announcementsEntry.setCreateDate(ServiceTestUtil.nextDate());
+		announcementsEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		announcementsEntry.setModifiedDate(ServiceTestUtil.nextDate());
+		announcementsEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		announcementsEntry.setClassNameId(ServiceTestUtil.nextLong());
+		announcementsEntry.setClassNameId(RandomTestUtil.nextLong());
 
-		announcementsEntry.setClassPK(ServiceTestUtil.nextLong());
+		announcementsEntry.setClassPK(RandomTestUtil.nextLong());
 
-		announcementsEntry.setTitle(ServiceTestUtil.randomString());
+		announcementsEntry.setTitle(RandomTestUtil.randomString());
 
-		announcementsEntry.setContent(ServiceTestUtil.randomString());
+		announcementsEntry.setContent(RandomTestUtil.randomString());
 
-		announcementsEntry.setUrl(ServiceTestUtil.randomString());
+		announcementsEntry.setUrl(RandomTestUtil.randomString());
 
-		announcementsEntry.setType(ServiceTestUtil.randomString());
+		announcementsEntry.setType(RandomTestUtil.randomString());
 
-		announcementsEntry.setDisplayDate(ServiceTestUtil.nextDate());
+		announcementsEntry.setDisplayDate(RandomTestUtil.nextDate());
 
-		announcementsEntry.setExpirationDate(ServiceTestUtil.nextDate());
+		announcementsEntry.setExpirationDate(RandomTestUtil.nextDate());
 
-		announcementsEntry.setPriority(ServiceTestUtil.nextInt());
+		announcementsEntry.setPriority(RandomTestUtil.nextInt());
 
-		announcementsEntry.setAlert(ServiceTestUtil.randomBoolean());
+		announcementsEntry.setAlert(RandomTestUtil.randomBoolean());
 
 		_persistence.update(announcementsEntry);
 

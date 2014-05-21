@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class ShoppingCartPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCart shoppingCart = _persistence.create(pk);
 
@@ -126,29 +126,29 @@ public class ShoppingCartPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCart newShoppingCart = _persistence.create(pk);
 
-		newShoppingCart.setGroupId(ServiceTestUtil.nextLong());
+		newShoppingCart.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingCart.setCompanyId(ServiceTestUtil.nextLong());
+		newShoppingCart.setCompanyId(RandomTestUtil.nextLong());
 
-		newShoppingCart.setUserId(ServiceTestUtil.nextLong());
+		newShoppingCart.setUserId(RandomTestUtil.nextLong());
 
-		newShoppingCart.setUserName(ServiceTestUtil.randomString());
+		newShoppingCart.setUserName(RandomTestUtil.randomString());
 
-		newShoppingCart.setCreateDate(ServiceTestUtil.nextDate());
+		newShoppingCart.setCreateDate(RandomTestUtil.nextDate());
 
-		newShoppingCart.setModifiedDate(ServiceTestUtil.nextDate());
+		newShoppingCart.setModifiedDate(RandomTestUtil.nextDate());
 
-		newShoppingCart.setItemIds(ServiceTestUtil.randomString());
+		newShoppingCart.setItemIds(RandomTestUtil.randomString());
 
-		newShoppingCart.setCouponCodes(ServiceTestUtil.randomString());
+		newShoppingCart.setCouponCodes(RandomTestUtil.randomString());
 
-		newShoppingCart.setAltShipping(ServiceTestUtil.nextInt());
+		newShoppingCart.setAltShipping(RandomTestUtil.nextInt());
 
-		newShoppingCart.setInsure(ServiceTestUtil.randomBoolean());
+		newShoppingCart.setInsure(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newShoppingCart);
 
@@ -183,7 +183,7 @@ public class ShoppingCartPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -195,7 +195,7 @@ public class ShoppingCartPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -207,8 +207,8 @@ public class ShoppingCartPersistenceTest {
 	@Test
 	public void testCountByG_U() {
 		try {
-			_persistence.countByG_U(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_U(0L, 0L);
 		}
@@ -228,7 +228,7 @@ public class ShoppingCartPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -269,7 +269,7 @@ public class ShoppingCartPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCart missingShoppingCart = _persistence.fetchByPrimaryKey(pk);
 
@@ -324,7 +324,7 @@ public class ShoppingCartPersistenceTest {
 				ShoppingCart.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ShoppingCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -363,7 +363,7 @@ public class ShoppingCartPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("cartId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("cartId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -389,29 +389,29 @@ public class ShoppingCartPersistenceTest {
 	}
 
 	protected ShoppingCart addShoppingCart() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingCart shoppingCart = _persistence.create(pk);
 
-		shoppingCart.setGroupId(ServiceTestUtil.nextLong());
+		shoppingCart.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingCart.setCompanyId(ServiceTestUtil.nextLong());
+		shoppingCart.setCompanyId(RandomTestUtil.nextLong());
 
-		shoppingCart.setUserId(ServiceTestUtil.nextLong());
+		shoppingCart.setUserId(RandomTestUtil.nextLong());
 
-		shoppingCart.setUserName(ServiceTestUtil.randomString());
+		shoppingCart.setUserName(RandomTestUtil.randomString());
 
-		shoppingCart.setCreateDate(ServiceTestUtil.nextDate());
+		shoppingCart.setCreateDate(RandomTestUtil.nextDate());
 
-		shoppingCart.setModifiedDate(ServiceTestUtil.nextDate());
+		shoppingCart.setModifiedDate(RandomTestUtil.nextDate());
 
-		shoppingCart.setItemIds(ServiceTestUtil.randomString());
+		shoppingCart.setItemIds(RandomTestUtil.randomString());
 
-		shoppingCart.setCouponCodes(ServiceTestUtil.randomString());
+		shoppingCart.setCouponCodes(RandomTestUtil.randomString());
 
-		shoppingCart.setAltShipping(ServiceTestUtil.nextInt());
+		shoppingCart.setAltShipping(RandomTestUtil.nextInt());
 
-		shoppingCart.setInsure(ServiceTestUtil.randomBoolean());
+		shoppingCart.setInsure(RandomTestUtil.randomBoolean());
 
 		_persistence.update(shoppingCart);
 

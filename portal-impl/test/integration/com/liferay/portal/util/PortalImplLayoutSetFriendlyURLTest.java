@@ -22,10 +22,12 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.lang.reflect.Field;
 
@@ -58,7 +60,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME);
 
 			Layout layout = LayoutTestUtil.addLayout(
-				defaultGroup.getGroupId(), ServiceTestUtil.randomString());
+				defaultGroup.getGroupId(), RandomTestUtil.randomString());
 
 			String friendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 				layout.getLayoutSet(), themeDisplay);

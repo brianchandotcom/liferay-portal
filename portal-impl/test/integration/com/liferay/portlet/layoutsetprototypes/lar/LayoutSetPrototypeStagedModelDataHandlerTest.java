@@ -36,11 +36,11 @@ import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,7 +110,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		throws Exception {
 
 		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, LayoutPrototype.class, layoutPrototype);
@@ -149,8 +149,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(
-				ServiceTestUtil.randomString());
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			layoutSetPrototype.getGroupId(), true,
@@ -167,7 +166,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			dependentStagedModelsMap);
 
 		Layout prototypedLayout = LayoutTestUtil.addLayout(
-			layoutSetPrototype.getGroupId(), ServiceTestUtil.randomString(),
+			layoutSetPrototype.getGroupId(), RandomTestUtil.randomString(),
 			true, layoutPrototype, true);
 
 		addLayout(LayoutSetPrototype.class, prototypedLayout);

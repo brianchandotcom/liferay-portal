@@ -32,12 +32,10 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Image image = _persistence.create(pk);
 
@@ -123,21 +121,21 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Image newImage = _persistence.create(pk);
 
-		newImage.setMvccVersion(ServiceTestUtil.nextLong());
+		newImage.setMvccVersion(RandomTestUtil.nextLong());
 
-		newImage.setModifiedDate(ServiceTestUtil.nextDate());
+		newImage.setModifiedDate(RandomTestUtil.nextDate());
 
-		newImage.setType(ServiceTestUtil.randomString());
+		newImage.setType(RandomTestUtil.randomString());
 
-		newImage.setHeight(ServiceTestUtil.nextInt());
+		newImage.setHeight(RandomTestUtil.nextInt());
 
-		newImage.setWidth(ServiceTestUtil.nextInt());
+		newImage.setWidth(RandomTestUtil.nextInt());
 
-		newImage.setSize(ServiceTestUtil.nextInt());
+		newImage.setSize(RandomTestUtil.nextInt());
 
 		_persistence.update(newImage);
 
@@ -158,7 +156,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testCountByLtSize() {
 		try {
-			_persistence.countByLtSize(ServiceTestUtil.nextInt());
+			_persistence.countByLtSize(RandomTestUtil.nextInt());
 
 			_persistence.countByLtSize(0);
 		}
@@ -178,7 +176,7 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -217,7 +215,7 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Image missingImage = _persistence.fetchByPrimaryKey(pk);
 
@@ -272,7 +270,7 @@ public class ImagePersistenceTest {
 				Image.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -311,7 +309,7 @@ public class ImagePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -319,21 +317,21 @@ public class ImagePersistenceTest {
 	}
 
 	protected Image addImage() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		Image image = _persistence.create(pk);
 
-		image.setMvccVersion(ServiceTestUtil.nextLong());
+		image.setMvccVersion(RandomTestUtil.nextLong());
 
-		image.setModifiedDate(ServiceTestUtil.nextDate());
+		image.setModifiedDate(RandomTestUtil.nextDate());
 
-		image.setType(ServiceTestUtil.randomString());
+		image.setType(RandomTestUtil.randomString());
 
-		image.setHeight(ServiceTestUtil.nextInt());
+		image.setHeight(RandomTestUtil.nextInt());
 
-		image.setWidth(ServiceTestUtil.nextInt());
+		image.setWidth(RandomTestUtil.nextInt());
 
-		image.setSize(ServiceTestUtil.nextInt());
+		image.setSize(RandomTestUtil.nextInt());
 
 		_persistence.update(image);
 

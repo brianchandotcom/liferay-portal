@@ -32,11 +32,12 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portal.util.UserTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.OrganizationTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import java.lang.reflect.Field;
 
@@ -144,7 +145,7 @@ public class UserServiceTest {
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			String emailAddress =
-				"UserServiceTest." + ServiceTestUtil.nextLong() +
+				"UserServiceTest." + RandomTestUtil.nextLong() +
 					"@liferay.com";
 
 			UserServiceUtil.updateEmailAddress(
@@ -450,7 +451,7 @@ public class UserServiceTest {
 
 		if (secure) {
 			String emailAddress =
-				"UserServiceTest." + ServiceTestUtil.nextLong() +
+				"UserServiceTest." + RandomTestUtil.nextLong() +
 					"@liferay.com";
 
 			return UserServiceUtil.addUser(
@@ -463,7 +464,7 @@ public class UserServiceTest {
 		}
 		else {
 			String emailAddress =
-				"UserServiceTest." + ServiceTestUtil.nextLong() + "@test.com";
+				"UserServiceTest." + RandomTestUtil.nextLong() + "@test.com";
 
 			return UserLocalServiceUtil.addUser(
 				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
@@ -510,9 +511,9 @@ public class UserServiceTest {
 		Boolean passwordReset = false;
 		String reminderQueryQuestion = StringPool.BLANK;
 		String reminderQueryAnswer = StringPool.BLANK;
-		String screenName = "TestUser" + ServiceTestUtil.nextLong();
+		String screenName = "TestUser" + RandomTestUtil.nextLong();
 		String emailAddress =
-			"UserServiceTest." + ServiceTestUtil.nextLong() + "@liferay.com";
+			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		String languageId = StringPool.BLANK;

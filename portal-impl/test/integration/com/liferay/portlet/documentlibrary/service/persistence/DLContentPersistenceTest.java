@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -44,6 +43,7 @@ import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -105,7 +105,7 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLContent dlContent = _persistence.create(pk);
 
@@ -132,21 +132,21 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLContent newDLContent = _persistence.create(pk);
 
-		newDLContent.setGroupId(ServiceTestUtil.nextLong());
+		newDLContent.setGroupId(RandomTestUtil.nextLong());
 
-		newDLContent.setCompanyId(ServiceTestUtil.nextLong());
+		newDLContent.setCompanyId(RandomTestUtil.nextLong());
 
-		newDLContent.setRepositoryId(ServiceTestUtil.nextLong());
+		newDLContent.setRepositoryId(RandomTestUtil.nextLong());
 
-		newDLContent.setPath(ServiceTestUtil.randomString());
+		newDLContent.setPath(RandomTestUtil.randomString());
 
-		newDLContent.setVersion(ServiceTestUtil.randomString());
+		newDLContent.setVersion(RandomTestUtil.randomString());
 
-		String newDataString = ServiceTestUtil.randomString();
+		String newDataString = RandomTestUtil.randomString();
 
 		byte[] newDataBytes = newDataString.getBytes(StringPool.UTF8);
 
@@ -155,7 +155,7 @@ public class DLContentPersistenceTest {
 
 		newDLContent.setData(newDataBlob);
 
-		newDLContent.setSize(ServiceTestUtil.nextLong());
+		newDLContent.setSize(RandomTestUtil.nextLong());
 
 		_persistence.update(newDLContent);
 
@@ -183,8 +183,8 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R() {
 		try {
-			_persistence.countByC_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_R(0L, 0L);
 		}
@@ -196,8 +196,8 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_P() {
 		try {
-			_persistence.countByC_R_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_R_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_R_P(0L, 0L, StringPool.NULL);
 
@@ -211,8 +211,8 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_LikeP() {
 		try {
-			_persistence.countByC_R_LikeP(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_R_LikeP(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_R_LikeP(0L, 0L, StringPool.NULL);
 
@@ -226,8 +226,8 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_P_V() {
 		try {
-			_persistence.countByC_R_P_V(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+			_persistence.countByC_R_P_V(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
 			_persistence.countByC_R_P_V(0L, 0L, StringPool.NULL, StringPool.NULL);
 
@@ -249,7 +249,7 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -288,7 +288,7 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLContent missingDLContent = _persistence.fetchByPrimaryKey(pk);
 
@@ -343,7 +343,7 @@ public class DLContentPersistenceTest {
 				DLContent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DLContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -382,7 +382,7 @@ public class DLContentPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contentId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -414,21 +414,21 @@ public class DLContentPersistenceTest {
 	}
 
 	protected DLContent addDLContent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLContent dlContent = _persistence.create(pk);
 
-		dlContent.setGroupId(ServiceTestUtil.nextLong());
+		dlContent.setGroupId(RandomTestUtil.nextLong());
 
-		dlContent.setCompanyId(ServiceTestUtil.nextLong());
+		dlContent.setCompanyId(RandomTestUtil.nextLong());
 
-		dlContent.setRepositoryId(ServiceTestUtil.nextLong());
+		dlContent.setRepositoryId(RandomTestUtil.nextLong());
 
-		dlContent.setPath(ServiceTestUtil.randomString());
+		dlContent.setPath(RandomTestUtil.randomString());
 
-		dlContent.setVersion(ServiceTestUtil.randomString());
+		dlContent.setVersion(RandomTestUtil.randomString());
 
-		String dataString = ServiceTestUtil.randomString();
+		String dataString = RandomTestUtil.randomString();
 
 		byte[] dataBytes = dataString.getBytes(StringPool.UTF8);
 
@@ -437,7 +437,7 @@ public class DLContentPersistenceTest {
 
 		dlContent.setData(dataBlob);
 
-		dlContent.setSize(ServiceTestUtil.nextLong());
+		dlContent.setSize(RandomTestUtil.nextLong());
 
 		_persistence.update(dlContent);
 

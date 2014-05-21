@@ -20,7 +20,7 @@ import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.UserGroupTestUtil;
+import com.liferay.test.portal.util.UserGroupTestUtil;
 
 import org.junit.runner.RunWith;
 

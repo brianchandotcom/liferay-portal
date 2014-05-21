@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -40,6 +39,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivity socialActivity = _persistence.create(pk);
 
@@ -125,35 +125,35 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivity newSocialActivity = _persistence.create(pk);
 
-		newSocialActivity.setGroupId(ServiceTestUtil.nextLong());
+		newSocialActivity.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setCompanyId(ServiceTestUtil.nextLong());
+		newSocialActivity.setCompanyId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setUserId(ServiceTestUtil.nextLong());
+		newSocialActivity.setUserId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setCreateDate(ServiceTestUtil.nextLong());
+		newSocialActivity.setCreateDate(RandomTestUtil.nextLong());
 
-		newSocialActivity.setActivitySetId(ServiceTestUtil.nextLong());
+		newSocialActivity.setActivitySetId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
+		newSocialActivity.setMirrorActivityId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setClassNameId(ServiceTestUtil.nextLong());
+		newSocialActivity.setClassNameId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setClassPK(ServiceTestUtil.nextLong());
+		newSocialActivity.setClassPK(RandomTestUtil.nextLong());
 
-		newSocialActivity.setParentClassNameId(ServiceTestUtil.nextLong());
+		newSocialActivity.setParentClassNameId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setParentClassPK(ServiceTestUtil.nextLong());
+		newSocialActivity.setParentClassPK(RandomTestUtil.nextLong());
 
-		newSocialActivity.setType(ServiceTestUtil.nextInt());
+		newSocialActivity.setType(RandomTestUtil.nextInt());
 
-		newSocialActivity.setExtraData(ServiceTestUtil.randomString());
+		newSocialActivity.setExtraData(RandomTestUtil.randomString());
 
-		newSocialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
+		newSocialActivity.setReceiverUserId(RandomTestUtil.nextLong());
 
 		_persistence.update(newSocialActivity);
 
@@ -192,7 +192,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -204,7 +204,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -216,7 +216,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -228,7 +228,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByActivitySetId() {
 		try {
-			_persistence.countByActivitySetId(ServiceTestUtil.nextLong());
+			_persistence.countByActivitySetId(RandomTestUtil.nextLong());
 
 			_persistence.countByActivitySetId(0L);
 		}
@@ -240,7 +240,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByMirrorActivityId() {
 		try {
-			_persistence.countByMirrorActivityId(ServiceTestUtil.nextLong());
+			_persistence.countByMirrorActivityId(RandomTestUtil.nextLong());
 
 			_persistence.countByMirrorActivityId(0L);
 		}
@@ -252,7 +252,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByClassNameId() {
 		try {
-			_persistence.countByClassNameId(ServiceTestUtil.nextLong());
+			_persistence.countByClassNameId(RandomTestUtil.nextLong());
 
 			_persistence.countByClassNameId(0L);
 		}
@@ -264,7 +264,7 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByReceiverUserId() {
 		try {
-			_persistence.countByReceiverUserId(ServiceTestUtil.nextLong());
+			_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByReceiverUserId(0L);
 		}
@@ -276,8 +276,8 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -289,8 +289,8 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByM_C_C() {
 		try {
-			_persistence.countByM_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByM_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByM_C_C(0L, 0L, 0L);
 		}
@@ -302,8 +302,8 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByC_C_T() {
 		try {
-			_persistence.countByC_C_T(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByC_C_T(0L, 0L, 0);
 		}
@@ -315,10 +315,10 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByG_U_C_C_T_R() {
 		try {
-			_persistence.countByG_U_C_C_T_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_U_C_C_T_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_U_C_C_T_R(0L, 0L, 0L, 0L, 0, 0L);
 		}
@@ -330,10 +330,10 @@ public class SocialActivityPersistenceTest {
 	@Test
 	public void testCountByG_U_CD_C_C_T_R() {
 		try {
-			_persistence.countByG_U_CD_C_C_T_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt(), ServiceTestUtil.nextLong());
+			_persistence.countByG_U_CD_C_C_T_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
 
 			_persistence.countByG_U_CD_C_C_T_R(0L, 0L, 0L, 0L, 0L, 0, 0L);
 		}
@@ -353,7 +353,7 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -395,7 +395,7 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivity missingSocialActivity = _persistence.fetchByPrimaryKey(pk);
 
@@ -450,7 +450,7 @@ public class SocialActivityPersistenceTest {
 				SocialActivity.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<SocialActivity> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -489,7 +489,7 @@ public class SocialActivityPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("activityId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -528,35 +528,35 @@ public class SocialActivityPersistenceTest {
 	}
 
 	protected SocialActivity addSocialActivity() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivity socialActivity = _persistence.create(pk);
 
-		socialActivity.setGroupId(ServiceTestUtil.nextLong());
+		socialActivity.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivity.setCompanyId(ServiceTestUtil.nextLong());
+		socialActivity.setCompanyId(RandomTestUtil.nextLong());
 
-		socialActivity.setUserId(ServiceTestUtil.nextLong());
+		socialActivity.setUserId(RandomTestUtil.nextLong());
 
-		socialActivity.setCreateDate(ServiceTestUtil.nextLong());
+		socialActivity.setCreateDate(RandomTestUtil.nextLong());
 
-		socialActivity.setActivitySetId(ServiceTestUtil.nextLong());
+		socialActivity.setActivitySetId(RandomTestUtil.nextLong());
 
-		socialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
+		socialActivity.setMirrorActivityId(RandomTestUtil.nextLong());
 
-		socialActivity.setClassNameId(ServiceTestUtil.nextLong());
+		socialActivity.setClassNameId(RandomTestUtil.nextLong());
 
-		socialActivity.setClassPK(ServiceTestUtil.nextLong());
+		socialActivity.setClassPK(RandomTestUtil.nextLong());
 
-		socialActivity.setParentClassNameId(ServiceTestUtil.nextLong());
+		socialActivity.setParentClassNameId(RandomTestUtil.nextLong());
 
-		socialActivity.setParentClassPK(ServiceTestUtil.nextLong());
+		socialActivity.setParentClassPK(RandomTestUtil.nextLong());
 
-		socialActivity.setType(ServiceTestUtil.nextInt());
+		socialActivity.setType(RandomTestUtil.nextInt());
 
-		socialActivity.setExtraData(ServiceTestUtil.randomString());
+		socialActivity.setExtraData(RandomTestUtil.randomString());
 
-		socialActivity.setReceiverUserId(ServiceTestUtil.nextLong());
+		socialActivity.setReceiverUserId(RandomTestUtil.nextLong());
 
 		_persistence.update(socialActivity);
 

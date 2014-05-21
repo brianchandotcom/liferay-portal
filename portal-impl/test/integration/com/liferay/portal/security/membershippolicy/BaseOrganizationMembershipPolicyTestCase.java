@@ -15,8 +15,8 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.util.OrganizationTestUtil;
-import com.liferay.portal.util.RoleTestUtil;
+import com.liferay.test.portal.util.OrganizationTestUtil;
+import com.liferay.test.portal.util.RoleTestUtil;
 
 import org.junit.After;
 import org.junit.Before;

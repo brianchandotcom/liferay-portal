@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.impl.CalEventModelImpl;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class CalEventPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		CalEvent calEvent = _persistence.create(pk);
 
@@ -128,53 +128,53 @@ public class CalEventPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		CalEvent newCalEvent = _persistence.create(pk);
 
-		newCalEvent.setUuid(ServiceTestUtil.randomString());
+		newCalEvent.setUuid(RandomTestUtil.randomString());
 
-		newCalEvent.setGroupId(ServiceTestUtil.nextLong());
+		newCalEvent.setGroupId(RandomTestUtil.nextLong());
 
-		newCalEvent.setCompanyId(ServiceTestUtil.nextLong());
+		newCalEvent.setCompanyId(RandomTestUtil.nextLong());
 
-		newCalEvent.setUserId(ServiceTestUtil.nextLong());
+		newCalEvent.setUserId(RandomTestUtil.nextLong());
 
-		newCalEvent.setUserName(ServiceTestUtil.randomString());
+		newCalEvent.setUserName(RandomTestUtil.randomString());
 
-		newCalEvent.setCreateDate(ServiceTestUtil.nextDate());
+		newCalEvent.setCreateDate(RandomTestUtil.nextDate());
 
-		newCalEvent.setModifiedDate(ServiceTestUtil.nextDate());
+		newCalEvent.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCalEvent.setTitle(ServiceTestUtil.randomString());
+		newCalEvent.setTitle(RandomTestUtil.randomString());
 
-		newCalEvent.setDescription(ServiceTestUtil.randomString());
+		newCalEvent.setDescription(RandomTestUtil.randomString());
 
-		newCalEvent.setLocation(ServiceTestUtil.randomString());
+		newCalEvent.setLocation(RandomTestUtil.randomString());
 
-		newCalEvent.setStartDate(ServiceTestUtil.nextDate());
+		newCalEvent.setStartDate(RandomTestUtil.nextDate());
 
-		newCalEvent.setEndDate(ServiceTestUtil.nextDate());
+		newCalEvent.setEndDate(RandomTestUtil.nextDate());
 
-		newCalEvent.setDurationHour(ServiceTestUtil.nextInt());
+		newCalEvent.setDurationHour(RandomTestUtil.nextInt());
 
-		newCalEvent.setDurationMinute(ServiceTestUtil.nextInt());
+		newCalEvent.setDurationMinute(RandomTestUtil.nextInt());
 
-		newCalEvent.setAllDay(ServiceTestUtil.randomBoolean());
+		newCalEvent.setAllDay(RandomTestUtil.randomBoolean());
 
-		newCalEvent.setTimeZoneSensitive(ServiceTestUtil.randomBoolean());
+		newCalEvent.setTimeZoneSensitive(RandomTestUtil.randomBoolean());
 
-		newCalEvent.setType(ServiceTestUtil.randomString());
+		newCalEvent.setType(RandomTestUtil.randomString());
 
-		newCalEvent.setRepeating(ServiceTestUtil.randomBoolean());
+		newCalEvent.setRepeating(RandomTestUtil.randomBoolean());
 
-		newCalEvent.setRecurrence(ServiceTestUtil.randomString());
+		newCalEvent.setRecurrence(RandomTestUtil.randomString());
 
-		newCalEvent.setRemindBy(ServiceTestUtil.nextInt());
+		newCalEvent.setRemindBy(RandomTestUtil.nextInt());
 
-		newCalEvent.setFirstReminder(ServiceTestUtil.nextInt());
+		newCalEvent.setFirstReminder(RandomTestUtil.nextInt());
 
-		newCalEvent.setSecondReminder(ServiceTestUtil.nextInt());
+		newCalEvent.setSecondReminder(RandomTestUtil.nextInt());
 
 		_persistence.update(newCalEvent);
 
@@ -247,7 +247,7 @@ public class CalEventPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -262,7 +262,7 @@ public class CalEventPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -276,7 +276,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -288,7 +288,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -300,7 +300,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByNotRemindBy() {
 		try {
-			_persistence.countByNotRemindBy(ServiceTestUtil.nextInt());
+			_persistence.countByNotRemindBy(RandomTestUtil.nextInt());
 
 			_persistence.countByNotRemindBy(0);
 		}
@@ -312,7 +312,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByG_T() {
 		try {
-			_persistence.countByG_T(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_T(0L, StringPool.NULL);
 
@@ -326,9 +326,9 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByG_TArrayable() {
 		try {
-			_persistence.countByG_T(ServiceTestUtil.nextLong(),
+			_persistence.countByG_T(RandomTestUtil.nextLong(),
 				new String[] {
-					ServiceTestUtil.randomString(), StringPool.BLANK,
+					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.NULL, null, null
 				});
 		}
@@ -340,10 +340,10 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByG_R() {
 		try {
-			_persistence.countByG_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByG_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_R(0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByG_R(0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -353,14 +353,14 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByG_T_R() {
 		try {
-			_persistence.countByG_T_R(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.randomBoolean());
+			_persistence.countByG_T_R(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.randomBoolean());
 
 			_persistence.countByG_T_R(0L, StringPool.NULL,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 
 			_persistence.countByG_T_R(0L, (String)null,
-				ServiceTestUtil.randomBoolean());
+				RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -370,11 +370,11 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testCountByG_T_RArrayable() {
 		try {
-			_persistence.countByG_T_R(ServiceTestUtil.nextLong(),
+			_persistence.countByG_T_R(RandomTestUtil.nextLong(),
 				new String[] {
-					ServiceTestUtil.randomString(), StringPool.BLANK,
+					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.NULL, null, null
-				}, ServiceTestUtil.randomBoolean());
+				}, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -392,7 +392,7 @@ public class CalEventPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -447,7 +447,7 @@ public class CalEventPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		CalEvent missingCalEvent = _persistence.fetchByPrimaryKey(pk);
 
@@ -502,7 +502,7 @@ public class CalEventPersistenceTest {
 				CalEvent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<CalEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -541,7 +541,7 @@ public class CalEventPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("eventId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("eventId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -568,53 +568,53 @@ public class CalEventPersistenceTest {
 	}
 
 	protected CalEvent addCalEvent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		CalEvent calEvent = _persistence.create(pk);
 
-		calEvent.setUuid(ServiceTestUtil.randomString());
+		calEvent.setUuid(RandomTestUtil.randomString());
 
-		calEvent.setGroupId(ServiceTestUtil.nextLong());
+		calEvent.setGroupId(RandomTestUtil.nextLong());
 
-		calEvent.setCompanyId(ServiceTestUtil.nextLong());
+		calEvent.setCompanyId(RandomTestUtil.nextLong());
 
-		calEvent.setUserId(ServiceTestUtil.nextLong());
+		calEvent.setUserId(RandomTestUtil.nextLong());
 
-		calEvent.setUserName(ServiceTestUtil.randomString());
+		calEvent.setUserName(RandomTestUtil.randomString());
 
-		calEvent.setCreateDate(ServiceTestUtil.nextDate());
+		calEvent.setCreateDate(RandomTestUtil.nextDate());
 
-		calEvent.setModifiedDate(ServiceTestUtil.nextDate());
+		calEvent.setModifiedDate(RandomTestUtil.nextDate());
 
-		calEvent.setTitle(ServiceTestUtil.randomString());
+		calEvent.setTitle(RandomTestUtil.randomString());
 
-		calEvent.setDescription(ServiceTestUtil.randomString());
+		calEvent.setDescription(RandomTestUtil.randomString());
 
-		calEvent.setLocation(ServiceTestUtil.randomString());
+		calEvent.setLocation(RandomTestUtil.randomString());
 
-		calEvent.setStartDate(ServiceTestUtil.nextDate());
+		calEvent.setStartDate(RandomTestUtil.nextDate());
 
-		calEvent.setEndDate(ServiceTestUtil.nextDate());
+		calEvent.setEndDate(RandomTestUtil.nextDate());
 
-		calEvent.setDurationHour(ServiceTestUtil.nextInt());
+		calEvent.setDurationHour(RandomTestUtil.nextInt());
 
-		calEvent.setDurationMinute(ServiceTestUtil.nextInt());
+		calEvent.setDurationMinute(RandomTestUtil.nextInt());
 
-		calEvent.setAllDay(ServiceTestUtil.randomBoolean());
+		calEvent.setAllDay(RandomTestUtil.randomBoolean());
 
-		calEvent.setTimeZoneSensitive(ServiceTestUtil.randomBoolean());
+		calEvent.setTimeZoneSensitive(RandomTestUtil.randomBoolean());
 
-		calEvent.setType(ServiceTestUtil.randomString());
+		calEvent.setType(RandomTestUtil.randomString());
 
-		calEvent.setRepeating(ServiceTestUtil.randomBoolean());
+		calEvent.setRepeating(RandomTestUtil.randomBoolean());
 
-		calEvent.setRecurrence(ServiceTestUtil.randomString());
+		calEvent.setRecurrence(RandomTestUtil.randomString());
 
-		calEvent.setRemindBy(ServiceTestUtil.nextInt());
+		calEvent.setRemindBy(RandomTestUtil.nextInt());
 
-		calEvent.setFirstReminder(ServiceTestUtil.nextInt());
+		calEvent.setFirstReminder(RandomTestUtil.nextInt());
 
-		calEvent.setSecondReminder(ServiceTestUtil.nextInt());
+		calEvent.setSecondReminder(RandomTestUtil.nextInt());
 
 		_persistence.update(calEvent);
 

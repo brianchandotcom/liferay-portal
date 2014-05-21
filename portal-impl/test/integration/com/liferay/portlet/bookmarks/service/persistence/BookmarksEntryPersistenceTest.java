@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
 
@@ -128,47 +128,47 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BookmarksEntry newBookmarksEntry = _persistence.create(pk);
 
-		newBookmarksEntry.setUuid(ServiceTestUtil.randomString());
+		newBookmarksEntry.setUuid(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setGroupId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setCompanyId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setUserId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setUserId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setUserName(ServiceTestUtil.randomString());
+		newBookmarksEntry.setUserName(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setCreateDate(ServiceTestUtil.nextDate());
+		newBookmarksEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		newBookmarksEntry.setModifiedDate(ServiceTestUtil.nextDate());
+		newBookmarksEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newBookmarksEntry.setResourceBlockId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setResourceBlockId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setFolderId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setTreePath(ServiceTestUtil.randomString());
+		newBookmarksEntry.setTreePath(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setName(ServiceTestUtil.randomString());
+		newBookmarksEntry.setName(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setUrl(ServiceTestUtil.randomString());
+		newBookmarksEntry.setUrl(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setDescription(ServiceTestUtil.randomString());
+		newBookmarksEntry.setDescription(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setVisits(ServiceTestUtil.nextInt());
+		newBookmarksEntry.setVisits(RandomTestUtil.nextInt());
 
-		newBookmarksEntry.setPriority(ServiceTestUtil.nextInt());
+		newBookmarksEntry.setPriority(RandomTestUtil.nextInt());
 
-		newBookmarksEntry.setStatus(ServiceTestUtil.nextInt());
+		newBookmarksEntry.setStatus(RandomTestUtil.nextInt());
 
-		newBookmarksEntry.setStatusByUserId(ServiceTestUtil.nextLong());
+		newBookmarksEntry.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setStatusByUserName(ServiceTestUtil.randomString());
+		newBookmarksEntry.setStatusByUserName(RandomTestUtil.randomString());
 
-		newBookmarksEntry.setStatusDate(ServiceTestUtil.nextDate());
+		newBookmarksEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newBookmarksEntry);
 
@@ -222,7 +222,7 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByResourceBlockId() {
 		try {
-			_persistence.countByResourceBlockId(ServiceTestUtil.nextLong());
+			_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
 
 			_persistence.countByResourceBlockId(0L);
 		}
@@ -249,7 +249,7 @@ public class BookmarksEntryPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -264,7 +264,7 @@ public class BookmarksEntryPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -278,7 +278,7 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -290,8 +290,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_F() {
 		try {
-			_persistence.countByG_F(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_F(0L, 0L);
 		}
@@ -303,8 +303,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_FArrayable() {
 		try {
-			_persistence.countByG_F(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L });
+			_persistence.countByG_F(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -314,8 +314,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_S() {
 		try {
-			_persistence.countByG_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_S(0L, 0);
 		}
@@ -327,8 +327,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_NotS() {
 		try {
-			_persistence.countByG_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_NotS(0L, 0);
 		}
@@ -340,8 +340,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByC_NotS() {
 		try {
-			_persistence.countByC_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByC_NotS(0L, 0);
 		}
@@ -353,8 +353,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_U_S() {
 		try {
-			_persistence.countByG_U_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_U_S(0L, 0L, 0);
 		}
@@ -366,8 +366,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_U_NotS() {
 		try {
-			_persistence.countByG_U_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_U_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_U_NotS(0L, 0L, 0);
 		}
@@ -379,8 +379,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_F_S() {
 		try {
-			_persistence.countByG_F_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_F_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_F_S(0L, 0L, 0);
 		}
@@ -392,9 +392,9 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_F_SArrayable() {
 		try {
-			_persistence.countByG_F_S(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_F_S(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -404,8 +404,8 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_F_NotS() {
 		try {
-			_persistence.countByG_F_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByG_F_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_F_NotS(0L, 0L, 0);
 		}
@@ -417,9 +417,9 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_F_NotSArrayable() {
 		try {
-			_persistence.countByG_F_NotS(ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_F_NotS(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -429,9 +429,9 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_U_F_S() {
 		try {
-			_persistence.countByG_U_F_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_U_F_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_U_F_S(0L, 0L, 0L, 0);
 		}
@@ -443,10 +443,10 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testCountByG_U_F_SArrayable() {
 		try {
-			_persistence.countByG_U_F_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(),
-				new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_U_F_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -464,7 +464,7 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -507,7 +507,7 @@ public class BookmarksEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BookmarksEntry missingBookmarksEntry = _persistence.fetchByPrimaryKey(pk);
 
@@ -562,7 +562,7 @@ public class BookmarksEntryPersistenceTest {
 				BookmarksEntry.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -601,7 +601,7 @@ public class BookmarksEntryPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -628,47 +628,47 @@ public class BookmarksEntryPersistenceTest {
 	}
 
 	protected BookmarksEntry addBookmarksEntry() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
 
-		bookmarksEntry.setUuid(ServiceTestUtil.randomString());
+		bookmarksEntry.setUuid(RandomTestUtil.randomString());
 
-		bookmarksEntry.setGroupId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setGroupId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setCompanyId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setUserId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setUserId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setUserName(ServiceTestUtil.randomString());
+		bookmarksEntry.setUserName(RandomTestUtil.randomString());
 
-		bookmarksEntry.setCreateDate(ServiceTestUtil.nextDate());
+		bookmarksEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		bookmarksEntry.setModifiedDate(ServiceTestUtil.nextDate());
+		bookmarksEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		bookmarksEntry.setResourceBlockId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setResourceBlockId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setFolderId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setTreePath(ServiceTestUtil.randomString());
+		bookmarksEntry.setTreePath(RandomTestUtil.randomString());
 
-		bookmarksEntry.setName(ServiceTestUtil.randomString());
+		bookmarksEntry.setName(RandomTestUtil.randomString());
 
-		bookmarksEntry.setUrl(ServiceTestUtil.randomString());
+		bookmarksEntry.setUrl(RandomTestUtil.randomString());
 
-		bookmarksEntry.setDescription(ServiceTestUtil.randomString());
+		bookmarksEntry.setDescription(RandomTestUtil.randomString());
 
-		bookmarksEntry.setVisits(ServiceTestUtil.nextInt());
+		bookmarksEntry.setVisits(RandomTestUtil.nextInt());
 
-		bookmarksEntry.setPriority(ServiceTestUtil.nextInt());
+		bookmarksEntry.setPriority(RandomTestUtil.nextInt());
 
-		bookmarksEntry.setStatus(ServiceTestUtil.nextInt());
+		bookmarksEntry.setStatus(RandomTestUtil.nextInt());
 
-		bookmarksEntry.setStatusByUserId(ServiceTestUtil.nextLong());
+		bookmarksEntry.setStatusByUserId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setStatusByUserName(ServiceTestUtil.randomString());
+		bookmarksEntry.setStatusByUserName(RandomTestUtil.randomString());
 
-		bookmarksEntry.setStatusDate(ServiceTestUtil.nextDate());
+		bookmarksEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(bookmarksEntry);
 

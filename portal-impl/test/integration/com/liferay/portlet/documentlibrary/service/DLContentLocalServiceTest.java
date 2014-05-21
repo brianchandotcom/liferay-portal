@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.store.Store;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.io.ByteArrayInputStream;
 
@@ -55,9 +55,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testAddContentByByteArray() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -71,9 +71,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testAddContentByInputStream() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -87,9 +87,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testDeleteContent() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -109,9 +109,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testDeleteContents() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -138,15 +138,15 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testDeleteContentsByDirectory() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
-		String directory = ServiceTestUtil.randomString();
+		String directory = RandomTestUtil.randomString();
 
-		String path1 = directory + "/" + ServiceTestUtil.randomString();
+		String path1 = directory + "/" + RandomTestUtil.randomString();
 		String path2 =
-			directory + "/" + ServiceTestUtil.randomString() + "/" +
-				ServiceTestUtil.randomString();
+			directory + "/" + RandomTestUtil.randomString() + "/" +
+				RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
 			companyId, repositoryId, path1, Store.VERSION_DEFAULT,
@@ -176,9 +176,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentLatest() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -200,17 +200,17 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentsAll() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId, ServiceTestUtil.randomString(),
+			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 		DLContent dlContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId, ServiceTestUtil.randomString(),
+			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 		DLContent dlContent3 = _dlContentLocalService.addContent(
-			companyId, repositoryId, ServiceTestUtil.randomString(),
+			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 
 		List<DLContent> dlContents = _dlContentLocalService.getContents(
@@ -224,18 +224,18 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentsByDirectory() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path1 = ServiceTestUtil.randomString();
-		String path2 = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path1 = RandomTestUtil.randomString();
+		String path2 = RandomTestUtil.randomString();
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
 			companyId, repositoryId,
-			path1 + "/" + ServiceTestUtil.randomString(), Store.VERSION_DEFAULT,
+			path1 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 		DLContent dlContent2 = _dlContentLocalService.addContent(
 			companyId, repositoryId,
-			path2 + "/" + ServiceTestUtil.randomString(), Store.VERSION_DEFAULT,
+			path2 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		List<DLContent> dlContents =
@@ -254,10 +254,10 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentsVersions() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path1 = ServiceTestUtil.randomString();
-		String path2 = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path1 = RandomTestUtil.randomString();
+		String path2 = RandomTestUtil.randomString();
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
 			companyId, repositoryId, path1, Store.VERSION_DEFAULT,
@@ -288,9 +288,9 @@ public class DLContentLocalServiceTest {
 	@Test
 	@Transactional
 	public void testGetContentVersion() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
 			companyId, repositoryId, path, Store.VERSION_DEFAULT,
@@ -312,9 +312,9 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testHasContent() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String path = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String path = RandomTestUtil.randomString();
 
 		// 1.0
 
@@ -347,11 +347,11 @@ public class DLContentLocalServiceTest {
 	@Test
 	@Transactional
 	public void testUpdateContent() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long oldRepositoryId = ServiceTestUtil.nextLong();
-		long newRepositoryId = ServiceTestUtil.nextLong();
-		String oldPath = ServiceTestUtil.randomString();
-		String newPath = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long oldRepositoryId = RandomTestUtil.nextLong();
+		long newRepositoryId = RandomTestUtil.nextLong();
+		String oldPath = RandomTestUtil.randomString();
+		String newPath = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
 			companyId, oldRepositoryId, oldPath, Store.VERSION_DEFAULT,

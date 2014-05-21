@@ -116,6 +116,13 @@ log
 /portal-service/test-results
 /portal-service/woven-classes
 
+/portal-test/*.iml
+/portal-test/*.ipr
+/portal-test/*.iws
+/portal-test/classes
+/portal-test/portal-test*.asc
+/portal-test/portal-test*.jar
+
 /portal-web/*.iml
 /portal-web/*.ipr
 /portal-web/*.iws

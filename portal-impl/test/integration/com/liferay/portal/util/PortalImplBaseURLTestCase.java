@@ -21,8 +21,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,9 +49,9 @@ public class PortalImplBaseURLTestCase {
 		group = GroupTestUtil.addGroup();
 
 		privateLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString(), true);
+			group.getGroupId(), RandomTestUtil.randomString(), true);
 		publicLayout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 	}
 
 	@After

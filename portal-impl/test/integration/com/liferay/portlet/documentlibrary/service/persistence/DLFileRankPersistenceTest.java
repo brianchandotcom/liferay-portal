@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -41,6 +40,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +99,7 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileRank dlFileRank = _persistence.create(pk);
 
@@ -126,21 +126,21 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileRank newDLFileRank = _persistence.create(pk);
 
-		newDLFileRank.setGroupId(ServiceTestUtil.nextLong());
+		newDLFileRank.setGroupId(RandomTestUtil.nextLong());
 
-		newDLFileRank.setCompanyId(ServiceTestUtil.nextLong());
+		newDLFileRank.setCompanyId(RandomTestUtil.nextLong());
 
-		newDLFileRank.setUserId(ServiceTestUtil.nextLong());
+		newDLFileRank.setUserId(RandomTestUtil.nextLong());
 
-		newDLFileRank.setCreateDate(ServiceTestUtil.nextDate());
+		newDLFileRank.setCreateDate(RandomTestUtil.nextDate());
 
-		newDLFileRank.setFileEntryId(ServiceTestUtil.nextLong());
+		newDLFileRank.setFileEntryId(RandomTestUtil.nextLong());
 
-		newDLFileRank.setActive(ServiceTestUtil.randomBoolean());
+		newDLFileRank.setActive(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newDLFileRank);
 
@@ -166,7 +166,7 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -178,7 +178,7 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testCountByFileEntryId() {
 		try {
-			_persistence.countByFileEntryId(ServiceTestUtil.nextLong());
+			_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 
 			_persistence.countByFileEntryId(0L);
 		}
@@ -190,8 +190,8 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testCountByG_U() {
 		try {
-			_persistence.countByG_U(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_U(0L, 0L);
 		}
@@ -203,10 +203,10 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testCountByG_U_A() {
 		try {
-			_persistence.countByG_U_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+			_persistence.countByG_U_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_U_A(0L, 0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByG_U_A(0L, 0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -216,8 +216,8 @@ public class DLFileRankPersistenceTest {
 	@Test
 	public void testCountByC_U_F() {
 		try {
-			_persistence.countByC_U_F(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByC_U_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByC_U_F(0L, 0L, 0L);
 		}
@@ -237,7 +237,7 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -276,7 +276,7 @@ public class DLFileRankPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileRank missingDLFileRank = _persistence.fetchByPrimaryKey(pk);
 
@@ -331,7 +331,7 @@ public class DLFileRankPersistenceTest {
 				DLFileRank.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileRankId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DLFileRank> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -370,7 +370,7 @@ public class DLFileRankPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileRankId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileRankId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -398,21 +398,21 @@ public class DLFileRankPersistenceTest {
 	}
 
 	protected DLFileRank addDLFileRank() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLFileRank dlFileRank = _persistence.create(pk);
 
-		dlFileRank.setGroupId(ServiceTestUtil.nextLong());
+		dlFileRank.setGroupId(RandomTestUtil.nextLong());
 
-		dlFileRank.setCompanyId(ServiceTestUtil.nextLong());
+		dlFileRank.setCompanyId(RandomTestUtil.nextLong());
 
-		dlFileRank.setUserId(ServiceTestUtil.nextLong());
+		dlFileRank.setUserId(RandomTestUtil.nextLong());
 
-		dlFileRank.setCreateDate(ServiceTestUtil.nextDate());
+		dlFileRank.setCreateDate(RandomTestUtil.nextDate());
 
-		dlFileRank.setFileEntryId(ServiceTestUtil.nextLong());
+		dlFileRank.setFileEntryId(RandomTestUtil.nextLong());
 
-		dlFileRank.setActive(ServiceTestUtil.randomBoolean());
+		dlFileRank.setActive(RandomTestUtil.randomBoolean());
 
 		_persistence.update(dlFileRank);
 

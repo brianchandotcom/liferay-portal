@@ -31,13 +31,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserTrackerPath;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class UserTrackerPathPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserTrackerPath userTrackerPath = _persistence.create(pk);
 
@@ -123,17 +121,17 @@ public class UserTrackerPathPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserTrackerPath newUserTrackerPath = _persistence.create(pk);
 
-		newUserTrackerPath.setMvccVersion(ServiceTestUtil.nextLong());
+		newUserTrackerPath.setMvccVersion(RandomTestUtil.nextLong());
 
-		newUserTrackerPath.setUserTrackerId(ServiceTestUtil.nextLong());
+		newUserTrackerPath.setUserTrackerId(RandomTestUtil.nextLong());
 
-		newUserTrackerPath.setPath(ServiceTestUtil.randomString());
+		newUserTrackerPath.setPath(RandomTestUtil.randomString());
 
-		newUserTrackerPath.setPathDate(ServiceTestUtil.nextDate());
+		newUserTrackerPath.setPathDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newUserTrackerPath);
 
@@ -155,7 +153,7 @@ public class UserTrackerPathPersistenceTest {
 	@Test
 	public void testCountByUserTrackerId() {
 		try {
-			_persistence.countByUserTrackerId(ServiceTestUtil.nextLong());
+			_persistence.countByUserTrackerId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserTrackerId(0L);
 		}
@@ -175,7 +173,7 @@ public class UserTrackerPathPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -215,7 +213,7 @@ public class UserTrackerPathPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserTrackerPath missingUserTrackerPath = _persistence.fetchByPrimaryKey(pk);
 
@@ -270,7 +268,7 @@ public class UserTrackerPathPersistenceTest {
 				UserTrackerPath.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<UserTrackerPath> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -311,7 +309,7 @@ public class UserTrackerPathPersistenceTest {
 				"userTrackerPathId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerPathId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -319,17 +317,17 @@ public class UserTrackerPathPersistenceTest {
 	}
 
 	protected UserTrackerPath addUserTrackerPath() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserTrackerPath userTrackerPath = _persistence.create(pk);
 
-		userTrackerPath.setMvccVersion(ServiceTestUtil.nextLong());
+		userTrackerPath.setMvccVersion(RandomTestUtil.nextLong());
 
-		userTrackerPath.setUserTrackerId(ServiceTestUtil.nextLong());
+		userTrackerPath.setUserTrackerId(RandomTestUtil.nextLong());
 
-		userTrackerPath.setPath(ServiceTestUtil.randomString());
+		userTrackerPath.setPath(RandomTestUtil.randomString());
 
-		userTrackerPath.setPathDate(ServiceTestUtil.nextDate());
+		userTrackerPath.setPathDate(RandomTestUtil.nextDate());
 
 		_persistence.update(userTrackerPath);
 

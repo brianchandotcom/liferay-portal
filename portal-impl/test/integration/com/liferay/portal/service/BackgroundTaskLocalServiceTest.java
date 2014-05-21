@@ -28,8 +28,9 @@ import com.liferay.portal.model.impl.BackgroundTaskImpl;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.UserTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -64,7 +65,7 @@ public class BackgroundTaskLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), _group.getGroupId());
+			RandomTestUtil.randomString(), _group.getGroupId());
 	}
 
 	@Test
@@ -106,7 +107,7 @@ public class BackgroundTaskLocalServiceTest {
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			_user.getUserId(), backgroundTask.getBackgroundTaskId(),
-			ServiceTestUtil.randomString(), file);
+			RandomTestUtil.randomString(), file);
 
 		backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
@@ -126,7 +127,7 @@ public class BackgroundTaskLocalServiceTest {
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 0);
 
-		String fileName = ServiceTestUtil.randomString();
+		String fileName = RandomTestUtil.randomString();
 
 		Class<?> clazz = getClass();
 
@@ -288,9 +289,9 @@ public class BackgroundTaskLocalServiceTest {
 		Map<String, Serializable> taskContext =
 			new HashMap<String, Serializable>();
 
-		taskContext.put("param1", ServiceTestUtil.randomBoolean());
-		taskContext.put("param2", ServiceTestUtil.randomString());
-		taskContext.put("param3", ServiceTestUtil.randomInt());
+		taskContext.put("param1", RandomTestUtil.randomBoolean());
+		taskContext.put("param2", RandomTestUtil.randomString());
+		taskContext.put("param3", RandomTestUtil.randomInt());
 		taskContext.put("param4", new Date());
 
 		return taskContext;

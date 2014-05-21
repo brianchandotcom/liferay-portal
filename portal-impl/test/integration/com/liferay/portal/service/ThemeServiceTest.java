@@ -22,7 +22,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

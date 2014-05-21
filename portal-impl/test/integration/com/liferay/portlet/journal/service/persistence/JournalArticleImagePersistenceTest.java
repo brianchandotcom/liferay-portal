@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.model.impl.JournalArticleImageModelImpl;
 import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class JournalArticleImagePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleImage journalArticleImage = _persistence.create(pk);
 
@@ -128,23 +128,23 @@ public class JournalArticleImagePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleImage newJournalArticleImage = _persistence.create(pk);
 
-		newJournalArticleImage.setGroupId(ServiceTestUtil.nextLong());
+		newJournalArticleImage.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalArticleImage.setArticleId(ServiceTestUtil.randomString());
+		newJournalArticleImage.setArticleId(RandomTestUtil.randomString());
 
-		newJournalArticleImage.setVersion(ServiceTestUtil.nextDouble());
+		newJournalArticleImage.setVersion(RandomTestUtil.nextDouble());
 
-		newJournalArticleImage.setElInstanceId(ServiceTestUtil.randomString());
+		newJournalArticleImage.setElInstanceId(RandomTestUtil.randomString());
 
-		newJournalArticleImage.setElName(ServiceTestUtil.randomString());
+		newJournalArticleImage.setElName(RandomTestUtil.randomString());
 
-		newJournalArticleImage.setLanguageId(ServiceTestUtil.randomString());
+		newJournalArticleImage.setLanguageId(RandomTestUtil.randomString());
 
-		newJournalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
+		newJournalArticleImage.setTempImage(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newJournalArticleImage);
 
@@ -171,7 +171,7 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -183,9 +183,9 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testCountByTempImage() {
 		try {
-			_persistence.countByTempImage(ServiceTestUtil.randomBoolean());
+			_persistence.countByTempImage(RandomTestUtil.randomBoolean());
 
-			_persistence.countByTempImage(ServiceTestUtil.randomBoolean());
+			_persistence.countByTempImage(RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -195,8 +195,8 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testCountByG_A_V() {
 		try {
-			_persistence.countByG_A_V(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextDouble());
+			_persistence.countByG_A_V(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextDouble());
 
 			_persistence.countByG_A_V(0L, StringPool.NULL, 0D);
 
@@ -210,8 +210,8 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testCountByG_A_V_E_E_L() {
 		try {
-			_persistence.countByG_A_V_E_E_L(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextDouble(),
+			_persistence.countByG_A_V_E_E_L(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextDouble(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 
 			_persistence.countByG_A_V_E_E_L(0L, StringPool.NULL, 0D,
@@ -236,7 +236,7 @@ public class JournalArticleImagePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -277,7 +277,7 @@ public class JournalArticleImagePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleImage missingJournalArticleImage = _persistence.fetchByPrimaryKey(pk);
 
@@ -332,7 +332,7 @@ public class JournalArticleImagePersistenceTest {
 				JournalArticleImage.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleImageId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<JournalArticleImage> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -373,7 +373,7 @@ public class JournalArticleImagePersistenceTest {
 				"articleImageId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("articleImageId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -412,23 +412,23 @@ public class JournalArticleImagePersistenceTest {
 
 	protected JournalArticleImage addJournalArticleImage()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		JournalArticleImage journalArticleImage = _persistence.create(pk);
 
-		journalArticleImage.setGroupId(ServiceTestUtil.nextLong());
+		journalArticleImage.setGroupId(RandomTestUtil.nextLong());
 
-		journalArticleImage.setArticleId(ServiceTestUtil.randomString());
+		journalArticleImage.setArticleId(RandomTestUtil.randomString());
 
-		journalArticleImage.setVersion(ServiceTestUtil.nextDouble());
+		journalArticleImage.setVersion(RandomTestUtil.nextDouble());
 
-		journalArticleImage.setElInstanceId(ServiceTestUtil.randomString());
+		journalArticleImage.setElInstanceId(RandomTestUtil.randomString());
 
-		journalArticleImage.setElName(ServiceTestUtil.randomString());
+		journalArticleImage.setElName(RandomTestUtil.randomString());
 
-		journalArticleImage.setLanguageId(ServiceTestUtil.randomString());
+		journalArticleImage.setLanguageId(RandomTestUtil.randomString());
 
-		journalArticleImage.setTempImage(ServiceTestUtil.randomBoolean());
+		journalArticleImage.setTempImage(RandomTestUtil.randomBoolean());
 
 		_persistence.update(journalArticleImage);
 

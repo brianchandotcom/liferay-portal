@@ -16,7 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.test.TestContext;
-import com.liferay.portal.util.MailServiceTestUtil;
+import com.liferay.test.portal.util.MailServiceTestUtil;
 
 /**
  * @author Manuel de la Peña

@@ -34,13 +34,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ServiceComponent serviceComponent = _persistence.create(pk);
 
@@ -126,19 +124,19 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ServiceComponent newServiceComponent = _persistence.create(pk);
 
-		newServiceComponent.setMvccVersion(ServiceTestUtil.nextLong());
+		newServiceComponent.setMvccVersion(RandomTestUtil.nextLong());
 
-		newServiceComponent.setBuildNamespace(ServiceTestUtil.randomString());
+		newServiceComponent.setBuildNamespace(RandomTestUtil.randomString());
 
-		newServiceComponent.setBuildNumber(ServiceTestUtil.nextLong());
+		newServiceComponent.setBuildNumber(RandomTestUtil.nextLong());
 
-		newServiceComponent.setBuildDate(ServiceTestUtil.nextLong());
+		newServiceComponent.setBuildDate(RandomTestUtil.nextLong());
 
-		newServiceComponent.setData(ServiceTestUtil.randomString());
+		newServiceComponent.setData(RandomTestUtil.randomString());
 
 		_persistence.update(newServiceComponent);
 
@@ -176,7 +174,7 @@ public class ServiceComponentPersistenceTest {
 	public void testCountByBNS_BNU() {
 		try {
 			_persistence.countByBNS_BNU(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByBNS_BNU(StringPool.NULL, 0L);
 
@@ -198,7 +196,7 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -238,7 +236,7 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ServiceComponent missingServiceComponent = _persistence.fetchByPrimaryKey(pk);
 
@@ -293,7 +291,7 @@ public class ServiceComponentPersistenceTest {
 				ServiceComponent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -334,7 +332,7 @@ public class ServiceComponentPersistenceTest {
 				"serviceComponentId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -361,19 +359,19 @@ public class ServiceComponentPersistenceTest {
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ServiceComponent serviceComponent = _persistence.create(pk);
 
-		serviceComponent.setMvccVersion(ServiceTestUtil.nextLong());
+		serviceComponent.setMvccVersion(RandomTestUtil.nextLong());
 
-		serviceComponent.setBuildNamespace(ServiceTestUtil.randomString());
+		serviceComponent.setBuildNamespace(RandomTestUtil.randomString());
 
-		serviceComponent.setBuildNumber(ServiceTestUtil.nextLong());
+		serviceComponent.setBuildNumber(RandomTestUtil.nextLong());
 
-		serviceComponent.setBuildDate(ServiceTestUtil.nextLong());
+		serviceComponent.setBuildDate(RandomTestUtil.nextLong());
 
-		serviceComponent.setData(ServiceTestUtil.randomString());
+		serviceComponent.setData(RandomTestUtil.randomString());
 
 		_persistence.update(serviceComponent);
 

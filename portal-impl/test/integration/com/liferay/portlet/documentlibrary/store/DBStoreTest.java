@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -54,9 +54,9 @@ public class DBStoreTest {
 
 	@Test
 	public void testAddFileWithByteArray() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String fileName = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
@@ -67,9 +67,9 @@ public class DBStoreTest {
 
 	@Test
 	public void testAddFileWithFile() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String fileName = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String fileName = RandomTestUtil.randomString();
 		File file = createFile(_DATA_VERSION_1);
 
 		_store.addFile(companyId, repositoryId, fileName, file);
@@ -84,9 +84,9 @@ public class DBStoreTest {
 
 		// FileInputStream
 
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String fileName = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String fileName = RandomTestUtil.randomString();
 		File file = createFile(_DATA_VERSION_1);
 
 		_store.addFile(
@@ -98,9 +98,9 @@ public class DBStoreTest {
 
 		// UnsyncByteArrayInputStream
 
-		companyId = ServiceTestUtil.nextLong();
-		repositoryId = ServiceTestUtil.nextLong();
-		fileName = ServiceTestUtil.randomString();
+		companyId = RandomTestUtil.nextLong();
+		repositoryId = RandomTestUtil.nextLong();
+		fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
@@ -112,9 +112,9 @@ public class DBStoreTest {
 
 		// ByteArrayInputStream
 
-		companyId = ServiceTestUtil.nextLong();
-		repositoryId = ServiceTestUtil.nextLong();
-		fileName = ServiceTestUtil.randomString();
+		companyId = RandomTestUtil.nextLong();
+		repositoryId = RandomTestUtil.nextLong();
+		fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
@@ -126,9 +126,9 @@ public class DBStoreTest {
 
 		// BufferedInputStream
 
-		companyId = ServiceTestUtil.nextLong();
-		repositoryId = ServiceTestUtil.nextLong();
-		fileName = ServiceTestUtil.randomString();
+		companyId = RandomTestUtil.nextLong();
+		repositoryId = RandomTestUtil.nextLong();
+		fileName = RandomTestUtil.randomString();
 
 		_store.addFile(
 			companyId, repositoryId, fileName,
@@ -144,13 +144,13 @@ public class DBStoreTest {
 
 		// One level deep
 
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
-		String directory = ServiceTestUtil.randomString();
+		String directory = RandomTestUtil.randomString();
 
-		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
-		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName1 = directory + "/" + RandomTestUtil.randomString();
+		String fileName2 = directory + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -173,11 +173,11 @@ public class DBStoreTest {
 
 		// Two levels deep
 
-		directory = ServiceTestUtil.randomString();
-		fileName1 = directory + "/" + ServiceTestUtil.randomString();
+		directory = RandomTestUtil.randomString();
+		fileName1 = directory + "/" + RandomTestUtil.randomString();
 		fileName2 =
-			directory + "/" + ServiceTestUtil.randomString() + "/" +
-				ServiceTestUtil.randomString();
+			directory + "/" + RandomTestUtil.randomString() + "/" +
+				RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -297,15 +297,15 @@ public class DBStoreTest {
 
 	@Test
 	public void testGetFileNames() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
 		// One level deep
 
-		String directory = ServiceTestUtil.randomString();
+		String directory = RandomTestUtil.randomString();
 
-		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
-		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName1 = directory + "/" + RandomTestUtil.randomString();
+		String fileName2 = directory + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -321,12 +321,12 @@ public class DBStoreTest {
 
 		// Two levels deep
 
-		directory = ServiceTestUtil.randomString();
+		directory = RandomTestUtil.randomString();
 
-		String fileName3 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName3 = directory + "/" + RandomTestUtil.randomString();
 		String fileName4 =
-			directory + "/" + ServiceTestUtil.randomString() + "/" +
-				ServiceTestUtil. randomString();
+			directory + "/" + RandomTestUtil.randomString() + "/" +
+				RandomTestUtil. randomString();
 
 		_store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName4, _DATA_VERSION_1);
@@ -348,13 +348,13 @@ public class DBStoreTest {
 
 		// One level deep
 
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
-		String directory = ServiceTestUtil.randomString();
+		String directory = RandomTestUtil.randomString();
 
-		String fileName1 = directory + "/" + ServiceTestUtil.randomString();
-		String fileName2 = directory + "/" + ServiceTestUtil.randomString();
+		String fileName1 = directory + "/" + RandomTestUtil.randomString();
+		String fileName2 = directory + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -371,12 +371,12 @@ public class DBStoreTest {
 
 		// Two levels deep
 
-		directory = ServiceTestUtil.randomString();
+		directory = RandomTestUtil.randomString();
 
-		String subdirectory = directory + "/" + ServiceTestUtil.randomString();
+		String subdirectory = directory + "/" + RandomTestUtil.randomString();
 
-		String fileName3 = directory + "/" + ServiceTestUtil.randomString();
-		String fileName4 = subdirectory + "/" + ServiceTestUtil.randomString();
+		String fileName3 = directory + "/" + RandomTestUtil.randomString();
+		String fileName4 = subdirectory + "/" + RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName4, _DATA_VERSION_1);
@@ -411,9 +411,9 @@ public class DBStoreTest {
 
 	@Test
 	public void testHasFile() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String fileName = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
@@ -528,7 +528,7 @@ public class DBStoreTest {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		String newFileName = ServiceTestUtil.randomString();
+		String newFileName = RandomTestUtil.randomString();
 
 		_store.updateFile(companyId, repositoryId, fileName, newFileName);
 
@@ -544,7 +544,7 @@ public class DBStoreTest {
 		long repositoryId = (Long)data[1];
 		String fileName = (String)data[2];
 
-		long newRepositoryId = ServiceTestUtil.nextLong();
+		long newRepositoryId = RandomTestUtil.nextLong();
 
 		_store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 
@@ -553,9 +553,9 @@ public class DBStoreTest {
 	}
 
 	protected Object[] addFile(int newVersionCount) throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
-		String fileName = ServiceTestUtil.randomString();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+		String fileName = RandomTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 

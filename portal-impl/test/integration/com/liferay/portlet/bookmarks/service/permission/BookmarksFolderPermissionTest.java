@@ -16,12 +16,12 @@ package com.liferay.portlet.bookmarks.service.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -57,10 +57,10 @@ public class BookmarksFolderPermissionTest extends BasePermissionTestCase {
 	@Override
 	protected void doSetUp() throws Exception {
 		_folder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), RandomTestUtil.randomString());
 
 		_subfolder = BookmarksTestUtil.addFolder(
-			_folder.getFolderId(), ServiceTestUtil.randomString(),
+			_folder.getFolderId(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
 

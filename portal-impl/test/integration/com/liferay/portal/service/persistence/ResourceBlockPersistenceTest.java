@@ -34,13 +34,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class ResourceBlockPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceBlock resourceBlock = _persistence.create(pk);
 
@@ -126,21 +124,21 @@ public class ResourceBlockPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceBlock newResourceBlock = _persistence.create(pk);
 
-		newResourceBlock.setMvccVersion(ServiceTestUtil.nextLong());
+		newResourceBlock.setMvccVersion(RandomTestUtil.nextLong());
 
-		newResourceBlock.setCompanyId(ServiceTestUtil.nextLong());
+		newResourceBlock.setCompanyId(RandomTestUtil.nextLong());
 
-		newResourceBlock.setGroupId(ServiceTestUtil.nextLong());
+		newResourceBlock.setGroupId(RandomTestUtil.nextLong());
 
-		newResourceBlock.setName(ServiceTestUtil.randomString());
+		newResourceBlock.setName(RandomTestUtil.randomString());
 
-		newResourceBlock.setPermissionsHash(ServiceTestUtil.randomString());
+		newResourceBlock.setPermissionsHash(RandomTestUtil.randomString());
 
-		newResourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
+		newResourceBlock.setReferenceCount(RandomTestUtil.nextLong());
 
 		_persistence.update(newResourceBlock);
 
@@ -165,7 +163,7 @@ public class ResourceBlockPersistenceTest {
 	@Test
 	public void testCountByC_N() {
 		try {
-			_persistence.countByC_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_N(0L, StringPool.NULL);
 
@@ -179,8 +177,8 @@ public class ResourceBlockPersistenceTest {
 	@Test
 	public void testCountByC_G_N() {
 		try {
-			_persistence.countByC_G_N(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_G_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_G_N(0L, 0L, StringPool.NULL);
 
@@ -194,8 +192,8 @@ public class ResourceBlockPersistenceTest {
 	@Test
 	public void testCountByC_G_N_P() {
 		try {
-			_persistence.countByC_G_N_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+			_persistence.countByC_G_N_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
 			_persistence.countByC_G_N_P(0L, 0L, StringPool.NULL, StringPool.NULL);
 
@@ -217,7 +215,7 @@ public class ResourceBlockPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -258,7 +256,7 @@ public class ResourceBlockPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceBlock missingResourceBlock = _persistence.fetchByPrimaryKey(pk);
 
@@ -313,7 +311,7 @@ public class ResourceBlockPersistenceTest {
 				ResourceBlock.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceBlockId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ResourceBlock> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -354,7 +352,7 @@ public class ResourceBlockPersistenceTest {
 				"resourceBlockId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceBlockId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -386,21 +384,21 @@ public class ResourceBlockPersistenceTest {
 	}
 
 	protected ResourceBlock addResourceBlock() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceBlock resourceBlock = _persistence.create(pk);
 
-		resourceBlock.setMvccVersion(ServiceTestUtil.nextLong());
+		resourceBlock.setMvccVersion(RandomTestUtil.nextLong());
 
-		resourceBlock.setCompanyId(ServiceTestUtil.nextLong());
+		resourceBlock.setCompanyId(RandomTestUtil.nextLong());
 
-		resourceBlock.setGroupId(ServiceTestUtil.nextLong());
+		resourceBlock.setGroupId(RandomTestUtil.nextLong());
 
-		resourceBlock.setName(ServiceTestUtil.randomString());
+		resourceBlock.setName(RandomTestUtil.randomString());
 
-		resourceBlock.setPermissionsHash(ServiceTestUtil.randomString());
+		resourceBlock.setPermissionsHash(RandomTestUtil.randomString());
 
-		resourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
+		resourceBlock.setReferenceCount(RandomTestUtil.nextLong());
 
 		_persistence.update(resourceBlock);
 

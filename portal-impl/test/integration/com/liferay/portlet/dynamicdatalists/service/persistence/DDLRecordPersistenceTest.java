@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class DDLRecordPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDLRecord ddlRecord = _persistence.create(pk);
 
@@ -128,35 +128,35 @@ public class DDLRecordPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDLRecord newDDLRecord = _persistence.create(pk);
 
-		newDDLRecord.setUuid(ServiceTestUtil.randomString());
+		newDDLRecord.setUuid(RandomTestUtil.randomString());
 
-		newDDLRecord.setGroupId(ServiceTestUtil.nextLong());
+		newDDLRecord.setGroupId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setCompanyId(ServiceTestUtil.nextLong());
+		newDDLRecord.setCompanyId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setUserId(ServiceTestUtil.nextLong());
+		newDDLRecord.setUserId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setUserName(ServiceTestUtil.randomString());
+		newDDLRecord.setUserName(RandomTestUtil.randomString());
 
-		newDDLRecord.setVersionUserId(ServiceTestUtil.nextLong());
+		newDDLRecord.setVersionUserId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setVersionUserName(ServiceTestUtil.randomString());
+		newDDLRecord.setVersionUserName(RandomTestUtil.randomString());
 
-		newDDLRecord.setCreateDate(ServiceTestUtil.nextDate());
+		newDDLRecord.setCreateDate(RandomTestUtil.nextDate());
 
-		newDDLRecord.setModifiedDate(ServiceTestUtil.nextDate());
+		newDDLRecord.setModifiedDate(RandomTestUtil.nextDate());
 
-		newDDLRecord.setDDMStorageId(ServiceTestUtil.nextLong());
+		newDDLRecord.setDDMStorageId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setRecordSetId(ServiceTestUtil.nextLong());
+		newDDLRecord.setRecordSetId(RandomTestUtil.nextLong());
 
-		newDDLRecord.setVersion(ServiceTestUtil.randomString());
+		newDDLRecord.setVersion(RandomTestUtil.randomString());
 
-		newDDLRecord.setDisplayIndex(ServiceTestUtil.nextInt());
+		newDDLRecord.setDisplayIndex(RandomTestUtil.nextInt());
 
 		_persistence.update(newDDLRecord);
 
@@ -211,7 +211,7 @@ public class DDLRecordPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -226,7 +226,7 @@ public class DDLRecordPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -240,7 +240,7 @@ public class DDLRecordPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -252,7 +252,7 @@ public class DDLRecordPersistenceTest {
 	@Test
 	public void testCountByRecordSetId() {
 		try {
-			_persistence.countByRecordSetId(ServiceTestUtil.nextLong());
+			_persistence.countByRecordSetId(RandomTestUtil.nextLong());
 
 			_persistence.countByRecordSetId(0L);
 		}
@@ -264,8 +264,8 @@ public class DDLRecordPersistenceTest {
 	@Test
 	public void testCountByR_U() {
 		try {
-			_persistence.countByR_U(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByR_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByR_U(0L, 0L);
 		}
@@ -285,7 +285,7 @@ public class DDLRecordPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -326,7 +326,7 @@ public class DDLRecordPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDLRecord missingDDLRecord = _persistence.fetchByPrimaryKey(pk);
 
@@ -381,7 +381,7 @@ public class DDLRecordPersistenceTest {
 				DDLRecord.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DDLRecord> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -420,7 +420,7 @@ public class DDLRecordPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("recordId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("recordId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -447,35 +447,35 @@ public class DDLRecordPersistenceTest {
 	}
 
 	protected DDLRecord addDDLRecord() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDLRecord ddlRecord = _persistence.create(pk);
 
-		ddlRecord.setUuid(ServiceTestUtil.randomString());
+		ddlRecord.setUuid(RandomTestUtil.randomString());
 
-		ddlRecord.setGroupId(ServiceTestUtil.nextLong());
+		ddlRecord.setGroupId(RandomTestUtil.nextLong());
 
-		ddlRecord.setCompanyId(ServiceTestUtil.nextLong());
+		ddlRecord.setCompanyId(RandomTestUtil.nextLong());
 
-		ddlRecord.setUserId(ServiceTestUtil.nextLong());
+		ddlRecord.setUserId(RandomTestUtil.nextLong());
 
-		ddlRecord.setUserName(ServiceTestUtil.randomString());
+		ddlRecord.setUserName(RandomTestUtil.randomString());
 
-		ddlRecord.setVersionUserId(ServiceTestUtil.nextLong());
+		ddlRecord.setVersionUserId(RandomTestUtil.nextLong());
 
-		ddlRecord.setVersionUserName(ServiceTestUtil.randomString());
+		ddlRecord.setVersionUserName(RandomTestUtil.randomString());
 
-		ddlRecord.setCreateDate(ServiceTestUtil.nextDate());
+		ddlRecord.setCreateDate(RandomTestUtil.nextDate());
 
-		ddlRecord.setModifiedDate(ServiceTestUtil.nextDate());
+		ddlRecord.setModifiedDate(RandomTestUtil.nextDate());
 
-		ddlRecord.setDDMStorageId(ServiceTestUtil.nextLong());
+		ddlRecord.setDDMStorageId(RandomTestUtil.nextLong());
 
-		ddlRecord.setRecordSetId(ServiceTestUtil.nextLong());
+		ddlRecord.setRecordSetId(RandomTestUtil.nextLong());
 
-		ddlRecord.setVersion(ServiceTestUtil.randomString());
+		ddlRecord.setVersion(RandomTestUtil.randomString());
 
-		ddlRecord.setDisplayIndex(ServiceTestUtil.nextInt());
+		ddlRecord.setDisplayIndex(RandomTestUtil.nextInt());
 
 		_persistence.update(ddlRecord);
 

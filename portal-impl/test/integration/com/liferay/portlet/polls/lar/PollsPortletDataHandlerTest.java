@@ -22,7 +22,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
-import com.liferay.portlet.polls.util.PollsTestUtil;
+import com.liferay.test.portlet.polls.util.PollsTestUtil;
 
 import org.junit.runner.RunWith;
 

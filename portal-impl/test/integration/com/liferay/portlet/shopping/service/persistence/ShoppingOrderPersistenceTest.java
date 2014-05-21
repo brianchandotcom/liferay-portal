@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -44,6 +43,7 @@ import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.model.impl.ShoppingOrderModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -102,7 +102,7 @@ public class ShoppingOrderPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrder shoppingOrder = _persistence.create(pk);
 
@@ -129,109 +129,109 @@ public class ShoppingOrderPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrder newShoppingOrder = _persistence.create(pk);
 
-		newShoppingOrder.setGroupId(ServiceTestUtil.nextLong());
+		newShoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingOrder.setCompanyId(ServiceTestUtil.nextLong());
+		newShoppingOrder.setCompanyId(RandomTestUtil.nextLong());
 
-		newShoppingOrder.setUserId(ServiceTestUtil.nextLong());
+		newShoppingOrder.setUserId(RandomTestUtil.nextLong());
 
-		newShoppingOrder.setUserName(ServiceTestUtil.randomString());
+		newShoppingOrder.setUserName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCreateDate(ServiceTestUtil.nextDate());
+		newShoppingOrder.setCreateDate(RandomTestUtil.nextDate());
 
-		newShoppingOrder.setModifiedDate(ServiceTestUtil.nextDate());
+		newShoppingOrder.setModifiedDate(RandomTestUtil.nextDate());
 
-		newShoppingOrder.setNumber(ServiceTestUtil.randomString());
+		newShoppingOrder.setNumber(RandomTestUtil.randomString());
 
-		newShoppingOrder.setTax(ServiceTestUtil.nextDouble());
+		newShoppingOrder.setTax(RandomTestUtil.nextDouble());
 
-		newShoppingOrder.setShipping(ServiceTestUtil.nextDouble());
+		newShoppingOrder.setShipping(RandomTestUtil.nextDouble());
 
-		newShoppingOrder.setAltShipping(ServiceTestUtil.randomString());
+		newShoppingOrder.setAltShipping(RandomTestUtil.randomString());
 
-		newShoppingOrder.setRequiresShipping(ServiceTestUtil.randomBoolean());
+		newShoppingOrder.setRequiresShipping(RandomTestUtil.randomBoolean());
 
-		newShoppingOrder.setInsure(ServiceTestUtil.randomBoolean());
+		newShoppingOrder.setInsure(RandomTestUtil.randomBoolean());
 
-		newShoppingOrder.setInsurance(ServiceTestUtil.nextDouble());
+		newShoppingOrder.setInsurance(RandomTestUtil.nextDouble());
 
-		newShoppingOrder.setCouponCodes(ServiceTestUtil.randomString());
+		newShoppingOrder.setCouponCodes(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCouponDiscount(ServiceTestUtil.nextDouble());
+		newShoppingOrder.setCouponDiscount(RandomTestUtil.nextDouble());
 
-		newShoppingOrder.setBillingFirstName(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingFirstName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingLastName(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingLastName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingEmailAddress(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingEmailAddress(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingCompany(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingCompany(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingStreet(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingStreet(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingCity(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingCity(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingState(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingState(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingZip(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingZip(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingCountry(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingCountry(RandomTestUtil.randomString());
 
-		newShoppingOrder.setBillingPhone(ServiceTestUtil.randomString());
+		newShoppingOrder.setBillingPhone(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShipToBilling(ServiceTestUtil.randomBoolean());
+		newShoppingOrder.setShipToBilling(RandomTestUtil.randomBoolean());
 
-		newShoppingOrder.setShippingFirstName(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingFirstName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingLastName(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingLastName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingEmailAddress(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingEmailAddress(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingCompany(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingCompany(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingStreet(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingStreet(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingCity(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingCity(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingState(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingState(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingZip(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingZip(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingCountry(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingCountry(RandomTestUtil.randomString());
 
-		newShoppingOrder.setShippingPhone(ServiceTestUtil.randomString());
+		newShoppingOrder.setShippingPhone(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCcName(ServiceTestUtil.randomString());
+		newShoppingOrder.setCcName(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCcType(ServiceTestUtil.randomString());
+		newShoppingOrder.setCcType(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCcNumber(ServiceTestUtil.randomString());
+		newShoppingOrder.setCcNumber(RandomTestUtil.randomString());
 
-		newShoppingOrder.setCcExpMonth(ServiceTestUtil.nextInt());
+		newShoppingOrder.setCcExpMonth(RandomTestUtil.nextInt());
 
-		newShoppingOrder.setCcExpYear(ServiceTestUtil.nextInt());
+		newShoppingOrder.setCcExpYear(RandomTestUtil.nextInt());
 
-		newShoppingOrder.setCcVerNumber(ServiceTestUtil.randomString());
+		newShoppingOrder.setCcVerNumber(RandomTestUtil.randomString());
 
-		newShoppingOrder.setComments(ServiceTestUtil.randomString());
+		newShoppingOrder.setComments(RandomTestUtil.randomString());
 
-		newShoppingOrder.setPpTxnId(ServiceTestUtil.randomString());
+		newShoppingOrder.setPpTxnId(RandomTestUtil.randomString());
 
-		newShoppingOrder.setPpPaymentStatus(ServiceTestUtil.randomString());
+		newShoppingOrder.setPpPaymentStatus(RandomTestUtil.randomString());
 
-		newShoppingOrder.setPpPaymentGross(ServiceTestUtil.nextDouble());
+		newShoppingOrder.setPpPaymentGross(RandomTestUtil.nextDouble());
 
-		newShoppingOrder.setPpReceiverEmail(ServiceTestUtil.randomString());
+		newShoppingOrder.setPpReceiverEmail(RandomTestUtil.randomString());
 
-		newShoppingOrder.setPpPayerEmail(ServiceTestUtil.randomString());
+		newShoppingOrder.setPpPayerEmail(RandomTestUtil.randomString());
 
-		newShoppingOrder.setSendOrderEmail(ServiceTestUtil.randomBoolean());
+		newShoppingOrder.setSendOrderEmail(RandomTestUtil.randomBoolean());
 
-		newShoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
+		newShoppingOrder.setSendShippingEmail(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newShoppingOrder);
 
@@ -346,7 +346,7 @@ public class ShoppingOrderPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -386,8 +386,8 @@ public class ShoppingOrderPersistenceTest {
 	@Test
 	public void testCountByG_U_PPPS() {
 		try {
-			_persistence.countByG_U_PPPS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_U_PPPS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_U_PPPS(0L, 0L, StringPool.NULL);
 
@@ -409,7 +409,7 @@ public class ShoppingOrderPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -475,7 +475,7 @@ public class ShoppingOrderPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrder missingShoppingOrder = _persistence.fetchByPrimaryKey(pk);
 
@@ -530,7 +530,7 @@ public class ShoppingOrderPersistenceTest {
 				ShoppingOrder.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ShoppingOrder> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -569,7 +569,7 @@ public class ShoppingOrderPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orderId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orderId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -598,109 +598,109 @@ public class ShoppingOrderPersistenceTest {
 	}
 
 	protected ShoppingOrder addShoppingOrder() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrder shoppingOrder = _persistence.create(pk);
 
-		shoppingOrder.setGroupId(ServiceTestUtil.nextLong());
+		shoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingOrder.setCompanyId(ServiceTestUtil.nextLong());
+		shoppingOrder.setCompanyId(RandomTestUtil.nextLong());
 
-		shoppingOrder.setUserId(ServiceTestUtil.nextLong());
+		shoppingOrder.setUserId(RandomTestUtil.nextLong());
 
-		shoppingOrder.setUserName(ServiceTestUtil.randomString());
+		shoppingOrder.setUserName(RandomTestUtil.randomString());
 
-		shoppingOrder.setCreateDate(ServiceTestUtil.nextDate());
+		shoppingOrder.setCreateDate(RandomTestUtil.nextDate());
 
-		shoppingOrder.setModifiedDate(ServiceTestUtil.nextDate());
+		shoppingOrder.setModifiedDate(RandomTestUtil.nextDate());
 
-		shoppingOrder.setNumber(ServiceTestUtil.randomString());
+		shoppingOrder.setNumber(RandomTestUtil.randomString());
 
-		shoppingOrder.setTax(ServiceTestUtil.nextDouble());
+		shoppingOrder.setTax(RandomTestUtil.nextDouble());
 
-		shoppingOrder.setShipping(ServiceTestUtil.nextDouble());
+		shoppingOrder.setShipping(RandomTestUtil.nextDouble());
 
-		shoppingOrder.setAltShipping(ServiceTestUtil.randomString());
+		shoppingOrder.setAltShipping(RandomTestUtil.randomString());
 
-		shoppingOrder.setRequiresShipping(ServiceTestUtil.randomBoolean());
+		shoppingOrder.setRequiresShipping(RandomTestUtil.randomBoolean());
 
-		shoppingOrder.setInsure(ServiceTestUtil.randomBoolean());
+		shoppingOrder.setInsure(RandomTestUtil.randomBoolean());
 
-		shoppingOrder.setInsurance(ServiceTestUtil.nextDouble());
+		shoppingOrder.setInsurance(RandomTestUtil.nextDouble());
 
-		shoppingOrder.setCouponCodes(ServiceTestUtil.randomString());
+		shoppingOrder.setCouponCodes(RandomTestUtil.randomString());
 
-		shoppingOrder.setCouponDiscount(ServiceTestUtil.nextDouble());
+		shoppingOrder.setCouponDiscount(RandomTestUtil.nextDouble());
 
-		shoppingOrder.setBillingFirstName(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingFirstName(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingLastName(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingLastName(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingEmailAddress(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingEmailAddress(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingCompany(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingCompany(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingStreet(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingStreet(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingCity(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingCity(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingState(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingState(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingZip(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingZip(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingCountry(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingCountry(RandomTestUtil.randomString());
 
-		shoppingOrder.setBillingPhone(ServiceTestUtil.randomString());
+		shoppingOrder.setBillingPhone(RandomTestUtil.randomString());
 
-		shoppingOrder.setShipToBilling(ServiceTestUtil.randomBoolean());
+		shoppingOrder.setShipToBilling(RandomTestUtil.randomBoolean());
 
-		shoppingOrder.setShippingFirstName(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingFirstName(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingLastName(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingLastName(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingEmailAddress(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingEmailAddress(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingCompany(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingCompany(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingStreet(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingStreet(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingCity(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingCity(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingState(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingState(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingZip(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingZip(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingCountry(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingCountry(RandomTestUtil.randomString());
 
-		shoppingOrder.setShippingPhone(ServiceTestUtil.randomString());
+		shoppingOrder.setShippingPhone(RandomTestUtil.randomString());
 
-		shoppingOrder.setCcName(ServiceTestUtil.randomString());
+		shoppingOrder.setCcName(RandomTestUtil.randomString());
 
-		shoppingOrder.setCcType(ServiceTestUtil.randomString());
+		shoppingOrder.setCcType(RandomTestUtil.randomString());
 
-		shoppingOrder.setCcNumber(ServiceTestUtil.randomString());
+		shoppingOrder.setCcNumber(RandomTestUtil.randomString());
 
-		shoppingOrder.setCcExpMonth(ServiceTestUtil.nextInt());
+		shoppingOrder.setCcExpMonth(RandomTestUtil.nextInt());
 
-		shoppingOrder.setCcExpYear(ServiceTestUtil.nextInt());
+		shoppingOrder.setCcExpYear(RandomTestUtil.nextInt());
 
-		shoppingOrder.setCcVerNumber(ServiceTestUtil.randomString());
+		shoppingOrder.setCcVerNumber(RandomTestUtil.randomString());
 
-		shoppingOrder.setComments(ServiceTestUtil.randomString());
+		shoppingOrder.setComments(RandomTestUtil.randomString());
 
-		shoppingOrder.setPpTxnId(ServiceTestUtil.randomString());
+		shoppingOrder.setPpTxnId(RandomTestUtil.randomString());
 
-		shoppingOrder.setPpPaymentStatus(ServiceTestUtil.randomString());
+		shoppingOrder.setPpPaymentStatus(RandomTestUtil.randomString());
 
-		shoppingOrder.setPpPaymentGross(ServiceTestUtil.nextDouble());
+		shoppingOrder.setPpPaymentGross(RandomTestUtil.nextDouble());
 
-		shoppingOrder.setPpReceiverEmail(ServiceTestUtil.randomString());
+		shoppingOrder.setPpReceiverEmail(RandomTestUtil.randomString());
 
-		shoppingOrder.setPpPayerEmail(ServiceTestUtil.randomString());
+		shoppingOrder.setPpPayerEmail(RandomTestUtil.randomString());
 
-		shoppingOrder.setSendOrderEmail(ServiceTestUtil.randomBoolean());
+		shoppingOrder.setSendOrderEmail(RandomTestUtil.randomBoolean());
 
-		shoppingOrder.setSendShippingEmail(ServiceTestUtil.randomBoolean());
+		shoppingOrder.setSendShippingEmail(RandomTestUtil.randomBoolean());
 
 		_persistence.update(shoppingOrder);
 

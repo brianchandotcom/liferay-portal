@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,7 +93,7 @@ public class CounterPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		String pk = ServiceTestUtil.randomString();
+		String pk = RandomTestUtil.randomString();
 
 		Counter counter = _persistence.create(pk);
 
@@ -120,11 +120,11 @@ public class CounterPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		String pk = ServiceTestUtil.randomString();
+		String pk = RandomTestUtil.randomString();
 
 		Counter newCounter = _persistence.create(pk);
 
-		newCounter.setCurrentId(ServiceTestUtil.nextLong());
+		newCounter.setCurrentId(RandomTestUtil.nextLong());
 
 		_persistence.update(newCounter);
 
@@ -146,7 +146,7 @@ public class CounterPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		String pk = ServiceTestUtil.randomString();
+		String pk = RandomTestUtil.randomString();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -184,7 +184,7 @@ public class CounterPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		String pk = ServiceTestUtil.randomString();
+		String pk = RandomTestUtil.randomString();
 
 		Counter missingCounter = _persistence.fetchByPrimaryKey(pk);
 
@@ -216,7 +216,7 @@ public class CounterPersistenceTest {
 				Counter.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name",
-				ServiceTestUtil.randomString()));
+				RandomTestUtil.randomString()));
 
 		List<Counter> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -255,7 +255,7 @@ public class CounterPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("name"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("name",
-				new Object[] { ServiceTestUtil.randomString() }));
+				new Object[] { RandomTestUtil.randomString() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -263,11 +263,11 @@ public class CounterPersistenceTest {
 	}
 
 	protected Counter addCounter() throws Exception {
-		String pk = ServiceTestUtil.randomString();
+		String pk = RandomTestUtil.randomString();
 
 		Counter counter = _persistence.create(pk);
 
-		counter.setCurrentId(ServiceTestUtil.nextLong());
+		counter.setCurrentId(RandomTestUtil.nextLong());
 
 		_persistence.update(counter);
 

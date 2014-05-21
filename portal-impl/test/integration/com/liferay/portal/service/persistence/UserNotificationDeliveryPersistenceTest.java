@@ -33,14 +33,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserNotificationDelivery userNotificationDelivery = _persistence.create(pk);
 
@@ -126,25 +124,25 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserNotificationDelivery newUserNotificationDelivery = _persistence.create(pk);
 
-		newUserNotificationDelivery.setMvccVersion(ServiceTestUtil.nextLong());
+		newUserNotificationDelivery.setMvccVersion(RandomTestUtil.nextLong());
 
-		newUserNotificationDelivery.setCompanyId(ServiceTestUtil.nextLong());
+		newUserNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
 
-		newUserNotificationDelivery.setUserId(ServiceTestUtil.nextLong());
+		newUserNotificationDelivery.setUserId(RandomTestUtil.nextLong());
 
-		newUserNotificationDelivery.setPortletId(ServiceTestUtil.randomString());
+		newUserNotificationDelivery.setPortletId(RandomTestUtil.randomString());
 
-		newUserNotificationDelivery.setClassNameId(ServiceTestUtil.nextLong());
+		newUserNotificationDelivery.setClassNameId(RandomTestUtil.nextLong());
 
-		newUserNotificationDelivery.setNotificationType(ServiceTestUtil.nextInt());
+		newUserNotificationDelivery.setNotificationType(RandomTestUtil.nextInt());
 
-		newUserNotificationDelivery.setDeliveryType(ServiceTestUtil.nextInt());
+		newUserNotificationDelivery.setDeliveryType(RandomTestUtil.nextInt());
 
-		newUserNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
+		newUserNotificationDelivery.setDeliver(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newUserNotificationDelivery);
 
@@ -173,7 +171,7 @@ public class UserNotificationDeliveryPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -185,9 +183,9 @@ public class UserNotificationDeliveryPersistenceTest {
 	@Test
 	public void testCountByU_P_C_N_D() {
 		try {
-			_persistence.countByU_P_C_N_D(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt(), ServiceTestUtil.nextInt());
+			_persistence.countByU_P_C_N_D(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
 
 			_persistence.countByU_P_C_N_D(0L, StringPool.NULL, 0L, 0, 0);
 
@@ -210,7 +208,7 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -253,7 +251,7 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserNotificationDelivery missingUserNotificationDelivery = _persistence.fetchByPrimaryKey(pk);
 
@@ -310,7 +308,7 @@ public class UserNotificationDeliveryPersistenceTest {
 				UserNotificationDelivery.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"userNotificationDeliveryId", ServiceTestUtil.nextLong()));
+				"userNotificationDeliveryId", RandomTestUtil.nextLong()));
 
 		List<UserNotificationDelivery> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -354,7 +352,7 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"userNotificationDeliveryId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -389,25 +387,25 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	protected UserNotificationDelivery addUserNotificationDelivery()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		UserNotificationDelivery userNotificationDelivery = _persistence.create(pk);
 
-		userNotificationDelivery.setMvccVersion(ServiceTestUtil.nextLong());
+		userNotificationDelivery.setMvccVersion(RandomTestUtil.nextLong());
 
-		userNotificationDelivery.setCompanyId(ServiceTestUtil.nextLong());
+		userNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
 
-		userNotificationDelivery.setUserId(ServiceTestUtil.nextLong());
+		userNotificationDelivery.setUserId(RandomTestUtil.nextLong());
 
-		userNotificationDelivery.setPortletId(ServiceTestUtil.randomString());
+		userNotificationDelivery.setPortletId(RandomTestUtil.randomString());
 
-		userNotificationDelivery.setClassNameId(ServiceTestUtil.nextLong());
+		userNotificationDelivery.setClassNameId(RandomTestUtil.nextLong());
 
-		userNotificationDelivery.setNotificationType(ServiceTestUtil.nextInt());
+		userNotificationDelivery.setNotificationType(RandomTestUtil.nextInt());
 
-		userNotificationDelivery.setDeliveryType(ServiceTestUtil.nextInt());
+		userNotificationDelivery.setDeliveryType(RandomTestUtil.nextInt());
 
-		userNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
+		userNotificationDelivery.setDeliver(RandomTestUtil.randomBoolean());
 
 		_persistence.update(userNotificationDelivery);
 

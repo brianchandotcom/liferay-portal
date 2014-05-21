@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -42,6 +41,7 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
@@ -127,21 +127,21 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExpandoColumn newExpandoColumn = _persistence.create(pk);
 
-		newExpandoColumn.setCompanyId(ServiceTestUtil.nextLong());
+		newExpandoColumn.setCompanyId(RandomTestUtil.nextLong());
 
-		newExpandoColumn.setTableId(ServiceTestUtil.nextLong());
+		newExpandoColumn.setTableId(RandomTestUtil.nextLong());
 
-		newExpandoColumn.setName(ServiceTestUtil.randomString());
+		newExpandoColumn.setName(RandomTestUtil.randomString());
 
-		newExpandoColumn.setType(ServiceTestUtil.nextInt());
+		newExpandoColumn.setType(RandomTestUtil.nextInt());
 
-		newExpandoColumn.setDefaultData(ServiceTestUtil.randomString());
+		newExpandoColumn.setDefaultData(RandomTestUtil.randomString());
 
-		newExpandoColumn.setTypeSettings(ServiceTestUtil.randomString());
+		newExpandoColumn.setTypeSettings(RandomTestUtil.randomString());
 
 		_persistence.update(newExpandoColumn);
 
@@ -166,7 +166,7 @@ public class ExpandoColumnPersistenceTest {
 	@Test
 	public void testCountByTableId() {
 		try {
-			_persistence.countByTableId(ServiceTestUtil.nextLong());
+			_persistence.countByTableId(RandomTestUtil.nextLong());
 
 			_persistence.countByTableId(0L);
 		}
@@ -178,7 +178,7 @@ public class ExpandoColumnPersistenceTest {
 	@Test
 	public void testCountByT_N() {
 		try {
-			_persistence.countByT_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByT_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByT_N(0L, StringPool.NULL);
 
@@ -192,9 +192,9 @@ public class ExpandoColumnPersistenceTest {
 	@Test
 	public void testCountByT_NArrayable() {
 		try {
-			_persistence.countByT_N(ServiceTestUtil.nextLong(),
+			_persistence.countByT_N(RandomTestUtil.nextLong(),
 				new String[] {
-					ServiceTestUtil.randomString(), StringPool.BLANK,
+					RandomTestUtil.randomString(), StringPool.BLANK,
 					StringPool.NULL, null, null
 				});
 		}
@@ -214,7 +214,7 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -253,7 +253,7 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExpandoColumn missingExpandoColumn = _persistence.fetchByPrimaryKey(pk);
 
@@ -308,7 +308,7 @@ public class ExpandoColumnPersistenceTest {
 				ExpandoColumn.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("columnId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ExpandoColumn> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -347,7 +347,7 @@ public class ExpandoColumnPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("columnId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("columnId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -374,21 +374,21 @@ public class ExpandoColumnPersistenceTest {
 	}
 
 	protected ExpandoColumn addExpandoColumn() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
-		expandoColumn.setCompanyId(ServiceTestUtil.nextLong());
+		expandoColumn.setCompanyId(RandomTestUtil.nextLong());
 
-		expandoColumn.setTableId(ServiceTestUtil.nextLong());
+		expandoColumn.setTableId(RandomTestUtil.nextLong());
 
-		expandoColumn.setName(ServiceTestUtil.randomString());
+		expandoColumn.setName(RandomTestUtil.randomString());
 
-		expandoColumn.setType(ServiceTestUtil.nextInt());
+		expandoColumn.setType(RandomTestUtil.nextInt());
 
-		expandoColumn.setDefaultData(ServiceTestUtil.randomString());
+		expandoColumn.setDefaultData(RandomTestUtil.randomString());
 
-		expandoColumn.setTypeSettings(ServiceTestUtil.randomString());
+		expandoColumn.setTypeSettings(RandomTestUtil.randomString());
 
 		_persistence.update(expandoColumn);
 

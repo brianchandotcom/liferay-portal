@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.impl.MBBanModelImpl;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class MBBanPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBBan mbBan = _persistence.create(pk);
 
@@ -128,25 +128,25 @@ public class MBBanPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBBan newMBBan = _persistence.create(pk);
 
-		newMBBan.setUuid(ServiceTestUtil.randomString());
+		newMBBan.setUuid(RandomTestUtil.randomString());
 
-		newMBBan.setGroupId(ServiceTestUtil.nextLong());
+		newMBBan.setGroupId(RandomTestUtil.nextLong());
 
-		newMBBan.setCompanyId(ServiceTestUtil.nextLong());
+		newMBBan.setCompanyId(RandomTestUtil.nextLong());
 
-		newMBBan.setUserId(ServiceTestUtil.nextLong());
+		newMBBan.setUserId(RandomTestUtil.nextLong());
 
-		newMBBan.setUserName(ServiceTestUtil.randomString());
+		newMBBan.setUserName(RandomTestUtil.randomString());
 
-		newMBBan.setCreateDate(ServiceTestUtil.nextDate());
+		newMBBan.setCreateDate(RandomTestUtil.nextDate());
 
-		newMBBan.setModifiedDate(ServiceTestUtil.nextDate());
+		newMBBan.setModifiedDate(RandomTestUtil.nextDate());
 
-		newMBBan.setBanUserId(ServiceTestUtil.nextLong());
+		newMBBan.setBanUserId(RandomTestUtil.nextLong());
 
 		_persistence.update(newMBBan);
 
@@ -187,7 +187,7 @@ public class MBBanPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -202,7 +202,7 @@ public class MBBanPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -216,7 +216,7 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -228,7 +228,7 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -240,7 +240,7 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testCountByBanUserId() {
 		try {
-			_persistence.countByBanUserId(ServiceTestUtil.nextLong());
+			_persistence.countByBanUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByBanUserId(0L);
 		}
@@ -252,8 +252,8 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testCountByG_B() {
 		try {
-			_persistence.countByG_B(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_B(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_B(0L, 0L);
 		}
@@ -273,7 +273,7 @@ public class MBBanPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -313,7 +313,7 @@ public class MBBanPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBBan missingMBBan = _persistence.fetchByPrimaryKey(pk);
 
@@ -367,7 +367,7 @@ public class MBBanPersistenceTest {
 				MBBan.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("banId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<MBBan> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -406,7 +406,7 @@ public class MBBanPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("banId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("banId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -437,25 +437,25 @@ public class MBBanPersistenceTest {
 	}
 
 	protected MBBan addMBBan() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		MBBan mbBan = _persistence.create(pk);
 
-		mbBan.setUuid(ServiceTestUtil.randomString());
+		mbBan.setUuid(RandomTestUtil.randomString());
 
-		mbBan.setGroupId(ServiceTestUtil.nextLong());
+		mbBan.setGroupId(RandomTestUtil.nextLong());
 
-		mbBan.setCompanyId(ServiceTestUtil.nextLong());
+		mbBan.setCompanyId(RandomTestUtil.nextLong());
 
-		mbBan.setUserId(ServiceTestUtil.nextLong());
+		mbBan.setUserId(RandomTestUtil.nextLong());
 
-		mbBan.setUserName(ServiceTestUtil.randomString());
+		mbBan.setUserName(RandomTestUtil.randomString());
 
-		mbBan.setCreateDate(ServiceTestUtil.nextDate());
+		mbBan.setCreateDate(RandomTestUtil.nextDate());
 
-		mbBan.setModifiedDate(ServiceTestUtil.nextDate());
+		mbBan.setModifiedDate(RandomTestUtil.nextDate());
 
-		mbBan.setBanUserId(ServiceTestUtil.nextLong());
+		mbBan.setBanUserId(RandomTestUtil.nextLong());
 
 		_persistence.update(mbBan);
 

@@ -33,15 +33,16 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import java.io.File;
 
@@ -186,10 +187,10 @@ public class CompanyLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		LayoutSetPrototype layoutSetPrototype = addLayoutSetPrototype(
-			companyId, userId, ServiceTestUtil.randomString());
+			companyId, userId, RandomTestUtil.randomString());
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
@@ -218,11 +219,11 @@ public class CompanyLocalServiceTest {
 
 		Group parentGroup = GroupTestUtil.addGroup(
 			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		Group group = GroupTestUtil.addGroup(
 			companyId, userId, parentGroup.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		addUser(
 			companyId, userId, group.getGroupId(),
@@ -301,7 +302,7 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany();
 
 		testUpdateAccountNames(
-			company, new String[] {ServiceTestUtil.randomString()}, false);
+			company, new String[] {RandomTestUtil.randomString()}, false);
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
@@ -312,7 +313,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	protected Company addCompany() throws Exception {
-		String webId = ServiceTestUtil.randomString() + "test.com";
+		String webId = RandomTestUtil.randomString() + "test.com";
 
 		Company company = CompanyLocalServiceUtil.addCompany(
 			webId, webId, "test.com", PropsValues.SHARD_DEFAULT_NAME, false, 0,
@@ -345,9 +346,9 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		return UserTestUtil.addUser(
-			companyId, userId, ServiceTestUtil.randomString(), false,
-			LocaleUtil.getDefault(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), new long[] {groupId},
+			companyId, userId, RandomTestUtil.randomString(), false,
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
 			serviceContext);
 	}
 

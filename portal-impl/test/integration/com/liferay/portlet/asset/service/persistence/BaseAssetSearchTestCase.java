@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -42,6 +39,12 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.SearchContextTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.asset.service.persistence.AssetEntryQueryTestUtil;
 
 import java.text.DateFormat;
 
@@ -73,12 +76,12 @@ public abstract class BaseAssetSearchTestCase {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				serviceContext);
 
 		_vocabularyId = vocabulary.getVocabularyId();
@@ -553,22 +556,22 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setGroupIds(
 			new long[] {group1.getGroupId(), group2.getGroupId()});
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
 		int initialEntries = searchCount(assetEntryQuery, searchContext);
 
-		ServiceContext serviceContext1 = ServiceTestUtil.getServiceContext(
-			group1.getGroupId());
+		ServiceContext serviceContext1 =
+			ServiceContextTestUtil.getServiceContext(group1.getGroupId());
 
 		BaseModel<?> parentBaseModel1 = getParentBaseModel(
 			group1, serviceContext1);
 
 		addBaseModel(parentBaseModel1, getSearchKeywords(), serviceContext1);
 
-		ServiceContext serviceContext2 = ServiceTestUtil.getServiceContext(
-			group2.getGroupId());
+		ServiceContext serviceContext2 =
+			ServiceContextTestUtil.getServiceContext(group2.getGroupId());
 
 		BaseModel<?> parentBaseModel2 = getParentBaseModel(
 			group1, serviceContext2);
@@ -1000,13 +1003,13 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, int expectedResults)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1031,13 +1034,13 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, int expectedResult)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1054,13 +1057,13 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, boolean classType)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1089,13 +1092,13 @@ public abstract class BaseAssetSearchTestCase {
 			String[] titles, String[] orderedTitles)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1127,19 +1130,19 @@ public abstract class BaseAssetSearchTestCase {
 			Date[] expirationDates)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
 		for (Date expirationDate : expirationDates) {
 			addBaseModel(
-				parentBaseModel, ServiceTestUtil.randomString(), expirationDate,
+				parentBaseModel, RandomTestUtil.randomString(), expirationDate,
 				serviceContext);
 		}
 
@@ -1175,13 +1178,13 @@ public abstract class BaseAssetSearchTestCase {
 			String[] titles, String[] orderedTitles)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1206,20 +1209,19 @@ public abstract class BaseAssetSearchTestCase {
 	protected void testPaginationType(AssetEntryQuery assetEntryQuery, int size)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
 
-		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
 		for (int i = 0; i < size; i++) {
 			addBaseModel(
-				parentBaseModel, ServiceTestUtil.randomString(),
-				serviceContext);
+				parentBaseModel, RandomTestUtil.randomString(), serviceContext);
 		}
 
 		Assert.assertEquals(

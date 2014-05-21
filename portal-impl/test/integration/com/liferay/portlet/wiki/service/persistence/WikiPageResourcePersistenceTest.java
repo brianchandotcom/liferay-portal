@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -42,6 +41,7 @@ import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class WikiPageResourcePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPageResource wikiPageResource = _persistence.create(pk);
 
@@ -127,15 +127,15 @@ public class WikiPageResourcePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPageResource newWikiPageResource = _persistence.create(pk);
 
-		newWikiPageResource.setUuid(ServiceTestUtil.randomString());
+		newWikiPageResource.setUuid(RandomTestUtil.randomString());
 
-		newWikiPageResource.setNodeId(ServiceTestUtil.nextLong());
+		newWikiPageResource.setNodeId(RandomTestUtil.nextLong());
 
-		newWikiPageResource.setTitle(ServiceTestUtil.randomString());
+		newWikiPageResource.setTitle(RandomTestUtil.randomString());
 
 		_persistence.update(newWikiPageResource);
 
@@ -168,7 +168,7 @@ public class WikiPageResourcePersistenceTest {
 	@Test
 	public void testCountByN_T() {
 		try {
-			_persistence.countByN_T(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByN_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByN_T(0L, StringPool.NULL);
 
@@ -190,7 +190,7 @@ public class WikiPageResourcePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -229,7 +229,7 @@ public class WikiPageResourcePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPageResource missingWikiPageResource = _persistence.fetchByPrimaryKey(pk);
 
@@ -284,7 +284,7 @@ public class WikiPageResourcePersistenceTest {
 				WikiPageResource.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<WikiPageResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -325,7 +325,7 @@ public class WikiPageResourcePersistenceTest {
 				"resourcePrimKey"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -352,15 +352,15 @@ public class WikiPageResourcePersistenceTest {
 	}
 
 	protected WikiPageResource addWikiPageResource() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WikiPageResource wikiPageResource = _persistence.create(pk);
 
-		wikiPageResource.setUuid(ServiceTestUtil.randomString());
+		wikiPageResource.setUuid(RandomTestUtil.randomString());
 
-		wikiPageResource.setNodeId(ServiceTestUtil.nextLong());
+		wikiPageResource.setNodeId(RandomTestUtil.nextLong());
 
-		wikiPageResource.setTitle(ServiceTestUtil.randomString());
+		wikiPageResource.setTitle(RandomTestUtil.randomString());
 
 		_persistence.update(wikiPageResource);
 

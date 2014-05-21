@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -42,6 +41,7 @@ import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +100,7 @@ public class SocialActivityLimitPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivityLimit socialActivityLimit = _persistence.create(pk);
 
@@ -127,25 +127,25 @@ public class SocialActivityLimitPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivityLimit newSocialActivityLimit = _persistence.create(pk);
 
-		newSocialActivityLimit.setGroupId(ServiceTestUtil.nextLong());
+		newSocialActivityLimit.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivityLimit.setCompanyId(ServiceTestUtil.nextLong());
+		newSocialActivityLimit.setCompanyId(RandomTestUtil.nextLong());
 
-		newSocialActivityLimit.setUserId(ServiceTestUtil.nextLong());
+		newSocialActivityLimit.setUserId(RandomTestUtil.nextLong());
 
-		newSocialActivityLimit.setClassNameId(ServiceTestUtil.nextLong());
+		newSocialActivityLimit.setClassNameId(RandomTestUtil.nextLong());
 
-		newSocialActivityLimit.setClassPK(ServiceTestUtil.nextLong());
+		newSocialActivityLimit.setClassPK(RandomTestUtil.nextLong());
 
-		newSocialActivityLimit.setActivityType(ServiceTestUtil.nextInt());
+		newSocialActivityLimit.setActivityType(RandomTestUtil.nextInt());
 
-		newSocialActivityLimit.setActivityCounterName(ServiceTestUtil.randomString());
+		newSocialActivityLimit.setActivityCounterName(RandomTestUtil.randomString());
 
-		newSocialActivityLimit.setValue(ServiceTestUtil.randomString());
+		newSocialActivityLimit.setValue(RandomTestUtil.randomString());
 
 		_persistence.update(newSocialActivityLimit);
 
@@ -174,7 +174,7 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -186,7 +186,7 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testCountByUserId() {
 		try {
-			_persistence.countByUserId(ServiceTestUtil.nextLong());
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
 			_persistence.countByUserId(0L);
 		}
@@ -198,8 +198,8 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -211,9 +211,9 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testCountByG_U_C_C_A_A() {
 		try {
-			_persistence.countByG_U_C_C_A_A(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
+			_persistence.countByG_U_C_C_A_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
 				StringPool.BLANK);
 
 			_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, StringPool.NULL);
@@ -236,7 +236,7 @@ public class SocialActivityLimitPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -277,7 +277,7 @@ public class SocialActivityLimitPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivityLimit missingSocialActivityLimit = _persistence.fetchByPrimaryKey(pk);
 
@@ -332,7 +332,7 @@ public class SocialActivityLimitPersistenceTest {
 				SocialActivityLimit.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<SocialActivityLimit> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -373,7 +373,7 @@ public class SocialActivityLimitPersistenceTest {
 				"activityLimitId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityLimitId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -409,25 +409,25 @@ public class SocialActivityLimitPersistenceTest {
 
 	protected SocialActivityLimit addSocialActivityLimit()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SocialActivityLimit socialActivityLimit = _persistence.create(pk);
 
-		socialActivityLimit.setGroupId(ServiceTestUtil.nextLong());
+		socialActivityLimit.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivityLimit.setCompanyId(ServiceTestUtil.nextLong());
+		socialActivityLimit.setCompanyId(RandomTestUtil.nextLong());
 
-		socialActivityLimit.setUserId(ServiceTestUtil.nextLong());
+		socialActivityLimit.setUserId(RandomTestUtil.nextLong());
 
-		socialActivityLimit.setClassNameId(ServiceTestUtil.nextLong());
+		socialActivityLimit.setClassNameId(RandomTestUtil.nextLong());
 
-		socialActivityLimit.setClassPK(ServiceTestUtil.nextLong());
+		socialActivityLimit.setClassPK(RandomTestUtil.nextLong());
 
-		socialActivityLimit.setActivityType(ServiceTestUtil.nextInt());
+		socialActivityLimit.setActivityType(RandomTestUtil.nextInt());
 
-		socialActivityLimit.setActivityCounterName(ServiceTestUtil.randomString());
+		socialActivityLimit.setActivityCounterName(RandomTestUtil.randomString());
 
-		socialActivityLimit.setValue(ServiceTestUtil.randomString());
+		socialActivityLimit.setValue(RandomTestUtil.randomString());
 
 		_persistence.update(socialActivityLimit);
 

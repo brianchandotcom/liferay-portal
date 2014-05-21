@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -44,6 +43,7 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingItemLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -102,7 +102,7 @@ public class ShoppingItemPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItem shoppingItem = _persistence.create(pk);
 
@@ -129,75 +129,75 @@ public class ShoppingItemPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItem newShoppingItem = _persistence.create(pk);
 
-		newShoppingItem.setGroupId(ServiceTestUtil.nextLong());
+		newShoppingItem.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setCompanyId(ServiceTestUtil.nextLong());
+		newShoppingItem.setCompanyId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setUserId(ServiceTestUtil.nextLong());
+		newShoppingItem.setUserId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setUserName(ServiceTestUtil.randomString());
+		newShoppingItem.setUserName(RandomTestUtil.randomString());
 
-		newShoppingItem.setCreateDate(ServiceTestUtil.nextDate());
+		newShoppingItem.setCreateDate(RandomTestUtil.nextDate());
 
-		newShoppingItem.setModifiedDate(ServiceTestUtil.nextDate());
+		newShoppingItem.setModifiedDate(RandomTestUtil.nextDate());
 
-		newShoppingItem.setCategoryId(ServiceTestUtil.nextLong());
+		newShoppingItem.setCategoryId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setSku(ServiceTestUtil.randomString());
+		newShoppingItem.setSku(RandomTestUtil.randomString());
 
-		newShoppingItem.setName(ServiceTestUtil.randomString());
+		newShoppingItem.setName(RandomTestUtil.randomString());
 
-		newShoppingItem.setDescription(ServiceTestUtil.randomString());
+		newShoppingItem.setDescription(RandomTestUtil.randomString());
 
-		newShoppingItem.setProperties(ServiceTestUtil.randomString());
+		newShoppingItem.setProperties(RandomTestUtil.randomString());
 
-		newShoppingItem.setFields(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setFields(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setFieldsQuantities(ServiceTestUtil.randomString());
+		newShoppingItem.setFieldsQuantities(RandomTestUtil.randomString());
 
-		newShoppingItem.setMinQuantity(ServiceTestUtil.nextInt());
+		newShoppingItem.setMinQuantity(RandomTestUtil.nextInt());
 
-		newShoppingItem.setMaxQuantity(ServiceTestUtil.nextInt());
+		newShoppingItem.setMaxQuantity(RandomTestUtil.nextInt());
 
-		newShoppingItem.setPrice(ServiceTestUtil.nextDouble());
+		newShoppingItem.setPrice(RandomTestUtil.nextDouble());
 
-		newShoppingItem.setDiscount(ServiceTestUtil.nextDouble());
+		newShoppingItem.setDiscount(RandomTestUtil.nextDouble());
 
-		newShoppingItem.setTaxable(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setTaxable(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setShipping(ServiceTestUtil.nextDouble());
+		newShoppingItem.setShipping(RandomTestUtil.nextDouble());
 
-		newShoppingItem.setUseShippingFormula(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setUseShippingFormula(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setRequiresShipping(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setRequiresShipping(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setStockQuantity(ServiceTestUtil.nextInt());
+		newShoppingItem.setStockQuantity(RandomTestUtil.nextInt());
 
-		newShoppingItem.setFeatured(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setFeatured(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setSale(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setSale(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setSmallImage(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setSmallImage(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setSmallImageId(ServiceTestUtil.nextLong());
+		newShoppingItem.setSmallImageId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setSmallImageURL(ServiceTestUtil.randomString());
+		newShoppingItem.setSmallImageURL(RandomTestUtil.randomString());
 
-		newShoppingItem.setMediumImage(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setMediumImage(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setMediumImageId(ServiceTestUtil.nextLong());
+		newShoppingItem.setMediumImageId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setMediumImageURL(ServiceTestUtil.randomString());
+		newShoppingItem.setMediumImageURL(RandomTestUtil.randomString());
 
-		newShoppingItem.setLargeImage(ServiceTestUtil.randomBoolean());
+		newShoppingItem.setLargeImage(RandomTestUtil.randomBoolean());
 
-		newShoppingItem.setLargeImageId(ServiceTestUtil.nextLong());
+		newShoppingItem.setLargeImageId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
+		newShoppingItem.setLargeImageURL(RandomTestUtil.randomString());
 
 		_persistence.update(newShoppingItem);
 
@@ -278,7 +278,7 @@ public class ShoppingItemPersistenceTest {
 	@Test
 	public void testCountBySmallImageId() {
 		try {
-			_persistence.countBySmallImageId(ServiceTestUtil.nextLong());
+			_persistence.countBySmallImageId(RandomTestUtil.nextLong());
 
 			_persistence.countBySmallImageId(0L);
 		}
@@ -290,7 +290,7 @@ public class ShoppingItemPersistenceTest {
 	@Test
 	public void testCountByMediumImageId() {
 		try {
-			_persistence.countByMediumImageId(ServiceTestUtil.nextLong());
+			_persistence.countByMediumImageId(RandomTestUtil.nextLong());
 
 			_persistence.countByMediumImageId(0L);
 		}
@@ -302,7 +302,7 @@ public class ShoppingItemPersistenceTest {
 	@Test
 	public void testCountByLargeImageId() {
 		try {
-			_persistence.countByLargeImageId(ServiceTestUtil.nextLong());
+			_persistence.countByLargeImageId(RandomTestUtil.nextLong());
 
 			_persistence.countByLargeImageId(0L);
 		}
@@ -314,8 +314,8 @@ public class ShoppingItemPersistenceTest {
 	@Test
 	public void testCountByG_C() {
 		try {
-			_persistence.countByG_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_C(0L, 0L);
 		}
@@ -327,7 +327,7 @@ public class ShoppingItemPersistenceTest {
 	@Test
 	public void testCountByC_S() {
 		try {
-			_persistence.countByC_S(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_S(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByC_S(0L, StringPool.NULL);
 
@@ -349,7 +349,7 @@ public class ShoppingItemPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -397,7 +397,7 @@ public class ShoppingItemPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItem missingShoppingItem = _persistence.fetchByPrimaryKey(pk);
 
@@ -452,7 +452,7 @@ public class ShoppingItemPersistenceTest {
 				ShoppingItem.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ShoppingItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -491,7 +491,7 @@ public class ShoppingItemPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("itemId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -527,75 +527,75 @@ public class ShoppingItemPersistenceTest {
 	}
 
 	protected ShoppingItem addShoppingItem() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItem shoppingItem = _persistence.create(pk);
 
-		shoppingItem.setGroupId(ServiceTestUtil.nextLong());
+		shoppingItem.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingItem.setCompanyId(ServiceTestUtil.nextLong());
+		shoppingItem.setCompanyId(RandomTestUtil.nextLong());
 
-		shoppingItem.setUserId(ServiceTestUtil.nextLong());
+		shoppingItem.setUserId(RandomTestUtil.nextLong());
 
-		shoppingItem.setUserName(ServiceTestUtil.randomString());
+		shoppingItem.setUserName(RandomTestUtil.randomString());
 
-		shoppingItem.setCreateDate(ServiceTestUtil.nextDate());
+		shoppingItem.setCreateDate(RandomTestUtil.nextDate());
 
-		shoppingItem.setModifiedDate(ServiceTestUtil.nextDate());
+		shoppingItem.setModifiedDate(RandomTestUtil.nextDate());
 
-		shoppingItem.setCategoryId(ServiceTestUtil.nextLong());
+		shoppingItem.setCategoryId(RandomTestUtil.nextLong());
 
-		shoppingItem.setSku(ServiceTestUtil.randomString());
+		shoppingItem.setSku(RandomTestUtil.randomString());
 
-		shoppingItem.setName(ServiceTestUtil.randomString());
+		shoppingItem.setName(RandomTestUtil.randomString());
 
-		shoppingItem.setDescription(ServiceTestUtil.randomString());
+		shoppingItem.setDescription(RandomTestUtil.randomString());
 
-		shoppingItem.setProperties(ServiceTestUtil.randomString());
+		shoppingItem.setProperties(RandomTestUtil.randomString());
 
-		shoppingItem.setFields(ServiceTestUtil.randomBoolean());
+		shoppingItem.setFields(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setFieldsQuantities(ServiceTestUtil.randomString());
+		shoppingItem.setFieldsQuantities(RandomTestUtil.randomString());
 
-		shoppingItem.setMinQuantity(ServiceTestUtil.nextInt());
+		shoppingItem.setMinQuantity(RandomTestUtil.nextInt());
 
-		shoppingItem.setMaxQuantity(ServiceTestUtil.nextInt());
+		shoppingItem.setMaxQuantity(RandomTestUtil.nextInt());
 
-		shoppingItem.setPrice(ServiceTestUtil.nextDouble());
+		shoppingItem.setPrice(RandomTestUtil.nextDouble());
 
-		shoppingItem.setDiscount(ServiceTestUtil.nextDouble());
+		shoppingItem.setDiscount(RandomTestUtil.nextDouble());
 
-		shoppingItem.setTaxable(ServiceTestUtil.randomBoolean());
+		shoppingItem.setTaxable(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setShipping(ServiceTestUtil.nextDouble());
+		shoppingItem.setShipping(RandomTestUtil.nextDouble());
 
-		shoppingItem.setUseShippingFormula(ServiceTestUtil.randomBoolean());
+		shoppingItem.setUseShippingFormula(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setRequiresShipping(ServiceTestUtil.randomBoolean());
+		shoppingItem.setRequiresShipping(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setStockQuantity(ServiceTestUtil.nextInt());
+		shoppingItem.setStockQuantity(RandomTestUtil.nextInt());
 
-		shoppingItem.setFeatured(ServiceTestUtil.randomBoolean());
+		shoppingItem.setFeatured(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setSale(ServiceTestUtil.randomBoolean());
+		shoppingItem.setSale(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setSmallImage(ServiceTestUtil.randomBoolean());
+		shoppingItem.setSmallImage(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setSmallImageId(ServiceTestUtil.nextLong());
+		shoppingItem.setSmallImageId(RandomTestUtil.nextLong());
 
-		shoppingItem.setSmallImageURL(ServiceTestUtil.randomString());
+		shoppingItem.setSmallImageURL(RandomTestUtil.randomString());
 
-		shoppingItem.setMediumImage(ServiceTestUtil.randomBoolean());
+		shoppingItem.setMediumImage(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setMediumImageId(ServiceTestUtil.nextLong());
+		shoppingItem.setMediumImageId(RandomTestUtil.nextLong());
 
-		shoppingItem.setMediumImageURL(ServiceTestUtil.randomString());
+		shoppingItem.setMediumImageURL(RandomTestUtil.randomString());
 
-		shoppingItem.setLargeImage(ServiceTestUtil.randomBoolean());
+		shoppingItem.setLargeImage(RandomTestUtil.randomBoolean());
 
-		shoppingItem.setLargeImageId(ServiceTestUtil.nextLong());
+		shoppingItem.setLargeImageId(RandomTestUtil.nextLong());
 
-		shoppingItem.setLargeImageURL(ServiceTestUtil.randomString());
+		shoppingItem.setLargeImageURL(RandomTestUtil.randomString());
 
 		_persistence.update(shoppingItem);
 

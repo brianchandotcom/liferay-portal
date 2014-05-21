@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.UserTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import java.util.Locale;
 
@@ -195,8 +195,8 @@ public class I18nFilterTest {
 
 		if (userLocale != null) {
 			User user = UserTestUtil.addUser(
-				ServiceTestUtil.randomString(), true, userLocale,
-				ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+				RandomTestUtil.randomString(), true, userLocale,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				new long[] {_group.getGroupId()});
 
 			_mockHttpServletRequest.setAttribute(WebKeys.USER, user);

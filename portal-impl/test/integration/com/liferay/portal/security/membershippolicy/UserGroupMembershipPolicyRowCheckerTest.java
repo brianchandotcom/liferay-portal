@@ -22,8 +22,8 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
+import com.liferay.test.portal.util.UserTestUtil;
 
 import javax.portlet.RenderResponse;
 

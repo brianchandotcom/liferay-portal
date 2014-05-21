@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class AssetTagPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AssetTag assetTag = _persistence.create(pk);
 
@@ -128,25 +128,25 @@ public class AssetTagPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AssetTag newAssetTag = _persistence.create(pk);
 
-		newAssetTag.setGroupId(ServiceTestUtil.nextLong());
+		newAssetTag.setGroupId(RandomTestUtil.nextLong());
 
-		newAssetTag.setCompanyId(ServiceTestUtil.nextLong());
+		newAssetTag.setCompanyId(RandomTestUtil.nextLong());
 
-		newAssetTag.setUserId(ServiceTestUtil.nextLong());
+		newAssetTag.setUserId(RandomTestUtil.nextLong());
 
-		newAssetTag.setUserName(ServiceTestUtil.randomString());
+		newAssetTag.setUserName(RandomTestUtil.randomString());
 
-		newAssetTag.setCreateDate(ServiceTestUtil.nextDate());
+		newAssetTag.setCreateDate(RandomTestUtil.nextDate());
 
-		newAssetTag.setModifiedDate(ServiceTestUtil.nextDate());
+		newAssetTag.setModifiedDate(RandomTestUtil.nextDate());
 
-		newAssetTag.setName(ServiceTestUtil.randomString());
+		newAssetTag.setName(RandomTestUtil.randomString());
 
-		newAssetTag.setAssetCount(ServiceTestUtil.nextInt());
+		newAssetTag.setAssetCount(RandomTestUtil.nextInt());
 
 		_persistence.update(newAssetTag);
 
@@ -175,7 +175,7 @@ public class AssetTagPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -187,7 +187,7 @@ public class AssetTagPersistenceTest {
 	@Test
 	public void testCountByG_N() {
 		try {
-			_persistence.countByG_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_N(0L, StringPool.NULL);
 
@@ -209,7 +209,7 @@ public class AssetTagPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -260,7 +260,7 @@ public class AssetTagPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AssetTag missingAssetTag = _persistence.fetchByPrimaryKey(pk);
 
@@ -315,7 +315,7 @@ public class AssetTagPersistenceTest {
 				AssetTag.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<AssetTag> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -354,7 +354,7 @@ public class AssetTagPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tagId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("tagId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -381,25 +381,25 @@ public class AssetTagPersistenceTest {
 	}
 
 	protected AssetTag addAssetTag() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		AssetTag assetTag = _persistence.create(pk);
 
-		assetTag.setGroupId(ServiceTestUtil.nextLong());
+		assetTag.setGroupId(RandomTestUtil.nextLong());
 
-		assetTag.setCompanyId(ServiceTestUtil.nextLong());
+		assetTag.setCompanyId(RandomTestUtil.nextLong());
 
-		assetTag.setUserId(ServiceTestUtil.nextLong());
+		assetTag.setUserId(RandomTestUtil.nextLong());
 
-		assetTag.setUserName(ServiceTestUtil.randomString());
+		assetTag.setUserName(RandomTestUtil.randomString());
 
-		assetTag.setCreateDate(ServiceTestUtil.nextDate());
+		assetTag.setCreateDate(RandomTestUtil.nextDate());
 
-		assetTag.setModifiedDate(ServiceTestUtil.nextDate());
+		assetTag.setModifiedDate(RandomTestUtil.nextDate());
 
-		assetTag.setName(ServiceTestUtil.randomString());
+		assetTag.setName(RandomTestUtil.randomString());
 
-		assetTag.setAssetCount(ServiceTestUtil.nextInt());
+		assetTag.setAssetCount(RandomTestUtil.nextInt());
 
 		_persistence.update(assetTag);
 

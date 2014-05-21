@@ -16,8 +16,8 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.util.PortletPreferencesTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.test.portal.service.util.PortletPreferencesTestUtil;
 
 import java.util.Map;
 

@@ -34,13 +34,11 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutBranch layoutBranch = _persistence.create(pk);
 
@@ -126,29 +124,29 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutBranch newLayoutBranch = _persistence.create(pk);
 
-		newLayoutBranch.setMvccVersion(ServiceTestUtil.nextLong());
+		newLayoutBranch.setMvccVersion(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setGroupId(ServiceTestUtil.nextLong());
+		newLayoutBranch.setGroupId(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setCompanyId(ServiceTestUtil.nextLong());
+		newLayoutBranch.setCompanyId(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setUserId(ServiceTestUtil.nextLong());
+		newLayoutBranch.setUserId(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setUserName(ServiceTestUtil.randomString());
+		newLayoutBranch.setUserName(RandomTestUtil.randomString());
 
-		newLayoutBranch.setLayoutSetBranchId(ServiceTestUtil.nextLong());
+		newLayoutBranch.setLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setPlid(ServiceTestUtil.nextLong());
+		newLayoutBranch.setPlid(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setName(ServiceTestUtil.randomString());
+		newLayoutBranch.setName(RandomTestUtil.randomString());
 
-		newLayoutBranch.setDescription(ServiceTestUtil.randomString());
+		newLayoutBranch.setDescription(RandomTestUtil.randomString());
 
-		newLayoutBranch.setMaster(ServiceTestUtil.randomBoolean());
+		newLayoutBranch.setMaster(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newLayoutBranch);
 
@@ -181,7 +179,7 @@ public class LayoutBranchPersistenceTest {
 	@Test
 	public void testCountByLayoutSetBranchId() {
 		try {
-			_persistence.countByLayoutSetBranchId(ServiceTestUtil.nextLong());
+			_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
 
 			_persistence.countByLayoutSetBranchId(0L);
 		}
@@ -193,8 +191,8 @@ public class LayoutBranchPersistenceTest {
 	@Test
 	public void testCountByL_P() {
 		try {
-			_persistence.countByL_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByL_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByL_P(0L, 0L);
 		}
@@ -206,8 +204,8 @@ public class LayoutBranchPersistenceTest {
 	@Test
 	public void testCountByL_P_N() {
 		try {
-			_persistence.countByL_P_N(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByL_P_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByL_P_N(0L, 0L, StringPool.NULL);
 
@@ -221,10 +219,10 @@ public class LayoutBranchPersistenceTest {
 	@Test
 	public void testCountByL_P_M() {
 		try {
-			_persistence.countByL_P_M(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+			_persistence.countByL_P_M(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-			_persistence.countByL_P_M(0L, 0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByL_P_M(0L, 0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -242,7 +240,7 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -284,7 +282,7 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutBranch missingLayoutBranch = _persistence.fetchByPrimaryKey(pk);
 
@@ -339,7 +337,7 @@ public class LayoutBranchPersistenceTest {
 				LayoutBranch.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("LayoutBranchId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<LayoutBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -380,7 +378,7 @@ public class LayoutBranchPersistenceTest {
 				"LayoutBranchId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("LayoutBranchId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -409,29 +407,29 @@ public class LayoutBranchPersistenceTest {
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutBranch layoutBranch = _persistence.create(pk);
 
-		layoutBranch.setMvccVersion(ServiceTestUtil.nextLong());
+		layoutBranch.setMvccVersion(RandomTestUtil.nextLong());
 
-		layoutBranch.setGroupId(ServiceTestUtil.nextLong());
+		layoutBranch.setGroupId(RandomTestUtil.nextLong());
 
-		layoutBranch.setCompanyId(ServiceTestUtil.nextLong());
+		layoutBranch.setCompanyId(RandomTestUtil.nextLong());
 
-		layoutBranch.setUserId(ServiceTestUtil.nextLong());
+		layoutBranch.setUserId(RandomTestUtil.nextLong());
 
-		layoutBranch.setUserName(ServiceTestUtil.randomString());
+		layoutBranch.setUserName(RandomTestUtil.randomString());
 
-		layoutBranch.setLayoutSetBranchId(ServiceTestUtil.nextLong());
+		layoutBranch.setLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		layoutBranch.setPlid(ServiceTestUtil.nextLong());
+		layoutBranch.setPlid(RandomTestUtil.nextLong());
 
-		layoutBranch.setName(ServiceTestUtil.randomString());
+		layoutBranch.setName(RandomTestUtil.randomString());
 
-		layoutBranch.setDescription(ServiceTestUtil.randomString());
+		layoutBranch.setDescription(RandomTestUtil.randomString());
 
-		layoutBranch.setMaster(ServiceTestUtil.randomBoolean());
+		layoutBranch.setMaster(RandomTestUtil.randomBoolean());
 
 		_persistence.update(layoutBranch);
 

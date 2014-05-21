@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -38,6 +37,7 @@ import com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
 import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +96,7 @@ public class SCLicensePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCLicense scLicense = _persistence.create(pk);
 
@@ -123,19 +123,19 @@ public class SCLicensePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCLicense newSCLicense = _persistence.create(pk);
 
-		newSCLicense.setName(ServiceTestUtil.randomString());
+		newSCLicense.setName(RandomTestUtil.randomString());
 
-		newSCLicense.setUrl(ServiceTestUtil.randomString());
+		newSCLicense.setUrl(RandomTestUtil.randomString());
 
-		newSCLicense.setOpenSource(ServiceTestUtil.randomBoolean());
+		newSCLicense.setOpenSource(RandomTestUtil.randomBoolean());
 
-		newSCLicense.setActive(ServiceTestUtil.randomBoolean());
+		newSCLicense.setActive(RandomTestUtil.randomBoolean());
 
-		newSCLicense.setRecommended(ServiceTestUtil.randomBoolean());
+		newSCLicense.setRecommended(RandomTestUtil.randomBoolean());
 
 		_persistence.update(newSCLicense);
 
@@ -156,9 +156,9 @@ public class SCLicensePersistenceTest {
 	@Test
 	public void testCountByActive() {
 		try {
-			_persistence.countByActive(ServiceTestUtil.randomBoolean());
+			_persistence.countByActive(RandomTestUtil.randomBoolean());
 
-			_persistence.countByActive(ServiceTestUtil.randomBoolean());
+			_persistence.countByActive(RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -168,11 +168,11 @@ public class SCLicensePersistenceTest {
 	@Test
 	public void testCountByA_R() {
 		try {
-			_persistence.countByA_R(ServiceTestUtil.randomBoolean(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByA_R(RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
 
-			_persistence.countByA_R(ServiceTestUtil.randomBoolean(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByA_R(RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -190,7 +190,7 @@ public class SCLicensePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -229,7 +229,7 @@ public class SCLicensePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCLicense missingSCLicense = _persistence.fetchByPrimaryKey(pk);
 
@@ -284,7 +284,7 @@ public class SCLicensePersistenceTest {
 				SCLicense.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("licenseId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<SCLicense> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -323,7 +323,7 @@ public class SCLicensePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("licenseId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("licenseId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -331,19 +331,19 @@ public class SCLicensePersistenceTest {
 	}
 
 	protected SCLicense addSCLicense() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		SCLicense scLicense = _persistence.create(pk);
 
-		scLicense.setName(ServiceTestUtil.randomString());
+		scLicense.setName(RandomTestUtil.randomString());
 
-		scLicense.setUrl(ServiceTestUtil.randomString());
+		scLicense.setUrl(RandomTestUtil.randomString());
 
-		scLicense.setOpenSource(ServiceTestUtil.randomBoolean());
+		scLicense.setOpenSource(RandomTestUtil.randomBoolean());
 
-		scLicense.setActive(ServiceTestUtil.randomBoolean());
+		scLicense.setActive(RandomTestUtil.randomBoolean());
 
-		scLicense.setRecommended(ServiceTestUtil.randomBoolean());
+		scLicense.setRecommended(RandomTestUtil.randomBoolean());
 
 		_persistence.update(scLicense);
 

@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.RoleTestUtil;
+import com.liferay.test.portlet.documentlibrary.util.DLAppTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -62,11 +62,11 @@ public class DLFolderPermissionTest extends BasePermissionTestCase {
 	protected void doSetUp() throws Exception {
 		_folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), true);
+			RandomTestUtil.randomString(), true);
 
 		_subfolder = DLAppTestUtil.addFolder(
 			group.getGroupId(), _folder.getFolderId(),
-			ServiceTestUtil.randomString(), true);
+			RandomTestUtil.randomString(), true);
 	}
 
 	@Override

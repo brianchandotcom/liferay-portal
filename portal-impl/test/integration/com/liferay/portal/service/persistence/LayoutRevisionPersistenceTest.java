@@ -33,13 +33,11 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +96,7 @@ public class LayoutRevisionPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutRevision layoutRevision = _persistence.create(pk);
 
@@ -125,69 +123,69 @@ public class LayoutRevisionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutRevision newLayoutRevision = _persistence.create(pk);
 
-		newLayoutRevision.setMvccVersion(ServiceTestUtil.nextLong());
+		newLayoutRevision.setMvccVersion(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setGroupId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setGroupId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setCompanyId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setCompanyId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setUserId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setUserId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setUserName(ServiceTestUtil.randomString());
+		newLayoutRevision.setUserName(RandomTestUtil.randomString());
 
-		newLayoutRevision.setCreateDate(ServiceTestUtil.nextDate());
+		newLayoutRevision.setCreateDate(RandomTestUtil.nextDate());
 
-		newLayoutRevision.setModifiedDate(ServiceTestUtil.nextDate());
+		newLayoutRevision.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayoutRevision.setLayoutSetBranchId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setLayoutBranchId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setLayoutBranchId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setParentLayoutRevisionId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setParentLayoutRevisionId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setHead(ServiceTestUtil.randomBoolean());
+		newLayoutRevision.setHead(RandomTestUtil.randomBoolean());
 
-		newLayoutRevision.setMajor(ServiceTestUtil.randomBoolean());
+		newLayoutRevision.setMajor(RandomTestUtil.randomBoolean());
 
-		newLayoutRevision.setPlid(ServiceTestUtil.nextLong());
+		newLayoutRevision.setPlid(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setPrivateLayout(ServiceTestUtil.randomBoolean());
+		newLayoutRevision.setPrivateLayout(RandomTestUtil.randomBoolean());
 
-		newLayoutRevision.setName(ServiceTestUtil.randomString());
+		newLayoutRevision.setName(RandomTestUtil.randomString());
 
-		newLayoutRevision.setTitle(ServiceTestUtil.randomString());
+		newLayoutRevision.setTitle(RandomTestUtil.randomString());
 
-		newLayoutRevision.setDescription(ServiceTestUtil.randomString());
+		newLayoutRevision.setDescription(RandomTestUtil.randomString());
 
-		newLayoutRevision.setKeywords(ServiceTestUtil.randomString());
+		newLayoutRevision.setKeywords(RandomTestUtil.randomString());
 
-		newLayoutRevision.setRobots(ServiceTestUtil.randomString());
+		newLayoutRevision.setRobots(RandomTestUtil.randomString());
 
-		newLayoutRevision.setTypeSettings(ServiceTestUtil.randomString());
+		newLayoutRevision.setTypeSettings(RandomTestUtil.randomString());
 
-		newLayoutRevision.setIconImageId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setIconImageId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setThemeId(ServiceTestUtil.randomString());
+		newLayoutRevision.setThemeId(RandomTestUtil.randomString());
 
-		newLayoutRevision.setColorSchemeId(ServiceTestUtil.randomString());
+		newLayoutRevision.setColorSchemeId(RandomTestUtil.randomString());
 
-		newLayoutRevision.setWapThemeId(ServiceTestUtil.randomString());
+		newLayoutRevision.setWapThemeId(RandomTestUtil.randomString());
 
-		newLayoutRevision.setWapColorSchemeId(ServiceTestUtil.randomString());
+		newLayoutRevision.setWapColorSchemeId(RandomTestUtil.randomString());
 
-		newLayoutRevision.setCss(ServiceTestUtil.randomString());
+		newLayoutRevision.setCss(RandomTestUtil.randomString());
 
-		newLayoutRevision.setStatus(ServiceTestUtil.nextInt());
+		newLayoutRevision.setStatus(RandomTestUtil.nextInt());
 
-		newLayoutRevision.setStatusByUserId(ServiceTestUtil.nextLong());
+		newLayoutRevision.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setStatusByUserName(ServiceTestUtil.randomString());
+		newLayoutRevision.setStatusByUserName(RandomTestUtil.randomString());
 
-		newLayoutRevision.setStatusDate(ServiceTestUtil.nextDate());
+		newLayoutRevision.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newLayoutRevision);
 
@@ -263,7 +261,7 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByLayoutSetBranchId() {
 		try {
-			_persistence.countByLayoutSetBranchId(ServiceTestUtil.nextLong());
+			_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
 
 			_persistence.countByLayoutSetBranchId(0L);
 		}
@@ -275,7 +273,7 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByPlid() {
 		try {
-			_persistence.countByPlid(ServiceTestUtil.nextLong());
+			_persistence.countByPlid(RandomTestUtil.nextLong());
 
 			_persistence.countByPlid(0L);
 		}
@@ -287,10 +285,10 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_H() {
 		try {
-			_persistence.countByL_H(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean());
+			_persistence.countByL_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-			_persistence.countByL_H(0L, ServiceTestUtil.randomBoolean());
+			_persistence.countByL_H(0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -300,8 +298,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_P() {
 		try {
-			_persistence.countByL_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByL_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByL_P(0L, 0L);
 		}
@@ -313,8 +311,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_S() {
 		try {
-			_persistence.countByL_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByL_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByL_S(0L, 0);
 		}
@@ -326,10 +324,10 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByH_P() {
 		try {
-			_persistence.countByH_P(ServiceTestUtil.randomBoolean(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByH_P(RandomTestUtil.randomBoolean(),
+				RandomTestUtil.nextLong());
 
-			_persistence.countByH_P(ServiceTestUtil.randomBoolean(), 0L);
+			_persistence.countByH_P(RandomTestUtil.randomBoolean(), 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -339,8 +337,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByP_NotS() {
 		try {
-			_persistence.countByP_NotS(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByP_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByP_NotS(0L, 0);
 		}
@@ -352,8 +350,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_L_P() {
 		try {
-			_persistence.countByL_L_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByL_L_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByL_L_P(0L, 0L, 0L);
 		}
@@ -365,8 +363,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_P_P() {
 		try {
-			_persistence.countByL_P_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+			_persistence.countByL_P_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 			_persistence.countByL_P_P(0L, 0L, 0L);
 		}
@@ -378,10 +376,10 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_H_P() {
 		try {
-			_persistence.countByL_H_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong());
+			_persistence.countByL_H_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
-			_persistence.countByL_H_P(0L, ServiceTestUtil.randomBoolean(), 0L);
+			_persistence.countByL_H_P(0L, RandomTestUtil.randomBoolean(), 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -391,8 +389,8 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testCountByL_P_S() {
 		try {
-			_persistence.countByL_P_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+			_persistence.countByL_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByL_P_S(0L, 0L, 0);
 		}
@@ -412,7 +410,7 @@ public class LayoutRevisionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -460,7 +458,7 @@ public class LayoutRevisionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutRevision missingLayoutRevision = _persistence.fetchByPrimaryKey(pk);
 
@@ -515,7 +513,7 @@ public class LayoutRevisionPersistenceTest {
 				LayoutRevision.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutRevisionId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<LayoutRevision> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -556,7 +554,7 @@ public class LayoutRevisionPersistenceTest {
 				"layoutRevisionId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutRevisionId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -584,69 +582,69 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	protected LayoutRevision addLayoutRevision() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutRevision layoutRevision = _persistence.create(pk);
 
-		layoutRevision.setMvccVersion(ServiceTestUtil.nextLong());
+		layoutRevision.setMvccVersion(RandomTestUtil.nextLong());
 
-		layoutRevision.setGroupId(ServiceTestUtil.nextLong());
+		layoutRevision.setGroupId(RandomTestUtil.nextLong());
 
-		layoutRevision.setCompanyId(ServiceTestUtil.nextLong());
+		layoutRevision.setCompanyId(RandomTestUtil.nextLong());
 
-		layoutRevision.setUserId(ServiceTestUtil.nextLong());
+		layoutRevision.setUserId(RandomTestUtil.nextLong());
 
-		layoutRevision.setUserName(ServiceTestUtil.randomString());
+		layoutRevision.setUserName(RandomTestUtil.randomString());
 
-		layoutRevision.setCreateDate(ServiceTestUtil.nextDate());
+		layoutRevision.setCreateDate(RandomTestUtil.nextDate());
 
-		layoutRevision.setModifiedDate(ServiceTestUtil.nextDate());
+		layoutRevision.setModifiedDate(RandomTestUtil.nextDate());
 
-		layoutRevision.setLayoutSetBranchId(ServiceTestUtil.nextLong());
+		layoutRevision.setLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		layoutRevision.setLayoutBranchId(ServiceTestUtil.nextLong());
+		layoutRevision.setLayoutBranchId(RandomTestUtil.nextLong());
 
-		layoutRevision.setParentLayoutRevisionId(ServiceTestUtil.nextLong());
+		layoutRevision.setParentLayoutRevisionId(RandomTestUtil.nextLong());
 
-		layoutRevision.setHead(ServiceTestUtil.randomBoolean());
+		layoutRevision.setHead(RandomTestUtil.randomBoolean());
 
-		layoutRevision.setMajor(ServiceTestUtil.randomBoolean());
+		layoutRevision.setMajor(RandomTestUtil.randomBoolean());
 
-		layoutRevision.setPlid(ServiceTestUtil.nextLong());
+		layoutRevision.setPlid(RandomTestUtil.nextLong());
 
-		layoutRevision.setPrivateLayout(ServiceTestUtil.randomBoolean());
+		layoutRevision.setPrivateLayout(RandomTestUtil.randomBoolean());
 
-		layoutRevision.setName(ServiceTestUtil.randomString());
+		layoutRevision.setName(RandomTestUtil.randomString());
 
-		layoutRevision.setTitle(ServiceTestUtil.randomString());
+		layoutRevision.setTitle(RandomTestUtil.randomString());
 
-		layoutRevision.setDescription(ServiceTestUtil.randomString());
+		layoutRevision.setDescription(RandomTestUtil.randomString());
 
-		layoutRevision.setKeywords(ServiceTestUtil.randomString());
+		layoutRevision.setKeywords(RandomTestUtil.randomString());
 
-		layoutRevision.setRobots(ServiceTestUtil.randomString());
+		layoutRevision.setRobots(RandomTestUtil.randomString());
 
-		layoutRevision.setTypeSettings(ServiceTestUtil.randomString());
+		layoutRevision.setTypeSettings(RandomTestUtil.randomString());
 
-		layoutRevision.setIconImageId(ServiceTestUtil.nextLong());
+		layoutRevision.setIconImageId(RandomTestUtil.nextLong());
 
-		layoutRevision.setThemeId(ServiceTestUtil.randomString());
+		layoutRevision.setThemeId(RandomTestUtil.randomString());
 
-		layoutRevision.setColorSchemeId(ServiceTestUtil.randomString());
+		layoutRevision.setColorSchemeId(RandomTestUtil.randomString());
 
-		layoutRevision.setWapThemeId(ServiceTestUtil.randomString());
+		layoutRevision.setWapThemeId(RandomTestUtil.randomString());
 
-		layoutRevision.setWapColorSchemeId(ServiceTestUtil.randomString());
+		layoutRevision.setWapColorSchemeId(RandomTestUtil.randomString());
 
-		layoutRevision.setCss(ServiceTestUtil.randomString());
+		layoutRevision.setCss(RandomTestUtil.randomString());
 
-		layoutRevision.setStatus(ServiceTestUtil.nextInt());
+		layoutRevision.setStatus(RandomTestUtil.nextInt());
 
-		layoutRevision.setStatusByUserId(ServiceTestUtil.nextLong());
+		layoutRevision.setStatusByUserId(RandomTestUtil.nextLong());
 
-		layoutRevision.setStatusByUserName(ServiceTestUtil.randomString());
+		layoutRevision.setStatusByUserName(RandomTestUtil.randomString());
 
-		layoutRevision.setStatusDate(ServiceTestUtil.nextDate());
+		layoutRevision.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(layoutRevision);
 

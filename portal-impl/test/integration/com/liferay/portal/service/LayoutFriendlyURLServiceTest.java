@@ -25,8 +25,9 @@ import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.LayoutTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class LayoutFriendlyURLServiceTest {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		String name = ServiceTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 
 		nameMap.put(LocaleUtil.GERMANY, name);
 		nameMap.put(LocaleUtil.US, name);
@@ -109,7 +110,7 @@ public class LayoutFriendlyURLServiceTest {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		String name = ServiceTestUtil.randomString();
+		String name = RandomTestUtil.randomString();
 
 		nameMap.put(LocaleUtil.SPAIN, name);
 		nameMap.put(LocaleUtil.US, name);

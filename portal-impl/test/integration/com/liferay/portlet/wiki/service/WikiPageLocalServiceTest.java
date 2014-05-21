@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -44,12 +41,16 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
-import com.liferay.portlet.expando.util.ExpandoTestUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.util.WikiTestUtil;
+import com.liferay.test.portal.util.GroupTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.ServiceContextTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.expando.util.ExpandoTestUtil;
+import com.liferay.test.portlet.wiki.util.WikiTestUtil;
 
 import java.util.List;
 
@@ -105,7 +106,8 @@ public class WikiPageLocalServiceTest {
 			page.getAttachmentsFileEntries();
 
 		WikiPage copyPage = WikiTestUtil.copyPage(
-			page, true, ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			page, true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		List<FileEntry> copyAttachmentsFileEntries =
 			copyPage.getAttachmentsFileEntries();
@@ -304,8 +306,8 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			"A", true);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPageLocalServiceUtil.movePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), "A", "B", true,
@@ -342,8 +344,8 @@ public class WikiPageLocalServiceTest {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPageLocalServiceUtil.movePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
@@ -378,7 +380,7 @@ public class WikiPageLocalServiceTest {
 	protected void addExpandoValueToPage(WikiPage page) throws Exception {
 		ExpandoValue value = ExpandoTestUtil.addValue(
 			PortalUtil.getClassNameId(WikiPage.class), page.getPrimaryKey(),
-			ServiceTestUtil.randomString());
+			RandomTestUtil.randomString());
 
 		ExpandoBridge expandoBridge = page.getExpandoBridge();
 
@@ -436,8 +438,8 @@ public class WikiPageLocalServiceTest {
 		WikiPage parentPage = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPageLocalServiceUtil.changeParent(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
@@ -458,8 +460,8 @@ public class WikiPageLocalServiceTest {
 			addExpandoValueToPage(page);
 		}
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPageLocalServiceUtil.movePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
@@ -508,14 +510,14 @@ public class WikiPageLocalServiceTest {
 	}
 
 	protected void testRevertPage(boolean hasExpandoValues) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		String originalContent = ServiceTestUtil.randomString();
+		String originalContent = RandomTestUtil.randomString();
 
 		WikiPage originalPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), originalContent, true,
+			RandomTestUtil.randomString(), originalContent, true,
 			serviceContext);
 
 		if (hasExpandoValues) {

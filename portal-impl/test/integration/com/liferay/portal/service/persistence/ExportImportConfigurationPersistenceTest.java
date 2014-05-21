@@ -32,12 +32,10 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExportImportConfiguration exportImportConfiguration = _persistence.create(pk);
 
@@ -123,39 +121,39 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExportImportConfiguration newExportImportConfiguration = _persistence.create(pk);
 
-		newExportImportConfiguration.setMvccVersion(ServiceTestUtil.nextLong());
+		newExportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setGroupId(ServiceTestUtil.nextLong());
+		newExportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setCompanyId(ServiceTestUtil.nextLong());
+		newExportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setUserId(ServiceTestUtil.nextLong());
+		newExportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setUserName(ServiceTestUtil.randomString());
+		newExportImportConfiguration.setUserName(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setCreateDate(ServiceTestUtil.nextDate());
+		newExportImportConfiguration.setCreateDate(RandomTestUtil.nextDate());
 
-		newExportImportConfiguration.setModifiedDate(ServiceTestUtil.nextDate());
+		newExportImportConfiguration.setModifiedDate(RandomTestUtil.nextDate());
 
-		newExportImportConfiguration.setName(ServiceTestUtil.randomString());
+		newExportImportConfiguration.setName(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setDescription(ServiceTestUtil.randomString());
+		newExportImportConfiguration.setDescription(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setType(ServiceTestUtil.nextInt());
+		newExportImportConfiguration.setType(RandomTestUtil.nextInt());
 
-		newExportImportConfiguration.setSettings(ServiceTestUtil.randomString());
+		newExportImportConfiguration.setSettings(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setStatus(ServiceTestUtil.nextInt());
+		newExportImportConfiguration.setStatus(RandomTestUtil.nextInt());
 
-		newExportImportConfiguration.setStatusByUserId(ServiceTestUtil.nextLong());
+		newExportImportConfiguration.setStatusByUserId(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setStatusByUserName(ServiceTestUtil.randomString());
+		newExportImportConfiguration.setStatusByUserName(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setStatusDate(ServiceTestUtil.nextDate());
+		newExportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newExportImportConfiguration);
 
@@ -202,7 +200,7 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -214,7 +212,7 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -226,8 +224,8 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testCountByG_T() {
 		try {
-			_persistence.countByG_T(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_T(0L, 0);
 		}
@@ -239,8 +237,8 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testCountByG_S() {
 		try {
-			_persistence.countByG_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt());
+			_persistence.countByG_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
 			_persistence.countByG_S(0L, 0);
 		}
@@ -252,8 +250,8 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testCountByG_T_S() {
 		try {
-			_persistence.countByG_T_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextInt(), ServiceTestUtil.nextInt());
+			_persistence.countByG_T_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_T_S(0L, 0, 0);
 		}
@@ -274,7 +272,7 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -319,7 +317,7 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExportImportConfiguration missingExportImportConfiguration = _persistence.fetchByPrimaryKey(pk);
 
@@ -376,7 +374,7 @@ public class ExportImportConfigurationPersistenceTest {
 				ExportImportConfiguration.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"exportImportConfigurationId", ServiceTestUtil.nextLong()));
+				"exportImportConfigurationId", RandomTestUtil.nextLong()));
 
 		List<ExportImportConfiguration> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -420,7 +418,7 @@ public class ExportImportConfigurationPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"exportImportConfigurationId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -429,39 +427,39 @@ public class ExportImportConfigurationPersistenceTest {
 
 	protected ExportImportConfiguration addExportImportConfiguration()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ExportImportConfiguration exportImportConfiguration = _persistence.create(pk);
 
-		exportImportConfiguration.setMvccVersion(ServiceTestUtil.nextLong());
+		exportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setGroupId(ServiceTestUtil.nextLong());
+		exportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setCompanyId(ServiceTestUtil.nextLong());
+		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setUserId(ServiceTestUtil.nextLong());
+		exportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setUserName(ServiceTestUtil.randomString());
+		exportImportConfiguration.setUserName(RandomTestUtil.randomString());
 
-		exportImportConfiguration.setCreateDate(ServiceTestUtil.nextDate());
+		exportImportConfiguration.setCreateDate(RandomTestUtil.nextDate());
 
-		exportImportConfiguration.setModifiedDate(ServiceTestUtil.nextDate());
+		exportImportConfiguration.setModifiedDate(RandomTestUtil.nextDate());
 
-		exportImportConfiguration.setName(ServiceTestUtil.randomString());
+		exportImportConfiguration.setName(RandomTestUtil.randomString());
 
-		exportImportConfiguration.setDescription(ServiceTestUtil.randomString());
+		exportImportConfiguration.setDescription(RandomTestUtil.randomString());
 
-		exportImportConfiguration.setType(ServiceTestUtil.nextInt());
+		exportImportConfiguration.setType(RandomTestUtil.nextInt());
 
-		exportImportConfiguration.setSettings(ServiceTestUtil.randomString());
+		exportImportConfiguration.setSettings(RandomTestUtil.randomString());
 
-		exportImportConfiguration.setStatus(ServiceTestUtil.nextInt());
+		exportImportConfiguration.setStatus(RandomTestUtil.nextInt());
 
-		exportImportConfiguration.setStatusByUserId(ServiceTestUtil.nextLong());
+		exportImportConfiguration.setStatusByUserId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setStatusByUserName(ServiceTestUtil.randomString());
+		exportImportConfiguration.setStatusByUserName(RandomTestUtil.randomString());
 
-		exportImportConfiguration.setStatusDate(ServiceTestUtil.nextDate());
+		exportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
 		_persistence.update(exportImportConfiguration);
 

@@ -34,13 +34,11 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +97,7 @@ public class ResourceTypePermissionPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
@@ -126,21 +124,21 @@ public class ResourceTypePermissionPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceTypePermission newResourceTypePermission = _persistence.create(pk);
 
-		newResourceTypePermission.setMvccVersion(ServiceTestUtil.nextLong());
+		newResourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
-		newResourceTypePermission.setCompanyId(ServiceTestUtil.nextLong());
+		newResourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
 
-		newResourceTypePermission.setGroupId(ServiceTestUtil.nextLong());
+		newResourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 
-		newResourceTypePermission.setName(ServiceTestUtil.randomString());
+		newResourceTypePermission.setName(RandomTestUtil.randomString());
 
-		newResourceTypePermission.setRoleId(ServiceTestUtil.nextLong());
+		newResourceTypePermission.setRoleId(RandomTestUtil.nextLong());
 
-		newResourceTypePermission.setActionIds(ServiceTestUtil.nextLong());
+		newResourceTypePermission.setActionIds(RandomTestUtil.nextLong());
 
 		_persistence.update(newResourceTypePermission);
 
@@ -165,7 +163,7 @@ public class ResourceTypePermissionPersistenceTest {
 	@Test
 	public void testCountByRoleId() {
 		try {
-			_persistence.countByRoleId(ServiceTestUtil.nextLong());
+			_persistence.countByRoleId(RandomTestUtil.nextLong());
 
 			_persistence.countByRoleId(0L);
 		}
@@ -177,8 +175,8 @@ public class ResourceTypePermissionPersistenceTest {
 	@Test
 	public void testCountByC_N_R() {
 		try {
-			_persistence.countByC_N_R(ServiceTestUtil.nextLong(),
-				StringPool.BLANK, ServiceTestUtil.nextLong());
+			_persistence.countByC_N_R(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextLong());
 
 			_persistence.countByC_N_R(0L, StringPool.NULL, 0L);
 
@@ -192,9 +190,9 @@ public class ResourceTypePermissionPersistenceTest {
 	@Test
 	public void testCountByC_G_N_R() {
 		try {
-			_persistence.countByC_G_N_R(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_G_N_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_G_N_R(0L, 0L, StringPool.NULL, 0L);
 
@@ -217,7 +215,7 @@ public class ResourceTypePermissionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -259,7 +257,7 @@ public class ResourceTypePermissionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceTypePermission missingResourceTypePermission = _persistence.fetchByPrimaryKey(pk);
 
@@ -316,7 +314,7 @@ public class ResourceTypePermissionPersistenceTest {
 				ResourceTypePermission.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"resourceTypePermissionId", ServiceTestUtil.nextLong()));
+				"resourceTypePermissionId", RandomTestUtil.nextLong()));
 
 		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -360,7 +358,7 @@ public class ResourceTypePermissionPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
 				"resourceTypePermissionId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -392,21 +390,21 @@ public class ResourceTypePermissionPersistenceTest {
 
 	protected ResourceTypePermission addResourceTypePermission()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ResourceTypePermission resourceTypePermission = _persistence.create(pk);
 
-		resourceTypePermission.setMvccVersion(ServiceTestUtil.nextLong());
+		resourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
-		resourceTypePermission.setCompanyId(ServiceTestUtil.nextLong());
+		resourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
 
-		resourceTypePermission.setGroupId(ServiceTestUtil.nextLong());
+		resourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 
-		resourceTypePermission.setName(ServiceTestUtil.randomString());
+		resourceTypePermission.setName(RandomTestUtil.randomString());
 
-		resourceTypePermission.setRoleId(ServiceTestUtil.nextLong());
+		resourceTypePermission.setRoleId(RandomTestUtil.nextLong());
 
-		resourceTypePermission.setActionIds(ServiceTestUtil.nextLong());
+		resourceTypePermission.setActionIds(RandomTestUtil.nextLong());
 
 		_persistence.update(resourceTypePermission);
 

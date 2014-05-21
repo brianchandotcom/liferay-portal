@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class DDMStructurePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStructure ddmStructure = _persistence.create(pk);
 
@@ -128,39 +128,39 @@ public class DDMStructurePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStructure newDDMStructure = _persistence.create(pk);
 
-		newDDMStructure.setUuid(ServiceTestUtil.randomString());
+		newDDMStructure.setUuid(RandomTestUtil.randomString());
 
-		newDDMStructure.setGroupId(ServiceTestUtil.nextLong());
+		newDDMStructure.setGroupId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setCompanyId(ServiceTestUtil.nextLong());
+		newDDMStructure.setCompanyId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setUserId(ServiceTestUtil.nextLong());
+		newDDMStructure.setUserId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setUserName(ServiceTestUtil.randomString());
+		newDDMStructure.setUserName(RandomTestUtil.randomString());
 
-		newDDMStructure.setCreateDate(ServiceTestUtil.nextDate());
+		newDDMStructure.setCreateDate(RandomTestUtil.nextDate());
 
-		newDDMStructure.setModifiedDate(ServiceTestUtil.nextDate());
+		newDDMStructure.setModifiedDate(RandomTestUtil.nextDate());
 
-		newDDMStructure.setParentStructureId(ServiceTestUtil.nextLong());
+		newDDMStructure.setParentStructureId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setClassNameId(ServiceTestUtil.nextLong());
+		newDDMStructure.setClassNameId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setStructureKey(ServiceTestUtil.randomString());
+		newDDMStructure.setStructureKey(RandomTestUtil.randomString());
 
-		newDDMStructure.setName(ServiceTestUtil.randomString());
+		newDDMStructure.setName(RandomTestUtil.randomString());
 
-		newDDMStructure.setDescription(ServiceTestUtil.randomString());
+		newDDMStructure.setDescription(RandomTestUtil.randomString());
 
-		newDDMStructure.setXsd(ServiceTestUtil.randomString());
+		newDDMStructure.setXsd(RandomTestUtil.randomString());
 
-		newDDMStructure.setStorageType(ServiceTestUtil.randomString());
+		newDDMStructure.setStorageType(RandomTestUtil.randomString());
 
-		newDDMStructure.setType(ServiceTestUtil.nextInt());
+		newDDMStructure.setType(RandomTestUtil.nextInt());
 
 		_persistence.update(newDDMStructure);
 
@@ -220,7 +220,7 @@ public class DDMStructurePersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -235,7 +235,7 @@ public class DDMStructurePersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -249,7 +249,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -262,7 +262,7 @@ public class DDMStructurePersistenceTest {
 	public void testCountByGroupIdArrayable() {
 		try {
 			_persistence.countByGroupId(new long[] {
-					ServiceTestUtil.nextLong(), 0L
+					RandomTestUtil.nextLong(), 0L
 				});
 		}
 		catch (Exception e) {
@@ -273,7 +273,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByParentStructureId() {
 		try {
-			_persistence.countByParentStructureId(ServiceTestUtil.nextLong());
+			_persistence.countByParentStructureId(RandomTestUtil.nextLong());
 
 			_persistence.countByParentStructureId(0L);
 		}
@@ -285,7 +285,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByClassNameId() {
 		try {
-			_persistence.countByClassNameId(ServiceTestUtil.nextLong());
+			_persistence.countByClassNameId(RandomTestUtil.nextLong());
 
 			_persistence.countByClassNameId(0L);
 		}
@@ -311,8 +311,8 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByG_P() {
 		try {
-			_persistence.countByG_P(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_P(0L, 0L);
 		}
@@ -324,8 +324,8 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByG_C() {
 		try {
-			_persistence.countByG_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_C(0L, 0L);
 		}
@@ -337,8 +337,8 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByG_CArrayable() {
 		try {
-			_persistence.countByG_C(new long[] { ServiceTestUtil.nextLong(), 0L },
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_C(new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextLong());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -348,8 +348,8 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByC_C() {
 		try {
-			_persistence.countByC_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByC_C(0L, 0L);
 		}
@@ -361,8 +361,8 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByG_C_S() {
 		try {
-			_persistence.countByG_C_S(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByG_C_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
 			_persistence.countByG_C_S(0L, 0L, StringPool.NULL);
 
@@ -376,7 +376,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testCountByG_N_D() {
 		try {
-			_persistence.countByG_N_D(ServiceTestUtil.nextLong(),
+			_persistence.countByG_N_D(RandomTestUtil.nextLong(),
 				StringPool.BLANK, StringPool.BLANK);
 
 			_persistence.countByG_N_D(0L, StringPool.NULL, StringPool.NULL);
@@ -399,7 +399,7 @@ public class DDMStructurePersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -452,7 +452,7 @@ public class DDMStructurePersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStructure missingDDMStructure = _persistence.fetchByPrimaryKey(pk);
 
@@ -507,7 +507,7 @@ public class DDMStructurePersistenceTest {
 				DDMStructure.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DDMStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -546,7 +546,7 @@ public class DDMStructurePersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("structureId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("structureId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -581,39 +581,39 @@ public class DDMStructurePersistenceTest {
 	}
 
 	protected DDMStructure addDDMStructure() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMStructure ddmStructure = _persistence.create(pk);
 
-		ddmStructure.setUuid(ServiceTestUtil.randomString());
+		ddmStructure.setUuid(RandomTestUtil.randomString());
 
-		ddmStructure.setGroupId(ServiceTestUtil.nextLong());
+		ddmStructure.setGroupId(RandomTestUtil.nextLong());
 
-		ddmStructure.setCompanyId(ServiceTestUtil.nextLong());
+		ddmStructure.setCompanyId(RandomTestUtil.nextLong());
 
-		ddmStructure.setUserId(ServiceTestUtil.nextLong());
+		ddmStructure.setUserId(RandomTestUtil.nextLong());
 
-		ddmStructure.setUserName(ServiceTestUtil.randomString());
+		ddmStructure.setUserName(RandomTestUtil.randomString());
 
-		ddmStructure.setCreateDate(ServiceTestUtil.nextDate());
+		ddmStructure.setCreateDate(RandomTestUtil.nextDate());
 
-		ddmStructure.setModifiedDate(ServiceTestUtil.nextDate());
+		ddmStructure.setModifiedDate(RandomTestUtil.nextDate());
 
-		ddmStructure.setParentStructureId(ServiceTestUtil.nextLong());
+		ddmStructure.setParentStructureId(RandomTestUtil.nextLong());
 
-		ddmStructure.setClassNameId(ServiceTestUtil.nextLong());
+		ddmStructure.setClassNameId(RandomTestUtil.nextLong());
 
-		ddmStructure.setStructureKey(ServiceTestUtil.randomString());
+		ddmStructure.setStructureKey(RandomTestUtil.randomString());
 
-		ddmStructure.setName(ServiceTestUtil.randomString());
+		ddmStructure.setName(RandomTestUtil.randomString());
 
-		ddmStructure.setDescription(ServiceTestUtil.randomString());
+		ddmStructure.setDescription(RandomTestUtil.randomString());
 
-		ddmStructure.setXsd(ServiceTestUtil.randomString());
+		ddmStructure.setXsd(RandomTestUtil.randomString());
 
-		ddmStructure.setStorageType(ServiceTestUtil.randomString());
+		ddmStructure.setStorageType(RandomTestUtil.randomString());
 
-		ddmStructure.setType(ServiceTestUtil.nextInt());
+		ddmStructure.setType(RandomTestUtil.nextInt());
 
 		_persistence.update(ddmStructure);
 

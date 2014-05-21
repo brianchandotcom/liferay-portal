@@ -20,16 +20,16 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.test.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -214,9 +214,8 @@ public class RoleMembershipPolicyRolesTest
 			RoleConstants.TYPE_REGULAR);
 
 		RoleServiceUtil.updateRole(
-			role.getRoleId(), ServiceTestUtil.randomString(),
-			role.getTitleMap(), role.getDescriptionMap(), role.getSubtype(),
-			new ServiceContext());
+			role.getRoleId(), RandomTestUtil.randomString(), role.getTitleMap(),
+			role.getDescriptionMap(), role.getSubtype(), new ServiceContext());
 
 		Assert.assertTrue(isVerify());
 	}

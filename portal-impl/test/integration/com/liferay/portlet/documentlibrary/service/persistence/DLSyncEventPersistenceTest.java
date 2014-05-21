@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -40,6 +39,7 @@ import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLSyncEvent dlSyncEvent = _persistence.create(pk);
 
@@ -125,17 +125,17 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLSyncEvent newDLSyncEvent = _persistence.create(pk);
 
-		newDLSyncEvent.setModifiedTime(ServiceTestUtil.nextLong());
+		newDLSyncEvent.setModifiedTime(RandomTestUtil.nextLong());
 
-		newDLSyncEvent.setEvent(ServiceTestUtil.randomString());
+		newDLSyncEvent.setEvent(RandomTestUtil.randomString());
 
-		newDLSyncEvent.setType(ServiceTestUtil.randomString());
+		newDLSyncEvent.setType(RandomTestUtil.randomString());
 
-		newDLSyncEvent.setTypePK(ServiceTestUtil.nextLong());
+		newDLSyncEvent.setTypePK(RandomTestUtil.nextLong());
 
 		_persistence.update(newDLSyncEvent);
 
@@ -156,7 +156,7 @@ public class DLSyncEventPersistenceTest {
 	@Test
 	public void testCountByModifiedTime() {
 		try {
-			_persistence.countByModifiedTime(ServiceTestUtil.nextLong());
+			_persistence.countByModifiedTime(RandomTestUtil.nextLong());
 
 			_persistence.countByModifiedTime(0L);
 		}
@@ -168,7 +168,7 @@ public class DLSyncEventPersistenceTest {
 	@Test
 	public void testCountByTypePK() {
 		try {
-			_persistence.countByTypePK(ServiceTestUtil.nextLong());
+			_persistence.countByTypePK(RandomTestUtil.nextLong());
 
 			_persistence.countByTypePK(0L);
 		}
@@ -188,7 +188,7 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -227,7 +227,7 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLSyncEvent missingDLSyncEvent = _persistence.fetchByPrimaryKey(pk);
 
@@ -282,7 +282,7 @@ public class DLSyncEventPersistenceTest {
 				DLSyncEvent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncEventId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DLSyncEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -321,7 +321,7 @@ public class DLSyncEventPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("syncEventId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("syncEventId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -345,17 +345,17 @@ public class DLSyncEventPersistenceTest {
 	}
 
 	protected DLSyncEvent addDLSyncEvent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DLSyncEvent dlSyncEvent = _persistence.create(pk);
 
-		dlSyncEvent.setModifiedTime(ServiceTestUtil.nextLong());
+		dlSyncEvent.setModifiedTime(RandomTestUtil.nextLong());
 
-		dlSyncEvent.setEvent(ServiceTestUtil.randomString());
+		dlSyncEvent.setEvent(RandomTestUtil.randomString());
 
-		dlSyncEvent.setType(ServiceTestUtil.randomString());
+		dlSyncEvent.setType(RandomTestUtil.randomString());
 
-		dlSyncEvent.setTypePK(ServiceTestUtil.nextLong());
+		dlSyncEvent.setTypePK(RandomTestUtil.nextLong());
 
 		_persistence.update(dlSyncEvent);
 

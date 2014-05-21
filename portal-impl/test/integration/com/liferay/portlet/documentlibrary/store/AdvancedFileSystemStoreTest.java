@@ -16,10 +16,10 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
+import com.liferay.test.portal.util.RandomTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class AdvancedFileSystemStoreTest {
 
 		long companyId = (Long)data[0];
 		long repositoryId = (Long)data[1];
-		long newRepositoryId = ServiceTestUtil.nextLong();
+		long newRepositoryId = RandomTestUtil.nextLong();
 
 		try {
 			String[] fileNames = _store.getFileNames(companyId, repositoryId);
@@ -73,8 +73,8 @@ public class AdvancedFileSystemStoreTest {
 	}
 
 	protected Object[] initStoreData() throws Exception {
-		long companyId = ServiceTestUtil.nextLong();
-		long repositoryId = ServiceTestUtil.nextLong();
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
 
 		for (int i = 0; i < _FILE_COUNT; i++) {
 			String fileName = String.valueOf(i) + _FILE_NAME_EXTENSION;

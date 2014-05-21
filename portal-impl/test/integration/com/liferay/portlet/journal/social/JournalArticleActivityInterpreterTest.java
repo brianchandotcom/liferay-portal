@@ -16,19 +16,19 @@ package com.liferay.portlet.journal.social;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.social.BaseSocialActivityInterpreterTestCase;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portal.util.TestPropsValues;
+import com.liferay.test.portlet.journal.util.JournalTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -49,8 +49,8 @@ public class JournalArticleActivityInterpreterTest
 	protected void addActivities() throws Exception {
 		_article = JournalTestUtil.addArticle(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), LocaleUtil.getDefault(), false,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), false,
 			true);
 	}
 
@@ -77,7 +77,7 @@ public class JournalArticleActivityInterpreterTest
 	@Override
 	protected void renameModels() throws Exception {
 		_article = JournalTestUtil.updateArticle(
-			_article, ServiceTestUtil.randomString(), _article.getContent());
+			_article, RandomTestUtil.randomString(), _article.getContent());
 	}
 
 	@Override

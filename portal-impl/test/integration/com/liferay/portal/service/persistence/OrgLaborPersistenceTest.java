@@ -31,12 +31,10 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.service.OrgLaborLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,7 +93,7 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		OrgLabor orgLabor = _persistence.create(pk);
 
@@ -122,43 +120,43 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		OrgLabor newOrgLabor = _persistence.create(pk);
 
-		newOrgLabor.setMvccVersion(ServiceTestUtil.nextLong());
+		newOrgLabor.setMvccVersion(RandomTestUtil.nextLong());
 
-		newOrgLabor.setOrganizationId(ServiceTestUtil.nextLong());
+		newOrgLabor.setOrganizationId(RandomTestUtil.nextLong());
 
-		newOrgLabor.setTypeId(ServiceTestUtil.nextInt());
+		newOrgLabor.setTypeId(RandomTestUtil.nextInt());
 
-		newOrgLabor.setSunOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setSunOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setSunClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setSunClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setMonOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setMonOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setMonClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setMonClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setTueOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setTueOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setTueClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setTueClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setWedOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setWedOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setWedClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setWedClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setThuOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setThuOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setThuClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setThuClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setFriOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setFriOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setFriClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setFriClose(RandomTestUtil.nextInt());
 
-		newOrgLabor.setSatOpen(ServiceTestUtil.nextInt());
+		newOrgLabor.setSatOpen(RandomTestUtil.nextInt());
 
-		newOrgLabor.setSatClose(ServiceTestUtil.nextInt());
+		newOrgLabor.setSatClose(RandomTestUtil.nextInt());
 
 		_persistence.update(newOrgLabor);
 
@@ -205,7 +203,7 @@ public class OrgLaborPersistenceTest {
 	@Test
 	public void testCountByOrganizationId() {
 		try {
-			_persistence.countByOrganizationId(ServiceTestUtil.nextLong());
+			_persistence.countByOrganizationId(RandomTestUtil.nextLong());
 
 			_persistence.countByOrganizationId(0L);
 		}
@@ -225,7 +223,7 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -267,7 +265,7 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		OrgLabor missingOrgLabor = _persistence.fetchByPrimaryKey(pk);
 
@@ -322,7 +320,7 @@ public class OrgLaborPersistenceTest {
 				OrgLabor.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<OrgLabor> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -361,7 +359,7 @@ public class OrgLaborPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orgLaborId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orgLaborId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -369,43 +367,43 @@ public class OrgLaborPersistenceTest {
 	}
 
 	protected OrgLabor addOrgLabor() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		OrgLabor orgLabor = _persistence.create(pk);
 
-		orgLabor.setMvccVersion(ServiceTestUtil.nextLong());
+		orgLabor.setMvccVersion(RandomTestUtil.nextLong());
 
-		orgLabor.setOrganizationId(ServiceTestUtil.nextLong());
+		orgLabor.setOrganizationId(RandomTestUtil.nextLong());
 
-		orgLabor.setTypeId(ServiceTestUtil.nextInt());
+		orgLabor.setTypeId(RandomTestUtil.nextInt());
 
-		orgLabor.setSunOpen(ServiceTestUtil.nextInt());
+		orgLabor.setSunOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setSunClose(ServiceTestUtil.nextInt());
+		orgLabor.setSunClose(RandomTestUtil.nextInt());
 
-		orgLabor.setMonOpen(ServiceTestUtil.nextInt());
+		orgLabor.setMonOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setMonClose(ServiceTestUtil.nextInt());
+		orgLabor.setMonClose(RandomTestUtil.nextInt());
 
-		orgLabor.setTueOpen(ServiceTestUtil.nextInt());
+		orgLabor.setTueOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setTueClose(ServiceTestUtil.nextInt());
+		orgLabor.setTueClose(RandomTestUtil.nextInt());
 
-		orgLabor.setWedOpen(ServiceTestUtil.nextInt());
+		orgLabor.setWedOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setWedClose(ServiceTestUtil.nextInt());
+		orgLabor.setWedClose(RandomTestUtil.nextInt());
 
-		orgLabor.setThuOpen(ServiceTestUtil.nextInt());
+		orgLabor.setThuOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setThuClose(ServiceTestUtil.nextInt());
+		orgLabor.setThuClose(RandomTestUtil.nextInt());
 
-		orgLabor.setFriOpen(ServiceTestUtil.nextInt());
+		orgLabor.setFriOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setFriClose(ServiceTestUtil.nextInt());
+		orgLabor.setFriClose(RandomTestUtil.nextInt());
 
-		orgLabor.setSatOpen(ServiceTestUtil.nextInt());
+		orgLabor.setSatOpen(RandomTestUtil.nextInt());
 
-		orgLabor.setSatClose(ServiceTestUtil.nextInt());
+		orgLabor.setSatClose(RandomTestUtil.nextInt());
 
 		_persistence.update(orgLabor);
 

@@ -22,8 +22,8 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.util.SocialActivityTestUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
+import com.liferay.test.portlet.social.util.SocialActivityTestUtil;
 
 import java.util.List;
 

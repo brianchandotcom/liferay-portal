@@ -25,7 +25,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -36,10 +35,11 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.test.portal.util.RandomTestUtil;
+import com.liferay.test.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.test.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +78,7 @@ public class FileEntryStagedModelDataHandlerTest
 	@Test
 	@Transactional
 	public void testExportImportFileExtension() throws Exception {
-		String sourceFileName = ServiceTestUtil.randomString() + ".pdf";
+		String sourceFileName = RandomTestUtil.randomString() + ".pdf";
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			stagingGroup.getGroupId(),
@@ -92,7 +92,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(importedFileEntry.getExtension(), "pdf");
 
-		String title = ServiceTestUtil.randomString() + ".awesome";
+		String title = RandomTestUtil.randomString() + ".awesome";
 
 		DLAppTestUtil.updateFileEntry(
 			stagingGroup.getGroupId(), fileEntry.getFileEntryId(),
@@ -187,7 +187,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		return DLAppTestUtil.addFileEntry(
 			group.getGroupId(), folder.getFolderId(),
-			ServiceTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			dlFileEntryType.getFileEntryTypeId());
 	}
 

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -40,6 +39,7 @@ import com.liferay.portlet.shopping.NoSuchOrderItemException;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.service.ShoppingOrderItemLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,7 +98,7 @@ public class ShoppingOrderItemPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrderItem shoppingOrderItem = _persistence.create(pk);
 
@@ -125,27 +125,27 @@ public class ShoppingOrderItemPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrderItem newShoppingOrderItem = _persistence.create(pk);
 
-		newShoppingOrderItem.setOrderId(ServiceTestUtil.nextLong());
+		newShoppingOrderItem.setOrderId(RandomTestUtil.nextLong());
 
-		newShoppingOrderItem.setItemId(ServiceTestUtil.randomString());
+		newShoppingOrderItem.setItemId(RandomTestUtil.randomString());
 
-		newShoppingOrderItem.setSku(ServiceTestUtil.randomString());
+		newShoppingOrderItem.setSku(RandomTestUtil.randomString());
 
-		newShoppingOrderItem.setName(ServiceTestUtil.randomString());
+		newShoppingOrderItem.setName(RandomTestUtil.randomString());
 
-		newShoppingOrderItem.setDescription(ServiceTestUtil.randomString());
+		newShoppingOrderItem.setDescription(RandomTestUtil.randomString());
 
-		newShoppingOrderItem.setProperties(ServiceTestUtil.randomString());
+		newShoppingOrderItem.setProperties(RandomTestUtil.randomString());
 
-		newShoppingOrderItem.setPrice(ServiceTestUtil.nextDouble());
+		newShoppingOrderItem.setPrice(RandomTestUtil.nextDouble());
 
-		newShoppingOrderItem.setQuantity(ServiceTestUtil.nextInt());
+		newShoppingOrderItem.setQuantity(RandomTestUtil.nextInt());
 
-		newShoppingOrderItem.setShippedDate(ServiceTestUtil.nextDate());
+		newShoppingOrderItem.setShippedDate(RandomTestUtil.nextDate());
 
 		_persistence.update(newShoppingOrderItem);
 
@@ -177,7 +177,7 @@ public class ShoppingOrderItemPersistenceTest {
 	@Test
 	public void testCountByOrderId() {
 		try {
-			_persistence.countByOrderId(ServiceTestUtil.nextLong());
+			_persistence.countByOrderId(RandomTestUtil.nextLong());
 
 			_persistence.countByOrderId(0L);
 		}
@@ -197,7 +197,7 @@ public class ShoppingOrderItemPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -237,7 +237,7 @@ public class ShoppingOrderItemPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrderItem missingShoppingOrderItem = _persistence.fetchByPrimaryKey(pk);
 
@@ -292,7 +292,7 @@ public class ShoppingOrderItemPersistenceTest {
 				ShoppingOrderItem.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderItemId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<ShoppingOrderItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -331,7 +331,7 @@ public class ShoppingOrderItemPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orderItemId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orderItemId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -340,27 +340,27 @@ public class ShoppingOrderItemPersistenceTest {
 
 	protected ShoppingOrderItem addShoppingOrderItem()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrderItem shoppingOrderItem = _persistence.create(pk);
 
-		shoppingOrderItem.setOrderId(ServiceTestUtil.nextLong());
+		shoppingOrderItem.setOrderId(RandomTestUtil.nextLong());
 
-		shoppingOrderItem.setItemId(ServiceTestUtil.randomString());
+		shoppingOrderItem.setItemId(RandomTestUtil.randomString());
 
-		shoppingOrderItem.setSku(ServiceTestUtil.randomString());
+		shoppingOrderItem.setSku(RandomTestUtil.randomString());
 
-		shoppingOrderItem.setName(ServiceTestUtil.randomString());
+		shoppingOrderItem.setName(RandomTestUtil.randomString());
 
-		shoppingOrderItem.setDescription(ServiceTestUtil.randomString());
+		shoppingOrderItem.setDescription(RandomTestUtil.randomString());
 
-		shoppingOrderItem.setProperties(ServiceTestUtil.randomString());
+		shoppingOrderItem.setProperties(RandomTestUtil.randomString());
 
-		shoppingOrderItem.setPrice(ServiceTestUtil.nextDouble());
+		shoppingOrderItem.setPrice(RandomTestUtil.nextDouble());
 
-		shoppingOrderItem.setQuantity(ServiceTestUtil.nextInt());
+		shoppingOrderItem.setQuantity(RandomTestUtil.nextInt());
 
-		shoppingOrderItem.setShippedDate(ServiceTestUtil.nextDate());
+		shoppingOrderItem.setShippedDate(RandomTestUtil.nextDate());
 
 		_persistence.update(shoppingOrderItem);
 

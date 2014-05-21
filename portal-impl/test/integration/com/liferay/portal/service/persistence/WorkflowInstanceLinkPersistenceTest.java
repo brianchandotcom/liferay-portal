@@ -31,13 +31,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,7 +94,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WorkflowInstanceLink workflowInstanceLink = _persistence.create(pk);
 
@@ -123,29 +121,29 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WorkflowInstanceLink newWorkflowInstanceLink = _persistence.create(pk);
 
-		newWorkflowInstanceLink.setMvccVersion(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setMvccVersion(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setGroupId(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setGroupId(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setCompanyId(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setUserId(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setUserId(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setUserName(ServiceTestUtil.randomString());
+		newWorkflowInstanceLink.setUserName(RandomTestUtil.randomString());
 
-		newWorkflowInstanceLink.setCreateDate(ServiceTestUtil.nextDate());
+		newWorkflowInstanceLink.setCreateDate(RandomTestUtil.nextDate());
 
-		newWorkflowInstanceLink.setModifiedDate(ServiceTestUtil.nextDate());
+		newWorkflowInstanceLink.setModifiedDate(RandomTestUtil.nextDate());
 
-		newWorkflowInstanceLink.setClassNameId(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setClassNameId(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setClassPK(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setClassPK(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setWorkflowInstanceId(ServiceTestUtil.nextLong());
+		newWorkflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
 
 		_persistence.update(newWorkflowInstanceLink);
 
@@ -180,9 +178,9 @@ public class WorkflowInstanceLinkPersistenceTest {
 	@Test
 	public void testCountByG_C_C_C() {
 		try {
-			_persistence.countByG_C_C_C(ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-				ServiceTestUtil.nextLong());
+			_persistence.countByG_C_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
 			_persistence.countByG_C_C_C(0L, 0L, 0L, 0L);
 		}
@@ -203,7 +201,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -246,7 +244,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WorkflowInstanceLink missingWorkflowInstanceLink = _persistence.fetchByPrimaryKey(pk);
 
@@ -302,7 +300,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 				WorkflowInstanceLink.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("workflowInstanceLinkId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<WorkflowInstanceLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -344,7 +342,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 				"workflowInstanceLinkId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("workflowInstanceLinkId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -353,29 +351,29 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	protected WorkflowInstanceLink addWorkflowInstanceLink()
 		throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		WorkflowInstanceLink workflowInstanceLink = _persistence.create(pk);
 
-		workflowInstanceLink.setMvccVersion(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setMvccVersion(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setGroupId(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setGroupId(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setCompanyId(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setUserId(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setUserId(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setUserName(ServiceTestUtil.randomString());
+		workflowInstanceLink.setUserName(RandomTestUtil.randomString());
 
-		workflowInstanceLink.setCreateDate(ServiceTestUtil.nextDate());
+		workflowInstanceLink.setCreateDate(RandomTestUtil.nextDate());
 
-		workflowInstanceLink.setModifiedDate(ServiceTestUtil.nextDate());
+		workflowInstanceLink.setModifiedDate(RandomTestUtil.nextDate());
 
-		workflowInstanceLink.setClassNameId(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setClassNameId(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setClassPK(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setClassPK(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setWorkflowInstanceId(ServiceTestUtil.nextLong());
+		workflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
 
 		_persistence.update(workflowInstanceLink);
 

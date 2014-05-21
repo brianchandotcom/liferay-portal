@@ -21,7 +21,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.model.ShoppingItem;
-import com.liferay.portlet.shopping.util.ShoppingTestUtil;
+import com.liferay.test.portlet.shopping.util.ShoppingTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;

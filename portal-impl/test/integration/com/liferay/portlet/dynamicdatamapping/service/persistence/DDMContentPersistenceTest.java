@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
@@ -43,6 +42,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 
+import com.liferay.test.portal.util.RandomTestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class DDMContentPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMContent ddmContent = _persistence.create(pk);
 
@@ -128,29 +128,29 @@ public class DDMContentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMContent newDDMContent = _persistence.create(pk);
 
-		newDDMContent.setUuid(ServiceTestUtil.randomString());
+		newDDMContent.setUuid(RandomTestUtil.randomString());
 
-		newDDMContent.setGroupId(ServiceTestUtil.nextLong());
+		newDDMContent.setGroupId(RandomTestUtil.nextLong());
 
-		newDDMContent.setCompanyId(ServiceTestUtil.nextLong());
+		newDDMContent.setCompanyId(RandomTestUtil.nextLong());
 
-		newDDMContent.setUserId(ServiceTestUtil.nextLong());
+		newDDMContent.setUserId(RandomTestUtil.nextLong());
 
-		newDDMContent.setUserName(ServiceTestUtil.randomString());
+		newDDMContent.setUserName(RandomTestUtil.randomString());
 
-		newDDMContent.setCreateDate(ServiceTestUtil.nextDate());
+		newDDMContent.setCreateDate(RandomTestUtil.nextDate());
 
-		newDDMContent.setModifiedDate(ServiceTestUtil.nextDate());
+		newDDMContent.setModifiedDate(RandomTestUtil.nextDate());
 
-		newDDMContent.setName(ServiceTestUtil.randomString());
+		newDDMContent.setName(RandomTestUtil.randomString());
 
-		newDDMContent.setDescription(ServiceTestUtil.randomString());
+		newDDMContent.setDescription(RandomTestUtil.randomString());
 
-		newDDMContent.setXml(ServiceTestUtil.randomString());
+		newDDMContent.setXml(RandomTestUtil.randomString());
 
 		_persistence.update(newDDMContent);
 
@@ -199,7 +199,7 @@ public class DDMContentPersistenceTest {
 	public void testCountByUUID_G() {
 		try {
 			_persistence.countByUUID_G(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
@@ -214,7 +214,7 @@ public class DDMContentPersistenceTest {
 	public void testCountByUuid_C() {
 		try {
 			_persistence.countByUuid_C(StringPool.BLANK,
-				ServiceTestUtil.nextLong());
+				RandomTestUtil.nextLong());
 
 			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
@@ -228,7 +228,7 @@ public class DDMContentPersistenceTest {
 	@Test
 	public void testCountByGroupId() {
 		try {
-			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 			_persistence.countByGroupId(0L);
 		}
@@ -240,7 +240,7 @@ public class DDMContentPersistenceTest {
 	@Test
 	public void testCountByCompanyId() {
 		try {
-			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 			_persistence.countByCompanyId(0L);
 		}
@@ -260,7 +260,7 @@ public class DDMContentPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		try {
 			_persistence.findByPrimaryKey(pk);
@@ -300,7 +300,7 @@ public class DDMContentPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMContent missingDDMContent = _persistence.fetchByPrimaryKey(pk);
 
@@ -355,7 +355,7 @@ public class DDMContentPersistenceTest {
 				DDMContent.class.getClassLoader());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
-				ServiceTestUtil.nextLong()));
+				RandomTestUtil.nextLong()));
 
 		List<DDMContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -394,7 +394,7 @@ public class DDMContentPersistenceTest {
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contentId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentId",
-				new Object[] { ServiceTestUtil.nextLong() }));
+				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -421,29 +421,29 @@ public class DDMContentPersistenceTest {
 	}
 
 	protected DDMContent addDDMContent() throws Exception {
-		long pk = ServiceTestUtil.nextLong();
+		long pk = RandomTestUtil.nextLong();
 
 		DDMContent ddmContent = _persistence.create(pk);
 
-		ddmContent.setUuid(ServiceTestUtil.randomString());
+		ddmContent.setUuid(RandomTestUtil.randomString());
 
-		ddmContent.setGroupId(ServiceTestUtil.nextLong());
+		ddmContent.setGroupId(RandomTestUtil.nextLong());
 
-		ddmContent.setCompanyId(ServiceTestUtil.nextLong());
+		ddmContent.setCompanyId(RandomTestUtil.nextLong());
 
-		ddmContent.setUserId(ServiceTestUtil.nextLong());
+		ddmContent.setUserId(RandomTestUtil.nextLong());
 
-		ddmContent.setUserName(ServiceTestUtil.randomString());
+		ddmContent.setUserName(RandomTestUtil.randomString());
 
-		ddmContent.setCreateDate(ServiceTestUtil.nextDate());
+		ddmContent.setCreateDate(RandomTestUtil.nextDate());
 
-		ddmContent.setModifiedDate(ServiceTestUtil.nextDate());
+		ddmContent.setModifiedDate(RandomTestUtil.nextDate());
 
-		ddmContent.setName(ServiceTestUtil.randomString());
+		ddmContent.setName(RandomTestUtil.randomString());
 
-		ddmContent.setDescription(ServiceTestUtil.randomString());
+		ddmContent.setDescription(RandomTestUtil.randomString());
 
-		ddmContent.setXml(ServiceTestUtil.randomString());
+		ddmContent.setXml(RandomTestUtil.randomString());
 
 		_persistence.update(ddmContent);
 

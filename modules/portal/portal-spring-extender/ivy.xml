@@ -8,9 +8,9 @@
 	<info module="${plugin.name}" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency name="org.eclipse.gemini.blueprint.core" org="org.eclipse.gemini" rev="2.0.0.M02" />
-		<dependency name="org.eclipse.gemini.blueprint.extender" org="org.eclipse.gemini" rev="2.0.0.M02" />
-		<dependency name="org.eclipse.gemini.blueprint.io" org="org.eclipse.gemini" rev="2.0.0.M02" />
+		<dependency name="org.eclipse.gemini.blueprint.core" org="com.liferay" rev="2.0.0.M02" />
+		<dependency name="org.eclipse.gemini.blueprint.extender" org="com.liferay" rev="2.0.0.M02" />
+		<dependency name="org.eclipse.gemini.blueprint.io" org="com.liferay" rev="2.0.0.M02" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
 	</dependencies>
 </ivy-module>

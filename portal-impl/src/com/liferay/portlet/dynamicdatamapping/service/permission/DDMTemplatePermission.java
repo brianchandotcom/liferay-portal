@@ -56,8 +56,8 @@ public class DDMTemplatePermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, DDMTemplate template,
-			String portletId, String actionId) {
+		PermissionChecker permissionChecker, DDMTemplate template,
+		String portletId, String actionId) {
 
 		if (Validator.isNotNull(portletId)) {
 			Boolean hasPermission = StagingPermissionUtil.hasPermission(

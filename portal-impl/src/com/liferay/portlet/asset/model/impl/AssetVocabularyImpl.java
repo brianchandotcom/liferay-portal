@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,6 +119,37 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isMissingRequiredCategory(
+			long classNameId, final long[] categoryIds)
+		throws SystemException {
+
+		long[] requiredClassNameIds = getRequiredClassNameIds();
+
+		PredicateFilter<AssetCategory> existingCategoryFilter =
+			new PredicateFilter<AssetCategory>() {
+
+				@Override
+				public boolean filter(AssetCategory assetCategory) {
+					return ArrayUtil.contains(
+						categoryIds, assetCategory.getCategoryId());
+				}
+
+			};
+
+		if ((requiredClassNameIds.length > 0) &&
+			((requiredClassNameIds[0] ==
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
+			 ArrayUtil.contains(requiredClassNameIds, classNameId))) {
+
+			if (!ListUtil.exists(getCategories(), existingCategoryFilter)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

@@ -31,6 +31,10 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS
 
 	int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), status);
 	int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folder.getFolderId(), status);
+
+	AssetRendererFactory bookmarksEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksEntry.class.getName());
+
+	AssetRendererFactory bookmarksFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksFolder.class.getName());
 	%>
 
 	<aui:row>
@@ -42,15 +46,15 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS
 			</c:if>
 
 			<div class="lfr-asset-metadata">
-				<div class="lfr-asset-icon lfr-asset-date">
+				<div class="icon-calendar lfr-asset-icon">
 					<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDate.format(folder.getModifiedDate()), false) %>
 				</div>
 
-				<div class="lfr-asset-icon lfr-asset-subfolders">
+				<div class="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
 
-				<div class="lfr-asset-icon lfr-asset-items last">
+				<div class="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %> lfr-asset-icon last">
 					<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "bookmark" : "bookmarks" %>' />
 				</div>
 			</div>

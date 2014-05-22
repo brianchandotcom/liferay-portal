@@ -23,7 +23,7 @@ String url = (String)request.getAttribute("liferay-ui:rss:url");
 
 <liferay-ui:icon
 	cssClass="taglib-rss"
-	image="rss"
+	iconCssClass="icon-rss"
 	label="<%= true %>"
 	message="<%= message %>"
 	target="_blank"

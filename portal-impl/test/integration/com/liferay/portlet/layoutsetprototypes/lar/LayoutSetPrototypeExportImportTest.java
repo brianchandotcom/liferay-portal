@@ -14,8 +14,12 @@
 
 package com.liferay.portlet.layoutsetprototypes.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutPrototype;
@@ -24,14 +28,15 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -44,14 +49,26 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class,
-		TransactionalCallbackAwareExecutionTestListener.class
+		ResetDatabaseExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-@Transactional
 public class LayoutSetPrototypeExportImportTest
 	extends BasePortletExportImportTestCase {
+
+	public static final TransactionAttribute REQUIRED_TRANSACTION_ATTRIBUTE;
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.propagation(Propagation.REQUIRED);
+		builder.rollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		REQUIRED_TRANSACTION_ATTRIBUTE = builder.build();
+	}
 
 	@Override
 	public String getNamespace() {
@@ -70,23 +87,34 @@ public class LayoutSetPrototypeExportImportTest
 	}
 
 	@Test
-	public void testExportImportLayoutSetPrototype() throws Exception {
+	public void testExportImportLayoutSetPrototype() throws Throwable {
 		exportImportLayoutSetPrototype(false);
 	}
 
 	@Test
 	public void testExportImportLayoutSetPrototypeWithLayoutPrototype()
-		throws Exception {
+		throws Throwable {
 
 		exportImportLayoutSetPrototype(true);
 	}
 
 	protected void exportImportLayoutSetPrototype(boolean layoutPrototype)
-		throws Exception {
+		throws Throwable {
 
 		// Exclude default site templates
 
-		LayoutSetPrototypeUtil.removeAll();
+		TransactionInvokerUtil.invoke(
+			REQUIRED_TRANSACTION_ATTRIBUTE,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					LayoutSetPrototypeUtil.removeAll();
+
+					return null;
+				}
+
+			});
 
 		LayoutSetPrototype exportedLayoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());

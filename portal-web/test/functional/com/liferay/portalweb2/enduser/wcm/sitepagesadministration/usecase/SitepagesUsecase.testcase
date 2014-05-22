@@ -6,6 +6,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="Site#tearDownCP" />
 
 		<execute macro="WebContent#tearDownCP" />
@@ -15,6 +17,8 @@
 		<execute macro="MessageboardsThread#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="SitePage#tearDownPrivateCP" />
 
 		<execute macro="User#tearDownCP" />
 
@@ -253,6 +257,689 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
+	</command>
+
+	<command name="ViewSecureContentAndPageAsGuest" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa1@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="MessageboardsPortlet#subscribePG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
+			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailMessageBodyClosing" value="Sincerely" />
+			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="Blogs Entry Title" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="blogEntryURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailMailTableMessageTitle" value="Message Boards" />
+			<var name="gmailMessageBody" value="MB Thread Message Body" />
+			<var name="gmailMessageBodyClosing" value="http://localhost" />
+			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="MB Thread Message Subject" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+		</execute>
+
+		<execute macro="User#viewLoginPG" />
+		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
+		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
+
+		<execute action="Home#open" locator1="${blogEntryURL}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+	</command>
+
+	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa1@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="MessageboardsPortlet#subscribePG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
+			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailMessageBodyClosing" value="Sincerely" />
+			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="Blogs Entry Title" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="blogEntryURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailMailTableMessageTitle" value="Message Boards" />
+			<var name="gmailMessageBody" value="MB Thread Message Body" />
+			<var name="gmailMessageBodyClosing" value="http://localhost" />
+			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="MB Thread Message Subject" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+		</execute>
+
+		<execute macro="Page#viewSpecificPG">
+			<var name="pageNameList" value="Private Page" />
+		</execute>
+
+		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE" />
+		<execute action="Home#assertElementNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" />
+
+		<execute action="Home#open" locator1="${blogEntryURL}" />
+
+		<execute macro="BlogsEntry#viewDetailsPG">
+			<var name="blogEntryURL" value="${blogEntryURL}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="messageBoardsThreadURL" value="${messageBoardsThreadURL}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ViewSecureContentAndPageAsUser" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" value="liferay.qa1@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="MessageboardsPortlet#subscribePG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="viewableBy" value="true" />
+			<var name="viewableBySelection" value="Site Members" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="gmailMailTableMessageTitle" value="New Blogs Post" />
+			<var name="gmailMessageBody" value="Test Test created a new blog entry titled Blogs Entry Title." />
+			<var name="gmailMessageBodyClosing" value="Sincerely" />
+			<var name="gmailMessageBodyGreeting" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="New Blogs Post by Test Test" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="Blogs Entry Title" />
+			<var name="gmailAssetType" value="New Blogs Post" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="blogEntryURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailMailTableMessageTitle" value="Message Boards" />
+			<var name="gmailMessageBody" value="MB Thread Message Body" />
+			<var name="gmailMessageBodyClosing" value="http://localhost" />
+			<var name="gmailMessageBodyGreeting" value="Liferay Message Boards" />
+			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Gmail#openMessageLink">
+			<var name="contentTitle" value="MB Thread Message Subject" />
+			<var name="gmailAssetType" value="Message Boards" />
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
+
+		<execute action="Gmail#close" />
+
+		<execute action="Home#selectWindow" locator1="null" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userPassword" value="loveispatient1" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+
+		<execute action="Home#open" locator1="${blogEntryURL}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blog and Message Board Page" />
+		</execute>
+
+		<execute action="Home#open" locator1="${messageBoardsThreadURL}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute macro="User#logoutPG" />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">

@@ -52,4 +52,25 @@ public class Log4JLoggerTestUtil {
 		return captureAppender;
 	}
 
+	public static Level setLoggerLevel(String name, Level level) {
+		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
+
+		Log log = logWrapper.getWrappedLog();
+
+		if (!(log instanceof Log4jLogImpl)) {
+			throw new IllegalStateException(
+				"Log " + name + " is not a Log4j logger");
+		}
+
+		Log4jLogImpl log4jLogImpl = (Log4jLogImpl)log;
+
+		Logger logger = log4jLogImpl.getWrappedLogger();
+
+		Level oldLevel = logger.getLevel();
+
+		logger.setLevel(level);
+
+		return oldLevel;
+	}
+
 }

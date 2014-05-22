@@ -16,6 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.test.jdbc.InterceptDataSource;
 import com.liferay.portal.util.InitUtil;
 
 import java.lang.reflect.Field;
@@ -42,6 +43,8 @@ public class LiferayIntegrationJUnitTestRunner
 	@Override
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
+
+		InterceptDataSource.initialize();
 
 		InitUtil.initWithSpringAndModuleFramework();
 	}

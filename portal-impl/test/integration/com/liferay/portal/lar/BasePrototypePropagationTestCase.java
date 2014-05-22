@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -33,6 +34,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -155,6 +157,10 @@ public abstract class BasePrototypePropagationTestCase {
 				initialPortletCount, LayoutTestUtil.getPortlets(layout).size());
 		}
 
+		prototypeLayout = updateModifiedDate(
+			prototypeLayout,
+			new Date(System.currentTimeMillis() + Time.MINUTE));
+
 		layout = propagateChanges(layout);
 
 		if (linkEnabled) {
@@ -251,6 +257,16 @@ public abstract class BasePrototypePropagationTestCase {
 
 	protected abstract void setLinkEnabled(boolean linkEnabled)
 		throws Exception;
+
+	protected Layout updateModifiedDate(Layout layout, Date date)
+		throws Exception {
+
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		layout.setModifiedDate(date);
+
+		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
 
 	protected long globalGroupId;
 	protected JournalArticle globalJournalArticle;

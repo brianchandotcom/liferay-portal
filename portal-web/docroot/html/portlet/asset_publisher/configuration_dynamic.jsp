@@ -112,9 +112,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
-						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
+						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						if (assetAvailableClassTypes.isEmpty()) {
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
+
+						if (classTypes.isEmpty()) {
 							continue;
 						}
 
@@ -122,18 +124,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 						String className = AssetPublisherUtil.getClassName(assetRendererFactory);
 
-						Set<Long> assetAvailableClassTypeIdsSet = assetAvailableClassTypes.keySet();
-
-						Long[] assetAvailableClassTypeIds = assetAvailableClassTypeIdsSet.toArray(new Long[assetAvailableClassTypeIdsSet.size()]);
-
-						Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(portletPreferences, className, assetAvailableClassTypeIds);
+						Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(portletPreferences, className, classTypes);
 
 						// Left list
 
 						List<KeyValuePair> subtypesLeftList = new ArrayList<KeyValuePair>();
 
 						for (long subtypeId : assetSelectedClassTypeIds) {
-							subtypesLeftList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(assetAvailableClassTypes.get(subtypeId))));
+							subtypesLeftList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classTypeReader.getClassType(subtypeId, locale).getName())));
 						}
 
 						Arrays.sort(assetSelectedClassTypeIds);
@@ -153,13 +151,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<optgroup label="<liferay-ui:message key="subtype" />">
 
 									<%
-									for (Long classTypeId : assetAvailableClassTypes.keySet()) {
-										if (Arrays.binarySearch(assetSelectedClassTypeIds, classTypeId) < 0) {
-											subtypesRightList.add(new KeyValuePair(String.valueOf(classTypeId), HtmlUtil.escape(assetAvailableClassTypes.get(classTypeId))));
+									for (ClassType classType : classTypes) {
+										if (Arrays.binarySearch(assetSelectedClassTypeIds, classType.getClassTypeId()) < 0) {
+											subtypesRightList.add(new KeyValuePair(String.valueOf(classType.getClassTypeId()), HtmlUtil.escape(classType.getName())));
 										}
 									%>
 
-										<aui:option label="<%= HtmlUtil.escapeAttribute(assetAvailableClassTypes.get(classTypeId)) %>" selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length == 1) && (classTypeId.equals(assetSelectedClassTypeIds[0])) %>" value="<%= classTypeId %>" />
+										<aui:option label="<%= HtmlUtil.escapeAttribute(classType.getName()) %>" selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length == 1) && ((assetSelectedClassTypeIds[0]).equals(classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
 
 									<%
 									}
@@ -183,21 +181,21 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<div class="asset-subtypefields-wrapper hide" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 								<%
-								for (long assetAvailableClassTypeId : assetAvailableClassTypeIds) {
-									if (assetRendererFactory.getClassTypeFieldNamesCount(assetAvailableClassTypeId, locale) == 0) {
+								for (ClassType classType: classTypes) {
+									if (classType.getClassTypeFieldsCount() == 0) {
 										continue;
 									}
 								%>
 
-									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>Options">
+									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
 										<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 											<portlet:param name="struts_action" value="/portlet_configuration/select_structure_field" />
 											<portlet:param name="portletResource" value="<%= portletResource %>" />
 											<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
-											<portlet:param name="classTypeId" value="<%= String.valueOf(assetAvailableClassTypeId) %>" />
+											<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
 										</portlet:renderURL>
 
-										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>PopUpButton">
+										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
 											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
 										</span>
 									</span>
@@ -576,24 +574,24 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 
 		<%
-		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
+		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
 		}
 
-		Set<Long> assetAvailableClassTypeIdsSet = assetAvailableClassTypes.keySet();
+		for (ClassType classType: assetAvailableClassTypes) {
+			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
 
-		for (long subtypeId : assetAvailableClassTypeIdsSet) {
-			List<Tuple> classTypeFieldNames = curRendererFactory.getClassTypeFieldNames(subtypeId, locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			if (classTypeFieldNames.isEmpty()) {
+			if (classTypeFields.isEmpty()) {
 				continue;
 			}
 		%>
 
 			var optgroupClose = '</optgroup>';
-			var optgroupOpen = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subtypeId)) %>">';
+			var optgroupOpen = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
 
 			var columnBuffer1 = [optgroupOpen];
 			var columnBuffer2 = [optgroupOpen];
@@ -602,8 +600,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 
-			for (Tuple classTypeFieldName : classTypeFieldNames) {
-				String value = DDMIndexerUtil.encodeName((Long)classTypeFieldName.getObject(3), (String)classTypeFieldName.getObject(1));
+			for (ClassTypeField classTypeField : classTypeFields) {
+				String value = DDMIndexerUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName());
 				String selectedOrderByColumn1 = StringPool.BLANK;
 				String selectedOrderByColumn2 = StringPool.BLANK;
 
@@ -616,8 +614,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			%>
 
-				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
-				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
+				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
+				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>');
 
 			<%
 			}
@@ -626,8 +624,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			columnBuffer1.push(optgroupClose);
 			columnBuffer2.push(optgroupClose);
 
-			MAP_DDM_STRUCTURES['<%= className %>_<%= subtypeId %>_optTextOrderByColumn1'] = columnBuffer1.join('');
-			MAP_DDM_STRUCTURES['<%= className %>_<%= subtypeId %>_optTextOrderByColumn2'] = columnBuffer2.join('');
+			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'] = columnBuffer1.join('');
+			MAP_DDM_STRUCTURES['<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'] = columnBuffer2.join('');
 
 		<%
 		}

@@ -60,17 +60,35 @@ public interface AssetRendererFactory {
 
 	public long getClassNameId();
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link com.liferay.portlet.asset.model.ClassTypeReader}
+	 */
+	@Deprecated
 	public Tuple getClassTypeFieldName(
 			long classTypeId, String fieldName, Locale locale)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link com.liferay.portlet.asset.model.ClassTypeReader}
+	 */
+	@Deprecated
 	public List<Tuple> getClassTypeFieldNames(
 			long classTypeId, Locale locale, int start, int end)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link com.liferay.portlet.asset.model.ClassTypeReader}
+	 */
+	@Deprecated
 	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
 		throws Exception;
 
+	public ClassTypeReader getClassTypeReader();
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link com.liferay.portlet.asset.model.ClassTypeReader}
+	 */
+	@Deprecated
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
 		throws Exception;
 
@@ -106,6 +124,10 @@ public interface AssetRendererFactory {
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link com.liferay.portlet.asset.model.ClassTypeReader}
+	 */
+	@Deprecated
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception;
 

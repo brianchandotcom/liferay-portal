@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,6 +37,9 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.model.ClassType;
+import com.liferay.portlet.asset.model.ClassTypeField;
+import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -815,17 +817,20 @@ public class AssetPublisherDisplayContext {
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
-		Tuple classTypeFieldName =
-			assetRendererFactory.getClassTypeFieldName(
-				classTypeIds[0], getDDMStructureFieldName(), locale);
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
 
-		long ddmStructureId = GetterUtil.getLong(
-			classTypeFieldName.getObject(3));
+		ClassType classType = classTypeReader.getClassType(
+			classTypeIds[0], locale);
+
+		ClassTypeField classTypeField = classType.getClassTypeField(
+			getDDMStructureFieldName());
 
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
 			DDMIndexerUtil.encodeName(
-				ddmStructureId, getDDMStructureFieldName(), locale));
+				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
+				locale));
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldValue", getDDMStructureFieldValue());
 	}
@@ -872,13 +877,16 @@ public class AssetPublisherDisplayContext {
 					AssetRendererFactoryRegistryUtil.
 						getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
-				Tuple classTypeFieldName =
-					assetRendererFactory.getClassTypeFieldName(
-						classTypeIds[0], _ddmStructureFieldName,
-						themeDisplay.getLocale());
+				ClassTypeReader classTypeReader =
+					assetRendererFactory.getClassTypeReader();
 
-				_ddmStructureFieldLabel = (String)classTypeFieldName.getObject(
-					0);
+				ClassType classType = classTypeReader.getClassType(
+					classTypeIds[0], themeDisplay.getLocale());
+
+				ClassTypeField classTypeField = classType.getClassTypeField(
+					_ddmStructureFieldName);
+
+				_ddmStructureFieldLabel = classTypeField.getLabel();
 			}
 		}
 	}

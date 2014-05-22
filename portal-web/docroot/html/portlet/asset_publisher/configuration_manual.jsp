@@ -157,14 +157,16 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 							<%
 								}
 								else {
-									Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+									ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-									for (Map.Entry<Long, String> assetAvailableClassType : assetAvailableClassTypes.entrySet()) {
-										assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getKey()));
+									List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+
+									for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+										assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
 
 										data.put("href", assetBrowserURL.toString());
 
-										String type = assetAvailableClassType.getValue();
+										String type = assetAvailableClassType.getName();
 
 										data.put("title", LanguageUtil.format(pageContext, "select-x", type, false));
 										data.put("type", type);

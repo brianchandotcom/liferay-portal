@@ -14,14 +14,10 @@
 
 package com.liferay.portlet.asset.model;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,11 +27,12 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.NoSuchClassTypeException;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -86,45 +83,83 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getClassNameId(_className);
 	}
 
+	@Deprecated
 	@Override
 	public Tuple getClassTypeFieldName(
 			long classTypeId, String fieldName, Locale locale)
 		throws Exception {
 
-		List<Tuple> classTypeFieldNames = getClassTypeFieldNames(
-			classTypeId, locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ClassTypeReader classTypeReader = getClassTypeReader();
 
-		for (Tuple classTypeFieldName : classTypeFieldNames) {
-			String curFieldName = (String)classTypeFieldName.getObject(1);
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 
-			if (fieldName.equals(curFieldName)) {
-				return classTypeFieldName;
+		List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
+
+		for (ClassTypeField classTypeField : classTypeFields) {
+			if (fieldName.equals(classTypeField.getName())) {
+				return toTuple(classTypeField);
 			}
 		}
 
 		return null;
 	}
 
+	@Deprecated
 	@Override
 	public List<Tuple> getClassTypeFieldNames(
 			long classTypeId, Locale locale, int start, int end)
 		throws Exception {
 
-		return Collections.emptyList();
+		ClassTypeReader classTypeReader = getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+		List<ClassTypeField> classTypeFields = classType.getClassTypeFields(
+			start, end);
+
+		List<Tuple> tuples = new ArrayList<Tuple>(classTypeFields.size());
+
+		for (ClassTypeField classTypeField : classTypeFields) {
+			tuples.add(toTuple(classTypeField));
+		}
+
+		return tuples;
 	}
 
+	@Deprecated
 	@Override
 	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
 		throws Exception {
 
-		return 0;
+		ClassTypeReader classTypeReader = getClassTypeReader();
+
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+		return classType.getClassTypeFieldsCount();
 	}
 
+	@Override
+	public ClassTypeReader getClassTypeReader() {
+		return new NullClassTypeReader();
+	}
+
+	@Deprecated
 	@Override
 	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
 		throws Exception {
 
-		return Collections.emptyMap();
+		ClassTypeReader classTypeReader = getClassTypeReader();
+
+		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+			groupId, locale);
+
+		Map<Long, String> classTypesMap = new HashMap<Long, String>();
+
+		for (ClassType classType : classTypes) {
+			classTypesMap.put(classType.getClassTypeId(), classType.getName());
+		}
+
+		return classTypesMap;
 	}
 
 	@Override
@@ -192,14 +227,16 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return false;
 	}
 
+	@Deprecated
 	@Override
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception {
 
-		List<Tuple> classTypeFieldNames = getClassTypeFieldNames(
-			classTypeId, locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ClassTypeReader classTypeReader = getClassTypeReader();
 
-		return !classTypeFieldNames.isEmpty();
+		ClassType classType = classTypeReader.getClassType(classTypeId, locale);
+
+		return classType.getClassTypeFieldsCount() > 0;
 	}
 
 	@Override
@@ -269,38 +306,6 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
 	}
 
-	protected List<Tuple> getDDMStructureFieldNames(
-			DDMStructure ddmStructure, Locale locale)
-		throws Exception {
-
-		List<Tuple> fields = new ArrayList<Tuple>();
-
-		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
-			LocaleUtil.toLanguageId(locale));
-
-		for (Map<String, String> fieldMap : fieldsMap.values()) {
-			String indexType = fieldMap.get("indexType");
-			boolean privateField = GetterUtil.getBoolean(
-				fieldMap.get("private"));
-
-			String type = fieldMap.get("type");
-
-			if (Validator.isNull(indexType) || privateField ||
-				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
-
-				continue;
-			}
-
-			String label = fieldMap.get("label");
-			String name = fieldMap.get("name");
-
-			fields.add(
-				new Tuple(label, name, type, ddmStructure.getStructureId()));
-		}
-
-		return fields;
-	}
-
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
@@ -321,12 +326,31 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		_supportsClassTypes = supportsClassTypes;
 	}
 
+	protected Tuple toTuple(ClassTypeField classTypeField) {
+		return new Tuple(
+			classTypeField.getLabel(), classTypeField.getName(),
+			classTypeField.getType(), classTypeField.getClassTypeId());
+	}
+
 	private static final boolean _PERMISSION = true;
 
-	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
-		"checkbox", "ddm-date", "ddm-decimal", "ddm-integer", "ddm-number",
-		"radio", "select", "text"
-	};
+	private static final class NullClassTypeReader implements ClassTypeReader {
+
+		@Override
+		public List<ClassType> getAvailableClassTypes(
+			long[] groupIds, Locale locale) {
+
+			return Collections.emptyList();
+		}
+
+		@Override
+		public ClassType getClassType(long classTypeId, Locale locale)
+			throws PortalException, SystemException {
+
+			throw new NoSuchClassTypeException();
+		}
+
+	}
 
 	private boolean _categorizable = true;
 	private String _className;

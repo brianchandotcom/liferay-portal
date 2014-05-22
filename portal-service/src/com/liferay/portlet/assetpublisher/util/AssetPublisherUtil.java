@@ -26,6 +26,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
 import java.util.List;
@@ -236,6 +237,14 @@ public class AssetPublisherUtil {
 
 		return getAssetPublisher().getClassNameIds(
 			portletPreferences, availableClassNameIds);
+	}
+
+	public static Long[] getClassTypeIds(
+		PortletPreferences portletPreferences, String className,
+		List<ClassType> availableClassTypes) {
+
+		return getAssetPublisher().getClassTypeIds(
+			portletPreferences, className, availableClassTypes);
 	}
 
 	public static Long[] getClassTypeIds(

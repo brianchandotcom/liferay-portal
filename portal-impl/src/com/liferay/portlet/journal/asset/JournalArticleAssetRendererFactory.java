@@ -19,19 +19,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
+import com.liferay.portlet.asset.model.BaseDDMStructureClassTypeReader;
+import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -42,10 +40,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -128,49 +123,8 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public List<Tuple> getClassTypeFieldNames(
-			long classTypeId, Locale locale, int start, int end)
-		throws Exception {
-
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(classTypeId);
-
-		List<Tuple> fieldNames = getDDMStructureFieldNames(
-			ddmStructure, locale);
-
-		return ListUtil.subList(fieldNames, start, end);
-	}
-
-	@Override
-	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
-		throws Exception {
-
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(classTypeId);
-
-		List<Tuple> fieldNames = getDDMStructureFieldNames(
-			ddmStructure, locale);
-
-		return fieldNames.size();
-	}
-
-	@Override
-	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
-		throws Exception {
-
-		Map<Long, String> classTypes = new HashMap<Long, String>();
-
-		List<DDMStructure> ddmStructures =
-			DDMStructureServiceUtil.getStructures(
-				groupIds,
-				PortalUtil.getClassNameId(JournalArticle.class.getName()));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			classTypes.put(
-				ddmStructure.getStructureId(), ddmStructure.getName(locale));
-		}
-
-		return classTypes;
+	public ClassTypeReader getClassTypeReader() {
+		return new BaseDDMStructureClassTypeReader(getClassName());
 	}
 
 	@Override

@@ -24,8 +24,8 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalConverterUtil;
 
 /**
-* @author Adolfo Pérez
-*/
+ * @author Adolfo Pérez
+ */
 final class JournalArticleDDMFieldReader extends BaseDDMFieldReader {
 
 	public JournalArticleDDMFieldReader(JournalArticle article) {

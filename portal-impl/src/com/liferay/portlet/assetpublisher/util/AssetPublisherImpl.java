@@ -73,6 +73,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
@@ -828,6 +829,23 @@ public class AssetPublisherImpl implements AssetPublisher {
 		else {
 			return availableClassNameIds;
 		}
+	}
+
+	@Override
+	public Long[] getClassTypeIds(
+		PortletPreferences portletPreferences, String className,
+		List<ClassType> availableClassTypes) {
+
+		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
+
+		for (int i = 0; i < availableClassTypeIds.length; i++) {
+			ClassType classType = availableClassTypes.get(i);
+
+			availableClassTypeIds[i] = classType.getClassTypeId();
+		}
+
+		return getClassTypeIds(
+			portletPreferences, className, availableClassTypeIds);
 	}
 
 	@Override

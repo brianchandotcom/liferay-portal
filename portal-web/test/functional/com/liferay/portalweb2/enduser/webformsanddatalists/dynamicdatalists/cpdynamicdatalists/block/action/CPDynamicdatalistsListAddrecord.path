@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_SELECT</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//select</td>
 	<td></td>
 </tr>
 <tr>

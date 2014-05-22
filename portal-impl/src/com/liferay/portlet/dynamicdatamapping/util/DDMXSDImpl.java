@@ -422,17 +422,6 @@ public class DDMXSDImpl implements DDMXSD {
 
 			jsonObject.put("localizationMap", localizationMapJSONObject);
 
-			JSONArray hiddenAttributesJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			if (type.equals(DDMImpl.TYPE_CHECKBOX)) {
-				hiddenAttributesJSONArray.put("required");
-			}
-
-			hiddenAttributesJSONArray.put("readOnly");
-
-			jsonObject.put("hiddenAttributes", hiddenAttributesJSONArray);
-
 			String key = "fields";
 
 			if (type.equals(DDMImpl.TYPE_RADIO) ||

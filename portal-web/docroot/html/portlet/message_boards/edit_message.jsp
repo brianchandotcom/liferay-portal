@@ -218,7 +218,7 @@ else {
 
 	<aui:fieldset>
 		<c:if test="<%= message != null %>">
-			<aui:workflow-status status="<%= message.getStatus() %>" />
+			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
 		</c:if>
 
 		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
@@ -344,8 +344,14 @@ else {
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
+									<%
+									AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+									AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+									%>
+
 									<liferay-ui:icon
-										image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+										iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 										label="<%= true %>"
 										message="<%= fileEntry.getTitle() %>"
 									/>

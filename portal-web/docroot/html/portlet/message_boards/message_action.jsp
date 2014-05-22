@@ -33,7 +33,7 @@ MBCategory category = message.getCategory();
 MBThread thread = message.getThread();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) && !thread.isLocked() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/message_boards/edit_message" />
@@ -42,7 +42,8 @@ MBThread thread = message.getThread();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -57,7 +58,8 @@ MBThread thread = message.getThread();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -91,7 +93,8 @@ MBThread thread = message.getThread();
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						image="unsubscribe"
+						iconCssClass="icon-remove-sign"
+						message="unsubscribe"
 						url="<%= unsubscribeURL %>"
 					/>
 				</c:when>
@@ -104,7 +107,8 @@ MBThread thread = message.getThread();
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						image="subscribe"
+						iconCssClass="icon-ok-sign"
+						message="subscribe"
 						url="<%= subscribeURL %>"
 					/>
 				</c:otherwise>
@@ -123,7 +127,7 @@ MBThread thread = message.getThread();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="unlock"
+					iconCssClass="icon-unlock"
 					message="unlock-thread"
 					url="<%= unlockThreadURL %>"
 				/>
@@ -138,7 +142,7 @@ MBThread thread = message.getThread();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="lock"
+					iconCssClass="icon-lock"
 					message="lock-thread"
 					url="<%= lockThreadURL %>"
 				/>
@@ -155,7 +159,7 @@ MBThread thread = message.getThread();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="submit"
+			iconCssClass="icon-move"
 			message="move"
 			url="<%= moveThreadURL %>"
 		/>

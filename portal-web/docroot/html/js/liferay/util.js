@@ -393,21 +393,22 @@
 			return columnId;
 		},
 
-		getGeolocation: function(callback, defaultCallback) {
-			if (callback && navigator.geolocation) {
+		getGeolocation: function(success, fallback, options) {
+			if (success && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
 					function(position) {
-						callback.call(
-							this,
+						success(
 							position.coords.latitude,
-							position.coords.longitude
+							position.coords.longitude,
+							position
 						);
 					},
-					defaultCallback
+					fallback,
+					options
 				);
 			}
-			else if (defaultCallback) {
-				defaultCallback();
+			else if (fallback) {
+				fallback();
 			}
 		},
 

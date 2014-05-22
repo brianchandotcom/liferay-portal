@@ -23,7 +23,7 @@
 	%>
 
 	<liferay-ui:icon
-		image="../document_library/msoffice"
+		iconCssClass="icon-file-alt"
 		message="open-in-ms-office"
 		onClick="<%= taglibOnClick %>"
 		url="javascript:;"

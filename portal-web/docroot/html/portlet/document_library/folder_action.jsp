@@ -120,7 +120,6 @@ String iconMenuId = null;
 				<c:when test="<%= folder != null %>">
 
 					<%
-					boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
 					boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
 					%>
 
@@ -133,7 +132,8 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="edit"
+							iconCssClass="icon-edit"
+							message="edit"
 							url="<%= editURL %>"
 						/>
 					</c:if>
@@ -147,7 +147,8 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="edit"
+							iconCssClass="icon-edit"
+							message="edit"
 							url="<%= editURL %>"
 						/>
 					</c:if>
@@ -161,7 +162,7 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="submit"
+							iconCssClass="icon-move"
 							message="move"
 							url="<%= moveURL %>"
 						/>
@@ -177,43 +178,12 @@ String iconMenuId = null;
 						/>
 
 						<liferay-ui:icon
-							image="permissions"
+							iconCssClass="icon-lock"
+							message="permissions"
 							method="get"
 							url="<%= permissionsURL %>"
 							useDialog="<%= true %>"
 						/>
-					</c:if>
-
-					<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
-						<portlet:renderURL var="redirectURL">
-							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-						</portlet:renderURL>
-
-						<portlet:actionURL var="deleteURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-							<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
-					</c:if>
-
-					<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
-						<portlet:renderURL var="redirectURL">
-							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-						</portlet:renderURL>
-
-						<portlet:actionURL var="deleteURL">
-							<portlet:param name="struts_action" value="/document_library/edit_repository" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-							<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon-delete url="<%= deleteURL %>" />
 					</c:if>
 
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
@@ -225,7 +195,7 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="add_folder"
+							iconCssClass="icon-plus"
 							message="add-subfolder"
 							url="<%= addFolderURL %>"
 						/>
@@ -247,7 +217,8 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="edit"
+							iconCssClass="icon-edit"
+							message="edit"
 							url="<%= editURL %>"
 						/>
 					</c:if>
@@ -262,7 +233,8 @@ String iconMenuId = null;
 						/>
 
 						<liferay-ui:icon
-							image="permissions"
+							iconCssClass="icon-lock"
+							message="permissions"
 							method="get"
 							url="<%= permissionsURL %>"
 							useDialog="<%= true %>"
@@ -278,7 +250,7 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="add_folder"
+							iconCssClass="icon-plus"
 							message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
 							url="<%= addFolderURL %>"
 						/>
@@ -292,7 +264,7 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="add_drive"
+							iconCssClass="icon-plus"
 							message="add-repository"
 							url="<%= addRepositoryURL %>"
 						/>
@@ -319,7 +291,7 @@ String iconMenuId = null;
 
 						<liferay-ui:icon
 							cssClass="hide upload-multiple-documents"
-							image="../document_library/add_multiple_documents"
+							iconCssClass="icon-copy"
 							message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 							url="<%= editFileEntryURL %>"
 						/>
@@ -342,7 +314,7 @@ String iconMenuId = null;
 					%>
 
 					<liferay-ui:icon
-						image="../document_library/add_document"
+						iconCssClass="icon-plus"
 						message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
 						url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
 					/>
@@ -350,8 +322,8 @@ String iconMenuId = null;
 
 				<c:if test="<%= hasViewPermission && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
 					<liferay-ui:icon
+						iconCssClass="icon-search"
 						cssClass='<%= randomNamespace + "-slide-show" %>'
-						image="../image_gallery_display/slide_show"
 						message="view-slide-show"
 						url="javascript:;"
 					/>
@@ -366,7 +338,7 @@ String iconMenuId = null;
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						image="add_instance"
+						iconCssClass="icon-plus"
 						message="add-shortcut"
 						url="<%= editFileShortcutURL %>"
 					/>
@@ -382,10 +354,49 @@ String iconMenuId = null;
 
 			<liferay-ui:icon
 				cssClass='<%= randomNamespace + "-webdav-action" %>'
-				image="desktop"
+				iconCssClass="icon-desktop"
 				message="access-from-desktop"
 				url="javascript:;"
 			/>
+		</c:if>
+
+		<c:if test="<%= dlActionsDisplayContext.isShowActions() && (folder != null) %>">
+
+			<%
+			boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
+			%>
+
+			<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
+				<portlet:renderURL var="redirectURL">
+					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+				</portlet:renderURL>
+
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/document_library/edit_folder" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
+			</c:if>
+
+			<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
+				<portlet:renderURL var="redirectURL">
+					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+				</portlet:renderURL>
+
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/document_library/edit_repository" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete url="<%= deleteURL %>" />
+			</c:if>
 		</c:if>
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>

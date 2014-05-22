@@ -38,31 +38,31 @@ if (orderByType.equals("asc")) {
 	String taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'title','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="title" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="title" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'creationDate','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="create-date" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="create-date" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modifiedDate','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="modified-date" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="modified-date" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'downloads','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="downloads" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="downloads" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'size','" + reverseOrderByType + "')";
 	%>
 
-	<aui:nav-item href="<%= taglibURL %>" label="size" />
+	<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-calendar" label="size" />
 </aui:nav-item>
 
 <aui:script>

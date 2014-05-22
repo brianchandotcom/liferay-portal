@@ -298,14 +298,15 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-ok-sign"
 							label="<%= true %>"
+							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							image="unsubscribe"
+							iconCssClass="icon-remove-sign"
 							label="<%= true %>"
 							message="subscribed-to-a-parent-folder"
 						/>
@@ -329,8 +330,9 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
 					label="<%= true %>"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>

@@ -208,7 +208,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							}
 							%>
 
-							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
+							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
 						<c:if test="<%= dlPortletInstanceSettings.getEnableRatings() && fileEntry.isSupportsSocial() %>">
@@ -286,23 +286,23 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			<div class="asset-details body-row">
 				<c:if test="<%= dlFileEntryActionsDisplayContext.isAssetMetadataVisible() %>">
 					<div class="asset-details-content">
-						<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
+						<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
 						</h3>
 
-						<div class="lfr-asset-author lfr-asset-icon">
+						<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
+							<div>
+								<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+							</div>
+						</c:if>
+
+						<div class="icon-user lfr-asset-icon">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
 						</div>
 
-						<div class="lfr-asset-date lfr-asset-icon">
+						<div class="icon-calendar lfr-asset-icon">
 							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 						</div>
-
-						<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
-							<div class="lfr-asset-summary">
-								<aui:workflow-status model="<%= DLFileEntry.class %>" status="<%= fileVersion.getStatus() %>" />
-							</div>
-						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
 							<blockquote class="lfr-asset-description">
@@ -313,7 +313,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						<span class="download-document">
 							<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 								<liferay-ui:icon
-									image="download"
+									iconCssClass="icon-download"
 									label="<%= true %>"
 									message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 									url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
@@ -712,6 +712,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 		<c:if test="<%= dlFileEntryActionsDisplayContext.isOpenInMsOfficeButtonVisible() %>">
 			fileEntryButtonGroup.push(
 				{
+					icon: 'icon-file-alt',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
 					on: {
 						click: function(event) {
@@ -732,7 +733,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 					</portlet:renderURL>
 
-					icon: 'icon-pencil',
+					icon: 'icon-edit',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>',
 					on: {
 						click: function(event) {
@@ -768,7 +769,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			fileEntryButtonGroup.push(
 				{
 
-					icon: 'icon-lock',
+					icon: 'icon-unlock',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
 					on: {
 						click: function(event) {
@@ -800,7 +801,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			fileEntryButtonGroup.push(
 				{
 
-					icon: 'icon-unlock',
+					icon: 'icon-lock',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
 					on: {
 						click: function(event) {
@@ -823,7 +824,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
 
-					icon: 'icon-permissions',
+					icon: 'icon-lock',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 					on: {
 						click: function(event) {
@@ -868,7 +869,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 						<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
 					</portlet:renderURL>
 
-					icon: 'icon-delete',
+					icon: 'icon-remove',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
 					on: {
 						click: function(event) {

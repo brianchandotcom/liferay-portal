@@ -27,7 +27,8 @@
 				/>
 
 				<liferay-ui:icon
-					image="permissions"
+					iconCssClass="icon-lock"
+					message="permissions"
 					method="get"
 					url="<%= permissionsURL %>"
 					useDialog="<%= true %>"
@@ -45,7 +46,8 @@
 				/>
 
 				<liferay-ui:icon
-					image="permissions"
+					iconCssClass="icon-lock"
+					message="permissions"
 					method="get"
 					url="<%= shortcutPermissionsURL %>"
 					useDialog="<%= true %>"

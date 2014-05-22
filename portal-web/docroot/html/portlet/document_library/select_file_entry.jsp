@@ -85,20 +85,15 @@ if (folder != null) {
 				rowURL = null;
 			}
 
-			String image = null;
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-			if ((foldersCount + fileEntriesCount) > 0) {
-				image = "folder_full_document";
-			}
-			else {
-				image = "folder_empty";
-			}
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 			%>
 
 			<liferay-ui:search-container-column-text
 				name="folder"
 			>
-				<liferay-ui:icon image="<%= image %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= rowURL.toString() %>" />
+				<liferay-ui:icon iconCssClass="<%= assetRenderer.getIconCssClass() %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= rowURL.toString() %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -137,15 +132,17 @@ if (folder != null) {
 			modelVar="curFile"
 			rowVar="row"
 		>
-
-			<%
-			String icon = "../file_system/small/" + curFile.getIcon();
-			%>
-
 			<liferay-ui:search-container-column-text
 				name="document"
 			>
-				<liferay-ui:icon image="<%= icon %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFile.getTitle()) %>" />
+
+				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
+				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFile.getFileEntryId());
+				%>
+
+				<liferay-ui:icon iconCssClass="<%= assetRenderer.getIconCssClass() %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFile.getTitle()) %>" />
 
 				<c:if test="<%= Validator.isNotNull(curFile.getDescription()) %>">
 					<br />

@@ -31,6 +31,10 @@ JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDE
 
 	int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId(), status);
 	int entriesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, folder.getFolderId(), status);
+
+	AssetRendererFactory journalArticleAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+	AssetRendererFactory journalFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
 	%>
 
 	<aui:row>
@@ -42,15 +46,15 @@ JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDE
 			</c:if>
 
 			<div class="lfr-asset-metadata">
-				<div class="lfr-asset-icon lfr-asset-date">
+				<div class="icon-calendar lfr-asset-icon">
 					<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDateTime.format(folder.getModifiedDate()), false) %>
 				</div>
 
-				<div class="lfr-asset-icon lfr-asset-subfolders">
+				<div class="<%= journalFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
 
-				<div class="lfr-asset-icon lfr-asset-items last">
+				<div class="<%= journalArticleAssetRendererFactory.getIconCssClass() %> lfr-asset-icon last">
 					<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "article" : "articles" %>' />
 				</div>
 			</div>

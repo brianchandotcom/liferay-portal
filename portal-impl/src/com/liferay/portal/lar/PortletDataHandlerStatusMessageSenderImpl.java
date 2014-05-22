@@ -57,6 +57,21 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("portletId", portletId);
 
+	}
+
+	@Override
+	public void sendStatusMessage(
+		String messageType, String[] portletIds,
+		ManifestSummary manifestSummary) {
+
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Message message = createMessage(messageType, manifestSummary);
+
+		message.put("portletIds", portletIds);
+
 		_singleDestinationMessageSender.send(message);
 	}
 

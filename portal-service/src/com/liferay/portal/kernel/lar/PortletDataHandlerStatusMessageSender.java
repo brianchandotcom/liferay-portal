@@ -30,6 +30,10 @@ public interface PortletDataHandlerStatusMessageSender {
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary);
 
+	public void sendStatusMessage(
+		String messageType, String[] portletIds,
+		ManifestSummary manifestSummary);
+
 	public <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary);
 

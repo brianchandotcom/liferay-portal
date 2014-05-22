@@ -48,6 +48,14 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 			messageType, portletId, manifestSummary);
 	}
 
+	public static void sendStatusMessage(
+		String messageType, String[] portletIds,
+		ManifestSummary manifestSummary) {
+
+		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+			messageType, portletIds, manifestSummary);
+	}
+
 	public static <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 

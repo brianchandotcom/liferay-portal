@@ -1,20 +1,4 @@
 <definition>
-	<command name="addBlogsEntryPG">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
-
-		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
-		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGAssetpublisherAddnewblogsentry#pause" locator1="5000" />
-		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
-
-		<var name="key_assetTitle" value="${entryTitle}" />
-
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
-	</command>
-
 	<command name="configureAddSiteScopes">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
@@ -161,65 +145,22 @@
 
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
 
-		<if>
-			<equals arg1="${doc}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_DOC_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_DOC_CHECKBOX" />
-			</else>
-		</if>
+		<for list="${documentTypes}" param="documentType">
+			<var name="documentTypeUppercase" value="${documentType?uppercase()}" />
 
-		<if>
-			<equals arg1="${odt}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_ODT_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_ODT_CHECKBOX" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${pdf}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_PDF_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_PDF_CHECKBOX" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${rtf}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_RTF_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_RTF_CHECKBOX" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${sxw}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_SXW_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_SXW_CHECKBOX" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${txt}" arg2="true" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_TXT_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_TXT_CHECKBOX" />
-			</else>
-		</if>
+			<if>
+				<equals arg1="${check}" arg2="true" />
+				<then>
+					<execute action="PGAssetpublisherConfigurationDisplaysettings#check" locator-key1="ENABLE_CONVERSION_${documentTypeUppercase}_CHECKBOX" />
+				</then>
+				<elseif>
+					<equals arg1="${uncheck}" arg2="true" />
+					<then>
+						<execute action="PGAssetpublisherConfigurationDisplaysettings#uncheck" locator-key1="ENABLE_CONVERSION_${documentTypeUppercase}_CHECKBOX" />
+					</then>
+				</elseif>
+			</if>
+		</for>
 
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

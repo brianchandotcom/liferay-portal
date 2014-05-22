@@ -1,30 +1,10 @@
 <definition>
 	<command name="assertTextEquals">
+		<case comparator="startsWith" locator-key1="DOCUMENT_CONVERSION_">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="ASSET_CONTENT">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_DOC">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_ODT">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_PDF">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_RTF">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_SXW">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_CONVERSION_TXT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

@@ -29,10 +29,6 @@
 	</command>
 
 	<command name="enableOpenOfficeIntegration">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
-		</execute>
-
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
 
 		<execute action="CPServeradministrationExternalservices#check" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />

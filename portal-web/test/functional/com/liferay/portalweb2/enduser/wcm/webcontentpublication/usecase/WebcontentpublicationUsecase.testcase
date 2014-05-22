@@ -833,6 +833,10 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
 		<execute macro="ServerAdministration#enableOpenOfficeIntegration" />
 
 		<execute macro="Page#gotoPG">
@@ -841,16 +845,12 @@
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="${webContentContent}" />
-	 		<var name="webContentTitle" value="${webContentTitle}" />
-	 	</execute>
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
-	 	<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-	 		<var name="doc" value="true" />
-	 		<var name="odt" value="true" />
-	 		<var name="pdf" value="true" />
-	 		<var name="rtf" value="true" />
-	 		<var name="sxw" value="true" />
-	 		<var name="txt" value="true" />
+		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
+	 		<var name="check" value="true" />
+	 		<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -858,12 +858,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
-			<var name="doc" value="true" />
-			<var name="odt" value="true" />
-			<var name="pdf" value="true" />
-			<var name="rtf" value="true" />
-			<var name="sxw" value="true" />
-			<var name="txt" value="true" />
+			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -872,9 +867,17 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-			<var name="doc" value="true" />
-			<var name="pdf" value="true" />
-			<var name="txt" value="true" />
+			<var name="check" value="true" />
+			<var name="documentTypes" value="doc,pdf,txt" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
+			<var name="documentTypes" value="odt,rtf,sxw" />
+			<var name="uncheck" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -882,9 +885,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
-			<var name="doc" value="true" />
-			<var name="pdf" value="true" />
-			<var name="txt" value="true" />
+			<var name="documentTypes" value="doc,pdf,txt" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -892,13 +893,26 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG" />
+		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
+			<var name="documentTypes" value="odt,rtf,sxw" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewConversionLinksPGViaAP">
+		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
+			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
+	 		<var name="uncheck" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
+			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>

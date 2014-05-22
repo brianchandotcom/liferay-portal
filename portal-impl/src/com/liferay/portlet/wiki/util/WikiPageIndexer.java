@@ -256,7 +256,7 @@ public class WikiPageIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		WikiPage page = (WikiPage)obj;
 
-		if (!page.isApproved() && !page.isInTrash()) {
+		if ((!page.isApproved() && !page.isInTrash()) || !page.isHead()) {
 			return;
 		}
 

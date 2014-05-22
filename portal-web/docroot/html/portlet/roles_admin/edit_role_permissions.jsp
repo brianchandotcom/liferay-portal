@@ -247,7 +247,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 				AArray.each(
 					event.results,
-					function(item, index, collection) {
+					function(item, index) {
 						item.raw.node.removeClass('hide');
 					}
 				);

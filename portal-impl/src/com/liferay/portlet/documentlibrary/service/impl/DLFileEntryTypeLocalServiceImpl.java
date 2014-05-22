@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
@@ -538,6 +540,13 @@ public class DLFileEntryTypeLocalServiceImpl
 				userId, dlFileEntry.getFileEntryId(), null, null, null, null,
 				null, false, defaultFileEntryTypeId, null, null, null, 0,
 				serviceContext);
+
+			dlAppHelperLocalService.updateAsset(
+				userId, new LiferayFileEntry(dlFileEntry),
+				new LiferayFileVersion(dlFileVersion),
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
 		}
 
 		List<DLFolder> subFolders = dlFolderPersistence.findByG_M_P_H(

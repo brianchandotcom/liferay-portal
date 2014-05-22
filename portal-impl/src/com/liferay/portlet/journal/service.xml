@@ -541,9 +541,6 @@
 		<exception>DuplicateArticleImageId</exception>
 		<exception>DuplicateFeedId</exception>
 		<exception>DuplicateFolderName</exception>
-		<exception>DuplicateStructureElement</exception>
-		<exception>DuplicateStructureId</exception>
-		<exception>DuplicateTemplateId</exception>
 		<exception>FeedContentField</exception>
 		<exception>FeedId</exception>
 		<exception>FeedName</exception>
@@ -551,16 +548,5 @@
 		<exception>FeedTargetPortletId</exception>
 		<exception>FolderName</exception>
 		<exception>InvalidDDMStructure</exception>
-		<exception>RequiredStructure</exception>
-		<exception>RequiredTemplate</exception>
-		<exception>StructureId</exception>
-		<exception>StructureInheritance</exception>
-		<exception>StructureName</exception>
-		<exception>StructureXsd</exception>
-		<exception>TemplateId</exception>
-		<exception>TemplateName</exception>
-		<exception>TemplateSmallImageName</exception>
-		<exception>TemplateSmallImageSize</exception>
-		<exception>TemplateXsl</exception>
 	</exceptions>
 </service-builder>

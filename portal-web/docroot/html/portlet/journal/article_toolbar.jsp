@@ -42,7 +42,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 			if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
 				A.Object.some(
 					CKEDITOR.instances,
-					function(item, index, collection) {
+					function(item, index) {
 						var parentForm = A.one('#' + item.element.getId()).ancestor('form');
 
 						if (parentForm.compareTo(form)) {

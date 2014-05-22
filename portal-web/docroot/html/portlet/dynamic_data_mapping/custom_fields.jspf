@@ -362,10 +362,14 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 						fieldNamespace: {
 							value: 'ddm'
+						},
+
+						hiddenAttributes: {
+							value: ['localizable', 'readOnly', 'repeatable']
 						}
 					},
 
-					EXTENDS: A.FormBuilderTextField,
+					EXTENDS: A.FormBuilderField,
 
 					NAME: 'ddm-geolocation',
 

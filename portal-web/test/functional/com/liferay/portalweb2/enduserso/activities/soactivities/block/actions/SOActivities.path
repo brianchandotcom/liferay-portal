@@ -44,6 +44,11 @@
 	<td>//ul[@class='nav nav-tabs']//a[contains(.,'Me')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NO_ACTIVITIES-->
 <tr>
 	<td>NO_ACTIVITIES</td>
@@ -122,17 +127,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_DOCUMENT_TITLE</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${documentTitleRow}]/span[@class='activity-subentry-title']/a/span[2]</td>
+	<td>ACTIVITIES_DOCUMENT_TITLE_MULTIPLE</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${key_documentTitleRow}]/span[@class='activity-subentry-title']/a/span[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_DOCUMENT_DESCRIPTION</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${documentTitleRow}]/span[@class='activity-subentry-body']</td>
+	<td>ACTIVITIES_DOCUMENT_DESCRIPTION_MULTIPLE</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${key_documentTitleRow}]/span[@class='activity-subentry-body']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_DOCUMENT_DESCRIPTION</td>
+	<td>ACTIVITIES_DOCUMENT_DESCRIPTION_SINGLE</td>
 	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='document-content']</td>
 	<td></td>
 </tr>
@@ -177,8 +182,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITIES_VIEW_MORE</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//span[@class='action toggle']/a[contains(.,'View More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_VIEW_LESS</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//span[@class='action toggle']/a[contains(.,'View Less')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVITIES_COMMENT_FIELD</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//input[contains(@placeholder,'Leave a comment')]</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//input[contains(@class,'field comment-form')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_COMMENT_INPUT_FIELD</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//input[@class='field comment-form focus']</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,17 +214,27 @@
 <!--ACTIVITIES_COMMENT-->
 <tr>
 	<td>ACTIVITIES_COMMENT_USER_PICTURE</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry']//img[contains(@alt,'${key_userFirstName}')]</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry' and contains(.,'${key_commentContent}')]//img[contains(@alt,'${key_userFirstName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIVITIES_COMMENT_USER_NAME</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry']//span[@class='user-name']</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry' and contains(.,'${key_commentContent}')]//span[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIVITIES_COMMENT_CONTENT</td>
-	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry']//span[@class='message']</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry' and contains(.,'${key_commentContent}')]//span[@class='message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_COMMENT_EDIT</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry' and contains(.,'${key_commentContent}')]//span[contains(@class,'edit-comment')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_COMMENT_DELETE</td>
+	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='comment-entry' and contains(.,'${key_commentContent}')]//span[contains(@class,'delete-comment')]/a</td>
 	<td></td>
 </tr>
 <tr>

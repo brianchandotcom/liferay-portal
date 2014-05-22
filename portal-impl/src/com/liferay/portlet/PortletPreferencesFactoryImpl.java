@@ -629,16 +629,36 @@ public class PortletPreferencesFactoryImpl
 
 	@Override
 	public String toXML(PortalPreferences portalPreferences) {
-		PortalPreferencesImpl portalPreferencesImpl =
-			(PortalPreferencesImpl)portalPreferences;
+		PortalPreferencesImpl portalPreferencesImpl = null;
+
+		if (portalPreferences instanceof PortalPreferencesWrapper) {
+			PortalPreferencesWrapper portalPreferencesWrapper =
+				(PortalPreferencesWrapper)portalPreferences;
+
+			portalPreferencesImpl =
+				portalPreferencesWrapper.getPortalPreferencesImpl();
+		}
+		else {
+			portalPreferencesImpl = (PortalPreferencesImpl)portalPreferences;
+		}
 
 		return portalPreferencesImpl.toXML();
 	}
 
 	@Override
 	public String toXML(PortletPreferences portletPreferences) {
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)portletPreferences;
+		PortletPreferencesImpl portletPreferencesImpl = null;
+
+		if (portletPreferences instanceof PortletPreferencesWrapper) {
+			PortletPreferencesWrapper portletPreferencesWrapper =
+				(PortletPreferencesWrapper)portletPreferences;
+
+			portletPreferencesImpl =
+				portletPreferencesWrapper.getPortletPreferencesImpl();
+		}
+		else {
+			portletPreferencesImpl = (PortletPreferencesImpl)portletPreferences;
+		}
 
 		return portletPreferencesImpl.toXML();
 	}

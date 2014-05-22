@@ -34,11 +34,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			var STR_BLANK = '';
 
 			var TPL_BUTTON = '<div class="field-labels-inline">' +
-								'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
+								'<input class="btn" type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
 							'<div>';
 
 			var TPL_GEOLOCATION = '<div class="field-labels-inline">' +
-										'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "geolocate") %>" />' +
+										'<input class="btn" type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "geolocate") %>" />' +
 									'<div>';
 
 			var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +

@@ -1836,7 +1836,7 @@ AUI.add(
 
 								selectNode.append(buffer.join(STR_EMPTY));
 
-								selectNode.set('selectedIndex', selectedVocabularyIndex);
+								selectNode.attr('selectedIndex', selectedVocabularyIndex);
 							}
 						}
 					},

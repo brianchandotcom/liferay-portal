@@ -122,8 +122,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 						name="entry"
 						title="<%= entry.getDescription() %>"
 					>
+
+						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksEntry.class.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
+						%>
+
 						<liferay-ui:icon
-							image="../ratings/star_hover"
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= entry.getName() %>"
 							target="_blank"
@@ -171,8 +178,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 						name="entry"
 						title="<%= folder.getDescription() %>"
 					>
+
+						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksFolder.class.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+						%>
+
 						<liferay-ui:icon
-							image='<%= (BookmarksFolderLocalServiceUtil.getFoldersAndEntriesCount(folder.getGroupId(), folder.getFolderId(), WorkflowConstants.STATUS_ANY) > 0) ? "folder_full_document" : "folder_empty" %>'
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= HtmlUtil.escape(folder.getName()) %>"
 							url="<%= rowURL %>"

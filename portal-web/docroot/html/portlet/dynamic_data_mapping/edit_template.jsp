@@ -280,16 +280,16 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				function(item, index, collection, mode) {
 					var A = AUI();
 
-					var hiddenAttributesMap = window.<portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
-					var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
+					var hiddenAttributes = item.get('hiddenAttributes') || [];
 
-					hiddenAttributes = A.Array(hiddenAttributes);
-
-					if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
+					if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_CREATE %>') {
+						hiddenAttributes.push('readOnly');
+					}
+					else {
 						A.Array.removeItem(hiddenAttributes, 'readOnly');
 					}
 
-					item.set('hiddenAttributes', hiddenAttributes);
+					item.set('hiddenAttributes', A.Array.unique(hiddenAttributes));
 				},
 				['aui-base']
 			);

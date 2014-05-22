@@ -91,6 +91,20 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					value: true
 				},
 
+				hiddenAttributes: {
+					valueFn: function() {
+						var instance = this;
+
+						var hiddenAttributes = ['readOnly'];
+
+						if (instance.get('type') === 'checkbox') {
+							hiddenAttributes.push('required');
+						}
+
+						return hiddenAttributes;
+					}
+				},
+
 				name: {
 					setter: Liferay.FormBuilder.normalizeKey,
 					valueFn: function() {
@@ -503,6 +517,10 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 						fieldNamespace: {
 							value: 'ddm'
+						},
+
+						hiddenAttributes: {
+							value: ['readOnly', 'required', 'predefinedValue', 'indexType']
 						},
 
 						showLabel: {

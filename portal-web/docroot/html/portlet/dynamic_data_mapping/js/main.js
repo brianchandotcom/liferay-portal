@@ -14,14 +14,6 @@ AUI.add(
 
 		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue', 'tip'];
 
-		var MAP_HIDDEN_FIELD_ATTRS = {
-			checkbox: ['readOnly', 'required'],
-
-			separator: ['readOnly', 'required', 'predefinedValue', 'indexType'],
-
-			DEFAULT: ['readOnly']
-		};
-
 		var STR_BLANK = '';
 
 		var MAP_ELEMENT_DATA = {
@@ -169,7 +161,6 @@ AUI.add(
 						var instance = this;
 
 						instance.LOCALIZABLE_FIELD_ATTRS = A.Array(LOCALIZABLE_FIELD_ATTRS);
-						instance.MAP_HIDDEN_FIELD_ATTRS = A.clone(MAP_HIDDEN_FIELD_ATTRS);
 
 						var translationManager = instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
 
@@ -760,79 +751,66 @@ AUI.add(
 
 			DDM_STRUCTURE: [
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.checkbox,
 					iconClass: 'icon-fb-boolean',
 					label: Liferay.Language.get('boolean'),
 					type: 'checkbox'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-calendar',
 					label: Liferay.Language.get('date'),
 					type: 'ddm-date'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-decimal',
 					label: Liferay.Language.get('decimal'),
 					type: 'ddm-decimal'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-file-text',
 					label: Liferay.Language.get('documents-and-media'),
 					type: 'ddm-documentlibrary'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-edit-sign',
 					label: Liferay.Language.get('html'),
 					type: 'ddm-text-html'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-globe',
 					label: Liferay.Language.get('geolocation'),
 					type: 'ddm-geolocation'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-integer',
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-link',
 					label: Liferay.Language.get('link-to-page'),
 					type: 'ddm-link-to-page'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-number',
 					label: Liferay.Language.get('number'),
 					type: 'ddm-number'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-radio',
 					label: Liferay.Language.get('radio'),
 					type: 'radio'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-select',
 					label: Liferay.Language.get('select'),
 					type: 'select'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-text',
 					label: Liferay.Language.get('text'),
 					type: 'text'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-text-box',
 					label: Liferay.Language.get('text-box'),
 					type: 'textarea'
@@ -841,19 +819,16 @@ AUI.add(
 
 			DDM_TEMPLATE: [
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-paragraph',
 					label: Liferay.Language.get('paragraph'),
 					type: 'ddm-paragraph'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-fieldset',
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
@@ -862,13 +837,11 @@ AUI.add(
 
 			WCM_STRUCTURE: [
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-picture',
 					label: Liferay.Language.get('image'),
 					type: 'ddm-image'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.separator,
 					iconClass: 'icon-fb-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'

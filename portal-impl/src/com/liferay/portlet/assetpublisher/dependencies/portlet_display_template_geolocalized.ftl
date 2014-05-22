@@ -73,32 +73,32 @@
 	</#list>
 </#list>
 
-<div class="${namespace}map-canvas" id="${namespace}mapCanvas"></div>
+<div class="map-canvas" id="${namespace}mapCanvas"></div>
 
 <#if mapsAPIProvider = "googleMaps" >
 	<style type="text/css">
-		.${namespace}asset-entry-abstract {
+		#${namespace}assetEntryAbstract {
 			min-width: ${minWidth};
 		}
 
-		.${namespace}asset-entry-abstract .asset-entry-abstract-image {
+		#${namespace}assetEntryAbstract .asset-entry-abstract-image {
 			float: left;
 		}
 
-		.${namespace}asset-entry-abstract .asset-entry-abstract-image img {
+		#${namespace}assetEntryAbstract .asset-entry-abstract-image img {
 			display: block;
 			margin-right: 2em;
 		}
 
-		.${namespace}asset-entry-abstract .taglib-icon {
+		#${namespace}assetEntryAbstract .taglib-icon {
 			float: right;
 		}
 
-		.${namespace}map-canvas {
+		#${namespace}mapCanvas {
 			min-height: ${minHeight};
 		}
 
-		.${namespace}map-canvas img {
+		#${namespace}mapCanvas img {
 			max-width: none;
 		}
 	</style>
@@ -110,108 +110,108 @@
 	</#if>
 
 	<@liferay_aui.script>
-	(function() {
-		var putMarkers = function(map) {
-			var bounds;
+		(function() {
+			var putMarkers = function(map) {
+				var bounds;
 
-			var points = ${jsonArray};
+				var points = ${jsonArray};
 
-			var len = points.length;
+				var len = points.length;
 
-			if (len) {
-				bounds = new google.maps.LatLngBounds();
+				if (len) {
+					bounds = new google.maps.LatLngBounds();
 
-				for (var i = 0; i < len; i++) {
-					var point = points[i];
+					for (var i = 0; i < len; i++) {
+						var point = points[i];
 
-					var marker = new google.maps.Marker(
-						{
-							icon: point['icon'],
-							map: map,
-							position: new google.maps.LatLng(point['latitude'], point['longitude']),
-							title: point['title']
-						}
-					);
-
-					bounds.extend(marker.position);
-
-					(function(marker) {
-						var infoWindow = new google.maps.InfoWindow(
+						var marker = new google.maps.Marker(
 							{
-								content: point['abstract'] || point['title']
+								icon: point.icon,
+								map: map,
+								position: new google.maps.LatLng(point.latitude, point.longitude),
+								title: point.title
 							}
 						);
 
-						google.maps.event.addListener(
-							marker,
-							'click',
-							function() {
-								infoWindow.open(map, marker);
-							}
-						);
-					})(marker);
+						bounds.extend(marker.position);
+
+						(function(marker) {
+							var infoWindow = new google.maps.InfoWindow(
+								{
+									content: point.abstract || point.title
+								}
+							);
+
+							google.maps.event.addListener(
+								marker,
+								'click',
+								function() {
+									infoWindow.open(map, marker);
+								}
+							);
+						})(marker);
+					}
 				}
-			}
 
-			return bounds;
-		};
+				return bounds;
+			};
 
-		var drawMap = function(mapOptions) {
-			var map = new google.maps.Map(document.getElementById('${namespace}mapCanvas'), mapOptions);
+			var drawMap = function(mapOptions) {
+				var map = new google.maps.Map(document.getElementById('${namespace}mapCanvas'), mapOptions);
 
-			var bounds = putMarkers(map);
+				var bounds = putMarkers(map);
 
-			if (bounds) {
-				map.fitBounds(bounds);
-				map.panToBounds(bounds);
-			}
-		};
-
-		var drawDefaultMap = function() {
-			drawMap(
-				{
-					center: new google.maps.LatLng(${defaultLatitude}, ${defaultLongitude}),
-					zoom: 8
+				if (bounds) {
+					map.fitBounds(bounds);
+					map.panToBounds(bounds);
 				}
-			);
-		};
+			};
 
-		Liferay.Util.getGeolocation(
-			function(latitude, longitude) {
+			var drawDefaultMap = function() {
 				drawMap(
 					{
-						center: new google.maps.LatLng(latitude, longitude),
+						center: new google.maps.LatLng(${defaultLatitude}, ${defaultLongitude}),
 						zoom: 8
 					}
 				);
-			},
-			drawDefaultMap
-		);
-	})();
+			};
+
+			Liferay.Util.getGeolocation(
+				function(latitude, longitude) {
+					drawMap(
+						{
+							center: new google.maps.LatLng(latitude, longitude),
+							zoom: 8
+						}
+					);
+				},
+				drawDefaultMap
+			);
+		})();
 	</@liferay_aui.script>
 </#if>
 
 <#if mapsAPIProvider = "openStreetMap">
 	<style type="text/css">
-		.${namespace}asset-entry-abstract {
+		#${namespace}assetEntryAbstract {
 			min-width: ${minWidth};
 			overflow: auto;
 		}
 
-		.${namespace}asset-entry-abstract .asset-entry-abstract-image {
+		#${namespace}assetEntryAbstract .asset-entry-abstract-image {
 			float: left;
 			margin-right: 2em;
 		}
 
-		.${namespace}asset-entry-abstract .asset-entry-abstract-image img {
+		#${namespace}assetEntryAbstract .asset-entry-abstract-image img {
 			display: block;
 		}
 
-		.${namespace}asset-entry-abstract .taglib-icon {
+		#${namespace}assetEntryAbstract .taglib-icon {
 			float: right;
 		}
 
-		.${namespace}map-canvas {
+		#${namespace}mapCanvas {
 			min-height: ${minHeight};
 		}
 	</style>
@@ -221,64 +221,59 @@
 	<script src="${uriScheme}://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
 	<@liferay_aui.script>
-	(function() {
-		var putMarkers = function(map) {
-			var bounds;
+		(function() {
+			var putMarkers = function(map) {
+				var bounds;
 
-			L.tileLayer(
-				'${uriScheme}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				{
-					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				L.tileLayer(
+					'${uriScheme}://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+					{
+						attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+					}
+				).addTo(map);
+
+				var points = ${jsonArray};
+
+				var len = points.length;
+
+				if (len) {
+					bounds = L.latLngBounds([]);
+
+					for (var i = 0; i < len; i++) {
+						var point = points[i];
+
+						var latLng = L.latLng(point.latitude, point.longitude);
+
+						L.marker(latLng).addTo(map).bindPopup(
+							point.abstract,
+							{
+								maxWidth: ${maxWidth}
+							}
+						);
+
+						bounds.extend(latLng);
+					}
 				}
-			).addTo(map);
 
-			var points = ${jsonArray};
+				return bounds;
+			};
 
-			var len = points.length;
+			var drawMap = function(lat, lng) {
+				var map = L.map('${namespace}mapCanvas').setView([lat, lng], 8);
 
-			if (len) {
-				bounds = L.latLngBounds([]);
+				var bounds = putMarkers(map);
 
-				for (var i = 0; i < len; i++) {
-					var point = points[i];
-
-					var latLng = L.latLng(point['latitude'], point['longitude']);
-
-					L.marker(latLng).addTo(map).bindPopup(
-						point['abstract'],
-						{
-							maxWidth: ${maxWidth}
-						}
-					);
-
-					bounds.extend(latLng);
+				if (bounds) {
+					map.fitBounds(bounds);
 				}
-			}
+			};
 
-			return bounds;
-		};
+			var drawDefaultMap = function() {
+				drawMap(${defaultLatitude}, ${defaultLongitude});
+			};
 
-		var drawMap = function(lat, lng) {
-			var map = L.map('${namespace}mapCanvas').setView([lat, lng], 8);
-
-			var bounds = putMarkers(map);
-
-			if (bounds) {
-				map.fitBounds(bounds);
-			}
-		};
-
-		var drawDefaultMap = function() {
-			drawMap(${defaultLatitude}, ${defaultLongitude});
-		};
-
-		Liferay.Util.getGeolocation(
-			function(latitude, longitude) {
-				drawMap(latitude, longitude);
-			},
-			drawDefaultMap
-		);
-	})();
+			Liferay.Util.getGeolocation(drawMap, drawDefaultMap);
+		})();
 	</@liferay_aui.script>
 </#if>
 
@@ -289,7 +284,7 @@
 
 	${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 
-	<div class="${namespace}asset-entry-abstract">
+	<div class="asset-entry-abstract" id="${namespace}assetEntryAbstract">
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 
 		<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />

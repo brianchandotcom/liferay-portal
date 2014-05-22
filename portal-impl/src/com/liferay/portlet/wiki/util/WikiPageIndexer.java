@@ -272,7 +272,8 @@ public class WikiPageIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+				classPK, (Boolean)null);
 
 		doReindex(page);
 	}

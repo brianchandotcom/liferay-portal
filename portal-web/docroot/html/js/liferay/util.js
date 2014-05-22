@@ -265,14 +265,14 @@
 		},
 
 		disableFormButtons: function(inputs, form) {
-			inputs.set('disabled', true);
+			inputs.attr('disabled', true);
 			inputs.setStyle('opacity', 0.5);
 
 			if (A.UA.gecko) {
 				A.getWin().on(
 					'unload',
 					function(event) {
-						inputs.set('disabled', false);
+						inputs.attr('disabled', false);
 					}
 				);
 			}
@@ -283,7 +283,7 @@
 
 			document.body.style.cursor = 'auto';
 
-			inputs.set('disabled', false);
+			inputs.attr('disabled', false);
 			inputs.setStyle('opacity', 1);
 		},
 

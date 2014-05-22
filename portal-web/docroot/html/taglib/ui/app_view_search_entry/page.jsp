@@ -18,9 +18,7 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-search-entry:actionJsp");
-String containerIcon = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerIcon"), "folder");
 String containerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:containerName");
-String containerSrc = (String)request.getAttribute("liferay-ui:app-view-search-entry:containerSrc");
 String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(locale, "folder"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
@@ -81,23 +79,7 @@ summary.setQueryTerms(queryTerms);
 
 						<c:if test="<%= Validator.isNotNull(containerName) %>">
 							<dt>
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(containerSrc) %>">
-										<liferay-ui:icon
-											label="<%= true %>"
-											message="<%= LanguageUtil.get(locale, containerType) %>"
-											src="<%= containerSrc %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:icon
-											image='<%= (Validator.isNotNull(containerIcon)) ? containerIcon : "folder" %>'
-											label="<%= true %>"
-											message="<%= LanguageUtil.get(locale, containerType) %>"
-										/>
-									</c:otherwise>
-								</c:choose>
-								:
+								<%= LanguageUtil.get(locale, containerType) %>:
 							</dt>
 							<dd>
 
@@ -128,6 +110,10 @@ summary.setQueryTerms(queryTerms);
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
+
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 		%>
 
 			<div class="entry-attachment">
@@ -136,17 +122,17 @@ summary.setQueryTerms(queryTerms);
 						<img alt="<%= fileEntry.getTitle() %>" class="attachment" src="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>" />
 					</div>
 
-						<span class="title">
-							<liferay-ui:icon
-								image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
-								label="<%= true %>"
-								message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName()), false) %>'
-							/>
-						</span>
+					<span class="title">
+						<liferay-ui:icon
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName()), false) %>'
+						/>
+					</span>
 
-						<span class="body">
-							<%= summary.getHighlightedContent() %>
-						</span>
+					<span class="body">
+						<%= summary.getHighlightedContent() %>
+					</span>
 				</aui:a>
 			</div>
 
@@ -176,7 +162,7 @@ summary.setQueryTerms(queryTerms);
 
 					<span class="title">
 						<liferay-ui:icon
-							image="message"
+							iconCssClass="icon-comment"
 							label="<%= true %>"
 							message='<%= LanguageUtil.format(locale, "comment-by-x", HtmlUtil.escape(userDisplay.getFullName()), false) %>'
 						/>

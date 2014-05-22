@@ -94,6 +94,7 @@ AUI.add(
 							buttonType: Liferay.Language.get('button-type'),
 							deleteFieldsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'),
 							duplicateMessage: Liferay.Language.get('duplicate'),
+							duplicateNameMessage: Liferay.Language.get('please-enter-a-unique-field-name'),
 							editMessage: Liferay.Language.get('edit'),
 							label: Liferay.Language.get('field-label'),
 							large: Liferay.Language.get('large'),
@@ -177,6 +178,8 @@ AUI.add(
 						instance._toggleInputDirection(translationManager.get('defaultLocale'));
 					},
 
+					NAMES_HASH: {},
+
 					bindUI: function() {
 						var instance = this;
 
@@ -192,6 +195,8 @@ AUI.add(
 
 						field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
 						field.set('strings', instance.get('strings'));
+
+						instance.NAMES_HASH[field.get('name')] = true;
 
 						return field;
 					},
@@ -481,6 +486,46 @@ AUI.add(
 						);
 
 						return AArray.dedupe(readOnlyAttributes);
+					},
+
+					_handleSaveEvent: function() {
+						var instance = this;
+
+						var editingField = instance.editingField;
+
+						var namesList = instance.NAMES_HASH;
+
+						var oldValue = editingField.get('name');
+
+						var newValue;
+
+						if (editingField) {
+							var modelList = instance.propertyList.get('data');
+
+							modelList.each(function(model) {
+								var attributeName = model.get('attributeName');
+
+								var attributeValue = model.get('value');
+
+								if (attributeName === 'name' && attributeValue !== oldValue) {
+									newValue = attributeValue;
+								}
+							});
+
+							if (namesList[newValue]) {
+								alert (instance.get('strings').duplicateNameMessage);
+								editingField.focus();
+							}
+
+							else {
+								if (newValue !== undefined) {
+									delete namesList[oldValue];
+									namesList[newValue] = true;
+								}
+
+								LiferayFormBuilder.superclass._handleSaveEvent.apply(this, arguments);
+							}
+						}
 					},
 
 					_onPropertyModelChange: function(event) {

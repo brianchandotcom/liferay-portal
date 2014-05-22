@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -89,8 +90,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				String title = rs.getString("title");
 				String extension = rs.getString("extension");
 				String version = rs.getString("version");
+				String periodAndExtension;
 
-				String periodAndExtension = StringPool.PERIOD.concat(extension);
+				if (Validator.isNull(extension)) {
+					periodAndExtension = StringPool.PERIOD.concat(StringPool.BLANK);
+				}
+				else {
+					periodAndExtension = StringPool.PERIOD.concat(extension);
+				}
 
 				if (!title.endsWith(periodAndExtension)) {
 					continue;

@@ -535,10 +535,14 @@
 	<command name="linkImage">
 		<execute action="CKEditor#click" locator-key1="CONTENT_IMAGE_LINK" />
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
+
 		<execute action="Home#selectWindow" locator1="Resources Browser" />
+
 		<execute action="CKEditor#sikuliClick" locator-key1="RESOURCES_BROWSER_LIFERAY_PNG" />
 		<execute action="CKEditor#sikuliClick" locator-key1="RESOURCES_BROWSER_DOCUMENTS_AND_MEDIA_DOCUMENT_PNG" />
+
 		<execute action="Home#selectWindow" locator1="null" />
+
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 	</command>
 

@@ -106,9 +106,7 @@ public class ResetDatabaseUtil {
 		_recording = true;
 	}
 
-	private static Table _buildTable(
-		Connection connection, String tableName) {
-
+	private static Table _buildTable(Connection connection, String tableName) {
 		try {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -198,10 +196,10 @@ public class ResetDatabaseUtil {
 
 		return null;
 	}
-	
+
+	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
 	private static ConcurrentMap<String, Table> _modifiedTables =
 		new ConcurrentHashMap<String, Table>();
-	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
 	private static volatile boolean _recording;
 
 }

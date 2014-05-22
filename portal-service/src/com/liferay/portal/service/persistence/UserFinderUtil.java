@@ -24,6 +24,13 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class UserFinderUtil {
+	public static int countBySocialUsers(long companyId, long userId, int type,
+		boolean equal, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countBySocialUsers(companyId, userId, type, equal, status);
+	}
+
 	public static int countByUser(long userId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -86,6 +93,15 @@ public class UserFinderUtil {
 	public static java.util.List<com.liferay.portal.model.User> findByNoGroups()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNoGroups();
+	}
+
+	public static java.util.List<com.liferay.portal.model.User> findBySocialUsers(
+		long companyId, long userId, int type, boolean equal, int status,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findBySocialUsers(companyId, userId, type, equal, status,
+			start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> findByC_FN_MN_LN_SN_EA_S(

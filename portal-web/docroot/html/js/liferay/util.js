@@ -391,17 +391,22 @@
 			return columnId;
 		},
 
-		getGeolocation: function(callback) {
-			if (callback && navigator.geolocation) {
+		getGeolocation: function(success, fallback, options) {
+			if (success && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
 					function(position) {
-						callback.call(
-							this,
+						success(
 							position.coords.latitude,
-							position.coords.longitude
+							position.coords.longitude,
+							position
 						);
-					}
+					},
+					fallback,
+					options
 				);
+			}
+			else if (fallback) {
+				fallback();
 			}
 		},
 

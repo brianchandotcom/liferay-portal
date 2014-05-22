@@ -136,3 +136,9 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 >
 	${theme.quick_acess(content_id)}
 </#macro>
+
+<#macro silently
+	foo
+>
+	<#assign foo = foo />
+</#macro>

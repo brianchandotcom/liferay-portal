@@ -431,6 +431,10 @@ public class UserFinderImpl
 		String[] emailAddresses = null;
 		boolean andOperator = false;
 
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
+
 		if (Validator.isNotNull(keywords)) {
 			WildcardMode wildcardMode = (WildcardMode)GetterUtil.getObject(
 				params.get("wildcardMode"), WildcardMode.SURROUND);

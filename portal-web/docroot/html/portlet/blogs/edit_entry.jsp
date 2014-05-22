@@ -534,7 +534,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						types.each(
 							function(item, index, collection) {
 								if (item.get('checked')) {
-									values.item(index).set('disabled', false);
+									values.item(index).attr('disabled', false);
 								}
 							}
 						);

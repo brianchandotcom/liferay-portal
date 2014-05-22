@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -37,7 +36,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -204,47 +202,6 @@ public class DDMTemplateStagedModelDataHandler
 		}
 	}
 
-	protected DDMTemplate addTemplate(
-			long userId, long groupId, DDMTemplate template, long classPK,
-			File smallFile, ServiceContext serviceContext)
-		throws Exception {
-
-		DDMTemplate newTemplate = null;
-
-		try {
-			return DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, template.getClassNameId(), classPK,
-				template.getTemplateKey(), template.getNameMap(),
-				template.getDescriptionMap(), template.getType(),
-				template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(),
-				template.isSmallImage(), template.getSmallImageURL(), smallFile,
-				serviceContext);
-		}
-		catch (TemplateDuplicateTemplateKeyException tdtke) {
-			newTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, template.getClassNameId(), classPK, null,
-				template.getNameMap(), template.getDescriptionMap(),
-				template.getType(), template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(),
-				template.isSmallImage(), template.getSmallImageURL(), smallFile,
-				serviceContext);
-
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("A template with the key ");
-				sb.append(template.getTemplateKey());
-				sb.append(" already exists. The new generated key is ");
-				sb.append(newTemplate.getTemplateKey());
-
-				_log.warn(sb.toString());
-			}
-		}
-
-		return newTemplate;
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, DDMTemplate template)
@@ -386,9 +343,15 @@ public class DDMTemplateStagedModelDataHandler
 				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
-					importedTemplate = addTemplate(
-						userId, portletDataContext.getScopeGroupId(), template,
-						classPK, smallFile, serviceContext);
+					importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
+						userId, portletDataContext.getScopeGroupId(),
+						template.getClassNameId(), classPK,
+						template.getTemplateKey(), template.getNameMap(),
+						template.getDescriptionMap(), template.getType(),
+						template.getMode(), template.getLanguage(),
+						template.getScript(), template.isCacheable(),
+						template.isSmallImage(), template.getSmallImageURL(),
+						smallFile, serviceContext);
 				}
 				else {
 					importedTemplate =
@@ -404,9 +367,14 @@ public class DDMTemplateStagedModelDataHandler
 				}
 			}
 			else {
-				importedTemplate = addTemplate(
-					userId, portletDataContext.getScopeGroupId(), template,
-					classPK, smallFile, serviceContext);
+				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
+					userId, portletDataContext.getScopeGroupId(),
+					template.getClassNameId(), classPK, null,
+					template.getNameMap(), template.getDescriptionMap(),
+					template.getType(), template.getMode(),
+					template.getLanguage(), template.getScript(),
+					template.isCacheable(), template.isSmallImage(),
+					template.getSmallImageURL(), smallFile, serviceContext);
 			}
 
 			portletDataContext.importClassedModel(template, importedTemplate);

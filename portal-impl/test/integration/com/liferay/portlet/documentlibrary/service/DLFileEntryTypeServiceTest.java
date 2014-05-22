@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -32,7 +31,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -60,7 +59,7 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		EnvironmentExecutionTestListener.class,
-		TransactionalCallbackAwareExecutionTestListener.class
+		ResetDatabaseExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryTypeServiceTest {
@@ -226,7 +225,6 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testLocalizedSiteAddFileEntryType() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -262,7 +260,6 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testLocalizedSiteUpdateFileEntryType() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

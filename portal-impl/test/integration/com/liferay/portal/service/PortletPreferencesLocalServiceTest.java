@@ -16,9 +16,12 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -29,7 +32,7 @@ import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -40,6 +43,7 @@ import com.liferay.portlet.StrictPortletPreferencesImpl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,11 +57,23 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		TransactionalCallbackAwareExecutionTestListener.class
+		ResetDatabaseExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class PortletPreferencesLocalServiceTest {
+
+	public static final TransactionAttribute REQUIRED_TRANSACTION_ATTRIBUTE;
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.propagation(Propagation.REQUIRED);
+		builder.rollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		REQUIRED_TRANSACTION_ATTRIBUTE = builder.build();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -962,16 +978,27 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetNotStrictPortletPreferences() throws Exception {
-		TestPortletPreferencesLocalServiceImpl
-			testPortletPreferencesLocalServiceImpl =
-				new TestPortletPreferencesLocalServiceImpl(false);
+	public void testGetNotStrictPortletPreferences() throws Throwable {
+		final PortletPreferencesLocalService portletPreferencesLocalService =
+			new TestPortletPreferencesLocalServiceImpl(false);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			testPortletPreferencesLocalServiceImpl.getStrictPreferences(
-				_layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				_portlet.getPortletId());
+			TransactionInvokerUtil.invoke(
+				REQUIRED_TRANSACTION_ATTRIBUTE,
+				new Callable<javax.portlet.PortletPreferences>() {
+
+					@Override
+					public javax.portlet.PortletPreferences call()
+						throws Exception {
+
+						return
+							portletPreferencesLocalService.getStrictPreferences(
+								_layout.getCompanyId(),
+								PortletKeys.PREFS_OWNER_ID_DEFAULT,
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								_layout.getPlid(), _portlet.getPortletId());
+					}
+				});
 
 		assertEmptyPortletPreferencesMap(jxPortletPreferences);
 	}
@@ -1240,58 +1267,89 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetStrictPreferences() throws Exception {
-		TestPortletPreferencesLocalServiceImpl
-			testPortletPreferencesLocalServiceImpl =
-				new TestPortletPreferencesLocalServiceImpl(true);
+	public void testGetStrictPreferences() throws Throwable {
+		final PortletPreferencesLocalService portletPreferencesLocalService =
+			new TestPortletPreferencesLocalServiceImpl(true);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			testPortletPreferencesLocalServiceImpl.getStrictPreferences(
-				_layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				_portlet.getPortletId());
+			TransactionInvokerUtil.invoke(
+				REQUIRED_TRANSACTION_ATTRIBUTE,
+				new Callable<javax.portlet.PortletPreferences>() {
+
+					@Override
+					public javax.portlet.PortletPreferences call()
+						throws Exception {
+
+						return
+							portletPreferencesLocalService.getStrictPreferences(
+								_layout.getCompanyId(),
+								PortletKeys.PREFS_OWNER_ID_DEFAULT,
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								_layout.getPlid(), _portlet.getPortletId());
+					}
+				});
 
 		assertStrictPortletPreferences(jxPortletPreferences);
 	}
 
 	@Test
 	public void testGetStrictPreferencesByPortletPreferencesIds()
-		throws Exception {
+		throws Throwable {
 
-		TestPortletPreferencesLocalServiceImpl
-			testPortletPreferencesLocalServiceImpl =
-				new TestPortletPreferencesLocalServiceImpl(true);
+		final PortletPreferencesLocalService portletPreferencesLocalService =
+			new TestPortletPreferencesLocalServiceImpl(true);
 
-		PortletPreferencesIds portletPreferencesIds =
+		final PortletPreferencesIds portletPreferencesIds =
 			new PortletPreferencesIds(
 				_layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId());
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			testPortletPreferencesLocalServiceImpl.getStrictPreferences(
-				portletPreferencesIds);
+			TransactionInvokerUtil.invoke(
+				REQUIRED_TRANSACTION_ATTRIBUTE,
+				new Callable<javax.portlet.PortletPreferences>() {
+
+					@Override
+					public javax.portlet.PortletPreferences call()
+						throws Exception {
+
+						return
+							portletPreferencesLocalService.getStrictPreferences(
+								portletPreferencesIds);
+					}
+				});
 
 		assertStrictPortletPreferences(jxPortletPreferences);
 	}
 
 	@Test
 	public void testGetStrictPreferencesWithDefaultXML()
-		throws Exception {
+		throws Throwable {
 
-		TestPortletPreferencesLocalServiceImpl
+		final TestPortletPreferencesLocalServiceImpl
 			testPortletPreferencesLocalServiceImpl =
 				new TestPortletPreferencesLocalServiceImpl(true);
 
-		String portletPreferencesXML =
+		final String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
-			testPortletPreferencesLocalServiceImpl.getStrictPreferences(
-				_layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				_portlet.getPortletId(), portletPreferencesXML);
+			TransactionInvokerUtil.invoke(
+				REQUIRED_TRANSACTION_ATTRIBUTE,
+				new Callable<javax.portlet.PortletPreferences>() {
+
+					@Override
+					public javax.portlet.PortletPreferences call()
+						throws Exception {
+
+						return testPortletPreferencesLocalServiceImpl.getStrictPreferences(
+							_layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+							_portlet.getPortletId(), portletPreferencesXML);
+					}
+				});
 
 		assertStrictPortletPreferences(jxPortletPreferences);
 	}

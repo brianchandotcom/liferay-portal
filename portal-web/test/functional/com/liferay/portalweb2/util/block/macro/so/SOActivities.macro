@@ -1,4 +1,44 @@
 <definition>
+	<command name="addActivityEntryComment">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="row" value="${row}" />
+			</then>
+			<else>
+				<var name="row" value="01" />
+			</else>
+		</if>
+
+		<var name="key_row" value="${row}" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#click" locator-key1="ACTIVITIES_COMMENT_FIELD" />
+		<execute action="SOActivities#type" locator-key1="ACTIVITIES_COMMENT_INPUT_FIELD" value1="${commentContent}" />
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\13" />
+
+		<var name="key_commentContent" value="${commentContent}" />
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${commentContent}" />
+	</command>
+
 	<command name="addSiteContent">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar" />
@@ -112,6 +152,244 @@
 		</execute>
 	</command>
 
+	<command name="deleteActivityEntryComment">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="row" value="${row}" />
+			</then>
+			<else>
+				<var name="row" value="01" />
+			</else>
+		</if>
+
+		<var name="key_commentContent" value="${commentContent}" />
+		<var name="key_row" value="${row}" />
+		<var name="key_userFirstName" value="${userFirstName}" />
+		<var name="key_userName" value="${userName}" />
+
+		<if>
+			<equals arg1="${commentCount}" arg2="1" />
+			<then>
+				<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT_DELETE" value1="Delete" />
+		<execute action="SOActivities#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${commentContent}" />
+	</command>
+
+	<command name="deleteSiteContent">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deletePG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#deletePG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#deletePG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#deletePG">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#deleteBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+		</execute>
+	</command>
+
+	<command name="editActivityEntryComment">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="row" value="${row}" />
+			</then>
+			<else>
+				<var name="row" value="01" />
+			</else>
+		</if>
+
+		<var name="key_commentContent" value="${commentContent}" />
+		<var name="key_row" value="${row}" />
+		<var name="key_userFirstName" value="${userFirstName}" />
+		<var name="key_userName" value="${userName}" />
+
+		<if>
+			<equals arg1="${commentCount}" arg2="1" />
+			<then>
+				<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT_EDIT" value1="Edit" />
+		<execute action="SOActivities#pause" value1="1000" />
+		<execute action="SOActivities#click" locator-key1="ACTIVITIES_COMMENT_FIELD" />
+		<execute action="SOActivities#type" locator-key1="ACTIVITIES_COMMENT_INPUT_FIELD" value1="${commentContentEdit}" />
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_COMMENT_FIELD" value1="\13" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${commentContentEdit}" />
+	</command>
+
+	<command name="editSiteContent">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="endDateTimeEdit" value="11:59 PM" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="startDateTimeEdit" value="11:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#editPG">
+			<var name="dmFolderDescriptionEdit" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderNameEdit" value="${dmFolderNameEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderNameEdit}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
+			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#editPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryNameEdit" value="${categoryNameEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryNameEdit}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#editPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#editFrontPagePG">
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#editBookmarksEntry">
+			<var name="bookmarksEntryDescriptionEdit" value="${bookmarksEntryDescriptionEdit}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryNameEdit" value="${bookmarksEntryNameEdit}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+	</command>
+
 	<command name="viewActivityEntryComment">
 		<if>
 			<isset var="row" />
@@ -123,6 +401,7 @@
 			</else>
 		</if>
 
+		<var name="key_commentContent" value="${commentContent}" />
 		<var name="key_row" value="${row}" />
 		<var name="key_userFirstName" value="${userFirstName}" />
 		<var name="key_userName" value="${userName}" />
@@ -356,7 +635,7 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_VERSION" value1="Version ${dmDocumentVersionNumber}" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION_SINGLE" value1="${dmDocumentDescription}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOWNLOAD" value1="Download" />
 
 		<if>
@@ -561,6 +840,7 @@
 
 		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
+		<var name="key_commentContent" value="${microblogsEntryCommentContent}" />
 		<var name="key_userName" value="${microblogsEntryCommentAuthorName}" />
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
@@ -859,19 +1139,21 @@
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${documentsAction}" />
 
-		<var name="stopAtNumber" value="${number?increment()}" />
+		<var name="key_documentTitleRow" value="1" />
 
-		<while>
-			<not>
-				<equals arg1="${documentTitleRow}" arg2="${stopAtNumber}" />
-			</not>
-			<then>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}${documentTitleRow}" />
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION" value1="${dmDocumentDescription}${documentTitleRow}" />
+		<for list="${dmDocumentTitleList}" param="dmDocumentTitle">
+			<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_TITLE_MULTIPLE" value1="${dmDocumentTitle}" />
 
-				<var name="documentTitleRow" value="${documentTitleRow?increment()}" />
-			</then>
-		</while>
+			<var name="key_documentTitleRow" value="${key_documentTitleRow?increment()}" />
+		</for>
+
+		<var name="key_documentTitleRow" value="1" />
+
+		<for list="${dmDocumentDescriptionList}" param="dmDocumentDescription">
+			<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION_MULTIPLE" value1="${dmDocumentDescription}" />
+
+			<var name="key_documentTitleRow" value="${key_documentTitleRow?increment()}" />
+		</for>
 
 		<if>
 			<isset var="commentCount" />
@@ -925,6 +1207,57 @@
 		</execute>
 	</command>
 
+	<command name="viewSiteContentEdited">
+		<execute macro="SOActivities#viewBookmarksActivityEntry">
+			<var name="action" value="${bookmarkEditAction}" />
+		</execute>
+
+		<execute macro="SOActivities#viewWikiActivityEntry">
+			<var name="action" value="${wikiAction}" />
+			<var name="row" value="02" />
+		</execute>
+
+		<execute macro="SOActivities#viewBlogsActivityEntry">
+			<var name="action" value="${blogsEditAction}" />
+			<var name="row" value="03" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="${documentsEditAction}" />
+			<var name="row" value="04" />
+		</execute>
+
+		<execute macro="SOActivities#viewCalendarActivityEntry">
+			<var name="action" value="${calendarEditAction}" />
+			<var name="row" value="05" />
+		</execute>
+
+		<execute macro="SOActivities#viewBookmarksActivityEntry">
+			<var name="action" value="${bookmarkAction}" />
+			<var name="row" value="06" />
+		</execute>
+
+		<execute macro="SOActivities#viewBlogsActivityEntry">
+			<var name="action" value="${blogsAction}" />
+			<var name="row" value="07" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="${forumsAction}" />
+			<var name="row" value="08" />
+		</execute>
+
+		<execute macro="SOActivities#viewDocumentsActivityEntry">
+			<var name="action" value="${documentsAction}" />
+			<var name="row" value="09" />
+		</execute>
+
+		<execute macro="SOActivities#viewCalendarActivityEntry">
+			<var name="action" value="${calendarAction}" />
+			<var name="row" value="10" />
+		</execute>
+	</command>
+
 	<command name="viewWikiActivityEntry">
 		<if>
 			<isset var="row" />
@@ -958,7 +1291,15 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${wikiPageTitle}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="${wikiPageContent}" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_CHANGES" value1="View Changes" />
+
+		<if>
+			<not>
+				<contains string="${action}" substring="Commented" />
+			</not>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_CHANGES" value1="View Changes" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="commentCount" />

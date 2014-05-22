@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.LiferayFileItemException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -125,7 +126,10 @@ public class EditArticleAction extends PortletAction {
 						WebKeys.UPLOAD_EXCEPTION);
 
 				if (uploadException != null) {
-					if (uploadException.isExceededSizeLimit()) {
+					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+						throw new LiferayFileItemException();
+					}
+					else if (uploadException.isExceededSizeLimit()) {
 						throw new ArticleContentSizeException();
 					}
 
@@ -285,6 +289,7 @@ public class EditArticleAction extends PortletAction {
 					 e instanceof ArticleTypeException ||
 					 e instanceof ArticleVersionException ||
 					 e instanceof DuplicateArticleIdException ||
+					 e instanceof LiferayFileItemException ||
 					 e instanceof StorageFieldRequiredException) {
 
 				SessionErrors.add(actionRequest, e.getClass());

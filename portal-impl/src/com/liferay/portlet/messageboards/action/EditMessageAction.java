@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.LiferayFileItemException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -103,7 +104,10 @@ public class EditMessageAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException();
+				}
+				else if (uploadException.isExceededSizeLimit()) {
 					throw new FileSizeException(uploadException.getCause());
 				}
 
@@ -165,6 +169,7 @@ public class EditMessageAction extends PortletAction {
 					 e instanceof FileExtensionException ||
 					 e instanceof FileNameException ||
 					 e instanceof FileSizeException ||
+					 e instanceof LiferayFileItemException ||
 					 e instanceof LockedThreadException ||
 					 e instanceof MessageBodyException ||
 					 e instanceof MessageSubjectException ||

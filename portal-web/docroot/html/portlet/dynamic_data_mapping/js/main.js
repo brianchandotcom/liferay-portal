@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
-		var FormBuilderField = A.FormBuilderField;
 
 		var BODY = A.getBody();
 
@@ -22,34 +21,31 @@ AUI.add(
 
 		var STR_BLANK = '';
 
-		var MAP_ELEMENT_DATA = {
-			attributeList: STR_BLANK,
-			nodeName: STR_BLANK
-		};
-
-		var STR_CDATA_CLOSE = ']]>';
-
-		var STR_CDATA_OPEN = '<![CDATA[';
-
 		var STR_SPACE = ' ';
-
-		var TPL_ELEMENT = '<{nodeName}{attributeList}></{nodeName}>';
 
 		var UNLOCALIZABLE_FIELD_ATTRS = ['indexType', 'name', 'required', 'repeatable', 'showLabel'];
 
-		var XML_ATTRIBUTES_FIELD_ATTRS = {
+		var LAYOUT_FIELD_ATTRS = {
+			label: 1,
+			predefinedValue: 1,
+			style: 1,
+			tip: 1,
+			type: 1,
+			visibility: 1,
+			width: 1
+		};
+
+		var STRUCTURE_FIELD_ATTRS = {
+			calculatedValueExpression: 1,
 			dataType: 1,
 			indexType: 1,
 			localizable: 1,
 			multiple: 1,
 			name: 1,
-			options: 1,
-			readOnly: 1,
+			nestedFields: 1,
 			repeatable: 1,
 			required: 1,
-			showLabel: 1,
-			type: 1,
-			width: 1
+			validation: 1
 		};
 
 		var LiferayAvailableField = A.Component.create(
@@ -206,38 +202,6 @@ AUI.add(
 						return window[instance.get('portletNamespace') + 'getContentDefinition']();
 					},
 
-					getDefinition: function() {
-						var instance = this;
-
-						var buffer = [];
-
-						var translationManager = instance.translationManager;
-
-						var editingLocale = translationManager.get('editingLocale');
-
-						instance._updateFieldsLocalizationMap(editingLocale);
-
-						var root = instance._createDynamicNode(
-							'root',
-							{
-								'available-locales': translationManager.get('availableLocales').join(),
-								'default-locale': translationManager.get('defaultLocale')
-							}
-						);
-
-						buffer.push(root.openTag);
-
-						instance.get('fields').each(
-							function(item, index) {
-								instance._appendStructureTypeElementAndMetaData(item, buffer);
-							}
-						);
-
-						buffer.push(root.closeTag);
-
-						return buffer.join(STR_BLANK);
-					},
-
 					getFieldLocalizedValue: function(field, attribute, locale) {
 						var instance = this;
 
@@ -246,6 +210,66 @@ AUI.add(
 						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
 
 						return instance.normalizeValue(value);
+					},
+
+					getDefinition: function() {
+						var instance = this;
+
+						var fields = {};
+
+						var fieldNames = [];
+
+						var layoutFields = {};
+
+						var structureFields = {};
+
+						var translationManager = instance.translationManager;
+
+						var editingLocale = translationManager.get('editingLocale');
+
+						instance._updateFieldsLocalizationMap(editingLocale);
+
+						layoutFields.availableLanguages = translationManager.get('availableLocales');
+						layoutFields.defaultLanguage = translationManager.get('defaultLocale');
+						layoutFields.fieldsLayout = {};
+
+						instance.get('fields').each(
+							function(field) {
+								var name = field.get('name');
+
+								fieldNames.push(name);
+
+								instance._addFieldProperties(field, layoutFields, structureFields);
+							}
+						);
+
+						layoutFields.pages = [
+							{
+								sections: [
+									{
+										fields: fieldNames
+									}
+								]
+							}
+						];
+
+						fields.layout = layoutFields;
+						fields.structure = structureFields;
+
+						return fields;
+					},
+
+					normalizeKey: function(str) {
+						A.each(
+							str,
+							function(item, index) {
+								if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+									str = str.replace(item, STR_SPACE);
+								}
+							}
+						);
+
+						return str.replace(/\s/g, '_');
 					},
 
 					normalizeValue: function(value) {
@@ -258,6 +282,107 @@ AUI.add(
 						return value;
 					},
 
+					_addFieldOptions: function(field, layoutFields) {
+						var instance = this;
+
+						var fieldName = field.get('name');
+
+						var options = field.get('options');
+
+						var fieldOptions = [];
+
+						if (options) {
+							AArray.each(
+								options,
+								function(option) {
+									var fieldOption = {};
+
+									var localizationMap = option.localizationMap;
+
+									fieldOption.value = option.value;
+									fieldOption.labels = {};
+
+									A.each(
+										localizationMap,
+										function(item, index, collection) {
+											fieldOption.labels[index] = instance.normalizeValue(item.label);
+										}
+									);
+
+									fieldOptions.push(fieldOption);
+								}
+							);
+
+							layoutFields.fieldsLayout[fieldName].options = fieldOptions;
+						}
+					},
+
+					_addFieldProperties: function(field, layoutFields, structureFields) {
+						var instance = this;
+
+						var name = field.get('name');
+
+						var nestedFieldNames = [];
+
+						layoutFields.fieldsLayout[name] = {};
+						structureFields[name] = {};
+
+						// Adding nested fields.
+						field.get('fields').each(
+							function(childField) {
+								nestedFieldNames.push(childField.get('name'));
+
+								instance._addFieldProperties(childField, layoutFields, structureFields);
+							}
+						);
+
+						if (nestedFieldNames.length > 0) {
+							structureFields[name].nestedFields = nestedFieldNames;
+						}
+
+						instance._addFieldOptions(field, layoutFields);
+
+						layoutFields.fieldsLayout[name]['visibility'] = '<Visibility-expression-here>';
+						layoutFields.fieldsLayout[name]['validation'] = '<Validation-expression-here>';
+						layoutFields.fieldsLayout[name]['style'] = '<Bootstrap-css-class-here>';
+						structureFields[name]['dataType'] =  field.get('dataType');
+						structureFields[name]['fieldNamespace'] = field.get('fieldNamespace');
+						structureFields[name]['multiple'] = field.get('multiple');
+						structureFields[name]['readOnly'] = field.get('readOnly');
+
+						AArray.each(
+							field.getProperties(),
+							function(item) {
+								var attributeName = item.attributeName;
+
+								if (LAYOUT_FIELD_ATTRS[attributeName]) {
+									layoutFields.fieldsLayout[name][attributeName] = {};
+
+									if (LOCALIZABLE_FIELD_ATTRS.indexOf(attributeName) > -1) {
+										AArray.each(
+											layoutFields.availableLanguages,
+											function(item2) {
+												var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item2);
+
+												if ((attributeName === 'predefinedValue') && instanceOf(field, A.FormBuilderMultipleChoiceField)) {
+													attributeValue = A.JSON.stringify(AArray(attributeValue));
+												}
+
+												layoutFields.fieldsLayout[name][attributeName][item2] = attributeValue;
+											}
+										)
+									}
+									else {
+										layoutFields.fieldsLayout[name][attributeName] = field.get(attributeName);
+									}
+								}
+								else if (STRUCTURE_FIELD_ATTRS[attributeName]) {
+									structureFields[name][attributeName] = field.get(attributeName);
+								}
+							}
+						);
+					},
+
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
@@ -268,198 +393,6 @@ AUI.add(
 						instance._syncFieldsLocaleUI(event.newVal);
 
 						instance._toggleInputDirection(event.newVal);
-					},
-
-					_appendStructureChildren: function(field, buffer) {
-						var instance = this;
-
-						field.get('fields').each(
-							function(item, index) {
-								instance._appendStructureTypeElementAndMetaData(item, buffer);
-							}
-						);
-					},
-
-					_appendStructureFieldOptionsBuffer: function(field, buffer) {
-						var instance = this;
-
-						var options = field.get('options');
-
-						if (options) {
-							AArray.each(
-								options,
-								function(item, index) {
-									var name = item.name;
-
-									if (!name) {
-										name = A.FormBuilderField.buildFieldName('option');
-									}
-
-									var typeElementOption = instance._createDynamicNode(
-										'dynamic-element',
-										{
-											name: name,
-											type: 'option',
-											value: Liferay.Util.escapeHTML(item.value)
-										}
-									);
-
-									buffer.push(typeElementOption.openTag);
-
-									instance._appendStructureOptionMetaData(item, buffer);
-
-									buffer.push(typeElementOption.closeTag);
-								}
-							);
-						}
-					},
-
-					_appendStructureOptionMetaData: function(option, buffer) {
-						var instance = this;
-
-						var localizationMap = option.localizationMap;
-
-						var labelTag = instance._createDynamicNode(
-							'entry',
-							{
-								name: 'label'
-							}
-						);
-
-						A.each(
-							localizationMap,
-							function(item, index) {
-								if (isObject(item)) {
-									var metadataTag = instance._createDynamicNode(
-										'meta-data',
-										{
-											locale: index
-										}
-									);
-
-									var labelVal = instance.normalizeValue(item.label);
-
-									buffer.push(
-										metadataTag.openTag,
-										labelTag.openTag,
-										STR_CDATA_OPEN + labelVal + STR_CDATA_CLOSE,
-										labelTag.closeTag,
-										metadataTag.closeTag
-									);
-								}
-							}
-						);
-					},
-
-					_appendStructureTypeElementAndMetaData: function(field, buffer) {
-						var instance = this;
-
-						var typeElement = instance._createDynamicNode(
-							'dynamic-element',
-							{
-								dataType: field.get('dataType'),
-								fieldNamespace: field.get('fieldNamespace'),
-								indexType: field.get('indexType'),
-								localizable: field.get('localizable'),
-								multiple: field.get('multiple'),
-								name: field.get('name'),
-								readOnly: field.get('readOnly'),
-								repeatable: field.get('repeatable'),
-								required: field.get('required'),
-								showLabel: field.get('showLabel'),
-								type: field.get('type'),
-								width: field.get('width')
-							}
-						);
-
-						buffer.push(typeElement.openTag);
-
-						instance._appendStructureFieldOptionsBuffer(field, buffer);
-
-						instance._appendStructureChildren(field, buffer);
-
-						var availableLocales = instance.translationManager.get('availableLocales');
-
-						AArray.each(
-							availableLocales,
-							function(item1, index1) {
-								var metadata = instance._createDynamicNode(
-									'meta-data',
-									{
-										locale: item1
-									}
-								);
-
-								buffer.push(metadata.openTag);
-
-								AArray.each(
-									field.getProperties(),
-									function(item2, index2) {
-										var attributeName = item2.attributeName;
-
-										if (!XML_ATTRIBUTES_FIELD_ATTRS[attributeName]) {
-											var attributeTag = instance._createDynamicNode(
-												'entry',
-												{
-													name: attributeName
-												}
-											);
-
-											var attributeValue = instance.getFieldLocalizedValue(field, attributeName, item1);
-
-											if ((attributeName === 'predefinedValue') && instanceOf(field, A.FormBuilderMultipleChoiceField)) {
-												attributeValue = A.JSON.stringify(AArray(attributeValue));
-											}
-
-											buffer.push(
-												attributeTag.openTag,
-												STR_CDATA_OPEN + attributeValue + STR_CDATA_CLOSE,
-												attributeTag.closeTag
-											);
-										}
-									}
-								);
-
-								buffer.push(metadata.closeTag);
-							}
-						);
-
-						buffer.push(typeElement.closeTag);
-					},
-
-					_createDynamicNode: function(nodeName, attributeMap) {
-						var instance = this;
-
-						var attrs = [];
-						var typeElement = [];
-
-						if (!nodeName) {
-							nodeName = 'dynamic-element';
-						}
-
-						MAP_ELEMENT_DATA.attributeList = STR_BLANK;
-						MAP_ELEMENT_DATA.nodeName = nodeName;
-
-						if (attributeMap) {
-							A.each(
-								attributeMap,
-								function(item, index) {
-									if (item !== undefined) {
-										attrs.push([index, '="', item, '" '].join(STR_BLANK));
-									}
-								}
-							);
-
-							MAP_ELEMENT_DATA.attributeList = STR_SPACE + attrs.join(STR_BLANK);
-						}
-
-						typeElement = Lang.sub(TPL_ELEMENT, MAP_ELEMENT_DATA);
-						typeElement = typeElement.replace(/\s?(>)(<)/, '$1$1$2$2').split(/></);
-
-						return {
-							closeTag: typeElement[1],
-							openTag: typeElement[0]
-						};
 					},
 
 					_getReadOnlyFieldAttributes: function(field) {
@@ -701,19 +634,6 @@ AUI.add(
 							}
 						);
 					}
-				},
-
-				normalizeKey: function(str) {
-					A.each(
-						str,
-						function(item, index) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
-								str = str.replace(item, STR_SPACE);
-							}
-						}
-					);
-
-					return str.replace(/\s/g, '_');
 				}
 			}
 		);

@@ -160,6 +160,11 @@
 	<td>//div[@class='control-group' and label[contains(.,'Tags')]]//span[@class='textboxlistentry-remove']/i</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_SELECT</td>

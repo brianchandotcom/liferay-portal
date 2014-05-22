@@ -45,9 +45,9 @@
 		<if>
 			<isset var="vocabularyName" />
 			<then>
-				<var name="key_vocabularyName" value="${vocabularyName}" />
-
 				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+
+				<var name="key_vocabularyName" value="${vocabularyName}" />
 
 				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
 

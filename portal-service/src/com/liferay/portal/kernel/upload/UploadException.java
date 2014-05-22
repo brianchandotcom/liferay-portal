@@ -37,14 +37,25 @@ public class UploadException extends PortalException {
 		super(cause);
 	}
 
+	public boolean isExceededLiferayFileItemSizeLimit() {
+		return _exceededLiferayFileItemSizeLimit;
+	}
+
 	public boolean isExceededSizeLimit() {
 		return _exceededSizeLimit;
+	}
+
+	public void setExceededLiferayFileItemSizeLimit(
+		boolean exceededLiferayFileItemSizeLimit) {
+
+		_exceededLiferayFileItemSizeLimit = exceededLiferayFileItemSizeLimit;
 	}
 
 	public void setExceededSizeLimit(boolean exceededSizeLimit) {
 		_exceededSizeLimit = exceededSizeLimit;
 	}
 
+	private boolean _exceededLiferayFileItemSizeLimit;
 	private boolean _exceededSizeLimit;
 
 }

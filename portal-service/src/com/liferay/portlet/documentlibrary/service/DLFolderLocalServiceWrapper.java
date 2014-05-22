@@ -704,6 +704,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long parentFolderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.getFolderIds(groupId, parentFolderId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {

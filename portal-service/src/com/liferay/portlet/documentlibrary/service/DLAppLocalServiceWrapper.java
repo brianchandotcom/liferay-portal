@@ -286,6 +286,13 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		_dlAppLocalService.deleteAll(repositoryId);
 	}
 
+	@Override
+	public void deleteAllRepositories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppLocalService.deleteAllRepositories(groupId);
+	}
+
 	/**
 	* Deletes the file entry.
 	*

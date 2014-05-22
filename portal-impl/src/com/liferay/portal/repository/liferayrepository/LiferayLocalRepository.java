@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -52,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -259,6 +261,18 @@ public class LiferayLocalRepository
 			getGroupId(), toFolderId(parentFolderId), title);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
+	public List<FileEntry> getRepositoryFileEntries(
+			long rootFolderId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		List<DLFileEntry> dlFileEntries =
+			dlFileEntryLocalService.getGroupFileEntries(
+				getGroupId(), 0, rootFolderId, start, end, obc);
+
+		return toFileEntries(dlFileEntries);
 	}
 
 	@Override

@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * @author Mika Koivisto
@@ -149,6 +152,15 @@ public class LocalRepositoryProxyBean
 		throws PortalException, SystemException {
 
 		return _localRepository.getFolder(parentFolderId, title);
+	}
+
+	@Override
+	public List<FileEntry> getRepositoryFileEntries(
+			long rootFolderId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return _localRepository.getRepositoryFileEntries(
+			rootFolderId, start, end, obc);
 	}
 
 	@Override

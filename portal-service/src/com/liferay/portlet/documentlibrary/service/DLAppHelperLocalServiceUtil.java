@@ -111,6 +111,12 @@ public class DLAppHelperLocalServiceUtil {
 		getService().deleteFolder(folder);
 	}
 
+	public static void deleteRepositoryFileEntries(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRepositoryFileEntries(repositoryId);
+	}
+
 	public static void getFileAsStream(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		boolean incrementCounter)

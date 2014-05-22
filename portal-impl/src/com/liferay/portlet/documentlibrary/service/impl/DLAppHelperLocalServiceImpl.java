@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -350,6 +352,22 @@ public class DLAppHelperLocalServiceImpl
 				trashVersionLocalService.deleteTrashVersion(
 					DLFolderConstants.getClassName(), dlFolder.getFolderId());
 			}
+		}
+	}
+
+	@Override
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository =
+			repositoryLocalService.getLocalRepositoryImpl(repositoryId);
+
+		List<FileEntry> fileEntries = localRepository.getRepositoryFileEntries(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			deleteFileEntry(fileEntry);
 		}
 	}
 

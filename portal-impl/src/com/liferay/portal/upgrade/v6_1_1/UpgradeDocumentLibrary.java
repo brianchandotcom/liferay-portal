@@ -93,7 +93,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				String periodAndExtension;
 
 				if (Validator.isNull(extension)) {
-					periodAndExtension = StringPool.PERIOD.concat(StringPool.BLANK);
+					periodAndExtension = StringPool.PERIOD.concat(
+						StringPool.BLANK);
 				}
 				else {
 					periodAndExtension = StringPool.PERIOD.concat(extension);

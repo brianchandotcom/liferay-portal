@@ -109,21 +109,21 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						<c:choose>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT %>">
 								<liferay-ui:icon
-									image="clip"
+									iconCssClass="icon-paperclip"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-added-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH %>">
 								<liferay-ui:icon
-									image="delete_attachment"
+									iconCssClass="icon-remove"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-removed-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH %>">
 								<liferay-ui:icon
-									image="undo"
+									iconCssClass="icon-undo"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-restored-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
@@ -167,7 +167,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						<c:choose>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_TO_TRASH %>">
 								<liferay-ui:icon
-									image="trash"
+									iconCssClass="icon-trash"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), socialActivityWikiPage.getTitle()}, false) %>'
 								/>
@@ -178,7 +178,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
-									image="undo"
+									iconCssClass="icon-undo"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-restore-from-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
@@ -189,7 +189,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
-									image="add_article"
+									iconCssClass="icon-plus"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-added-the-page-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
@@ -206,7 +206,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
-									image="edit"
+									iconCssClass="icon-edit"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>

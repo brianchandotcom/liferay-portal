@@ -129,8 +129,9 @@ if (wikiPage != null) {
 	<c:when test="<%= print %>">
 		<div class="popup-print">
 			<liferay-ui:icon
-				image="print"
+				iconCssClass="icon-print"
 				label="<%= true %>"
+				message="print"
 				url="javascript:print();"
 			/>
 		</div>
@@ -193,8 +194,9 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 					<c:if test="<%= followRedirect || (redirectPage == null) %>">
 						<liferay-ui:icon
-							image="edit"
+							iconCssClass="icon-edit"
 							label="<%= true %>"
+							message="edit"
 							url="<%= editPageURL.toString() %>"
 						/>
 					</c:if>
@@ -208,7 +210,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				%>
 
 				<liferay-ui:icon
-					image="history"
+					iconCssClass="icon-file-alt"
 					label="<%= true %>"
 					message="details"
 					method="get"
@@ -216,8 +218,9 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				/>
 
 				<liferay-ui:icon
-					image="print"
+					iconCssClass="icon-print"
 					label="<%= true %>"
+					message="print"
 					url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
 				/>
 			</div>
@@ -311,7 +314,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				<div class="article-actions">
 					<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 						<liferay-ui:icon
-							image="add_article"
+							iconCssClass="icon-plus"
 							label="<%= true %>"
 							message="add-child-page"
 							method="get"
@@ -320,7 +323,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 					</c:if>
 
 					<liferay-ui:icon
-						image="clip"
+						iconCssClass="icon-paperclip"
 						label="<%= true %>"
 						message='<%= attachmentsFileEntriesCount + " " + LanguageUtil.get(pageContext, (attachmentsFileEntriesCount == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
 					/>

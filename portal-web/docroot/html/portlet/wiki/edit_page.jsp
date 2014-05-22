@@ -174,7 +174,7 @@ if (Validator.isNull(redirect)) {
 	<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
 	<c:if test="<%= (wikiPage != null) && (!wikiPage.isNew()) %>">
-		<aui:workflow-status status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 	</c:if>
 
 	<c:if test="<%= !editTitle %>">

@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WikiPage wikiPage = (WikiPage)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/wiki/edit_page" />
@@ -31,7 +31,8 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -46,7 +47,8 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -65,7 +67,8 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="copy"
+			iconCssClass="icon-copy"
+			message="copy"
 			url="<%= copyPageURL.toString() %>"
 		/>
 
@@ -77,7 +80,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="forward"
+			iconCssClass="icon-move"
 			message="move"
 			url="<%= movePageURL.toString() %>"
 		/>
@@ -95,7 +98,8 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="unsubscribe"
+					iconCssClass="icon-remove-sign"
+					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
 			</c:when>
@@ -109,7 +113,8 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>
@@ -141,6 +146,6 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 			<portlet:param name="version" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon image="delete" message="discard-draft" url="<%= deleteURL %>" />
+		<liferay-ui:icon iconCssClass="icon-remove" message="discard-draft" url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

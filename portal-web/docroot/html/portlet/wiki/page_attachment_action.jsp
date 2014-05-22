@@ -26,7 +26,7 @@ FileEntry attachmentsFileEntry = (FileEntry)row.getObject();
 WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFileEntryId());
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
 			<c:if test="<%= WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
@@ -47,7 +47,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				%>
 
 				<liferay-ui:icon
-					image="undo"
+					iconCssClass="icon-undo"
 					message="restore"
 					onClick="<%= taglibOnClick %>"
 					url="javascript:;"

@@ -191,8 +191,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									image="unsubscribe"
+									iconCssClass="icon-remove-sign"
 									label="<%= true %>"
+									message="unsubscribe"
 									url="<%= unsubscribeURL %>"
 								/>
 							</td>
@@ -211,8 +212,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									image="subscribe"
+									iconCssClass="icon-ok-sign"
 									label="<%= true %>"
+									message="subscribe"
 									url="<%= subscribeURL %>"
 								/>
 							</td>
@@ -237,8 +239,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									image="unsubscribe"
+									iconCssClass="icon-remove-sign"
 									label="<%= true %>"
+									message="unsubscribe"
 									url="<%= unsubscribeURL %>"
 								/>
 							</td>
@@ -256,8 +259,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									image="subscribe"
+									iconCssClass="icon-ok-sign"
 									label="<%= true %>"
+									message="subscribe"
 									url="<%= subscribeURL %>"
 								/>
 							</td>
@@ -288,8 +292,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 					/>
 
 					<liferay-ui:icon
-						image="permissions"
+						iconCssClass="icon-lock"
 						label="<%= true %>"
+						message="permissions"
 						method="get"
 						url="<%= permissionsURL %>"
 						useDialog="<%= true %>"
@@ -311,8 +316,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 					%>
 
 					<liferay-ui:icon
-						image="copy"
+						iconCssClass="icon-copy"
 						label="<%= true %>"
+						message="copy"
 						url="<%= copyPageURL.toString() %>"
 					/>
 				</c:if>
@@ -327,7 +333,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 					%>
 
 					<liferay-ui:icon
-						image="forward"
+						iconCssClass="icon-move"
 						label="<%= true %>"
 						message="move"
 						url="<%= movePageURL.toString() %>"

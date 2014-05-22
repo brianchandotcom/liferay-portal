@@ -174,14 +174,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		return node.loadingmask;
 	};
 
-	var getXMLFormatter = function() {
-		if (!xmlFormatter) {
-			xmlFormatter = new Liferay.XMLFormatter();
-		}
-
-		return xmlFormatter;
-	};
-
 	var isViewTabActive = function() {
 		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('hide');
 	};
@@ -235,9 +227,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 		var content = formBuilder.getDefinition();
 
-		content = getXMLFormatter().format(content);
-
-		getFormEditor().set(STR_VALUE, content);
+		getFormEditor().set(STR_VALUE, A.JSON.stringify(content, null, 4));
 	};
 
 	var switchToView = function() {

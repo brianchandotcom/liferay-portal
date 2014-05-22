@@ -750,8 +750,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 				// Move file entries within repository
 
-				return fromLocalRepository.moveFileEntry(
+				FileEntry fileEntry = fromLocalRepository.moveFileEntry(
 					userId, fileEntryId, newFolderId, serviceContext);
+
+				dlAppHelperLocalService.moveFileEntry(fileEntry);
+
+				return fileEntry;
 			}
 
 			// Move file entries between repositories

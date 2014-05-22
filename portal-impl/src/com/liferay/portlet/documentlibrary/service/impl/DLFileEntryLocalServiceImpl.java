@@ -1447,9 +1447,6 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry dlFileEntry = moveFileEntryImpl(
 				userId, fileEntryId, newFolderId, serviceContext);
 
-			dlAppHelperLocalService.moveFileEntry(
-				new LiferayFileEntry(dlFileEntry));
-
 			return dlFileEntryTypeLocalService.updateFileEntryFileEntryType(
 				dlFileEntry, serviceContext);
 		}

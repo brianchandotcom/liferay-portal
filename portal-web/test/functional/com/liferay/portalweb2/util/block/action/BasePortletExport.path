@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//label[contains(.,'Permissions')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -125,6 +120,188 @@
 <tr>
 	<td>CURRENT_AND_PREVIOUS_CLEAR</td>
 	<td>//tr[contains(.,'${key_larFileName}')]/td[6]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGES-->
+<tr>
+	<td>PAGES_CHANGE_LINK</td>
+	<td>//div/a[@id='_156_pagesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
+	<td>//div[contains(.,'Public Pages')]//i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SPECIFIC_PAGE_NAME</td>
+	<td>//li/div[contains(.,'${key_pageName}')]/i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SELECT_PAGES_BUTTON</td>
+	<td>//button[contains(.,'Select Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
+	<td>//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
+	<td>//input[@id='_156_LAYOUT_SET_SETTINGSCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
+	<td>//input[@id='_156_THEME_REFERENCECheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_LOGO_CHECKBOX</td>
+	<td>//input[@id='_156_LOGOCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_OK_BUTTON</td>
+	<td>//button[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--APPLICATION_CONFIGURATION-->
+<tr>
+	<td>APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO</td>
+	<td>//input[@id='_156_allApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO</td>
+	<td>//input[@id='_156_chooseApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX</td>
+	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_ALL_CONTENT_RADIO</td>
+	<td>//input[@id='_156_allContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
+	<td>//input[@id='_156_chooseContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_GENERAL_CHECKBOX</td>
+	<td>//ul[@class='portlet-list']/li//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
+	<td>//label[contains(.,'1 Deletions')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
+	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_CHECKBOX</td>
+	<td>//a[@data-portlettitle='${key_contentName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX</td>
+	<td>//input[@data-name='${key_dataName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON</td>
+	<td>//button[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CHOOSE_CONTENT_DATE_RANGE-->
+<tr>
+	<td>CHOOSE_CONTENT_DATE_RANGE_STATUS</td>
+	<td>//span[@id='_156_selectedRange']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK</td>
+	<td>//a[@id='_156_rangeLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATE_RANGE_POPUP-->
+<tr>
+	<td>DATE_RANGE_POPUP_RANGE_RADIO</td>
+	<td>//input[@id='_156_range${key_contentDateRange}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_RANGE_POPUP_OK_BUTTON</td>
+	<td>//button[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATE_RANGE-->
+<tr>
+	<td>DATE_RANGE_START_DATE</td>
+	<td>//input[@name='_156_startDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_RANGE_END_DATE</td>
+	<td>//input[@name='_156_endDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//input[@id='_156_PERMISSIONSCheckbox']</td>
 	<td></td>
 </tr>
 </tbody>

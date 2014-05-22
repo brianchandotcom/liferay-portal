@@ -95,10 +95,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
 				</portlet:renderURL>
 
-				<aui:a cssClass="previous" href="<%= previousEntryURL %>" label="previous" />
+				<aui:a cssClass="icon-circle-arrow-left previous" href="<%= previousEntryURL %>" label="previous" />
 			</c:when>
 			<c:otherwise>
-				<span class="previous"><liferay-ui:message key="previous" /></span>
+				<span class="icon-circle-arrow-left previous"><liferay-ui:message key="previous" /></span>
 			</c:otherwise>
 		</c:choose>
 
@@ -110,10 +110,15 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
 				</portlet:renderURL>
 
-				<aui:a cssClass="next" href="<%= nextEntryURL %>" label="next" />
+				<aui:a cssClass="next" href="<%= nextEntryURL %>" label="next">
+					<i class="icon-circle-arrow-right"></i>
+				</aui:a>
 			</c:when>
 			<c:otherwise>
-				<span class="next"><liferay-ui:message key="next" /></span>
+				<span class="next">
+					<liferay-ui:message key="next" />
+					<i class="icon-circle-arrow-right"></i>
+				</span>
 			</c:otherwise>
 		</c:choose>
 	</div>

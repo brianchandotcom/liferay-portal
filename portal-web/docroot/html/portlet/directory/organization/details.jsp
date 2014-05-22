@@ -25,7 +25,7 @@ long logoId = organization.getLogoId();
 <h2><%= HtmlUtil.escape(organization.getName()) %></h2>
 
 <div class="details">
-	<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src="<%= themeDisplay.getPathImage() %>/organization_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(logoId) %>" />
+	<img alt="<%= HtmlUtil.escapeAttribute(organization.getName()) %>" class="avatar" src="<%= themeDisplay.getPathImage() %>/organization_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(logoId) %>" />
 
 	<dl class="property-list">
 		<dt>

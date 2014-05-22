@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.InvalidRepositoryException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
@@ -24,15 +25,19 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -41,6 +46,7 @@ import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
+import java.util.List;
 
 /**
  * Implements trash handling for the folder entity.
@@ -74,6 +80,20 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(classPK);
+
+		List<DLFileEntry> fileEntries =
+			DLFileEntryLocalServiceUtil.getGroupFileEntries(
+				dlFolder.getGroupId(), 0, classPK, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			DLAppHelperLocalServiceUtil.deleteFileEntry(
+				new LiferayFileEntry(fileEntry));
+		}
+
+		DLAppHelperLocalServiceUtil.deleteFolder(new LiferayFolder(dlFolder));
 
 		DLFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}

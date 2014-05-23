@@ -61,6 +61,10 @@
 	};
 
 	var Util = {
+		MAP_HTML_CHARS_ESCAPED: MAP_HTML_CHARS_ESCAPED,
+
+		submitCountdown: 0,
+
 		actsAsAspect: function(object) {
 			object.yield = null;
 			object.rv = {};
@@ -954,11 +958,7 @@
 
 		_unescapeHTML: function(entities, match) {
 			return entities[match];
-		},
-
-		submitCountdown: 0,
-
-		MAP_HTML_CHARS_ESCAPED: MAP_HTML_CHARS_ESCAPED
+		}
 	};
 
 	Liferay.provide(

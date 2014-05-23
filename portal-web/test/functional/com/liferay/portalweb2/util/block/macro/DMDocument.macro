@@ -45,21 +45,21 @@
 		<if>
 			<isset var="vocabularyName" />
 			<then>
-				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+				<execute macro="DMDocument#showCategorization" />
 
 				<var name="key_vocabularyName" value="${vocabularyName}" />
 
-				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
+				<execute action="CPDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_VOCABULARY_SELECT" value1="${vocabularyName}" />
 
 				<for list="${categoryNameList}" param="categoryName">
 					<var name="key_categoryName" value="${categoryName}" />
-					<execute action="PGDocumentsandmediaAdddocument#assertElementPresent" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
-					<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
-					<execute action="PGDocumentsandmediaAdddocument#check" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" value1="${categoryName}" />
-					<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="" />
+					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
+					<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
+					<execute action="CPDocumentsandmediaAdddocument#check" locator-key1="CATEGORIZATION_CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" />
+					<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="CATEGORIZATION_CATEGORIES_SEARCH_FIELD" value1="" />
 				</for>
 
-				<execute action="PGDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_CATEGORIES_CLOSE_BUTTON" />
+				<execute action="CPDocumentsandmediaAdddocument#click" locator-key1="CATEGORIZATION_CATEGORIES_CLOSE_BUTTON" />
 			</then>
 		</if>
 
@@ -170,7 +170,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+					<execute macro="DMDocument#showCategorization" />
 
 					<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
 					<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
@@ -381,7 +381,7 @@
 				<contains string="${dmDocumentTagName}" substring="{dmDocumentTagName}" />
 			</not>
 			<then>
-				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+				<execute macro="DMDocument#showCategorization" />
 
 				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${dmDocumentTagName}" />
 			</then>
@@ -904,6 +904,15 @@
 					<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 				</then>
 			</elseif>
+		</if>
+	</command>
+
+	<command name="showCategorization">
+		<if>
+			<condition action="PGDocumentsandmediaEditdocument#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_FIELD" />
+			<then>
+				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
+			</then>
 		</if>
 	</command>
 

@@ -9,4 +9,12 @@
 		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_rich_summary.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
+	<template>
+		<template-key>asset-publisher-geolocalized</template-key>
+		<name>portlet-display-template-name-geolocalized</name>
+		<description>portlet-display-template-description-geolocalized</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_geolocalized.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
 </root>

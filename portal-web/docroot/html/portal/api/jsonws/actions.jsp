@@ -105,7 +105,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 						String methodURL = HttpUtil.addParameter(jsonWSContextPath, "signature", serviceSignature);
 						%>
 
-						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
+						<a class="lfr-api-service-result method-name" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
 							<%= path %>
 						</a>
 					</li>

@@ -150,10 +150,13 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 		long[] requiredClassNameIds = getRequiredClassNameIds();
 
-		if ((requiredClassNameIds.length > 0) &&
-			((requiredClassNameIds[0] ==
+		if (requiredClassNameIds.length == 0) {
+			return false;
+		}
+
+		if ((requiredClassNameIds[0] ==
 				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
-			 ArrayUtil.contains(requiredClassNameIds, classNameId))) {
+			ArrayUtil.contains(requiredClassNameIds, classNameId)) {
 
 			PredicateFilter<AssetCategory> predicateFilter =
 				new PredicateFilter<AssetCategory>() {

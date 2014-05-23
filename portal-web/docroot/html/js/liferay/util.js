@@ -1417,6 +1417,10 @@
 			ddmURL.setParameter('mode', config.mode);
 			ddmURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
 
+			if ('redirect' in config) {
+				ddmURL.setParameter('redirect', config.redirect);
+			}
+
 			if ('refererPortletName' in config) {
 				ddmURL.setParameter('refererPortletName', config.refererPortletName);
 			}

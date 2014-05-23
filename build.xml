@@ -5,6 +5,7 @@
 
 	<macrodef name="app-server-properties-reset">
 		<sequential>
+			<delete file="${project.dir}/tools/sdk/build.${user.name}.properties" />
 			<delete file="app.server.${user.name}.properties" />
 		</sequential>
 	</macrodef>
@@ -14,6 +15,8 @@
 
 		<sequential>
 			<echo file="app.server.${user.name}.properties">@{properties}</echo>
+
+			<copy file="${project.dir}/app.server.${user.name}.properties" tofile="${project.dir}/tools/sdk/build.${user.name}.properties" />
 		</sequential>
 	</macrodef>
 

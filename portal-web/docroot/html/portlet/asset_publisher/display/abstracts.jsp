@@ -44,7 +44,7 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 	<div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) ? "default-asset-publisher" : StringPool.BLANK %>">
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
-		<h3 class="asset-title">
+		<h4 class="asset-title">
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(viewURL) %>">
 					<a class="<%= assetRenderer.getIconCssClass() %>" href="<%= viewURL %>"> <%= HtmlUtil.escape(title) %></a>
@@ -55,7 +55,35 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 					<%= HtmlUtil.escape(title) %>
 				</c:otherwise>
 			</c:choose>
-		</h3>
+		</h4>
+
+		<%
+		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+		%>
+
+		<c:if test="<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>">
+			<div class="asset-author">
+
+				<%
+				User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+				String displayDate = StringPool.BLANK;
+
+				if (assetEntry.getPublishDate() != null) {
+					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+				}
+				%>
+
+				<div class="asset-avatar">
+					<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+				</div>
+
+				<div class="asset-user-info">
+					<span class="user-info"><%= userDisplay.getFullName() %></span>
+					<span class="date-info"><%= displayDate %></span>
+				</div>
+			</div>
+		</c:if>
 
 		<div class="asset-content">
 			<div class="asset-summary">
@@ -89,8 +117,6 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 
 			<%
 			boolean filterByMetadata = true;
-
-			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 			%>
 
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>

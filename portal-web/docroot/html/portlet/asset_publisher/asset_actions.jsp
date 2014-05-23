@@ -55,8 +55,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
-			label="<%= showIconLabel %>"
+			iconCssClass="icon-edit-sign"
 			message='<%= showIconLabel ? LanguageUtil.format(pageContext, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) : LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
 			url="<%= taglibEditURL %>"
 		/>

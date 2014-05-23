@@ -1,5 +1,6 @@
 .portlet-asset-publisher {
 	.asset-abstract {
+		border-bottom: 1px solid #DDD;
 		margin-bottom: 2em;
 
 		.asset-content p {
@@ -59,6 +60,10 @@
 			display: inline-block;
 		}
 
+		.metadata-author {
+			display: none;
+		}
+
 		.metadata-categories span {
 			float: none;
 		}
@@ -79,12 +84,45 @@
 		font-size: 11px;
 		font-weight: normal;
 		margin-bottom: 3px;
-		margin-top: 0;
+		margin-top: 10px;
+
+		.icon-edit-sign {
+			font-size: 20px;
+		}
+	}
+
+	.asset-author {
+		overflow: hidden;
+		padding: 10px;
+
+		.asset-avatar {
+			float: left;
+			padding-right: 10px;
+
+			.avatar {
+				width: 45px;
+			}
+		}
+
+		.asset-user-info {
+			margin-top: 5px;
+
+			.user-info {
+				color: #009AE5;
+				display: block;
+				font-size: 14px;
+				line-height: 14px;
+			}
+
+			.date-info {
+				color: #8C8C8C;
+				font-size: 13px;
+			}
+		}
 	}
 
 	.asset-title {
-		border-bottom: 1px solid #DDD;
-		margin-right: 8px;
+		margin-right: 20px;
 		padding-bottom: 1px;
 
 		.asset-actions img {

@@ -162,7 +162,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 
 				A.Array.each(
 					[currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns],
-					function(item, index, collection) {
+					function(item, index) {
 						var actionsNode = item.one('option[value="action"]');
 
 						if (actionsNode) {

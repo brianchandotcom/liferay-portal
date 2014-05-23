@@ -17,6 +17,12 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+String portalMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "openStreetMap");
+
+String portalGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
+
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 UnicodeProperties groupTypeSettings = null;
@@ -28,9 +34,9 @@ else {
 	groupTypeSettings = new UnicodeProperties();
 }
 
-String mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", "openStreetMap");
+String mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", portalMapsAPIProvider);
 
-String googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", "");
+String googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", portalGoogleMapsAPIKey);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />

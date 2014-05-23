@@ -110,9 +110,9 @@ AUI.add(
 
 		var AssetTagsAdmin = A.Component.create(
 			{
-				NAME: 'assettagsadmin',
-
 				EXTENDS: A.Base,
+
+				NAME: 'assettagsadmin',
 
 				prototype: {
 					initializer: function(config) {
@@ -1872,6 +1872,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-button', 'aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-loading-mask-deprecated', 'aui-pagination', 'aui-tree-view', 'autocomplete-base', 'dd', 'json', 'liferay-form','liferay-history-manager', 'liferay-portlet-url', 'liferay-token-list', 'liferay-util-window']
+		requires: ['aui-button', 'aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-loading-mask-deprecated', 'aui-pagination', 'aui-tree-view', 'autocomplete-base', 'dd', 'json', 'liferay-form', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-token-list', 'liferay-util-window']
 	}
 );

@@ -13,14 +13,10 @@
 
 	var STR_TERM = 'term';
 
+	var TPL_REPLACE_HTML = '<span class="lfr-ac-content">{html}</span>';
+
 	var AutoCompleteCKEditor = A.Component.create(
 		{
-			EXTENDS: A.Base,
-
-			AUGMENTS: [Liferay.AutoCompleteInputBase],
-
-			NAME: 'liferay-autocomplete-ckeditor',
-
 			ATTRS: {
 				editor: {
 					validator: Lang.isObject,
@@ -30,99 +26,73 @@
 				inputNode: {
 					valueFn: '_getInputElement',
 					writeOnce: true
+				},
+
+				replaceMode: {
+					validator: Lang.isString,
+					value: 'text'
+				},
+
+				tplReplace: {
+					validator: Lang.isString
 				}
 			},
+
+			AUGMENTS: [Liferay.AutoCompleteInputBase],
+
+			EXTENDS: A.Base,
+
+			NAME: 'liferay-autocomplete-ckeditor',
 
 			prototype: {
 				initializer: function() {
 					var instance = this;
 
-					instance._bindUI();
+					instance._replaceFn = {
+						html: A.bind('_replaceHtml', instance),
+						text: A.bind('_replaceText', instance)
+					};
+
+					A.Do.after(instance._bindUI, instance, '_bindUIACIBase', instance);
 				},
 
-				_acUpdateValue: function(text) {
+				_acSelectValue: function(event) {
+					var instance = this;
+
+					var text = event.result.text;
+
+					var tplReplace = instance.get('tplReplace');
+
+					if (tplReplace) {
+						text = Lang.sub(tplReplace, event.result.raw);
+					}
+
+					var ac = instance._ac;
+
+					ac._inputNode.focus();
+
+					ac._updateValue(text);
+
+					ac._ariaSay(
+						'item_selected',
+						{
+							item: event.result.text
+						}
+					);
+
+					ac.hide();
+
+					event.preventDefault();
+				},
+
+				_acUpdateValue: function(value) {
 					var instance = this;
 
 					var prevTermPosition = instance._getPrevTermPosition();
 
-					var prevTermContainer = prevTermPosition.container;
+					var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTermPosition);
 
-					var containerAscendant = instance._getContainerAscendant(prevTermContainer);
-
-					var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
-
-					var offset = prevTermPosition.index;
-
-					var term = instance.get(STR_TERM);
-
-					var addChars;
-
-					var node = updateWalker.next();
-
-					var prevNode = node;
-
-					var remainingChars = term + text;
-
-					while (node) {
-						if (node.type === CKEDITOR.NODE_TEXT) {
-							var nodeText = node.getText();
-
-							var availableChars = nodeText.length;
-
-							if (offset !== -1) {
-								availableChars -= offset;
-
-								addChars = remainingChars.substring(0, availableChars);
-
-								node.setText(nodeText.substring(0, offset) + addChars);
-
-								offset = -1;
-
-								remainingChars = remainingChars.substring(availableChars);
-							}
-							else {
-								var spaceIndex = nodeText.indexOf(STR_SPACE);
-
-								if (!availableChars || spaceIndex === 0) {
-									prevNode.setText(prevNode.getText() + remainingChars);
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else if (spaceIndex !== -1) {
-									node.setText(remainingChars + nodeText.substring(spaceIndex));
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else {
-									addChars = remainingChars.substring(0, availableChars);
-
-									node.setText(addChars);
-
-									remainingChars = remainingChars.substring(availableChars);
-								}
-							}
-
-							prevNode = node;
-						}
-
-						node = updateWalker.next();
-					}
-
-					if (remainingChars.length) {
-						prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
-					}
-
-					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
-
-					if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
-						caretIndex = prevNode.getText().length;
-					}
-
-					instance._setCaretIndex(prevNode, caretIndex);
+					instance._setCaretIndex(caretPosition.node, caretPosition.index);
 
 					var editor = instance.get('editor');
 
@@ -137,7 +107,8 @@
 					var editor = instance.get(STR_EDITOR);
 
 					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance))
+						editor.on('key', A.bind('_onEditorKey', instance)),
+						instance._ac.on('select', instance._acSelectValue, instance)
 					];
 
 					editor.once(
@@ -381,6 +352,156 @@
 					var query = instance._getQuery();
 
 					instance._processKeyUp(query);
+				},
+
+				_replaceHtml: function(text, prevTermPosition) {
+					var instance = this;
+
+					var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+
+					if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
+						replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
+					}
+
+					var newElement = CKEDITOR.dom.element.createFromHtml(
+						Lang.sub(
+							TPL_REPLACE_HTML,
+							{
+								html: text
+							}
+						)
+					);
+
+					newElement.replace(replaceContainer);
+
+					var nextElement = newElement.getNext();
+
+					if (nextElement) {
+						var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+
+						var updateWalker = instance._getWalker(containerAscendant, nextElement);
+
+						var node = updateWalker.next();
+
+						var removeNodes = [];
+
+						while (node) {
+							var nodeText = node.getText();
+
+							var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+							if (spaceIndex !== -1) {
+								node.setText(nodeText.substring(spaceIndex));
+
+								updateWalker.end();
+							}
+							else {
+								removeNodes.push(node);
+							}
+
+							node = updateWalker.next();
+						}
+
+						A.Array.invoke(removeNodes, 'remove');
+
+						nextElement = newElement.getNext();
+					}
+
+					if (!nextElement) {
+						nextElement = new CKEDITOR.dom.text(STR_SPACE);
+
+						nextElement.insertAfter(newElement);
+					}
+
+					return {
+						index: 1,
+						node: nextElement
+					};
+				},
+
+				_replaceText: function(text, prevTermPosition) {
+					var instance = this;
+
+					var addChars;
+
+					var prevTermContainer = prevTermPosition.container;
+					var offset = prevTermPosition.index;
+
+					var containerAscendant = instance._getContainerAscendant(prevTermContainer);
+
+					var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
+
+					var term = instance.get(STR_TERM);
+
+					var node = updateWalker.next();
+
+					var prevNode = node;
+
+					var remainingChars = term + text;
+
+					while (node) {
+						if (node.type === CKEDITOR.NODE_TEXT) {
+							var nodeText = node.getText();
+
+							var availableChars = nodeText.length;
+
+							if (offset !== -1) {
+								availableChars -= offset;
+
+								addChars = remainingChars.substring(0, availableChars);
+
+								node.setText(nodeText.substring(0, offset) + addChars);
+
+								offset = -1;
+
+								remainingChars = remainingChars.substring(availableChars);
+							}
+							else {
+								var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+								if (!availableChars || spaceIndex === 0) {
+									prevNode.setText(prevNode.getText() + remainingChars);
+
+									updateWalker.end();
+
+									remainingChars = STR_EMPTY;
+								}
+								else if (spaceIndex !== -1) {
+									node.setText(remainingChars + nodeText.substring(spaceIndex));
+
+									updateWalker.end();
+
+									remainingChars = STR_EMPTY;
+								}
+								else {
+									addChars = remainingChars.substring(0, availableChars);
+
+									node.setText(addChars);
+
+									remainingChars = remainingChars.substring(availableChars);
+								}
+							}
+
+							prevNode = node;
+						}
+
+						node = updateWalker.next();
+					}
+
+					if (remainingChars.length) {
+						prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
+					}
+
+					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
+
+					if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
+						caretIndex = prevNode.getText().length;
+					}
+
+					return {
+						index: caretIndex,
+						node: prevNode
+					};
 				},
 
 				_setCaretIndex: function(node, caretIndex) {

@@ -341,7 +341,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 </div>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="entries-empty alert alert-info">
+	<div class="alert alert-info entries-empty">
 		<c:choose>
 			<c:when test="<%= (fileEntryTypeId >= 0) %>">
 				<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" translateArguments="<%= false %>" />
@@ -392,7 +392,7 @@ for (int i = 0; i < results.size(); i++) {
 
 						<c:otherwise>
 							<div style="float: left; margin: 100px 10px 0px;">
-								<img alt="<liferay-ui:message key="error" />" border="no" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
+								<img alt="<liferay-ui:message key="error" />" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
 							</div>
 						</c:otherwise>
 					</c:choose>

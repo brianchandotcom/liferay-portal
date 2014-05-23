@@ -72,7 +72,7 @@ int defaultSpeed = 3000;
 			String largeSrc = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 		%>
 
-			<img alt="<liferay-ui:message key="slide-show" />" border="0" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
+			<img alt="<liferay-ui:message key="slide-show" />" name="<portlet:namespace />slideShow" src="<%= largeSrc %>" />
 
 		<%
 		}

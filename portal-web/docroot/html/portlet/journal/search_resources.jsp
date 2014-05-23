@@ -343,7 +343,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 								<c:otherwise>
 									<div style="float: left; margin: 100px 10px 0px;">
-										<img alt="<liferay-ui:message key="image" />" border="no" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
+										<img alt="<liferay-ui:message key="image" />" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -407,7 +407,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 								<c:otherwise>
 									<div style="float: left; margin: 100px 10px 0px;">
-										<img alt="<liferay-ui:message key="image" />" border="no" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
+										<img alt="<liferay-ui:message key="image" />" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
 									</div>
 								</c:otherwise>
 							</c:choose>

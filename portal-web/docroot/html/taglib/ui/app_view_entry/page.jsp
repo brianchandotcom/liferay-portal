@@ -85,7 +85,7 @@ if (showLinkTitle) {
 			</c:choose>
 
 			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-				<img alt="" border="no" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
+				<img alt="" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 
 				<c:if test="<%= shortcut %>">
 					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -130,7 +130,7 @@ if (showLinkTitle) {
 			</c:choose>
 
 			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-				<img alt="" border="no" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
+				<img alt="" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 
 				<c:if test="<%= shortcut %>">
 					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />

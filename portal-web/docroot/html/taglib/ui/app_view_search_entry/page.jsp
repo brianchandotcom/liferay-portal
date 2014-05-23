@@ -46,7 +46,7 @@ summary.setQueryTerms(queryTerms);
 	<a class="entry-link" href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(title + " - " + description) %>">
 		<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 			<div class="entry-thumbnail">
-				<img alt="" border="no" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" />
+				<img alt="" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" />
 
 				<c:if test="<%= locked %>">
 					<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
@@ -182,7 +182,7 @@ summary.setQueryTerms(queryTerms);
 	</c:if>
 
 	<c:if test="<%= showCheckbox %>">
-		<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
+		<aui:input cssClass="entry-selector overlay" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">

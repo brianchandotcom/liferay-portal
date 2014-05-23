@@ -19,9 +19,9 @@ AUI.add(
 
 		var DLFileEntryCellEditor = A.Component.create(
 			{
-				NAME: 'document-library-file-entry-cell-editor',
-
 				EXTENDS: A.BaseCellEditor,
+
+				NAME: 'document-library-file-entry-cell-editor',
 
 				prototype: {
 					ELEMENT_TEMPLATE: '<input type="hidden" />',
@@ -155,9 +155,9 @@ AUI.add(
 
 		var LinkToPageCellEditor = A.Component.create(
 			{
-				NAME: 'link-to-page-cell-editor',
-
 				EXTENDS: A.DropDownCellEditor,
+
+				NAME: 'link-to-page-cell-editor',
 
 				prototype: {
 					OPT_GROUP_TEMPLATE: '<optgroup label="{label}">{options}</optgroup>',

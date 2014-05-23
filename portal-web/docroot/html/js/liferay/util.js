@@ -166,7 +166,7 @@
 					var defaultType = 'text';
 
 					el.all('input').each(
-						function(item, index, collection) {
+						function(item, index) {
 							var type = item.get('type') || defaultType;
 
 							item.addClass(type);
@@ -1087,7 +1087,7 @@
 			}
 
 			inputs.each(
-				function(item, index, collection) {
+				function(item, index) {
 					if (!item.compareTo(allBox) && (arrayIndexOf(name, item.attr('name')) > -1)) {
 						totalBoxes++;
 
@@ -1116,7 +1116,7 @@
 				var lis = flyout.all('li');
 
 				lis.each(
-					function(item, index, collection) {
+					function(item, index) {
 						var childUL = item.one('ul');
 
 						if (childUL) {
@@ -1370,7 +1370,7 @@
 				selectedOption = options.item(selectedIndex);
 
 				options.each(
-					function(item, index, collection) {
+					function(item, index) {
 						if (item.get('selected')) {
 							toBox.append(item);
 						}
@@ -2034,7 +2034,7 @@
 			}
 
 			button.each(
-				function(item, index, collection) {
+				function(item, index) {
 					item.attr('disabled', state);
 
 					item.toggleClass('disabled', state);

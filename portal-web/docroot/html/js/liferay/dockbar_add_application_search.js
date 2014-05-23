@@ -65,7 +65,7 @@ AUI.add(
 				var instance = this;
 
 				instance.get(STR_NODES).each(
-					function(item, index, collection) {
+					function(item, index) {
 						var contentItem = item.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR);
 
 						if (contentItem) {

@@ -120,7 +120,7 @@ AUI.add(
 							var cssClassBuffer = [];
 
 							items.each(
-								function(item, index, collection) {
+								function(item, index) {
 									var layoutConfig = layoutIds[index];
 
 									if (layoutConfig) {
@@ -242,7 +242,7 @@ AUI.add(
 						}
 
 						obj.each(
-							function(item, index, collection) {
+							function(item, index) {
 								if (item.hasClass('lfr-nav-deletable')) {
 									instance._createDeleteButton(item);
 								}
@@ -287,7 +287,7 @@ AUI.add(
 							var navItemSelector = instance._navItemSelector;
 
 							var navItems = navBlock.all(navItemSelector).filter(
-								function(item, index, collection) {
+								function(item, index) {
 									return !item.hasClass('selected');
 								}
 							);

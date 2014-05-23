@@ -1078,7 +1078,7 @@ AUI.add(
 
 					var useForAll = newPanel.all('.lfr-use-for-all input[type=checkbox]');
 
-					var handleForms = function(item, index, collection) {
+					var handleForms = function(item, index) {
 						var checkBox = item;
 
 						var fieldset = checkBox.ancestor(FIELDSET);
@@ -1094,7 +1094,7 @@ AUI.add(
 						var checked = item.get(CHECKED);
 
 						otherHolders.each(
-							function(holderItem, holderIndex, holderCollection) {
+							function(holderItem, holderIndex) {
 								if (holderIndex > firstIndex) {
 									var fields = holderItem.all('input, select');
 									var colorPickerImages = holderItem.all('.buttonitem');

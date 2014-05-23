@@ -152,7 +152,7 @@ AUI.add(
 						else {
 							AObject.some(
 								formValidator.errors,
-								function(item, index, collection) {
+								function(item, index) {
 									var field = formValidator.getField(index);
 
 									field.scrollIntoView();
@@ -192,7 +192,7 @@ AUI.add(
 						var nodes = instance.get(STR_NODES);
 
 						nodes.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var header = item.one(SELECTOR_TOGGLER_HEADER);
 
 								var active = header.hasClass(CSS_ACTIVE);

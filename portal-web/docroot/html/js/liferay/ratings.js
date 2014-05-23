@@ -306,7 +306,7 @@ AUI.add(
 						ratingScore.one('.rating-label').html(label);
 
 						ratingScore.all(SELECTOR_RATING_ELEMENT).each(
-							function(item, index, collection) {
+							function(item, index) {
 								var fromCssClass = CSS_ICON_STAR;
 								var toCssClass = CSS_ICON_STAR_EMPTY;
 

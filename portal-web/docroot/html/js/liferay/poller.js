@@ -204,7 +204,7 @@ AUI.add(
 			_createRequestTimer();
 		};
 
-		var _updatePortletIdsMap = function(item, index, collection) {
+		var _updatePortletIdsMap = function(item, index) {
 			_portletIdsMap[index] = item.initialRequest;
 		};
 

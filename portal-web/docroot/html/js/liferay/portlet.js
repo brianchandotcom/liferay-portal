@@ -83,7 +83,7 @@
 								A.all('body link').appendTo(head);
 
 								A.all('link.lfr-css-file').each(
-									function(item, index, collection) {
+									function(item, index) {
 										document.createStyleSheet(item.get('href'));
 									}
 								);

@@ -190,7 +190,7 @@ AUI.add(
 						}
 
 						instance.getFieldsList(null, fieldNode).each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance.renderRepeatableUI(item);
 							}
 						);
@@ -204,7 +204,7 @@ AUI.add(
 						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
 
 						instance.getFieldsList().each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance.renderRepeatableUI(item);
 
 								var fieldName = item.getData('fieldName');

@@ -155,7 +155,7 @@ AUI.add(
 
 						AObject.some(
 							hostFocusManager._descendantsMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (item === focusedCurrent) {
 									var menuItemLink = A.one('#' + index);
 
@@ -240,7 +240,7 @@ AUI.add(
 						var menuItems = [];
 
 						instance._host.all(SELECTOR_DOCKBAR_ITEM).each(
-							function(item, index, collection) {
+							function(item, index) {
 								item = item.getData('menuItem') || item;
 
 								menuItems.push(item);

@@ -95,7 +95,7 @@ AUI.add(
 
 						AObject.some(
 							devices,
-							function(item, index, collection) {
+							function(item, index) {
 								var selected = item.selected;
 
 								if (selected) {

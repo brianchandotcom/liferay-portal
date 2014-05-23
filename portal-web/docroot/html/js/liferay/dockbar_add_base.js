@@ -86,7 +86,7 @@ AUI.add(
 							var searchData = [];
 
 							nodes.each(
-								function(item, index, collection) {
+								function(item, index) {
 									searchData.push(
 										{
 											node: item,

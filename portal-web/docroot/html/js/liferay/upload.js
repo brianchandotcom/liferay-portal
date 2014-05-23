@@ -407,7 +407,7 @@ AUI.add(
 
 							var files = AArray.map(
 								fileNames,
-								function(item, index, collection) {
+								function(item, index) {
 									var title = item;
 
 									var tempRandomSuffix = instance.get('tempRandomSuffix');
@@ -445,7 +445,7 @@ AUI.add(
 
 						return AArray.filter(
 							data,
-							function(item, index, collection) {
+							function(item, index) {
 
 								var id = item.get('id') || A.guid();
 								var name = item.get('name');
@@ -527,7 +527,7 @@ AUI.add(
 						if (dragDropFiles && (target === uploaderBoundingBox || uploaderBoundingBox.contains(target))) {
 							event.fileList = AArray.map(
 								dragDropFiles,
-								function(item, index, collection) {
+								function(item, index) {
 									return new A.FileHTML5(item);
 								}
 							);
@@ -631,7 +631,7 @@ AUI.add(
 
 								var file = queue.currentFiles[fileId] || AArray.find(
 									queue.queuedFiles,
-									function(item, index, collection) {
+									function(item, index) {
 										return item.id === fileId;
 									}
 								);

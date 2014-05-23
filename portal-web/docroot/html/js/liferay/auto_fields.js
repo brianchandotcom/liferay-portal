@@ -109,7 +109,7 @@ AUI.add(
 						);
 
 						baseRows.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var formRow;
 								var firstChild;
 
@@ -222,7 +222,7 @@ AUI.add(
 								rules = formValidator.get('rules');
 
 								node.all('input, select, textarea').each(
-									function(item, index, collection) {
+									function(item, index) {
 										var name = item.attr('name') || item.attr('id');
 
 										if (rules && rules[name]) {
@@ -286,7 +286,7 @@ AUI.add(
 						var contentBox = instance._contentBox;
 
 						contentBox.all('.lfr-form-row').each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance.deleteRow(item);
 							}
 						);
@@ -318,7 +318,7 @@ AUI.add(
 						}
 						else {
 							visibleRows.each(
-								function(item, index, collection) {
+								function(item, index) {
 									var formField = item.one('input, textarea, select');
 									var fieldId = formField.attr('id');
 
@@ -358,7 +358,7 @@ AUI.add(
 
 					_clearForm: function(node) {
 						node.all('input, select, textarea').each(
-							function(item, index, collection) {
+							function(item, index) {
 								var type = item.getAttribute('type');
 								var tag = item.get('nodeName').toLowerCase();
 
@@ -388,7 +388,7 @@ AUI.add(
 						);
 					},
 
-					_clearHiddenRows: function(item, index, collection) {
+					_clearHiddenRows: function(item, index) {
 						var instance = this;
 
 						if (instance._isHiddenRow(item)) {
@@ -427,7 +427,7 @@ AUI.add(
 						}
 
 						node.all('input, select, textarea, span').each(
-							function(item, index, collection) {
+							function(item, index) {
 								var oldName = item.attr('name') || item.attr('id');
 								var originalName = oldName.replace(/([0-9]+)$/, '');
 								var newName = originalName + guid;
@@ -540,7 +540,7 @@ AUI.add(
 							'clearList',
 							function(event) {
 								rows.all('.lfr-form-row').each(
-									function(item, index, collection) {
+									function(item, index) {
 										if (instance._isHiddenRow(item)) {
 											A.DD.DDM.getDrag(item).destroy();
 										}

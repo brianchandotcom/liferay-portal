@@ -347,7 +347,7 @@ AUI.add(
 										var fieldsets = popup.entriesNode.all('fieldset');
 
 										fieldsets.each(
-											function(item, index, collection) {
+											function(item, index) {
 												var visibleEntries = item.one('label:not(.hide)');
 
 												var action = 'addClass';

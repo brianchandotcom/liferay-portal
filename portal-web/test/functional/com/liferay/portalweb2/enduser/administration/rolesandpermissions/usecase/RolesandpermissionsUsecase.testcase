@@ -1888,7 +1888,7 @@
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="ADD_CATEGORY_BUTTON" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" />
 
-		<execute macro="AssetPublisherPortlet#addBlogsEntryPG">
+		<execute macro="BlogsEntry#addPGViaAP">
 			<var name="entryContent" value="This is a movie blog by usersn2" />
 			<var name="entryTitle" value="Movie Blog" />
 		</execute>

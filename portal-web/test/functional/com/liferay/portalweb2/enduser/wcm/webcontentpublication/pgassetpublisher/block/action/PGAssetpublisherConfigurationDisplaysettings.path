@@ -79,6 +79,47 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENABLE_CONVERSION-->
+<tr>
+	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
+	<td>//input[@id='_86_extensionsdocCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_ODT_CHECKBOX</td>
+	<td>//input[@id='_86_extensionsodtCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_PDF_CHECKBOX</td>
+	<td>//input[@id='_86_extensionspdfCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_RTF_CHECKBOX</td>
+	<td>//input[@id='_86_extensionsrtfCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_SXW_CHECKBOX</td>
+	<td>//input[@id='_86_extensionssxwCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_TXT_CHECKBOX</td>
+	<td>//input[@id='_86_extensionstxtCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
 	<td>//input[@id='_86_enablePrintCheckbox']</td>
 	<td></td>

@@ -28,6 +28,15 @@
 		<execute action="CPServeradministrationMail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="enableOpenOfficeIntegration">
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
+
+		<execute action="CPServeradministrationExternalservices#check" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
+		<execute action="CPServeradministrationExternalservices#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="searchPortalPropertiesCP">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PROPERTIES" value1="Properties" />
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />

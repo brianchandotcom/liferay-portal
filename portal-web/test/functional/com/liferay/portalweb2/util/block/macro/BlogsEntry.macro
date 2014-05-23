@@ -327,7 +327,15 @@
 			</else>
 		</if>
 
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+		<if>
+			<condition action="PGAssetpublisher#isVisible" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" />
+			<then>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
+			</else>
+		</if>
 
 		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />

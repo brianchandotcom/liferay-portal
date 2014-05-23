@@ -46,7 +46,14 @@ public class VerifyProcessTracker
 	public VerifyProcess addingService(
 		ServiceReference<VerifyProcess> serviceReference) {
 
-		VerifyProcess verifyProcess = _addVerifyProcess(serviceReference);
+		VerifyProcess verifyProcess = null;
+
+		try {
+			_addVerifyProcess(serviceReference);
+		}
+		catch (IllegalArgumentException iae) {
+			return null;
+		}
 
 		_execute(verifyProcess);
 

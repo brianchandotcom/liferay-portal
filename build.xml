@@ -189,16 +189,24 @@
 				</then>
 			</if>
 
+			<pathconvert property="liferay.home.build.property" targetos="unix">
+				<path location="${liferay.home}" />
+			</pathconvert>
+
+			<pathconvert property="project.dir.build.property" targetos="unix">
+				<path location="${project.dir}" />
+			</pathconvert>
+
 			<echo
 				append="true"
 				file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
 			>
 				app.server.type=${app.server.type}
-				auto.deploy.dir=${liferay.home}/osgi/apps
+				auto.deploy.dir=${liferay.home.build.property}/osgi/apps
 				clean.delete.ivy.md5=true
 				clean.delete.lib=true
-				ivy.home=${project.dir}/.ivy
-				liferay.home=${liferay.home}
+				ivy.home=${project.dir.build.property}/.ivy
+				liferay.home=${liferay.home.build.property}
 			</echo>
 
 			<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />

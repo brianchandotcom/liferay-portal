@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -254,26 +255,20 @@ public class AssetUtil {
 	public static List<AssetVocabulary> filterVocabularies(
 		List<AssetVocabulary> vocabularies, String className) {
 
-		List<AssetVocabulary> filteredVocabularies =
-			new ArrayList<AssetVocabulary>();
+		final long classNameId = PortalUtil.getClassNameId(className);
 
-		for (AssetVocabulary vocabulary : vocabularies) {
-			UnicodeProperties settingsProperties =
-				vocabulary.getSettingsProperties();
+		PredicateFilter<AssetVocabulary> vocabulariesFilter =
+			new PredicateFilter<AssetVocabulary>() {
 
-			long[] selectedClassNameIds = StringUtil.split(
-				settingsProperties.getProperty("selectedClassNameIds"), 0L);
-			long classNameId = PortalUtil.getClassNameId(className);
+				@Override
+				public boolean filter(AssetVocabulary vocabulary) {
+					return vocabulary.isAssociatedToAssetRendererFactory(
+						classNameId);
+				}
 
-			if ((selectedClassNameIds.length == 0) ||
-				(selectedClassNameIds[0] == 0) ||
-				ArrayUtil.contains(selectedClassNameIds, classNameId)) {
+			};
 
-				filteredVocabularies.add(vocabulary);
-			}
-		}
-
-		return filteredVocabularies;
+		return ListUtil.filter(vocabularies, vocabulariesFilter);
 	}
 
 	public static long[] filterVocabularyIds(

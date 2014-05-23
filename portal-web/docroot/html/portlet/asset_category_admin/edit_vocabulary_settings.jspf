@@ -31,10 +31,8 @@ long[] selectedClassNameIds = null;
 long[] requiredClassNameIds = null;
 
 if (vocabulary != null) {
-	UnicodeProperties settingsProperties = vocabulary.getSettingsProperties();
-
-	selectedClassNameIds = StringUtil.split(settingsProperties.getProperty("selectedClassNameIds"), 0L);
-	requiredClassNameIds = StringUtil.split(settingsProperties.getProperty("requiredClassNameIds"), 0L);
+	selectedClassNameIds = vocabulary.getSelectedClassNameIds();
+	requiredClassNameIds = vocabulary.getRequiredClassNameIds();
 
 	if ((requiredClassNameIds != null) && _isDefaultClassNameIds(requiredClassNameIds)) {
 		required = true;

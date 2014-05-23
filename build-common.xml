@@ -84,7 +84,11 @@
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
 
-	<property location="${project.dir}" name="project.location.absolute" />
+	<property location="${project.dir}" name="project.location.absolute.native" />
+	
+	<pathconvert property="project.location.absolute" targetos="unix">
+		<path location="${project.location.absolute.native}" />
+	</pathconvert>
 
 	<propertycopy
 		from="project.location.absolute"

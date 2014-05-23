@@ -5,7 +5,7 @@
 <#assign typeSettings = group.getParentLiveGroupTypeSettingsProperties() />
 
 <#assign mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!"" />
-<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsApiKey")!"" />
+<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
 
 <#assign companyPrefs = prefsPropsUtil.getPreferences(companyId) />
 
@@ -14,7 +14,7 @@
 </#if>
 
 <#if apiKey = "">
-	<#assign apiKey = companyPrefs.getValue("googleMapsApiKey", "") />
+	<#assign apiKey = companyPrefs.getValue("googleMapsAPIKey", "") />
 </#if>
 
 <#assign defaultLatitude = -3.6833 />

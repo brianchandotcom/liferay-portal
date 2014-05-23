@@ -21,7 +21,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "openStreetMap");
 
-String googleMapsApiKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsApiKey", "");
+String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
@@ -34,11 +34,11 @@ String googleMapsApiKey = PrefsParamUtil.getString(companyPortletPreferences, re
 
 <aui:input checked='<%= mapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="settings--mapsAPIProvider--" type="radio" value="googleMaps" />
 
-<div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsApiKey">
-	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="settings--googleMapsApiKey--" size="40" type="text" value="<%= googleMapsApiKey %>" />
+<div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
+	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="settings--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
 </div>
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />mapsGoogleMapsEnabled', '<portlet:namespace />googleMapsApiKey', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />mapsOpenStreetMapEnabled', '', '<portlet:namespace />googleMapsApiKey');
+	Liferay.Util.toggleRadio('<portlet:namespace />mapsGoogleMapsEnabled', '<portlet:namespace />googleMapsAPIKey', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />mapsOpenStreetMapEnabled', '', '<portlet:namespace />googleMapsAPIKey');
 </aui:script>

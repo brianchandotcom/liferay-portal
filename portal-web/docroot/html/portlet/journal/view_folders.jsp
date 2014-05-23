@@ -240,6 +240,8 @@ else {
 					<c:if test="<%= total > 0 %>">
 
 						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
 						List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(groupIds, PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
 
 						for (DDMStructure ddmStructure : ddmStructures) {
@@ -264,7 +266,7 @@ else {
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
 								entryTitle="<%= ddmStructure.getName(locale) %>"
-								iconImage="icon-th-large"
+								iconImage="<%= assetRendererFactory.getIconCssClass() %>"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
 							/>

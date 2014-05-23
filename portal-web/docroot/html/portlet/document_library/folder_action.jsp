@@ -322,8 +322,8 @@ String iconMenuId = null;
 
 				<c:if test="<%= hasViewPermission && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
 					<liferay-ui:icon
-						iconCssClass="icon-search"
 						cssClass='<%= randomNamespace + "-slide-show" %>'
+						iconCssClass="icon-search"
 						message="view-slide-show"
 						url="javascript:;"
 					/>

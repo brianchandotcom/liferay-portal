@@ -358,13 +358,15 @@ else {
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
 								entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
-								iconImage="icon-file"
+								iconImage="icon-file-alt"
 								selected="<%= (fileEntryTypeId == 0) %>"
 								viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
 							/>
 						</c:if>
 
 						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
 						List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, searchContainer.getStart(), searchContainer.getEnd());
 
 						for (DLFileEntryType fileEntryType : fileEntryTypes) {
@@ -391,7 +393,7 @@ else {
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
 								entryTitle="<%= fileEntryType.getName(locale) %>"
-								iconImage="icon-file"
+								iconImage="<%= assetRendererFactory.getIconCssClass() %>"
 								selected="<%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) %>"
 								viewURL="<%= viewFileEntryTypeURL.toString() %>"
 							/>

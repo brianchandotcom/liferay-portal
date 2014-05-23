@@ -80,10 +80,10 @@ AUI.add(
 
 							A.each(
 								state,
-								function(value1, key1, collection1) {
+								function(value1, key1) {
 									A.Array.each(
 										instance.PROTECTED_HASH_KEYS,
-										function(value2, key2, collection2) {
+										function(value2, key2) {
 											if (value2.test(key1)) {
 												delete state[key1];
 												protectedHashMap[key1] = value1;
@@ -103,7 +103,7 @@ AUI.add(
 
 					AObject.each(
 						queryMap,
-						function(item, index, collection) {
+						function(item, index) {
 							if (!isValue(item)) {
 								delete queryMap[index];
 							}

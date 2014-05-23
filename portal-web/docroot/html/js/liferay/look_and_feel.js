@@ -162,7 +162,6 @@ AUI.add(
 							instance._currentPopup.plug(
 								[
 									{
-										fn: A.Plugin.IO,
 										cfg: {
 											after: {
 												success: function(event) {
@@ -178,15 +177,16 @@ AUI.add(
 												}
 											},
 											autoLoad: false,
-											showLoading: false,
 											data: {
+												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 												p_l_id: themeDisplay.getPlid(),
 												p_p_id: 113,
-												p_p_state: EXCLUSIVE,
-												doAsUserId: themeDisplay.getDoAsUserIdEncoded()
+												p_p_state: EXCLUSIVE
 											},
+											showLoading: false,
 											uri: themeDisplay.getPathMain() + '/portal/render_portlet'
-										}
+										},
+										fn: A.Plugin.IO
 									},
 									{
 										fn: A.LoadingMask
@@ -471,7 +471,7 @@ AUI.add(
 
 				A.each(
 					[cTopColor, cRightColor, cBottomColor, cLeftColor],
-					function(item, index, collection) {
+					function(item, index) {
 						var hexValue = item.val().replace('#', EMPTY);
 
 						var borderLocation = '_borderColorPicker' + index;
@@ -726,17 +726,6 @@ AUI.add(
 				}
 			},
 
-			_getCombo: function(input, selectBox) {
-				var instance = this;
-
-				var inputVal = input.val();
-				var selectVal = selectBox.val();
-
-				inputVal = instance._getSafeInteger(inputVal);
-
-				return {input: inputVal, selectBox: selectVal, both: inputVal + selectVal};
-			},
-
 			_getCSSClasses: function(portletBoundary, portlet) {
 				var instance = this;
 
@@ -764,6 +753,21 @@ AUI.add(
 				);
 
 				return '.' + boundaryClasses.join('.') + portletClasses;
+			},
+
+			_getCombo: function(input, selectBox) {
+				var instance = this;
+
+				var inputVal = input.val();
+				var selectVal = selectBox.val();
+
+				inputVal = instance._getSafeInteger(inputVal);
+
+				return {
+					both: inputVal + selectVal,
+					input: inputVal,
+					selectBox: selectVal
+				};
 			},
 
 			_getDefaultData: function() {
@@ -1045,8 +1049,8 @@ AUI.add(
 
 				instance._tabs = new A.TabView(
 					{
-						srcNode: newPanel,
-						panelNode: newPanel.one('.tab-pane')
+						panelNode: newPanel.one('.tab-pane'),
+						srcNode: newPanel
 					}
 				).render();
 
@@ -1078,7 +1082,7 @@ AUI.add(
 
 					var useForAll = newPanel.all('.lfr-use-for-all input[type=checkbox]');
 
-					var handleForms = function(item, index, collection) {
+					var handleForms = function(item, index) {
 						var checkBox = item;
 
 						var fieldset = checkBox.ancestor(FIELDSET);
@@ -1094,7 +1098,7 @@ AUI.add(
 						var checked = item.get(CHECKED);
 
 						otherHolders.each(
-							function(holderItem, holderIndex, holderCollection) {
+							function(holderItem, holderIndex) {
 								if (holderIndex > firstIndex) {
 									var fields = holderItem.all('input, select');
 									var colorPickerImages = holderItem.all('.buttonitem');
@@ -1512,7 +1516,7 @@ AUI.add(
 					if (portletData.titles) {
 						A.each(
 							portletData.titles,
-							function(item, index, collection) {
+							function(item, index) {
 								instance._languageClasses(item);
 							}
 						);

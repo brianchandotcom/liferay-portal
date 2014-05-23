@@ -65,7 +65,7 @@ AUI.add(
 				var instance = this;
 
 				instance.get(STR_NODES).each(
-					function(item, index, collection) {
+					function(item, index) {
 						var contentItem = item.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR);
 
 						if (contentItem) {
@@ -86,7 +86,7 @@ AUI.add(
 					instance._collapsedCategories = [];
 
 					instance._categories.each(
-						function(item, index, collection) {
+						function(item, index) {
 							var header = item.one('.toggler-header');
 
 							if (header && header.hasClass('toggler-header-collapsed')) {
@@ -104,7 +104,7 @@ AUI.add(
 					if (instance._collapsedCategories) {
 						A.each(
 							instance._collapsedCategories,
-							function(item, index, collection) {
+							function(item, index) {
 								var categoryIndex = instance._categories.indexOf(item);
 
 								var togglerItems = instance._togglerDelegate.items;
@@ -133,7 +133,7 @@ AUI.add(
 
 						A.each(
 							event.results,
-							function(item, index, collection) {
+							function(item, index) {
 								var node = item.raw.node;
 
 								node.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR).show();

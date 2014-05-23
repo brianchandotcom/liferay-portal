@@ -159,7 +159,7 @@ AUI.add(
 						var instance = this;
 
 						return instance._content.some(
-							function(item, index, collection) {
+							function(item, index) {
 								return item.contains(target);
 							}
 						);

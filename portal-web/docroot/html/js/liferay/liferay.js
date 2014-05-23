@@ -59,28 +59,6 @@ Liferay = window.Liferay || {};
 				return A.bind.apply(A, args);
 			},
 
-			parseInvokeArgs: function(args) {
-				var instance = this;
-
-				var payload = args[0];
-
-				var ioConfig = instance.parseIOConfig(args);
-
-				if (Lang.isString(payload)) {
-					payload = instance.parseStringPayload(args);
-
-					instance.parseIOFormConfig(ioConfig, args);
-
-					var lastArg = args[args.length - 1];
-
-					if (Lang.isObject(lastArg) && lastArg.method) {
-						ioConfig.method = lastArg.method;
-					}
-				}
-
-				return [payload, ioConfig];
-			},
-
 			parseIOConfig: function(args) {
 				var instance = this;
 
@@ -141,6 +119,28 @@ Liferay = window.Liferay || {};
 				}
 			},
 
+			parseInvokeArgs: function(args) {
+				var instance = this;
+
+				var payload = args[0];
+
+				var ioConfig = instance.parseIOConfig(args);
+
+				if (Lang.isString(payload)) {
+					payload = instance.parseStringPayload(args);
+
+					instance.parseIOFormConfig(ioConfig, args);
+
+					var lastArg = args[args.length - 1];
+
+					if (Lang.isObject(lastArg) && lastArg.method) {
+						ioConfig.method = lastArg.method;
+					}
+				}
+
+				return [payload, ioConfig];
+			},
+
 			parseStringPayload: function(args) {
 				var instance = this;
 
@@ -186,7 +186,7 @@ Liferay = window.Liferay || {};
 
 	A.each(
 		['get', 'delete', 'post', 'put', 'update'],
-		function(item, index, collection) {
+		function(item, index) {
 			var methodName = item;
 
 			if (item === 'delete') {

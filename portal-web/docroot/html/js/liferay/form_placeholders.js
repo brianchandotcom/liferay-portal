@@ -31,8 +31,11 @@ AUI.add(
 		var Placeholders = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
+
 				NAME: 'placeholders',
+
 				NS: STR_PLACEHOLDER,
+
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
@@ -45,7 +48,7 @@ AUI.add(
 							var placeholderInputs = formNode.all(SELECTOR_PLACEHOLDER_INPUTS);
 
 							placeholderInputs.each(
-								function(item, index, collection) {
+								function(item, index) {
 									if (!item.val()) {
 										if (item.attr(STR_TYPE) === STR_PASSWORD) {
 											instance._initializePasswordNode(item);
@@ -103,7 +106,7 @@ AUI.add(
 						var placeholderInputs = formNode.all(SELECTOR_PLACEHOLDER_INPUTS);
 
 						placeholderInputs.each(
-							function(item, index, collection) {
+							function(item, index) {
 								if (item.val() == item.attr(STR_PLACEHOLDER)) {
 									item.val(STR_BLANK);
 								}

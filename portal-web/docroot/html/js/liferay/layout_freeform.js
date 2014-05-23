@@ -71,7 +71,7 @@ AUI.add(
 						}
 
 						Layout.getPortlets().each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._setupNodeResize(item);
 								instance._setupNodeStack(item);
 							}

@@ -58,7 +58,7 @@ AUI.add(
 
 						AArray.some(
 							MENU_ITEM_CSS_CLASSES,
-							function(item, index, collection) {
+							function(item, index) {
 								if (menuItem.hasClass(item)) {
 									menuItem.addClass(CSS_OPEN);
 
@@ -138,6 +138,18 @@ AUI.add(
 						event.currentTarget.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 					},
 
+					_handleUpDownKeyPress: function(event) {
+						var instance = this;
+
+						var method = '_handleDownKeyPress';
+
+						if (event.isKey('UP')) {
+							method = '_handleUpKeyPress';
+						}
+
+						instance[method](event);
+					},
+
 					_handleUpKeyPress: function(event) {
 						var instance = this;
 
@@ -155,7 +167,7 @@ AUI.add(
 
 						AObject.some(
 							hostFocusManager._descendantsMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (item === focusedCurrent) {
 									var menuItemLink = A.one('#' + index);
 
@@ -163,7 +175,7 @@ AUI.add(
 
 									AArray.some(
 										MENU_ITEM_CSS_CLASSES,
-										function(item, index, collection) {
+										function(item, index) {
 											if (menuItem.hasClass(item)) {
 												menuItem.addClass(CSS_OPEN);
 
@@ -188,18 +200,6 @@ AUI.add(
 								}
 							}
 						);
-					},
-
-					_handleUpDownKeyPress: function(event) {
-						var instance = this;
-
-						var method = '_handleDownKeyPress';
-
-						if (event.isKey('UP')) {
-							method = '_handleUpKeyPress';
-						}
-
-						instance[method](event);
 					},
 
 					_initHostFocusManager: function() {
@@ -234,22 +234,6 @@ AUI.add(
 						instance.hostFocusManager = host.focusManager;
 					},
 
-					_initMenuItems: function() {
-						var instance = this;
-
-						var menuItems = [];
-
-						instance._host.all(SELECTOR_DOCKBAR_ITEM).each(
-							function(item, index, collection) {
-								item = item.getData('menuItem') || item;
-
-								menuItems.push(item);
-							}
-						);
-
-						instance._menuItems = new A.NodeList(menuItems);
-					},
-
 					_initMenuItemHandlers: function() {
 						var instance = this;
 
@@ -261,6 +245,22 @@ AUI.add(
 						host.delegate(EVENT_KEY, instance._handleTabKeyPress, 'down:9');
 
 						Liferay.after('exitNavigation', instance._handleExitNavigation, instance);
+					},
+
+					_initMenuItems: function() {
+						var instance = this;
+
+						var menuItems = [];
+
+						instance._host.all(SELECTOR_DOCKBAR_ITEM).each(
+							function(item, index) {
+								item = item.getData('menuItem') || item;
+
+								menuItems.push(item);
+							}
+						);
+
+						instance._menuItems = new A.NodeList(menuItems);
 					}
 				}
 			}

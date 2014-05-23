@@ -59,23 +59,25 @@ AUI.add(
 
 		var DevicePreview = A.Component.create(
 			{
+				ATTRS: {
+					devices: {
+						validator: Lang.isObject
+					},
+
+					inputHeight: {
+						setter: A.one
+					},
+
+					inputWidth: {
+						setter: A.one
+					}
+				},
+
 				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
 				NAME: 'devicepreview',
-
-				ATTRS: {
-					devices: {
-						validator: Lang.isObject
-					},
-					inputHeight: {
-						setter: A.one
-					},
-					inputWidth: {
-						setter: A.one
-					}
-				},
 
 				prototype: {
 					initializer: function(config) {
@@ -95,7 +97,7 @@ AUI.add(
 
 						AObject.some(
 							devices,
-							function(item, index, collection) {
+							function(item, index) {
 								var selected = item.selected;
 
 								if (selected) {
@@ -217,113 +219,6 @@ AUI.add(
 								width: dialogWidth
 							}
 						};
-					},
-
-					_openDeviceDialog: function(device, rotation) {
-						var instance = this;
-
-						var dialog = Liferay.Util.getWindow(instance._dialogId);
-
-						var dialogAttrs = instance._normalizeDialogAttrs(device, rotation);
-
-						var devicePreviewNode = instance._devicePreviewNode;
-
-						var height = dialogAttrs.size.height;
-						var width = dialogAttrs.size.width;
-
-						if (!dialog) {
-							var dialogConfig = {
-								align: {
-									node: devicePreviewNode,
-									points: DIALOG_ALIGN_POINTS
-								},
-								autoSizeNode: devicePreviewNode,
-								constrain: devicePreviewNode,
-								height: height,
-								render: devicePreviewNode,
-								width: width
-							};
-
-							Liferay.Util.openWindow(
-								{
-									cache: false,
-									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
-									dialogIframe: DIALOG_IFRAME_DEFAULTS,
-									id: instance._dialogId,
-									iframeId: 'devicePreviewIframe',
-									uri: WIN.location.href
-								},
-								function(dialogWindow) {
-									var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
-
-									dialogWindow.align(devicePreviewNode, DIALOG_ALIGN_POINTS);
-
-									dialogWindow.plug(
-										A.Plugin.SizeAnim,
-										{
-											align: true,
-											after: {
-												end: function(event) {
-													var selectedDevice = instance._selectedDevice;
-
-													if (selectedDevice.skin) {
-														dialogBoundingBox.addClass(selectedDevice.skin);
-													}
-
-													dialogWindow.sizeanim.set(STR_PREVENT_TRANSITION, selectedDevice.preventTransition || false);
-												},
-												start: function(event) {
-													AObject.each(
-														instance.get(STR_DEVICES),
-														function(item, index, collection) {
-															if (item.skin) {
-																dialogBoundingBox.removeClass(item.skin);
-															}
-														}
-													);
-												}
-											},
-											preventTransition: true
-										}
-									);
-
-									dialogBoundingBox.addClass(device.skin);
-
-									instance._eventHandles.push(
-										dialogWindow.on(
-											{
-												'resize:end': A.bind('_onResizeEnd', instance),
-												'resize:resize': A.bind('_onResize', instance),
-												'resize:start': A.bind('_onResizeStart', instance),
-												'visibleChange': A.bind('_onDialogVisibleChange', instance)
-											}
-										)
-									);
-								}
-							);
-						}
-						else {
-							var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
-
-							dialogBoundingBox.toggleClass(STR_ROTATED, rotation);
-
-							if (!device.preventTransition) {
-								dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
-							}
-
-							dialog.setAttrs(dialogAttrs);
-
-							dialog.iframe.node.setStyles(
-								{
-									height: height,
-									width: width
-								}
-							);
-
-							dialog.show();
-						}
-
-						instance._selectedDevice = device;
 					},
 
 					_onDeviceClick: function(event) {
@@ -453,6 +348,113 @@ AUI.add(
 								width: width
 							}
 						);
+					},
+
+					_openDeviceDialog: function(device, rotation) {
+						var instance = this;
+
+						var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+						var dialogAttrs = instance._normalizeDialogAttrs(device, rotation);
+
+						var devicePreviewNode = instance._devicePreviewNode;
+
+						var height = dialogAttrs.size.height;
+						var width = dialogAttrs.size.width;
+
+						if (!dialog) {
+							var dialogConfig = {
+								align: {
+									node: devicePreviewNode,
+									points: DIALOG_ALIGN_POINTS
+								},
+								autoSizeNode: devicePreviewNode,
+								constrain: devicePreviewNode,
+								height: height,
+								render: devicePreviewNode,
+								width: width
+							};
+
+							Liferay.Util.openWindow(
+								{
+									cache: false,
+									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
+									dialogIframe: DIALOG_IFRAME_DEFAULTS,
+									id: instance._dialogId,
+									iframeId: 'devicePreviewIframe',
+									uri: WIN.location.href
+								},
+								function(dialogWindow) {
+									var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
+
+									dialogWindow.align(devicePreviewNode, DIALOG_ALIGN_POINTS);
+
+									dialogWindow.plug(
+										A.Plugin.SizeAnim,
+										{
+											after: {
+												end: function(event) {
+													var selectedDevice = instance._selectedDevice;
+
+													if (selectedDevice.skin) {
+														dialogBoundingBox.addClass(selectedDevice.skin);
+													}
+
+													dialogWindow.sizeanim.set(STR_PREVENT_TRANSITION, selectedDevice.preventTransition || false);
+												},
+												start: function(event) {
+													AObject.each(
+														instance.get(STR_DEVICES),
+														function(item, index) {
+															if (item.skin) {
+																dialogBoundingBox.removeClass(item.skin);
+															}
+														}
+													);
+												}
+											},
+											align: true,
+											preventTransition: true
+										}
+									);
+
+									dialogBoundingBox.addClass(device.skin);
+
+									instance._eventHandles.push(
+										dialogWindow.on(
+											{
+												'resize:end': A.bind('_onResizeEnd', instance),
+												'resize:resize': A.bind('_onResize', instance),
+												'resize:start': A.bind('_onResizeStart', instance),
+												'visibleChange': A.bind('_onDialogVisibleChange', instance)
+											}
+										)
+									);
+								}
+							);
+						}
+						else {
+							var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
+
+							dialogBoundingBox.toggleClass(STR_ROTATED, rotation);
+
+							if (!device.preventTransition) {
+								dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
+							}
+
+							dialog.setAttrs(dialogAttrs);
+
+							dialog.iframe.node.setStyles(
+								{
+									height: height,
+									width: width
+								}
+							);
+
+							dialog.show();
+						}
+
+						instance._selectedDevice = device;
 					}
 				}
 			}

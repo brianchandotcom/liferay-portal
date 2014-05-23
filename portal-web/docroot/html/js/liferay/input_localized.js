@@ -56,14 +56,6 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					name: {
-						validator: Lang.isString
-					},
-
-					namespace: {
-						validator: Lang.isString
-					},
-
 					inputPlaceholder: {
 						setter: A.one
 					},
@@ -74,6 +66,14 @@ AUI.add(
 
 					itemsError: {
 						validator: Lang.isArray
+					},
+
+					name: {
+						validator: Lang.isString
+					},
+
+					namespace: {
+						validator: Lang.isString
 					},
 
 					selected: {
@@ -423,7 +423,7 @@ AUI.add(
 
 						AArray.each(
 							flags,
-							function(item, index, collection) {
+							function(item, index) {
 								var flagNode = instance.getItemByIndex(index);
 
 								flagNode.toggleClass(

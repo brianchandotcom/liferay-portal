@@ -42,7 +42,7 @@ AUI.add(
 
 			A.each(
 				array,
-				function(item, index, collection) {
+				function(item, index) {
 					var id = item.select;
 					var select = A.one('#' + id);
 					var selectData = item.selectData;
@@ -117,7 +117,7 @@ AUI.add(
 
 				A.each(
 					list,
-					function(item, index, collection) {
+					function(item, index) {
 						var key = item[selectId];
 						var value = item[selectDesc];
 

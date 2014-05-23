@@ -216,7 +216,7 @@ AUI.add(
 					var data = [];
 
 					options.each(
-						function(item, index, collection) {
+						function(item, index) {
 							data.push(
 								{
 									name: item.html(),

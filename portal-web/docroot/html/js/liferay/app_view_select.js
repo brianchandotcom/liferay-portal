@@ -268,7 +268,7 @@ AUI.add(
 
 						var selectAllCheckbox = instance._selectAllCheckbox;
 
-						for (var i = 0, length = instance._checkBoxesId.length; i < length; i++) {
+						for (var i = 0; i < instance._checkBoxesId.length; i++) {
 							Util.checkAll(instance._portletContainer, instance._checkBoxesId[i], selectAllCheckbox, CSS_RESULT_ROW);
 						}
 
@@ -336,7 +336,7 @@ AUI.add(
 
 							A.each(
 								selectedEntries,
-								function(item, index, collection) {
+								function(item, index) {
 									var entry = entriesContainer.one('input[value="' + item + '"]');
 
 									if (entry) {

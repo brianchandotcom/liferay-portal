@@ -146,29 +146,36 @@ AUI.add(
 					deleteFile: {
 						value: ''
 					},
+
 					fallback: {
 						setter: A.one,
 						value: null
 					},
+
 					maxFileSize: {
 						setter: Lang.toInt,
 						value: 0
 					},
+
 					metadataContainer: {
 						setter: A.one,
 						value: null
 					},
+
 					metadataExplanationContainer: {
 						setter: A.one,
 						value: null
 					},
+
 					multipleFiles: {
 						validator: Lang.isBoolean,
 						value: true
 					},
+
 					render: {
 						value: true
 					},
+
 					strings: {
 						value: {
 							allFilesSelectedText: Liferay.Language.get('all-files-selected'),
@@ -176,8 +183,8 @@ AUI.add(
 							cancelUploadsText: Liferay.Language.get('cancel-all-uploads'),
 							clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
 							deleteFileText: Liferay.Language.get('delete-file'),
-							dropFilesText: Liferay.Language.get('drop-files-here-to-upload'),
 							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
+							dropFilesText: Liferay.Language.get('drop-files-here-to-upload'),
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
@@ -185,8 +192,8 @@ AUI.add(
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
 							orText: Liferay.Language.get('or'),
 							pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed'),
-							selectFilesText: Liferay.Language.get('select-files'),
 							selectFileText: Liferay.Language.get('select-file'),
+							selectFilesText: Liferay.Language.get('select-files'),
 							unexpectedErrorOnDeleteText: Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file'),
 							unexpectedErrorOnUploadText: Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file'),
 							uploadingFileXofXText: Liferay.Language.get('uploading-file-x-of-x'),
@@ -199,13 +206,16 @@ AUI.add(
 							zeroByteSizeText: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
 						}
 					},
+
 					tempFileURL: {
 						value: ''
 					},
+
 					tempRandomSuffix: {
 						validator: Lang.isString,
 						value: null
 					},
+
 					uploadFile: {
 						value: ''
 					}
@@ -358,7 +368,7 @@ AUI.add(
 
 						A.each(
 							queue.queuedFiles,
-							function(item, index, collection) {
+							function(item, index) {
 								var li = A.one('#' + item.id);
 
 								if (li && !li.hasClass('upload-complete')) {
@@ -407,7 +417,7 @@ AUI.add(
 
 							var files = AArray.map(
 								fileNames,
-								function(item, index, collection) {
+								function(item, index) {
 									var title = item;
 
 									var tempRandomSuffix = instance.get('tempRandomSuffix');
@@ -445,7 +455,7 @@ AUI.add(
 
 						return AArray.filter(
 							data,
-							function(item, index, collection) {
+							function(item, index) {
 
 								var id = item.get('id') || A.guid();
 								var name = item.get('name');
@@ -527,7 +537,7 @@ AUI.add(
 						if (dragDropFiles && (target === uploaderBoundingBox || uploaderBoundingBox.contains(target))) {
 							event.fileList = AArray.map(
 								dragDropFiles,
-								function(item, index, collection) {
+								function(item, index) {
 									return new A.FileHTML5(item);
 								}
 							);
@@ -614,6 +624,14 @@ AUI.add(
 						Liferay.fire('allUploadsComplete');
 					},
 
+					_onBeforeUnload: function(event) {
+						var instance = this;
+
+						if (instance._isUploading()) {
+							event.preventDefault();
+						}
+					},
+
 					_onCancelFileClick: function(currentTarget) {
 						var instance = this;
 
@@ -631,7 +649,7 @@ AUI.add(
 
 								var file = queue.currentFiles[fileId] || AArray.find(
 									queue.queuedFiles,
-									function(item, index, collection) {
+									function(item, index) {
 										return item.id === fileId;
 									}
 								);
@@ -681,13 +699,13 @@ AUI.add(
 									),
 									dataType: 'JSON',
 									on: {
-										success: function(event, id, obj) {
-											instance._handleDeleteResponse(this.get('responseData'), li);
-										},
 										failure: function(event, id, obj) {
 											li.show();
 
 											instance._handleDeleteResponse(failureResponse, li);
+										},
+										success: function(event, id, obj) {
+											instance._handleDeleteResponse(this.get('responseData'), li);
 										}
 									}
 								}
@@ -743,14 +761,6 @@ AUI.add(
 						instance._markSelected(currentTarget);
 
 						instance._updateMetadataContainer();
-					},
-
-					_onBeforeUnload: function(event) {
-						var instance = this;
-
-						if (instance._isUploading()) {
-							event.preventDefault();
-						}
 					},
 
 					_onUploadComplete: function(event) {

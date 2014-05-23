@@ -8,8 +8,11 @@ AUI.add(
 		var AddPageTemplateSearch = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
+
 				EXTENDS: A.Base,
+
 				NAME: 'addpagetemplatesearch',
+
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
@@ -39,7 +42,7 @@ AUI.add(
 						if (query) {
 							A.Array.each(
 								event.results,
-								function(item, index, collection) {
+								function(item, index) {
 									item.raw.node.show();
 								}
 							);

@@ -135,6 +135,73 @@ AUI.add(
 				}
 			},
 
+			_addCloseButton: function(notice) {
+				var instance = this;
+
+				var closeButton;
+
+				if (instance._closeText !== false) {
+					instance._closeText = instance._closeText || Liferay.Language.get('close');
+				}
+				else {
+					instance._useCloseButton = false;
+					instance._closeText = STR_EMPTY;
+				}
+
+				if (instance._useCloseButton) {
+					var html =  '<button class="btn submit popup-alert-close">' +
+									instance._closeText +
+								'</button>';
+
+					closeButton = notice.append(html);
+				}
+				else {
+					closeButton = notice.one('.close');
+				}
+
+				if (closeButton) {
+					closeButton.on(STR_CLICK, instance.close, instance);
+				}
+			},
+
+			_addToggleButton: function(notice) {
+				var instance = this;
+
+				if (instance._useToggleButton) {
+					instance._hideText = instance._toggleText.hide || Liferay.Language.get(STR_HIDE);
+					instance._showText = instance._toggleText.show || Liferay.Language.get(STR_SHOW);
+
+					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
+					var toggleSpan = toggleButton.one('span');
+
+					var visible = 0;
+
+					var showText = instance._showText;
+					var hideText = instance._hideText;
+
+					toggleButton.on(
+						STR_CLICK,
+						function(event) {
+							var text = showText;
+
+							if (visible === 0) {
+								text = hideText;
+
+								visible = 1;
+							}
+							else {
+								visible = 0;
+							}
+
+							notice.toggle();
+							toggleSpan.text(text);
+						}
+					);
+
+					notice.append(toggleButton);
+				}
+			},
+
 			_afterNoticeShow: function(event) {
 				var instance = this;
 
@@ -236,7 +303,7 @@ AUI.add(
 
 				A.Array.each(
 					instance._noticeClass.split(' '),
-					function(item, index, collection) {
+					function(item, index) {
 						notice.addClass(item);
 					}
 				);
@@ -257,73 +324,6 @@ AUI.add(
 				Do.after(instance._afterNoticeShow, notice, STR_SHOW, instance);
 
 				instance._notice = notice;
-			},
-
-			_addCloseButton: function(notice) {
-				var instance = this;
-
-				var closeButton;
-
-				if (instance._closeText !== false) {
-					instance._closeText = instance._closeText || Liferay.Language.get('close');
-				}
-				else {
-					instance._useCloseButton = false;
-					instance._closeText = STR_EMPTY;
-				}
-
-				if (instance._useCloseButton) {
-					var html =  '<button class="btn submit popup-alert-close">' +
-									instance._closeText +
-								'</button>';
-
-					closeButton = notice.append(html);
-				}
-				else {
-					closeButton = notice.one('.close');
-				}
-
-				if (closeButton) {
-					closeButton.on(STR_CLICK, instance.close, instance);
-				}
-			},
-
-			_addToggleButton: function(notice) {
-				var instance = this;
-
-				if (instance._useToggleButton) {
-					instance._hideText = instance._toggleText.hide || Liferay.Language.get(STR_HIDE);
-					instance._showText = instance._toggleText.show || Liferay.Language.get(STR_SHOW);
-
-					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
-					var toggleSpan = toggleButton.one('span');
-
-					var visible = 0;
-
-					var showText = instance._showText;
-					var hideText = instance._hideText;
-
-					toggleButton.on(
-						STR_CLICK,
-						function(event) {
-							var text = showText;
-
-							if (visible === 0) {
-								text = hideText;
-
-								visible = 1;
-							}
-							else {
-								visible = 0;
-							}
-
-							notice.toggle();
-							toggleSpan.text(text);
-						}
-					);
-
-					notice.append(toggleButton);
-				}
 			},
 
 			_preventHide: function() {

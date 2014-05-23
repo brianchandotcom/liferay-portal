@@ -7,31 +7,37 @@ AUI.add(
 
 		var SearchContainer = A.Component.create(
 			{
-				NAME: 'searchcontainer',
-
 				ATTRS: {
 					classNameHover: {
 						value: ''
 					},
+
 					hover: {
 						value: ''
 					},
+
 					id: {
 						value: ''
 					},
+
 					rowClassNameAlternate: {
 						value: ''
 					},
+
 					rowClassNameAlternateHover: {
 						value: ''
 					},
+
 					rowClassNameBody: {
 						value: ''
 					},
+
 					rowClassNameBodyHover: {
 						value: ''
 					}
 				},
+
+				NAME: 'searchcontainer',
 
 				constructor: function(config) {
 					var id = config.id;
@@ -175,7 +181,7 @@ AUI.add(
 
 								A.each(
 									arr,
-									function(item, index, collection) {
+									function(item, index) {
 										var cell = cells.item(index);
 
 										if (cell) {
@@ -214,7 +220,7 @@ AUI.add(
 							var row = null;
 
 							instance._table.all('tr').some(
-								function(item, index, collection) {
+								function(item, index) {
 									if (!item.hasClass(CSS_TEMPLATE) && index == obj) {
 										row = item;
 									}

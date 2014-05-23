@@ -71,20 +71,18 @@ AUI.add(
 
 		var TranslationManager = A.Component.create(
 			{
-				NAME: 'translationmanager',
-
 				ATTRS: {
 					availableLocales: {
 						validator: Lang.isArray,
 						valueFn: '_valueAvailableLocales'
 					},
 
-					availableTranslationsNode: {
-						valueFn: '_valueAvailableTranslationsNode'
-					},
-
 					availableTranslationsLinksNode: {
 						valueFn: '_valueAvailableTranslationsLinksNode'
+					},
+
+					availableTranslationsNode: {
+						valueFn: '_valueAvailableTranslationsNode'
 					},
 
 					changeDefaultLocaleNode: {
@@ -138,14 +136,16 @@ AUI.add(
 				CSS_PREFIX: 'lfr-translation-manager',
 
 				HTML_PARSER: {
-					availableTranslationsNode: STR_DOT + CSS_AVAILABLE_TRANSLATIONS,
 					availableTranslationsLinksNode: STR_DOT + CSS_AVAILABLE_TRANSLATIONS_LINKS,
+					availableTranslationsNode: STR_DOT + CSS_AVAILABLE_TRANSLATIONS,
 					changeDefaultLocaleNode: STR_DOT + CSS_CHANGE_DEFAULT_LOCALE,
 					defaultLocaleLabelNode: STR_DOT + CSS_DEFAULT_LOCALE_LABEL,
 					defaultLocaleNode: STR_DOT + CSS_DEFAULT_LOCALE,
 					defaultLocaleTextNode: STR_DOT + CSS_DEFAULT_LOCALE_TEXT,
 					iconMenuNode: STR_DOT + CSS_ICON_MENU
 				},
+
+				NAME: 'translationmanager',
 
 				UI_ATTRS: ['availableLocales', 'defaultLocale', 'editingLocale', 'readOnly'],
 
@@ -280,7 +280,7 @@ AUI.add(
 
 						A.each(
 							instance._locales,
-							function(item, index, collection) {
+							function(item, index) {
 								tplBuffer[0] = item;
 								tplBuffer[1] = localesMap[item];
 
@@ -382,7 +382,7 @@ AUI.add(
 
 						AArray.each(
 							val,
-							function(item, index, collection) {
+							function(item, index) {
 								if (defaultLocale !== item) {
 									tplBuffer.cssClass = (editingLocale === item) ? CSS_TRANSLATION_EDITING : STR_BLANK;
 
@@ -459,16 +459,16 @@ AUI.add(
 						return [instance.get('defaultLocale')];
 					},
 
-					_valueAvailableTranslationsNode: function() {
-						var instance = this;
-
-						return Node.create(TPL_AVAILABLE_TRANSLATIONS_NODE);
-					},
-
 					_valueAvailableTranslationsLinksNode: function() {
 						var instance = this;
 
 						return Node.create(TPL_AVAILABLE_TRANSLATIONS_LINKS_NODE);
+					},
+
+					_valueAvailableTranslationsNode: function() {
+						var instance = this;
+
+						return Node.create(TPL_AVAILABLE_TRANSLATIONS_NODE);
 					},
 
 					_valueChangeDefaultLocaleNode: function() {

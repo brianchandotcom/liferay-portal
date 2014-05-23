@@ -246,7 +246,7 @@ AUI.add(
 							var items = instance._portletContainer.all('[data-folder="true"]');
 
 							items.each(
-								function(item, index, collection) {
+								function(item, index) {
 									item.plug(
 										A.Plugin.Drop,
 										{
@@ -382,8 +382,8 @@ AUI.add(
 						dd.set(
 							STR_DATA,
 							{
-								selectedItemsCount: selectedItemsCount,
-								selectedItems: selectedItems
+								selectedItems: selectedItems,
+								selectedItemsCount: selectedItemsCount
 							}
 						);
 					},
@@ -414,7 +414,7 @@ AUI.add(
 
 						var checkBoxesIds = processEntryIds.checkBoxesIds;
 
-						for (var i = 0, checkBoxesIdsLength = checkBoxesIds.length; i < checkBoxesIdsLength; i++) {
+						for (var i = 0; i < checkBoxesIds.length; i++) {
 							var listEntryIds = Util.listCheckedExcept(form, allRowsIdCheckbox, checkBoxesIds[i]);
 
 							form.get(entryIds[i]).val(listEntryIds);

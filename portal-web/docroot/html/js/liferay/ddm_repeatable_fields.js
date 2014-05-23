@@ -18,11 +18,11 @@ AUI.add(
 					classPK: {
 					},
 
-					doAsGroupId: {
-					},
-
 					container: {
 						setter: A.one
+					},
+
+					doAsGroupId: {
 					},
 
 					fieldsDisplayInput: {
@@ -104,6 +104,18 @@ AUI.add(
 						);
 					},
 
+					getFieldParentNode: function(fieldNode) {
+						var instance = this;
+
+						var parentNode = fieldNode.ancestor('.field-wrapper');
+
+						if (!parentNode) {
+							parentNode = instance.get('container');
+						}
+
+						return parentNode;
+					},
+
 					getFieldsList: function(fieldName, parentNode) {
 						var instance = this;
 
@@ -125,18 +137,6 @@ AUI.add(
 						}
 
 						return container.all(selector.join(''));
-					},
-
-					getFieldParentNode: function(fieldNode) {
-						var instance = this;
-
-						var parentNode = fieldNode.ancestor('.field-wrapper');
-
-						if (!parentNode) {
-							parentNode = instance.get('container');
-						}
-
-						return parentNode;
 					},
 
 					insertField: function(fieldNode) {
@@ -190,7 +190,7 @@ AUI.add(
 						}
 
 						instance.getFieldsList(null, fieldNode).each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance.renderRepeatableUI(item);
 							}
 						);
@@ -204,7 +204,7 @@ AUI.add(
 						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
 
 						instance.getFieldsList().each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance.renderRepeatableUI(item);
 
 								var fieldName = item.getData('fieldName');

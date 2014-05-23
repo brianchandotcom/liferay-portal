@@ -26,10 +26,6 @@ AUI.add(
 
 		var AddBase = A.Component.create(
 			{
-				EXTENDS: A.Base,
-
-				NAME: 'addbase',
-
 				ATTRS: {
 					focusItem: {
 						setter: A.one
@@ -43,12 +39,12 @@ AUI.add(
 						setter: A.one
 					},
 
-					nodeSelector: {
-						validator: Lang.isString
-					},
-
 					nodeList: {
 						setter: A.one
+					},
+
+					nodeSelector: {
+						validator: Lang.isString
 					},
 
 					nodes: {
@@ -70,6 +66,10 @@ AUI.add(
 					}
 				},
 
+				EXTENDS: A.Base,
+
+				NAME: 'addbase',
+
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
@@ -86,7 +86,7 @@ AUI.add(
 							var searchData = [];
 
 							nodes.each(
-								function(item, index, collection) {
+								function(item, index) {
 									searchData.push(
 										{
 											node: item,

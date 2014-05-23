@@ -1,7 +1,8 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 <#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
+<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#assign group = themeDisplay.getScopeGroup() />
+
 <#assign typeSettings = group.getParentLiveGroupTypeSettingsProperties() />
 
 <#assign mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!"" />
@@ -22,20 +23,17 @@
 
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
+<#assign maxWidth = 500 />
+<#assign minHeight = "400px" />
+<#assign minWidth = "400px" />
+<#assign namespace = renderResponse.getNamespace() />
+<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 <#if themeDisplay.isSecure()>
 	<#assign uriScheme = "https" />
 <#else>
 	<#assign uriScheme = "http" />
 </#if>
-
-<#assign maxWidth = 500 />
-<#assign minHeight = "400px" />
-<#assign minWidth = "400px" />
-
-<#assign namespace = renderResponse.getNamespace() />
-
-<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 <#assign images = {
 	"com.liferay.portlet.documentlibrary.model.DLFileEntry": "${uriScheme}://maps.google.com/mapfiles/ms/icons/green-dot.png",

@@ -60,7 +60,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 				A.Array.each(
 					styles,
-					function(item, index, collection) {
+					function(item, index) {
 						var rule = item.split(':');
 
 						if (rule.length == 2) {

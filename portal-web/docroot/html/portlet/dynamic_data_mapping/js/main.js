@@ -242,7 +242,7 @@ AUI.add(
 						buffer.push(root.openTag);
 
 						instance.get('fields').each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._appendStructureTypeElementAndMetaData(item, buffer);
 							}
 						);
@@ -278,7 +278,7 @@ AUI.add(
 						var instance = this;
 
 						field.get('fields').each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._appendStructureTypeElementAndMetaData(item, buffer);
 							}
 						);
@@ -517,7 +517,7 @@ AUI.add(
 									var modelList = instance.propertyList.get('data');
 
 									var nameModel = modelList.filter(
-										function(item, index, collection) {
+										function(item, index) {
 											return (item.get('attributeName') === 'name');
 										}
 									);
@@ -549,7 +549,7 @@ AUI.add(
 
 						var fields = AArray.map(
 							val,
-							function(item, index, collection) {
+							function(item, index) {
 								return A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item);
 							}
 						);

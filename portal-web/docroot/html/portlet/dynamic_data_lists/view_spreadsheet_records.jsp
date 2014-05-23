@@ -97,7 +97,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var keys = A.Array.map(
 		columns,
-		function(item, index, collection) {
+		function(item, index) {
 			var key = item.key;
 
 			if (!item.sortFn) {

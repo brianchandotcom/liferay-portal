@@ -282,7 +282,7 @@ AUI.add(
 								var selLayout = SpreadSheet.Util.parseJSON(val);
 
 								options.each(
-									function(item, index, collection) {
+									function(item, index) {
 										var curLayout = SpreadSheet.Util.parseJSON(item.attr('value'));
 
 										if ((curLayout.groupId === selLayout.groupId) &&
@@ -366,7 +366,7 @@ AUI.add(
 
 						var keys = AArray.map(
 							columns,
-							function(item, index, collection) {
+							function(item, index) {
 								return item.key;
 							}
 						);
@@ -608,7 +608,7 @@ AUI.add(
 
 					AArray.each(
 						columns,
-						function(item, index, collection) {
+						function(item, index) {
 							var dataType = item.dataType;
 							var name = item.name;
 							var type = item.type;
@@ -660,7 +660,7 @@ AUI.add(
 								config.inputFormatter = function(val) {
 									return AArray.map(
 										val,
-										function(item, index, collection) {
+										function(item, index) {
 											return item.getTime();
 										}
 									);
@@ -669,7 +669,7 @@ AUI.add(
 								config.outputFormatter = function(val) {
 									return AArray.map(
 										val,
-										function(item, index, collection) {
+										function(item, index) {
 											var value = Lang.toInt(item) || Date.now();
 
 											var date = new Date(value);
@@ -826,7 +826,7 @@ AUI.add(
 
 					AArray.some(
 						structure,
-						function(item, index, collection) {
+						function(item, index) {
 							found = item;
 
 							return (found[attributeName] === attributeValue);

@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Util = Liferay.Util;
 
+		var touch = A.UA.touch;
+
 		var CSS_DRAGGABLE = 'portlet-draggable';
 
 		var layoutModule = 'liferay-layout-column';
@@ -159,14 +161,6 @@ AUI.add(
 				return !!columnNode.one(options.portletBoundary);
 			},
 
-			maybeAddTouchHandle: function(portletBoundary) {
-				if (A.UA.touchEnabled) {
-					var portletTitle = portletBoundary.one('.portlet-title');
-
-					portletTitle.append('<div class="' + CSS_TOUCH_DRAG_HANDLE + '"></div>');
-				}
-			},
-
 			on: function() {
 				var layoutHandler = Layout.getLayoutHandler();
 
@@ -308,7 +302,6 @@ AUI.add(
 				Layout.options.handles = touchHandles;
 			},
 
-
 			updatePortletDropZones: function(portletBoundary) {
 				var options = Layout.options;
 				var portletDropNodes = portletBoundary.all(options.dropNodes);
@@ -433,7 +426,7 @@ AUI.add(
 
 				Layout.updateEmptyColumnsInfo();
 
-				if (A.UA.touchEnabled) {
+				if (touch) {
 					Layout.updatePortletTouchDragHandles();
 				}
 
@@ -500,7 +493,7 @@ AUI.add(
 			);
 
 			if (layoutContainer) {
-				if (!A.UA.touch) {
+				if (!touch) {
 					layoutContainer.once(
 						'mousemove',
 						function() {

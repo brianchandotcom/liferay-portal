@@ -30,8 +30,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 <div class="lfr-spreadsheet-container">
 	<div id="<portlet:namespace />spreadsheet">
-		<div class="table-striped yui3-widget yui3-datatable" id="<portlet:namespace />dataTable">
-			<div class="yui3-datatable-scrollable yui3-datatable-content" id="<portlet:namespace />dataTableContent"></div>
+		<div class="table-striped yui3-datatable yui3-widget" id="<portlet:namespace />dataTable">
+			<div class="yui3-datatable-content yui3-datatable-scrollable" id="<portlet:namespace />dataTableContent"></div>
 		</div>
 	</div>
 

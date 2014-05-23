@@ -71,7 +71,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdatingAFileEntryUpdatesItsAsset() throws Throwable {
+	public void testUpdateAssetWhenUpdatingFileEntry() throws Throwable {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -92,13 +92,11 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdatingAFolderUpdatesItsAsset() throws Throwable {
+	public void testUpdateAssetWhenUpdatingFolder() throws Throwable {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		Folder folder = addFolder(false);
-
-		Assert.assertNotEquals(folder.getName(), "foo");
+		Folder folder = addFolder(false, "Test Folder");
 
 		DLAppLocalServiceUtil.updateFolder(
 			folder.getFolderId(), folder.getParentFolderId(), "foo", "bar",

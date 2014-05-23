@@ -110,9 +110,9 @@ AUI.add(
 
 		var AssetTagsAdmin = A.Component.create(
 			{
-				NAME: 'assettagsadmin',
-
 				EXTENDS: A.Base,
+
+				NAME: 'assettagsadmin',
 
 				prototype: {
 					initializer: function(config) {
@@ -283,7 +283,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (owns(state, index)) {
 									var historyEntry = item.historyEntry;
 
@@ -322,7 +322,7 @@ AUI.add(
 						var tagItemChecks = instance._tagsList.all('.tag-item-check');
 
 						tagItemChecks.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var checked = item.attr('checked');
 
 								if (currentCheckedStatus && !checked) {
@@ -341,7 +341,7 @@ AUI.add(
 						var instance = this;
 
 						instance._getStagedTags().each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._checkTag(item, true);
 							}
 						);
@@ -672,6 +672,36 @@ AUI.add(
 						return ddHandler;
 					},
 
+					_getIOTagDetails: function() {
+						var instance = this;
+
+						var ioTagDetails = instance._ioTagDetails;
+
+						if (!ioTagDetails) {
+							ioTagDetails = A.io.request(
+								null,
+								{
+									autoLoad: false,
+									dataType: 'HTML',
+									on: {
+										failure: function(event, id, obj) {
+											instance._onTagViewFailure(obj);
+										},
+										success: function(event, id, obj) {
+											var response = this.get('responseData');
+
+											instance._onTagViewSuccess(response);
+										}
+									}
+								}
+							);
+
+							instance._ioTagDetails = ioTagDetails;
+						}
+
+						return ioTagDetails;
+					},
+
 					_getIOTagUpdate: function() {
 						var instance = this;
 
@@ -700,36 +730,6 @@ AUI.add(
 						}
 
 						return ioTag;
-					},
-
-					_getIOTagDetails: function() {
-						var instance = this;
-
-						var ioTagDetails = instance._ioTagDetails;
-
-						if (!ioTagDetails) {
-							ioTagDetails = A.io.request(
-								null,
-								{
-									autoLoad: false,
-									dataType: 'HTML',
-									on: {
-										success: function(event, id, obj) {
-											var response = this.get('responseData');
-
-											instance._onTagViewSuccess(response);
-										},
-										failure: function(event, id, obj) {
-											instance._onTagViewFailure(obj);
-										}
-									}
-								}
-							);
-
-							instance._ioTagDetails = ioTagDetails;
-						}
-
-						return ioTagDetails;
 					},
 
 					_getStagedTag: function(tagId) {
@@ -788,65 +788,6 @@ AUI.add(
 						}
 
 						return attr;
-					},
-
-					_getTagsPagination: function() {
-						var instance = this;
-
-						var tagsPagination = instance._tagsPagination;
-
-						if (!tagsPagination) {
-							var instanceConfig = instance._config;
-
-							var config = {
-								boundingBox: '.tags-pagination',
-								circular: false,
-								visible: false
-							};
-
-							var paginationMap = instance._getTagsPaginationMap();
-
-							AObject.each(
-								paginationMap,
-								function(item, index, collection) {
-									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
-								}
-							);
-
-							tagsPagination = new A.Pagination(config).render();
-
-							tagsPagination.after('changeRequest', instance._afterTagsPaginationChangeRequest, instance);
-
-							instance._tagsPagination = tagsPagination;
-						}
-
-						return tagsPagination;
-					},
-
-					_getTagsPaginationMap: function() {
-						var instance = this;
-
-						var namespace = instance._prefixedPortletId;
-						var paginationMap = instance._paginationMap;
-
-						if (!paginationMap) {
-							paginationMap = {
-								page: {
-									defaultValue: 1,
-									formatter: Number,
-									historyEntry: namespace + 'page'
-								},
-								tagsPerPage: {
-									defaultValue: instance._config.tagsPerPage,
-									formatter: Number,
-									historyEntry: namespace + 'tagsPerPage'
-								}
-							};
-
-							instance._paginationMap = paginationMap;
-						}
-
-						return paginationMap;
 					},
 
 					_getTagPanelMerge: function() {
@@ -988,6 +929,95 @@ AUI.add(
 						);
 					},
 
+					_getTagsPagination: function() {
+						var instance = this;
+
+						var tagsPagination = instance._tagsPagination;
+
+						if (!tagsPagination) {
+							var instanceConfig = instance._config;
+
+							var config = {
+								boundingBox: '.tags-pagination',
+								circular: false,
+								visible: false
+							};
+
+							var paginationMap = instance._getTagsPaginationMap();
+
+							AObject.each(
+								paginationMap,
+								function(item, index) {
+									config[index] = Number(HistoryManager.get(item.historyEntry)) || item.defaultValue;
+								}
+							);
+
+							tagsPagination = new A.Pagination(config).render();
+
+							tagsPagination.after('changeRequest', instance._afterTagsPaginationChangeRequest, instance);
+
+							instance._tagsPagination = tagsPagination;
+						}
+
+						return tagsPagination;
+					},
+
+					_getTagsPaginationMap: function() {
+						var instance = this;
+
+						var namespace = instance._prefixedPortletId;
+						var paginationMap = instance._paginationMap;
+
+						if (!paginationMap) {
+							paginationMap = {
+								page: {
+									defaultValue: 1,
+									formatter: Number,
+									historyEntry: namespace + 'page'
+								},
+								tagsPerPage: {
+									defaultValue: instance._config.tagsPerPage,
+									formatter: Number,
+									historyEntry: namespace + 'tagsPerPage'
+								}
+							};
+
+							instance._paginationMap = paginationMap;
+						}
+
+						return paginationMap;
+					},
+
+					_hideAllMessages: function() {
+						var instance = this;
+
+						instance._container.all('.lfr-message-response').hide();
+					},
+
+					_hideMessage: function(container) {
+						var instance = this;
+
+						container = container || instance._portletMessageContainer;
+
+						container.hide();
+					},
+
+					_hidePanels: function() {
+						var instance = this;
+
+						if (instance._tagPanelAdd) {
+							instance._tagPanelAdd.hide();
+						}
+
+						if (instance._tagPanelEdit) {
+							instance._tagPanelEdit.hide();
+						}
+
+						if (instance._tagPanelMerge) {
+							instance._tagPanelMerge.hide();
+						}
+					},
+
 					_initializeTagPanelAdd: function(callback) {
 						var instance = this;
 
@@ -1081,36 +1111,6 @@ AUI.add(
 						Liferay.Util.focusFormField(inputTagNameNode);
 					},
 
-					_hideAllMessages: function() {
-						var instance = this;
-
-						instance._container.all('.lfr-message-response').hide();
-					},
-
-					_hideMessage: function(container) {
-						var instance = this;
-
-						container = container || instance._portletMessageContainer;
-
-						container.hide();
-					},
-
-					_hidePanels: function() {
-						var instance = this;
-
-						if (instance._tagPanelAdd) {
-							instance._tagPanelAdd.hide();
-						}
-
-						if (instance._tagPanelEdit) {
-							instance._tagPanelEdit.hide();
-						}
-
-						if (instance._tagPanelMerge) {
-							instance._tagPanelMerge.hide();
-						}
-					},
-
 					_loadData: function() {
 						var instance = this;
 
@@ -1190,7 +1190,7 @@ AUI.add(
 							targetTagsList.empty();
 
 							selectedTagsNodes.each(
-								function(item, index, collection) {
+								function(item, index) {
 									var name = checkedItemsName[index];
 
 									var listItem = Lang.sub(
@@ -1227,24 +1227,24 @@ AUI.add(
 						}
 					},
 
-					_mergeTags: function(fromIds, toId, overrideProperties, callback) {
-						Liferay.Service(
-							'/assettag/merge-tags',
-							{
-								fromTagIds: fromIds,
-								overrideProperties: overrideProperties,
-								toTagId: toId
-							},
-							callback
-						);
-					},
-
 					_mergeTag: function(fromId, toId, callback) {
 						Liferay.Service(
 							'/assettag/merge-tags',
 							{
 								fromTagId: fromId,
 								overrideProperties: true,
+								toTagId: toId
+							},
+							callback
+						);
+					},
+
+					_mergeTags: function(fromIds, toId, overrideProperties, callback) {
+						Liferay.Service(
+							'/assettag/merge-tags',
+							{
+								fromTagIds: fromIds,
+								overrideProperties: overrideProperties,
 								toTagId: toId
 							},
 							callback
@@ -1288,7 +1288,7 @@ AUI.add(
 
 						AObject.each(
 							paginationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								var historyEntry = item.historyEntry;
 
 								var value;
@@ -1334,31 +1334,6 @@ AUI.add(
 						);
 
 						instance._updateTag(form);
-					},
-
-					_onTagsListClick: function(event) {
-						var instance = this;
-
-						instance._onTagsListSelect(event);
-
-						var target = event.target;
-
-						if (target.hasClass('tag-item-check')) {
-							Liferay.Util.checkAllBox(event.currentTarget, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTagsCheckbox');
-
-							instance._toggleStagedTagItem(target);
-						}
-						else if (target.hasClass('tag-item-actions-trigger')) {
-							instance._onShowTagPanel(event, ACTION_EDIT);
-						}
-					},
-
-					_onTagsListSelect: function(event) {
-						var instance = this;
-
-						var tagId = instance._getTagId(event.target);
-
-						instance._selectTag(tagId);
 					},
 
 					_onTagMergeClick: function(event) {
@@ -1481,6 +1456,31 @@ AUI.add(
 						instance._tagViewContainer.html(response);
 					},
 
+					_onTagsListClick: function(event) {
+						var instance = this;
+
+						instance._onTagsListSelect(event);
+
+						var target = event.target;
+
+						if (target.hasClass('tag-item-check')) {
+							Liferay.Util.checkAllBox(event.currentTarget, 'tag-item-check', '#' + instance._prefixedPortletId + 'checkAllTagsCheckbox');
+
+							instance._toggleStagedTagItem(target);
+						}
+						else if (target.hasClass('tag-item-actions-trigger')) {
+							instance._onShowTagPanel(event, ACTION_EDIT);
+						}
+					},
+
+					_onTagsListSelect: function(event) {
+						var instance = this;
+
+						var tagId = instance._getTagId(event.target);
+
+						instance._selectTag(tagId);
+					},
+
 					_prepareTags: function(tags, callback) {
 						var instance = this;
 
@@ -1494,7 +1494,7 @@ AUI.add(
 
 							A.each(
 								tags,
-								function(item, index, collection) {
+								function(item, index) {
 									if (index === 0) {
 										item.cssClassSelected = 'active';
 									}
@@ -1787,6 +1787,12 @@ AUI.add(
 						instance._tagsActionsButton.toggle(hasTags);
 					},
 
+					_unselectAllTags: function() {
+						var instance = this;
+
+						A.all(instance._tagsItemsSelector).removeClass('active');
+					},
+
 					_updateMergeItemsTarget: function() {
 						var instance = this;
 
@@ -1821,21 +1827,15 @@ AUI.add(
 
 						if (selectedTag) {
 							previousTagData = {
-								tagNode: selectedTag,
 								nextSibling: selectedTag.next(),
-								previousSibling: selectedTag.previous()
+								previousSibling: selectedTag.previous(),
+								tagNode: selectedTag
 							};
 
 							selectedTag.remove();
 
 							instance._previousTagData = previousTagData;
 						}
-					},
-
-					_unselectAllTags: function() {
-						var instance = this;
-
-						A.all(instance._tagsItemsSelector).removeClass('active');
 					},
 
 					_updateTag: function(form) {
@@ -1872,6 +1872,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-button', 'aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-loading-mask-deprecated', 'aui-pagination', 'aui-tree-view', 'autocomplete-base', 'dd', 'json', 'liferay-form','liferay-history-manager', 'liferay-portlet-url', 'liferay-token-list', 'liferay-util-window']
+		requires: ['aui-button', 'aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-loading-mask-deprecated', 'aui-pagination', 'aui-tree-view', 'autocomplete-base', 'dd', 'json', 'liferay-form', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-token-list', 'liferay-util-window']
 	}
 );

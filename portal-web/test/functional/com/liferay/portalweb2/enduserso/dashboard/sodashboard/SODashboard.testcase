@@ -736,6 +736,50 @@
 		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="SITE_NAME" />
 	</command>
 
+	<command name="ViewEventStartTimeEndTimeEventsDisplay" priority="5">
+		<var name="endDateTime" value="11:59 PM" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar Page" />
+		<var name="portletName" value="Calendar" />
+		<var name="soPage" value="true" />
+		<var name="startDateTime" value="12:00 AM" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOUserBar#addPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPGSetTime">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="setEndDateTime" value="${endDateTime}" />
+			<var name="setStartDateTime" value="${startDateTime}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SODashboard#viewTodaysEvent">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="eventDescription" value="${eventDescription}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="startDateTime" value="${startDateTime}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="SITE_NAME" />
+	</command>
+
 	<command name="ViewLinkContactscenter" priority="5">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -849,6 +893,7 @@
 
 		<execute macro="SODashboard#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
@@ -912,18 +957,63 @@
 
 		<execute macro="SODashboard#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 
 		<execute macro="SODashboard#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="schedulerEventDialogBox" value="true" />
 		</execute>
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 
 		<execute macro="SODashboard#viewTodaysEventSiteEvent">
 			<var name="eventTitle" value="${eventTitle3}" />
+			<var name="schedulerEventDialogBox" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+	</command>
+
+	<command name="ViewSiteEventStartTimeEndTimeEventsDisplay" priority="5">
+		<var name="endDateTime" value="11:59 PM" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="startDateTime" value="12:00 AM" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPGSetTime">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="setEndDateTime" value="${endDateTime}" />
+			<var name="setStartDateTime" value="${startDateTime}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SODashboard#viewTodaysEventSiteEvent">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
+			<var name="startDateTime" value="${startDateTime}" />
 		</execute>
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />

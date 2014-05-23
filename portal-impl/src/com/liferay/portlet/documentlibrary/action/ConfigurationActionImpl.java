@@ -15,17 +15,13 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -57,13 +53,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		return new DLSettings(super.getSettings(actionRequest));
 	}
 
 	protected void validate(ActionRequest actionRequest) throws Exception {

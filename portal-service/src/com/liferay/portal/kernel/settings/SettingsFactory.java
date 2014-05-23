@@ -58,4 +58,7 @@ public interface SettingsFactory {
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
 		throws PortalException, SystemException;
 
+	public void registerFallbackKeys(
+		String settingsId, FallbackKeys fallbackKeys);
+
 }

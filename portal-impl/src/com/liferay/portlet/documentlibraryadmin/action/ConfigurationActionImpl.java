@@ -14,10 +14,7 @@
 
 package com.liferay.portlet.documentlibraryadmin.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,13 +47,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		return new DLSettings(super.getSettings(actionRequest));
 	}
 
 	protected void validate(ActionRequest actionRequest) throws Exception {

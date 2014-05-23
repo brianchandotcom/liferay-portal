@@ -101,6 +101,12 @@ public class SettingsFactoryUtil {
 		return _settingsFactory;
 	}
 
+	public static void registerFallbackKeys(
+		String settingsId, FallbackKeys fallbackKeys) {
+
+		getSettingsFactory().registerFallbackKeys(settingsId, fallbackKeys);
+	}
+
 	public void setSettingsFactory(SettingsFactory settingsFactory) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

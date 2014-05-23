@@ -7,14 +7,14 @@
 <#assign mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!"" />
 <#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
 
-<#assign companyPrefs = prefsPropsUtil.getPreferences(companyId) />
+<#assign companyPortletPreferences = prefsPropsUtil.getPreferences(companyId) />
 
 <#if mapsAPIProvider = "">
-	<#assign mapsAPIProvider = companyPrefs.getValue("mapsAPIProvider", "openStreetMap") />
+	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "openStreetMap") />
 </#if>
 
 <#if apiKey = "">
-	<#assign apiKey = companyPrefs.getValue("googleMapsAPIKey", "") />
+	<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
 </#if>
 
 <#assign defaultLatitude = -3.6833 />

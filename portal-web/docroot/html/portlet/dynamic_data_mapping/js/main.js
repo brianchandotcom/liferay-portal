@@ -14,14 +14,6 @@ AUI.add(
 
 		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue', 'tip'];
 
-		var MAP_HIDDEN_FIELD_ATTRS = {
-			checkbox: ['readOnly', 'required'],
-
-			separator: ['readOnly', 'required', 'predefinedValue', 'indexType'],
-
-			DEFAULT: ['readOnly']
-		};
-
 		var STR_BLANK = '';
 
 		var MAP_ELEMENT_DATA = {
@@ -69,9 +61,9 @@ AUI.add(
 					}
 				},
 
-				NAME: 'availableField',
+				EXTENDS: A.FormBuilderAvailableField,
 
-				EXTENDS: A.FormBuilderAvailableField
+				NAME: 'availableField'
 			}
 		);
 
@@ -93,37 +85,6 @@ AUI.add(
 
 					portletResourceNamespace: {
 						value: STR_BLANK
-					},
-
-					translationManager: {
-						validator: isObject,
-						value: {}
-					},
-
-					validator: {
-						setter: function(val) {
-							var instance = this;
-
-							var config = A.merge(
-								{
-									rules: {
-										name: {
-											required: true,
-											structureFieldName: true
-										}
-									},
-									fieldStrings: {
-										name: {
-											required: Liferay.Language.get('this-field-is-required')
-										}
-									}
-								},
-								val
-							);
-
-							return config;
-						},
-						value: {}
 					},
 
 					strings: {
@@ -157,6 +118,37 @@ AUI.add(
 							width: Liferay.Language.get('width'),
 							yes: Liferay.Language.get('yes')
 						}
+					},
+
+					translationManager: {
+						validator: isObject,
+						value: {}
+					},
+
+					validator: {
+						setter: function(val) {
+							var instance = this;
+
+							var config = A.merge(
+								{
+									fieldStrings: {
+										name: {
+											required: Liferay.Language.get('this-field-is-required')
+										}
+									},
+									rules: {
+										name: {
+											required: true,
+											structureFieldName: true
+										}
+									}
+								},
+								val
+							);
+
+							return config;
+						},
+						value: {}
 					}
 				},
 
@@ -164,12 +156,24 @@ AUI.add(
 
 				NAME: 'liferayformbuilder',
 
+				normalizeKey: function(str) {
+					A.each(
+						str,
+						function(item, index, collection) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+								str = str.replace(item, STR_SPACE);
+							}
+						}
+					);
+
+					return str.replace(/\s/g, '_');
+				},
+
 				prototype: {
 					initializer: function() {
 						var instance = this;
 
 						instance.LOCALIZABLE_FIELD_ATTRS = A.Array(LOCALIZABLE_FIELD_ATTRS);
-						instance.MAP_HIDDEN_FIELD_ATTRS = A.clone(MAP_HIDDEN_FIELD_ATTRS);
 
 						var translationManager = instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
 
@@ -693,19 +697,6 @@ AUI.add(
 							}
 						);
 					}
-				},
-
-				normalizeKey: function(str) {
-					A.each(
-						str,
-						function(item, index, collection) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
-								str = str.replace(item, STR_SPACE);
-							}
-						}
-					);
-
-					return str.replace(/\s/g, '_');
 				}
 			}
 		);
@@ -713,6 +704,92 @@ AUI.add(
 		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'icon-fb-custom-field';
 
 		var AVAILABLE_FIELDS = {
+			DDM_STRUCTURE: [
+				{
+					iconClass: 'icon-fb-boolean',
+					label: Liferay.Language.get('boolean'),
+					type: 'checkbox'
+				},
+				{
+					iconClass: 'icon-calendar',
+					label: Liferay.Language.get('date'),
+					type: 'ddm-date'
+				},
+				{
+					iconClass: 'icon-fb-decimal',
+					label: Liferay.Language.get('decimal'),
+					type: 'ddm-decimal'
+				},
+				{
+					iconClass: 'icon-file-text',
+					label: Liferay.Language.get('documents-and-media'),
+					type: 'ddm-documentlibrary'
+				},
+				{
+					iconClass: 'icon-edit-sign',
+					label: Liferay.Language.get('html'),
+					type: 'ddm-text-html'
+				},
+				{
+					iconClass: 'icon-globe',
+					label: Liferay.Language.get('geolocation'),
+					type: 'ddm-geolocation'
+				},
+				{
+					iconClass: 'icon-fb-integer',
+					label: Liferay.Language.get('integer'),
+					type: 'ddm-integer'
+				},
+				{
+					iconClass: 'icon-link',
+					label: Liferay.Language.get('link-to-page'),
+					type: 'ddm-link-to-page'
+				},
+				{
+					iconClass: 'icon-fb-number',
+					label: Liferay.Language.get('number'),
+					type: 'ddm-number'
+				},
+				{
+					iconClass: 'icon-fb-radio',
+					label: Liferay.Language.get('radio'),
+					type: 'radio'
+				},
+				{
+					iconClass: 'icon-fb-select',
+					label: Liferay.Language.get('select'),
+					type: 'select'
+				},
+				{
+					iconClass: 'icon-fb-text',
+					label: Liferay.Language.get('text'),
+					type: 'text'
+				},
+				{
+					iconClass: 'icon-fb-text-box',
+					label: Liferay.Language.get('text-box'),
+					type: 'textarea'
+				}
+			],
+
+			DDM_TEMPLATE: [
+				{
+					iconClass: 'icon-fb-paragraph',
+					label: Liferay.Language.get('paragraph'),
+					type: 'ddm-paragraph'
+				},
+				{
+					iconClass: 'icon-fb-separator',
+					label: Liferay.Language.get('separator'),
+					type: 'ddm-separator'
+				},
+				{
+					iconClass: 'icon-fb-fieldset',
+					label: Liferay.Language.get('fieldset'),
+					type: 'fieldset'
+				}
+			],
+
 			DEFAULT: [
 				{
 					fieldLabel: Liferay.Language.get('button'),
@@ -758,117 +835,13 @@ AUI.add(
 				}
 			],
 
-			DDM_STRUCTURE: [
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.checkbox,
-					iconClass: 'icon-fb-boolean',
-					label: Liferay.Language.get('boolean'),
-					type: 'checkbox'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-calendar',
-					label: Liferay.Language.get('date'),
-					type: 'ddm-date'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-decimal',
-					label: Liferay.Language.get('decimal'),
-					type: 'ddm-decimal'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-file-text',
-					label: Liferay.Language.get('documents-and-media'),
-					type: 'ddm-documentlibrary'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-edit-sign',
-					label: Liferay.Language.get('html'),
-					type: 'ddm-text-html'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-globe',
-					label: Liferay.Language.get('geolocation'),
-					type: 'ddm-geolocation'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-integer',
-					label: Liferay.Language.get('integer'),
-					type: 'ddm-integer'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-link',
-					label: Liferay.Language.get('link-to-page'),
-					type: 'ddm-link-to-page'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-number',
-					label: Liferay.Language.get('number'),
-					type: 'ddm-number'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-radio',
-					label: Liferay.Language.get('radio'),
-					type: 'radio'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-select',
-					label: Liferay.Language.get('select'),
-					type: 'select'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-text',
-					label: Liferay.Language.get('text'),
-					type: 'text'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-text-box',
-					label: Liferay.Language.get('text-box'),
-					type: 'textarea'
-				}
-			],
-
-			DDM_TEMPLATE: [
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-paragraph',
-					label: Liferay.Language.get('paragraph'),
-					type: 'ddm-paragraph'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-separator',
-					label: Liferay.Language.get('separator'),
-					type: 'ddm-separator'
-				},
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-fb-fieldset',
-					label: Liferay.Language.get('fieldset'),
-					type: 'fieldset'
-				}
-			],
-
 			WCM_STRUCTURE: [
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-picture',
 					label: Liferay.Language.get('image'),
 					type: 'ddm-image'
 				},
 				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.separator,
 					iconClass: 'icon-fb-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'

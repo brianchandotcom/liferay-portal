@@ -44,15 +44,14 @@
 
 			NAME: 'liferay-autocomplete-ckeditor',
 
-
 			prototype: {
 				initializer: function() {
 					var instance = this;
 
 					instance._replaceFn = {
-						html: A.bind(instance._replaceHtml, instance),
-						text: A.bind(instance._replaceText, instance)
-					}
+						html: A.bind('_replaceHtml', instance),
+						text: A.bind('_replaceText', instance)
+					};
 
 					A.Do.after(instance._bindUI, instance, '_bindUIACIBase', instance);
 				},
@@ -71,13 +70,16 @@
 					var ac = instance._ac;
 
 					ac._inputNode.focus();
+
 					ac._updateValue(text);
+
 					ac._ariaSay(
 						'item_selected',
 						{
 							item: event.result.text
 						}
 					);
+
 					ac.hide();
 
 					event.preventDefault();
@@ -420,17 +422,16 @@
 				_replaceText: function(text, prevTermPosition) {
 					var instance = this;
 
+					var addChars;
+
 					var prevTermContainer = prevTermPosition.container;
+					var offset = prevTermPosition.index;
 
 					var containerAscendant = instance._getContainerAscendant(prevTermContainer);
 
 					var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
 
-					var offset = prevTermPosition.index;
-
 					var term = instance.get(STR_TERM);
-
-					var addChars;
 
 					var node = updateWalker.next();
 

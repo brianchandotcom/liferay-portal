@@ -769,6 +769,43 @@ AUI.add(
 				};
 			},
 
+			_getUploadStatus: function(key) {
+				var instance = this;
+
+				var dataSet = instance._getDataSet();
+
+				return dataSet.item(String(key));
+			},
+
+			_getUploadURL: function(folderId) {
+				var instance = this;
+
+				var uploadURL = instance._uploadURL;
+
+				if (!uploadURL) {
+					var config = instance._config;
+
+					var redirect = config.redirect;
+
+					uploadURL = unescape(config.uploadURL);
+
+					instance._uploadURL = Liferay.Util.addParams(
+						{
+							redirect: redirect,
+							ts: Lang.now()
+						},
+						uploadURL
+					);
+				}
+
+				return sub(
+					uploadURL,
+					{
+						folderId: folderId
+					}
+				);
+			},
+
 			_getUploader: function() {
 				var instance = this;
 
@@ -817,35 +854,6 @@ AUI.add(
 				}
 
 				return uploader;
-			},
-
-			_getUploadURL: function(folderId) {
-				var instance = this;
-
-				var uploadURL = instance._uploadURL;
-
-				if (!uploadURL) {
-					var config = instance._config;
-
-					var redirect = config.redirect;
-
-					uploadURL = unescape(config.uploadURL);
-
-					instance._uploadURL = Liferay.Util.addParams(
-						{
-							redirect: redirect,
-							ts: Lang.now()
-						},
-						uploadURL
-					);
-				}
-
-				return sub(
-					uploadURL,
-					{
-						folderId: folderId
-					}
-				);
 			},
 
 			_initDLUpload: function() {
@@ -905,14 +913,6 @@ AUI.add(
 				}
 			},
 
-			_getUploadStatus: function(key) {
-				var instance = this;
-
-				var dataSet = instance._getDataSet();
-
-				return dataSet.item(String(key));
-			},
-
 			_onFileSelect: function(event) {
 				var instance = this;
 
@@ -960,10 +960,10 @@ AUI.add(
 						key,
 						{
 							fileList: validFiles,
-							target: folderNode,
 							folder: (key != instance._folderId),
 							folderId: key,
-							invalidFiles: filesPartition.rejects
+							invalidFiles: filesPartition.rejects,
+							target: folderNode
 						}
 					);
 				}
@@ -1142,16 +1142,6 @@ AUI.add(
 				progressBar.set('value', Math.ceil(value));
 			},
 
-			_updateThumbnail: function(node, fileName) {
-				var instance = this;
-
-				var imageNode = node.one('img');
-
-				var thumbnailPath = instance._getMediaThumbnail(fileName);
-
-				imageNode.attr('src', thumbnailPath);
-			},
-
 			_updateStatusUI: function(target, filesPartition) {
 				var instance = this;
 
@@ -1196,6 +1186,16 @@ AUI.add(
 						}
 					);
 				}
+			},
+
+			_updateThumbnail: function(node, fileName) {
+				var instance = this;
+
+				var imageNode = node.one('img');
+
+				var thumbnailPath = instance._getMediaThumbnail(fileName);
+
+				imageNode.attr('src', thumbnailPath);
 			},
 
 			_validateFiles: function(data) {

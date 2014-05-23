@@ -88,7 +88,7 @@ public class InputSearchTag extends IncludeTag {
 		String cssClass = _cssClass;
 
 		if (Validator.isNull(cssClass)) {
-			cssClass = "input-append";
+			cssClass = "";
 		}
 
 		String name = _name;

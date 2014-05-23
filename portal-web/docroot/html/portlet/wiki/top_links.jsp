@@ -151,8 +151,8 @@ if (categoryId > 0) {
 			<portlet:param name="struts_action" value="/wiki/search" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
+		<aui:nav-bar-search>
+			<div class="col-sm-5 col-md-4 col-lg-3 form-search">
 				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

@@ -62,7 +62,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</aui:nav>
 
 		<c:if test="<%= !passwordPolicyEnabled %>">
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/password_policies_admin/password_policy_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/html/portlet/password_policies_admin/password_policy_search.jsp" searchContainer="<%= searchContainer %>" />
 		</c:if>
 	</aui:nav-bar>
 

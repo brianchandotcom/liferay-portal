@@ -76,7 +76,7 @@ String portletURLString = portletURL.toString();
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
+		<aui:nav-bar-search file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
 	</aui:nav-bar>
 
 	<%

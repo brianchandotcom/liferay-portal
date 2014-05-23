@@ -27,9 +27,12 @@ boolean showButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:inpu
 String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:title"));
 
 String value = ParamUtil.getString(request, name);
+
+cssClass = cssClass.isEmpty() ? "input-group" : " input-group";
+
 %>
 
-<div class="input-group <%= cssClass %>">
+<div class="<%= cssClass %>">
 	<label class="hide-accessible" for="<portlet:namespace /><%= id %>"><%= title %></label>
 
 	<input class="form-control search-query" id="<portlet:namespace /><%= id %>" name="<portlet:namespace /><%= name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />

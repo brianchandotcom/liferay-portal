@@ -27,7 +27,7 @@
 
 		return !A.Array.some(
 			window.<portlet:namespace />structure,
-			function(item, index, collection) {
+			function(item, index) {
 				var fieldName = item.name;
 				var fieldValue = activeRecord.get(fieldName);
 

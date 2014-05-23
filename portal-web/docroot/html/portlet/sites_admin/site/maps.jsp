@@ -19,9 +19,9 @@
 <%
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-String portalMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "openStreetMap");
+String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "openStreetMap");
 
-String portalGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
+String companyGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
@@ -34,9 +34,8 @@ else {
 	groupTypeSettings = new UnicodeProperties();
 }
 
-String mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", portalMapsAPIProvider);
-
-String googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", portalGoogleMapsAPIKey);
+String groupMapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", companyMapsAPIProvider);
+String groupGoogleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", companyGoogleMapsAPIKey);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
@@ -45,12 +44,12 @@ String googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, reque
 
 <p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
-<aui:input checked='<%= mapsAPIProvider.equals("openStreetMap") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="openStreetMap" />
+<aui:input checked='<%= groupMapsAPIProvider.equals("openStreetMap") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="openStreetMap" />
 
-<aui:input checked='<%= mapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="googleMaps" />
+<aui:input checked='<%= groupMapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="TypeSettingsProperties--mapsAPIProvider--" type="radio" value="googleMaps" />
 
 <div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
-	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
+	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= groupGoogleMapsAPIKey %>" />
 </div>
 
 <aui:script>

@@ -2372,6 +2372,16 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
+	public List<JournalArticle> getArticles(
+			long groupId, String articleId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_A(
+			groupId, articleId, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<JournalArticle> getArticlesByResourcePrimKey(
 			long resourcePrimKey)
 		throws SystemException {
@@ -2427,6 +2437,13 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticlePersistence.countByG_F_ST(
 			groupId, folderId, status);
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, String articleId)
+		throws SystemException {
+
+		return journalArticlePersistence.countByG_A(groupId, articleId);
 	}
 
 	/**

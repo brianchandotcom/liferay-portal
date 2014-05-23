@@ -140,7 +140,7 @@ AUI.add(
 								results.push(
 									{
 										node: item,
-										searchData: item.one('.version-title').text()
+										searchData: item.one('.version-title').text() + '|' + item.attr('data-user-name')
 									}
 								);
 							}
@@ -156,7 +156,7 @@ AUI.add(
 									queryDelay: 0,
 									source: results,
 									resultTextLocator: 'searchData',
-									resultFilters: 'phraseMatch'
+									resultFilters: 'subWordMatch'
 								}
 							);
 						}

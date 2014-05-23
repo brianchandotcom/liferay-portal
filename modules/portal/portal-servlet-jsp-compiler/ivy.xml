@@ -18,7 +18,7 @@
 		<dependency name="jetty-util" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
 		<dependency name="jetty-websocket" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
 		<dependency name="org.apache.jasper.glassfish" org="org.eclipse.jetty.orbit" rev="2.1.0.v201110031002" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="phidias" org="com.github.rotty3000" rev="0.2.1" />
 	</dependencies>
 </ivy-module>

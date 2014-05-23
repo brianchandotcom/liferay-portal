@@ -322,7 +322,7 @@ AUI.add(
 						var tagItemChecks = instance._tagsList.all('.tag-item-check');
 
 						tagItemChecks.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var checked = item.attr('checked');
 
 								if (currentCheckedStatus && !checked) {
@@ -341,7 +341,7 @@ AUI.add(
 						var instance = this;
 
 						instance._getStagedTags().each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._checkTag(item, true);
 							}
 						);
@@ -1190,7 +1190,7 @@ AUI.add(
 							targetTagsList.empty();
 
 							selectedTagsNodes.each(
-								function(item, index, collection) {
+								function(item, index) {
 									var name = checkedItemsName[index];
 
 									var listItem = Lang.sub(

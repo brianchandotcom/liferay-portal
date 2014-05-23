@@ -33,6 +33,8 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionModelImpl;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.test.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;

@@ -32,6 +32,8 @@ import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
 import com.liferay.portal.service.BrowserTrackerLocalServiceUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.test.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;

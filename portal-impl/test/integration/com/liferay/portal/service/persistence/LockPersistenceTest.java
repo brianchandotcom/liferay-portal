@@ -35,6 +35,8 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LockModelImpl;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.test.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;

@@ -849,8 +849,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
-	 		<var name="check" value="true" />
-	 		<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
+			<var name="check" value="true" />
+			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -904,7 +904,7 @@
 
 		<execute macro="AssetPublisherPortlet#configureDisplayConversionsPG">
 			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
-	 		<var name="uncheck" value="true" />
+			<var name="uncheck" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

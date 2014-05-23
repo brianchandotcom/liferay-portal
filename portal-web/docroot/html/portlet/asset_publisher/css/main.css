@@ -1,7 +1,7 @@
 .portlet-asset-publisher {
 	.asset-abstract {
 		border-bottom: 1px solid #DDD;
-		margin-bottom: 2em;
+		padding: 0.6em 0;
 
 		.asset-content p {
 			margin-bottom: 0;
@@ -18,9 +18,7 @@
 
 	.asset-content {
 		clear: right;
-		margin-bottom: 10px;
-		margin-left: 25px;
-		margin-right: 10px;
+		padding: 10px;
 
 		.asset-description {
 			clear: left;
@@ -53,8 +51,8 @@
 
 	.asset-metadata {
 		clear: both;
-		margin-left: 25px;
 		overflow: hidden;
+		padding: 10px;
 
 		span {
 			display: inline-block;
@@ -87,7 +85,7 @@
 		margin-top: 10px;
 
 		.icon-edit-sign {
-			font-size: 20px;
+			font-size: 2em;
 		}
 	}
 
@@ -122,8 +120,7 @@
 	}
 
 	.asset-title {
-		margin-right: 20px;
-		padding-bottom: 1px;
+		padding: 10px;
 
 		.asset-actions img {
 			margin-left: 5px;
@@ -175,6 +172,7 @@
 
 	.metadata-entry {
 		color: #999;
+		margin-right: 2em;
 	}
 
 	.single-item-button {

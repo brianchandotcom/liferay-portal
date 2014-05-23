@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -63,6 +68,16 @@
 <tr>
 	<td>THREAD_ACTIONS_UNSUBSCRIBE</td>
 	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_ACTIONS_LOCK_THREAD</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Lock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_ACTIONS_UNLOCK_THREAD</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unlock Thread')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -148,8 +163,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_BODY_1_BLOCK_QUOTE</td>
+	<td>xpath=(//div[@class='thread-body'])[1]//div[@class='quote-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_BODY_2</td>
 	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BODY_2_BLOCK_QUOTE</td>
+	<td>xpath=(//div[@class='thread-body'])[2]//div[@class='quote-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -158,8 +183,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_BODY_3_BLOCK_QUOTE</td>
+	<td>xpath=(//div[@class='thread-body'])[3]//div[@class='quote-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_BODY_4</td>
 	<td>xpath=(//div[@class='thread-body'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BODY_4_BLOCK_QUOTE</td>
+	<td>xpath=(//div[@class='thread-body'])[4]//div[@class='quote-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -245,6 +280,21 @@
 <tr>
 	<td>MESSAGE_QUICK_REPLY_3</td>
 	<td>xpath=(//span[.='Quick Reply'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_WITH_QUOTE_1</td>
+	<td>xpath=(//span[.='Reply with Quote'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_WITH_QUOTE_2</td>
+	<td>xpath=(//span[.='Reply with Quote'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_WITH_QUOTE_3</td>
+	<td>xpath=(//span[.='Reply with Quote'])[3]</td>
 	<td></td>
 </tr>
 <tr>

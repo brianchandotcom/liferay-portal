@@ -33,6 +33,11 @@
 	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
+<tr><!--This locator is necessary for tests that require the sendKey action-->
+	<td>BODY_FIELD_SOURCE_ON_SEND_KEYS</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button__source')]</td>

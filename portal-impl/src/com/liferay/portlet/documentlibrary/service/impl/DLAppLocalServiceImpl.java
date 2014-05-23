@@ -1308,8 +1308,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
 
-		return localRepository.updateFolder(
+		Folder folder = localRepository.updateFolder(
 			folderId, parentFolderId, name, description, serviceContext);
+
+		dlAppHelperLocalService.updateFolder(
+			serviceContext.getUserId(), folder, serviceContext);
+
+		return folder;
 	}
 
 	protected FileEntry copyFileEntry(

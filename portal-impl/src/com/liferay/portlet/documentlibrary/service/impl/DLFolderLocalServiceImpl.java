@@ -1013,11 +1013,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					serviceContext);
 			}
 
-			// App helper
-
-			dlAppHelperLocalService.updateFolder(
-				userId, new LiferayFolder(dlFolder), serviceContext);
-
 			return dlFolder;
 		}
 		finally {

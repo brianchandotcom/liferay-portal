@@ -98,11 +98,11 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 		</liferay-ui:custom-attributes-available>
 
 		<div class="lfr-asset-metadata">
-			<div class="lfr-asset-icon lfr-asset-author">
+			<div class="icon-user lfr-asset-icon">
 				<%= LanguageUtil.format(pageContext, "created-by-x", HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), themeDisplay.getScopeGroupName())), false) %>
 			</div>
 
-			<div class="lfr-asset-icon lfr-asset-date">
+			<div class="icon-calendar lfr-asset-icon">
 				<%= dateFormatDate.format(entry.getCreateDate()) %>
 			</div>
 

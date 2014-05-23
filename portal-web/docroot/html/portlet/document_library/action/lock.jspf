@@ -24,7 +24,7 @@
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="lock"
+			iconCssClass="icon-unlock"
 			message="checkout[document]"
 			url="<%= checkOutURL %>"
 		/>
@@ -38,7 +38,7 @@
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="unlock"
+			iconCssClass="icon-lock"
 			message="checkin"
 			url="<%= checkInURL %>"
 		/>
@@ -52,7 +52,7 @@
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="undo"
+			iconCssClass="icon-remove"
 			message="cancel-checkout[document]"
 			url="<%= cancelCheckOutURL %>"
 		/>

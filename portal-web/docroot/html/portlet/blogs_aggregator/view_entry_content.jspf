@@ -42,9 +42,9 @@
 			<div class="entry-info">
 				<span class="entry-title"><a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></a></span>
 
-				<span class="entry-author"><liferay-ui:message key="written-by" /> <a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %></a>,</span>
+				<span class="icon-user entry-author"><liferay-ui:message key="written-by" /> <a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %></a></span>
 
-				<span class="entry-date"><liferay-ui:message key="on-date" /> <%= dateFormatDateTime.format(entry.getDisplayDate()) %></span>
+				<span class="icon-calendar entry-date"><liferay-ui:message key="on-date" /> <%= dateFormatDateTime.format(entry.getDisplayDate()) %></span>
 
 				<span class="entry-categories">
 					<liferay-ui:asset-categories-summary

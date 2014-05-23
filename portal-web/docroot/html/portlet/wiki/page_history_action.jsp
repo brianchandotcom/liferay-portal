@@ -34,7 +34,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="undo"
+			iconCssClass="icon-undo"
 			message="revert"
 			url="<%= revertURL %>"
 		/>

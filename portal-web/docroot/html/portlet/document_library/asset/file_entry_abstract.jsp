@@ -60,7 +60,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				%>
 
 				<liferay-ui:icon
-					image="download"
+					iconCssClass="icon-download"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(pageContext, "download-x", taglibFileEntryTitle, false) + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 					url="<%= assetRenderer.getURLDownload(themeDisplay) %>"

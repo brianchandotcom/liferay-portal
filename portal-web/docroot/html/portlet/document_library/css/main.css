@@ -71,6 +71,12 @@
 		margin-bottom: 0;
 	}
 
+	.drive-error {
+		.icon-hdd {
+			color: #C00;
+		}
+	}
+
 	.move-list {
 		.move-file, .move-folder {
 			background: #F0FAF0 url() no-repeat 5px 50%;
@@ -152,7 +158,7 @@
 		.lfr-asset-summary {
 			margin-left: 5px;
 
-			.download-document, .conversions, .lfr-asset-author, .webdav-url {
+			.download-document, .conversions, .webdav-url {
 				display: block;
 				margin: 0.7em 0;
 			}
@@ -170,50 +176,6 @@
 				font-size: 1.4em;
 				font-weight: bold;
 			}
-		}
-
-		.icon-delete, .icon-download, .icon-edit, .icon-lock, .icon-move, .icon-permissions, .icon-trash, .icon-undo, .icon-unlock {
-			background: url() no-repeat 0 0;
-		}
-
-		.icon-delete {
-			background-image: url(@theme_image_path@/common/delete.png);
-		}
-
-		.icon-download {
-			background-image: url(@theme_image_path@/common/download.png);
-		}
-
-		.icon-edit {
-			background-image: url(@theme_image_path@/common/edit.png);
-		}
-
-		.icon-lock {
-			background-image: url(@theme_image_path@/common/lock.png);
-		}
-
-		.icon-move {
-			background-image: url(@theme_image_path@/common/submit.png);
-		}
-
-		.icon-msoffice {
-			background-image: url(@theme_image_path@/document_library/msoffice.png);
-		}
-
-		.icon-permissions {
-			background-image: url(@theme_image_path@/common/permissions.png);
-		}
-
-		.icon-trash {
-			background-image: url(@theme_image_path@/common/trash.png);
-		}
-
-		.icon-undo {
-			background-image: url(@theme_image_path@/common/undo.png);
-		}
-
-		.icon-unlock {
-			background-image: url(@theme_image_path@/common/unlock.png);
 		}
 	}
 
@@ -299,11 +261,6 @@
 		.lfr-panel-titlebar {
 			margin-top: 0;
 		}
-	}
-
-	.version.document-locked {
-		background: url(@theme_image_path@/common/lock.png) no-repeat 0 50%;
-		padding-left: 20px;
 	}
 
 	.common-file-metadata-container {
@@ -476,23 +433,18 @@
 			}
 
 			.lfr-asset-icon {
-				background-position: 0 2px;
-				background-repeat: no-repeat;
 				border-right-width: 0;
+				display: block;
 				float: none;
-				padding: 2px 0 2px 20px;
-			}
-
-			.lfr-asset-author {
-				background-image: url(@theme_image_path@/portlet/edit_defaults.png);
-			}
-
-			.lfr-asset-downloads {
-				background-image: url(@theme_image_path@/common/download.png);
+				padding: 2px 0 2px 0px;
 			}
 
 			.lfr-asset-ratings {
 				margin: 0 0 1em;
+			}
+
+			.workflow-status {
+				padding-left: 0;
 			}
 		}
 

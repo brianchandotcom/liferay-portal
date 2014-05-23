@@ -60,7 +60,7 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(thread.getLastPostByUserId
 		%>
 
 		<liferay-ui:icon
-			image="../aui/time"
+			iconCssClass="icon-time"
 			label="<%= true %>"
 			message='<%= LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, lastPostAgo, true), false) %>'
 		/>

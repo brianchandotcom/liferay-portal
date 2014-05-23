@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 BlogsEntry entry = (BlogsEntry)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>" triggerCssClass="btn">
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewEntryURL">
 			<portlet:param name="struts_action" value="/blogs_admin/view_entry" />
@@ -35,7 +35,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view"
+			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewEntryURL %>"
 		/>
@@ -50,7 +50,8 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editEntryURL %>"
 		/>
 	</c:if>
@@ -65,7 +66,8 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsEntryURL %>"
 			useDialog="<%= true %>"

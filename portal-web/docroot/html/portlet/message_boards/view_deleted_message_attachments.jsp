@@ -86,8 +86,15 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 			href="<%= rowHREF %>"
 			name="file-name"
 		>
+
+			<%
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+			%>
+
 			<liferay-ui:icon
-				image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+				iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 				label="<%= true %>"
 				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 			/>

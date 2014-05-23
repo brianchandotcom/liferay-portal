@@ -32,7 +32,7 @@
 	%>
 
 	<liferay-ui:icon
-		image="submit"
+		iconCssClass="icon-move"
 		message="move"
 		url="<%= moveURL.toString() %>"
 	/>

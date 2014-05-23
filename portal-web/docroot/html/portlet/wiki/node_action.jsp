@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WikiNode node = (WikiNode)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/wiki/edit_node" />
@@ -31,7 +31,8 @@ WikiNode node = (WikiNode)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -46,7 +47,8 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -61,7 +63,7 @@ WikiNode node = (WikiNode)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="post"
+			iconCssClass="icon-long-arrow-up"
 			message="import-pages"
 			url="<%= importURL %>"
 		/>
@@ -87,7 +89,8 @@ WikiNode node = (WikiNode)row.getObject();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="unsubscribe"
+					iconCssClass="icon-remove-sign"
+					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
 			</c:when>
@@ -100,11 +103,27 @@ WikiNode node = (WikiNode)row.getObject();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					image="subscribe"
+					iconCssClass="icon-ok-sign"
+					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
 			</c:otherwise>
 		</c:choose>
+	</c:if>
+
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="viewDeletedAttachmentsURL">
+			<portlet:param name="struts_action" value="/wiki/view_node_deleted_attachments" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+			<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-paperclip"
+			message="view-removed-attachments"
+			url="<%= viewDeletedAttachmentsURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.DELETE) %>">
@@ -118,21 +137,6 @@ WikiNode node = (WikiNode)row.getObject();
 		<liferay-ui:icon-delete
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="viewDeletedAttachmentsURL">
-			<portlet:param name="struts_action" value="/wiki/view_node_deleted_attachments" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-			<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			image="delete_attachment"
-			message="view-removed-attachments"
-			url="<%= viewDeletedAttachmentsURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

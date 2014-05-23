@@ -44,7 +44,7 @@ if (workflowEnabled) {
 
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon
-		image="unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

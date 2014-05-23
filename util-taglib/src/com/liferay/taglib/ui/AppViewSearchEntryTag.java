@@ -41,16 +41,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJsp = actionJsp;
 	}
 
-	public void setContainerIcon(String containerIcon) {
-		_containerIcon = containerIcon;
-	}
-
 	public void setContainerName(String containerName) {
 		_containerName = containerName;
-	}
-
-	public void setContainerSrc(String containerSrc) {
-		_containerSrc = containerSrc;
 	}
 
 	public void setContainerType(String containerType) {
@@ -120,9 +112,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
-		_containerIcon = null;
 		_containerName = null;
-		_containerSrc = null;
 		_containerType = null;
 		_cssClass = null;
 		_description = null;
@@ -156,11 +146,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:containerIcon", _containerIcon);
-		request.setAttribute(
 			"liferay-ui:app-view-search-entry:containerName", _containerName);
-		request.setAttribute(
-			"liferay-ui:app-view-search-entry:containerSrc", _containerSrc);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:containerType", _containerType);
 		request.setAttribute(
@@ -205,9 +191,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_search_entry/page.jsp";
 
 	private String _actionJsp;
-	private String _containerIcon;
 	private String _containerName;
-	private String _containerSrc;
 	private String _containerType;
 	private String _cssClass;
 	private String _description;

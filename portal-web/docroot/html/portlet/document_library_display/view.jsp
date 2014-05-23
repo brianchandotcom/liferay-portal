@@ -122,15 +122,21 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 						</c:if>
 
 						<div class="lfr-asset-metadata">
-							<div class="lfr-asset-icon lfr-asset-date">
+							<div class="icon-calendar lfr-asset-icon">
 								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDateTime.format(folder.getModifiedDate()), false) %>
 							</div>
 
-							<div class="lfr-asset-icon lfr-asset-subfolders">
+							<%
+							AssetRendererFactory dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+							AssetRendererFactory dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+							%>
+
+							<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
 								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 							</div>
 
-							<div class="lfr-asset-icon lfr-asset-items last">
+							<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon last">
 								<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
 							</div>
 						</div>

@@ -24,7 +24,7 @@ FileEntry fileEntry = (FileEntry)row.getObject();
 MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId());
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 
 		<%
@@ -43,7 +43,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 		%>
 
 		<liferay-ui:icon
-			image="undo"
+			iconCssClass="icon-undo"
 			message="restore"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"

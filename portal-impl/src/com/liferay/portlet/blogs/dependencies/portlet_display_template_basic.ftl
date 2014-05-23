@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="entry-body">
-			<div class="entry-author">
+			<div class="icon-user entry-author">
 				<@liferay.language key="written-by" /> ${htmlUtil.escape(portalUtil.getUserName(entry.getUserId(), entry.getUserName()))}
 			</div>
 
@@ -31,7 +31,7 @@
 		</div>
 
 		<div class="entry-footer">
-			<span class="entry-date">
+			<span class="icon-date entry-date">
 				${dateUtil.getDate(entry.getCreateDate(), "dd MMM yyyy - HH:mm:ss", locale)}
 			</span>
 

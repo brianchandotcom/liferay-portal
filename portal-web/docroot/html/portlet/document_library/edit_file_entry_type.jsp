@@ -54,7 +54,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 <liferay-util:buffer var="removeStructureIcon">
 	<liferay-ui:icon
-		image="unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

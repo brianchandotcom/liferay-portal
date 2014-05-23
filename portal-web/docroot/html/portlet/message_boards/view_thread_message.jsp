@@ -78,7 +78,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="view"
+								iconCssClass="icon-search"
 								label="<%= true %>"
 								message="recent-posts"
 								method="get"
@@ -236,8 +236,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									</portlet:renderURL>
 
 									<liferay-ui:icon
-										image="reply"
+										iconCssClass="icon-reply"
 										label="<%= true %>"
+										message="reply"
 										url="<%= replyURL %>"
 									/>
 								</li>
@@ -252,7 +253,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									</portlet:renderURL>
 
 									<liferay-ui:icon
-										image="quote"
+										iconCssClass="icon-quote-left"
 										label="<%= true %>"
 										message="reply-with-quote"
 										url="<%= quoteURL %>"
@@ -265,7 +266,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									%>
 
 									<liferay-ui:icon
-										image="bottom"
+										iconCssClass="icon-long-arrow-down"
 										label="<%= true %>"
 										message="quick-reply"
 										url="<%= taglibQuickReplyURL %>"
@@ -344,10 +345,14 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										sb.append(StringPool.OPEN_PARENTHESIS);
 										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
+
+										AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+										AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 										%>
 
 										<liferay-ui:icon
-											image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+											iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 											label="<%= true %>"
 											message="<%= sb.toString() %>"
 											url="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
@@ -367,7 +372,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										</portlet:renderURL>
 
 										<liferay-ui:icon
-											image="delete_attachment"
+											iconCssClass="icon-paperclip"
 											label="<%= true %>"
 											message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
 											url="<%= viewTrashAttachmentsURL %>"
@@ -419,8 +424,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						%>
 
 						<liferay-ui:icon
-							image="top"
+							iconCssClass="icon-long-arrow-up"
 							label="<%= true %>"
+							message="top"
 							url="<%= topHREF %>"
 						/>
 					</li>
@@ -434,8 +440,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="edit"
+								iconCssClass="icon-edit"
 								label="<%= true %>"
+								message="edit"
 								url="<%= editURL %>"
 							/>
 						</li>
@@ -452,8 +459,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							/>
 
 							<liferay-ui:icon
-								image="permissions"
+								iconCssClass="icon-lock"
 								label="<%= true %>"
+								message="permissions"
 								method="get"
 								url="<%= permissionsURL %>"
 								useDialog="<%= true %>"
@@ -471,7 +479,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="unlink"
+								iconCssClass="icon-unlink"
 								label="<%= true %>"
 								message="split-thread"
 								url="<%= splitThreadURL %>"

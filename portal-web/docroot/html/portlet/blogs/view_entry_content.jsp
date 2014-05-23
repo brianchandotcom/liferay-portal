@@ -34,7 +34,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				%>
 
 				<c:if test="<%= !entry.isApproved() %>">
-					<h3>
+					<h3 class="icon-file-alt">
 						<liferay-ui:message key='<%= entry.isPending() ? "pending-approval" : WorkflowConstants.getStatusLabel(entry.getStatus()) %>' />
 					</h3>
 				</c:if>
@@ -51,7 +51,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<div class="entry-date">
+				<div class="icon-calendar entry-date">
 					<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 
 					<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
@@ -85,8 +85,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="edit"
+								iconCssClass="icon-edit"
 								label="<%= true %>"
+								message="edit"
 								url="<%= editEntryURL %>"
 							/>
 						</li>
@@ -103,8 +104,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							/>
 
 							<liferay-ui:icon
-								image="permissions"
+								iconCssClass="icon-lock"
 								label="<%= true %>"
+								message="permissions"
 								method="get"
 								url="<%= permissionsEntryURL %>"
 								useDialog="<%= true %>"
@@ -201,7 +203,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<div class="entry-footer">
-				<div class="entry-author">
+				<div class="icon-user entry-author">
 					<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %>
 				</div>
 

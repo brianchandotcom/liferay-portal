@@ -23,7 +23,7 @@
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view"
+			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewFileEntryURL %>"
 		/>

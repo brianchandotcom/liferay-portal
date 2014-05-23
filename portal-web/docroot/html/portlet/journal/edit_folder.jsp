@@ -44,7 +44,7 @@ if (workflowEnabled) {
 
 <liferay-util:buffer var="removeDDMStructureIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

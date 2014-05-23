@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.UniqueList;
 
 import java.lang.reflect.Method;
 
@@ -88,7 +89,7 @@ public class TestContextHandler {
 
 		List<Class<? extends ExecutionTestListener>>
 			executionTestListenerClasses =
-				new ArrayList<Class<? extends ExecutionTestListener>>();
+				new UniqueList<Class<? extends ExecutionTestListener>>();
 
 		while (declaringClass != null) {
 			ExecutionTestListeners executionTestListeners =

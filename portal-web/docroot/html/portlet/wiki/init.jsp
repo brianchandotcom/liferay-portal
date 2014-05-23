@@ -70,13 +70,6 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 WikiSettings wikiSettings = WikiUtil.getWikiSettings(scopeGroupId);
 WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, portletId);
 
-String displayStyle = wikiPortletInstanceSettings.getDisplayStyle();
-long displayStyleGroupId = wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
-boolean enableRelatedAssets = wikiPortletInstanceSettings.getEnableRelatedAssets();
-boolean enablePageRatings = wikiPortletInstanceSettings.getEnablePageRatings();
-boolean enableComments = wikiPortletInstanceSettings.getEnableComments();
-boolean enableCommentRatings = wikiPortletInstanceSettings.getEnableCommentRatings();
-
 List<WikiNode> allNodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
 List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
 
@@ -88,13 +81,6 @@ if (ArrayUtil.isNotEmpty(visibleNodes)) {
 else {
 	visibleNodes = allNodeNames.toArray(new String[allNodeNames.size()]);
 }
-
-String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
-
-boolean enableRSS = wikiPortletInstanceSettings.getEnableRSS();
-int rssDelta = wikiPortletInstanceSettings.getRssDelta();
-String rssDisplayStyle = wikiPortletInstanceSettings.getRssDisplayStyle();
-String rssFeedType = wikiPortletInstanceSettings.getRssFeedType();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

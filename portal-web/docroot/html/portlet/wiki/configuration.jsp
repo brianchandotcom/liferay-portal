@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-System.out.println("config portletId "+portletId);
 wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, portletId, request);
 %>
 
@@ -52,10 +51,10 @@ wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, po
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:section>
 				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
+					delta="<%= wikiPortletInstanceSettings.getRssDelta() %>"
+					displayStyle="<%= wikiPortletInstanceSettings.getRssDisplayStyle() %>"
+					enabled="<%= wikiPortletInstanceSettings.getEnableRSS() %>"
+					feedType="<%= wikiPortletInstanceSettings.getRssFeedType() %>"
 				/>
 			</liferay-ui:section>
 		</c:if>

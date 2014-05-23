@@ -454,14 +454,11 @@ public class WikiUtil {
 
 		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
 
-		Layout layout = themeDisplay.getLayout();
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletId = portletDisplay.getId();
-
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			WikiUtil.getWikiPortletInstanceSettings(layout, portletId);
+			WikiUtil.getWikiPortletInstanceSettings(
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String[] visibleNodeNames =
 			wikiPortletInstanceSettings.getVisibleNodes();

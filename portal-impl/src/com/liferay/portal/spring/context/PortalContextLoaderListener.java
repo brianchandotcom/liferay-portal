@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.CharBufferPool;
@@ -60,24 +59,10 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletContextBagPool;
-import com.liferay.portlet.blogs.BlogsSettings;
-import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.bookmarks.BookmarksSettings;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
-import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.messageboards.MBSettings;
-import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.shopping.ShoppingSettings;
-import com.liferay.portlet.shopping.util.ShoppingConstants;
-import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
-import com.liferay.portlet.wiki.util.WikiConstants;
 
 import java.beans.PropertyDescriptor;
 
@@ -341,8 +326,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		initListeners(servletContext);
-
-		initSettingsFactory();
 	}
 
 	protected void clearFilteredPropertyDescriptorsCache(
@@ -367,45 +350,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			servletContext.addListener(
 				SerializableSessionAttributeListener.class);
 		}
-	}
-
-	protected void initSettingsFactory() {
-		SettingsFactory settingsFactory =
-			SettingsFactoryUtil.getSettingsFactory();
-
-		settingsFactory.registerFallbackKeys(
-			BlogsConstants.SERVICE_NAME, BlogsSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			BookmarksConstants.SERVICE_NAME, BookmarksSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			MBConstants.SERVICE_NAME, MBSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			ShoppingConstants.SERVICE_NAME, ShoppingSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			WikiConstants.SERVICE_NAME, WikiSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			DLConstants.SERVICE_NAME, DLSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY,
-			DLPortletInstanceSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			DLPortletInstanceSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			DLPortletInstanceSettings.FALLBACK_KEYS);
-
-		settingsFactory.registerFallbackKeys(
-			PortletKeys.MEDIA_GALLERY_DISPLAY,
-			DLPortletInstanceSettings.FALLBACK_KEYS);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

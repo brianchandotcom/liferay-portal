@@ -31,29 +31,41 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 }
 %>
 
-<p class="asset-description">
-	<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
-</p>
-
 <c:if test="<%= fileVersion.isApproved() %>">
 	<div class="asset-resource-info">
 		<c:choose>
 			<c:when test="<%= showThumbnail && ImageProcessorUtil.hasImages(fileVersion) %>">
-				<div>
-					<img alt="<liferay-ui:message key="image" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
+				<div class="asset-thumbnail">
+					<img alt="<liferay-ui:message key="image" />" class="img-polaroid" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
 				</div>
+
+				<p class="asset-description">
+					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+				</p>
 			</c:when>
 			<c:when test="<%= showThumbnail && PDFProcessorUtil.hasImages(fileVersion) %>">
-				<div>
-					<img alt="<liferay-ui:message key="document" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
+				<div class="asset-thumbnail">
+					<img alt="<liferay-ui:message key="document" />" class="img-polaroid" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
 				</div>
+
+				<p class="asset-description">
+					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+				</p>
 			</c:when>
 			<c:when test="<%= showThumbnail && VideoProcessorUtil.hasVideo(fileVersion) %>">
-				<div>
-					<img alt="<liferay-ui:message key="video" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
+				<div class="asset-thumbnail">
+					<img alt="<liferay-ui:message key="video" />" class="img-polaroid" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
 				</div>
+
+				<p class="asset-description">
+					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+				</p>
 			</c:when>
 			<c:otherwise>
+
+				<p class="asset-description">
+					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+				</p>
 
 				<%
 				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";

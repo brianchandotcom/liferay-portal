@@ -44,18 +44,50 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 	<div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) ? "default-asset-publisher" : StringPool.BLANK %>">
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
-		<h3 class="asset-title">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(viewURL) %>">
-					<a class="<%= assetRenderer.getIconCssClass() %>" href="<%= viewURL %>"> <%= HtmlUtil.escape(title) %></a>
-				</c:when>
-				<c:otherwise>
-					<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+		<h4 class="asset-title">
+			<c:if test="<%= Validator.isNotNull(viewURL) %>">
+				<a href="<%= viewURL %>">
+			</c:if>
 
-					<%= HtmlUtil.escape(title) %>
-				</c:otherwise>
-			</c:choose>
-		</h3>
+				<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
+				<%= HtmlUtil.escape(title) %>
+
+			<c:if test="<%=  %>">
+				</a>
+			</c:if>
+		</h4>
+
+		<%
+		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+		%>
+
+		<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
+			<div class="asset-author">
+
+				<%
+				User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+				String displayDate = StringPool.BLANK;
+
+				if (assetEntry.getPublishDate() != null) {
+					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+				}
+				else if (assetEntry.getModifiedDate() != null) {
+					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+				}
+				%>
+
+				<div class="asset-avatar">
+					<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+				</div>
+
+				<div class="asset-user-info">
+					<span class="user-info"><%= userDisplay.getFullName() %></span>
+					<span class="date-info"><%= displayDate %></span>
+				</div>
+			</div>
+		</c:if>
 
 		<div class="asset-content">
 			<div class="asset-summary">
@@ -77,20 +109,12 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 					</c:otherwise>
 				</c:choose>
 			</div>
-
-			<c:if test="<%= Validator.isNotNull(viewURL) %>">
-				<div class="asset-more">
-					<a href="<%= viewURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))} %>' key="<%= viewURLMessage %>" translateArguments="<%= false %>" /> &raquo; </a>
-				</div>
-			</c:if>
 		</div>
 
 		<div class="asset-metadata">
 
 			<%
 			boolean filterByMetadata = true;
-
-			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 			%>
 
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>

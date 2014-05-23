@@ -78,27 +78,32 @@ boolean hasAddPortletURLs = false;
 	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource);
 
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
-
-	for (long groupId : groupIds) {
-		Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
-
-		if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
-			hasAddPortletURLs = true;
-		}
 	%>
 
-		<c:if test="<%= !addPortletURLs.isEmpty() %>">
-			<aui:nav-bar>
-				<div class="lfr-meta-actions add-asset-selector">
-					<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-				</div>
-			</aui:nav-bar>
-		</c:if>
+	<c:if test="<%= groupIds.length > 0 %>">
+		<aui:nav-bar cssClass='<%= groupIds.length == 1 ? "single-item-button" : StringPool.BLANK %>'>
 
-	<%
-	}
-	%>
+			<%
+			for (long groupId : groupIds) {
+				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
 
+				if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
+					hasAddPortletURLs = true;
+				}
+			%>
+
+				<c:if test="<%= !addPortletURLs.isEmpty() %>">
+					<div class="add-asset-selector lfr-meta-actions">
+						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
+					</div>
+				</c:if>
+
+			<%
+			}
+			%>
+
+		</aui:nav-bar>
+	</c:if>
 </c:if>
 
 <div class="subscribe-action">

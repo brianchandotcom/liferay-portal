@@ -35,7 +35,11 @@
 		</div>
 
 		<h3 class="asset-title">
-			<a class="${assetRenderer.getIconCssClass()}" href="${viewURL}">${entryTitle}</a>
+			<a href="${viewURL}">
+				<i class="${assetRenderer.getIconCssClass()}"></i>
+
+				${entryTitle}
+			</a>
 		</h3>
 
 		<@getMetadataField fieldName="tags" />

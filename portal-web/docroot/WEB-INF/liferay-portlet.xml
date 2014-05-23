@@ -462,6 +462,7 @@
 		<portlet-name>36</portlet-name>
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki</struts-path>
+		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
 		<indexer-class>com.liferay.portlet.wiki.util.WikiNodeIndexer</indexer-class>
 		<indexer-class>com.liferay.portlet.wiki.util.WikiPageIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.wiki.util.WikiOpenSearchImpl</open-search-class>
@@ -1589,7 +1590,7 @@
 		<portlet-name>154</portlet-name>
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki_admin</struts-path>
-		<configuration-action-class>com.liferay.portlet.wiki.action.ConfigurationActionImpl</configuration-action-class>
+		<configuration-action-class>com.liferay.portlet.wikiadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>

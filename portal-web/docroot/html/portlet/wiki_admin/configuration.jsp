@@ -27,20 +27,12 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<%
-	String tabs2Names = "display-settings,email-from,page-added-email,page-updated-email";
-
-	if (PortalUtil.isRSSFeedsEnabled()) {
-		tabs2Names += ",rss";
-	}
-	%>
-
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="email-from,page-added-email,page-updated-email"
 		refresh="<%= false %>"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -49,11 +41,6 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 		<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
 		<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
-		<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
-
-		<liferay-ui:section>
-			<%@ include file="/html/portlet/wiki_admin/display_settings.jspf" %>
-		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset>
@@ -113,35 +100,9 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 				emailSubject="<%= wikiSettings.getEmailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
-
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-			<liferay-ui:section>
-				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
-				/>
-			</liferay-ui:section>
-		</c:if>
 	</liferay-ui:tabs>
 
 	<aui:button-row>
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />visibleNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentVisibleNodes);
-
-			document.<portlet:namespace />fm.<portlet:namespace />hiddenNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />availableVisibleNodes);
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
-</aui:script>

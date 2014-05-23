@@ -406,7 +406,7 @@ AUI.add(
 
 						var itemNames = AArray.map(
 							items,
-							function(item, index, collection) {
+							function(item, index) {
 								var itemId = item[keyId];
 
 								return selectedNames[itemId];
@@ -424,7 +424,7 @@ AUI.add(
 						if (categories.length) {
 							var buffer = AArray.map(
 								categories,
-								function(item, index, collection) {
+								function(item, index) {
 									if (item.parentCategoryId === 0) {
 										instance._vocabularyRootCategories[item.categoryId] = 1;
 									}
@@ -1049,7 +1049,7 @@ AUI.add(
 						if (Lang.isArray(categories)) {
 							filteredCategories = AArray.filter(
 								categories,
-								function(item, index, collection) {
+								function(item, index) {
 									return (item.parentCategoryId == parentCategoryId);
 								}
 							);
@@ -1094,7 +1094,7 @@ AUI.add(
 
 						return AArray.map(
 							json,
-							function(item, index, collection) {
+							function(item, index) {
 								var checked = false;
 
 								if (item.parentCategoryId === 0) {
@@ -1363,7 +1363,7 @@ AUI.add(
 
 						return AArray.find(
 							instance._vocabularies,
-							function(item, index, collection) {
+							function(item, index) {
 								return (vocabularyId == item.vocabularyId);
 							}
 						);
@@ -1378,7 +1378,7 @@ AUI.add(
 
 						A.some(
 							vocabularies,
-							function(item, index, collection) {
+							function(item, index) {
 								if (item.vocabularyId === vocabularyId) {
 									categoriesCount = item.categoriesCount;
 
@@ -2286,7 +2286,7 @@ AUI.add(
 						var autoFieldsTriggers = boundingBox.all(SELECTOR_FLOATING_TRIGGER);
 
 						autoFieldsTriggers.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var autoFieldsInstance = item.getData(STR_AUTO_FIELDS_INSTANCE);
 
 								callback.call(instance, autoFieldsInstance);
@@ -2328,7 +2328,7 @@ AUI.add(
 
 							var deletedRootCategories = AArray.filter(
 								categoryIds,
-								function(item, index, collection) {
+								function(item, index) {
 									var categoryId = item;
 
 									var rootVocabulary = (instance._vocabularyRootCategories[categoryId] === 1);
@@ -2940,7 +2940,7 @@ AUI.add(
 
 								result = A.some(
 									children,
-									function(item, index, collection) {
+									function(item, index) {
 										return (item.get(STR_LABEL) === categoryName);
 									}
 								);

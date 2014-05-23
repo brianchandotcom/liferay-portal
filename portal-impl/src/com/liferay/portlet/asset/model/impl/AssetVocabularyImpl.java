@@ -154,25 +154,25 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			return false;
 		}
 
-		if ((requiredClassNameIds[0] ==
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) ||
-			ArrayUtil.contains(requiredClassNameIds, classNameId)) {
+		if (!(requiredClassNameIds[0] ==
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
+			!ArrayUtil.contains(requiredClassNameIds, classNameId)) {
 
-			PredicateFilter<AssetCategory> predicateFilter =
-				new PredicateFilter<AssetCategory>() {
-
-					@Override
-					public boolean filter(AssetCategory assetCategory) {
-						return ArrayUtil.contains(
-							categoryIds, assetCategory.getCategoryId());
-					}
-
-				};
-
-			return !ListUtil.exists(getCategories(), predicateFilter);
+			return false;
 		}
 
-		return false;
+		PredicateFilter<AssetCategory> predicateFilter =
+			new PredicateFilter<AssetCategory>() {
+
+				@Override
+				public boolean filter(AssetCategory assetCategory) {
+					return ArrayUtil.contains(
+						categoryIds, assetCategory.getCategoryId());
+				}
+
+			};
+
+		return !ListUtil.exists(getCategories(), predicateFilter);
 	}
 
 	@Override

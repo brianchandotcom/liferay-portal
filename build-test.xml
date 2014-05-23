@@ -2908,6 +2908,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${delete.portal.ext}" arg2="true" />
+			<then>
+				<delete file="${app.server.classes.portal.dir}/portal-ext.properties" />
+			</then>
+		</if>
+
 		<antcall target="prepare-selenium" />
 
 		<if>

@@ -59,6 +59,7 @@
 	<path id="test.classpath">
 		<pathelement path="${classpath}" />
 		<pathelement path="test-classes/${test.type}" />
+		<pathelement path="${imported.classpath}" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />

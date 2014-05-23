@@ -105,7 +105,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 						String methodURL = HttpUtil.addParameter(jsonWSContextPath, "signature", serviceSignature);
 						%>
 
-						<a class="method-name lfr-api-service-result" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
+						<a class="lfr-api-service-result method-name" data-metaData="<%= jsonWebServiceClassName %>" href="<%= methodURL %>">
 							<%= path %>
 						</a>
 					</li>
@@ -177,7 +177,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 	var results = [];
 
 	servicesClone.all('.lfr-api-service-result').each(
-		function(item, index, collection) {
+		function(item, index) {
 			results.push(
 				{
 					el: item._node,
@@ -202,7 +202,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 				return AArray.filter(
 					results,
-					function(item, index, collection) {
+					function(item, index) {
 						var node = item.raw.node;
 						var guid = node.guid();
 
@@ -227,7 +227,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 					cachedResults = AArray.map(
 						results,
-						function(item, index, collection) {
+						function(item, index) {
 							return A.Highlight.all(item.text, queryChars);
 						}
 					);
@@ -269,7 +269,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 				if (query) {
 					AArray.each(
 						results,
-						function(item, index, collection) {
+						function(item, index) {
 							var raw = item.raw;
 							var el = raw.el;
 							var node = raw.node;

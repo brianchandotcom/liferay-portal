@@ -155,12 +155,10 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		if (_settingsProperties == null) {
-			_settingsProperties = getSettingsProperties();
-		}
+		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return GetterUtil.getBoolean(
-			_settingsProperties.getProperty("multiValued"), true);
+			settingsProperties.getProperty("multiValued"), true);
 	}
 
 	@Override

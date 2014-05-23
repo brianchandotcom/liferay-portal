@@ -8,6 +8,6 @@
 	<info module="${plugin.name}" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency name="org.eclipse.osgi" org="org.eclipse.tycho" rev="3.8.0.v20120529-1548" />
+		<dependency name="org.eclipse.osgi" org="org.eclipse.tycho" rev="3.9.1.v20130814-1242" />
 	</dependencies>
 </ivy-module>

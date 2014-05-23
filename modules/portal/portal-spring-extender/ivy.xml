@@ -11,6 +11,6 @@
 		<dependency name="org.eclipse.gemini.blueprint.core" org="com.liferay" rev="2.0.0.M02" />
 		<dependency name="org.eclipse.gemini.blueprint.extender" org="com.liferay" rev="2.0.0.M02" />
 		<dependency name="org.eclipse.gemini.blueprint.io" org="com.liferay" rev="2.0.0.M02" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

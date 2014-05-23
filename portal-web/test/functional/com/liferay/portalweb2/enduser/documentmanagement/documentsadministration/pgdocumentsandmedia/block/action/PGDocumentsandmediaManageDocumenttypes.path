@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//div[@class='input-append']/input[@id='_20_keywords']</td>
+	<td>//input[contains(@id,'keywords') and contains(@class,'search-query')]</td>
 	<td></td>
 </tr>
 <tr>

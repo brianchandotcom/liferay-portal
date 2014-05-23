@@ -434,7 +434,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSingleDocumentSelectionViaCP" priority="4">
+	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -459,23 +459,23 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#checkDocumentCP">
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
 		<execute action="CPDocumentsandmedia#assertNotChecked" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
 
-		<execute macro="DMDocument#uncheckDocumentCP">
+		<execute macro="DMDocument#uncheckDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
 		<execute action="CPDocumentsandmedia#assertNotChecked" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
 
-		<execute macro="DMDocument#checkDocumentCP">
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute macro="DMDocument#checkDocumentCP">
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
 

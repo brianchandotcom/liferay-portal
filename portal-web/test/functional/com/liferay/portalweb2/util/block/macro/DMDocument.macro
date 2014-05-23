@@ -239,7 +239,7 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="checkDocumentCP">
+	<command name="checkDocumentCheckboxCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="CPDocumentsandmedia#check" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
@@ -967,7 +967,7 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
-	<command name="uncheckDocumentCP">
+	<command name="uncheckDocumentCheckboxCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="CPDocumentsandmedia#uncheck" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />

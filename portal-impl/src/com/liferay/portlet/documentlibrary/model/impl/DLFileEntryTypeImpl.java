@@ -14,8 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -49,6 +54,42 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 		}
 
 		return name;
+	}
+
+	@Override
+	public String getUnambiguousName(
+			List<DLFileEntryType> fileEntryTypes, long groupId,
+			final Locale locale)
+		throws PortalException, SystemException {
+
+		if (getGroupId() == groupId ) {
+			return getName(locale);
+		}
+
+		boolean hasAmbiguousFileEntryTypes = ListUtil.exists(
+			fileEntryTypes, new PredicateFilter<DLFileEntryType>() {
+
+			@Override
+			public boolean filter(DLFileEntryType curFileEntryType) {
+				String curFileEntryTypeName = curFileEntryType.getName(locale);
+
+				if (curFileEntryTypeName.equals(getName(locale)) &&
+					(curFileEntryType.getFileEntryTypeId()
+						!= getFileEntryTypeId())) {
+
+					return true;
+				}
+
+				return false;
+			}
+		});
+
+		if (hasAmbiguousFileEntryTypes) {
+			return PortalUtil.getUnambiguousName(
+				getName(locale), getGroupId(), locale);
+		}
+
+		return getName(locale);
 	}
 
 	@Override

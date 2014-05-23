@@ -32,7 +32,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= AssetVocabularyUtil.getUnambiguousVocabularyTitle(vocabularies, vocabulary, themeDisplay.getSiteGroupId(), themeDisplay.getLocale()) %>:
+			<%= vocabulary.getUnambiguousTitle(vocabularies, themeDisplay.getSiteGroupId(), themeDisplay.getLocale()) %>:
 
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">

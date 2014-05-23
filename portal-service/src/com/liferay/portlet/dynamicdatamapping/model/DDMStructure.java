@@ -145,6 +145,12 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getUnambiguousName(
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> structures,
+		long groupId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the WebDAV URL to access the structure.
 	*

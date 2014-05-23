@@ -5492,6 +5492,28 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getUnambiguousName(
+		String title, long groupId, Locale locale) {
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(title);
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(group.getDescriptiveName(locale));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+		catch (Exception e) {
+			return title;
+		}
+	}
+
+	@Override
 	public String getUniqueElementId(
 		HttpServletRequest request, String namespace, String elementId) {
 

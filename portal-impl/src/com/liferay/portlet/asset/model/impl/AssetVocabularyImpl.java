@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.model.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,11 +24,14 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,6 +105,43 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		return value;
+	}
+
+	@Override
+	public String getUnambiguousTitle(
+			List<AssetVocabulary> vocabularies, long groupId,
+			final Locale locale)
+		throws PortalException, SystemException {
+
+		if (getGroupId() == groupId ) {
+			return getTitle(locale);
+		}
+
+		boolean hasAmbiguousVocabularies = ListUtil.exists(
+			vocabularies, new PredicateFilter<AssetVocabulary>() {
+
+				@Override
+				public boolean filter(AssetVocabulary curVocabulary) {
+					String curVocabularyTitle = curVocabulary.getTitle(locale);
+
+					if (curVocabularyTitle.equals(getTitle(locale)) &&
+						(curVocabulary.getVocabularyId() !=
+							getVocabularyId())) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		if (hasAmbiguousVocabularies) {
+			return PortalUtil.getUnambiguousName(
+				getTitle(locale), getGroupId(), locale);
+		}
+
+		return getTitle(locale);
 	}
 
 	@Override

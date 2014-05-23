@@ -43,6 +43,12 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
+	public java.lang.String getUnambiguousTitle(
+		java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> vocabularies,
+		long groupId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

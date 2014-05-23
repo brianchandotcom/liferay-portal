@@ -819,6 +819,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public java.lang.String getUnambiguousTitle(
+		java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> vocabularies,
+		long groupId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.getUnambiguousTitle(vocabularies, groupId,
+			locale);
+	}
+
+	@Override
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabulary.hasMoreThanOneCategorySelected(categoryIds);

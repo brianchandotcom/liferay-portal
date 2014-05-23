@@ -120,7 +120,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 				%>
 
-				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" localizeLabel="<%= false %>" />
+				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getUnambiguousName(fileEntryTypes, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />
 
 			<%
 			}

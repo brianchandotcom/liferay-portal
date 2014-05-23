@@ -1189,6 +1189,8 @@ public interface Portal {
 
 	public String[] getSystemSiteRoles();
 
+	public String getUnambiguousName(String title, long groupId, Locale locale);
+
 	public String getUniqueElementId(
 		HttpServletRequest request, String namespace, String id);
 

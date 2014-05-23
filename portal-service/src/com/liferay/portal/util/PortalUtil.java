@@ -1899,6 +1899,12 @@ public class PortalUtil {
 		return getPortal().getSystemSiteRoles();
 	}
 
+	public static String getUnambiguousName(
+		String title, long groupId, Locale locale) {
+
+		return getPortal().getUnambiguousName(title, groupId, locale);
+	}
+
 	public static String getUniqueElementId(
 		HttpServletRequest request, String namespace, String id) {
 

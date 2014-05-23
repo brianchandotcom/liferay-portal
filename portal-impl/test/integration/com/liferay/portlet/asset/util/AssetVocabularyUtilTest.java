@@ -92,16 +92,16 @@ public class AssetVocabularyUtilTest {
 		vocabularies.add(_vocabulary);
 
 		String unambiguousCompanyVocabularyTitle =
-			AssetVocabularyUtil.getUnambiguousVocabularyTitle(
-				vocabularies, _companyVocabulary, _group.getGroupId(), _LOCALE);
+			_companyVocabulary.getUnambiguousTitle(
+				vocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertTrue(
 			unambiguousCompanyVocabularyTitle.contains(
 				_companyGroup.getDescriptiveName(_LOCALE)));
 
 		String unambiguousVocabularyTitle =
-			AssetVocabularyUtil.getUnambiguousVocabularyTitle(
-				vocabularies, _vocabulary, _group.getGroupId(), _LOCALE);
+			_vocabulary.getUnambiguousTitle(
+				vocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousVocabularyTitle);
 	}
@@ -115,8 +115,8 @@ public class AssetVocabularyUtilTest {
 		vocabularies.add(_companyVocabulary);
 
 		String unambiguousCompanyVocabularyTitle =
-			AssetVocabularyUtil.getUnambiguousVocabularyTitle(
-				vocabularies, _companyVocabulary, _group.getGroupId(), _LOCALE);
+			_companyVocabulary.getUnambiguousTitle(
+				vocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousCompanyVocabularyTitle);
 	}

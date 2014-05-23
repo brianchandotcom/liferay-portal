@@ -72,6 +72,9 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 				if (assetEntry.getPublishDate() != null) {
 					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
 				}
+				else if (assetEntry.getModifiedDate() != null) {
+					displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+				}
 				%>
 
 				<div class="asset-avatar">

@@ -238,29 +238,31 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar-split {
 		.dockbar {
-			.container > .nav {
-				&.nav-add-controls ul.dropdown-menu > li > a {
-					background: #45CBF5;
+			.container, .container-fluid {
+				> .nav {
+					&.nav-add-controls ul.dropdown-menu > li > a {
+						background: #45CBF5;
 
-					@include respond-to(phone, tablet) {
-						background: transparent;
-					}
-				}
-
-				li.dropdown {
-					> .dropdown-toggle {
-						@extend %dockbar-caret;
+						@include respond-to(phone, tablet) {
+							background: transparent;
+						}
 					}
 
-					&.active, &.open {
+					li.dropdown {
 						> .dropdown-toggle {
-							color: #FFF;
-
-							@include respond-to(phone, tablet) {
-								background-color: #3EA9DB;
-							}
-
 							@extend %dockbar-caret;
+						}
+
+						&.active, &.open {
+							> .dropdown-toggle {
+								color: #FFF;
+
+								@include respond-to(phone, tablet) {
+									background-color: #3EA9DB;
+								}
+
+								@extend %dockbar-caret;
+							}
 						}
 					}
 				}
@@ -274,7 +276,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			min-height: 40px;
 		}
 
-		.container {
+		&.navbar-default {
+			background-color: transparent;
+		}
+
+		.container, .container-fluid {
 			background-color: $dockbarGradientStart;
 
 			@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
@@ -408,6 +414,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
+
+			> .navbar-header {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 
 		.divider-vertical {
@@ -456,16 +467,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 10px;
 		}
 
-		.container .navbar-btn {
-			background: transparent;
-			border-color: #DDD;
+		.container, .container-fluid {
+			.navbar-btn {
+				background: transparent;
+				border-color: #DDD;
 
-			&:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
-				background-color: #DDD;
-			}
+				&:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+					background-color: #DDD;
+				}
 
-			.icon-bar {
-				background: #656565;
+				.icon-bar {
+					background: #656565;
+				}
 			}
 		}
 
@@ -1054,17 +1067,21 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.container .btn, .nav li.dropdown.user-avatar {
-			.user-avatar-image {
-				@include user-avatar-circle();
+		.container, .container-fluid {
+			.btn, .nav li.dropdown.user-avatar {
+				.user-avatar-image {
+					@include user-avatar-circle();
+				}
 			}
 		}
 	}
 
 	.navbar {
-		.container .btn {
-			&, .icon-bar {
-				@include box-shadow(0 1px 0 #FFF);
+		.container, .container-fluid {
+			.btn {
+				&, .icon-bar {
+					@include box-shadow(0 1px 0 #FFF);
+				}
 			}
 		}
 
@@ -1073,8 +1090,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.dockbar .container .btn {
-		@include box-shadow(none);
+	.dockbar {
+		.container, .container-fluid {
+			.btn {
+				@include box-shadow(none);
+			}
+		}
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

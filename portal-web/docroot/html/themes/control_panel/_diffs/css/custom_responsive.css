@@ -3,112 +3,110 @@
 
 @include respond-to(phone, tablet) {
 	.aui {
-		.dockbar .container {
-			@include box-sizing(border-box);
+		.dockbar {
+			.container, .container-fluid {
+				@include box-sizing(border-box);
 
-			padding: 0 5px;
+				padding: 0 5px;
 
-			.nav-add-controls-btn {
-				display: none;
-			}
-
-			.nav-account-controls {
-				float: right;
-				text-align: top;
-			}
-
-			.navbar-brand {
-				@include flexbox();
-				@include flex-grow(1);
-				@include flex-shrink(500);
-
-				line-height: 16px;
-				min-width: 128px;
-				padding: 12px 0 0 0;
-				white-space: nowrap;
-				width: auto;
-
-				.control-panel-back-link {
-					float: left;
-					margin-top: 6px;
-					position: relative;
-					z-index: 2;
-
-					@include respond-to(phone) {
-						@include flex-shrink(0);
-
-						margin: 0;
-						padding: 6px 8px;
-						position: absolute;
-					}
+				.nav-add-controls-btn {
+					display: none;
 				}
 
-				h1 {
-					@include respond-to(phone) {
-						display: block;
-						height: 51px;
-						line-height: 16px;
-						margin-top: -5px;
-						max-width: 100%;
-						min-width: 55px;
-						padding: 0 16px 0 33px;
+				.nav-account-controls {
+					float: right;
+					text-align: top;
+				}
+
+				.navbar-brand {
+					@include flexbox();
+					@include flex-grow(1);
+					@include flex-shrink(500);
+
+					line-height: 16px;
+					min-width: 128px;
+					padding: 12px 0 0 0;
+					white-space: nowrap;
+					width: auto;
+
+					.control-panel-back-link {
+						float: left;
+						margin-top: 6px;
 						position: relative;
+						z-index: 2;
 
-						a {
-							display: inline-block;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							white-space: nowrap;
-							width: 100%;
+						@include respond-to(phone) {
+							@include flex-shrink(0);
 
-							&:only-child {
-								padding-top: 12px;
-							}
-
-							.lfr-icon-menu-text {
-								font-size: 18px;
-							}
-						}
-
-						.control-panel-site-selector, .site-administration-title {
-							display: block;
-
-							@include ellipsis;
-
-							font-size: 16px;
-						}
-
-						.control-panel-site-selector {
-							position: static;
-
-							i {
-								bottom: 4px;
-								position: absolute;
-								right: 0;
-							}
-
-							.dropdown-toggle {
-								padding-top: 0;
-							}
-						}
-
-						.divider {
-							display: none;
+							margin: 0;
+							padding: 6px 8px;
+							position: absolute;
 						}
 					}
 
-					@include respond-to(tablet) {
-						line-height: 32px;
+					h1 {
+						@include respond-to(phone) {
+							display: block;
+							height: 51px;
+							line-height: 16px;
+							margin-top: -5px;
+							max-width: 100%;
+							min-width: 55px;
+							padding: 0 16px 0 33px;
+							position: relative;
+
+							a {
+								display: inline-block;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								width: 100%;
+
+								&:only-child {
+									padding-top: 12px;
+								}
+
+								.lfr-icon-menu-text {
+									font-size: 18px;
+								}
+							}
+
+							.control-panel-site-selector, .site-administration-title {
+								display: block;
+
+								@include ellipsis;
+
+								font-size: 16px;
+							}
+
+							.control-panel-site-selector {
+								position: static;
+
+								i {
+									bottom: 4px;
+									position: absolute;
+									right: 0;
+								}
+							}
+
+							.divider {
+								display: none;
+							}
+						}
+
+						@include respond-to(tablet) {
+							line-height: 32px;
+						}
 					}
 				}
-			}
 
-			.navbar-btn {
-				float: right;
-			}
+				.navbar-btn {
+					float: right;
+				}
 
-			.nav-account-controls > li:hover {
-				background-color: transparent;
+				.nav-account-controls > li:hover {
+					background-color: transparent;
+				}
 			}
 		}
 	}

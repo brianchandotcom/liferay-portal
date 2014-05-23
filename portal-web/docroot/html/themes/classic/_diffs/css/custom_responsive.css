@@ -27,16 +27,20 @@
 			background: #009AE5;
 		}
 
-		.dockbar .container .nav-add-controls ul.dropdown-menu {
-			background: transparent;
-			padding: 0;
-
-			> li > a {
-				background: transparent;
-				padding: 9px 15px;
-
-				&.toggle-controls-link {
+		.dockbar {
+			.container, .container-fluid {
+				.nav-add-controls ul.dropdown-menu {
 					background: transparent;
+					padding: 0;
+
+					> li > a {
+						background: transparent;
+						padding: 9px 15px;
+
+						&.toggle-controls-link {
+							background: transparent;
+						}
+					}
 				}
 			}
 		}
@@ -52,7 +56,7 @@
 				padding: 2px 0;
 			}
 
-			.container {
+			.container, .container-fluid {
 				.site-navigation-btn {
 					display: none;
 

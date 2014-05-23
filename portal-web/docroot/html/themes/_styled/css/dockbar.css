@@ -69,7 +69,7 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.container {
+		.container, .container-fluid {
 			background-color: #F3F3F3;
 			border-color: #DDD;
 			margin-left: 0;
@@ -603,7 +603,7 @@ $editLayoutPanelWidth: 460px;
 				padding: 6px 10px;
 			}
 
-			.container {
+			.container, .container-fluid {
 				z-index: 400;
 
 				&.open {
@@ -837,35 +837,51 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	&.dialog-iframe-root-node .dockbar .container > .nav.nav-add-controls .dropdown-menu .page-preview-controls {
-		display: none;
+	&.dialog-iframe-root-node .dockbar {
+		.container, .container-fluid {
+			> .nav.nav-add-controls .dropdown-menu .page-preview-controls {
+				display: none;
+			}
+		}
 	}
 
 	.signed-out {
-		.dockbar .container > .nav-account-controls {
-			position: absolute;
-			right: 0;
+		.dockbar {
+			.container, .container-fluid {
+				> .nav-account-controls {
+					position: absolute;
+					right: 0;
 
-			@include respond-to(desktop) {
-				position: relative;
+					@include respond-to(desktop) {
+						position: relative;
+					}
+				}
 			}
 		}
 
-		&.dockbar-split .dockbar .container > .nav-account-controls {
-			position: absolute;
-			right: 0;
+		&.dockbar-split .dockbar {
+			.container, .container-fluid {
+				> .nav-account-controls {
+					position: absolute;
+					right: 0;
 
-			@include respond-to(desktop) {
-				position: fixed;
-				right: 5em;
+					@include respond-to(desktop) {
+						position: fixed;
+						right: 5em;
+					}
+				}
 			}
 		}
 	}
 
 	.touch .dockbar-split, .controls-hidden.dockbar-split {
-		.dockbar .container > .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
-			clip: rect(auto auto auto auto);
-			position: static;
+		.dockbar {
+			.container, .container-fluid {
+				> .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
+					clip: rect(auto auto auto auto);
+					position: static;
+				}
+			}
 		}
 	}
 
@@ -1038,8 +1054,12 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	&.ie6, &.ie7, &.ie8 {
-		.dockbar .container .nav-account-controls > li {
-			float: left;
+		.dockbar {
+			.container, .container-fluid {
+				.nav-account-controls > li {
+					float: left;
+				}
+			}
 		}
 
 		.dockbar-split .dockbar .nav-add-controls li.page-preview-controls {
@@ -1048,13 +1068,21 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	&.ie6, &.ie7, &.ie8, &.ie9 {
-		.dockbar .container .nav-account-controls {
-			width: auto;
+		.dockbar {
+			.container, .container-fluid {
+				.nav-account-controls {
+					width: auto;
+				}
+			}
 		}
 
 		.signed-out {
-			.dockbar .container .nav-account-controls {
-				float: right;
+			.dockbar {
+				.container, .container-fluid {
+					.nav-account-controls {
+						float: right;
+					}
+				}
 			}
 		}
 	}
@@ -1209,8 +1237,10 @@ $editLayoutPanelWidth: 460px;
 /* -------- Extras -------- */
 
 	.dockbar {
-		.container > .nav > li.info-items {
-			@include background-image(none);
+		.container, .container-fluid {
+			> .nav > li.info-items {
+				@include background-image(none);
+			}
 		}
 
 		.nav-navigation {
@@ -1293,9 +1323,11 @@ $editLayoutPanelWidth: 460px;
 				background-color: #FFF;
 			}
 
-			.container > .nav > li.info-items {
-				left: 0;
-				top: 100%;
+			.container, .container-fluid {
+				> .nav > li.info-items {
+					left: 0;
+					top: 100%;
+				}
 			}
 
 			.page-customization-bar-container {
@@ -1331,42 +1363,6 @@ $editLayoutPanelWidth: 460px;
 	@include respond-to(phone) {
 		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
 			margin-left: -5px;
-		}
-	}
-
-	/* -------- Bootstrap3 Navbar Overrides -------- */
-
-	.dropdown-menu {
-		float: none;
-		position: static;
-
-		@include respond-to(desktop) {
-			float: left;
-			position: absolute;
-		}
-
-		> li > a {
-			padding: 10px 15px;
-
-			@include respond-to(desktop) {
-				padding: 3px 20px;
-			}
-		}
-	}
-
-	.navbar-nav {
-		float: none;
-
-		@include respond-to(desktop) {
-			float: left;
-		}
-
-		> li {
-			float: none;
-
-			@include respond-to(desktop) {
-				float: left;
-			}
 		}
 	}
 }

@@ -132,9 +132,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.container > .nav.nav-add-controls ul.dropdown-menu > li > a {
-			&:focus, &:hover {
-				color: #FFF;
+		.container, .container-fluid { 
+			> .nav.nav-add-controls ul.dropdown-menu > li > a {
+				&:focus, &:hover {
+					color: #FFF;
+				}
 			}
 		}
 
@@ -235,58 +237,60 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 2px 20px;
 		}
 
-		.container > .nav {
-			&.nav-account-controls {
-				background-color: $dockbarGradientEnd;
-				border-top: 1px solid #00AEFF;
+		.container, .container-fluid {
+			> .nav {
+				&.nav-account-controls {
+					background-color: $dockbarGradientEnd;
+					border-top: 1px solid #00AEFF;
 
-				@include respond-to(phone, tablet) {
-					background-color: transparent;
-					border-top-width: 0;
+					@include respond-to(phone, tablet) {
+						background-color: transparent;
+						border-top-width: 0;
+					}
+
+					&.nav-account-controls-notice {
+						top: 50px;
+					}
 				}
 
-				&.nav-account-controls-notice {
-					top: 50px;
-				}
-			}
+				&.nav-add-controls ul.dropdown-menu {
+					overflow: visible;
 
-			&.nav-add-controls ul.dropdown-menu {
-				overflow: visible;
+					&.nav-add-controls-notice {
+						top: 70px;
+					}
 
-				&.nav-add-controls-notice {
-					top: 70px;
-				}
+					> li {
+						background-color: transparent;
 
-				> li {
-					background-color: transparent;
+						@include background-image(none);
 
-					@include background-image(none);
-
-					> a {
-						line-height: inherit;
-						padding: 6px 8px;
-
-						@include respond-to(phone, tablet) {
-							background: transparent;
-							padding: 9px 15px;
-						}
-
-						&:focus, &:hover {
-							background: #5BBAE8;
-
-							@include respond-to(phone, tablet) {
-								background: #2FA4F5;
-							}
-						}
-
-						&.toggle-controls-link {
-							background: #80E000;
+						> a {
+							line-height: inherit;
+							padding: 6px 8px;
 
 							@include respond-to(phone, tablet) {
 								background: transparent;
+								padding: 9px 15px;
+							}
 
-								&:focus, &:hover {
+							&:focus, &:hover {
+								background: #5BBAE8;
+
+								@include respond-to(phone, tablet) {
 									background: #2FA4F5;
+								}
+							}
+
+							&.toggle-controls-link {
+								background: #80E000;
+
+								@include respond-to(phone, tablet) {
+									background: transparent;
+
+									&:focus, &:hover {
+										background: #2FA4F5;
+									}
 								}
 							}
 						}
@@ -752,7 +756,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.dockbar-split .dockbar {
-		.container {
+		.container, .container-fluid {
 			@include box-shadow(none);
 			@include text-shadow(none);
 
@@ -800,42 +804,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	&.ie8 {
 		.dockbar-split .dockbar .info-button a {
 			margin-top: -2px;
-		}
-	}
-
-	/* -------- Bootstrap3 Navbar Overrides -------- */
-
-	.dropdown-menu {
-		float: none;
-		position: static;
-
-		@include respond-to(desktop) {
-			float: left;
-			position: absolute;
-		}
-
-		> li > a {
-			padding: 10px 15px;
-
-			@include respond-to(desktop) {
-				padding: 3px 20px;
-			}
-		}
-	}
-
-	.navbar-nav {
-		float: none;
-
-		@include respond-to(desktop) {
-			float: left;
-		}
-
-		> li {
-			float: none;
-
-			@include respond-to(desktop) {
-				float: left;
-			}
 		}
 	}
 }

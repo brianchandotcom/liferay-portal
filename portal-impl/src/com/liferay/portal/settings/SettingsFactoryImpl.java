@@ -150,9 +150,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return applyFallbackKeys(
 			new PortletPreferencesSettings(
 				getGroupPortletPreferences(
-					group.getCompanyId(), groupId, portletId)
-			),
-			PortletConstants.getRootPortletId(portletId)
+					group.getCompanyId(), groupId, portletId)),
+				PortletConstants.getRootPortletId(portletId)
 		);
 	}
 
@@ -173,6 +172,20 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		String settingsId, FallbackKeys fallbackKeys) {
 
 		_fallbackKeysMap.put(settingsId, fallbackKeys);
+	}
+
+	protected Settings applyFallbackKeys(Settings settings, String settingsId) {
+		if (settings instanceof FallbackKeys) {
+			return settings;
+		}
+
+		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
+
+		if (fallbackKeys != null) {
+			settings = new FallbackSettings(settings, fallbackKeys);
+		}
+
+		return settings;
 	}
 
 	protected PortletPreferences getCompanyPortletPreferences(
@@ -264,20 +277,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
 			portletId);
-	}
-
-	protected Settings applyFallbackKeys(Settings settings, String settingsId) {
-		if (settings instanceof FallbackKeys) {
-			return settings;
-		}
-
-		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
-
-		if (fallbackKeys != null) {
-			settings = new FallbackSettings(settings, fallbackKeys);
-		}
-
-		return settings;
 	}
 
 	private ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

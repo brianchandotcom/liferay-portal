@@ -254,7 +254,7 @@ AUI.add(
 
 								event.fileList = AArray.map(
 									dragDropFiles,
-									function(item, index, collection) {
+									function(item, index) {
 										return new A.FileHTML5(item);
 									}
 								);
@@ -394,7 +394,7 @@ AUI.add(
 
 				var columnValues = AArray.map(
 					instance._columnNames,
-					function(item, index, collection) {
+					function(item, index) {
 						var value = '';
 
 						if (item == 'name') {
@@ -1205,7 +1205,7 @@ AUI.add(
 
 				return AArray.partition(
 					data,
-					function(item, index, collection) {
+					function(item, index) {
 						var errorMessage;
 
 						var size = item.get('size') || 0;

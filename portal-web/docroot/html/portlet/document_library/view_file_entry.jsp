@@ -628,7 +628,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 			var rowIds = A.all('input[name=<portlet:namespace />rowIds]');
 
 			rowIds.each(
-				function(item, index, collection) {
+				function(item, index) {
 					if (index >= 2) {
 						item.set('checked', false);
 					}

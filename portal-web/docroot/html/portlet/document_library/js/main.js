@@ -220,7 +220,7 @@ AUI.add(
 
 						AObject.each(
 							state,
-							function(item, index, collection) {
+							function(item, index) {
 								if (index.indexOf(namespace) === 0) {
 									requestParams[index] = item;
 								}

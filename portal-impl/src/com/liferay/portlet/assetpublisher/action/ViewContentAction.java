@@ -53,8 +53,21 @@ public class ViewContentAction extends WebContentAction {
 		throws Exception {
 
 		try {
+			String portletName = portletConfig.getPortletName();
+
+			if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+				AssetEntry layoutAssetEntry =
+					(AssetEntry)renderRequest.getAttribute(
+						WebKeys.LAYOUT_ASSET_ENTRY);
+
+				if (layoutAssetEntry == null) {
+					return actionMapping.findForward(
+						"portlet.asset_publisher.view");
+				}
+			}
+
 			getAssetEntry(
-				renderRequest, renderResponse, portletConfig.getPortletName());
+				renderRequest, renderResponse, portletName);
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());

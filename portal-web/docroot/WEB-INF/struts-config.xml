@@ -288,6 +288,7 @@
 		</action>
 
 		<action path="/asset_publisher/view_content" type="com.liferay.portlet.assetpublisher.action.ViewContentAction">
+			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
 			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
 			<forward name="portlet.asset_publisher.error" path="portlet.asset_publisher.error" />
 		</action>

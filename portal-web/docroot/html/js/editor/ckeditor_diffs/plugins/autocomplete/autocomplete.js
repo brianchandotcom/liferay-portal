@@ -17,12 +17,6 @@
 
 	var AutoCompleteCKEditor = A.Component.create(
 		{
-			EXTENDS: A.Base,
-
-			AUGMENTS: [Liferay.AutoCompleteInputBase],
-
-			NAME: 'liferay-autocomplete-ckeditor',
-
 			ATTRS: {
 				editor: {
 					validator: Lang.isObject,
@@ -43,6 +37,13 @@
 					validator: Lang.isString
 				}
 			},
+
+			AUGMENTS: [Liferay.AutoCompleteInputBase],
+
+			EXTENDS: A.Base,
+
+			NAME: 'liferay-autocomplete-ckeditor',
+
 
 			prototype: {
 				initializer: function() {
@@ -71,7 +72,12 @@
 
 					ac._inputNode.focus();
 					ac._updateValue(text);
-					ac._ariaSay('item_selected', {item: event.result.text});
+					ac._ariaSay(
+						'item_selected',
+						{
+							item: event.result.text
+						}
+					);
 					ac.hide();
 
 					event.preventDefault();
@@ -346,6 +352,71 @@
 					instance._processKeyUp(query);
 				},
 
+				_replaceHtml: function(text, prevTermPosition) {
+					var instance = this;
+
+					var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+
+					if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
+						replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
+					}
+
+					var newElement = CKEDITOR.dom.element.createFromHtml(
+						Lang.sub(
+							TPL_REPLACE_HTML,
+							{
+								html: text
+							}
+						)
+					);
+
+					newElement.replace(replaceContainer);
+
+					var nextElement = newElement.getNext();
+
+					if (nextElement) {
+						var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+
+						var updateWalker = instance._getWalker(containerAscendant, nextElement);
+
+						var node = updateWalker.next();
+
+						var removeNodes = [];
+
+						while (node) {
+							var nodeText = node.getText();
+
+							var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+							if (spaceIndex !== -1) {
+								node.setText(nodeText.substring(spaceIndex));
+
+								updateWalker.end();
+							}
+							else {
+								removeNodes.push(node);
+							}
+
+							node = updateWalker.next();
+						}
+
+						A.Array.invoke(removeNodes, 'remove');
+
+						nextElement = newElement.getNext();
+					}
+
+					if (!nextElement) {
+						nextElement = new CKEDITOR.dom.text(STR_SPACE);
+
+						nextElement.insertAfter(newElement);
+					}
+
+					return {
+						index: 1,
+						node: nextElement
+					};
+				},
+
 				_replaceText: function(text, prevTermPosition) {
 					var instance = this;
 
@@ -427,73 +498,8 @@
 					}
 
 					return {
-						node: prevNode,
-						index: caretIndex
-					};
-				},
-
-				_replaceHtml: function(text, prevTermPosition) {
-					var instance = this;
-
-					var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
-
-					if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
-						replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
-					}
-
-					var newElement = CKEDITOR.dom.element.createFromHtml(
-						Lang.sub(
-							TPL_REPLACE_HTML,
-							{
-								html: text
-							}
-						)
-					);
-
-					newElement.replace(replaceContainer);
-
-					var nextElement = newElement.getNext();
-
-					if (nextElement) {
-						var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
-
-						var updateWalker = instance._getWalker(containerAscendant, nextElement);
-
-						var node = updateWalker.next();
-
-						var removeNodes = [];
-
-						while(node) {
-							var nodeText = node.getText();
-
-							var spaceIndex = nodeText.indexOf(STR_SPACE);
-
-							if (spaceIndex !== -1) {
-								node.setText(nodeText.substring(spaceIndex));
-
-								updateWalker.end()
-							}
-							else {
-								removeNodes.push(node);
-							}
-
-							node = updateWalker.next();
-						}
-
-						A.Array.invoke(removeNodes, 'remove');
-
-						nextElement = newElement.getNext();
-					}
-
-					if (!nextElement) {
-						nextElement = new CKEDITOR.dom.text(STR_SPACE);
-
-						nextElement.insertAfter(newElement);
-					}
-
-					return {
-						node: nextElement,
-						index: 1
+						index: caretIndex,
+						node: prevNode
 					};
 				},
 

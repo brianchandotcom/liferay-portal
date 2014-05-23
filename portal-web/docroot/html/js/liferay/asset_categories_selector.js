@@ -81,6 +81,7 @@ AUI.add(
 						},
 						value: ''
 					},
+
 					curEntryIds: {
 						setter: function(value) {
 							var instance = this;
@@ -93,29 +94,35 @@ AUI.add(
 						},
 						value: ''
 					},
+
 					labelNode: {
 						setter: function(value) {
 							return A.one(value) || A.Attribute.INVALID_VALUE;
 						},
 						value: null
 					},
+
 					maxEntries: {
 						validator: Lang.isNumber,
 						value: -1
 					},
+
 					moreResultsLabel: {
 						validator: '_isValidString',
 						value: Liferay.Language.get('load-more-results')
 					},
+
 					singleSelect: {
 						validator: Lang.isBoolean,
 						value: false
 					},
+
 					title: {
 						validator: '_isValidString',
 						value: Liferay.Language.get('select-categories')
 					},
-					vocabularyIds: {
+
+					vocabularyGroupIds: {
 						setter: function(value) {
 							var instance = this;
 
@@ -127,7 +134,8 @@ AUI.add(
 						},
 						value: []
 					},
-					vocabularyGroupIds: {
+
+					vocabularyIds: {
 						setter: function(value) {
 							var instance = this;
 
@@ -296,7 +304,6 @@ AUI.add(
 								{
 									'$vocabularies = /assetvocabulary/get-vocabularies': {
 										vocabularyIds: vocabularyIds,
-
 										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'@groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
@@ -316,9 +323,8 @@ AUI.add(
 							Liferay.Service(
 								{
 									'$vocabularies = /assetvocabulary/get-groups-vocabularies': {
-										groupIds: groupIds,
 										className: className,
-
+										groupIds: groupIds,
 										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
@@ -453,21 +459,6 @@ AUI.add(
 						instance.entries.add(entry);
 					},
 
-					_onCheckedChange: function(event) {
-						var instance = this;
-
-						if (event.newVal) {
-							if (instance.get('singleSelect')) {
-								instance._clearEntries();
-							}
-
-							instance._onCheckboxCheck(event);
-						}
-						else {
-							instance._onCheckboxUncheck(event);
-						}
-					},
-
 					_onCheckboxClick: function(event) {
 						var instance = this;
 
@@ -495,6 +486,21 @@ AUI.add(
 						}
 
 						instance.entries.removeKey(assetId);
+					},
+
+					_onCheckedChange: function(event) {
+						var instance = this;
+
+						if (event.newVal) {
+							if (instance.get('singleSelect')) {
+								instance._clearEntries();
+							}
+
+							instance._onCheckboxCheck(event);
+						}
+						else {
+							instance._onCheckboxUncheck(event);
+						}
 					},
 
 					_onSelectChange: function(event) {
@@ -584,11 +590,11 @@ AUI.add(
 							Liferay.Service(
 								{
 									'$display = /assetcategory/search-categories-display': {
+										end: -1,
 										groupIds: vocabularyGroupIds,
+										start: -1,
 										title: searchValue,
 										vocabularyIds: vocabularyIds,
-										start: -1,
-										end: -1,
 										'categories.$path = /assetcategory/get-category-path': {
 											'@categoryId': '$display.categories.categoryId'
 										}

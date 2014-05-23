@@ -40,10 +40,6 @@ AUI.add(
 
 		var XMLFormatter = A.Component.create(
 			{
-				EXTENDS: A.Base,
-
-				NAME: 'liferayxmlformatter',
-
 				ATTRS: {
 					lineIndent: {
 						validator: Lang.isString,
@@ -55,6 +51,10 @@ AUI.add(
 						value: '\t'
 					}
 				},
+
+				EXTENDS: A.Base,
+
+				NAME: 'liferayxmlformatter',
 
 				prototype: {
 					format: function(content) {

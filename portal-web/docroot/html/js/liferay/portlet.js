@@ -197,15 +197,15 @@
 				cmd: 'add',
 				dataType: 'JSON',
 				doAsUserId: doAsUserId,
-				portletData: portletData,
 				p_auth: Liferay.authToken,
 				p_l_id: plid,
 				p_p_col_id: currentColumnId,
 				p_p_col_pos: portletPosition,
-				p_p_id: portletId,
 				p_p_i_id: portletItemId,
+				p_p_id: portletId,
 				p_p_isolated: true,
-				p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+				p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
+				portletData: portletData
 			};
 
 			var firstPortlet = container.one('.portlet-boundary');

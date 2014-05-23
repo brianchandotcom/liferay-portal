@@ -40,25 +40,23 @@ AUI.add(
 
 		var AddPage = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
-
-				EXTENDS: Dockbar.AddBase,
-
-				NAME: 'addpage',
-
 				ATTRS: {
 					createPageMessage: {
 						validator: Lang.isString
 					},
+
 					parentLayoutId: {
 						validator: Lang.isNumber
 					},
+
 					refresh: {
 						validator: Lang.isBoolean
 					},
+
 					toggleOnCancel: {
 						validator: Lang.isBoolean
 					},
+
 					transition: {
 						validator: Lang.isObject,
 						value: {
@@ -66,6 +64,12 @@ AUI.add(
 						}
 					}
 				},
+
+				AUGMENTS: [Liferay.PortletBase],
+
+				EXTENDS: Dockbar.AddBase,
+
+				NAME: 'addpage',
 
 				prototype: {
 					initializer: function(config) {
@@ -124,10 +128,6 @@ AUI.add(
 								A.io.request(
 									addForm.get('action'),
 									{
-										dataType: 'JSON',
-										form: {
-											id: addForm.get(STR_ID)
-										},
 										after: {
 											success: function(event, id, obj) {
 												var responseData = this.get(STR_RESPONSE_DATA);
@@ -142,6 +142,10 @@ AUI.add(
 
 												panel.setContent(responseData);
 											}
+										},
+										dataType: 'JSON',
+										form: {
+											id: addForm.get(STR_ID)
 										}
 									}
 								);

@@ -89,13 +89,13 @@ AUI.add(
 						'</div>' +
 					'</div>',
 
-					TPL_ITEM_CONTAINER: '<ul class="direction-down dropdown-menu lfr-menu-list" id="{id}" role="menu" />',
-
 					TPL_ITEM: '<li id="{idLi}" role="presentation">' +
 						'<a href="javascript:;" class="lfr-pagination-link taglib-icon" id="{idLink}" role="menuitem">' +
 							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}">{value}</span>' +
 						'</a>' +
 					'</li>',
+
+					TPL_ITEM_CONTAINER: '<ul class="direction-down dropdown-menu lfr-menu-list" id="{id}" role="menu" />',
 
 					TPL_LABEL: ' {items} {per} {page}',
 

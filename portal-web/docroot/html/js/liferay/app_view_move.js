@@ -382,8 +382,8 @@ AUI.add(
 						dd.set(
 							STR_DATA,
 							{
-								selectedItemsCount: selectedItemsCount,
-								selectedItems: selectedItems
+								selectedItems: selectedItems,
+								selectedItemsCount: selectedItemsCount
 							}
 						);
 					},
@@ -414,7 +414,7 @@ AUI.add(
 
 						var checkBoxesIds = processEntryIds.checkBoxesIds;
 
-						for (var i = 0, checkBoxesIdsLength = checkBoxesIds.length; i < checkBoxesIdsLength; i++) {
+						for (var i = 0; i < checkBoxesIds.length; i++) {
 							var listEntryIds = Util.listCheckedExcept(form, allRowsIdCheckbox, checkBoxesIds[i]);
 
 							form.get(entryIds[i]).val(listEntryIds);

@@ -132,12 +132,6 @@ AUI.add(
 				return panelNode;
 			},
 
-			togglePreviewPanel: function() {
-				var instance = this;
-
-				Dockbar._togglePanel(STR_PREVIEW_PANEL);
-			},
-
 			toggleAddPanel: function() {
 				var instance = this;
 
@@ -148,6 +142,12 @@ AUI.add(
 				var instance = this;
 
 				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
+			},
+
+			togglePreviewPanel: function() {
+				var instance = this;
+
+				Dockbar._togglePanel(STR_PREVIEW_PANEL);
 			},
 
 			_registerPanels: function() {

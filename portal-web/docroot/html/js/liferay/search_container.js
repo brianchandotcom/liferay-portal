@@ -7,31 +7,37 @@ AUI.add(
 
 		var SearchContainer = A.Component.create(
 			{
-				NAME: 'searchcontainer',
-
 				ATTRS: {
 					classNameHover: {
 						value: ''
 					},
+
 					hover: {
 						value: ''
 					},
+
 					id: {
 						value: ''
 					},
+
 					rowClassNameAlternate: {
 						value: ''
 					},
+
 					rowClassNameAlternateHover: {
 						value: ''
 					},
+
 					rowClassNameBody: {
 						value: ''
 					},
+
 					rowClassNameBodyHover: {
 						value: ''
 					}
 				},
+
+				NAME: 'searchcontainer',
 
 				constructor: function(config) {
 					var id = config.id;

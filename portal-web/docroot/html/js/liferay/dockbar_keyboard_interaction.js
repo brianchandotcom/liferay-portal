@@ -138,6 +138,18 @@ AUI.add(
 						event.currentTarget.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 					},
 
+					_handleUpDownKeyPress: function(event) {
+						var instance = this;
+
+						var method = '_handleDownKeyPress';
+
+						if (event.isKey('UP')) {
+							method = '_handleUpKeyPress';
+						}
+
+						instance[method](event);
+					},
+
 					_handleUpKeyPress: function(event) {
 						var instance = this;
 
@@ -190,18 +202,6 @@ AUI.add(
 						);
 					},
 
-					_handleUpDownKeyPress: function(event) {
-						var instance = this;
-
-						var method = '_handleDownKeyPress';
-
-						if (event.isKey('UP')) {
-							method = '_handleUpKeyPress';
-						}
-
-						instance[method](event);
-					},
-
 					_initHostFocusManager: function() {
 						var instance = this;
 
@@ -234,6 +234,19 @@ AUI.add(
 						instance.hostFocusManager = host.focusManager;
 					},
 
+					_initMenuItemHandlers: function() {
+						var instance = this;
+
+						var host = instance._host;
+
+						host.delegate(EVENT_KEY, instance._handleUpDownKeyPress, 'down:38,40', SELECTOR_DOCKBAR_ITEM_FIRST_LINK, instance);
+						host.delegate(EVENT_KEY, instance._handleLeftRightKeyPress, 'down:37,39', SELECTOR_DOCKBAR_ITEM_LINK, instance);
+
+						host.delegate(EVENT_KEY, instance._handleTabKeyPress, 'down:9');
+
+						Liferay.after('exitNavigation', instance._handleExitNavigation, instance);
+					},
+
 					_initMenuItems: function() {
 						var instance = this;
 
@@ -248,19 +261,6 @@ AUI.add(
 						);
 
 						instance._menuItems = new A.NodeList(menuItems);
-					},
-
-					_initMenuItemHandlers: function() {
-						var instance = this;
-
-						var host = instance._host;
-
-						host.delegate(EVENT_KEY, instance._handleUpDownKeyPress, 'down:38,40', SELECTOR_DOCKBAR_ITEM_FIRST_LINK, instance);
-						host.delegate(EVENT_KEY, instance._handleLeftRightKeyPress, 'down:37,39', SELECTOR_DOCKBAR_ITEM_LINK, instance);
-
-						host.delegate(EVENT_KEY, instance._handleTabKeyPress, 'down:9');
-
-						Liferay.after('exitNavigation', instance._handleExitNavigation, instance);
 					}
 				}
 			}

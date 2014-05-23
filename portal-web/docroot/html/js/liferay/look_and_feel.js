@@ -162,7 +162,6 @@ AUI.add(
 							instance._currentPopup.plug(
 								[
 									{
-										fn: A.Plugin.IO,
 										cfg: {
 											after: {
 												success: function(event) {
@@ -178,15 +177,16 @@ AUI.add(
 												}
 											},
 											autoLoad: false,
-											showLoading: false,
 											data: {
+												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 												p_l_id: themeDisplay.getPlid(),
 												p_p_id: 113,
-												p_p_state: EXCLUSIVE,
-												doAsUserId: themeDisplay.getDoAsUserIdEncoded()
+												p_p_state: EXCLUSIVE
 											},
+											showLoading: false,
 											uri: themeDisplay.getPathMain() + '/portal/render_portlet'
-										}
+										},
+										fn: A.Plugin.IO
 									},
 									{
 										fn: A.LoadingMask
@@ -726,17 +726,6 @@ AUI.add(
 				}
 			},
 
-			_getCombo: function(input, selectBox) {
-				var instance = this;
-
-				var inputVal = input.val();
-				var selectVal = selectBox.val();
-
-				inputVal = instance._getSafeInteger(inputVal);
-
-				return {input: inputVal, selectBox: selectVal, both: inputVal + selectVal};
-			},
-
 			_getCSSClasses: function(portletBoundary, portlet) {
 				var instance = this;
 
@@ -764,6 +753,21 @@ AUI.add(
 				);
 
 				return '.' + boundaryClasses.join('.') + portletClasses;
+			},
+
+			_getCombo: function(input, selectBox) {
+				var instance = this;
+
+				var inputVal = input.val();
+				var selectVal = selectBox.val();
+
+				inputVal = instance._getSafeInteger(inputVal);
+
+				return {
+					both: inputVal + selectVal,
+					input: inputVal,
+					selectBox: selectVal
+				};
 			},
 
 			_getDefaultData: function() {
@@ -1045,8 +1049,8 @@ AUI.add(
 
 				instance._tabs = new A.TabView(
 					{
-						srcNode: newPanel,
-						panelNode: newPanel.one('.tab-pane')
+						panelNode: newPanel.one('.tab-pane'),
+						srcNode: newPanel
 					}
 				).render();
 

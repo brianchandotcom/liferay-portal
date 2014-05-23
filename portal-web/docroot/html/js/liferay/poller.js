@@ -91,7 +91,7 @@ AUI.add(
 			if (Util.isArray(response)) {
 				var meta = response.shift();
 
-				for (var i = 0, length = response.length; i < length; i++) {
+				for (var i = 0; i < response.length; i++) {
 					var chunk = response[i].payload;
 
 					var chunkData = chunk.data;
@@ -216,8 +216,6 @@ AUI.add(
 				instance.setSupportsComet(options.supportsComet);
 			},
 
-			url: _url,
-
 			addListener: function(key, listener, scope) {
 				_portlets[key] = {
 					initialRequest: true,
@@ -323,8 +321,8 @@ AUI.add(
 					}
 
 					var requestData = {
-						portletId: key,
-						data: data
+						data: data,
+						portletId: key
 					};
 
 					if (chunkId) {
@@ -341,7 +339,9 @@ AUI.add(
 				_cancelRequestTimer();
 
 				_suspended = true;
-			}
+			},
+
+			url: _url
 		};
 
 		A.getDoc().on(

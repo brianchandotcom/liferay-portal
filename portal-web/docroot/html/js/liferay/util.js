@@ -61,8 +61,6 @@
 	};
 
 	var Util = {
-		submitCountdown: 0,
-
 		actsAsAspect: function(object) {
 			object.yield = null;
 			object.rv = {};
@@ -478,22 +476,6 @@
 			return topWindow;
 		},
 
-		getWindow: function(id) {
-			if (!id) {
-				id = Util.getWindowName();
-			}
-
-			return Util.getTop().Liferay.Util.Window.getById(id);
-		},
-
-		getWindowName: function() {
-			return window.name || Window._name || '';
-		},
-
-		getWindowWidth: function() {
-			return (window.innerWidth > 0) ? window.innerWidth : screen.width;
-		},
-
 		getURLWithSessionId: function(url) {
 			if (!themeDisplay.isAddSessionIdToURL()) {
 				return url;
@@ -529,6 +511,22 @@
 			}
 
 			return url + sessionId;
+		},
+
+		getWindow: function(id) {
+			if (!id) {
+				id = Util.getWindowName();
+			}
+
+			return Util.getTop().Liferay.Util.Window.getById(id);
+		},
+
+		getWindowName: function() {
+			return window.name || Window._name || '';
+		},
+
+		getWindowWidth: function() {
+			return (window.innerWidth > 0) ? window.innerWidth : screen.width;
 		},
 
 		isArray: function(object) {
@@ -723,7 +721,9 @@
 						function() {
 							el.focus();
 							el.setSelectionRange(caretPos, caretPos);
-						}, 0);
+						},
+						0
+					);
 
 				}
 				else {
@@ -955,6 +955,8 @@
 		_unescapeHTML: function(entities, match) {
 			return entities[match];
 		},
+
+		submitCountdown: 0,
 
 		MAP_HTML_CHARS_ESCAPED: MAP_HTML_CHARS_ESCAPED
 	};
@@ -2168,8 +2170,8 @@
 				Liferay.fire(
 					'submitForm',
 					{
-						form: A.one(form),
 						action: action,
+						form: A.one(form),
 						singleSubmit: singleSubmit,
 						validate: validate !== false
 					}

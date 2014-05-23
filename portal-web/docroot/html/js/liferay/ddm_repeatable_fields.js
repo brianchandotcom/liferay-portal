@@ -18,11 +18,11 @@ AUI.add(
 					classPK: {
 					},
 
-					doAsGroupId: {
-					},
-
 					container: {
 						setter: A.one
+					},
+
+					doAsGroupId: {
 					},
 
 					fieldsDisplayInput: {
@@ -104,6 +104,18 @@ AUI.add(
 						);
 					},
 
+					getFieldParentNode: function(fieldNode) {
+						var instance = this;
+
+						var parentNode = fieldNode.ancestor('.field-wrapper');
+
+						if (!parentNode) {
+							parentNode = instance.get('container');
+						}
+
+						return parentNode;
+					},
+
 					getFieldsList: function(fieldName, parentNode) {
 						var instance = this;
 
@@ -125,18 +137,6 @@ AUI.add(
 						}
 
 						return container.all(selector.join(''));
-					},
-
-					getFieldParentNode: function(fieldNode) {
-						var instance = this;
-
-						var parentNode = fieldNode.ancestor('.field-wrapper');
-
-						if (!parentNode) {
-							parentNode = instance.get('container');
-						}
-
-						return parentNode;
 					},
 
 					insertField: function(fieldNode) {

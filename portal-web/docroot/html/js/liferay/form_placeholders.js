@@ -31,8 +31,11 @@ AUI.add(
 		var Placeholders = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
+
 				NAME: 'placeholders',
+
 				NS: STR_PLACEHOLDER,
+
 				prototype: {
 					initializer: function(config) {
 						var instance = this;

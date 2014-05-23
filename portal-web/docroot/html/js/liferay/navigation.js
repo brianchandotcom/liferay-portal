@@ -222,8 +222,8 @@ AUI.add(
 						var tempLink = Lang.sub(
 							tpl,
 							{
-								url: '#',
-								pageTitle: STR_EMPTY
+								pageTitle: STR_EMPTY,
+								url: '#'
 							}
 						);
 
@@ -572,10 +572,10 @@ AUI.add(
 
 				var optionsPopover = new A.Popover(
 					{
-						bodyContent: prototypeTemplate,
 						align: {
 							points: ['tc', 'bc']
 						},
+						bodyContent: prototypeTemplate,
 						on: {
 							visibleChange: function(event) {
 								var instance = this;

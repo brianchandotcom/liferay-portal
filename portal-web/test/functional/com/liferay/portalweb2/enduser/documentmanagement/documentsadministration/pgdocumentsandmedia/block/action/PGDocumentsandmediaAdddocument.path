@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPDocumentsandmediaAdddocument</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert-success')]</td>
 	<td></td>
@@ -86,113 +96,6 @@
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--RELATED_ASSETS-->
-<tr>
-	<td>RELATED_ASSETS_SELECT</td>
-	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
-	<td>//li[contains(@class,'asset-selector') and contains(.,'${key_assetType}')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_SELECT</td>
-	<td>//select[@id='_20_inputPermissionsViewRole']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_MORE_OPTIONS</td>
-	<td>link=More Options »</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_HIDE_OPTIONS</td>
-	<td>link=« Hide Options</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[2]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[3]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[4]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[5]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[6]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[7]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[8]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[2]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[3]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[4]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[5]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[6]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[7]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[8]/input</td>
 	<td></td>
 </tr>
 </tbody>

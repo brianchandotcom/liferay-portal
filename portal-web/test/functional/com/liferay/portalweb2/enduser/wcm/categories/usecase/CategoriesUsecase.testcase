@@ -13,6 +13,8 @@
 
 		<execute macro="Vocabulary#tearDownCP" />
 
+		<execute macro="DMDocument#tearDownCP" />
+
 		<execute macro="WebContent#tearDownCP" />
 
 		<execute macro="User#tearDownCP" />
@@ -483,6 +485,60 @@
 		<execute macro="WebContent#copyCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchEditedCategory" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Topic" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="categoryNameList" value="Category Name" />
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="vocabularyName" value="Topic" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#editCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="categoryNameEdit" value="Edited" />
+			<var name="vocabularyName" value="Topic" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Edited" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 </definition>

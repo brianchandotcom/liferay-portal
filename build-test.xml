@@ -19,11 +19,11 @@
 
 	<propertycopy from="database.${database.type}.version" name="database.version" />
 
-	<propertycopy from="database.${database.type}.${database.version}.host" name="database.host" />
-	<propertycopy from="database.${database.type}.${database.version}.password" name="database.password" />
-	<propertycopy from="database.${database.type}.${database.version}.schema" name="database.schema" />
-	<propertycopy from="database.${database.type}.${database.version}.username" name="database.username" />
-	<propertycopy from="database.${database.type}.${database.version}.url" name="database.url" />
+	<propertycopy from="database.${database.type}${database.version}.host" name="database.host" />
+	<propertycopy from="database.${database.type}${database.version}.password" name="database.password" />
+	<propertycopy from="database.${database.type}${database.version}.schema" name="database.schema" />
+	<propertycopy from="database.${database.type}${database.version}.username" name="database.username" />
+	<propertycopy from="database.${database.type}${database.version}.url" name="database.url" />
 
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
@@ -174,7 +174,7 @@
 			/>
 
 			<propertycopy
-				from="env.option.app.server.${app.server.type}.${app.server.major.version}"
+				from="env.option.app.server.${app.server.type}${app.server.major.version}"
 				name="env.option.app.server"
 				override="true"
 			/>
@@ -192,7 +192,7 @@
 			/>
 
 			<propertycopy
-				from="env.option.browser.${browser.type}.${browser.major.version}"
+				from="env.option.browser.${browser.type}${browser.major.version}"
 				name="env.option.browser"
 				override="true"
 			/>
@@ -210,7 +210,7 @@
 			/>
 
 			<propertycopy
-				from="env.option.database.${database.type}.${database.major.version}"
+				from="env.option.database.${database.type}${database.major.version}"
 				name="env.option.database"
 				override="true"
 			/>
@@ -244,7 +244,7 @@
 	<macrodef name="record-env-operating-system">
 		<sequential>
 			<propertycopy
-				from="env.option.operating.system.${operating.system.type}.${operating.system.version}"
+				from="env.option.operating.system.${operating.system.type}${operating.system.version}"
 				name="env.option.operating.system"
 				override="true"
 			/>

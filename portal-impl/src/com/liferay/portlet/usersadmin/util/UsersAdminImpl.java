@@ -49,7 +49,6 @@ import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -1106,7 +1105,8 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	@Override
 	public boolean hasUpdateFieldPermission(
-			User updatingUser, User updatedUser, String field)
+			PermissionChecker permissionChecker, User updatingUser,
+			User updatedUser, String field)
 		throws PortalException, SystemException {
 
 		if (updatedUser == null) {
@@ -1123,9 +1123,6 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		if ((updatingUser != null) && !updatingUser.equals(updatedUser)) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (UserPermissionUtil.contains(
 					permissionChecker, updatingUser.getUserId(),
 					ActionKeys.UPDATE_USER)) {

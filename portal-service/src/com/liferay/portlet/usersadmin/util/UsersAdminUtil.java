@@ -280,11 +280,12 @@ public class UsersAdminUtil {
 	}
 
 	public static boolean hasUpdateFieldPermission(
-			User updatingUser, User updatedUser, String field)
+			PermissionChecker permissionChecker, User updatingUser,
+			User updatedUser, String field)
 		throws PortalException, SystemException {
 
 		return getUsersAdmin().hasUpdateFieldPermission(
-			updatingUser, updatedUser, field);
+				permissionChecker, updatingUser, updatedUser, field);
 	}
 
 	/**

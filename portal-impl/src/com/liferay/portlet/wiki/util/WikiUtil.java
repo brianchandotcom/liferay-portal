@@ -46,8 +46,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -59,6 +61,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
+import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
 import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -451,14 +454,21 @@ public class WikiUtil {
 
 		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
 
-		WikiSettings wikiSettings = WikiUtil.getWikiSettings(
-			themeDisplay.getScopeGroupId());
+		Layout layout = themeDisplay.getLayout();
 
-		String[] visibleNodeNames = wikiSettings.getVisibleNodes();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
+		WikiPortletInstanceSettings wikiPortletInstanceSettings =
+			WikiUtil.getWikiPortletInstanceSettings(layout, portletId);
+
+		String[] visibleNodeNames =
+			wikiPortletInstanceSettings.getVisibleNodes();
 
 		nodes = orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = wikiSettings.getHiddenNodes();
+		String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {
@@ -586,6 +596,29 @@ public class WikiUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static WikiPortletInstanceSettings getWikiPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new WikiPortletInstanceSettings(settings);
+	}
+
+	public static WikiPortletInstanceSettings getWikiPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			request.getParameterMap(), settings);
+
+		return new WikiPortletInstanceSettings(parameterMapSettings);
 	}
 
 	public static WikiSettings getWikiSettings(long groupId)

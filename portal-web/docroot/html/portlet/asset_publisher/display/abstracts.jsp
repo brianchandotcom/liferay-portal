@@ -45,16 +45,17 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
 		<h4 class="asset-title">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(viewURL) %>">
-					<a class="<%= assetRenderer.getIconCssClass() %>" href="<%= viewURL %>"> <%= HtmlUtil.escape(title) %></a>
-				</c:when>
-				<c:otherwise>
-					<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+			<c:if test="<%= Validator.isNotNull(viewURL) %>">
+				<a href="<%= viewURL %>">
+			</c:if>
 
-					<%= HtmlUtil.escape(title) %>
-				</c:otherwise>
-			</c:choose>
+				<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
+				<%= HtmlUtil.escape(title) %>
+
+			<c:if test="<%=  %>">
+				</a>
+			</c:if>
 		</h4>
 
 		<%

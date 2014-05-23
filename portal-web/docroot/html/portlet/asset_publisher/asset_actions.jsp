@@ -48,7 +48,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 %>
 
 <c:if test="<%= editPortletURL != null %>">
-	<div class="lfr-meta-actions asset-actions">
+	<div class="asset-actions lfr-meta-actions">
 
 		<%
 		String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURL.toString()) + "'});";

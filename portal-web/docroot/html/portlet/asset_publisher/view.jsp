@@ -93,7 +93,7 @@ boolean hasAddPortletURLs = false;
 			%>
 
 				<c:if test="<%= !addPortletURLs.isEmpty() %>">
-					<div class="lfr-meta-actions add-asset-selector">
+					<div class="add-asset-selector lfr-meta-actions">
 						<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
 					</div>
 				</c:if>

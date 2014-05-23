@@ -266,6 +266,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portal.model.LayoutCUSTOMIZE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

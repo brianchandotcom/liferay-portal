@@ -2858,9 +2858,9 @@ AUI.add(
 
 		var CategoriesTree = A.Component.create(
 			{
-				NAME: 'CategoriesTree',
-
 				EXTENDS: A.TreeViewDD,
+
+				NAME: 'CategoriesTree',
 
 				prototype: {
 					reinsertChild: function(dragNode, dropNode) {

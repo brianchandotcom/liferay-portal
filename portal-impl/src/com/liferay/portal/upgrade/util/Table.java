@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.StagnantRowException;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,6 +75,9 @@ public class Table {
 			throw new UpgradeException(
 				"Nulls should never be inserted into the database. " +
 					"Attempted to append column to " + sb.toString() + ".");
+		}
+		else if (value instanceof byte[]) {
+			sb.append(Base64.encode((byte[])value));
 		}
 		else if (value instanceof Clob || value instanceof String) {
 			value = StringUtil.replace(
@@ -403,6 +407,9 @@ public class Table {
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(rs.getInt(name));
 		}
+		else if (t == Types.LONGVARBINARY) {
+			value = rs.getBytes(name);
+		}
 		else if (t == Types.LONGVARCHAR) {
 			value = GetterUtil.getString(rs.getString(name));
 		}
@@ -577,6 +584,9 @@ public class Table {
 		}
 		else if (t == Types.INTEGER) {
 			ps.setInt(paramIndex, GetterUtil.getInteger(value));
+		}
+		else if (t == Types.LONGVARBINARY) {
+			ps.setBytes(paramIndex, Base64.decode(value));
 		}
 		else if (t == Types.SMALLINT) {
 			ps.setShort(paramIndex, GetterUtil.getShort(value));

@@ -111,8 +111,13 @@ AUI.add(
 							BODY.delegate(STR_CLICK, instance._onTargetVersionSelected, '.target-version', instance),
 							instance.get(STR_VERSION_FILTER).delegate(STR_CLICK, instance._onCloseFilter, '.close-version-filter', instance),
 							instance.get(STR_VERSION_ITEMS).delegate(STR_CLICK, instance._onSelectVersionItem, SELECTOR_VERSION_ITEM, instance),
-							instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
 						];
+
+						if (instance._diffVersionSearch) {
+							eventHandles.push(
+								instance._diffVersionSearch.on('results', instance._onDiffVersionSearchResults, instance)
+							);
+						}
 
 						var languageSelector = instance.byId('languageId');
 
@@ -141,16 +146,20 @@ AUI.add(
 							}
 						);
 
-						instance._diffVersionSearch = new DiffVersionSearch(
-							{
-								inputNode: instance.get('searchBox'),
-								minQueryLength: 0,
-								queryDelay: 0,
-								source: results,
-								resultTextLocator: 'searchData',
-								resultFilters: 'phraseMatch'
-							}
-						);
+						var searchBox = instance.get('searchBox');
+
+						if (searchBox) {
+							instance._diffVersionSearch = new DiffVersionSearch(
+								{
+									inputNode: searchBox,
+									minQueryLength: 0,
+									queryDelay: 0,
+									source: results,
+									resultTextLocator: 'searchData',
+									resultFilters: 'phraseMatch'
+								}
+							);
+						}
 					},
 
 					_loadDiffHTML: function(sourceVersion, targetVersion) {

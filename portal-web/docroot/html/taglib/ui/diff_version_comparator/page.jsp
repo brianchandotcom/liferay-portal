@@ -113,13 +113,32 @@ if (Validator.isNotNull(languageId)) {
 
 		<aui:row>
 			<aui:col cssClass="search-container-column" width="30">
-				<div class="search-panels">
-					<div class="search-panels-bar">
-						<i class="search-panel-icon"></i>
 
-						<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+				<%
+				List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
+
+				int diffVersionsCount = 0;
+
+				for (int i = 0; i < diffVersions.size(); i++) {
+					DiffVersion diffVersion = diffVersions.get(i);
+
+					if ((diffVersion.getVersion() <= sourceVersion) || (diffVersion.getVersion() > targetVersion)) {
+						continue;
+					}
+
+					diffVersionsCount++;
+				}
+				%>
+
+				<c:if test="<%= diffVersionsCount >= 5 %>">
+					<div class="search-panels">
+						<div class="search-panels-bar">
+							<i class="search-panel-icon"></i>
+
+							<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+						</div>
 					</div>
-				</div>
+				</c:if>
 
 				<c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">
 					<div class="language-selector">
@@ -143,8 +162,6 @@ if (Validator.isNotNull(languageId)) {
 
 					<%
 					double previousSourceVersion = sourceVersion;
-
-					List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
 
 					for (int i = 0; i < diffVersions.size(); i++) {
 						DiffVersion diffVersion = diffVersions.get(i);

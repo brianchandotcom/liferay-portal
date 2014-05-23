@@ -6,10 +6,6 @@
 		.asset-content p {
 			margin-bottom: 0;
 		}
-
-		.asset-description {
-			clear: left;
-		}
 	}
 
 	.asset-back-to {
@@ -19,11 +15,6 @@
 	.asset-content {
 		clear: right;
 		padding: 10px;
-
-		.asset-description {
-			clear: left;
-			font-style: italic;
-		}
 	}
 
 	.asset-flag {
@@ -75,6 +66,11 @@
 		float: right;
 		padding-left: 0.5em;
 		width: 150px;
+	}
+
+	.asset-thumbnail {
+		float: left;
+		margin: 0 2em 2em 0;
 	}
 
 	.asset-actions {

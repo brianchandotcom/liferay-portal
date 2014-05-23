@@ -227,8 +227,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				vertical-align: baseline;
 
 				h1 {
-					@include box-sizing(border-box);
-
 					display: inline-block;
 					font-size: inherit;
 					line-height: 1;

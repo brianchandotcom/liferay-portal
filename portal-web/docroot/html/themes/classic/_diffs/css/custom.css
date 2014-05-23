@@ -693,10 +693,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(3px);
 	}
 
-	.update-reminder-query .reminder-query-answer {
-		@include box-sizing(border-box);
-	}
-
 	.modify-pages .delete-tab {
 		@include border-radius(50%);
 		@include text-shadow(none);

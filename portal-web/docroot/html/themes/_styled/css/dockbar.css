@@ -1165,9 +1165,6 @@ $editLayoutPanelWidth: 460px;
 	.page-customization-bar {
 		background-color: #555;
 		background-color: rgba(0, 0, 0, 0.5);
-
-		@include box-sizing(border-box);
-
 		color: #FFF;
 		display: table;
 		font-size: 14px;
@@ -1351,9 +1348,6 @@ $editLayoutPanelWidth: 460px;
 
 			.staging-bar li.dropdown .dropdown-menu {
 				background-color: #FFF;
-
-				@include box-sizing(border-box);
-
 				margin: 0;
 				padding: 10px;
 			}

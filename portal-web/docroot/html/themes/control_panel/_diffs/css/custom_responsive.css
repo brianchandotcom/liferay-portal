@@ -5,8 +5,6 @@
 	.aui {
 		.dockbar {
 			.container, .container-fluid {
-				@include box-sizing(border-box);
-
 				padding: 0 5px;
 
 				.nav-add-controls-btn {

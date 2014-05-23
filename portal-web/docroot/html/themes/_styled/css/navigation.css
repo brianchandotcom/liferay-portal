@@ -93,8 +93,6 @@
 				}
 
 				.add-page-editor-input {
-					@include box-sizing(border-box);
-
 					width: 70%;
 					z-index: 1;
 				}

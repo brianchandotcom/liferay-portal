@@ -1091,18 +1091,6 @@ public class UsersAdminImpl implements UsersAdmin {
 		return hasUpdateFieldPermission(null, user, "emailAddress");
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean hasUpdateFieldPermission(User user, String field)
-		throws PortalException, SystemException {
-
-		return hasUpdateFieldPermission(null, user, field);
-	}
-
 	@Override
 	public boolean hasUpdateFieldPermission(
 			PermissionChecker permissionChecker, User updatingUser,
@@ -1173,6 +1161,18 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasUpdateFieldPermission(User, User, String)}
+	 */
+	@Deprecated
+	@Override
+	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException {
+
+		return hasUpdateFieldPermission(null, user, field);
 	}
 
 	/**

@@ -268,6 +268,15 @@ public class UsersAdminUtil {
 		return getUsersAdmin().hasUpdateEmailAddress(permissionChecker, user);
 	}
 
+	public static boolean hasUpdateFieldPermission(
+			PermissionChecker permissionChecker, User updatingUser,
+			User updatedUser, String field)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().hasUpdateFieldPermission(
+			permissionChecker, updatingUser, updatedUser, field);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, User, String)}
@@ -277,15 +286,6 @@ public class UsersAdminUtil {
 		throws PortalException, SystemException {
 
 		return getUsersAdmin().hasUpdateFieldPermission(null, user, field);
-	}
-
-	public static boolean hasUpdateFieldPermission(
-			PermissionChecker permissionChecker, User updatingUser,
-			User updatedUser, String field)
-		throws PortalException, SystemException {
-
-		return getUsersAdmin().hasUpdateFieldPermission(
-				permissionChecker, updatingUser, updatedUser, field);
 	}
 
 	/**

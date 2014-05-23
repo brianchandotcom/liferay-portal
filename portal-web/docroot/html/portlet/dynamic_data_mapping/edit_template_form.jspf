@@ -40,7 +40,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 
 		A.Array.each(
 			availableFields,
-			function(item, index, collection) {
+			function(item, index) {
 				item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
 			}
 		);

@@ -242,7 +242,7 @@ AUI.add(
 						buffer.push(root.openTag);
 
 						instance.get('fields').each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._appendStructureTypeElementAndMetaData(item, buffer);
 							}
 						);
@@ -278,7 +278,7 @@ AUI.add(
 						var instance = this;
 
 						field.get('fields').each(
-							function(item, index, collection) {
+							function(item, index) {
 								instance._appendStructureTypeElementAndMetaData(item, buffer);
 							}
 						);
@@ -292,7 +292,7 @@ AUI.add(
 						if (options) {
 							AArray.each(
 								options,
-								function(item, index, collection) {
+								function(item, index) {
 									var name = item.name;
 
 									if (!name) {
@@ -332,7 +332,7 @@ AUI.add(
 
 						A.each(
 							localizationMap,
-							function(item, index, collection) {
+							function(item, index) {
 								if (isObject(item)) {
 									var metadataTag = instance._createDynamicNode(
 										'meta-data',
@@ -386,7 +386,7 @@ AUI.add(
 
 						AArray.each(
 							availableLocales,
-							function(item1, index1, collection1) {
+							function(item1, index1) {
 								var metadata = instance._createDynamicNode(
 									'meta-data',
 									{
@@ -398,7 +398,7 @@ AUI.add(
 
 								AArray.each(
 									field.getProperties(),
-									function(item2, index2, collection2) {
+									function(item2, index2) {
 										var attributeName = item2.attributeName;
 
 										if (!XML_ATTRIBUTES_FIELD_ATTRS[attributeName]) {
@@ -447,7 +447,7 @@ AUI.add(
 						if (attributeMap) {
 							A.each(
 								attributeMap,
-								function(item, index, collection) {
+								function(item, index) {
 									if (item !== undefined) {
 										attrs.push([index, '="', item, '" '].join(STR_BLANK));
 									}
@@ -478,7 +478,7 @@ AUI.add(
 
 						AArray.each(
 							UNLOCALIZABLE_FIELD_ATTRS,
-							function(item, index, collection) {
+							function(item, index) {
 								if (defaultLocale === editingLocale) {
 									AArray.removeItem(readOnlyAttributes, item);
 								}
@@ -517,7 +517,7 @@ AUI.add(
 									var modelList = instance.propertyList.get('data');
 
 									var nameModel = modelList.filter(
-										function(item, index, collection) {
+										function(item, index) {
 											return (item.get('attributeName') === 'name');
 										}
 									);
@@ -549,7 +549,7 @@ AUI.add(
 
 						var fields = AArray.map(
 							val,
-							function(item, index, collection) {
+							function(item, index) {
 								return A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item);
 							}
 						);
@@ -570,7 +570,7 @@ AUI.add(
 
 						AArray.each(
 							options,
-							function(item, index, collection) {
+							function(item, index) {
 								var localizationMap = item.localizationMap;
 
 								if (isObject(localizationMap)) {
@@ -603,7 +603,7 @@ AUI.add(
 								if (isObject(localizationMap) && isObject(localeMap)) {
 									AArray.each(
 										instance.LOCALIZABLE_FIELD_ATTRS,
-										function(item, index, collection) {
+										function(item, index) {
 											field.set(item, localeMap[item]);
 										}
 									);
@@ -648,7 +648,7 @@ AUI.add(
 
 						AArray.each(
 							options,
-							function(item, index, collection) {
+							function(item, index) {
 								var localizationMap = item.localizationMap;
 
 								if (!isObject(localizationMap)) {
@@ -672,7 +672,7 @@ AUI.add(
 						fields = fields || instance.get('fields');
 
 						fields.each(
-							function(item, index, collection) {
+							function(item, index) {
 								var localizationMap = {};
 
 								localizationMap[locale] = item.getAttrs(instance.LOCALIZABLE_FIELD_ATTRS);
@@ -698,7 +698,7 @@ AUI.add(
 				normalizeKey: function(str) {
 					A.each(
 						str,
-						function(item, index, collection) {
+						function(item, index) {
 							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
 								str = str.replace(item, STR_SPACE);
 							}

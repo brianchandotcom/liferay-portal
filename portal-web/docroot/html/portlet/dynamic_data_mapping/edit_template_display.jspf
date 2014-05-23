@@ -161,7 +161,7 @@ if (Validator.isNotNull(scriptContent)) {
 				var results = [];
 
 				paletteItems.each(
-					function(item, index, collection) {
+					function(item, index) {
 						results.push(
 							{
 								node: item.ancestor(),
@@ -202,14 +202,14 @@ if (Validator.isNotNull(scriptContent)) {
 				'results',
 				function(event) {
 					paletteItems.each(
-						function(item, index, collection) {
+						function(item, index) {
 							item.ancestor().addClass('hide');
 						}
 					);
 
 					AArray.each(
 						event.results,
-						function(item, index, collection) {
+						function(item, index) {
 							item.raw.node.removeClass('hide');
 						}
 					);
@@ -217,7 +217,7 @@ if (Validator.isNotNull(scriptContent)) {
 					var foundVisibleSection;
 
 					paletteSectionsNode.each(
-						function(item, index, collection) {
+						function(item, index) {
 							var visibleItem = item.one('.palette-item-container:not(.hide)');
 
 							if (visibleItem) {

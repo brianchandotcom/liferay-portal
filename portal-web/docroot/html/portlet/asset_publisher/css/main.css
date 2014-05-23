@@ -177,6 +177,10 @@
 		color: #999;
 	}
 
+	.single-item-button {
+		display: inline-block;
+	}
+
 	.subscribe-action {
 		text-align: right;
 

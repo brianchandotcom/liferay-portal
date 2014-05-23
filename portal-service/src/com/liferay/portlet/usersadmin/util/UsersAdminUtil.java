@@ -258,7 +258,8 @@ public class UsersAdminUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	public static boolean hasUpdateEmailAddress(
@@ -279,18 +280,21 @@ public class UsersAdminUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	public static boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
-		return getUsersAdmin().hasUpdateFieldPermission(null, user, field);
+		return getUsersAdmin().hasUpdateFieldPermission(
+			null, null, user, field);
 	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	public static boolean hasUpdateScreenName(

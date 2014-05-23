@@ -452,11 +452,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.navbar {
-		.btn-group, .navbar-search {
-			margin-bottom: 8px;
-			margin-top: 8px;
-		}
-
 		.navbar-btn {
 			padding: 10px;
 		}

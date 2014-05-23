@@ -80,6 +80,13 @@
 		</if>
 
 		<if>
+			<equals arg1="${anonymous}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#check" locator-key1="ANONYMOUS_CHECKBOX" />
+			</then>
+		</if>
+		
+		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsPostthread#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
@@ -293,6 +300,16 @@
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 	</command>
 
+	<command name="lockPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="THREAD_ACTIONS_LOCK_THREAD" value1="Lock Thread" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="markAsAnswerPG">
 		<if>
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" />
@@ -368,7 +385,17 @@
 
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_QUICK_REPLY_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+			</else>
+		</if>
+		
 		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
 
@@ -470,6 +497,30 @@
 		</if>
 	</command>
 
+	<command name="replyWithQuotePG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
+		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD_SOURCE_ON_SEND_KEYS" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+	
 	<command name="restoreMBAttachmentCP">
 		<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_BODY_ATTACHMENT_1" />
 
@@ -599,6 +650,19 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewLockedPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_LOCKED_ICON" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_ACTIONS_UNLOCK_THREAD" value1="Unlock Thread" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_REPLY_WITH_QUOTE_1" value1="Reply with Quote" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 	</command>
 
 	<command name="viewMarkAsAnswerPG">

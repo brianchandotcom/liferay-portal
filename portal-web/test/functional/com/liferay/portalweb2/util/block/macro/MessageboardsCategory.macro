@@ -149,7 +149,7 @@
 
 	<command name="gotoPG">
 		<if>
-			<equals arg1="categoryDescriptionEnabled" arg2="true" />
+			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
 				<var name="key_categoryDescription" value="${categoryDescription}" />
 
@@ -163,11 +163,11 @@
 		</if>
 
 		<if>
-			<equals arg1="subCategoryEnabled" arg2="true" />
+			<equals arg1="${subCategoryEnabled}" arg2="true" />
 			<then>
 				<var name="key_subCategoryName" value="${subCategoryName}" />
 
-				<execute action="PGMessageboardsCategory#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
+				<execute action="PGMessageboardsCategory#click" locator-key1="SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 			</then>
 		</if>
 	</command>

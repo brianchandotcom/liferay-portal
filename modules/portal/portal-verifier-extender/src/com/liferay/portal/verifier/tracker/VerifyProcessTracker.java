@@ -53,6 +53,30 @@ public class VerifyProcessTracker
 		return verifyProcess;
 	}
 
+	public void execute(String verifyProcessName) throws VerifyException {
+		VerifyProcess verifyProcess = _verifyProcesses.get(verifyProcessName);
+
+		if (verifyProcess == null) {
+			System.out.println(
+				"A verify process with name " + verifyProcessName +
+					" has not been found");
+
+			return;
+		}
+
+		verifyProcess.verify();
+	}
+
+	public void list() {
+		for (Map.Entry<String, VerifyProcess> entry :
+				_verifyProcesses.entrySet()) {
+
+			System.out.println(
+				"Verifier " + entry.getKey() + " of type " +
+					entry.getValue().getClass());
+		}
+	}
+
 	@Override
 	public void modifiedService(
 		ServiceReference<VerifyProcess> serviceReference,
@@ -97,7 +121,7 @@ public class VerifyProcessTracker
 		catch (VerifyException ve) {
 			if (_log.isErrorEnabled()) {
 				_log.error(
-					"An error has occurred while executing the verifier " +
+					"Unexpected error while executing the verifier " +
 						verifyProcess.getClass(), ve);
 			}
 		}
@@ -109,7 +133,7 @@ public class VerifyProcessTracker
 		String verifyProcessName = (String)serviceReference.getProperty(
 			"verify.process.name");
 
-		if (verifyProcessName == null || verifyProcessName.equals("")) {
+		if ((verifyProcessName == null) || verifyProcessName.equals("")) {
 			throw new IllegalArgumentException(
 				"Verify processes must define the property " +
 					"\"verify.process.name\"");

@@ -16,8 +16,12 @@ package com.liferay.portal.verifier.activator;
 
 import com.liferay.portal.verifier.tracker.VerifyProcessTracker;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Miguel Pastor
@@ -29,15 +33,36 @@ public class VerifyExtenderActivator implements BundleActivator {
 		_verifyProcessTracker = new VerifyProcessTracker(bundleContext);
 
 		_verifyProcessTracker.open();
+
+		_verifyCommand = _registerConsoleCommand(bundleContext);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		_verifyProcessTracker.close();
 
+		_verifyCommand.unregister();
+
+		_verifyCommand = null;
 		_verifyProcessTracker = null;
 	}
 
+	private ServiceRegistration<Object> _registerConsoleCommand(
+		BundleContext bundleContext) {
+
+		Dictionary<String, Object> serviceProperties =
+			new Hashtable<String, Object>();
+
+		serviceProperties.put(
+			"osgi.command.function",
+			new String[] { "execute", "list" });
+		serviceProperties.put("osgi.command.scope", "verifier-extender");
+
+		return bundleContext.registerService(
+			Object.class, _verifyProcessTracker, serviceProperties);
+	}
+
+	ServiceRegistration<Object> _verifyCommand;
 	VerifyProcessTracker _verifyProcessTracker;
 
 }

@@ -289,7 +289,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						A.Array.removeItem(hiddenAttributes, 'readOnly');
 					}
 
-					item.set('hiddenAttributes', A.Array.unique(hiddenAttributes));
+					item.set('hiddenAttributes', A.Array.dedupe(hiddenAttributes));
 				},
 				['aui-base']
 			);

@@ -61,9 +61,9 @@ AUI.add(
 					}
 				},
 
-				NAME: 'availableField',
+				EXTENDS: A.FormBuilderAvailableField,
 
-				EXTENDS: A.FormBuilderAvailableField
+				NAME: 'availableField'
 			}
 		);
 
@@ -85,37 +85,6 @@ AUI.add(
 
 					portletResourceNamespace: {
 						value: STR_BLANK
-					},
-
-					translationManager: {
-						validator: isObject,
-						value: {}
-					},
-
-					validator: {
-						setter: function(val) {
-							var instance = this;
-
-							var config = A.merge(
-								{
-									rules: {
-										name: {
-											required: true,
-											structureFieldName: true
-										}
-									},
-									fieldStrings: {
-										name: {
-											required: Liferay.Language.get('this-field-is-required')
-										}
-									}
-								},
-								val
-							);
-
-							return config;
-						},
-						value: {}
 					},
 
 					strings: {
@@ -149,12 +118,56 @@ AUI.add(
 							width: Liferay.Language.get('width'),
 							yes: Liferay.Language.get('yes')
 						}
+					},
+
+					translationManager: {
+						validator: isObject,
+						value: {}
+					},
+
+					validator: {
+						setter: function(val) {
+							var instance = this;
+
+							var config = A.merge(
+								{
+									fieldStrings: {
+										name: {
+											required: Liferay.Language.get('this-field-is-required')
+										}
+									},
+									rules: {
+										name: {
+											required: true,
+											structureFieldName: true
+										}
+									}
+								},
+								val
+							);
+
+							return config;
+						},
+						value: {}
 					}
 				},
 
 				EXTENDS: A.FormBuilder,
 
 				NAME: 'liferayformbuilder',
+
+				normalizeKey: function(str) {
+					A.each(
+						str,
+						function(item, index, collection) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+								str = str.replace(item, STR_SPACE);
+							}
+						}
+					);
+
+					return str.replace(/\s/g, '_');
+				},
 
 				prototype: {
 					initializer: function() {
@@ -684,19 +697,6 @@ AUI.add(
 							}
 						);
 					}
-				},
-
-				normalizeKey: function(str) {
-					A.each(
-						str,
-						function(item, index, collection) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
-								str = str.replace(item, STR_SPACE);
-							}
-						}
-					);
-
-					return str.replace(/\s/g, '_');
 				}
 			}
 		);
@@ -704,51 +704,6 @@ AUI.add(
 		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'icon-fb-custom-field';
 
 		var AVAILABLE_FIELDS = {
-			DEFAULT: [
-				{
-					fieldLabel: Liferay.Language.get('button'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-button',
-					label: Liferay.Language.get('button'),
-					type: 'button'
-				},
-				{
-					fieldLabel: Liferay.Language.get('checkbox'),
-					iconClass: 'icon-fb-boolean',
-					label: Liferay.Language.get('checkbox'),
-					type: 'checkbox'
-				},
-				{
-					fieldLabel: Liferay.Language.get('fieldset'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-fieldset',
-					label: Liferay.Language.get('fieldset'),
-					type: 'fieldset'
-				},
-				{
-					fieldLabel: Liferay.Language.get('text-box'),
-					iconClass: 'icon-fb-text',
-					label: Liferay.Language.get('text-box'),
-					type: 'text'
-				},
-				{
-					fieldLabel: Liferay.Language.get('text-area'),
-					iconClass: 'icon-fb-text-box',
-					label: Liferay.Language.get('text-area'),
-					type: 'textarea'
-				},
-				{
-					fieldLabel: Liferay.Language.get('radio-buttons'),
-					iconClass: 'icon-fb-radio',
-					label: Liferay.Language.get('radio-buttons'),
-					type: 'radio'
-				},
-				{
-					fieldLabel: Liferay.Language.get('select-option'),
-					iconClass: 'icon-fb-select',
-					label: Liferay.Language.get('select-option'),
-					type: 'select'
-				}
-			],
-
 			DDM_STRUCTURE: [
 				{
 					iconClass: 'icon-fb-boolean',
@@ -832,6 +787,51 @@ AUI.add(
 					iconClass: 'icon-fb-fieldset',
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
+				}
+			],
+
+			DEFAULT: [
+				{
+					fieldLabel: Liferay.Language.get('button'),
+					iconClass: 'form-builder-field-icon form-builder-field-icon-button',
+					label: Liferay.Language.get('button'),
+					type: 'button'
+				},
+				{
+					fieldLabel: Liferay.Language.get('checkbox'),
+					iconClass: 'icon-fb-boolean',
+					label: Liferay.Language.get('checkbox'),
+					type: 'checkbox'
+				},
+				{
+					fieldLabel: Liferay.Language.get('fieldset'),
+					iconClass: 'form-builder-field-icon form-builder-field-icon-fieldset',
+					label: Liferay.Language.get('fieldset'),
+					type: 'fieldset'
+				},
+				{
+					fieldLabel: Liferay.Language.get('text-box'),
+					iconClass: 'icon-fb-text',
+					label: Liferay.Language.get('text-box'),
+					type: 'text'
+				},
+				{
+					fieldLabel: Liferay.Language.get('text-area'),
+					iconClass: 'icon-fb-text-box',
+					label: Liferay.Language.get('text-area'),
+					type: 'textarea'
+				},
+				{
+					fieldLabel: Liferay.Language.get('radio-buttons'),
+					iconClass: 'icon-fb-radio',
+					label: Liferay.Language.get('radio-buttons'),
+					type: 'radio'
+				},
+				{
+					fieldLabel: Liferay.Language.get('select-option'),
+					iconClass: 'icon-fb-select',
+					label: Liferay.Language.get('select-option'),
+					type: 'select'
 				}
 			],
 

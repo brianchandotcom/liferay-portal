@@ -82,15 +82,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					value: true
 				},
 
-				indexType: {
-					value: 'keyword'
-				},
-
-				localizable: {
-					seter: booleanParse,
-					value: true
-				},
-
 				hiddenAttributes: {
 					valueFn: function() {
 						var instance = this;
@@ -103,6 +94,15 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 						return hiddenAttributes;
 					}
+				},
+
+				indexType: {
+					value: 'keyword'
+				},
+
+				localizable: {
+					seter: booleanParse,
+					value: true
 				},
 
 				name: {

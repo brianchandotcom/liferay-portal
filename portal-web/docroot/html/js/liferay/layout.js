@@ -26,6 +26,8 @@ AUI.add(
 
 			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy sortable-layout-proxy"></div>'),
 
+			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
+
 			PROXY_NODE_ITEM: A.Node.create(
 				'<div class="lfr-portlet-proxy sortable-layout-proxy">' +
 					'<div class="portlet-topper">' +
@@ -33,8 +35,6 @@ AUI.add(
 					'</div>' +
 				'</div>'
 			),
-
-			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
 
 			options: LAYOUT_CONFIG,
 
@@ -53,28 +53,6 @@ AUI.add(
 						Liferay.Portlet.close(portlet, true);
 					}
 				);
-			},
-
-			getActiveDropContainer: function() {
-				var options = Layout.options;
-
-				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
-			},
-
-			getActiveDropNodes: function() {
-				var options = Layout.options;
-
-				var dropNodes = [];
-
-				A.all(options.dropContainer).each(
-					function(dropContainer) {
-						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
-							dropNodes.push(dropContainer.get('parentNode'));
-						}
-					}
-				);
-
-				return A.all(dropNodes);
 			},
 
 			findIndex: function(node) {
@@ -122,6 +100,28 @@ AUI.add(
 				if (layoutHandler) {
 					return layoutHandler.fire.apply(layoutHandler, arguments);
 				}
+			},
+
+			getActiveDropContainer: function() {
+				var options = Layout.options;
+
+				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
+			},
+
+			getActiveDropNodes: function() {
+				var options = Layout.options;
+
+				var dropNodes = [];
+
+				A.all(options.dropContainer).each(
+					function(dropContainer) {
+						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
+							dropNodes.push(dropContainer.get('parentNode'));
+						}
+					}
+				);
+
+				return A.all(dropNodes);
 			},
 
 			getLayoutHandler: function() {
@@ -274,6 +274,19 @@ AUI.add(
 				);
 			},
 
+			updatePortletDropZones: function(portletBoundary) {
+				var options = Layout.options;
+				var portletDropNodes = portletBoundary.all(options.dropNodes);
+
+				var layoutHandler = Layout.getLayoutHandler();
+
+				portletDropNodes.each(
+					function(item) {
+						layoutHandler.addDropNode(item);
+					}
+				);
+			},
+
 			updatePortletTouchDragHandles: function(event) {
 				var layoutHandler = Layout.getLayoutHandler();
 				var options = Layout.options;
@@ -300,19 +313,6 @@ AUI.add(
 				);
 
 				Layout.options.handles = touchHandles;
-			},
-
-			updatePortletDropZones: function(portletBoundary) {
-				var options = Layout.options;
-				var portletDropNodes = portletBoundary.all(options.dropNodes);
-
-				var layoutHandler = Layout.getLayoutHandler();
-
-				portletDropNodes.each(
-					function(item) {
-						layoutHandler.addDropNode(item);
-					}
-				);
 			},
 
 			_afterPortletClose: function(event) {

@@ -61,7 +61,7 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 		%>
 
-		<c:if test="<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>">
+		<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
 			<div class="asset-author">
 
 				<%

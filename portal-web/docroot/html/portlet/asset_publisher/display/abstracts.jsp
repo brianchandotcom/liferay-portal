@@ -108,12 +108,6 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 					</c:otherwise>
 				</c:choose>
 			</div>
-
-			<c:if test="<%= Validator.isNotNull(viewURL) %>">
-				<div class="asset-more">
-					<a href="<%= viewURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))} %>' key="<%= viewURLMessage %>" translateArguments="<%= false %>" /> &raquo; </a>
-				</div>
-			</c:if>
 		</div>
 
 		<div class="asset-metadata">

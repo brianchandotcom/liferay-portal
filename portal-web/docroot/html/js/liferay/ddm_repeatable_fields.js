@@ -83,7 +83,7 @@ AUI.add(
 								data: {
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
-									controlPanelCategory: 'current_site.content',
+									controlPanelCategory: 'portlet',
 									doAsGroupId: instance.get('doAsGroupId'),
 									fieldName: fieldName,
 									namespace: instance.get('namespace'),

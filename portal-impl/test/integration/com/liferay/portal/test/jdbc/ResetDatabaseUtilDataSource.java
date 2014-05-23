@@ -18,7 +18,7 @@ import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.test.jdbc.test.ResetDatabaseConnectionHandler;
+import com.liferay.portal.test.jdbc.ResetDatabaseConnectionHandler;
 
 import java.lang.reflect.Field;
 

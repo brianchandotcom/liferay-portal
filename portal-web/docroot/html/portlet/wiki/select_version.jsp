@@ -20,7 +20,6 @@
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectVersion");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -71,13 +70,17 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 						curSourceVersion = tempVersion;
 					}
 
-					Map<String, Object> data = new HashMap<String, Object>();
+					PortletURL compareVersionsURL = renderResponse.createRenderURL();
 
-					data.put("sourceversion", curSourceVersion);
-					data.put("targetversion", curTargetVersion);
+					compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
+					compareVersionsURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+					compareVersionsURL.setParameter("title", wikiPage.getTitle());
+					compareVersionsURL.setParameter("sourceVersion", String.valueOf(curSourceVersion));
+					compareVersionsURL.setParameter("targetVersion", String.valueOf(curTargetVersion));
+					compareVersionsURL.setParameter("type", "html");
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button cssClass="selector-button" href="<%= compareVersionsURL.toString() %>" value="choose" />
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -85,7 +88,3 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectVersionFm', '<%= HtmlUtil.escapeJS(eventName) %>');
-</aui:script>

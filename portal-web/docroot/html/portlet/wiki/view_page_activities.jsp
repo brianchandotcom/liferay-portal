@@ -259,43 +259,20 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 	/>
 </div>
 
-<%
-PortletURL compareVersionsURL = renderResponse.createRenderURL();
-
-compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
-%>
-
-<aui:form action="<%= compareVersionsURL %>" method="post" name="compareVersionsForm" onSubmit="event.preventDefault();">
-	<aui:input name="tabs3" type="hidden" value="activities" />
-	<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-	<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />
-	<aui:input name="sourceVersion" type="hidden" value="" />
-	<aui:input name="targetVersion" type="hidden" value="" />
-	<aui:input name="type" type="hidden" value="html" />
-</aui:form>
-
 <aui:script use="aui-base,escape">
 	A.getBody().delegate(
 		'click',
 		function(event) {
-			Liferay.Util.selectEntity(
+			Liferay.Util.openWindow(
 				{
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 680
+						width: 1024
 					},
-					eventName: '<portlet:namespace />selectVersion',
-					id: '<portlet:namespace />selectVersion' + event.currentTarget.attr('id'),
-					title: '<liferay-ui:message key="select-version" />',
+					id: '<portlet:namespace />compareVersions' + event.currentTarget.attr('id'),
+					title: '<liferay-ui:message key="compare-versions" />',
 					uri: event.currentTarget.attr('data-uri')
-				},
-				function(event) {
-					document.<portlet:namespace />compareVersionsForm.<portlet:namespace />sourceVersion.value = event.sourceversion;
-					document.<portlet:namespace />compareVersionsForm.<portlet:namespace />targetVersion.value = event.targetversion;
-
-					submitForm(document.<portlet:namespace />compareVersionsForm);
 				}
 			);
 		},

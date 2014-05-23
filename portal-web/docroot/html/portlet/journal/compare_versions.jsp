@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 
@@ -28,14 +27,8 @@ double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="compare-versions"
-/>
-
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/journal/compare_versions" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>

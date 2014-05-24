@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -46,7 +44,6 @@ import javax.servlet.http.HttpSession;
 /**
  * @author José Manuel Navarro
  */
-@ProviderType
 public class BreadcrumbUtil {
 
 	public static BreadcrumbEntry getGuestGroupBreadcrumbEntry(

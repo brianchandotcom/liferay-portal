@@ -12,7 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.nio.intraband.test;
+
+import com.liferay.portal.kernel.nio.intraband.BaseIntraband;
+import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
+import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 
 import java.io.IOException;
 

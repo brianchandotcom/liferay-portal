@@ -15,8 +15,9 @@
 package com.liferay.portal.kernel.nio.intraband.welder;
 
 import com.liferay.portal.kernel.nio.intraband.Intraband;
-import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.welder.test.WelderTestUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.io.IOException;

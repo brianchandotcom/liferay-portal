@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.portal.kernel.concurrent.test;
+
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 
 import java.util.concurrent.TimeUnit;
 

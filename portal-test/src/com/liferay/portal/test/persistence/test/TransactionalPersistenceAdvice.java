@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test.persistence;
+package com.liferay.portal.test.persistence.test;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.BasePersistence;

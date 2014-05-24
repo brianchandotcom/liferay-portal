@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.nio.intraband.test;
+
+import com.liferay.portal.kernel.nio.intraband.Intraband;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.ScatteringByteChannel;

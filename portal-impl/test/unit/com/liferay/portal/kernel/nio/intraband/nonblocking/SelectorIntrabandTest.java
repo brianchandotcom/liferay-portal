@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.nio.intraband.ClosedIntrabandException;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
-import com.liferay.portal.kernel.nio.intraband.IntrabandTestUtil;
+import com.liferay.portal.kernel.nio.intraband.test.IntrabandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.concurrent;
 
+import com.liferay.portal.kernel.concurrent.test.MarkerBlockingJob;
+import com.liferay.portal.kernel.concurrent.test.TestUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.Executors;

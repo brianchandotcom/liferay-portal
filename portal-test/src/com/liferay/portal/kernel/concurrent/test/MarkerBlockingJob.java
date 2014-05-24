@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.portal.kernel.concurrent.test;
 
 import java.util.concurrent.CountDownLatch;
 

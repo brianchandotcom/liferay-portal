@@ -269,11 +269,15 @@ public class PortletTracker
 			throw new RuntimeException(se);
 		}
 
+		PortletApp portletApp = portletModel.getPortletApp();
+		PluginPackage pluginPackage = portletModel.getPluginPackage();
+
 		portletModel = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
-		portletModel.setPluginPackage(portletModel.getPluginPackage());
-		portletModel.setPortletApp(portletModel.getPortletApp());
 		portletModel.setTimestamp(System.currentTimeMillis());
+
+		portletModel.setPluginPackage(pluginPackage);
+		portletModel.setPortletApp(portletApp);
 
 		return portletModel;
 	}

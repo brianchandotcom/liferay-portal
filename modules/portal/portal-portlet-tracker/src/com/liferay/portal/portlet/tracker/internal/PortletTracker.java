@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInfo;
@@ -267,10 +269,13 @@ public class PortletTracker
 			throw new RuntimeException(se);
 		}
 
+		PortletApp portletApp = portletModel.getPortletApp();
+		PluginPackage pluginPackage = portletModel.getPluginPackage();
+
 		portletModel = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
-		portletModel.setPluginPackage(portletModel.getPluginPackage());
-		portletModel.setPortletApp(portletModel.getPortletApp());
+		portletModel.setPluginPackage(pluginPackage);
+		portletModel.setPortletApp(portletApp);
 		portletModel.setTimestamp(System.currentTimeMillis());
 
 		return portletModel;
@@ -521,7 +526,7 @@ public class PortletTracker
 		throws PortalException, SystemException {
 
 		String categoryName = (String)serviceReference.getProperty(
-			"com.liferay.portal.portlet..display.category");
+			"com.liferay.portal.portlet.display.category");
 
 		if (categoryName == null) {
 			categoryName = "category.undefined";

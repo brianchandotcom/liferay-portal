@@ -100,7 +100,7 @@ public class PortletTracker
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Adding portlet " + portletId);
+			_log.info("Adding " + serviceReference);
 		}
 
 		try {
@@ -274,10 +274,9 @@ public class PortletTracker
 
 		portletModel = new PortletImpl(CompanyConstants.SYSTEM, portletId);
 
-		portletModel.setTimestamp(System.currentTimeMillis());
-
 		portletModel.setPluginPackage(pluginPackage);
 		portletModel.setPortletApp(portletApp);
+		portletModel.setTimestamp(System.currentTimeMillis());
 
 		return portletModel;
 	}
@@ -430,8 +429,8 @@ public class PortletTracker
 				try {
 					defaultPreferences = StringUtil.read(url.openStream());
 				}
-				catch (IOException e) {
-					_log.error(e, e);
+				catch (IOException ioe) {
+					_log.error(ioe, ioe);
 				}
 			}
 		}
@@ -527,7 +526,7 @@ public class PortletTracker
 		throws PortalException, SystemException {
 
 		String categoryName = (String)serviceReference.getProperty(
-			"com.liferay.portal.portlet..display.category");
+			"com.liferay.portal.portlet.display.category");
 
 		if (categoryName == null) {
 			categoryName = "category.undefined";

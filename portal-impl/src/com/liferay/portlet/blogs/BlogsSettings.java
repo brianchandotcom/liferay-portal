@@ -14,89 +14,33 @@
 
 package com.liferay.portlet.blogs;
 
+import com.liferay.portal.kernel.settings.BaseServiceSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Iván Zaera
  */
-public class BlogsSettings {
-
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"enableComments", PropsKeys.BLOGS_ENTRY_COMMENTS_ENABLED);
-		fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.BLOGS_COMMENT_RATINGS_ENABLED);
-		fallbackKeys.add("enableFlags", PropsKeys.BLOGS_FLAGS_ENABLED);
-		fallbackKeys.add("enableRatings", PropsKeys.BLOGS_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.BLOGS_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add("enableRss", PropsKeys.BLOGS_RSS_ENABLED);
-		fallbackKeys.add(
-			"enableSocialBookmarks", PropsKeys.BLOGS_SOCIAL_BOOKMARKS_ENABLED);
-		fallbackKeys.add("displayStyle", PropsKeys.BLOGS_DISPLAY_STYLE);
-		fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-		fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"pageDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
-		fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
-		fallbackKeys.add(
-			"socialBookmarksDisplayPosition",
-			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION);
-		fallbackKeys.add(
-			"socialBookmarksDisplayStyle",
-			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
-		fallbackKeys.add(
-			"socialBookmarksTypes", PropsKeys.SOCIAL_BOOKMARK_TYPES);
-
-		return fallbackKeys;
-	}
+public class BlogsSettings extends BaseServiceSettings {
 
 	public BlogsSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
+		super(settings, _fallbackKeys);
 	}
 
 	public String getDisplayStyle() {
-		return _typedSettings.getValue("displayStyle");
+		return typedSettings.getValue("displayStyle");
 	}
 
 	public long getDisplayStyleGroupId(long defaultDisplayStyleGroupId) {
-		return _typedSettings.getLongValue(
+		return typedSettings.getLongValue(
 			"displayStyleGroupId", defaultDisplayStyleGroupId);
 	}
 
 	public LocalizedValuesMap getEmailEntryAddedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailEntryAddedBody");
+		return typedSettings.getLocalizedValuesMap("emailEntryAddedBody");
 	}
 
 	public String getEmailEntryAddedBodyXml() {
@@ -106,11 +50,11 @@ public class BlogsSettings {
 	}
 
 	public boolean getEmailEntryAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
+		return typedSettings.getBooleanValue("emailEntryAddedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
+		return typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
 
 	public String getEmailEntryAddedSubjectXml() {
@@ -121,7 +65,7 @@ public class BlogsSettings {
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedBody");
+		return typedSettings.getLocalizedValuesMap("emailEntryUpdatedBody");
 	}
 
 	public String getEmailEntryUpdatedBodyXml() {
@@ -132,11 +76,11 @@ public class BlogsSettings {
 	}
 
 	public boolean getEmailEntryUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
+		return typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
+		return typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
 	}
 
 	public String getEmailEntryUpdatedSubjectXml() {
@@ -147,31 +91,31 @@ public class BlogsSettings {
 	}
 
 	public String getEmailFromAddress() {
-		return _typedSettings.getValue("emailFromAddress");
+		return typedSettings.getValue("emailFromAddress");
 	}
 
 	public String getEmailFromName() {
-		return _typedSettings.getValue("emailFromName");
+		return typedSettings.getValue("emailFromName");
 	}
 
 	public boolean getEnableCommentRatings() {
-		return _typedSettings.getBooleanValue("enableCommentRatings");
+		return typedSettings.getBooleanValue("enableCommentRatings");
 	}
 
 	public boolean getEnableComments() {
-		return _typedSettings.getBooleanValue("enableComments");
+		return typedSettings.getBooleanValue("enableComments");
 	}
 
 	public boolean getEnableFlags() {
-		return _typedSettings.getBooleanValue("enableFlags");
+		return typedSettings.getBooleanValue("enableFlags");
 	}
 
 	public boolean getEnableRatings() {
-		return _typedSettings.getBooleanValue("enableRatings");
+		return typedSettings.getBooleanValue("enableRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
+		return typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
 	public boolean getEnableRSS() {
@@ -179,41 +123,93 @@ public class BlogsSettings {
 			return false;
 		}
 
-		return _typedSettings.getBooleanValue("enableRss");
+		return typedSettings.getBooleanValue("enableRss");
 	}
 
 	public boolean getEnableSocialBookmarks() {
-		return _typedSettings.getBooleanValue("enableSocialBookmarks");
+		return typedSettings.getBooleanValue("enableSocialBookmarks");
 	}
 
 	public int getPageDelta() {
-		return _typedSettings.getIntegerValue("pageDelta");
+		return typedSettings.getIntegerValue("pageDelta");
 	}
 
 	public int getRssDelta() {
-		return _typedSettings.getIntegerValue("rssDelta");
+		return typedSettings.getIntegerValue("rssDelta");
 	}
 
 	public String getRssDisplayStyle() {
-		return _typedSettings.getValue("rssDisplayStyle");
+		return typedSettings.getValue("rssDisplayStyle");
 	}
 
 	public String getRssFeedType() {
-		return _typedSettings.getValue("rssFeedType");
+		return typedSettings.getValue("rssFeedType");
 	}
 
 	public String getSocialBookmarksDisplayPosition() {
-		return _typedSettings.getValue("socialBookmarksDisplayPosition");
+		return typedSettings.getValue("socialBookmarksDisplayPosition");
 	}
 
 	public String getSocialBookmarksDisplayStyle() {
-		return _typedSettings.getValue("socialBookmarksDisplayStyle");
+		return typedSettings.getValue("socialBookmarksDisplayStyle");
 	}
 
 	public String getSocialBookmarksTypes() {
-		return _typedSettings.getValue("socialBookmarksTypes");
+		return typedSettings.getValue("socialBookmarksTypes");
 	}
 
-	private TypedSettings _typedSettings;
+	private static FallbackKeys _fallbackKeys = new FallbackKeys();
+
+	static {
+		_fallbackKeys.add(
+			"enableComments", PropsKeys.BLOGS_ENTRY_COMMENTS_ENABLED);
+		_fallbackKeys.add(
+			"enableCommentRatings", PropsKeys.BLOGS_COMMENT_RATINGS_ENABLED);
+		_fallbackKeys.add("enableFlags", PropsKeys.BLOGS_FLAGS_ENABLED);
+		_fallbackKeys.add("enableRatings", PropsKeys.BLOGS_RATINGS_ENABLED);
+		_fallbackKeys.add(
+			"enableRelatedAssets", PropsKeys.BLOGS_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add("enableRss", PropsKeys.BLOGS_RSS_ENABLED);
+		_fallbackKeys.add(
+			"enableSocialBookmarks", PropsKeys.BLOGS_SOCIAL_BOOKMARKS_ENABLED);
+		_fallbackKeys.add("displayStyle", PropsKeys.BLOGS_DISPLAY_STYLE);
+		_fallbackKeys.add(
+			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
+		_fallbackKeys.add(
+			"emailEntryAddedEnabled",
+			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
+		_fallbackKeys.add(
+			"emailEntryAddedSubject",
+			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
+		_fallbackKeys.add(
+			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
+		_fallbackKeys.add(
+			"emailEntryUpdatedEnabled",
+			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
+		_fallbackKeys.add(
+			"emailEntryUpdatedSubject",
+			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
+		_fallbackKeys.add(
+			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		_fallbackKeys.add(
+			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		_fallbackKeys.add(
+			"pageDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		_fallbackKeys.add(
+			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		_fallbackKeys.add(
+			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
+		_fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+		_fallbackKeys.add(
+			"socialBookmarksDisplayPosition",
+			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION);
+		_fallbackKeys.add(
+			"socialBookmarksDisplayStyle",
+			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
+		_fallbackKeys.add(
+			"socialBookmarksTypes", PropsKeys.SOCIAL_BOOKMARK_TYPES);
+	}
 
 }

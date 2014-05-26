@@ -14,86 +14,41 @@
 
 package com.liferay.portlet.wiki;
 
+import com.liferay.portal.kernel.settings.BaseServiceSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PortalUtil;
-
-import java.io.IOException;
-
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
  */
-public class WikiSettings {
-
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
-
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
-		fallbackKeys.add(
-			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
-		fallbackKeys.add(
-			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailPageUpdatedEnabled",
-			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailPageUpdatedSubject",
-			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
-		fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enablePageRatings", PropsKeys.WIKI_PAGE_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add("enableRss", PropsKeys.WIKI_RSS_ENABLED);
-		fallbackKeys.add(
-			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
-		fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
-
-		return fallbackKeys;
-	}
+public class WikiSettings extends BaseServiceSettings {
 
 	public WikiSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
+		super(settings, _fallbackKeys);
 	}
 
 	public String getDisplayStyle() {
-		return _typedSettings.getValue("displayStyle");
+		return typedSettings.getValue("displayStyle");
 	}
 
 	public long getDisplayStyleGroupId(long defaultDisplayStyleGroupId) {
-		return _typedSettings.getLongValue(
+		return typedSettings.getLongValue(
 			"displayStyleGroupId", defaultDisplayStyleGroupId);
 	}
 
 	public String getEmailFromAddress() {
-		return _typedSettings.getValue("emailFromAddress");
+		return typedSettings.getValue("emailFromAddress");
 	}
 
 	public String getEmailFromName() {
-		return _typedSettings.getValue("emailFromName");
+		return typedSettings.getValue("emailFromName");
 	}
 
 	public LocalizedValuesMap getEmailPageAddedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailPageAddedBody");
+		return typedSettings.getLocalizedValuesMap("emailPageAddedBody");
 	}
 
 	public String getEmailPageAddedBodyXml() {
@@ -103,11 +58,11 @@ public class WikiSettings {
 	}
 
 	public boolean getEmailPageAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageAddedEnabled");
+		return typedSettings.getBooleanValue("emailPageAddedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailPageAddedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
+		return typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
 
 	public String getEmailPageAddedSubjectXml() {
@@ -118,7 +73,7 @@ public class WikiSettings {
 	}
 
 	public LocalizedValuesMap getEmailPageUpdatedBody() {
-		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
 	}
 
 	public String getEmailPageUpdatedBodyXml() {
@@ -128,11 +83,11 @@ public class WikiSettings {
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
+		return typedSettings.getBooleanValue("emailPageUpdatedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailPageUpdatedSubject() {
-		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
 	}
 
 	public String getEmailPageUpdatedSubjectXml() {
@@ -143,19 +98,19 @@ public class WikiSettings {
 	}
 
 	public boolean getEnableCommentRatings() {
-		return _typedSettings.getBooleanValue("enableCommentRatings");
+		return typedSettings.getBooleanValue("enableCommentRatings");
 	}
 
 	public boolean getEnableComments() {
-		return _typedSettings.getBooleanValue("enableComments");
+		return typedSettings.getBooleanValue("enableComments");
 	}
 
 	public boolean getEnablePageRatings() {
-		return _typedSettings.getBooleanValue("enablePageRatings");
+		return typedSettings.getBooleanValue("enablePageRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
+		return typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
 	public boolean getEnableRSS() {
@@ -163,43 +118,74 @@ public class WikiSettings {
 			return false;
 		}
 
-		return _typedSettings.getBooleanValue("enableRss");
+		return typedSettings.getBooleanValue("enableRss");
 	}
 
 	public String[] getHiddenNodes() {
-		return _typedSettings.getValues("hiddenNodes");
+		return typedSettings.getValues("hiddenNodes");
 	}
 
 	public int getRssDelta() {
-		return _typedSettings.getIntegerValue("rssDelta");
+		return typedSettings.getIntegerValue("rssDelta");
 	}
 
 	public String getRssDisplayStyle() {
-		return _typedSettings.getValue("rssDisplayStyle");
+		return typedSettings.getValue("rssDisplayStyle");
 	}
 
 	public String getRssFeedType() {
-		return _typedSettings.getValue("rssFeedType");
+		return typedSettings.getValue("rssFeedType");
 	}
 
 	public String[] getVisibleNodes() {
-		return _typedSettings.getValues("visibleNodes");
+		return typedSettings.getValues("visibleNodes");
 	}
 
 	public void setHiddenNodes(String[] hiddenNodes) {
-		_typedSettings.setValues("hiddenNodes", hiddenNodes);
+		typedSettings.setValues("hiddenNodes", hiddenNodes);
 	}
 
 	public void setVisibleNodes(String[] visibleNodes) {
-		_typedSettings.setValues("visibleNodes", visibleNodes);
+		typedSettings.setValues("visibleNodes", visibleNodes);
 	}
 
-	public void store() throws IOException, ValidatorException {
-		Settings settings = _typedSettings.getWrappedSettings();
+	private static FallbackKeys _fallbackKeys = new FallbackKeys();
 
-		settings.store();
+	static {
+		_fallbackKeys.add(
+			"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		_fallbackKeys.add(
+			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		_fallbackKeys.add(
+			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
+		_fallbackKeys.add(
+			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
+		_fallbackKeys.add(
+			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
+		_fallbackKeys.add(
+			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
+		_fallbackKeys.add(
+			"emailPageUpdatedEnabled",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
+		_fallbackKeys.add(
+			"emailPageUpdatedSubject",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
+		_fallbackKeys.add(
+			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
+		_fallbackKeys.add(
+			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
+		_fallbackKeys.add(
+			"enablePageRatings", PropsKeys.WIKI_PAGE_RATINGS_ENABLED);
+		_fallbackKeys.add(
+			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add("enableRss", PropsKeys.WIKI_RSS_ENABLED);
+		_fallbackKeys.add(
+			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		_fallbackKeys.add(
+			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
+		_fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
 	}
-
-	private TypedSettings _typedSettings;
 
 }

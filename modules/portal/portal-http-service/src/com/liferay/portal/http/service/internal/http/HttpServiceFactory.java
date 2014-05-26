@@ -65,6 +65,10 @@ public class HttpServiceFactory implements ServiceFactory<HttpService> {
 	public void ungetService(
 		Bundle bundle, ServiceRegistration<HttpService> serviceRegistration,
 		HttpService httpService) {
+
+		HttpServiceWrapper httpServiceWrapper = (HttpServiceWrapper)httpService;
+
+		httpServiceWrapper.close();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(HttpServiceFactory.class);

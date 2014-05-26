@@ -88,17 +88,16 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long groupId = rs.getLong("groupId");
 				long folderId = rs.getLong("folderId");
 				String title = rs.getString("title");
+
 				String extension = rs.getString("extension");
-				String version = rs.getString("version");
-				String periodAndExtension;
 
 				if (Validator.isNull(extension)) {
-					periodAndExtension = StringPool.PERIOD.concat(
-						StringPool.BLANK);
+					extension = StringPool.BLANK;
 				}
-				else {
-					periodAndExtension = StringPool.PERIOD.concat(extension);
-				}
+
+				String version = rs.getString("version");
+
+				String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 				if (!title.endsWith(periodAndExtension)) {
 					continue;

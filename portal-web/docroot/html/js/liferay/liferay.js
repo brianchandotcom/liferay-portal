@@ -89,7 +89,7 @@ Liferay = window.Liferay || {};
 							}
 						}
 						else if (callbackException) {
-							var exception = responseData ? responseData.exception : 'The server returned an empty response';
+							var exception = responseData ? (responseData.exception + ': ' + responseData.message) : 'The server returned an empty response';
 
 							callbackException.call(this, exception, responseData);
 						}

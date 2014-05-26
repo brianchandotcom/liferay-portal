@@ -783,10 +783,9 @@
 			<bean class="com.liferay.portal.util.LayoutTypePortletFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.util.Portal" class="com.liferay.portal.util.PortalImpl" />
 	<bean id="com.liferay.portal.util.PortalUtil" class="com.liferay.portal.util.PortalUtil">
-		<property name="portal">
-			<bean class="com.liferay.portal.util.PortalImpl" />
-		</property>
+		<property name="portal" ref="com.liferay.portal.util.Portal" />
 	</bean>
 	<bean id="com.liferay.portal.util.PortletListerFactoryUtil" class="com.liferay.portal.util.PortletListerFactoryUtil">
 		<property name="portletListerFactory">

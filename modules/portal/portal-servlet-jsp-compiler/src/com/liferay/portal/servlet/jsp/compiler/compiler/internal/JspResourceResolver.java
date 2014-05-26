@@ -101,7 +101,7 @@ public class JspResourceResolver implements ResourceResolver {
 
 		List<URL> urls = extraPackageMap.get(packageName);
 
-		if ((urls == null) || !urls.isEmpty()) {
+		if ((urls == null) || urls.isEmpty()) {
 			_jspResourceCache.putResources(bundleWiring, key, resources);
 
 			return resources;

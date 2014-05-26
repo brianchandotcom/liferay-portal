@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
@@ -22,6 +21,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
  */
 public interface DDMFormConverter {
 
-	public DDMForm convert(String xsd) throws DocumentException;
+	public DDMForm getForm(String xsd) throws Exception;
 
 }

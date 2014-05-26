@@ -24,21 +24,22 @@ import java.util.Set;
  */
 public class DDMFormFieldOptions {
 
-	public void addLabelToOption(
+	public void addOption(String value) {
+		_options.put(value, new LocalizedValue());
+	}
+
+	public void addOptionLabel(
 		String optionValue, Locale locale, String label) {
 
 		LocalizedValue labels = _options.get(optionValue);
 
 		if (labels == null) {
 			labels = new LocalizedValue();
+
 			_options.put(optionValue, labels);
 		}
 
 		labels.addValue(locale, label);
-	}
-
-	public void addOption(String value) {
-		_options.put(value, new LocalizedValue());
 	}
 
 	public LocalizedValue getOptionLabels(String optionValue) {
@@ -51,4 +52,5 @@ public class DDMFormFieldOptions {
 
 	private Map<String, LocalizedValue> _options =
 		new LinkedHashMap<String, LocalizedValue>();
+
 }

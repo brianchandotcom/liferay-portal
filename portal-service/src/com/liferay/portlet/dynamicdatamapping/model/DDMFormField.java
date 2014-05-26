@@ -24,8 +24,9 @@ import java.util.Map;
  */
 public class DDMFormField {
 
-	public LocalizedValue getCalculatedValueExpression() {
-		return _calculatedValueExpression;
+	public DDMFormField(String name, String type) {
+		_name = name;
+		_type = type;
 	}
 
 	public String getDataType() {
@@ -54,6 +55,7 @@ public class DDMFormField {
 
 		for (DDMFormField nestedField : _nestedFields) {
 			fieldsMap.put(nestedField.getName(), nestedField);
+
 			fieldsMap.putAll(nestedField.getNestedFieldsMap());
 		}
 
@@ -80,14 +82,6 @@ public class DDMFormField {
 		return _type;
 	}
 
-	public String getValidationExpression() {
-		return _validationExpression;
-	}
-
-	public String getVisibilityExpression() {
-		return _visibilityExpression;
-	}
-
 	public boolean isMultiple() {
 		return _multiple;
 	}
@@ -98,12 +92,6 @@ public class DDMFormField {
 
 	public boolean isRequired() {
 		return _required;
-	}
-
-	public void setCalculatedValueExpression(
-		LocalizedValue calculatedValueExpression) {
-
-		_calculatedValueExpression = calculatedValueExpression;
 	}
 
 	public void setDataType(String dataType) {
@@ -158,15 +146,6 @@ public class DDMFormField {
 		_type = type;
 	}
 
-	public void setValidationExpression(String validationExpression) {
-		_validationExpression = validationExpression;
-	}
-
-	public void setVisibilityExpression(String visibilityExpression) {
-		_visibilityExpression = visibilityExpression;
-	}
-
-	private LocalizedValue _calculatedValueExpression = new LocalizedValue();
 	private String _dataType;
 	private String _indexType;
 	private LocalizedValue _label = new LocalizedValue();
@@ -180,7 +159,5 @@ public class DDMFormField {
 	private LocalizedValue _style = new LocalizedValue();
 	private LocalizedValue _tip = new LocalizedValue();
 	private String _type;
-	private String _validationExpression;
-	private String _visibilityExpression;
 
 }

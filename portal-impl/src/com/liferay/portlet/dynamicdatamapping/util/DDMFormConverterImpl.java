@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
@@ -40,18 +39,34 @@ import java.util.Locale;
 public class DDMFormConverterImpl implements DDMFormConverter {
 
 	@Override
-	public DDMForm convert(String xsd) throws DocumentException {
-		DDMForm ddmForm = new DDMForm();
+	public DDMForm getForm(String xsd) throws Exception {
+		DDMForm form = new DDMForm();
 
 		Document document = SAXReaderUtil.read(xsd);
 
-		Element root = document.getRootElement();
+		setFormAvailableLocales(document.getRootElement(), form);
+		setFormDefaultLocale(document.getRootElement(), form);
+		setFormFields(document.getRootElement(), form);
 
-		ddmForm.setAvailableLocales(getAvailableLocales(root));
-		ddmForm.setDefaultLocale(getDefaultLocale(root));
-		ddmForm.setFields(getFields(root));
+		return form;
+	}
 
-		return ddmForm;
+	protected void addOptionValueLabels(
+		Element dynamicElementElement, DDMFormFieldOptions options,
+		String optionValue) {
+
+		List<Element> metadataElements = dynamicElementElement.elements(
+			"meta-data");
+
+		for (Element metadataElement : metadataElements) {
+			String languageId = metadataElement.attributeValue("locale");
+
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			Element labelElement = fetchMetadataEntry(metadataElement, "label");
+
+			options.addOptionLabel(optionValue, locale, labelElement.getText());
+		}
 	}
 
 	protected Element fetchMetadataEntry(
@@ -68,126 +83,195 @@ public class DDMFormConverterImpl implements DDMFormConverter {
 		return (Element)xPathSelector.selectSingleNode(parentElement);
 	}
 
-	protected List<Locale> getAvailableLocales(Element root) {
-		String availableLanguageIds = root.attributeValue("available-locales");
-
-		String[] splitLanguageIds = StringUtil.split(availableLanguageIds);
-
+	protected List<Locale> getAvailableLocales(Element rootElement) {
 		List<Locale> availableLocales = new ArrayList<Locale>();
 
-		for (String languageId : splitLanguageIds) {
-			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+		String availableLanguageIds = rootElement.attributeValue(
+			"available-locales");
+
+		for (String availableLanguageId :
+				StringUtil.split(availableLanguageIds)) {
+
+			Locale availableLocale = LocaleUtil.fromLanguageId(
+				availableLanguageId);
+
+			availableLocales.add(availableLocale);
 		}
 
 		return availableLocales;
 	}
 
-	protected Locale getDefaultLocale(Element root) {
-		String defaultLanguageId = root.attributeValue("default-locale");
+	protected Locale getDefaultLocale(Element rootElement) {
+		String defaultLanguageId = rootElement.attributeValue("default-locale");
 
 		return LocaleUtil.fromLanguageId(defaultLanguageId);
 	}
 
-	protected DDMFormField getField(Element dynamicElement) {
-		DDMFormField field = new DDMFormField();
+	protected DDMFormField getField(Element dynamicElementElement) {
+		String name = dynamicElementElement.attributeValue("name");
+		String type = dynamicElementElement.attributeValue("type");
 
-		field.setDataType(dynamicElement.attributeValue("dataType"));
-		field.setIndexType(dynamicElement.attributeValue("indexType"));
-		field.setMultiple(
-			GetterUtil.getBoolean(dynamicElement.attributeValue("multiple")));
-		field.setName(dynamicElement.attributeValue("name"));
-		field.setRequired(
-			GetterUtil.getBoolean(dynamicElement.attributeValue("required")));
+		DDMFormField field = new DDMFormField(name, type);
 
-		String fieldType = dynamicElement.attributeValue("type");
+		setFieldDataType(dynamicElementElement, field);
+		setFieldIndexType(dynamicElementElement, field);
+		setFieldMultiple(dynamicElementElement, field);
+		setFieldRequired(dynamicElementElement, field);
 
-		field.setType(fieldType);
+		List<Element> metadataElements = dynamicElementElement.elements(
+			"meta-data");
 
-		parseElementMetadata(dynamicElement.elements("meta-data"), field);
+		for (Element metadataElement : metadataElements) {
+			setFieldMetadata(metadataElement, field);
+		}
 
-		if (fieldType.equals("radio") || fieldType.equals("select")) {
-			field.setOptions(
-				getOptions(dynamicElement.elements("dynamic-element")));
+		if (type.equals("radio") || type.equals("select")) {
+			setFieldOptions(dynamicElementElement, field);
 		}
 		else {
-			field.setNestedFields(getFields(dynamicElement));
+			setFieldNestedField(dynamicElementElement, field);
 		}
 
 		return field;
 	}
 
-	protected List<DDMFormField> getFields(Element root) {
+	protected List<DDMFormField> getFields(Element rootElement) {
 		List<DDMFormField> fields = new ArrayList<DDMFormField>();
 
-		List<Element> dynamicElements = root.elements("dynamic-element");
+		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
+			DDMFormField field = getField(dynamicElement);
 
-		for (Element dynamicElement : dynamicElements) {
-			fields.add(getField(dynamicElement));
+			fields.add(field);
 		}
 
 		return fields;
 	}
 
-	protected DDMFormFieldOptions getOptions(List<Element> optionElements) {
+	protected DDMFormFieldOptions getOptions(
+		List<Element> dynamicElementElements) {
+
 		DDMFormFieldOptions options = new DDMFormFieldOptions();
 
-		for (Element optionElement : optionElements) {
-			String value = optionElement.attributeValue("value");
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String value = dynamicElementElement.attributeValue("value");
 
 			options.addOption(value);
 
-			List<Element> metadataElements = optionElement.elements("meta-data");
-
-			for (Element metadataElement : metadataElements) {
-				String languageId = metadataElement.attributeValue("locale");
-				Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-				Element labelElement = fetchMetadataEntry(
-					metadataElement, "label");
-
-				options.addLabelToOption(value, locale, labelElement.getText());
-			}
+			addOptionValueLabels(dynamicElementElement, options, value);
 		}
 
 		return options;
 	}
 
-	protected void parseElementMetadata(
-		List<Element> metadataElements, DDMFormField field) {
+	protected void setFieldDataType(
+		Element dynamicElementElement, DDMFormField field) {
 
-		for (Element metadataElement : metadataElements) {
-			String languageId = metadataElement.attributeValue("locale");
-			Locale currentLocale = LocaleUtil.fromLanguageId(languageId);
+		String dataType = dynamicElementElement.attributeValue("dataType");
 
-			Element labelElement = fetchMetadataEntry(metadataElement, "label");
+		field.setDataType(dataType);
+	}
 
-			if (labelElement != null) {
-				LocalizedValue fieldLabel = field.getLabel();
-				fieldLabel.addValue(currentLocale, labelElement.getText());
-			}
+	protected void setFieldIndexType(
+		Element dynamicElementElement, DDMFormField field) {
 
-			Element predefinedValueElement = fetchMetadataEntry(
-				metadataElement, "predefinedValue");
+		String indexType = dynamicElementElement.attributeValue("indexType");
 
-			if (predefinedValueElement != null) {
-				LocalizedValue fieldPredefinedValue = field.getPredefinedValue();
-				fieldPredefinedValue.addValue(
-					currentLocale, predefinedValueElement.getText());
-			}
+		field.setIndexType(indexType);
+	}
 
-			Element tipElement = fetchMetadataEntry(metadataElement, "tip");
+	protected void setFieldMetadata(
+		Element metadataElement, DDMFormField field) {
 
-			if (tipElement != null) {
-				LocalizedValue fieldTip = field.getTip();
-				fieldTip.addValue(currentLocale, tipElement.getText());
-			}
+		String languageId = metadataElement.attributeValue("locale");
 
-			Element styleElement = fetchMetadataEntry(metadataElement, "style");
+		Locale currentLocale = LocaleUtil.fromLanguageId(languageId);
 
-			if (styleElement != null) {
-				LocalizedValue fieldStyle = field.getStyle();
-				fieldStyle.addValue(currentLocale, styleElement.getText());
-			}
+		Element labelElement = fetchMetadataEntry(metadataElement, "label");
+
+		if (labelElement != null) {
+			LocalizedValue fieldLabel = field.getLabel();
+
+			fieldLabel.addValue(currentLocale, labelElement.getText());
+		}
+
+		Element predefinedValueElement = fetchMetadataEntry(
+			metadataElement, "predefinedValue");
+
+		if (predefinedValueElement != null) {
+			LocalizedValue fieldPredefinedValue = field.getPredefinedValue();
+
+			fieldPredefinedValue.addValue(
+				currentLocale, predefinedValueElement.getText());
+		}
+
+		Element tipElement = fetchMetadataEntry(metadataElement, "tip");
+
+		if (tipElement != null) {
+			LocalizedValue fieldTip = field.getTip();
+
+			fieldTip.addValue(currentLocale, tipElement.getText());
+		}
+
+		Element styleElement = fetchMetadataEntry(metadataElement, "style");
+
+		if (styleElement != null) {
+			LocalizedValue fieldStyle = field.getStyle();
+
+			fieldStyle.addValue(currentLocale, styleElement.getText());
 		}
 	}
+
+	protected void setFieldMultiple(
+		Element dynamicElementElement, DDMFormField field) {
+
+		boolean multiple = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("multiple"));
+
+		field.setMultiple(multiple);
+	}
+
+	protected void setFieldNestedField(
+		Element dynamicElementElement, DDMFormField field) {
+
+		List<DDMFormField> nestedFields = getFields(dynamicElementElement);
+
+		field.setNestedFields(nestedFields);
+	}
+
+	protected void setFieldOptions(
+		Element dynamicElementElement, DDMFormField field) {
+
+		DDMFormFieldOptions options = getOptions(
+			dynamicElementElement.elements("dynamic-element"));
+
+		field.setOptions(options);
+	}
+
+	protected void setFieldRequired(
+		Element dynamicElementElement, DDMFormField field) {
+
+		boolean required = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("required"));
+
+		field.setRequired(required);
+	}
+
+	protected void setFormAvailableLocales(Element rootElement, DDMForm form) {
+		List<Locale> availableLocales = getAvailableLocales(rootElement);
+
+		form.setAvailableLocales(availableLocales);
+	}
+
+	protected void setFormDefaultLocale(Element rootElement, DDMForm form) {
+		Locale defaultLocale = getDefaultLocale(rootElement);
+
+		form.setDefaultLocale(defaultLocale);
+	}
+
+	protected void setFormFields(Element rootElement, DDMForm form) {
+		List<DDMFormField> fields = getFields(rootElement);
+
+		form.setFields(fields);
+	}
+
 }

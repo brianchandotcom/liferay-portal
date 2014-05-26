@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
@@ -23,23 +22,23 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
  */
 public class DDMFormConverterUtil {
 
-	public static DDMForm convert(String xsd) throws DocumentException {
-		return getXSDToFormConverter().convert(xsd);
-	}
-
-	public static DDMFormConverter getXSDToFormConverter() {
+	public static DDMFormConverter getDDMFormConverter() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			DDMFormConverterUtil.class);
 
-		return _xsdToFormConverter;
+		return _ddmFormConverter;
 	}
 
-	public void setXSDToFormConverter(DDMFormConverter converter) {
+	public static DDMForm getForm(String xsd) throws Exception {
+		return getDDMFormConverter().getForm(xsd);
+	}
+
+	public void setDDMFormConverter(DDMFormConverter ddmFormConverter) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_xsdToFormConverter = converter;
+		_ddmFormConverter = ddmFormConverter;
 	}
 
-	private static DDMFormConverter _xsdToFormConverter;
+	private static DDMFormConverter _ddmFormConverter;
 
 }

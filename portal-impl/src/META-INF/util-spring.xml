@@ -449,7 +449,7 @@
 			<bean class="com.liferay.portal.util.MethodParametersResolverImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.MimeTypes" class="com.liferay.portal.util.MimeTypesImpl">
+	<bean id="com.liferay.portal.kernel.util.MimeTypes" class="com.liferay.portal.util.MimeTypesImpl" />
 	<bean id="com.liferay.portal.kernel.util.MimeTypesUtil" class="com.liferay.portal.kernel.util.MimeTypesUtil">
 		<property name="mimeTypes" ref="com.liferay.portal.kernel.util.MimeTypes" />
 	</bean>

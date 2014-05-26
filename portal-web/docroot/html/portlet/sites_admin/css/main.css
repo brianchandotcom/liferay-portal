@@ -1,6 +1,10 @@
 .portlet-site-settings {
-	.trash-entries-max-age {
-		margin-left: 1.5em;
+	.maps-google-maps-api-key {
+		margin-left: 20px;
+	}
+
+	.membership-restriction-container {
+		margin-top: 1em;
 	}
 
 	.staging-section {
@@ -11,7 +15,7 @@
 		font-weight: normal;
 	}
 
-	.membership-restriction-container {
-		margin-top: 1em;
+	.trash-entries-max-age {
+		margin-left: 1.5em;
 	}
 }

@@ -375,13 +375,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Skip
 	public List<CustomAttributesDisplay> getCustomAttributesDisplays() {
 		List<CustomAttributesDisplay> customAttributesDisplays =
-			new ArrayList<CustomAttributesDisplay>(
-				_customAttributesDisplayPortlets.size());
+			new ArrayList<CustomAttributesDisplay>();
 
-		for (Map.Entry<String, Portlet> entry :
-				_customAttributesDisplayPortlets.entrySet()) {
+		for (Portlet portlet : getPortlets()) {
+			if (!portlet.isActive() || !portlet.isInclude() ||
+				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
-			Portlet portlet = entry.getValue();
+				continue;
+			}
 
 			List<CustomAttributesDisplay> portletCustomAttributesDisplays =
 				portlet.getCustomAttributesDisplayInstances();
@@ -1520,13 +1521,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setCustomAttributesDisplayClasses(
 			customAttributesDisplayClasses);
 
-		if (customAttributesDisplayClasses.isEmpty()) {
-			_customAttributesDisplayPortlets.remove(portletId);
-		}
-		else {
-			_customAttributesDisplayPortlets.put(portletId, portletModel);
-		}
-
 		portletModel.setDDMDisplayClass(
 			GetterUtil.getString(
 				portletElement.elementText("ddm-display"),
@@ -2421,8 +2415,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private static Map<Long, Map<String, Portlet>> _companyPortletsPool =
 		new ConcurrentHashMap<Long, Map<String, Portlet>>();
-	private static Map<String, Portlet> _customAttributesDisplayPortlets =
-		new ConcurrentHashMap<String, Portlet>();
 	private static Map<String, Portlet> _friendlyURLMapperPortlets =
 		new ConcurrentHashMap<String, Portlet>();
 	private static Map<String, PortletApp> _portletAppsPool =

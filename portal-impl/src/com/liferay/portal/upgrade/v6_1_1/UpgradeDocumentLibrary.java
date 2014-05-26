@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,7 +88,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long groupId = rs.getLong("groupId");
 				long folderId = rs.getLong("folderId");
 				String title = rs.getString("title");
+
 				String extension = rs.getString("extension");
+
+				if (Validator.isNull(extension)) {
+					extension = StringPool.BLANK;
+				}
+
 				String version = rs.getString("version");
 
 				String periodAndExtension = StringPool.PERIOD.concat(extension);

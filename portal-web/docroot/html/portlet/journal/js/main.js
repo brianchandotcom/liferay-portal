@@ -5,9 +5,13 @@ AUI.add(
 
 		var STR_ADD = 'add';
 
+		var STR_ARTICLE = 'article';
+
 		var STR_ARTICLE_ID = 'articleId';
 
 		var STR_CMD = 'cmd';
+
+		var STR_STRINGS = 'strings';
 
 		var STR_UPDATE = 'update';
 
@@ -20,14 +24,207 @@ AUI.add(
 				NAME: 'journal',
 
 				ATTRS: {
-					articleId: {
-						validator: Lang.isString
+					article: {
+						validator: Lang.isObject,
+						value: {}
+					},
+
+					strings: {
+						validator: Lang.isObject,
+						value: {
+							addTemplate: Liferay.Language.get('please-add-a-template-to-render-this-structure'),
+							permissions: Liferay.Language.get('permissions'),
+							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft')
+						}
 					}
 				},
 
 				prototype: {
-					displayTemplateMessage: function() {
-						alert(Liferay.Language.get('please-add-a-template-to-render-this-structure'));
+					initializer: function() {
+						var instance = this;
+
+						instance._createTooltip();
+
+						instance._bindUI();
+					},
+
+					_bindUI: function() {
+						var instance = this;
+
+						var eventHandles = [];
+
+						var form = instance.getPrincipalForm();
+
+						eventHandles.push(form.delegate('change', instance._onFormChanged, ':input', instance));
+
+						var basicPreviewButton = instance.one('#basicPreviewButton');
+
+						if (basicPreviewButton) {
+							eventHandles.push(basicPreviewButton.on('click', instance._previewArticle, instance));
+						}
+
+						var permissionsButton = instance.one('#articlePermissionsButton');
+
+						if (permissionsButton) {
+							eventHandles.push(permissionsButton.on('click', instance._viewArticlePermissions, instance));
+						}
+
+						var historyButton = instance.one('#articleHistoryButton');
+
+						if (historyButton) {
+							eventHandles.push(historyButton.on('click', instance._viewArticleHistory, instance));
+						}
+					},
+
+					_createTooltip: function() {
+						var instance = this;
+
+						new A.Tooltip(
+							{
+								trigger: instance.one('#basicPreviewButton'),
+								visible: false,
+								zIndex: Liferay.zIndex.TOOLTIP
+							}
+						).render();
+					},
+
+					_displayTemplateMessage: function() {
+						var instance = this;
+
+						var strings = instance.get(STR_STRINGS);
+
+						alert(strings.addTemplate);
+					},
+
+					_hasStructure: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var structureId = instance.getByName(form, 'structureId');
+
+						return structureId && structureId.val();
+					},
+
+					_hasTemplate: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var templateId = instance.getByName(form, 'templateId');
+
+						return templateId && templateId.val();
+					},
+
+					_hasUnsavedChanges: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var unsavedChanges = instance._formChanged;
+
+						if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
+							A.Object.some(
+								CKEDITOR.instances,
+								function(item, index) {
+									var parentForm = A.one('#' + item.element.getId()).ancestor('form');
+
+									if (parentForm.compareTo(form)) {
+										unsavedChanges = item.checkDirty();
+
+										return unsavedChanges;
+									}
+								}
+							);
+						}
+
+						return unsavedChanges;
+					},
+
+					_onFormChanged: function(event) {
+						var instance = this;
+
+						instance._formChanged = true;
+					},
+
+					_previewArticle: function(event) {
+						var instance = this;
+
+						var strings = instance.get(STR_STRINGS);
+
+						event.preventDefault();
+
+						if (!instance._hasUnsavedChanges()) {
+							var article = instance.get(STR_ARTICLE);
+
+							Liferay.fire(
+								'previewArticle',
+								{
+									title: article.title,
+									uri: article.previewUrl
+								}
+							);
+						}
+						else if (confirm(strings.saveAsDraftBeforePreview)) {
+							var hasStructure = instance._hasStructure();
+
+							var hasTemplate = instance._hasTemplate();
+
+							var updateStructureDefaultValues = instance._updateStructureDefaultValues();
+
+							if (hasStructure && !hasTemplate && !updateStructureDefaultValues) {
+								instance._displayTemplateMessage();
+							}
+							else {
+								var form = instance.getPrincipalForm();
+
+								instance.one('#cmd', form).val('preview');
+
+								submitForm(form);
+							}
+						}
+					},
+
+					_updateStructureDefaultValues: function() {
+						var instance = this;
+
+						var form = instance.getPrincipalForm();
+
+						var classNameId = instance.getByName(form, 'classNameId');
+
+						return (classNameId && classNameId.val() > 0);
+					},
+
+					_viewArticleHistory: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						var article = instance.get(STR_ARTICLE);
+
+						window.location = article.viewHistoryUrl;
+					},
+
+					_viewArticlePermissions: function(event) {
+						var instance = this;
+
+						var strings = instance.get(STR_STRINGS);
+
+						var article = instance.get(STR_ARTICLE);
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
+									destroyOnHide: true
+								},
+								id: instance.ns('articlePermissions'),
+								title: strings.permissions,
+								uri: article.permissionsUrl
+							}
+						);
+
+						event.preventDefault();
 					},
 
 					getByName: function(currentForm, name, withoutNamespace) {
@@ -44,36 +241,18 @@ AUI.add(
 						return A.one('form[name=' + instance.NS + (formName || 'fm1') + ']');
 					},
 
-					hasStructure: function() {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						var structureId = instance.getByName(form, 'structureId');
-
-						return structureId && structureId.val();
-					},
-
-					hasTemplate: function() {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						var templateId = instance.getByName(form, 'templateId');
-
-						return templateId && templateId.val();
-					},
-
 					saveArticle: function(cmd) {
 						var instance = this;
 
 						var form = instance.getPrincipalForm();
 
-						if (instance.hasStructure() && !instance.hasTemplate() && !instance.updateStructureDefaultValues()) {
-							instance.displayTemplateMessage();
+						if (instance._hasStructure() && !instance._hasTemplate() && !instance._updateStructureDefaultValues()) {
+							instance._displayTemplateMessage();
 						}
 						else {
-							var articleId = instance.get(STR_ARTICLE_ID);
+							var article = instance.get(STR_ARTICLE);
+
+							var articleId = article.id;
 
 							if (!cmd) {
 								cmd = articleId ? STR_UPDATE : STR_ADD;
@@ -110,16 +289,6 @@ AUI.add(
 						cmdInput.val('translate');
 
 						submitForm(form);
-					},
-
-					updateStructureDefaultValues: function() {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						var classNameId = instance.getByName(form, 'classNameId');
-
-						return (classNameId && classNameId.val() > 0);
 					}
 				}
 			}
@@ -129,6 +298,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-dialog-iframe-deprecated', 'aui-tooltip', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );

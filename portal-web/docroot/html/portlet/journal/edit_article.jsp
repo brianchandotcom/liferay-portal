@@ -195,7 +195,19 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<c:if test="<%= (article != null) && !article.isNew() %>">
 						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
-						<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
+						<div class="article-toolbar toolbar" id="<portlet:namespace />articleToolbar">
+							<div class="btn-group">
+								<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+									<aui:button data-title='<%= LanguageUtil.get(pageContext, "in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft") %>' icon="icon-search" name="basicPreviewButton" value="basic-preview" />
+								</c:if>
+
+								<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
+									<aui:button name="articlePermissionsButton" icon="icon-lock" value="permissions" />
+								</c:if>
+
+								<aui:button icon="icon-time" name="articleHistoryButton" value="view-history" />
+							</div>
+						</div>
 					</c:if>
 				</c:if>
 
@@ -353,10 +365,38 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	</aui:script>
 </c:if>
 
+<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/journal/preview_article_content" />
+	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getTemplateId() %>" />
+</liferay-portlet:renderURL>
+
+<portlet:renderURL var="viewHistoryURL">
+	<portlet:param name="struts_action" value="/journal/view_article_history" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+</portlet:renderURL>
+
+<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+	modelResource="<%= JournalArticle.class.getName() %>"
+	modelResourceDescription="<%= article.getTitle(locale) %>"
+	resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
+	var="permissionsURL"
+/>
+
 <aui:script use="liferay-portlet-journal">
 	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(
 		{
-			articleId: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
+			article: {
+				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
+				permissionsUrl: '<%= permissionsURL %>',
+				previewUrl: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>',
+				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
+				viewHistoryUrl: '<%= viewHistoryURL %>'
+			},
 			namespace: '<portlet:namespace />'
 		}
 	);

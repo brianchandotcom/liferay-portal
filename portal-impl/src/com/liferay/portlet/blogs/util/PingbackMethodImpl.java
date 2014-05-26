@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -187,6 +189,20 @@ public class PingbackMethodImpl implements Method {
 			}
 		}
 
+		String urlTitle = entry.getUrlTitle();
+
+		ServiceContext serviceContext = buildServiceContext(
+			companyId, groupId, urlTitle);
+
+		MBMessageLocalServiceUtil.addDiscussionMessage(
+			userId, StringPool.BLANK, groupId, className, classPK, threadId,
+			parentMessageId, StringPool.BLANK, body, serviceContext);
+	}
+
+	protected ServiceContext buildServiceContext(
+			long companyId, long groupId, String urlTitle)
+		throws PortalException, SystemException {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		String pingbackUserName = LanguageUtil.get(
@@ -208,15 +224,12 @@ public class PingbackMethodImpl implements Method {
 
 		sb.append(portlet.getFriendlyURLMapping());
 		sb.append(StringPool.SLASH);
-		sb.append(entry.getUrlTitle());
+		sb.append(urlTitle);
 
 		serviceContext.setAttribute("redirect", sb.toString());
 
 		serviceContext.setLayoutFullURL(layoutFullURL);
-
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, StringPool.BLANK, groupId, className, classPK, threadId,
-			parentMessageId, StringPool.BLANK, body, serviceContext);
+		return serviceContext;
 	}
 
 	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {

@@ -98,6 +98,14 @@ public class PortletTracker
 						_PORTLET_ID_MAX_LENGTH + " characters");
 			}
 
+			com.liferay.portal.model.Portlet portletModel =
+				_portletLocalService.getPortletById(portletId);
+
+			if (portletModel != null) {
+				throw new IllegalArgumentException(
+					"Portlet id " + portletId + " is already in use.");
+			}
+
 			if (_log.isInfoEnabled()) {
 				_log.info("Adding " + serviceReference);
 			}

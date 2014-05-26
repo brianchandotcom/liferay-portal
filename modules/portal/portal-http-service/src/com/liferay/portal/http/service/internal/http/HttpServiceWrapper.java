@@ -41,6 +41,10 @@ public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 		this.bundleServletContext = bundleServletContext;
 	}
 
+	public void close() {
+		bundleServletContext.close();
+	}
+
 	@Override
 	public HttpContext createDefaultHttpContext() {
 		return bundleServletContext.getHttpContext();

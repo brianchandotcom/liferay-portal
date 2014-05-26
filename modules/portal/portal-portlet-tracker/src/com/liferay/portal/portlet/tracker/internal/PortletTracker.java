@@ -89,19 +89,19 @@ public class PortletTracker
 		String portletName = (String)serviceReference.getProperty(
 			"javax.portlet.name");
 
-		String portletId = JS.getSafeName(portletName);
-
-		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
-			throw new RuntimeException(
-				"Portlet id " + portletId + " has more than " +
-					_PORTLET_ID_MAX_LENGTH + " characters");
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Adding " + serviceReference);
-		}
-
 		try {
+			String portletId = JS.getSafeName(portletName);
+
+			if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
+				throw new IllegalArgumentException(
+					"Portlet id " + portletId + " has more than " +
+						_PORTLET_ID_MAX_LENGTH + " characters");
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Adding " + serviceReference);
+			}
+
 			BundleContext bundleContext = _componentContext.getBundleContext();
 
 			Portlet portlet = bundleContext.getService(serviceReference);

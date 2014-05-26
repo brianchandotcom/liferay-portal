@@ -40,6 +40,8 @@ AUI.add(
 
 					namespace: {},
 
+					round: {},
+
 					size: {},
 
 					totalEntries: {},
@@ -306,9 +308,11 @@ AUI.add(
 
 						var description = Liferay.Language.get('average');
 
-						var label = instance._getLabel(description, json.totalEntries, json.averageScore);
+						var averageScore = json.averageScore;
 
-						var averageIndex = json.averageScore;
+						var label = instance._getLabel(description, json.totalEntries, averageScore);
+
+						var averageIndex = instance.get('round') ? Math.round(averageScore) : Math.floor(averageScore);
 
 						var ratingScore = instance._ratingScoreNode;
 
@@ -328,7 +332,7 @@ AUI.add(
 							}
 						);
 
-						instance._updateAverageScoreText(json.averageScore);
+						instance._updateAverageScoreText(averageScore);
 					}
 				}
 			}

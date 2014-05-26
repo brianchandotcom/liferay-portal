@@ -281,7 +281,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<aui:a cssClass="journal-article-translation lfr-token" href="<%= editTranslationURL %>" id='<%= "journal-article-translation-" + translations[i] %>'>
+										<aui:a cssClass="journal-article-translation lfr-token" href="<%= editTranslationURL %>" id='<%= "journal-article-translation-link-" + translations[i] %>'>
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>

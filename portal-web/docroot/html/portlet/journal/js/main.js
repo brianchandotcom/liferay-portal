@@ -3,11 +3,15 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var SELECTOR_CMD = '#cmd';
+
 		var STR_ADD = 'add';
 
 		var STR_ARTICLE = 'article';
 
 		var STR_ARTICLE_ID = 'articleId';
+
+		var STR_CLICK = 'click';
 
 		var STR_CMD = 'cmd';
 
@@ -57,39 +61,47 @@ AUI.add(
 						instance._focusField();
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [];
+						var form = instance._getPrincipalForm();
 
-						var form = instance.getPrincipalForm();
-
-						eventHandles.push(form.delegate('change', instance._onFormChanged, ':input', instance));
-						eventHandles.push(form.on('submit', instance._onFormSubmit, instance));
+						var eventHandles = [
+							form.delegate('change', instance._onFormChanged, ':input', instance),
+							form.on('submit', instance._onFormSubmit, instance)
+						];
 
 						var basicPreviewButton = instance.one('#basicPreviewButton');
 
 						if (basicPreviewButton) {
-							eventHandles.push(basicPreviewButton.on('click', instance._previewArticle, instance));
+							eventHandles.push(basicPreviewButton.on(STR_CLICK, instance._previewArticle, instance));
 						}
 
 						var permissionsButton = instance.one('#articlePermissionsButton');
 
 						if (permissionsButton) {
-							eventHandles.push(permissionsButton.on('click', instance._viewArticlePermissions, instance));
+							eventHandles.push(permissionsButton.on(STR_CLICK, instance._viewArticlePermissions, instance));
 						}
 
 						var historyButton = instance.one('#articleHistoryButton');
 
 						if (historyButton) {
-							eventHandles.push(historyButton.on('click', instance._viewArticleHistory, instance));
+							eventHandles.push(historyButton.on(STR_CLICK, instance._viewArticleHistory, instance));
 						}
-
-						eventHandles.push(historyButton.on('click', instance._viewArticleHistory, instance));
 
 						var buttonRow = instance.one('.journal-article-button-row');
 
-						eventHandles.push(buttonRow.delegate('click', instance._onButtonClick, 'button', instance));
+						if (buttonRow) {
+							eventHandles.push(buttonRow.delegate(STR_CLICK, instance._onButtonClick, 'button', instance));
+						}
+
+						instance._eventHandles = eventHandles;
 					},
 
 					_createTooltip: function() {
@@ -122,12 +134,26 @@ AUI.add(
 						}
 					},
 
+					_getByName: function(currentForm, name, withoutNamespace) {
+						var instance = this;
+
+						var inputName = withoutNamespace ? name : instance.NS + name;
+
+						return instance.one('[name=' + inputName + ']', currentForm);
+					},
+
+					_getPrincipalForm: function(formName) {
+						var instance = this;
+
+						return instance.one('form[name=' + instance.ns(formName || 'fm1') + ']');
+					},
+
 					_hasStructure: function() {
 						var instance = this;
 
-						var form = instance.getPrincipalForm();
+						var form = instance._getPrincipalForm();
 
-						var structureId = instance.getByName(form, 'structureId');
+						var structureId = instance._getByName(form, 'structureId');
 
 						return structureId && structureId.val();
 					},
@@ -135,9 +161,9 @@ AUI.add(
 					_hasTemplate: function() {
 						var instance = this;
 
-						var form = instance.getPrincipalForm();
+						var form = instance._getPrincipalForm();
 
-						var templateId = instance.getByName(form, 'templateId');
+						var templateId = instance._getByName(form, 'templateId');
 
 						return templateId && templateId.val();
 					},
@@ -145,7 +171,7 @@ AUI.add(
 					_hasUnsavedChanges: function() {
 						var instance = this;
 
-						var form = instance.getPrincipalForm();
+						var form = instance._getPrincipalForm();
 
 						var unsavedChanges = instance._formChanged;
 
@@ -173,7 +199,7 @@ AUI.add(
 						var cmd = event.currentTarget.attr('data-cmd');
 
 						if (cmd) {
-							var form = instance.getPrincipalForm();
+							var form = instance._getPrincipalForm();
 
 							if (cmd === 'delete_translation') {
 								var strings = instance.get(STR_STRINGS);
@@ -181,7 +207,7 @@ AUI.add(
 								if (confirm(strings.deleteTranslationConfirmation)) {
 									var article = instance.get(STR_ARTICLE);
 
-									instance.one('#cmd', form).val(cmd);
+									instance.one(SELECTOR_CMD, form).val(cmd);
 
 									instance.one('#redirect', form).val(
 										Lang.sub(
@@ -198,7 +224,7 @@ AUI.add(
 								}
 							}
 							else {
-								instance.one('#cmd', form).val(cmd);
+								instance.one(SELECTOR_CMD, form).val(cmd);
 							}
 						}
 					},
@@ -214,15 +240,15 @@ AUI.add(
 
 						event.preventDefault();
 
-						var form = instance.getPrincipalForm();
+						var form = instance._getPrincipalForm();
 
-						var cmd = instance.one('#cmd', form).val();
+						var cmd = instance.one(SELECTOR_CMD, form).val();
 
 						if (cmd === 'translate') {
-							instance.translateArticle();
+							instance._translateArticle();
 						}
 						else {
-							instance.saveArticle(cmd);
+							instance._saveArticle(cmd);
 						}
 					},
 
@@ -255,21 +281,71 @@ AUI.add(
 								instance._displayTemplateMessage();
 							}
 							else {
-								var form = instance.getPrincipalForm();
+								var form = instance._getPrincipalForm();
 
-								instance.one('#cmd', form).val('preview');
+								instance.one(SELECTOR_CMD, form).val('preview');
 
 								submitForm(form);
 							}
 						}
 					},
 
+					_saveArticle: function(cmd) {
+						var instance = this;
+
+						var form = instance._getPrincipalForm();
+
+						if (instance._hasStructure() && !instance._hasTemplate() && !instance._updateStructureDefaultValues()) {
+							instance._displayTemplateMessage();
+						}
+						else {
+							var article = instance.get(STR_ARTICLE);
+
+							var articleId = article.id;
+
+							if (!cmd) {
+								cmd = articleId ? STR_UPDATE : STR_ADD;
+							}
+
+							var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
+							var cmdInput = instance._getByName(form, STR_CMD);
+							var newArticleIdInput = instance._getByName(form, 'newArticleId');
+							var workflowActionInput = instance._getByName(form, 'workflowAction');
+
+							if (cmd === 'publish') {
+								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
+
+								cmd = articleId ? STR_UPDATE : STR_ADD;
+							}
+
+							cmdInput.val(cmd);
+
+							if (!articleId) {
+								articleIdInput.val(newArticleIdInput.val());
+							}
+
+							submitForm(form);
+						}
+					},
+
+					_translateArticle: function() {
+						var instance = this;
+
+						var form = instance._getPrincipalForm();
+
+						var cmdInput = instance._getByName(form, STR_CMD);
+
+						cmdInput.val('translate');
+
+						submitForm(form);
+					},
+
 					_updateStructureDefaultValues: function() {
 						var instance = this;
 
-						var form = instance.getPrincipalForm();
+						var form = instance._getPrincipalForm();
 
-						var classNameId = instance.getByName(form, 'classNameId');
+						var classNameId = instance._getByName(form, 'classNameId');
 
 						return (classNameId && classNameId.val() > 0);
 					},
@@ -304,70 +380,6 @@ AUI.add(
 						);
 
 						event.preventDefault();
-					},
-
-					getByName: function(currentForm, name, withoutNamespace) {
-						var instance = this;
-
-						var inputName = withoutNamespace ? name : instance.NS + name;
-
-						return A.one(currentForm).one('[name=' + inputName + ']');
-					},
-
-					getPrincipalForm: function(formName) {
-						var instance = this;
-
-						return A.one('form[name=' + instance.NS + (formName || 'fm1') + ']');
-					},
-
-					saveArticle: function(cmd) {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						if (instance._hasStructure() && !instance._hasTemplate() && !instance._updateStructureDefaultValues()) {
-							instance._displayTemplateMessage();
-						}
-						else {
-							var article = instance.get(STR_ARTICLE);
-
-							var articleId = article.id;
-
-							if (!cmd) {
-								cmd = articleId ? STR_UPDATE : STR_ADD;
-							}
-
-							var articleIdInput = instance.getByName(form, STR_ARTICLE_ID);
-							var cmdInput = instance.getByName(form, STR_CMD);
-							var newArticleIdInput = instance.getByName(form, 'newArticleId');
-							var workflowActionInput = instance.getByName(form, 'workflowAction');
-
-							if (cmd == 'publish') {
-								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
-
-								cmd = articleId ? STR_UPDATE : STR_ADD;
-							}
-
-							cmdInput.val(cmd);
-
-							if (!articleId) {
-								articleIdInput.val(newArticleIdInput.val());
-							}
-
-							submitForm(form);
-						}
-					},
-
-					translateArticle: function() {
-						var instance = this;
-
-						var form = instance.getPrincipalForm();
-
-						var cmdInput = instance.getByName(form, STR_CMD);
-
-						cmdInput.val('translate');
-
-						submitForm(form);
 					}
 				}
 			}

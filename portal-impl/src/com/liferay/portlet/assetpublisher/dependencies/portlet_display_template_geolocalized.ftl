@@ -1,9 +1,10 @@
 <#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
-<#assign group = themeDisplay.getScopeGroup() />
+<#assign defaultLatitude = -3.6833 />
+<#assign defaultLongitude = 40.40 />
 
-<#assign typeSettings = group.getParentLiveGroupTypeSettingsProperties() />
+<#assign group = themeDisplay.getScopeGroup() />
 
 <#assign mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!"" />
 
@@ -12,22 +13,6 @@
 <#if mapsAPIProvider = "">
 	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "openStreetMap") />
 </#if>
-
-<#if mapsAPIProvider = "googleMaps">
-	<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
-
-	<#if apiKey = "">
-		<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
-	</#if>
-</#if>
-
-<#assign defaultLatitude = -3.6833 />
-<#assign defaultLongitude = 40.40 />
-<#assign maxWidth = 500 />
-<#assign minHeight = "400px" />
-<#assign minWidth = "400px" />
-<#assign namespace = renderResponse.getNamespace() />
-<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 <#if themeDisplay.isSecure()>
 	<#assign uriScheme = "https" />
@@ -41,6 +26,10 @@
 	"com.liferay.portlet.journal.model.JournalArticle": "${uriScheme}://maps.google.com/mapfiles/ms/icons/blue-dot.png",
 	"default": "${uriScheme}://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 } />
+
+<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
+
+<#assign namespace = renderResponse.getNamespace() />
 
 <#assign jsonArray = jsonFactoryUtil.createJSONArray() />
 
@@ -79,7 +68,7 @@
 <#if mapsAPIProvider = "googleMaps" >
 	<style type="text/css">
 		#${namespace}assetEntryAbstract {
-			min-width: ${minWidth};
+			min-width: 400px;
 		}
 
 		#${namespace}assetEntryAbstract .asset-entry-abstract-image {
@@ -96,13 +85,19 @@
 		}
 
 		#${namespace}mapCanvas {
-			min-height: ${minHeight};
+			min-height: 400px;
 		}
 
 		#${namespace}mapCanvas img {
 			max-width: none;
 		}
 	</style>
+
+	<#assign apiKey = group.getLiveParentTypeSettingsProperty("googleMapsAPIKey")!"" />
+
+	<#if apiKey = "">
+		<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
+	</#if>
 
 	<#if apiKey = "">
 		<script src="${uriScheme}://maps.googleapis.com/maps/api/js?sensor=true" type="text/javascript"></script>
@@ -195,7 +190,7 @@
 <#if mapsAPIProvider = "openStreetMap">
 	<style type="text/css">
 		#${namespace}assetEntryAbstract {
-			min-width: ${minWidth};
+			min-width: 400px;
 			overflow: auto;
 		}
 
@@ -213,7 +208,7 @@
 		}
 
 		#${namespace}mapCanvas {
-			min-height: ${minHeight};
+			min-height: 400px;
 		}
 	</style>
 
@@ -248,7 +243,7 @@
 						L.marker(latLng).addTo(map).bindPopup(
 							point.abstract,
 							{
-								maxWidth: ${maxWidth}
+								maxWidth: 500
 							}
 						);
 

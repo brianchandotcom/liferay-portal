@@ -19,16 +19,16 @@ AUI.add(
 
 		var STR_VERSION_ITEMS = 'versionItems';
 
-		var TPL_VERSION ='<div class="close-version-filter">' +
-			'<i class="icon-remove"></i>' +
-		'</div>' +
-		'<div>' +
-			'<span class="version">{version}</span>' +
-		'</div>' +
-		'<div>' +
-			'<span class="user-name">{userName}</span>' +
-			'<span class="display-date">{displayDate}</span>' +
-		'</div>';
+		var TPL_VERSION = '<div class="pull-right close-version-filter">' +
+				'<i class="icon-remove"></i>' +
+			'</div>' +
+			'<div>' +
+				'<span class="version">{version}</span>' +
+			'</div>' +
+			'<div>' +
+				'<span class="user-name">{userName}</span>' +
+				'<span class="display-date">{displayDate}</span>' +
+			'</div>';
 
 		var DiffVersionSearch = A.Component.create(
 			{
@@ -110,7 +110,7 @@ AUI.add(
 							BODY.delegate(STR_CLICK, instance._onSourceVersionSelected, '.source-version', instance),
 							BODY.delegate(STR_CLICK, instance._onTargetVersionSelected, '.target-version', instance),
 							instance.get(STR_VERSION_FILTER).delegate(STR_CLICK, instance._onCloseFilter, '.close-version-filter', instance),
-							instance.get(STR_VERSION_ITEMS).delegate(STR_CLICK, instance._onSelectVersionItem, SELECTOR_VERSION_ITEM, instance),
+							instance.get(STR_VERSION_ITEMS).delegate(STR_CLICK, instance._onSelectVersionItem, SELECTOR_VERSION_ITEM, instance)
 						];
 
 						if (instance._diffVersionSearch) {
@@ -154,9 +154,9 @@ AUI.add(
 									inputNode: searchBox,
 									minQueryLength: 0,
 									queryDelay: 0,
-									source: results,
+									resultFilters: 'subWordMatch',
 									resultTextLocator: 'searchData',
-									resultFilters: 'subWordMatch'
+									source: results
 								}
 							);
 						}
@@ -169,6 +169,7 @@ AUI.add(
 							instance.get('resourceURL'),
 							{
 								after: {
+									// add failure method here too
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');
 
@@ -185,19 +186,6 @@ AUI.add(
 						);
 					},
 
-					_onDiffVersionSearchResults: function(event) {
-						var instance = this;
-
-						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).hide();
-
-						A.Array.each(
-							event.results,
-							function(item, index, collection) {
-								item.raw.node.show();
-							}
-						);
-					},
-
 					_onCloseFilter: function(event) {
 						var instance = this;
 
@@ -208,21 +196,27 @@ AUI.add(
 						instance._loadDiffHTML(instance.get('initialSourceVersion'), instance.get('initialTargetVersion'));
 					},
 
+					_onDiffVersionSearchResults: function(event) {
+						var instance = this;
+
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).hide();
+
+						// if no results we have to display "No search results"
+
+						A.Array.each(
+							event.results,
+							function(item, index, collection) {
+								item.raw.node.show();
+							}
+						);
+					},
+
 					_onLanguageSelectorChange: function(event) {
 						var instance = this;
 
 						submitForm(instance.get(STR_DIFF_FORM));
 					},
 
-					_onSourceVersionSelected: function(event) {
-						var instance = this;
-
-						var sourceVersion = event.currentTarget.attr(STR_DATA_VERSION);
-
-						instance.byId('sourceVersion').val(sourceVersion);
-
-						submitForm(instance.get(STR_DIFF_FORM));
-					},
 
 					_onSelectVersionItem: function(event) {
 						var instance = this;
@@ -249,6 +243,16 @@ AUI.add(
 						versionFilter.show();
 
 						instance._loadDiffHTML(currentTarget.attr('data-source-version'), currentTarget.attr(STR_DATA_VERSION));
+					},
+
+					_onSourceVersionSelected: function(event) {
+						var instance = this;
+
+						var sourceVersion = event.currentTarget.attr(STR_DATA_VERSION);
+
+						instance.byId('sourceVersion').val(sourceVersion);
+
+						submitForm(instance.get(STR_DIFF_FORM));
 					},
 
 					_onTargetVersionSelected: function(event) {

@@ -36,14 +36,9 @@
 
 			.diff-selector {
 				overflow: hidden;
-
-				.diff-selector-version {
-					float: right;
-				}
 			}
 
 			.diff-selector-version-info {
-				float: right;
 				margin-right: 16px;
 			}
 		}
@@ -117,27 +112,22 @@
 			padding: 10px;
 
 			&.last {
-	        	border-width: 0;
+				border-width: 0;
 			}
 
 			&.selected {
-			 	.version-title {
+				.version-title {
 					color: #555;
-			 	}
+				}
 
 				.version-info {
-					.user-info {
-						color: #555;
-					}
-
-					.date-info {
+					.user-info, .date-info {
 						color: #555;
 					}
 				}
 			}
 
 			.version-avatar {
-				float: left;
 				padding-right: 5px;
 
 				.avatar {
@@ -210,7 +200,6 @@
 			.close-version-filter {
 				color: #CCC;
 				cursor: pointer;
-				float: right;
 			}
 
 			.display-date {

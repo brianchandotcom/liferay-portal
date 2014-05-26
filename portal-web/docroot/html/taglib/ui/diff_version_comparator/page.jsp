@@ -46,7 +46,7 @@ if (Validator.isNotNull(languageId)) {
 		<aui:row cssClass="diff-version-head">
 			<aui:col cssClass="diff-source-selector" width="30">
 				<div class="diff-selector">
-					<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+					<liferay-ui:icon-menu cssClass="pull-right diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -71,7 +71,7 @@ if (Validator.isNotNull(languageId)) {
 				</div>
 
 				<c:if test="<%= previousVersion == 0 %>">
-					<div class="diff-selector-version-info">
+					<div class="pull-right diff-selector-version-info">
 						(<liferay-ui:message key="first-version" />)
 					</div>
 				</c:if>
@@ -180,7 +180,7 @@ if (Validator.isNotNull(languageId)) {
 								<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
 							</span>
 
-							<div class="version-avatar">
+							<div class="pull-left version-avatar">
 								<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
 							</div>
 

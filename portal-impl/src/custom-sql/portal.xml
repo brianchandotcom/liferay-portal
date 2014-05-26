@@ -1412,6 +1412,20 @@
 				(defaultUser = [$FALSE$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_S">
+		<![CDATA[
+			SELECT
+				DISTINCT User_.userId AS userId
+			FROM
+				User_
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT

@@ -15,6 +15,8 @@ AUI.add(
 
 		var STR_UPDATE = 'update';
 
+		var TPL_DELETE_TRANSLATION_URL = '{baseURL}&{namespace}languageId={languageId}';
+
 		var Journal = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -29,10 +31,15 @@ AUI.add(
 						value: {}
 					},
 
+					focusFieldId: {
+						validator: Lang.isString
+					},
+
 					strings: {
 						validator: Lang.isObject,
 						value: {
 							addTemplate: Liferay.Language.get('please-add-a-template-to-render-this-structure'),
+							deleteTranslationConfirmation: Liferay.Language.get('are-you-sure-you-want-to-deactivate-this-language'),
 							permissions: Liferay.Language.get('permissions'),
 							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft')
 						}
@@ -46,6 +53,8 @@ AUI.add(
 						instance._createTooltip();
 
 						instance._bindUI();
+
+						instance._focusField();
 					},
 
 					_bindUI: function() {
@@ -56,6 +65,7 @@ AUI.add(
 						var form = instance.getPrincipalForm();
 
 						eventHandles.push(form.delegate('change', instance._onFormChanged, ':input', instance));
+						eventHandles.push(form.on('submit', instance._onFormSubmit, instance));
 
 						var basicPreviewButton = instance.one('#basicPreviewButton');
 
@@ -74,6 +84,12 @@ AUI.add(
 						if (historyButton) {
 							eventHandles.push(historyButton.on('click', instance._viewArticleHistory, instance));
 						}
+
+						eventHandles.push(historyButton.on('click', instance._viewArticleHistory, instance));
+
+						var buttonRow = instance.one('.journal-article-button-row');
+
+						eventHandles.push(buttonRow.delegate('click', instance._onButtonClick, 'button', instance));
 					},
 
 					_createTooltip: function() {
@@ -94,6 +110,16 @@ AUI.add(
 						var strings = instance.get(STR_STRINGS);
 
 						alert(strings.addTemplate);
+					},
+
+					_focusField: function() {
+						var instance = this;
+
+						var focusFieldId = instance.get('focusFieldId');
+
+						if (focusFieldId) {
+							Liferay.Util.focusFormField(instance.one(focusFieldId));
+						}
 					},
 
 					_hasStructure: function() {
@@ -141,10 +167,63 @@ AUI.add(
 						return unsavedChanges;
 					},
 
+					_onButtonClick: function(event) {
+						var instance = this;
+
+						var cmd = event.currentTarget.attr('data-cmd');
+
+						if (cmd) {
+							var form = instance.getPrincipalForm();
+
+							if (cmd === 'delete_translation') {
+								var strings = instance.get(STR_STRINGS);
+
+								if (confirm(strings.deleteTranslationConfirmation)) {
+									var article = instance.get(STR_ARTICLE);
+
+									instance.one('#cmd', form).val(cmd);
+
+									instance.one('#redirect', form).val(
+										Lang.sub(
+											TPL_DELETE_TRANSLATION_URL,
+											{
+												baseURL: article.editUrl,
+												languageId: article.defaultLanguageId,
+												namespace: instance.NS
+											}
+										)
+									);
+
+									submitForm(form);
+								}
+							}
+							else {
+								instance.one('#cmd', form).val(cmd);
+							}
+						}
+					},
+
 					_onFormChanged: function(event) {
 						var instance = this;
 
 						instance._formChanged = true;
+					},
+
+					_onFormSubmit: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						var form = instance.getPrincipalForm();
+
+						var cmd = instance.one('#cmd', form).val();
+
+						if (cmd === 'translate') {
+							instance.translateArticle();
+						}
+						else {
+							instance.saveArticle(cmd);
+						}
 					},
 
 					_previewArticle: function(event) {

@@ -164,7 +164,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		<portlet:param name="struts_action" value="/journal/edit_article" />
 	</portlet:renderURL>
 
-	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit='<%= renderResponse.getNamespace() + "submitForm(event);" %>'>
+	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -290,21 +290,21 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						<c:choose>
 							<c:when test="<%= Validator.isNull(toLanguageId) %>">
 								<c:if test="<%= hasSavePermission %>">
-									<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishArticle()" %>' type="submit" value="<%= publishButtonLabel %>" />
+									<aui:button data-cmd="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-										<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveArticle()" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+										<aui:button data-cmd="<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 									</c:if>
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<aui:button name="translateButton" onClick='<%= renderResponse.getNamespace() + "translateArticle()" %>' type="submit" value="save" />
+								<aui:button data-cmd="<%= Constants.TRANSLATE %>" name="translateButton" type="submit" value="save" />
 
 								<%
 								String[] translations = article.getAvailableLanguageIds();
 								%>
 
-								<aui:button disabled="<%= toLanguageId.equals(defaultLanguageId) || !ArrayUtil.contains(translations, toLanguageId) %>" name="removeArticleLocaleButton" onClick='<%= renderResponse.getNamespace() + "removeArticleLocale();" %>' value="remove-translation" />
+								<aui:button data-cmd="<%= Constants.DELETE_TRANSLATION %>" disabled="<%= toLanguageId.equals(defaultLanguageId) || !ArrayUtil.contains(translations, toLanguageId) %>" name="removeArticleLocaleButton" value="remove-translation" />
 							</c:otherwise>
 						</c:choose>
 						<aui:button href="<%= redirect %>" type="cancel" />
@@ -346,25 +346,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	</aui:form>
 </div>
 
-<c:if test='<%= (article != null) && SessionMessages.contains(renderRequest, "previewRequested") %>'>
-	<aui:script use="liferay-journal-preview">
-		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/journal/preview_article_content" />
-			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		</liferay-portlet:renderURL>
-
-		Liferay.fire(
-			'previewArticle',
-			{
-				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
-				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
-			}
-		);
-	</aui:script>
-</c:if>
-
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/journal/preview_article_content" />
 	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
@@ -387,80 +368,47 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	var="permissionsURL"
 />
 
+<portlet:renderURL var="editArticleURL">
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="struts_action" value="/journal/edit_article" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="articleId" value="<%= articleId %>" />
+	<portlet:param name="version" value="<%= String.valueOf(version) %>" />
+</portlet:renderURL>
+
 <aui:script use="liferay-portlet-journal">
-	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(
+	new Liferay.Portlet.Journal(
 		{
 			article: {
+				defaultLanguageId: '<%= defaultLanguageId %>',
+				editUrl: '<%= editArticleURL %>',
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 				permissionsUrl: '<%= permissionsURL %>',
 				previewUrl: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>',
 				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
 				viewHistoryUrl: '<%= viewHistoryURL %>'
 			},
+
+			<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+				focusFieldId: '<%= (article != null || PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID) ? "#title" : "#newArticleId" %>',
+			</c:if>
+
 			namespace: '<portlet:namespace />'
 		}
 	);
 </aui:script>
 
-<aui:script>
-	var <portlet:namespace />documentLibraryInput = null;
-	var <portlet:namespace />imageGalleryInput = null;
-
-	function <portlet:namespace />publishArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PUBLISH %>';
-	}
-
-	function <portlet:namespace />removeArticleLocale() {
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-this-language") %>')) {
-			document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE_TRANSLATION %>';
-			document.<portlet:namespace />fm1.<portlet:namespace />redirect.value = '<portlet:renderURL><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="articleId" value="<%= articleId %>" /><portlet:param name="version" value="<%= String.valueOf(version) %>" /></portlet:renderURL>&<portlet:namespace />languageId=<%= HtmlUtil.escapeJS(defaultLanguageId) %>';
-
-			submitForm(document.<portlet:namespace />fm1);
-		}
-	}
-
-	function <portlet:namespace />saveArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>';
-	}
-
-	function <portlet:namespace />selectDocumentLibrary(url) {
-		document.getElementById(<portlet:namespace />documentLibraryInput).value = url;
-	}
-
-	function <portlet:namespace />selectImageGallery(url) {
-		document.getElementById(<portlet:namespace />imageGalleryInput).value = url;
-	}
-
-	function <portlet:namespace />submitForm(event) {
-		event.preventDefault();
-
-		if (window.<portlet:namespace />journalPortlet) {
-			var cmd = document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value;
-
-			if (cmd === '<%= Constants.TRANSLATE %>') {
-				window.<portlet:namespace />journalPortlet.translateArticle();
+<c:if test='<%= (article != null) && SessionMessages.contains(renderRequest, "previewRequested") %>'>
+	<aui:script use="liferay-journal-preview">
+		Liferay.fire(
+			'previewArticle',
+			{
+				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
+				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
 			}
-			else {
-				window.<portlet:namespace />journalPortlet.saveArticle(cmd);
-			}
-		}
-	}
-
-	function <portlet:namespace />translateArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
-	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		<c:choose>
-			<c:when test="<%= PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID %>">
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />title);
-			</c:when>
-			<c:otherwise>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace /><%= (article == null) ? "newArticleId" : "title" %>);
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</aui:script>
+		);
+	</aui:script>
+</c:if>
 
 <%!
 private String _getSectionJsp(String name) {

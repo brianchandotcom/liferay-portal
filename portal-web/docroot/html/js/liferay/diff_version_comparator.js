@@ -169,7 +169,9 @@ AUI.add(
 							instance.get('resourceURL'),
 							{
 								after: {
-									// add failure method here too
+									failure: function(event, id, obj) {
+										instance.get('diffContainerHtmlResults').html(Liferay.Language.get('an-error-occurred-while-processing-the-requested-resource'));
+									},
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');
 
@@ -201,7 +203,12 @@ AUI.add(
 
 						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).hide();
 
-						// if no results we have to display "No search results"
+						if (event.results.length > 0) {
+							instance.get(STR_VERSION_ITEMS).one('.message-info').hide();
+						}
+						else {
+							instance.get(STR_VERSION_ITEMS).one('.message-info').show();
+						}
 
 						A.Array.each(
 							event.results,

@@ -195,6 +195,9 @@ if (Validator.isNotNull(languageId)) {
 					}
 					%>
 
+					<div class="alert alert-info message-info hide">
+						<liferay-ui:message key="there-are-no-results" />
+					</div>
 				</div>
 			</aui:col>
 			<aui:col cssClass="diff-container-column" width="70">

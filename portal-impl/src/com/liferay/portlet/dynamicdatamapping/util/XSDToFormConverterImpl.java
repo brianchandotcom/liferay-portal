@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portlet.dynamicdatamapping.forms.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.forms.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.forms.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.forms.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.List;

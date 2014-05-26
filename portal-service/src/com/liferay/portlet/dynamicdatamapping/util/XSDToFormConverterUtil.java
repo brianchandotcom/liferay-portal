@@ -16,7 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portlet.dynamicdatamapping.forms.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
  * @author Pablo Carvalho

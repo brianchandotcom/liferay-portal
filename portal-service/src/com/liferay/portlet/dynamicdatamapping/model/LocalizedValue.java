@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.forms;
+package com.liferay.portlet.dynamicdatamapping.model;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 

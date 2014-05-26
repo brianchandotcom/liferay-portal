@@ -37,36 +37,28 @@ $dockbarOpenGradientStart: #0EA6F9;
 		padding: 0;
 	}
 
-	.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
-		padding: 0 3em;
-
-		.panel-page-application {
-			margin: 0;
-		}
-	}
-
-	.panel-manage-frontpage {
-		.control-panel-bar-secondary {
-			margin-bottom: 1px;
-			margin-left: 20px;
-		}
-	}
-
 	.control-panel-home-actions-category .btn {
 		margin-bottom: 0.5em;
+	}
+
+	.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+		padding: 0 3em;
+	}
+
+	.panel-manage-apps .panel-page-application {
+		padding: 0 10px;
 	}
 
 	.taglib-portal-message {
 		margin-bottom: 0;
 	}
 
-	/* ---------- Control panel secondary nav ---------- */
+	/* ---------- Control Panel Secondary Nav ---------- */
 
 	.control-panel-bar-secondary {
-		margin-left: 10px;
-		padding-top: 1.1em;
+		padding: 15px 10px;
 
-		&.nav-pills {
+		.nav-pills {
 			li {
 				margin-right: 20px;
 
@@ -74,9 +66,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 					font-size: 15px;
 					font-weight: normal;
 					margin: 0;
-					padding: 10px 10px 11px;
+					padding: 5px 15px;
 
-					&:hover {
+					&:focus, &:hover {
 						background: #E5F5FC;
 					}
 				}
@@ -86,7 +78,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background: #009AE5;
 				color: #FFF;
 
-				&:hover {
+				&:focus, &:hover {
 					background: #009AE5;
 				}
 			}
@@ -137,10 +129,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.control-panel-bar-main {
 			font-size: 1.2em;
 			font-weight: bold;
-			margin-bottom: 5px;
-		}
-
-		.control-panel-bar-secondary {
 			margin-bottom: 5px;
 		}
 
@@ -1005,8 +993,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(0);
 	}
 
-	.control-panel-bar-secondary.nav-pills li a {
-		@include border-radius(4px);
+	.control-panel-bar-secondary {
+		.nav-pills li a {
+			@include border-radius(4px);
+		}
 	}
 
 	.alert {

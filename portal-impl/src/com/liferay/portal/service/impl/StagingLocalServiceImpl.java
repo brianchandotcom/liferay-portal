@@ -630,9 +630,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			GroupServiceHttp.disableStaging(httpPrincipal, remoteGroupId);
 		}
 		catch (NoSuchGroupException nsge) {
-
-			// Disable staging even if no remote group exists
-
+			if (_log.isWarnEnabled()) {
+				_log.warn("Remote live group has been already deleted", nsge);
+			}
 		}
 		catch (PrincipalException pe) {
 			RemoteExportException ree = new RemoteExportException(

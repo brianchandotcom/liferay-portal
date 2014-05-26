@@ -21,25 +21,25 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 /**
  * @author Pablo Carvalho
  */
-public class XSDToFormConverterUtil {
+public class DDMFormConverterUtil {
 
 	public static DDMForm convert(String xsd) throws DocumentException {
 		return getXSDToFormConverter().convert(xsd);
 	}
 
-	public static XSDToFormConverter getXSDToFormConverter() {
+	public static DDMFormConverter getXSDToFormConverter() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			XSDToFormConverterUtil.class);
+			DDMFormConverterUtil.class);
 
 		return _xsdToFormConverter;
 	}
 
-	public void setXSDToFormConverter(XSDToFormConverter converter) {
+	public void setXSDToFormConverter(DDMFormConverter converter) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_xsdToFormConverter = converter;
 	}
 
-	private static XSDToFormConverter _xsdToFormConverter;
+	private static DDMFormConverter _xsdToFormConverter;
 
 }

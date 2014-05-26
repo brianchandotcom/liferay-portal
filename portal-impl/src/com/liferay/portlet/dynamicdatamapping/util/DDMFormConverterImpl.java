@@ -37,7 +37,7 @@ import java.util.Locale;
 /**
  * @author Pablo Carvalho
  */
-public class XSDToFormConverterImpl implements XSDToFormConverter {
+public class DDMFormConverterImpl implements DDMFormConverter {
 
 	@Override
 	public DDMForm convert(String xsd) throws DocumentException {

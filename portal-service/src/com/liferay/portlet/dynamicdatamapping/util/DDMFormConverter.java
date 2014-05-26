@@ -20,7 +20,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 /**
  * @author Pablo Carvalho
  */
-public interface XSDToFormConverter {
+public interface DDMFormConverter {
 
 	public DDMForm convert(String xsd) throws DocumentException;
 

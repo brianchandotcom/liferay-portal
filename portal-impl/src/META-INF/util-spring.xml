@@ -898,6 +898,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormConverterUtil">
+		<property name="DDMFormConverter">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormConverterImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
 		<property name="DDMIndexer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
@@ -1014,11 +1019,6 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
-	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterUtil">
-		<property name="XSDToFormConverter">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.XSDToFormConverterImpl" />
-		</property>
 	</bean>
 	<util:map id="baseModelPermissionCheckers" key-type="java.lang.String" value-type="com.liferay.portal.security.permission.BaseModelPermissionChecker">
 		<entry key="com.liferay.portlet.blogs.model.BlogsEntry">

@@ -88,7 +88,7 @@ public class PingbackMethodImpl implements Method {
 	@Override
 	public Response execute(long companyId) {
 		try {
-			executeAddPingback(companyId);
+			addPingback(companyId);
 
 			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}
@@ -118,13 +118,34 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
-	public void executeAddPingback(long companyId) throws Exception {
-		/*
-		Just to make the diff easier to review,
-		in this commit this method is public and has a bad name.
-		This will be fixed in the next commit.
-		*/
+	@Override
+	public String getMethodName() {
+		return "pingback.ping";
+	}
 
+	@Override
+	public String getToken() {
+		return "pingback";
+	}
+
+	@Override
+	public boolean setArguments(Object[] arguments) {
+		try {
+			_sourceUri = (String)arguments[0];
+			_targetUri = (String)arguments[1];
+
+			return true;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			return false;
+		}
+	}
+
+	protected void addPingback(long companyId) throws Exception {
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {
 			throw new PingbackDisabledException("Pingbacks are disabled");
 		}
@@ -196,33 +217,6 @@ public class PingbackMethodImpl implements Method {
 		MBMessageLocalServiceUtil.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK, threadId,
 			parentMessageId, StringPool.BLANK, body, serviceContext);
-	}
-
-	@Override
-	public String getMethodName() {
-		return "pingback.ping";
-	}
-
-	@Override
-	public String getToken() {
-		return "pingback";
-	}
-
-	@Override
-	public boolean setArguments(Object[] arguments) {
-		try {
-			_sourceUri = (String)arguments[0];
-			_targetUri = (String)arguments[1];
-
-			return true;
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-
-			return false;
-		}
 	}
 
 	protected BlogsEntry getBlogsEntry(long companyId) throws Exception {

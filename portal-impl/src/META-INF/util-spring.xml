@@ -133,6 +133,10 @@
 			<bean class="com.liferay.portal.diff.DiffImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.expression.ExpressionFactory" class="com.liferay.portal.expression.ExpressionFactoryImpl" />
+	<bean id="com.liferay.portal.kernel.expression.ExpressionFactoryUtil" class="com.liferay.portal.kernel.expression.ExpressionFactoryUtil">
+		<property name="expressionFactory" ref="com.liferay.portal.kernel.expression.ExpressionFactory" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />

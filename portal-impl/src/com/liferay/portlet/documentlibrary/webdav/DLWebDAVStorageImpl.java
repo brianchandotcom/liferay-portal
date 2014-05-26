@@ -743,11 +743,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		catch (FileSizeException pe) {
 			return HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE;
 		}
-		catch (PrincipalException pe) {
-			return HttpServletResponse.SC_FORBIDDEN;
-		}
 		catch (NoSuchFolderException nsfe) {
 			return HttpServletResponse.SC_CONFLICT;
+		}
+		catch (PrincipalException pe) {
+			return HttpServletResponse.SC_FORBIDDEN;
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

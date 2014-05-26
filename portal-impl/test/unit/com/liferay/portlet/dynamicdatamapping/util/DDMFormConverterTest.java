@@ -45,67 +45,43 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Pablo Carvalho
  */
-@PrepareForTest({HtmlUtil.class, LocaleUtil.class, SAXReaderUtil.class, XSDToFormConverterUtil.class})
+@PrepareForTest( {
+	DDMFormConverterUtil.class, HtmlUtil.class, LocaleUtil.class,
+	SAXReaderUtil.class
+})
 @RunWith(PowerMockRunner.class)
-public class XSDToFormConverterTest extends PowerMockito {
+public class DDMFormConverterTest extends PowerMockito {
 
 	@Before
-	public void setUp() throws IllegalAccessException, InstantiationException {
-		spy(HtmlUtil.class);
-
-		when(
-			HtmlUtil.getHtml()
-		).thenReturn(
-			new HtmlImpl()
-		);
-
-		spy(LocaleUtil.class);
-
-		when(
-			LocaleUtil.fromLanguageId("en_US")
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		when(
-			LocaleUtil.fromLanguageId("pt_BR")
-		).thenReturn(
-			LocaleUtil.BRAZIL
-		);
-
-		spy(SAXReaderUtil.class);
-
-		when(
-			SAXReaderUtil.getSAXReader()
-		).thenReturn(
-			new SAXReaderImpl()
-		);
-
-		spy(XSDToFormConverterUtil.class);
-
-		when(
-			XSDToFormConverterUtil.getXSDToFormConverter()
-		).thenReturn(
-			_converter
-		);
+	public void setUp() throws Exception {
+		setUpDDMConverter();
+		setUpHtml();
+		setUpLocale();
+		setUpSAXReader();
 	}
 
 	@Test
 	public void testAllFieldsStructureConversion() throws Exception {
 		String xsd = readXML("dynamic-data-mapping-all-fields-structure.xml");
 
-		DDMForm form = XSDToFormConverterUtil.convert(xsd);
+		DDMForm form = DDMFormConverterUtil.getForm(xsd);
 
 		checkExpectedDefaultLanguage(form);
+
 		checkExpectedAvailableLanguages(form);
 
 		Map<String, DDMFormField> fieldsMap = form.getFieldsMap(true);
 
 		checkBooleanField(fieldsMap.get("Boolean2282"));
+
 		checkDateField(fieldsMap.get("Date2510"));
+
 		checkDecimalField(fieldsMap.get("Decimal3479"));
+
 		checkDocumentLibraryField(fieldsMap.get("Documents_and_Media4036"));
+
 		checkRadioField(fieldsMap.get("Radio5699"));
+
 		checkNestedFields(fieldsMap.get("Text6980"));
 	}
 
@@ -114,15 +90,19 @@ public class XSDToFormConverterTest extends PowerMockito {
 
 		Assert.assertEquals("boolean", booleanField.getDataType());
 		Assert.assertEquals("keyword", booleanField.getIndexType());
+
 		Assert.assertFalse(booleanField.isRepeatable());
 		Assert.assertFalse(booleanField.isRequired());
+
 		Assert.assertEquals("checkbox", booleanField.getType());
 
 		LocalizedValue label = booleanField.getLabel();
+
 		Assert.assertEquals("Boolean", label.getValue(LocaleUtil.US));
 		Assert.assertEquals("Booleano", label.getValue(LocaleUtil.BRAZIL));
 
 		LocalizedValue predefinedValue = booleanField.getPredefinedValue();
+
 		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
 	}
 
@@ -162,6 +142,7 @@ public class XSDToFormConverterTest extends PowerMockito {
 
 	protected void checkExpectedDefaultLanguage(DDMForm form) {
 		Locale defaultLocale = form.getDefaultLocale();
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		Assert.assertEquals("en_US", defaultLanguageId);
@@ -199,9 +180,6 @@ public class XSDToFormConverterTest extends PowerMockito {
 
 		LocalizedValue predefinedValue = radioField.getPredefinedValue();
 
-		// TODO(pablo.carvalho): should the predefined value be handled as a
-		// json array for select and radio fields?
-
 		Assert.assertEquals(
 			"[\"value 1\"]", predefinedValue.getValue(LocaleUtil.US));
 
@@ -210,11 +188,13 @@ public class XSDToFormConverterTest extends PowerMockito {
 		Set<String> optionsValues = options.getOptionsValues();
 
 		Assert.assertEquals(3, optionsValues.size());
+
 		Assert.assertTrue(optionsValues.contains("value 1"));
 		Assert.assertTrue(optionsValues.contains("value 2"));
 		Assert.assertTrue(optionsValues.contains("value 3"));
 
 		LocalizedValue value1Labels = options.getOptionLabels("value 1");
+
 		Assert.assertEquals("option 1", value1Labels.getValue(LocaleUtil.US));
 		Assert.assertEquals(
 			"opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
@@ -229,6 +209,52 @@ public class XSDToFormConverterTest extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
-	private XSDToFormConverter _converter = new XSDToFormConverterImpl();
+	protected void setUpDDMConverter() {
+		spy(DDMFormConverterUtil.class);
+
+		when(
+			DDMFormConverterUtil.getDDMFormConverter()
+		).thenReturn(
+			_ddmFormConverter
+		);
+	}
+
+	protected void setUpHtml() {
+		spy(HtmlUtil.class);
+
+		when(
+			HtmlUtil.getHtml()
+		).thenReturn(
+			new HtmlImpl()
+		);
+	}
+
+	protected void setUpLocale() {
+		spy(LocaleUtil.class);
+
+		when(
+			LocaleUtil.fromLanguageId("en_US")
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		when(
+			LocaleUtil.fromLanguageId("pt_BR")
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+	}
+
+	protected void setUpSAXReader() {
+		spy(SAXReaderUtil.class);
+
+		when(
+			SAXReaderUtil.getSAXReader()
+		).thenReturn(
+			new SAXReaderImpl()
+		);
+	}
+
+	private DDMFormConverter _ddmFormConverter = new DDMFormConverterImpl();
 
 }

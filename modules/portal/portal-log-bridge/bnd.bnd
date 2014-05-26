@@ -1,5 +1,5 @@
-Bundle-Activator: com.liferay.logbridge.LogBridge
+Bundle-Activator: ${classes;IMPLEMENTS;org.osgi.framework.BundleActivator}
+Bundle-Version: ${plugin.full.version}
 Bundle-Name: Log Bridge
-Import-Package: *
 Include-Resource: classes
 Private-Package: *

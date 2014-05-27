@@ -1808,6 +1808,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		if (!legacyURL) {
 			String[] pathArray = dlReference.split(StringPool.SLASH);
 
+			if (pathArray.length < 3) {
+				return null;
+			}
+			
 			map.put("groupId", new String[] {pathArray[2]});
 
 			if (pathArray.length == 4) {

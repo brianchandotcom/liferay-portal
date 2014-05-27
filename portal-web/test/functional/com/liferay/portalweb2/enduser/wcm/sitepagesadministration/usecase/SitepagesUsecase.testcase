@@ -328,11 +328,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -343,11 +341,9 @@
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="test test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -557,11 +553,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -572,11 +566,9 @@
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="test test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -673,11 +665,9 @@
 			<var name="userPassword" value="loveispatient1" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -798,11 +788,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="liferay.qa3@gmail.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="liferay.qa3@gmail.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -813,11 +801,9 @@
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="test test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -914,11 +900,9 @@
 			<var name="userPassword" value="loveispatient1" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea2@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
 		<execute macro="Page#openURL">

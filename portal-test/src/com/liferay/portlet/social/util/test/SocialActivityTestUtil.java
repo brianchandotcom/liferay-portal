@@ -23,11 +23,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
@@ -125,24 +123,6 @@ public class SocialActivityTestUtil {
 		return SocialActivityLimitLocalServiceUtil.fetchActivityLimit(
 			groupId, user.getUserId(), assetEntry.getClassNameId(), classPK,
 			activityType, activityCounterName);
-	}
-
-	protected static SocialActivity newActivity(
-		User user, Group group, AssetEntry assetEntry, int type) {
-
-		SocialActivity activity = new SocialActivityImpl();
-
-		activity.setGroupId(group.getGroupId());
-		activity.setCompanyId(group.getCompanyId());
-		activity.setUserId(user.getUserId());
-		activity.setUserUuid(user.getUuid());
-		activity.setCreateDate(System.currentTimeMillis());
-		activity.setClassNameId(assetEntry.getClassNameId());
-		activity.setClassPK(assetEntry.getClassPK());
-		activity.setType(type);
-		activity.setAssetEntry(assetEntry);
-
-		return activity;
 	}
 
 	private static final String _TEST_MODEL = "test-model";

@@ -83,10 +83,10 @@
 				casesensitive="false"
 				delimiter=","
 				distinct="true"
-				match="app\.server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+\.dir"
+				match="app\.(server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere)).+\.dir"
 				override="true"
 				property="app.server.dir.property.list"
-				select="\0"
+				select="\1"
 			/>
 
 			<sortlist
@@ -99,7 +99,7 @@
 			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
 				<sequential>
 					<propertycopy
-						from="@{app.server.dir.property}"
+						from="app.@{app.server.dir.property}.dir"
 						name="temp.app.server.dir"
 					/>
 
@@ -107,7 +107,7 @@
 						append="true"
 						file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
 					>
-						@{app.server.dir.property}=${temp.app.server.dir}
+						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
 					</echo>
 
 					<var name="temp.app.server.dir" unset="true" />

@@ -21,11 +21,6 @@ blogsPortletInstanceSettings = BlogsUtil.getBlogsPortletInstanceSettings(layout,
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
-	<portlet:param name="serviceName" value="<%= BlogsConstants.SERVICE_NAME %>" />
-	<portlet:param name="settingsScope" value="group" />
-</liferay-portlet:actionURL>
-
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
 	<liferay-portlet:param name="settingsScope" value="portletInstance" />
 </liferay-portlet:actionURL>
 

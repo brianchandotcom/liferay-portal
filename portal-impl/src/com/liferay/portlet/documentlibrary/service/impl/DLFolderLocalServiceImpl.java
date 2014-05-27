@@ -784,8 +784,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolderPersistence.update(dlFolder);
 
-			dlAppHelperLocalService.moveFolder(new LiferayFolder(dlFolder));
-
 			return dlFolder;
 		}
 		finally {

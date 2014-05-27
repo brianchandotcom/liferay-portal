@@ -2393,22 +2393,28 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
+		Folder folder = null;
+
 		if (fromRepository.getRepositoryId() ==
 				toRepository.getRepositoryId()) {
 
 			// Move file entries within repository
 
-			Folder folder = fromRepository.moveFolder(
+			folder = fromRepository.moveFolder(
 				folderId, parentFolderId, serviceContext);
+		}
+		else {
 
-			return folder;
+			// Move file entries between repositories
+
+			folder = moveFolders(
+				folderId, parentFolderId, fromRepository, toRepository,
+				serviceContext);
 		}
 
-		// Move file entries between repositories
+		dlAppHelperLocalService.moveFolder(folder);
 
-		return moveFolders(
-			folderId, parentFolderId, fromRepository, toRepository,
-			serviceContext);
+		return folder;
 	}
 
 	/**

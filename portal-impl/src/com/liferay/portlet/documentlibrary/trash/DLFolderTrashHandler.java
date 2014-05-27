@@ -250,7 +250,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLFolderLocalServiceUtil.moveFolder(
+		DLAppLocalServiceUtil.moveFolder(
 			userId, classPK, containerModelId, serviceContext);
 	}
 

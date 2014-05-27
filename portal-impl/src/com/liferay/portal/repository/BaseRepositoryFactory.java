@@ -30,7 +30,7 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
-import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
@@ -69,7 +69,7 @@ public abstract class BaseRepositoryFactory {
 
 			String repositoryImplClassName = className.getValue();
 
-			baseRepository = RepositoryFactoryUtil.getInstance(
+			baseRepository = ExternalRepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);
 		}
 		catch (Exception e) {
@@ -318,7 +318,6 @@ public abstract class BaseRepositoryFactory {
 	}
 
 	protected void setRepositoryService(RepositoryService repositoryService) {
-
 		_repositoryService = repositoryService;
 	}
 
@@ -346,7 +345,6 @@ public abstract class BaseRepositoryFactory {
 	}
 
 	protected void setUserLocalService(UserLocalService userLocalService) {
-
 		_userLocalService = userLocalService;
 	}
 

@@ -31,16 +31,8 @@ blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<%
-	String tabs2Names = "display-settings,email-from,entry-added-email,entry-updated-email";
-
-	if (PortalUtil.isRSSFeedsEnabled()) {
-		tabs2Names += ",rss";
-	}
-	%>
-
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="email-from,entry-added-email,entry-updated-email"
 		refresh="<%= false %>"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -49,10 +41,6 @@ blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 		<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
 		<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
-
-		<liferay-ui:section>
-			<%@ include file="/html/portlet/blogs_admin/display_settings.jspf" %>
-		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset>
@@ -108,17 +96,6 @@ blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 				emailSubject="<%= blogsSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
-
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-			<liferay-ui:section>
-				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
-				/>
-			</liferay-ui:section>
-		</c:if>
 	</liferay-ui:tabs>
 
 	<aui:button-row>

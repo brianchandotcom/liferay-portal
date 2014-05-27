@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
@@ -34,7 +36,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -119,7 +120,8 @@ public class TestPropsValues {
 	public static String getLogin(boolean encodeLogin) throws Exception {
 		String login = null;
 
-		String authType = PropsValues.COMPANY_SECURITY_AUTH_TYPE;
+		String authType = GetterUtil.getString(
+			PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
 
 		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 			login = getUser().getEmailAddress();
@@ -230,7 +232,9 @@ public class TestPropsValues {
 
 		try {
 			if (Validator.isNull(companyWebId)) {
-				companyWebId = PropsValues.COMPANY_DEFAULT_WEB_ID;
+				companyWebId =
+					GetterUtil.getString(
+						PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
 				TestPropsUtil.set("company.web.id", companyWebId);
 			}

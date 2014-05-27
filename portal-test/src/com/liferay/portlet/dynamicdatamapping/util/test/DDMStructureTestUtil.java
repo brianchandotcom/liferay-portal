@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.dynamicdatamapping.util.test;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -23,7 +26,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -79,11 +81,13 @@ public class DDMStructureTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		String ddlStorageType = GetterUtil.getString(
+			PropsUtil.get(PropsKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE));
+
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, parentStructureId,
 			PortalUtil.getClassNameId(className), null, nameMap, null, xsd,
-			PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE,
-			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			ddlStorageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	public static DDMStructure addStructure(

@@ -93,6 +93,7 @@
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
 				portletURL.setParameter('refererPortletName', '${themeDisplay.getPortletDisplay().getId()}');
 				portletURL.setParameter('struts_action', '/document_selector/view');
+				portletURL.setParameter('tabs1Names', 'documents');
 				portletURL.setPortletId('200');
 				portletURL.setWindowState('pop_up');
 

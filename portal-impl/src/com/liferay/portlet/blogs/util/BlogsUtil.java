@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
@@ -58,6 +60,29 @@ public class BlogsUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
+	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new BlogsPortletInstanceSettings(settings);
+	}
+
+	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			request.getParameterMap(), settings);
+
+		return new BlogsPortletInstanceSettings(parameterMapSettings);
+	}
+
 	public static BlogsSettings getBlogsSettings(long groupId)
 		throws PortalException, SystemException {
 
@@ -74,7 +99,7 @@ public class BlogsUtil {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, BlogsConstants.SERVICE_NAME);
 
-		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+		Settings parameterMapSettings = new ParameterMapSettings(
 			request.getParameterMap(), settings);
 
 		return new BlogsSettings(parameterMapSettings);

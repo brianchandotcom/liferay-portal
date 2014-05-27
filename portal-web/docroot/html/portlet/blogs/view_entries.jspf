@@ -60,15 +60,15 @@ showSearch = showSearch && !results.isEmpty();
 </c:if>
 
 <div class="subscribe">
-	<c:if test="<%= enableRSS %>">
+	<c:if test="<%= blogsPortletInstanceSettings.getEnableRSS() %>">
 		<liferay-portlet:resourceURL varImpl="rssURL">
 			<portlet:param name="struts_action" value="/blogs/rss" />
 		</liferay-portlet:resourceURL>
 
 		<liferay-ui:rss
-			delta="<%= rssDelta %>"
-			displayStyle="<%= rssDisplayStyle %>"
-			feedType="<%= rssFeedType %>"
+			delta="<%= blogsPortletInstanceSettings.getRssDelta() %>"
+			displayStyle="<%= blogsPortletInstanceSettings.getRssDisplayStyle() %>"
+			feedType="<%= blogsPortletInstanceSettings.getRssFeedType() %>"
 			resourceURL="<%= rssURL %>"
 		/>
 	</c:if>
@@ -113,7 +113,7 @@ showSearch = showSearch && !results.isEmpty();
 />
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()), blogsPortletInstanceSettings.getDisplayStyle());
 
 if (portletDisplayDDMTemplateId > 0) {
 %>

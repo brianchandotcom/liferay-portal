@@ -21,8 +21,6 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String portletId = portletDisplay.getId();
-
 if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -44,8 +42,6 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 //entry = entry.toEscapedModel();
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
-
-displayStyle = BlogsUtil.DISPLAY_STYLE_FULL_CONTENT;
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
 
@@ -124,7 +120,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	</div>
 </c:if>
 
-<c:if test="<%= enableComments %>">
+<c:if test="<%= blogsPortletInstanceSettings.getEnableComments() %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title="comments">
 			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(PortletKeys.BLOGS_ADMIN) %>">
@@ -140,7 +136,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				classPK="<%= entry.getEntryId() %>"
 				formAction="<%= discussionURL %>"
 				formName="fm2"
-				ratingsEnabled="<%= enableCommentRatings %>"
+				ratingsEnabled="<%= blogsPortletInstanceSettings.getEnableCommentRatings() %>"
 				redirect="<%= currentURL %>"
 				userId="<%= entry.getUserId() %>"
 			/>

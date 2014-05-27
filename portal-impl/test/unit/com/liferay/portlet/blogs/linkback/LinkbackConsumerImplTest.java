@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.blogs.linkback;
 
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.IOException;
 
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
 import org.mockito.internal.stubbing.answers.DoesNothing;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -40,16 +38,17 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({MBMessageLocalServiceUtil.class, PortalSocketPermission.class})
+@PrepareForTest({PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
-public class LinkbackConsumerUtilTest extends PowerMockito {
+public class LinkbackConsumerImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
 		setUpHttp();
-		setUpMessageBoards();
+
+		_linkbackConsumer = new LinkbackConsumerImpl(_comments);
 	}
 
 	@Test
@@ -64,14 +63,13 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 
 		long messageId = RandomTestUtil.randomLong();
 
-		LinkbackConsumerUtil.addNewTrackback(
-			messageId, "__url__", "__entryUrl__");
+		_linkbackConsumer.addNewTrackback(messageId, "__url__", "__entryUrl__");
 
-		LinkbackConsumerUtil.verifyNewTrackbacks();
+		_linkbackConsumer.verifyNewTrackbacks();
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).deleteDiscussionMessage(
+			_comments
+		).deleteComment(
 			messageId
 		);
 
@@ -94,14 +92,14 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 
 		long messageId = RandomTestUtil.randomLong();
 
-		LinkbackConsumerUtil.addNewTrackback(
+		_linkbackConsumer.addNewTrackback(
 			messageId, "__PROBLEM_URL__", "__entryUrl__");
 
-		LinkbackConsumerUtil.verifyNewTrackbacks();
+		_linkbackConsumer.verifyNewTrackbacks();
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).deleteDiscussionMessage(
+			_comments
+		).deleteComment(
 			messageId
 		);
 
@@ -122,12 +120,12 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 			"__URLtoString_containing_**entryUrl**__"
 		);
 
-		LinkbackConsumerUtil.addNewTrackback(
+		_linkbackConsumer.addNewTrackback(
 			RandomTestUtil.randomLong(), "__url__", "**entryUrl**");
 
-		LinkbackConsumerUtil.verifyNewTrackbacks();
+		_linkbackConsumer.verifyNewTrackbacks();
 
-		Mockito.verifyZeroInteractions(_mbMessageLocalService);
+		Mockito.verifyZeroInteractions(_comments);
 
 		Mockito.verify(
 			_http
@@ -144,20 +142,12 @@ public class LinkbackConsumerUtilTest extends PowerMockito {
 		httpUtil.setHttp(_http);
 	}
 
-	protected void setUpMessageBoards() {
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
-		);
-	}
+	@Mock
+	private Comments _comments;
 
 	@Mock
 	private Http _http;
 
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
+	private LinkbackConsumer _linkbackConsumer;
 
 }

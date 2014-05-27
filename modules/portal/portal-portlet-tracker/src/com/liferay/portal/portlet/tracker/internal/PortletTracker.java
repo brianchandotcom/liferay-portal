@@ -287,6 +287,7 @@ public class PortletTracker
 
 		portletModel.setPluginPackage(portalPortletModel.getPluginPackage());
 		portletModel.setPortletApp(portalPortletModel.getPortletApp());
+		portletModel.setRoleMappers(portalPortletModel.getRoleMappers());
 		portletModel.setTimestamp(System.currentTimeMillis());
 
 		return portletModel;
@@ -653,6 +654,7 @@ public class PortletTracker
 		Set<String> unlinkedRoles = new HashSet<String>(roleRefs);
 
 		portletModel.setUnlinkedRoles(unlinkedRoles);
+		portletModel.linkRoles();
 	}
 
 	protected void collectWindowStates(

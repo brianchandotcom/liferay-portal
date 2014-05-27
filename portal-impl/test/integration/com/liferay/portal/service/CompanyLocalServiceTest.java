@@ -32,6 +32,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -68,9 +70,11 @@ import org.springframework.mock.web.MockServletContext;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class,
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 @Transactional
 public class CompanyLocalServiceTest {
 

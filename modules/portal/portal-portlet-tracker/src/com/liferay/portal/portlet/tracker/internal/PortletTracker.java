@@ -229,7 +229,7 @@ public class PortletTracker
 		collectCacheScope(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
-		collectPortletInfo(serviceReference, portletModel, displayName);
+		collectPortletInfo(serviceReference, portletModel);
 		collectPortletModes(serviceReference, portletModel);
 		collectPortletPreferences(serviceReference, portletModel);
 		collectSecurityRoleRefs(serviceReference, portletModel);
@@ -327,8 +327,8 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
 
-		Integer expirationCache = (Integer)serviceReference.getProperty(
-			"javax.portlet.expiration-cache");
+		int expirationCache = GetterUtil.getInteger(
+			serviceReference.getProperty("javax.portlet.expiration-cache"));
 
 		portletModel.setExpCache(expirationCache);
 	}
@@ -355,21 +355,16 @@ public class PortletTracker
 
 	protected void collectPortletInfo(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.model.Portlet portletModel, String displayName) {
+		com.liferay.portal.model.Portlet portletModel) {
 
-		String portletInfoTitle = (String)serviceReference.getProperty(
-			"javax.portlet.info.title");
-
-		if (portletInfoTitle == null) {
-			portletInfoTitle = displayName;
-		}
-
-		String portletInfoShortTitle = (String)serviceReference.getProperty(
-			"javax.portlet.info.short-title");
-		String portletInfoKeyWords = (String)serviceReference.getProperty(
-			"javax.portlet.info.keywords");
-		String portletDescription = (String)serviceReference.getProperty(
-			"javax.portlet.description");
+		String portletInfoTitle = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.title"));
+		String portletInfoShortTitle = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.short-title"));
+		String portletInfoKeyWords = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.info.keywords"));
+		String portletDescription = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.description"));
 
 		PortletInfo portletInfo = new PortletInfo(
 			portletInfoTitle, portletInfoShortTitle, portletInfoKeyWords,
@@ -418,8 +413,8 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.model.Portlet portletModel) {
 
-		String defaultPreferences = (String)serviceReference.getProperty(
-			"javax.portlet.preferences");
+		String defaultPreferences = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.preferences"));
 
 		if ((defaultPreferences != null) &&
 			defaultPreferences.startsWith("classpath:")) {

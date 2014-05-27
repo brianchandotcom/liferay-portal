@@ -242,6 +242,9 @@ public class PortletKeys {
 
 	public static final String SOCIAL_ACTIVITY = "179";
 
+	public static final String SOCIAL_NETWORKING_MEMBERS_ACTIVITIES =
+		"8_WAR_socialnetworkingportlet";
+
 	public static final String SOFTWARE_CATALOG = "98";
 
 	public static final String STAGING_BAR = "170";

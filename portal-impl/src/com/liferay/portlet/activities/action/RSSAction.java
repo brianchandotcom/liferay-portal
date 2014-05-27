@@ -15,6 +15,8 @@
 package com.liferay.portlet.activities.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
@@ -126,9 +129,25 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		syndLinks.add(selfSyndLink);
 
-		String link =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+		String portletId = serviceContext.getPortletId();
+
+		String link = StringPool.BLANK;
+
+		if (portletId.equals(PortletKeys.ACTIVITIES)) {
+			link =
+				PortalUtil.getLayoutFullURL(themeDisplay) +
+					Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+		}
+		else if (portletId.equals(
+					PortletKeys.SOCIAL_NETWORKING_MEMBERS_ACTIVITIES)) {
+
+			link =
+				PortalUtil.getLayoutFullURL(themeDisplay) +
+					Portal.FRIENDLY_URL_SEPARATOR + "members_activities/rss";
+		}
+		else {
+			_log.error("RSS directory not found for portlet " + portletId);
+		}
 
 		selfSyndLink.setHref(link);
 
@@ -203,5 +222,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		return rss.getBytes(StringPool.UTF8);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(RSSAction.class);
 
 }

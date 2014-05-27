@@ -31,9 +31,8 @@ public interface Expression<T> {
 	public void setDoubleVariableValue(
 		String variableName, Double variableValue);
 
-	public void setExpressionVariableValue(
-		String variableName, Class<?> variableType,
-		String variableValueExpression);
+	public void setExpressionStringVariableValue(
+		String variableName, Class<?> variableType, String variableValue);
 
 	public void setFloatVariableValue(String variableName, Float variableValue);
 

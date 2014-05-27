@@ -27,10 +27,10 @@ public class VariableNamesExtractorTest {
 
 	@Test
 	public void testExpressionWithMultipleVariables() {
-		String expression = "((a + b) * variable_3) / var4  > 5";
+		String expressionString = "((a + b) * variable_3) / var4  > 5";
 
 		List<String> variableNames = _variableNamesExtractor.extract(
-			expression);
+			expressionString);
 
 		Assert.assertEquals(variableNames.size(), 4);
 
@@ -42,20 +42,20 @@ public class VariableNamesExtractorTest {
 
 	@Test
 	public void testExpressionWithNoVariables() {
-		String expression = "(1 + 2) * 3";
+		String expressionString = "(1 + 2) * 3";
 
 		List<String> variableNames = _variableNamesExtractor.extract(
-			expression);
+			expressionString);
 
 		Assert.assertEquals(variableNames.size(), 0);
 	}
 
 	@Test
 	public void testExpressionWithOneVariable() {
-		String expression = "((1 + 2) * variable) > 5";
+		String expressionString = "((1 + 2) * variable) > 5";
 
 		List<String> variableNames = _variableNamesExtractor.extract(
-			expression);
+			expressionString);
 
 		Assert.assertEquals(variableNames.size(), 1);
 

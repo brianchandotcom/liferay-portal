@@ -22,38 +22,46 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class ExpressionFactoryUtil {
 
 	public static Expression<Boolean> createBooleanExpression(
-		String expression) {
+		String expressionString) {
 
-		return getExpressionFactory().createBooleanExpression(expression);
+		return getExpressionFactory().createBooleanExpression(expressionString);
 	}
 
-	public static Expression<Double> createDoubleExpression(String expression) {
-		return getExpressionFactory().createDoubleExpression(expression);
+	public static Expression<Double> createDoubleExpression(
+		String expressionString) {
+
+		return getExpressionFactory().createDoubleExpression(expressionString);
 	}
 
 	public static <T> Expression<T> createExpression(
-		String expression, Class<T> expressionType) {
+		String expressionString, Class<T> expressionType) {
 
 		return getExpressionFactory().createExpression(
-			expression, expressionType);
+			expressionString, expressionType);
 	}
 
-	public static Expression<Float> createFloatExpression(String expression) {
-		return getExpressionFactory().createFloatExpression(expression);
+	public static Expression<Float> createFloatExpression(
+		String expressionString) {
+
+		return getExpressionFactory().createFloatExpression(expressionString);
 	}
 
 	public static Expression<Integer> createIntegerExpression(
-		String expression) {
+		String expressionString) {
 
-		return getExpressionFactory().createIntegerExpression(expression);
+		return getExpressionFactory().createIntegerExpression(expressionString);
 	}
 
-	public static Expression<Long> createLongExpression(String expression) {
-		return getExpressionFactory().createLongExpression(expression);
+	public static Expression<Long> createLongExpression(
+		String expressionString) {
+
+		return getExpressionFactory().createLongExpression(expressionString);
 	}
 
-	public static Expression<String> createStringExpression(String expression) {
-		return getExpressionFactory().createStringExpression(expression);
+	public static Expression<String> createStringExpression(
+		String expressionString) {
+
+		return getExpressionFactory().createStringExpression(expressionString);
 	}
 
 	public static ExpressionFactory getExpressionFactory() {

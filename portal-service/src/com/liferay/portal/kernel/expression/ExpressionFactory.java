@@ -19,19 +19,19 @@ package com.liferay.portal.kernel.expression;
  */
 public interface ExpressionFactory {
 
-	public Expression<Boolean> createBooleanExpression(String expression);
+	public Expression<Boolean> createBooleanExpression(String expressionString);
 
-	public Expression<Double> createDoubleExpression(String expression);
+	public Expression<Double> createDoubleExpression(String expressionString);
 
 	public <T> Expression<T> createExpression(
-		String expression, Class<T> expressionType);
+		String expressionString, Class<T> expressionType);
 
-	public Expression<Float> createFloatExpression(String expression);
+	public Expression<Float> createFloatExpression(String expressionString);
 
-	public Expression<Integer> createIntegerExpression(String expression);
+	public Expression<Integer> createIntegerExpression(String expressionString);
 
-	public Expression<Long> createLongExpression(String expression);
+	public Expression<Long> createLongExpression(String expressionString);
 
-	public Expression<String> createStringExpression(String expression);
+	public Expression<String> createStringExpression(String expressionString);
 
 }

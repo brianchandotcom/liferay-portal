@@ -41,8 +41,9 @@ public class VariableDependenciesTest {
 			ExpressionFactoryUtil.createLongExpression("var1 + var2 + var3");
 
 		expression.setLongVariableValue("var1", 5l);
-		expression.setExpressionVariableValue("var2", Long.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
+			"var2", Long.class, "var1 + 3");
+		expression.setExpressionStringVariableValue(
 			"var3", Long.class, "var2 + var1");
 
 		Map<String, VariableDependencies> dependenciesMap =

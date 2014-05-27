@@ -53,8 +53,9 @@ public class ExpressionEvaluationTest {
 		double var1 = 5.5;
 
 		expression.setDoubleVariableValue("var1", var1);
-		expression.setExpressionVariableValue("var2", Double.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
+			"var2", Double.class, "var1 + 3");
+		expression.setExpressionStringVariableValue(
 			"var3", Double.class, "var2 + var1");
 
 		double var2 = var1 + 3;
@@ -95,8 +96,9 @@ public class ExpressionEvaluationTest {
 		float var1 = 5.5f;
 
 		expression.setFloatVariableValue("var1", var1);
-		expression.setExpressionVariableValue("var2", Float.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
+			"var2", Float.class, "var1 + 3");
+		expression.setExpressionStringVariableValue(
 			"var3", Float.class, "var2 + var1");
 
 		float var2 = var1 + 3;
@@ -126,9 +128,9 @@ public class ExpressionEvaluationTest {
 		int var1 = 5;
 
 		expression.setIntegerVariableValue("var1", var1);
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
 			"var2", Integer.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
 			"var3", Integer.class, "var2 + var1");
 
 		int var2 = var1 + 3;
@@ -149,8 +151,9 @@ public class ExpressionEvaluationTest {
 		long var1 = 5l;
 
 		expression.setLongVariableValue("var1", var1);
-		expression.setExpressionVariableValue("var2", Long.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
+			"var2", Long.class, "var1 + 3");
+		expression.setExpressionStringVariableValue(
 			"var3", long.class, "var2 + var1");
 
 		long var2 = var1 + 3;
@@ -194,9 +197,9 @@ public class ExpressionEvaluationTest {
 		double var1 = 5.5;
 
 		expression.setDoubleVariableValue("var1", var1);
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
 			"var2", Double.class, "var1 + 3.5");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
 			"var3", Double.class, "var2 + var1");
 
 		double var2 = var1 + 3.5;
@@ -217,8 +220,9 @@ public class ExpressionEvaluationTest {
 		long var1 = 5;
 
 		expression.setLongVariableValue("var1", var1);
-		expression.setExpressionVariableValue("var2", Long.class, "var1 + 3");
-		expression.setExpressionVariableValue(
+		expression.setExpressionStringVariableValue(
+			"var2", Long.class, "var1 + 3");
+		expression.setExpressionStringVariableValue(
 			"var3", Long.class, "var2 + var1");
 
 		long var2 = var1 + 3;

@@ -25,14 +25,14 @@ import java.util.regex.Pattern;
  */
 public class VariableNamesExtractor {
 
-	public List<String> extract(String expression) {
-		if (expression == null) {
+	public List<String> extract(String expressionString) {
+		if (expressionString == null) {
 			return Collections.emptyList();
 		}
 
 		List<String> variableNames = new ArrayList<String>();
 
-		Matcher matcher = _VARIABLE_PATTERN.matcher(expression);
+		Matcher matcher = _VARIABLE_PATTERN.matcher(expressionString);
 
 		while (matcher.find()) {
 			variableNames.add(matcher.group(1));

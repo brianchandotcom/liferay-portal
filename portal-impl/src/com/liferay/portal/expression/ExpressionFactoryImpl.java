@@ -23,40 +23,44 @@ import com.liferay.portal.kernel.expression.ExpressionFactory;
 public class ExpressionFactoryImpl implements ExpressionFactory {
 
 	@Override
-	public Expression<Boolean> createBooleanExpression(String expression) {
-		return new ExpressionImpl<Boolean>(expression, Boolean.class);
+	public Expression<Boolean> createBooleanExpression(
+		String expressionString) {
+
+		return new ExpressionImpl<Boolean>(expressionString, Boolean.class);
 	}
 
 	@Override
-	public Expression<Double> createDoubleExpression(String expression) {
-		return new ExpressionImpl<Double>(expression, Double.class);
+	public Expression<Double> createDoubleExpression(String expressionString) {
+		return new ExpressionImpl<Double>(expressionString, Double.class);
 	}
 
 	@Override
 	public <T> Expression<T> createExpression(
-		String expression, Class<T> expressionType) {
+		String expressionString, Class<T> expressionType) {
 
-		return new ExpressionImpl<T>(expression, expressionType);
+		return new ExpressionImpl<T>(expressionString, expressionType);
 	}
 
 	@Override
-	public Expression<Float> createFloatExpression(String expression) {
-		return new ExpressionImpl<Float>(expression, Float.class);
+	public Expression<Float> createFloatExpression(String expressionString) {
+		return new ExpressionImpl<Float>(expressionString, Float.class);
 	}
 
 	@Override
-	public Expression<Integer> createIntegerExpression(String expression) {
-		return new ExpressionImpl<Integer>(expression, Integer.class);
+	public Expression<Integer> createIntegerExpression(
+		String expressionString) {
+
+		return new ExpressionImpl<Integer>(expressionString, Integer.class);
 	}
 
 	@Override
-	public Expression<Long> createLongExpression(String expression) {
-		return new ExpressionImpl<Long>(expression, Long.class);
+	public Expression<Long> createLongExpression(String expressionString) {
+		return new ExpressionImpl<Long>(expressionString, Long.class);
 	}
 
 	@Override
-	public Expression<String> createStringExpression(String expression) {
-		return new ExpressionImpl<String>(expression, String.class);
+	public Expression<String> createStringExpression(String expressionString) {
+		return new ExpressionImpl<String>(expressionString, String.class);
 	}
 
 }

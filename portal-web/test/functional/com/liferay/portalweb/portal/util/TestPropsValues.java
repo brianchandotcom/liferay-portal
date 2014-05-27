@@ -53,7 +53,7 @@ public class TestPropsValues
 		"ignore.errors");
 
 	public static final String IGNORE_ERRORS_DELIMITER = TestPropsUtil.get(
-		"delimiter");
+		"ignore.errors.delimiter");
 
 	public static final String LIFERAY_PORTAL_BRANCH = TestPropsUtil.get(
 		"liferay.portal.branch");

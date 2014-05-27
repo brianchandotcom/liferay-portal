@@ -479,25 +479,31 @@ public class SeleniumBuilder {
 
 			for (Element rootPropertyElement : rootPropertyElements) {
 				sb = new StringBundler();
-				String attributeName = rootPropertyElement.attributeValue(
+
+				String rootPropertyName = rootPropertyElement.attributeValue(
 					"name");
 
 				sb.append(testCaseName);
 				sb.append("TestCase.all.");
-				sb.append(rootPropertyElement.attributeValue("name"));
+				sb.append(rootPropertyName);
 				sb.append("=");
 				sb.append(rootPropertyElement.attributeValue("value"));
 
 				testCaseProperties.add(sb.toString());
 
-				if (attributeName.equals("ignore.errors")) {
+				String rootPropertyDelimiter =
+					rootPropertyElement.attributeValue("delimiter");
+
+				if ((rootPropertyDelimiter != null) &&
+					rootPropertyName.equals("ignore.errors")) {
+
 					sb = new StringBundler();
 
 					sb.append(testCaseName);
 					sb.append("TestCase.all.");
-					sb.append(rootPropertyElement.attributeValue("name"));
+					sb.append(rootPropertyName);
 					sb.append(".delimiter=");
-					sb.append(rootPropertyElement.attributeValue("delimiter"));
+					sb.append(rootPropertyDelimiter);
 
 					testCaseProperties.add(sb.toString());
 				}

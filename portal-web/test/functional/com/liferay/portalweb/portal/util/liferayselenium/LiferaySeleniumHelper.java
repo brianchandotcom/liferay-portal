@@ -688,15 +688,15 @@ public class LiferaySeleniumHelper {
 				String ignoreErrorsDelimiter =
 					TestPropsValues.IGNORE_ERRORS_DELIMITER;
 
-				String[] errors = TestPropsValues.IGNORE_ERRORS.split(
-					ignoreErrorsDelimiter);
-
 				if (ignoreErrorsDelimiter.equals("|")) {
 					ignoreErrorsDelimiter = "\\|";
 				}
 
-				for (String error : errors) {
-					if (line.contains(error)) {
+				String[] ignoreErrors = TestPropsValues.IGNORE_ERRORS.split(
+					ignoreErrorsDelimiter);
+
+				for (String ignoreError : ignoreErrors) {
+					if (line.contains(ignoreError)) {
 						return true;
 					}
 				}

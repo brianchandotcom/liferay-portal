@@ -519,6 +519,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					fileName, "Unused variable: " + fileName + " " + lineCount);
 			}
 
+			// LPS-47179
+
+			if (line.contains(".sendRedirect(") &&
+				!fileName.endsWith("_jsp.jsp")) {
+
+				processErrorMessage(
+					fileName,
+					"Do not use sendRedirect in jsp: " + fileName + " " +
+						lineCount);
+			}
+
 			if (!trimmedLine.equals("%>") && line.contains("%>") &&
 				!line.contains("--%>") && !line.contains(" %>")) {
 

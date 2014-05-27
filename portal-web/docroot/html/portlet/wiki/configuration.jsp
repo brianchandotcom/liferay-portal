@@ -18,6 +18,8 @@
 
 <%
 wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, portletId, request);
+
+wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, wikiPortletInstanceSettings);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

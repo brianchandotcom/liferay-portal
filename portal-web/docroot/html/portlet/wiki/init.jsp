@@ -39,6 +39,7 @@ page import="com.liferay.portlet.wiki.RequiredNodeException" %><%@
 page import="com.liferay.portlet.wiki.WikiFormatException" %><%@
 page import="com.liferay.portlet.wiki.WikiPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.wiki.WikiSettings" %><%@
+page import="com.liferay.portlet.wiki.context.WikiConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.wiki.importers.WikiImporterKeys" %><%@
 page import="com.liferay.portlet.wiki.model.WikiNode" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
@@ -69,18 +70,7 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 WikiSettings wikiSettings = WikiUtil.getWikiSettings(scopeGroupId);
 WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, portletId);
-
-List<WikiNode> allNodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
-List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
-
-String[] visibleNodes = wikiPortletInstanceSettings.getVisibleNodes();
-
-if (ArrayUtil.isNotEmpty(visibleNodes)) {
-	allNodes = WikiUtil.orderNodes(allNodes, visibleNodes);
-}
-else {
-	visibleNodes = allNodeNames.toArray(new String[allNodeNames.size()]);
-}
+WikiConfigurationDisplayContext wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, wikiPortletInstanceSettings);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

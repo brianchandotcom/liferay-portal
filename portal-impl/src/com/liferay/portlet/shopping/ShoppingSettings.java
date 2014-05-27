@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.shopping;
 
-import com.liferay.portal.kernel.settings.BaseServiceSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,7 +32,7 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  */
-public class ShoppingSettings extends BaseServiceSettings {
+public class ShoppingSettings {
 
 	public static final String CC_NONE = "none";
 
@@ -81,12 +81,50 @@ public class ShoppingSettings extends BaseServiceSettings {
 		Double.POSITIVE_INFINITY
 	};
 
+	public static FallbackKeys FALLBACK_KEYS = new FallbackKeys();
+
+	static {
+		FALLBACK_KEYS.add("ccTypes", PropsKeys.SHOPPING_CREDIT_CARD_TYPES);
+		FALLBACK_KEYS.add("currencyId", PropsKeys.SHOPPING_CURRENCY_ID);
+		FALLBACK_KEYS.add(
+			"emailFromAddress", PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		FALLBACK_KEYS.add(
+			"emailFromName", PropsKeys.SHOPPING_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		FALLBACK_KEYS.add(
+			"emailOrderConfirmationBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY);
+		FALLBACK_KEYS.add(
+			"emailOrderConfirmationEnabled",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED);
+		FALLBACK_KEYS.add(
+			"emailOrderConfirmationSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT);
+		FALLBACK_KEYS.add(
+			"emailOrderShippingBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY);
+		FALLBACK_KEYS.add(
+			"emailOrderShippingEnabled",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED);
+		FALLBACK_KEYS.add(
+			"emailOrderShippingSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT);
+		FALLBACK_KEYS.add("insurance", PropsKeys.SHOPPING_INSURANCE);
+		FALLBACK_KEYS.add(
+			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);
+		FALLBACK_KEYS.add("shipping", PropsKeys.SHOPPING_SHIPPING);
+		FALLBACK_KEYS.add(
+			"shippingFormula", PropsKeys.SHOPPING_SHIPPING_FORMULA);
+		FALLBACK_KEYS.add("taxState", PropsKeys.SHOPPING_TAX_STATE);
+	}
+
 	public ShoppingSettings(Settings settings) {
-		super(settings, _fallbackKeys);
+		_typedSettings = new TypedSettings(settings);
 	}
 
 	public String[][] getAlternativeShipping() {
-		String value = typedSettings.getValue("alternativeShipping", null);
+		String value = _typedSettings.getValue("alternativeShipping", null);
 
 		if (value == null) {
 			return new String[0][0];
@@ -116,7 +154,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String[] getCcTypes() {
-		String[] ccTypes = typedSettings.getValues("ccTypes");
+		String[] ccTypes = _typedSettings.getValues("ccTypes");
 
 		if ((ccTypes.length == 1) && ccTypes[0].equals(CC_NONE)) {
 			return StringPool.EMPTY_ARRAY;
@@ -126,20 +164,20 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String getCurrencyId() {
-		return typedSettings.getValue("currencyId", "USD");
+		return _typedSettings.getValue("currencyId", "USD");
 	}
 
 	public String getEmailFromAddress() {
-		return typedSettings.getValue("emailFromAddress");
+		return _typedSettings.getValue("emailFromAddress");
 	}
 
 	public String getEmailFromName() {
-		return typedSettings.getValue("emailFromName");
+		return _typedSettings.getValue("emailFromName");
 	}
 
 	public LocalizedValuesMap getEmailOrderConfirmationBody() {
 		LocalizedValuesMap emailOrderConfirmationBody =
-			typedSettings.getLocalizedValuesMap("emailOrderConfirmationBody");
+			_typedSettings.getLocalizedValuesMap("emailOrderConfirmationBody");
 
 		return emailOrderConfirmationBody;
 	}
@@ -152,12 +190,12 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEmailOrderConfirmationEnabled() {
-		return typedSettings.getBooleanValue("emailOrderConfirmationEnabled");
+		return _typedSettings.getBooleanValue("emailOrderConfirmationEnabled");
 	}
 
 	public LocalizedValuesMap getEmailOrderConfirmationSubject() {
 		LocalizedValuesMap emailOrderConfirmationSubject =
-			typedSettings.getLocalizedValuesMap(
+			_typedSettings.getLocalizedValuesMap(
 				"emailOrderConfirmationSubject");
 
 		return emailOrderConfirmationSubject;
@@ -171,7 +209,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingBody() {
-		return typedSettings.getLocalizedValuesMap("emailOrderShippingBody");
+		return _typedSettings.getLocalizedValuesMap("emailOrderShippingBody");
 	}
 
 	public String getEmailOrderShippingBodyXml() {
@@ -182,11 +220,12 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEmailOrderShippingEnabled() {
-		return typedSettings.getBooleanValue("emailOrderShippingEnabled");
+		return _typedSettings.getBooleanValue("emailOrderShippingEnabled");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingSubject() {
-		return typedSettings.getLocalizedValuesMap("emailOrderShippingSubject");
+		return _typedSettings.getLocalizedValuesMap(
+			"emailOrderShippingSubject");
 	}
 
 	public String getEmailOrderShippingSubjectXml() {
@@ -197,35 +236,35 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String[] getInsurance() {
-		return typedSettings.getValues("insurance");
+		return _typedSettings.getValues("insurance");
 	}
 
 	public String getInsuranceFormula() {
-		return typedSettings.getValue("insuranceFormula");
+		return _typedSettings.getValue("insuranceFormula");
 	}
 
 	public double getMinOrder() {
-		return typedSettings.getDoubleValue("minOrder");
+		return _typedSettings.getDoubleValue("minOrder");
 	}
 
 	public String getPayPalEmailAddress() {
-		return typedSettings.getValue("paypalEmailAddress");
+		return _typedSettings.getValue("paypalEmailAddress");
 	}
 
 	public String[] getShipping() {
-		return typedSettings.getValues("shipping");
+		return _typedSettings.getValues("shipping");
 	}
 
 	public String getShippingFormula() {
-		return typedSettings.getValue("shippingFormula");
+		return _typedSettings.getValue("shippingFormula");
 	}
 
 	public double getTaxRate() {
-		return typedSettings.getDoubleValue("taxRate");
+		return _typedSettings.getDoubleValue("taxRate");
 	}
 
 	public String getTaxState() {
-		return typedSettings.getValue("taxState");
+		return _typedSettings.getValue("taxState");
 	}
 
 	public boolean useAlternativeShipping() {
@@ -250,42 +289,6 @@ public class ShoppingSettings extends BaseServiceSettings {
 		return Validator.isNotNull(getPayPalEmailAddress());
 	}
 
-	private static FallbackKeys _fallbackKeys = new FallbackKeys();
-
-	static {
-		_fallbackKeys.add("ccTypes", PropsKeys.SHOPPING_CREDIT_CARD_TYPES);
-		_fallbackKeys.add("currencyId", PropsKeys.SHOPPING_CURRENCY_ID);
-		_fallbackKeys.add(
-			"emailFromAddress", PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		_fallbackKeys.add(
-			"emailFromName", PropsKeys.SHOPPING_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		_fallbackKeys.add(
-			"emailOrderConfirmationBody",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY);
-		_fallbackKeys.add(
-			"emailOrderConfirmationEnabled",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED);
-		_fallbackKeys.add(
-			"emailOrderConfirmationSubject",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT);
-		_fallbackKeys.add(
-			"emailOrderShippingBody",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY);
-		_fallbackKeys.add(
-			"emailOrderShippingEnabled",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED);
-		_fallbackKeys.add(
-			"emailOrderShippingSubject",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT);
-		_fallbackKeys.add("insurance", PropsKeys.SHOPPING_INSURANCE);
-		_fallbackKeys.add(
-			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);
-		_fallbackKeys.add("shipping", PropsKeys.SHOPPING_SHIPPING);
-		_fallbackKeys.add(
-			"shippingFormula", PropsKeys.SHOPPING_SHIPPING_FORMULA);
-		_fallbackKeys.add("taxState", PropsKeys.SHOPPING_TAX_STATE);
-	}
+	private TypedSettings _typedSettings;
 
 }

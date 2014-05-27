@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.documentlibrary;
 
-import com.liferay.portal.kernel.settings.BaseServiceSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -25,117 +25,119 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 /**
  * @author Sergio González
  */
-public class DLPortletInstanceSettings extends BaseServiceSettings {
+public class DLPortletInstanceSettings {
 
 	public static final String[] MULTI_VALUED_KEYS = {
 		"displayViews", "entryColumns", "fileEntryColumns", "folderColumns",
 		"mimeTypes"
 	};
 
+	public static FallbackKeys FALLBACK_KEYS = new FallbackKeys();
+
+	static {
+		FALLBACK_KEYS.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
+		FALLBACK_KEYS.add(
+			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
+		FALLBACK_KEYS.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
+		FALLBACK_KEYS.add(
+			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
+		FALLBACK_KEYS.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
+		FALLBACK_KEYS.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
+		FALLBACK_KEYS.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
+		FALLBACK_KEYS.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add(
+			"fileEntriesPerPage",
+			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add(
+			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		FALLBACK_KEYS.add(
+			"showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+	}
+
 	public DLPortletInstanceSettings(Settings settings) {
-		super(settings, _fallbackKeys);
+		_typedSettings = new TypedSettings(settings);
 	}
 
 	public long getDefaultFolderId() {
-		return typedSettings.getLongValue(
+		return _typedSettings.getLongValue(
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public String[] getDisplayViews() {
-		return typedSettings.getValues("displayViews");
+		return _typedSettings.getValues("displayViews");
 	}
 
 	public boolean getEnableCommentRatings() {
-		return typedSettings.getBooleanValue("enableCommentRatings");
+		return _typedSettings.getBooleanValue("enableCommentRatings");
 	}
 
 	public boolean getEnableRatings() {
-		return typedSettings.getBooleanValue("enableRatings");
+		return _typedSettings.getBooleanValue("enableRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
-		return typedSettings.getBooleanValue("enableRelatedAssets");
+		return _typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
 	public int getEntriesPerPage() {
-		return typedSettings.getIntegerValue("entriesPerPage");
+		return _typedSettings.getIntegerValue("entriesPerPage");
 	}
 
 	public String[] getEntryColumns() {
-		return typedSettings.getValues("entryColumns");
+		return _typedSettings.getValues("entryColumns");
 	}
 
 	public int getFileEntriesPerPage() {
-		return typedSettings.getIntegerValue("fileEntriesPerPage");
+		return _typedSettings.getIntegerValue("fileEntriesPerPage");
 	}
 
 	public String[] getFileEntryColumns() {
-		return typedSettings.getValues("fileEntryColumns");
+		return _typedSettings.getValues("fileEntryColumns");
 	}
 
 	public String[] getFolderColumns() {
-		return typedSettings.getValues("folderColumns");
+		return _typedSettings.getValues("folderColumns");
 	}
 
 	public int getFoldersPerPage() {
-		return typedSettings.getIntegerValue("foldersPerPage");
+		return _typedSettings.getIntegerValue("foldersPerPage");
 	}
 
 	public String[] getMimeTypes() {
-		return typedSettings.getValues("mimeTypes", _MIME_TYPES_DEFAULT);
+		return _typedSettings.getValues("mimeTypes", _MIME_TYPES_DEFAULT);
 	}
 
 	public long getRootFolderId() {
-		return typedSettings.getLongValue(
+		return _typedSettings.getLongValue(
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public boolean getShowActions() {
-		return typedSettings.getBooleanValue("showActions");
+		return _typedSettings.getBooleanValue("showActions");
 	}
 
 	public boolean getShowFolderMenu() {
-		return typedSettings.getBooleanValue("showFolderMenu");
+		return _typedSettings.getBooleanValue("showFolderMenu");
 	}
 
 	public boolean getShowFoldersSearch() {
-		return typedSettings.getBooleanValue("showFoldersSearch");
+		return _typedSettings.getBooleanValue("showFoldersSearch");
 	}
 
 	public boolean getShowSubfolders() {
-		return typedSettings.getBooleanValue("showSubfolders");
+		return _typedSettings.getBooleanValue("showSubfolders");
 	}
 
 	public boolean getShowTabs() {
-		return typedSettings.getBooleanValue("showTabs");
+		return _typedSettings.getBooleanValue("showTabs");
 	}
 
 	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(
 		DLUtil.getAllMediaGalleryMimeTypes());
 
-	private static FallbackKeys _fallbackKeys = new FallbackKeys();
-
-	static {
-		_fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
-		_fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
-		_fallbackKeys.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
-		_fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
-		_fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
-		_fallbackKeys.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
-		_fallbackKeys.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
-		_fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add(
-			"fileEntriesPerPage",
-			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-		_fallbackKeys.add(
-			"showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-	}
+	private TypedSettings _typedSettings;
 
 }

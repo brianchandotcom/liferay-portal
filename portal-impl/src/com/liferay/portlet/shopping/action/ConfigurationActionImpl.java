@@ -14,17 +14,13 @@
 
 package com.liferay.portlet.shopping.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.ShoppingSettings;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -54,13 +50,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		updateShippingCalculation(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		return new ShoppingSettings(super.getSettings(actionRequest));
 	}
 
 	protected void updateCcTypes(ActionRequest actionRequest) {

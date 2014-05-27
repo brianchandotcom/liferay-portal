@@ -21,29 +21,25 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
-import java.util.Collection;
 import java.util.Locale;
-
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
  * @author Jorge Ferrer
  */
-public class TypedSettings extends BaseSettings {
+public class TypedSettings {
 
-	public TypedSettings(Settings settings) {
+	public TypedSettings(Settings decoratedSettings) {
 		this(
-			settings, LocaleUtil.getSiteDefault(),
+			decoratedSettings, LocaleUtil.getSiteDefault(),
 			LanguageUtil.getAvailableLocales());
 	}
 
 	public TypedSettings(
-		Settings settings, Locale defaultLocale, Locale... availableLocales) {
+		Settings decoratedSettings, Locale defaultLocale,
+		Locale... availableLocales) {
 
-		_settings = settings;
+		_decoratedSettings = decoratedSettings;
 		_defaultLocale = defaultLocale;
 		_availableLocales = availableLocales;
 	}
@@ -58,9 +54,8 @@ public class TypedSettings extends BaseSettings {
 		return GetterUtil.getBoolean(value, defaultValue);
 	}
 
-	@Override
-	public Settings getDefaultSettings() {
-		return _settings.getDefaultSettings();
+	public Settings getDecoratedSettings() {
+		return _decoratedSettings;
 	}
 
 	public double getDoubleValue(String key) {
@@ -91,11 +86,6 @@ public class TypedSettings extends BaseSettings {
 		String value = getValue(key, null);
 
 		return GetterUtil.getInteger(value, defaultValue);
-	}
-
-	@Override
-	public Collection<String> getKeys() {
-		return _settings.getKeys();
 	}
 
 	public LocalizedValuesMap getLocalizedValuesMap(String key) {
@@ -134,54 +124,44 @@ public class TypedSettings extends BaseSettings {
 		return getValue(key, StringPool.BLANK);
 	}
 
-	@Override
 	public String getValue(String key, String defaultValue) {
-		return _settings.getValue(key, defaultValue);
+		return _decoratedSettings.getValue(key, defaultValue);
 	}
 
 	public String[] getValues(String key) {
 		return getValues(key, StringPool.EMPTY_ARRAY);
 	}
 
-	@Override
 	public String[] getValues(String key, String[] defaultValue) {
-		return _settings.getValues(key, defaultValue);
+		return _decoratedSettings.getValues(key, defaultValue);
 	}
 
-	@Override
 	public void reset(String key) {
-		_settings.reset(key);
+		_decoratedSettings.reset(key);
 	}
 
-	public Settings setBooleanValue(String key, boolean value) {
-		return setValue(key, String.valueOf(value));
+	public void setBooleanValue(String key, boolean value) {
+		setValue(key, String.valueOf(value));
 	}
 
-	public Settings setIntegerValue(String key, int value) {
-		return setValue(key, String.valueOf(value));
+	public void setIntegerValue(String key, int value) {
+		setValue(key, String.valueOf(value));
 	}
 
-	public Settings setLongValue(String key, long value) {
-		return setValue(key, String.valueOf(value));
+	public void setLongValue(String key, long value) {
+		setValue(key, String.valueOf(value));
 	}
 
-	@Override
-	public Settings setValue(String key, String value) {
-		return _settings.setValue(key, value);
+	public void setValue(String key, String value) {
+		_decoratedSettings.setValue(key, value);
 	}
 
-	@Override
-	public Settings setValues(String key, String[] values) {
-		return _settings.setValues(key, values);
-	}
-
-	@Override
-	public void store() throws IOException, ValidatorException {
-		_settings.store();
+	public void setValues(String key, String[] values) {
+		_decoratedSettings.setValues(key, values);
 	}
 
 	private Locale[] _availableLocales;
+	private Settings _decoratedSettings;
 	private Locale _defaultLocale;
-	private Settings _settings;
 
 }

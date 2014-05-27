@@ -14,25 +14,72 @@
 
 package com.liferay.portlet.documentlibrary;
 
-import com.liferay.portal.kernel.settings.BaseServiceSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Adolfo Pérez
  */
-public class DLSettings extends BaseServiceSettings {
+public class DLSettings {
 
 	public static final String[] MULTI_VALUED_KEYS = {};
 
+	public static FallbackKeys FALLBACK_KEYS = new FallbackKeys();
+
+	static {
+		FALLBACK_KEYS.add(
+			"emailFileEntryAddedBody",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY);
+		FALLBACK_KEYS.add(
+			"emailFileEntryAddedEnabled",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_ENABLED);
+		FALLBACK_KEYS.add(
+			"emailFileEntryAddedSubject",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
+		FALLBACK_KEYS.add(
+			"emailFileEntryUpdatedBody",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY);
+		FALLBACK_KEYS.add(
+			"emailFileEntryUpdatedEnabled",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED);
+		FALLBACK_KEYS.add(
+			"emailFileEntryUpdatedSubject",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
+		FALLBACK_KEYS.add(
+			"emailFromAddress", PropsKeys.DL_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		FALLBACK_KEYS.add(
+			"emailFromName", PropsKeys.DL_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		FALLBACK_KEYS.add(
+			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
+		FALLBACK_KEYS.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
+		FALLBACK_KEYS.add(
+			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
+		FALLBACK_KEYS.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
+		FALLBACK_KEYS.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
+		FALLBACK_KEYS.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
+		FALLBACK_KEYS.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add(
+			"fileEntriesPerPage",
+			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		FALLBACK_KEYS.add(
+			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		FALLBACK_KEYS.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);
+	}
+
 	public DLSettings(Settings settings) {
-		super(settings, _fallbackKeys);
+		_typedSettings = new TypedSettings(settings);
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedBody() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedBody");
+		return _typedSettings.getLocalizedValuesMap("emailFileEntryAddedBody");
 	}
 
 	public String getEmailFileEntryAddedBodyXml() {
@@ -43,11 +90,11 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEmailFileEntryAddedEnabled() {
-		return typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
+		return _typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
-		return typedSettings.getLocalizedValuesMap(
+		return _typedSettings.getLocalizedValuesMap(
 			"emailFileEntryAddedSubject");
 	}
 
@@ -59,7 +106,8 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedBody() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedBody");
+		return _typedSettings.getLocalizedValuesMap(
+			"emailFileEntryUpdatedBody");
 	}
 
 	public String getEmailFileEntryUpdatedBodyXml() {
@@ -70,11 +118,11 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEmailFileEntryUpdatedEnabled() {
-		return typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
+		return _typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
-		return typedSettings.getLocalizedValuesMap(
+		return _typedSettings.getLocalizedValuesMap(
 			"emailFileEntryUpdatedSubject");
 	}
 
@@ -86,58 +134,13 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailFromAddress() {
-		return typedSettings.getValue("emailFromAddress");
+		return _typedSettings.getValue("emailFromAddress");
 	}
 
 	public String getEmailFromName() {
-		return typedSettings.getValue("emailFromName");
+		return _typedSettings.getValue("emailFromName");
 	}
 
-	private static FallbackKeys _fallbackKeys = new FallbackKeys();
-
-	static {
-		_fallbackKeys.add(
-			"emailFileEntryAddedBody",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY);
-		_fallbackKeys.add(
-			"emailFileEntryAddedEnabled",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_ENABLED);
-		_fallbackKeys.add(
-			"emailFileEntryAddedSubject",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
-		_fallbackKeys.add(
-			"emailFileEntryUpdatedBody",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY);
-		_fallbackKeys.add(
-			"emailFileEntryUpdatedEnabled",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED);
-		_fallbackKeys.add(
-			"emailFileEntryUpdatedSubject",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
-		_fallbackKeys.add(
-			"emailFromAddress", PropsKeys.DL_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		_fallbackKeys.add(
-			"emailFromName", PropsKeys.DL_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		_fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
-		_fallbackKeys.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
-		_fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
-		_fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
-		_fallbackKeys.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
-		_fallbackKeys.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
-		_fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add(
-			"fileEntriesPerPage",
-			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-		_fallbackKeys.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);
-	}
+	private TypedSettings _typedSettings;
 
 }

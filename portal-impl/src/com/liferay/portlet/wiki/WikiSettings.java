@@ -30,6 +30,8 @@ import javax.portlet.ValidatorException;
  */
 public class WikiSettings {
 
+	public static final String[] MULTI_VALUED_KEYS = {};
+
 	public static FallbackKeys getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 

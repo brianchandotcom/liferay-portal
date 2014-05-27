@@ -40,18 +40,4 @@
 			<execute function="Close#closeWindow" />
 		</default>
 	</command>
-
-	<command name="isElementPresent">
-		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-
-		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-
-		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-	</command>
 </definition>

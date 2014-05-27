@@ -85,7 +85,7 @@
 				<execute action="PGMessageboardsPostthread#check" locator-key1="ANONYMOUS_CHECKBOX" />
 			</then>
 		</if>
-		
+
 		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
@@ -395,7 +395,7 @@
 				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
 			</else>
 		</if>
-		
+
 		<execute action="PGMessageboardsThread#type" locator-key1="QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
 
@@ -520,7 +520,7 @@
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
-	
+
 	<command name="restoreMBAttachmentCP">
 		<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_BODY_ATTACHMENT_1" />
 

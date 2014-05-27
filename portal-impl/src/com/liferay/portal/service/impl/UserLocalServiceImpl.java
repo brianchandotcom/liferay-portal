@@ -5745,6 +5745,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				!PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK ||
 				Validator.isNull(user.getDigest())) {
 
+				user = userPersistence.fetchByPrimaryKey(user.getUserId());
+
 				String digest = user.getDigest(password);
 
 				user.setDigest(digest);

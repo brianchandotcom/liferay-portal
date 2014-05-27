@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
 import com.liferay.portlet.wiki.WikiSettings;
 
 import javax.portlet.ActionRequest;
@@ -30,6 +31,10 @@ import javax.portlet.PortletConfig;
  * @author Bruno Farache
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
+
+	public ConfigurationActionImpl() {
+		addMultiValuedKeys(WikiPortletInstanceSettings.MULTI_VALUED_KEYS);
+	}
 
 	@Override
 	public void processAction(

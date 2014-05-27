@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
  */
 public class WikiSettings extends BaseServiceSettings {
 
+	public static final String[] MULTI_VALUED_KEYS = {};
+
 	public WikiSettings(Settings settings) {
 		super(settings, _fallbackKeys);
 	}

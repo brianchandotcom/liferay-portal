@@ -25,6 +25,10 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class WikiPortletInstanceSettings extends BaseServiceSettings {
 
+	public static final String[] MULTI_VALUED_KEYS = {
+		"visibleNodes", "hiddenNodes"
+	};
+
 	public WikiPortletInstanceSettings(Settings settings) {
 		super(settings, _fallbackKeys);
 	}

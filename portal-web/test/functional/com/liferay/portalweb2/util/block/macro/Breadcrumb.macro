@@ -117,4 +117,28 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewPortletPG">
+		<if>
+			<isset var="breadcrumbListVisible" />
+			<then>
+				<for list="${breadcrumbListVisible}" param="breadcrumbName">
+					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+					<execute action="PGBreadcrumb#assertTextEquals" locator-key1="BREADCRUMB_PAGE_PORTLET" value1="${breadcrumbName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="breadcrumbListNotVisible" />
+			<then>
+				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
+					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+					<execute action="PGBreadcrumb#assertElementNotPresent" locator-key1="BREADCRUMB_PAGE_PORTLET" />
+				</for>
+			</then>
+		</if>
+	</command>
 </definition>

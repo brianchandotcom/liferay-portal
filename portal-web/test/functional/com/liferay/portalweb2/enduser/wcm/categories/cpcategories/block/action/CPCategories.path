@@ -190,7 +190,7 @@
 <!--VOCABULARY_CATEGORY-->
 <tr>
 	<td>VOCABULARY_CATEGORY</td>
-	<td>//div[@id='categoriesTreeContainer']/ul/li[contains(.,'${key_categoryName}')]/div</td>
+	<td>//div[@id='categoriesTreeContainer']/ul/li[contains(.,'${key_categoryName}')]/div/span</td>
 	<td></td>
 </tr>
 <tr>

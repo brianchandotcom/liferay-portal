@@ -138,6 +138,12 @@
 		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_SEARCH_BUTTON" value1="Search" />
 	</command>
 
+	<command name="subscribePG">
+		<execute action="PGMessageboards#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="UNSUBSCRIBE_LINK" value1="Unsubscribe" />
+	</command>
+
 	<command name="tearDownConfigurationEmailCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />

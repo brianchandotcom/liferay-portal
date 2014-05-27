@@ -75,6 +75,19 @@
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureAnyCategoriesFilterPG">
+		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
+
+		<execute action="PGAssetpublisherConfiguration#select" locator-key1="FILTER_CATEGORIZATION_SELECT" value1="Categories" />
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="FILTER_CATEGORIES_SELECT_BUTTON" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="FILTER_CATEGORIES_CATEGORY_CHECKBOX" />
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureAnyTagsFilterPG">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 

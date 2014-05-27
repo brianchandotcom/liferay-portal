@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//form[@id='_182_undoForm']</td>
 	<td></td>
@@ -61,6 +66,11 @@
 <tr>
 	<td>SUBSCRIBE_LINK</td>
 	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE_LINK</td>
+	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>

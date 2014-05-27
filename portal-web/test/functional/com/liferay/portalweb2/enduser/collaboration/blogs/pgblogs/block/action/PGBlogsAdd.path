@@ -143,6 +143,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY_DROPDOWN</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ABSTRACT-->
 <tr>
 	<td>ABSTRACT_DESCRIPTION_FIELD</td>

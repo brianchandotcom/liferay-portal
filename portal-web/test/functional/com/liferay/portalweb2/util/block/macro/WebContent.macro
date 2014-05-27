@@ -1056,6 +1056,22 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewCategorizationCategoryCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPWebcontentEditwebcontent#click" locator-key1="MENU_CATEGORIZATION" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="CPWebcontentCategorization#assertTextEquals" locator-key1="CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="viewCategorizationSelectionCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

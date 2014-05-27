@@ -162,7 +162,7 @@
 
 	<command name="deleteSitepagesCP">
 		<while>
-			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 				<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
@@ -295,6 +295,33 @@
 			<else>
 				<execute macro="SitePage#addSitePageTypePanelCP" />
 			</else>
+		</if>
+	</command>
+
+	<command name="tearDownPrivateCP">
+		<description message="Delete all pages in the Private tab in Site Pages for Liferay." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<var name="key_siteName" value="Liferay" />
+
+		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Liferay" />
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+
+		<if>
+			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+				<execute action="CPSitepages#click" locator-key1="TOOLBAR_DELETE" />
+				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_LINK" />
+			</then>
 		</if>
 	</command>
 

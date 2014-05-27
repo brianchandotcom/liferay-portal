@@ -433,4 +433,52 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 	</command>
+
+	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document1 Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document1 Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document2 Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
+			<var name="dmDocumentTitle" value="DM Document1 Title" />
+		</execute>
+
+		<execute action="CPDocumentsandmedia#assertNotChecked" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+
+		<execute macro="DMDocument#uncheckDocumentCheckboxCP">
+			<var name="dmDocumentTitle" value="DM Document1 Title" />
+		</execute>
+
+		<execute action="CPDocumentsandmedia#assertNotChecked" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
+			<var name="dmDocumentTitle" value="DM Document1 Title" />
+		</execute>
+
+		<execute macro="DMDocument#checkDocumentCheckboxCP">
+			<var name="dmDocumentTitle" value="DM Document2 Title" />
+		</execute>
+
+		<execute action="CPDocumentsandmedia#assertChecked" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+	</command>
 </definition>

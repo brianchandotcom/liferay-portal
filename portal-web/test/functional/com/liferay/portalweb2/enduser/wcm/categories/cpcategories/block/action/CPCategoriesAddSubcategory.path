@@ -28,6 +28,11 @@
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

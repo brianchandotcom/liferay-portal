@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -34,9 +33,6 @@ import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -73,36 +69,15 @@ public class LiferayLocalRepository
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long repositoryId) {
+		ResourceLocalService resourceLocalService, long groupId,
+		long repositoryId, long dlFolderId) {
 
 		super(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
 			dlFileEntryLocalService, dlFileEntryService,
 			dlFileEntryTypeLocalService, dlFileVersionLocalService,
 			dlFileVersionService, dlFolderLocalService, dlFolderService,
-			resourceLocalService, repositoryId);
-	}
-
-	public LiferayLocalRepository(
-		RepositoryLocalService repositoryLocalService,
-		RepositoryService repositoryService,
-		DLAppHelperLocalService dlAppHelperLocalService,
-		DLFileEntryLocalService dlFileEntryLocalService,
-		DLFileEntryService dlFileEntryService,
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DLFileVersionLocalService dlFileVersionLocalService,
-		DLFileVersionService dlFileVersionService,
-		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long folderId,
-		long fileEntryId, long fileVersionId) {
-
-		super(
-			repositoryLocalService, repositoryService, dlAppHelperLocalService,
-			dlFileEntryLocalService, dlFileEntryService,
-			dlFileEntryTypeLocalService, dlFileVersionLocalService,
-			dlFileVersionService, dlFolderLocalService, dlFolderService,
-			resourceLocalService, folderId, fileEntryId, fileVersionId);
+			resourceLocalService, groupId, repositoryId, dlFolderId);
 	}
 
 	@Override
@@ -385,82 +360,6 @@ public class LiferayLocalRepository
 		UnicodeProperties typeSettingsProperties) {
 
 		return typeSettingsProperties;
-	}
-
-	@Override
-	protected void initByFileEntryId(long fileEntryId) {
-		try {
-			DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-				fileEntryId);
-
-			initByRepositoryId(dlFileEntry.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFileEntryException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
-
-	@Override
-	protected void initByFileVersionId(long fileVersionId) {
-		try {
-			DLFileVersion dlFileVersion =
-				dlFileVersionLocalService.getFileVersion(fileVersionId);
-
-			initByRepositoryId(dlFileVersion.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFileVersionException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
-
-	@Override
-	protected void initByFolderId(long folderId) {
-		try {
-			DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
-			initByRepositoryId(dlFolder.getRepositoryId());
-		}
-		catch (Exception e) {
-			if (_log.isTraceEnabled()) {
-				if (e instanceof NoSuchFolderException) {
-					_log.trace(e.getMessage());
-				}
-				else {
-					_log.trace(e, e);
-				}
-			}
-		}
-	}
-
-	@Override
-	protected void initByRepositoryId(long repositoryId) {
-		setGroupId(repositoryId);
-		setRepositoryId(repositoryId);
-
-		try {
-			Repository repository = repositoryLocalService.getRepository(
-				repositoryId);
-
-			setDlFolderId(repository.getDlFolderId());
-			setGroupId(repository.getGroupId());
-			setRepositoryId(repository.getRepositoryId());
-		}
-		catch (Exception e) {
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

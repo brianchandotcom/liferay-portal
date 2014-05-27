@@ -61,7 +61,8 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long repositoryId) {
+		ResourceLocalService resourceLocalService, long groupId,
+		long repositoryId, long dlFolderId) {
 
 		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
@@ -74,45 +75,9 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		this.dlFolderLocalService = dlFolderLocalService;
 		this.dlFolderService = dlFolderService;
 		this.resourceLocalService = resourceLocalService;
-
-		initByRepositoryId(repositoryId);
-	}
-
-	public LiferayRepositoryBase(
-		RepositoryLocalService repositoryLocalService,
-		RepositoryService repositoryService,
-		DLAppHelperLocalService dlAppHelperLocalService,
-		DLFileEntryLocalService dlFileEntryLocalService,
-		DLFileEntryService dlFileEntryService,
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DLFileVersionLocalService dlFileVersionLocalService,
-		DLFileVersionService dlFileVersionService,
-		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long folderId,
-		long fileEntryId, long fileVersionId) {
-
-		this.repositoryLocalService = repositoryLocalService;
-		this.repositoryService = repositoryService;
-		this.dlAppHelperLocalService = dlAppHelperLocalService;
-		this.dlFileEntryLocalService = dlFileEntryLocalService;
-		this.dlFileEntryService = dlFileEntryService;
-		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-		this.dlFileVersionLocalService = dlFileVersionLocalService;
-		this.dlFileVersionService = dlFileVersionService;
-		this.dlFolderLocalService = dlFolderLocalService;
-		this.dlFolderService = dlFolderService;
-		this.resourceLocalService = resourceLocalService;
-
-		if (folderId != 0) {
-			initByFolderId(folderId);
-		}
-		else if (fileEntryId != 0) {
-			initByFileEntryId(fileEntryId);
-		}
-		else if (fileVersionId != 0) {
-			initByFileVersionId(fileVersionId);
-		}
+		this._repositoryId = repositoryId;
+		this._groupId = groupId;
+		this._dlFolderId = dlFolderId;
 	}
 
 	public long getRepositoryId() {
@@ -215,14 +180,6 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return longList;
 	}
 
-	protected abstract void initByFileEntryId(long fileEntryId);
-
-	protected abstract void initByFileVersionId(long fileVersionId);
-
-	protected abstract void initByFolderId(long folderId);
-
-	protected abstract void initByRepositoryId(long repositoryId);
-
 	protected boolean isDefaultRepository() {
 		if (_groupId == _repositoryId) {
 			return true;
@@ -230,18 +187,6 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		else {
 			return false;
 		}
-	}
-
-	protected void setDlFolderId(long dlFolderId) {
-		_dlFolderId = dlFolderId;
-	}
-
-	protected void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
-	protected void setRepositoryId(long repositoryId) {
-		_repositoryId = repositoryId;
 	}
 
 	protected long toFolderId(long folderId) {

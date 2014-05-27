@@ -14,11 +14,19 @@
 
 package com.liferay.portal.repository;
 
+import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
  * @author Adolfo Pérez
@@ -33,13 +41,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
-			return new LiferayRepository(
-				getRepositoryLocalService(), getRepositoryService(),
-				getDlAppHelperLocalService(), getDlFileEntryLocalService(),
-				getDlFileEntryService(), getDlFileEntryTypeLocalService(),
-				getDlFileVersionLocalService(), getDlFileVersionService(),
-				getDlFolderLocalService(), getDlFolderService(),
-				getResourceLocalService(), repositoryId, repositoryId, 0);
+			return createLiferayRepository(repositoryId);
 		}
 		else {
 			return createExternalRepositoryImpl(repositoryId, classNameId);
@@ -51,15 +53,10 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		LiferayRepository liferayRepository = new LiferayRepository(
-			getRepositoryLocalService(), getRepositoryService(),
-			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
-			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
-			getDlFileVersionLocalService(), getDlFileVersionService(),
-			getDlFolderLocalService(), getDlFolderService(),
-			getResourceLocalService(), folderId, fileEntryId, fileVersionId);
+		LiferayRepository liferayRepository = createLiferayRepository(
+			folderId, fileEntryId, fileVersionId);
 
-		if (liferayRepository.getRepositoryId() != 0) {
+		if (liferayRepository != null) {
 			return liferayRepository;
 		}
 
@@ -67,6 +64,79 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 			folderId, fileEntryId, fileVersionId);
 
 		return create(repositoryId);
+	}
+
+	protected LiferayRepository createLiferayRepository(long repositoryId)
+		throws PortalException, SystemException {
+
+		long groupId;
+		long actualRepositoryId;
+		long dlFolderId;
+
+		try {
+			com.liferay.portal.model.Repository repository =
+				getRepositoryService().getRepository(repositoryId);
+
+			groupId = repository.getGroupId();
+			actualRepositoryId = repository.getRepositoryId();
+			dlFolderId = repository.getDlFolderId();
+		}
+		catch (NoSuchRepositoryException nsre) {
+			groupId = repositoryId;
+			actualRepositoryId = repositoryId;
+			dlFolderId = 0;
+		}
+
+		return new LiferayRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), groupId, actualRepositoryId, dlFolderId);
+	}
+
+	protected LiferayRepository createLiferayRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		try {
+			long repositoryId;
+
+			if (folderId != 0) {
+				DLFolder dlFolder = getDlFolderService().getFolder(folderId);
+
+				repositoryId = dlFolder.getRepositoryId();
+			}
+			else if (fileEntryId != 0) {
+				DLFileEntry dlFileEntry = getDlFileEntryService().getFileEntry(
+					fileEntryId);
+
+				repositoryId = dlFileEntry.getRepositoryId();
+			}
+			else if (fileVersionId != 0) {
+				DLFileVersion dlFileVersion =
+					getDlFileVersionService().getFileVersion(fileVersionId);
+
+				repositoryId = dlFileVersion.getRepositoryId();
+			}
+			else {
+				throw new InvalidRepositoryIdException(
+					"Missing a valid ID for folder, file entry or file " +
+						"version");
+			}
+
+			return createLiferayRepository(repositoryId);
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return null;
+		}
+		catch (NoSuchFileVersionException nsfve) {
+			return null;
+		}
 	}
 
 }

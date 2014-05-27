@@ -114,28 +114,6 @@ public class BlogsPortletInstanceSettings extends BaseServiceSettings {
 			"enableSocialBookmarks", PropsKeys.BLOGS_SOCIAL_BOOKMARKS_ENABLED);
 		_fallbackKeys.add("displayStyle", PropsKeys.BLOGS_DISPLAY_STYLE);
 		_fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-		_fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
-		_fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-		_fallbackKeys.add(
-			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-		_fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
-		_fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		_fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		_fallbackKeys.add(
-			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		_fallbackKeys.add(
 			"pageDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);

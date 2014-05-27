@@ -45,26 +45,7 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsUtil.getBlogsPortletInstanceSettings(layout, portletId);
 BlogsSettings blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId);
 
-int pageDelta = blogsPortletInstanceSettings.getPageDelta();
-String displayStyle = blogsPortletInstanceSettings.getDisplayStyle();
-long displayStyleGroupId = blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
-boolean enableFlags = blogsPortletInstanceSettings.getEnableFlags();
-boolean enableRelatedAssets = blogsPortletInstanceSettings.getEnableRelatedAssets();
-boolean enableRatings = blogsPortletInstanceSettings.getEnableRatings();
-boolean enableComments = blogsPortletInstanceSettings.getEnableComments();
-boolean enableCommentRatings = blogsPortletInstanceSettings.getEnableCommentRatings();
-boolean enableSocialBookmarks = blogsPortletInstanceSettings.getEnableSocialBookmarks();
-
-String socialBookmarksDisplayStyle = blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle();
-
-String socialBookmarksDisplayPosition = blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition();
-String socialBookmarksTypes = blogsPortletInstanceSettings.getSocialBookmarksTypes();
-
-boolean enableRSS = blogsPortletInstanceSettings.getEnableRSS();
-int rssDelta = blogsPortletInstanceSettings.getRssDelta();
-String rssDisplayStyle = blogsPortletInstanceSettings.getRssDisplayStyle();
-String rssFeedType = blogsPortletInstanceSettings.getRssFeedType();
 
 boolean showSearch = true;
 boolean showEditEntryPermissions = true;

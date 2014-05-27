@@ -55,10 +55,10 @@ blogsPortletInstanceSettings = BlogsUtil.getBlogsPortletInstanceSettings(layout,
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:section>
 				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
+					delta="<%= blogsPortletInstanceSettings.getRssDelta() %>"
+					displayStyle="<%= blogsPortletInstanceSettings.getRssDisplayStyle() %>"
+					enabled="<%= blogsPortletInstanceSettings.getEnableRSS() %>"
+					feedType="<%= blogsPortletInstanceSettings.getRssFeedType() %>"
 				/>
 			</liferay-ui:section>
 		</c:if>

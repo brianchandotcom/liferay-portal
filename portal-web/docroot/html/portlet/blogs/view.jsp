@@ -36,9 +36,9 @@ portletURL.setParameter("struts_action", "/blogs/view");
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<%
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, pageDelta, portletURL, null, null);
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, blogsPortletInstanceSettings.getPageDelta(), portletURL, null, null);
 
-	searchContainer.setDelta(pageDelta);
+	searchContainer.setDelta(blogsPortletInstanceSettings.getPageDelta());
 	searchContainer.setDeltaConfigurable(false);
 
 	int total = 0;

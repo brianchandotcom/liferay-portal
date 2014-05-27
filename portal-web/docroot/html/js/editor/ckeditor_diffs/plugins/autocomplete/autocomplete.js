@@ -31,10 +31,6 @@
 				replaceMode: {
 					validator: Lang.isString,
 					value: 'text'
-				},
-
-				tplReplace: {
-					validator: Lang.isString
 				}
 			},
 
@@ -54,35 +50,6 @@
 					};
 
 					A.Do.after(instance._bindUI, instance, '_bindUIACIBase', instance);
-				},
-
-				_acSelectValue: function(event) {
-					var instance = this;
-
-					var text = event.result.text;
-
-					var tplReplace = instance.get('tplReplace');
-
-					if (tplReplace) {
-						text = Lang.sub(tplReplace, event.result.raw);
-					}
-
-					var ac = instance._ac;
-
-					ac._inputNode.focus();
-
-					ac._updateValue(text);
-
-					ac._ariaSay(
-						'item_selected',
-						{
-							item: event.result.text
-						}
-					);
-
-					ac.hide();
-
-					event.preventDefault();
 				},
 
 				_acUpdateValue: function(value) {
@@ -107,8 +74,7 @@
 					var editor = instance.get(STR_EDITOR);
 
 					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance)),
-						instance._ac.on('select', instance._acSelectValue, instance)
+						editor.on('key', A.bind('_onEditorKey', instance))
 					];
 
 					editor.once(

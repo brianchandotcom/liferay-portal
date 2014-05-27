@@ -61,6 +61,10 @@ AUI.add(
 				value: '@'
 			},
 
+			tplReplace: {
+				validator: Lang.isString
+			},
+
 			tplResults: {
 				validator: Lang.isString
 			}
@@ -100,6 +104,35 @@ AUI.add(
 						return Lang.sub(tplResults, result.raw);
 					}
 				);
+			},
+
+			_acSelectValue: function(event) {
+				var instance = this;
+
+				var text = event.result.text;
+
+				var tplReplace = instance.get('tplReplace');
+
+				if (tplReplace) {
+					text = Lang.sub(tplReplace, event.result.raw);
+				}
+
+				var ac = instance._ac;
+
+				ac._inputNode.focus();
+
+				ac._updateValue(text);
+
+				ac._ariaSay(
+					'item_selected',
+					{
+						item: event.result.text
+					}
+				);
+
+				ac.hide();
+
+				event.preventDefault();
 			},
 
 			_adjustACPosition: function() {
@@ -144,6 +177,8 @@ AUI.add(
 				var ac = instance._ac;
 
 				ac.on('query', instance._onACQuery, instance);
+
+				ac.on('select', instance._acSelectValue, instance);
 
 				ac.after('visibleChange', instance._afterACVisibleChange, instance);
 

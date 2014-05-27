@@ -25,7 +25,7 @@
 		for (int pageDeltaValue : PropsValues.BLOGS_ENTRY_PAGE_DELTA_VALUES) {
 		%>
 
-			<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
+			<aui:option label="<%= pageDeltaValue %>" selected="<%= blogsPortletInstanceSettings.getPageDelta() == pageDeltaValue %>" />
 
 		<%
 		}
@@ -47,29 +47,29 @@
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-			displayStyle="<%= displayStyle %>"
-			displayStyleGroupId="<%= displayStyleGroupId %>"
+			displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>"
+			displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 			displayStyles="<%= displayStyles %>"
 			refreshURL="<%= configurationRenderURL %>"
 		/>
 	</div>
 
-	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
+	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= blogsPortletInstanceSettings.getEnableFlags() %>" />
 
-	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= blogsPortletInstanceSettings.getEnableRelatedAssets() %>" />
 
-	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= blogsPortletInstanceSettings.getEnableRatings() %>" />
 
 	<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
-		<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+		<aui:input name="preferences--enableComments--" type="checkbox" value="<%= blogsPortletInstanceSettings.getEnableComments() %>" />
 
-		<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+		<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= blogsPortletInstanceSettings.getEnableCommentRatings() %>" />
 	</c:if>
 
 	<liferay-ui:social-bookmarks-settings
-		displayPosition="<%= socialBookmarksDisplayPosition %>"
-		displayStyle="<%= socialBookmarksDisplayStyle %>"
-		enabled="<%= enableSocialBookmarks %>"
+		displayPosition="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition() %>"
+		displayStyle="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle() %>"
+		enabled="<%= blogsPortletInstanceSettings.getEnableSocialBookmarks() %>"
 		types="<%= blogsPortletInstanceSettings.getSocialBookmarksTypes() %>"
 	/>
 </aui:fieldset>

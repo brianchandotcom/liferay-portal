@@ -35,6 +35,7 @@ Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 	selectGroupURL.setParameter("struts_action", "/document_selector/view");
 	selectGroupURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	selectGroupURL.setParameter("eventName", eventName);
+	selectGroupURL.setParameter("tabs1", "pages");
 	selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 
 	for (Group group : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {

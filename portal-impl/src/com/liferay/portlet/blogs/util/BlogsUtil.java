@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
+
+import com.liferay.portal.model.Layout;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,14 +40,11 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -78,6 +79,29 @@ public class BlogsUtil {
 			request.getParameterMap(), settings);
 
 		return new BlogsSettings(parameterMapSettings);
+	}
+
+	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
+		Layout layout, String portletId)
+	throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new BlogsPortletInstanceSettings(settings);
+	}
+	
+	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
+			Layout layout, String portletId, HttpServletRequest request)
+		throws PortalException, SystemException {
+	
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			request.getParameterMap(), settings);
+
+		return new BlogsPortletInstanceSettings(parameterMapSettings);
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

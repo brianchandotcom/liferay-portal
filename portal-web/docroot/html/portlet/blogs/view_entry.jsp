@@ -21,8 +21,6 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String portletId = portletDisplay.getId();
-
 if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 

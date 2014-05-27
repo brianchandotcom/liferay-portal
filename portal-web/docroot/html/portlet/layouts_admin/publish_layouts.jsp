@@ -288,15 +288,7 @@ else {
 					</liferay-ui:error>
 
 					<c:if test="<%= !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE) %>">
-						<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
-
-						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>'>
-							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
-								<aui:validator name="required" />
-							</aui:input>
-
-							<aui:input label="description" name="description" />
-						</aui:fieldset>
+						<liferay-staging:template-header exportImportConfiguration="<%= exportImportConfiguration %>" title='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>' />
 					</c:if>
 
 					<div id="<portlet:namespace />publishOptions">

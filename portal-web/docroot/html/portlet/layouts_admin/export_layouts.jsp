@@ -191,15 +191,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 				<div class="export-dialog-tree">
 					<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-						<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
-
-						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>'>
-							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
-								<aui:validator name="required" />
-							</aui:input>
-
-							<aui:input label="description" name="description" />
-						</aui:fieldset>
+						<liferay-staging:template-header exportImportConfiguration="<%= exportImportConfiguration %>" title='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
 					</c:if>
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">

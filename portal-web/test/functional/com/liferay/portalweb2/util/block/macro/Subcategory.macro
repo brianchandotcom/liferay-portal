@@ -13,6 +13,20 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
+	<command name="addDuplicateCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_DETAILS_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute action="CPCategoriesAddSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
+		<execute action="CPCategoriesAddSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategoriesAddSubcategory#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="That category already exists." />
+	</command>
+
 	<command name="deleteViaActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

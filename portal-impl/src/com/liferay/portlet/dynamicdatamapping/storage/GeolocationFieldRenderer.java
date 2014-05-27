@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.text.NumberFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -85,7 +87,9 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 
 		double latitude = jsonObject.getDouble("latitude");
 
-		sb.append(latitude);
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+
+		sb.append(numberFormat.format(latitude));
 
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append(LanguageUtil.get(locale, "longitude"));
@@ -93,7 +97,7 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 
 		double longitude = jsonObject.getDouble("longitude");
 
-		sb.append(longitude);
+		sb.append(numberFormat.format(longitude));
 
 		return sb.toString();
 	}

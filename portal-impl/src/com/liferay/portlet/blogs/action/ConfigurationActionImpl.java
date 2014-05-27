@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portlet.blogs.BlogsSettings;
+
 import javax.portlet.ActionRequest;
 
 /**

@@ -26,13 +26,13 @@ long portletDisplayTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemp
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:breadcrumb
-				displayStyle="<%= displayStyle %>"
-				showCurrentGroup="<%= showCurrentGroup %>"
-				showCurrentPortlet="<%= showCurrentPortlet %>"
-				showGuestGroup="<%= showGuestGroup %>"
-				showLayout="<%= showLayout %>"
-				showParentGroups="<%= showParentGroups %>"
-				showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
-				/>
+			displayStyle="<%= displayStyle %>"
+			showCurrentGroup="<%= showCurrentGroup %>"
+			showCurrentPortlet="<%= showCurrentPortlet %>"
+			showGuestGroup="<%= showGuestGroup %>"
+			showLayout="<%= showLayout %>"
+			showParentGroups="<%= showParentGroups %>"
+			showPortletBreadcrumb="<%= showPortletBreadcrumb %>"
+		/>
 	</c:otherwise>
 </c:choose>

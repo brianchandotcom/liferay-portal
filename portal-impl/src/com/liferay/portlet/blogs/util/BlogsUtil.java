@@ -61,8 +61,8 @@ public class BlogsUtil {
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
 	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
-		Layout layout, String portletId)
-	throws PortalException, SystemException {
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
 
 		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
 			layout, portletId);
@@ -99,7 +99,7 @@ public class BlogsUtil {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, BlogsConstants.SERVICE_NAME);
 
-		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+		Settings parameterMapSettings = new ParameterMapSettings(
 			request.getParameterMap(), settings);
 
 		return new BlogsSettings(parameterMapSettings);

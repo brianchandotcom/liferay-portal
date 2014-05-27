@@ -683,10 +683,27 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		if (Validator.isNotNull(TestPropsValues.IGNORE_ERROR) &&
-			line.contains(TestPropsValues.IGNORE_ERROR)) {
+		if (Validator.isNotNull(TestPropsValues.IGNORE_ERRORS)) {
+			if (Validator.isNotNull(TestPropsValues.IGNORE_ERRORS_DELIMITER)) {
+				String ignoreErrorsDelimiter =
+					TestPropsValues.IGNORE_ERRORS_DELIMITER;
 
-			return true;
+				String[] errors = TestPropsValues.IGNORE_ERRORS.split(
+					ignoreErrorsDelimiter);
+
+				if (ignoreErrorsDelimiter.equals("|")) {
+					ignoreErrorsDelimiter = "\\|";
+				}
+
+				for (String error : errors) {
+					if (line.contains(error)) {
+						return true;
+					}
+				}
+			}
+			else if (line.contains(TestPropsValues.IGNORE_ERRORS)) {
+				return true;
+			}
 		}
 
 		return false;

@@ -89,7 +89,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-44534" name="AddCalendarEventComment" priority="4">
+	<command name="AddCalendarEventComment" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />

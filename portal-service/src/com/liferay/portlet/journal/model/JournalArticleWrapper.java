@@ -1663,6 +1663,20 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getContentByLocale(languageId);
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticle.getDDMStructure();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplate()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticle.getDDMTemplate();
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
 	*/

@@ -16,12 +16,15 @@ package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ClassNameServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -34,13 +37,17 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.io.InputStream;
@@ -119,6 +126,42 @@ public class JournalArticleServiceTest {
 		testAddArticleRequiredFields(
 			"test-ddm-structure-html-required-field.xml",
 			"test-journal-content-html-required-field.xml", requiredFields);
+	}
+
+	@Test(expected = StructureXsdException.class)
+	public void testCheckArticleMatchesStructureFail() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			ddmStructure.getStructureId());
+
+		String content = "<?xml version=\"1.0\"?><root></root>";
+
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+			content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey());
+
+		checkArticleMatchesStructure(article, ddmStructure);
+	}
+
+	@Test
+	public void testCheckArticleMatchesStructureSuccess() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		JournalFolder parentFolder = JournalTestUtil.addFolder(
+			group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
+
+		long classId = ClassNameServiceUtil.fetchClassNameId(
+			JournalArticle.class);
+
+		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
+			group.getGroupId(), classId, article.getStructureId());
+
+		checkArticleMatchesStructure(article, ddmStructure);
 	}
 
 	@Test
@@ -439,6 +482,23 @@ public class JournalArticleServiceTest {
 		}
 
 		return articles;
+	}
+
+	protected void checkArticleMatchesStructure(
+			JournalArticle article, DDMStructure ddmStructure)
+		throws DocumentException, PortalException {
+
+		new JournalArticleLocalServiceImpl() {
+
+			@Override
+			public void checkStructure(
+					JournalArticle article, DDMStructure structure)
+				throws DocumentException, PortalException {
+
+				super.checkStructure(article, structure);
+			}
+
+		}.checkStructure(article, ddmStructure);
 	}
 
 	protected int countArticlesByKeyword(String keyword, int status)

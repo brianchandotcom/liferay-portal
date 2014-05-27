@@ -5793,37 +5793,21 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		for (Element el : root.elements()) {
-			checkStructureField(el, contentDocument);
+			if (el.getName().equals("dynamic-element")) {
+				checkStructureField(el, contentDocument);
 
-			checkStructure(contentDocument, el);
+				checkStructure(contentDocument, el);
+			}
 		}
 	}
 
 	protected void checkStructure(JournalArticle article)
 		throws PortalException, SystemException {
 
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			article.getCompanyId());
-
-		DDMStructure structure = null;
+		DDMStructure structure = article.getDDMStructure();
 
 		try {
-			structure = ddmStructurePersistence.findByG_C_S(
-				PortalUtil.getSiteGroupId(article.getGroupId()),
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getStructureId());
-		}
-		catch (NoSuchStructureException nsse) {
-			structure = ddmStructurePersistence.findByG_C_S(
-				companyGroup.getGroupId(),
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getStructureId());
-		}
-
-		try {
-			Document xsdDocument = SAXReaderUtil.read(structure.getXsd());
-
-			checkStructure(article.getDocument(), xsdDocument.getRootElement());
+			checkStructure(article, structure);
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
@@ -5841,6 +5825,15 @@ public class JournalArticleLocalServiceImpl
 								"structure: " + sxsde.getMessage());
 			}
 		}
+	}
+
+	protected void checkStructure(
+			JournalArticle article, DDMStructure structure)
+		throws DocumentException, PortalException {
+
+		Document xsdDocument = SAXReaderUtil.read(structure.getXsd());
+
+		checkStructure(article.getDocument(), xsdDocument.getRootElement());
 	}
 
 	protected void checkStructureField(Element el, Document contentDocument)

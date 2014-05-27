@@ -9,6 +9,7 @@
 	<var name="adminFirstName" value="Test" />
 	<var name="adminListName" value="Test, Test" />
 	<var name="adminName" value="Test Test" />
+	<var name="adminScreenName" value="test" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -3562,6 +3563,7 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
+			<var name="commentCount" value="1" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />

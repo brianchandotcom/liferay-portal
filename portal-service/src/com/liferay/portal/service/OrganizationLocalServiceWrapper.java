@@ -1076,6 +1076,29 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Returns all the organizationIds associated with the user. If
+	* includeAdministrative is <code>true</code>, the result includes those
+	* organizationIds that are not directly associated to the user but he is an
+	* administrator or an owner of the organization.
+	*
+	* @param userId the primary key of the user
+	* @param includeAdministrative whether to includes organizations that are
+	indirectly associated to the user because he is an administrator
+	or an owner of the organization
+	* @return the organizationIds of organizations associated with the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getUserOrganizationIds(long userId,
+		boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getUserOrganizationIds(userId,
+			includeAdministrative);
+	}
+
+	/**
 	* Returns all the organizations associated with the user. If
 	* includeAdministrative is <code>true</code>, the result includes those
 	* organizations that are not directly associated to the user but he is an

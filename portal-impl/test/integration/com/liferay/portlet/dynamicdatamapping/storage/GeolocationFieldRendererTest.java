@@ -18,14 +18,15 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testng.Assert;
 
-import java.util.Locale;
+import org.testng.Assert;
 
 /**
  * @author Adolfo Pérez
@@ -44,6 +45,7 @@ public class GeolocationFieldRendererTest {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		jsonObject.put("latitude", 9.8765);
 		jsonObject.put("longitude", 1.2345);
 
@@ -51,7 +53,7 @@ public class GeolocationFieldRendererTest {
 
 		Assert.assertEquals(
 			"Latitude: 9.876, Longitude: 1.234",
-			fieldRenderer.render(field, Locale.US));
+			fieldRenderer.render(field, LocaleUtil.US));
 	}
 
 }

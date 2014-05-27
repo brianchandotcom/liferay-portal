@@ -350,8 +350,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public void destroyPortlet(Portlet portlet) {
 		String portletId = portlet.getRootPortletId();
 
-		_friendlyURLMapperPortlets.remove(portletId);
-
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
 		portletsPool.remove(portletId);
@@ -375,13 +373,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Skip
 	public List<CustomAttributesDisplay> getCustomAttributesDisplays() {
 		List<CustomAttributesDisplay> customAttributesDisplays =
-			new ArrayList<CustomAttributesDisplay>(
-				_customAttributesDisplayPortlets.size());
+			new ArrayList<CustomAttributesDisplay>();
 
-		for (Map.Entry<String, Portlet> entry :
-				_customAttributesDisplayPortlets.entrySet()) {
+		for (Portlet portlet : getPortlets()) {
+			if (!portlet.isActive() || !portlet.isInclude() ||
+				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
-			Portlet portlet = entry.getValue();
+				continue;
+			}
 
 			List<CustomAttributesDisplay> portletCustomAttributesDisplays =
 				portlet.getCustomAttributesDisplayInstances();
@@ -411,13 +410,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public List<Portlet> getFriendlyURLMapperPortlets() {
-		List<Portlet> portlets = new ArrayList<Portlet>(
-			_friendlyURLMapperPortlets.size());
+		List<Portlet> portlets = new ArrayList<Portlet>();
 
-		for (Map.Entry<String, Portlet> entry :
-				_friendlyURLMapperPortlets.entrySet()) {
+		for (Portlet portlet : getPortlets()) {
+			if (!portlet.isActive() || !portlet.isInclude() ||
+				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
-			Portlet portlet = entry.getValue();
+				continue;
+			}
 
 			FriendlyURLMapper friendlyURLMapper =
 				portlet.getFriendlyURLMapperInstance();
@@ -434,12 +434,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Skip
 	public List<FriendlyURLMapper> getFriendlyURLMappers() {
 		List<FriendlyURLMapper> friendlyURLMappers =
-			new ArrayList<FriendlyURLMapper>(_friendlyURLMapperPortlets.size());
+			new ArrayList<FriendlyURLMapper>();
 
-		for (Map.Entry<String, Portlet> entry :
-				_friendlyURLMapperPortlets.entrySet()) {
+		for (Portlet portlet : getPortlets()) {
+			if (!portlet.isActive() || !portlet.isInclude() ||
+				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
-			Portlet portlet = entry.getValue();
+				continue;
+			}
 
 			FriendlyURLMapper friendlyURLMapper =
 				portlet.getFriendlyURLMapperInstance();
@@ -690,7 +692,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		_portletAppsPool.clear();
 		_portletsPool.clear();
 		_portletIdsByStrutsPath.clear();
-		_friendlyURLMapperPortlets.clear();
 
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
@@ -752,9 +753,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					!portletModel.isInclude()) {
 
 					portletPoolsItr.remove();
-
-					_friendlyURLMapperPortlets.remove(
-						portletModel.getPortletId());
 				}
 			}
 
@@ -1342,19 +1340,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("portlet-url-class"),
 				portletModel.getPortletURLClass()));
-
 		portletModel.setFriendlyURLMapperClass(
 			GetterUtil.getString(
 				portletElement.elementText("friendly-url-mapper-class"),
 				portletModel.getFriendlyURLMapperClass()));
-
-		if (Validator.isNull(portletModel.getFriendlyURLMapperClass())) {
-			_friendlyURLMapperPortlets.remove(portletId);
-		}
-		else {
-			_friendlyURLMapperPortlets.put(portletId, portletModel);
-		}
-
 		portletModel.setFriendlyURLMapping(
 			GetterUtil.getString(
 				portletElement.elementText("friendly-url-mapping"),
@@ -1519,13 +1508,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portletModel.setCustomAttributesDisplayClasses(
 			customAttributesDisplayClasses);
-
-		if (customAttributesDisplayClasses.isEmpty()) {
-			_customAttributesDisplayPortlets.remove(portletId);
-		}
-		else {
-			_customAttributesDisplayPortlets.put(portletId, portletModel);
-		}
 
 		portletModel.setDDMDisplayClass(
 			GetterUtil.getString(
@@ -2421,10 +2403,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private static Map<Long, Map<String, Portlet>> _companyPortletsPool =
 		new ConcurrentHashMap<Long, Map<String, Portlet>>();
-	private static Map<String, Portlet> _customAttributesDisplayPortlets =
-		new ConcurrentHashMap<String, Portlet>();
-	private static Map<String, Portlet> _friendlyURLMapperPortlets =
-		new ConcurrentHashMap<String, Portlet>();
 	private static Map<String, PortletApp> _portletAppsPool =
 		new ConcurrentHashMap<String, PortletApp>();
 	private static Map<String, String> _portletIdsByStrutsPath =

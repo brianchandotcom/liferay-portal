@@ -21,6 +21,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="CONTENT_FIELD">
+			<execute function="AssertTextEquals#assertCKEditorText" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrame" />

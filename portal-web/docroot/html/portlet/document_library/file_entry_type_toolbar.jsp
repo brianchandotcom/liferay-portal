@@ -25,7 +25,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewFileEntryTypesURL">
 			<portlet:param name="struts_action" value="<%= strutsAction %>" />
 			<portlet:param name="includeBasicFileEntryType" value="<%= String.valueOf(includeBasicFileEntryType) %>" />

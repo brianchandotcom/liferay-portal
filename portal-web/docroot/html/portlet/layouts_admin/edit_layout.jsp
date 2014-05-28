@@ -117,7 +117,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 	<aui:nav-bar>
-		<aui:nav id="layoutsNav">
+		<aui:nav cssClass="navbar-nav" id="layoutsNav">
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
 				<aui:nav-item data-value="add-child-page" iconCssClass="icon-plus" label="add-child-page" />
 			</c:if>

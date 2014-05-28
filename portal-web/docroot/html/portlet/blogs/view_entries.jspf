@@ -24,7 +24,7 @@ showSearch = showSearch && !results.isEmpty();
 <c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
 	<aui:nav-bar>
 		<c:if test="<%= showAddEntryButton || showPermissionsButton %>">
-			<aui:nav>
+			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= showAddEntryButton %>">
 					<portlet:renderURL var="editEntryURL">
 						<portlet:param name="struts_action" value="/blogs/edit_entry" />

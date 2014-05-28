@@ -29,7 +29,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 
 		<%
 		String label = "message-boards-home";

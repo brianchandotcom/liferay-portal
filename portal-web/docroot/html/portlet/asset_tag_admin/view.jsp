@@ -18,7 +18,7 @@
 
 <aui:form name="fm">
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 				<aui:nav-item id="addTagButton" label="add-tag" />
 			</c:if>

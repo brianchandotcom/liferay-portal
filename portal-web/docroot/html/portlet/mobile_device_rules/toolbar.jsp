@@ -33,7 +33,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 	</liferay-portlet:renderURL>
 
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" selected='<%= toolbarItem.equals("add") %>' />
 		</aui:nav>
 

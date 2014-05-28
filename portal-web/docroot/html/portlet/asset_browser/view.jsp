@@ -44,7 +44,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			searchContainer="<%= new AssetSearch(renderRequest, portletURL) %>"
 		>
 			<aui:nav-bar>
-				<aui:nav searchContainer="<%= searchContainer %>">
+				<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 					<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
 						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />

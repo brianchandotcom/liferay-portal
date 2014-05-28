@@ -29,7 +29,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <aui:nav-bar>
-	<aui:nav searchContainer="<%= searchContainer %>">
+	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 
 		<%
 		String message = "add";

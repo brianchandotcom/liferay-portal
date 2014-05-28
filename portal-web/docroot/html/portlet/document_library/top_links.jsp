@@ -34,7 +34,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		<c:if test="<%= dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch() %>">
 			<aui:nav-bar>
 				<c:if test="<%= dlActionsDisplayContext.isShowTabs() %>">
-					<aui:nav>
+					<aui:nav cssClass="navbar-nav">
 
 						<%
 						PortletURL portletURL = renderResponse.createRenderURL();

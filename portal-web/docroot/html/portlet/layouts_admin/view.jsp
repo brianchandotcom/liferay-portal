@@ -136,7 +136,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					<c:choose>
 						<c:when test="<%= layoutSetBranches.size() > 1 %>">
 							<aui:nav-bar>
-								<aui:nav>
+								<aui:nav cssClass="navbar-nav">
 									<aui:nav-item dropdown="<%= true %>" label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>">
 
 										<%

@@ -167,7 +167,7 @@ if (!cmd.equals(Constants.ADD)) {
 	<liferay-ui:section>
 		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>
-				<aui:nav id="exportConfigurationButtons">
+				<aui:nav cssClass="navbar-nav" id="exportConfigurationButtons">
 					<aui:nav-item
 						data-value="custom"
 						iconCssClass="icon-puzzle"

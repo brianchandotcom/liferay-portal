@@ -76,7 +76,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 </div>
 
 <aui:nav-bar>
-	<aui:nav id="layoutsNav">
+	<aui:nav cssClass="navbar-nav" id="layoutsNav">
 		<c:if test="<%= hasViewPagesPermission %>">
 			<aui:nav-item data-value="view-pages" iconCssClass="icon-file" label="view-pages" />
 		</c:if>

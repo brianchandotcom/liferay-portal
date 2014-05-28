@@ -21,7 +21,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 
 			<%

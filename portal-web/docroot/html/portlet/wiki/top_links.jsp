@@ -95,7 +95,7 @@ if (categoryId > 0) {
 	</c:if>
 
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 
 			<%
 			PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);

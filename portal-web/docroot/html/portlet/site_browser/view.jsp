@@ -63,7 +63,7 @@ portletURL.setParameter("target", target);
 		<c:if test='<%= !type.equals("parent-sites") || (types.length > 1) %>'>
 			<aui:nav-bar>
 				<c:if test="<%= types.length > 1 %>">
-					<aui:nav searchContainer="<%= searchContainer %>">
+					<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 
 						<%
 						for (String curType : types) {

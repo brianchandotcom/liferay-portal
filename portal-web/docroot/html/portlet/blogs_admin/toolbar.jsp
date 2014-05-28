@@ -21,7 +21,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewEntriesURL">
 			<portlet:param name="struts_action" value="/blogs_admin/view" />
 		</portlet:renderURL>

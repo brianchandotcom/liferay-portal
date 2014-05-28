@@ -49,7 +49,7 @@ portletURL.setParameter("redirect", redirect);
 />
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL var="addURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />

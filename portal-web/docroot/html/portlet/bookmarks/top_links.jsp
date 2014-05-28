@@ -28,7 +28,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 
 		<%
 		String label = "home";

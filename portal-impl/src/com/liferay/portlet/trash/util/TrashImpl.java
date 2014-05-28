@@ -53,8 +53,10 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
@@ -542,21 +544,31 @@ public class TrashImpl implements Trash {
 
 		title = title.substring(prefix.length());
 
-		long trashEntryId = GetterUtil.getLong(title);
+		long entryId = GetterUtil.getLong(title);
 
-		if (trashEntryId <= 0) {
+		if (entryId <= 0) {
 			return title;
 		}
 
 		try {
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
-				trashEntryId);
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+				entryId);
 
-			title = trashEntry.getTypeSettingsProperty("title");
+			if (trashEntry == null) {
+				TrashVersion trashVersion =
+					TrashVersionLocalServiceUtil.getTrashVersion(entryId);
+
+				title = trashVersion.getTypeSettingsProperty("title");
+			}
+			else {
+				title = trashEntry.getTypeSettingsProperty("title");
+			}
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No trash entry exists with ID " + trashEntryId);
+				_log.debug(
+					"No trash entry or trash version exists with ID " +
+						entryId);
 			}
 		}
 

@@ -29,7 +29,7 @@ public class TrashVersionLocalServiceImpl
 	extends TrashVersionLocalServiceBaseImpl {
 
 	@Override
-	public void addTrashVersion(
+	public TrashVersion addTrashVersion(
 			long trashEntryId, String className, long classPK, int status,
 			UnicodeProperties typeSettingsProperties)
 		throws SystemException {
@@ -48,7 +48,7 @@ public class TrashVersionLocalServiceImpl
 
 		trashVersion.setStatus(status);
 
-		trashVersionPersistence.update(trashVersion);
+		return trashVersionPersistence.update(trashVersion);
 	}
 
 	@Override

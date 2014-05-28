@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ShoppingOrder order = (ShoppingOrder)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="struts_action" value="/shopping/edit_order" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -30,7 +30,8 @@ ShoppingOrder order = (ShoppingOrder)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="edit"
+		iconCssClass="icon-edit"
+		message="edit"
 		url="<%= editURL %>"
 	/>
 

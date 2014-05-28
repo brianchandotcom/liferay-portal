@@ -29,6 +29,11 @@ public class SiteCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-globe";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/site_icon.png";
 	}

@@ -23,6 +23,8 @@ public interface CustomAttributesDisplay {
 
 	public String getClassName();
 
+	public String getIconCssClass();
+
 	public String getIconPath(ThemeDisplay themeDisplay);
 
 	public String getPortletId();

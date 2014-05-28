@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.util.test.TestPropsUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.net.MalformedURLException;
@@ -31,11 +30,6 @@ import java.net.URL;
  * @author Manuel de la Peña
  */
 public class HttpPrincipalTestUtil {
-
-	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
-
-	public static final String USER_PASSWORD = TestPropsUtil.get(
-		"user.password");
 
 	public static HttpPrincipal getHttpPrincipal() throws Exception {
 		return getHttpPrincipal(getLogin());
@@ -51,10 +45,12 @@ public class HttpPrincipalTestUtil {
 		HttpPrincipal httpPrincipal = null;
 
 		if (authenticated) {
-			httpPrincipal = new HttpPrincipal(PORTAL_URL, login, USER_PASSWORD);
+			httpPrincipal = new HttpPrincipal(
+				TestPropsValues.PORTAL_URL, login,
+				TestPropsValues.USER_PASSWORD);
 		}
 		else {
-			httpPrincipal = new HttpPrincipal(PORTAL_URL);
+			httpPrincipal = new HttpPrincipal(TestPropsValues.PORTAL_URL);
 		}
 
 		return httpPrincipal;
@@ -97,10 +93,10 @@ public class HttpPrincipalTestUtil {
 			String login, boolean authenticated, String serviceName)
 		throws MalformedURLException {
 
-		String url = PORTAL_URL;
+		String url = TestPropsValues.PORTAL_URL;
 
 		if (authenticated) {
-			String password = USER_PASSWORD;
+			String password = TestPropsValues.USER_PASSWORD;
 
 			int pos = url.indexOf("://");
 

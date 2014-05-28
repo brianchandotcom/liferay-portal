@@ -3,8 +3,8 @@
 <root>
 	<template>
 		<template-key>asset-publisher-geolocalized</template-key>
-		<name>portlet-display-template-name-geolocalized</name>
-		<description>portlet-display-template-description-geolocalized</description>
+		<name>portlet-display-template-name-map</name>
+		<description>portlet-display-template-description-map</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portlet/assetpublisher/dependencies/portlet_display_template_geolocalized.ftl</script-file>
 		<cacheable>false</cacheable>

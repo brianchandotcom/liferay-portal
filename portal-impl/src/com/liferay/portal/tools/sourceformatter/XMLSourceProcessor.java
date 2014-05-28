@@ -1033,7 +1033,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private Properties _friendlyUrlRoutesSortExclusions;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
-		"\\<command name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
+		"\\<command[a-zA-Z0-9\"-= ]*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
 	private Pattern _poshiElementWithNoChildPattern = Pattern.compile(
 		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");

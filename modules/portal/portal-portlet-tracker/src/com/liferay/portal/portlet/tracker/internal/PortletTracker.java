@@ -841,7 +841,7 @@ public class PortletTracker
 		_servletContext = null;
 	}
 
-	private static final String _NAMESPACE = "com.liferay.portal.portlet.";
+	private static final String _NAMESPACE = "com.liferay.portlet.";
 
 	private static final int _PORTLET_ID_MAX_LENGTH =
 		255 - PortletConstants.INSTANCE_SEPARATOR.length() +

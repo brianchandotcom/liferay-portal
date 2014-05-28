@@ -172,12 +172,12 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/div/a[@title='Actions']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_ACTIONS_GENERIC</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]//a[@title='Actions']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -264,12 +264,12 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[@title='Actions']</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_ACTIONS_GENERIC</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[1]//a[@title='Actions']</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[1]//a[contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>

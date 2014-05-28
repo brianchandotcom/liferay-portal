@@ -109,12 +109,12 @@
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON</td>
-	<td>//div[@id='_198_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a[@title='Actions']</td>
+	<td>//div[@id='_198_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON_GENERIC</td>
-	<td>//div[@id='_198_bookmarksFoldersSearchContainer']//tr/td[4]/div/a[@title='Actions']</td>
+	<td>//div[@id='_198_bookmarksFoldersSearchContainer']//tr/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,12 +135,12 @@
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_ACTIONS_BUTTON</td>
-	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[5]/div/a[@title='Actions']</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC</td>
-	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr/td[5]/div/a[@title='Actions']</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>

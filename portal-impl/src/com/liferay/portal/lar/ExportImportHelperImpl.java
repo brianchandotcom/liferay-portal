@@ -1811,7 +1811,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			if (pathArray.length < 3) {
 				return null;
 			}
-			
+
 			map.put("groupId", new String[] {pathArray[2]});
 
 			if (pathArray.length == 4) {

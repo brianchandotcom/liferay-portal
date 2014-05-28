@@ -152,7 +152,7 @@ public class DynamicCSSUtil {
 
 		if (themeCssFastLoad && (cacheResourceURLConnection != null) &&
 			(resourceURLConnection != null) &&
-			(cacheResourceURLConnection.getLastModified() ==
+			(cacheResourceURLConnection.getLastModified() >=
 				resourceURLConnection.getLastModified())) {
 
 			parsedContent = StringUtil.read(

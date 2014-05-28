@@ -919,8 +919,6 @@ public interface PropsKeys {
 
 	public static final String FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = "facebook.connect.verified.account.required";
 
-	public static final String FIELD_ALL_USERS_EDITABLE_ROLES = "field.all.users.editable.roles";
-
 	public static final String FIELD_EDITABLE_DOMAINS = "field.editable.domains";
 
 	public static final String FIELD_EDITABLE_ROLES = "field.editable.roles";

@@ -728,8 +728,6 @@ public class PropsValues {
 
 	public static final boolean FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
 
-	public static final String[] FIELD_ALL_USERS_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_ALL_USERS_EDITABLE_ROLES);
-
 	public static final String[] FIELD_EDITABLE_DOMAINS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_DOMAINS);
 
 	public static final String[] FIELD_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_ROLES);

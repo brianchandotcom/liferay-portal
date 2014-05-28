@@ -49,6 +49,7 @@ import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -71,6 +72,7 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -1079,7 +1081,8 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -1087,24 +1090,14 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(null, user, "emailAddress");
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean hasUpdateFieldPermission(User user, String field)
-		throws PortalException, SystemException {
-
-		return hasUpdateFieldPermission(null, user, field);
+		return hasUpdateFieldPermission(
+			permissionChecker, null, user, "emailAddress");
 	}
 
 	@Override
 	public boolean hasUpdateFieldPermission(
-			User updatingUser, User updatedUser, String field)
+			PermissionChecker permissionChecker, User updatingUser,
+			User updatedUser, String field)
 		throws PortalException, SystemException {
 
 		if (updatedUser == null) {
@@ -1120,20 +1113,12 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		if ((updatingUser != null) && (updatingUser != updatedUser)) {
-			for (String roleName : PropsValues.FIELD_ALL_USERS_EDITABLE_ROLES) {
-				Role role = RoleLocalServiceUtil.fetchRole(
-					updatingUser.getCompanyId(), roleName);
+		if ((updatingUser != null) && !updatingUser.equals(updatedUser) &&
+			UserPermissionUtil.contains(
+				permissionChecker, updatingUser.getUserId(),
+				ActionKeys.UPDATE_USER)) {
 
-				if ((role != null) &&
-					RoleLocalServiceUtil.hasUserRole(
-						updatingUser.getUserId(), role.getRoleId())) {
-
-					return true;
-				}
-			}
-
-			return false;
+			return true;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {
@@ -1182,7 +1167,24 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
+	 */
+	@Deprecated
+	@Override
+	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return hasUpdateFieldPermission(permissionChecker, null, user, field);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -1190,7 +1192,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(null, user, "screenName");
+		return hasUpdateFieldPermission(
+			permissionChecker, null, user, "screenName");
 	}
 
 	@Override

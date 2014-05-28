@@ -736,12 +736,12 @@ public class UserFinderImpl
 		try {
 			session = openSession();
 
-			String sql = null;
-
 			boolean hasAnyKeyword =
 				!isEmpty(firstNames) || !isEmpty(middleNames) ||
 				!isEmpty(lastNames) || !isEmpty(screenNames) ||
 				!isEmpty(emailAddresses);
+
+			String sql = null;
 
 			if (hasAnyKeyword) {
 				sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
@@ -910,12 +910,12 @@ public class UserFinderImpl
 		String[] emailAddresses, int status,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		String sql = null;
-
 		boolean hasAnyKeyword =
 			!isEmpty(firstNames) || !isEmpty(middleNames) ||
 			!isEmpty(lastNames) || !isEmpty(screenNames) ||
 			!isEmpty(emailAddresses);
+
+		String sql = null;
 
 		if (hasAnyKeyword) {
 			sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);

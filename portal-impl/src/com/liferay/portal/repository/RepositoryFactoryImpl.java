@@ -84,13 +84,21 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			dlFolderId = repository.getDlFolderId();
 		}
 
+		return createLiferayRepositoryInstance(
+			groupId, actualRepositoryId, dlFolderId);
+	}
+
+	@Override
+	protected LiferayRepository createLiferayRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId) {
+
 		return new LiferayRepository(
 			getRepositoryLocalService(), getRepositoryService(),
 			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
 			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
 			getDlFileVersionLocalService(), getDlFileVersionService(),
 			getDlFolderLocalService(), getDlFolderService(),
-			getResourceLocalService(), groupId, actualRepositoryId, dlFolderId);
+			getResourceLocalService(), groupId, repositoryId, dlFolderId);
 	}
 
 	@Override

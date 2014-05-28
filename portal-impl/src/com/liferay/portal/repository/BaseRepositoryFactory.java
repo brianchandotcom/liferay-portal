@@ -158,6 +158,9 @@ public abstract class BaseRepositoryFactory<T> {
 		}
 	}
 
+	protected abstract T createLiferayRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId);
+
 	protected AssetEntryLocalService getAssetEntryLocalService() {
 		return _assetEntryLocalService;
 	}

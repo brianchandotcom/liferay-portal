@@ -100,7 +100,7 @@ public class UserServiceSoapTest {
 			new UserServiceSoapServiceLocator();
 
 		return userServiceSoapServiceLocator.getPortal_UserService(
-			TestPropsValues.getSoapURL(
+			HttpPrincipalTestUtil.getSoapURL(
 				userServiceSoapServiceLocator.
 					getPortal_UserServiceWSDDServiceName()));
 	}

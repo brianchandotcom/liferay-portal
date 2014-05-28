@@ -47,7 +47,7 @@ public class UserServiceHttpTest {
 		User user = addUser();
 
 		UserServiceHttp.deleteUser(
-			TestPropsValues.getHttpPrincipal(), user.getUserId());
+			HttpPrincipalTestUtil.getHttpPrincipal(), user.getUserId());
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class UserServiceHttpTest {
 		User user = addUser();
 
 		UserServiceHttp.getUserByEmailAddress(
-			TestPropsValues.getHttpPrincipal(), TestPropsValues.getCompanyId(),
+			HttpPrincipalTestUtil.getHttpPrincipal(), TestPropsValues.getCompanyId(),
 			user.getEmailAddress());
 	}
 
@@ -90,7 +90,7 @@ public class UserServiceHttpTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		return UserServiceHttp.addUser(
-			TestPropsValues.getHttpPrincipal(), TestPropsValues.getCompanyId(),
+			HttpPrincipalTestUtil.getHttpPrincipal(), TestPropsValues.getCompanyId(),
 			autoPassword, password1, password2, autoScreenName, screenName,
 			emailAddress, facebookId, openId, locale, firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,

@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.http.HttpPrincipalTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.After;
@@ -120,7 +120,7 @@ public class DLAppServiceSoapTest {
 			new DLAppServiceSoapServiceLocator();
 
 		return dlAppServiceSoapServiceLocator.getPortlet_DL_DLAppService(
-			TestPropsValues.getSoapURL(
+			HttpPrincipalTestUtil.getSoapURL(
 				dlAppServiceSoapServiceLocator.
 					getPortlet_DL_DLAppServiceWSDDServiceName()));
 	}

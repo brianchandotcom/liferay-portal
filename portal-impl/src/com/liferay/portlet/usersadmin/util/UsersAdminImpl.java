@@ -49,6 +49,7 @@ import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -102,7 +103,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -1174,7 +1174,10 @@ public class UsersAdminImpl implements UsersAdmin {
 	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(null, null, user, field);
+ 		PermissionChecker permissionChecker =
+ 			PermissionThreadLocal.getPermissionChecker();
+ 
+		return hasUpdateFieldPermission(permissionChecker, null, user, field);
 	}
 
 	/**

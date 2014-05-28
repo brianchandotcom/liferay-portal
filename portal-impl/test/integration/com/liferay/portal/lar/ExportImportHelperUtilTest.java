@@ -247,6 +247,27 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	@Test
+	public void testExportDLReferencesInvalidReference() throws Exception {
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("{{/documents/}}");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("[[/documents/]]");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("<a href=/documents/>Link</a>");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("<a href=\"/documents/\">Link</a>");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("<a href='/documents/'>Link</a>");
+
+		ExportImportHelperUtil.replaceExportDLReferences(
+			_portletDataContextExport, _referrerStagedModel, sb.toString(),
+			true);
+	}
+
+	@Test
 	public void testExportLayoutReferencesWithContext() throws Exception {
 		PortalImpl portalImpl = spy(new PortalImpl());
 

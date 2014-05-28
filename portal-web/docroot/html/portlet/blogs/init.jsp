@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
+page import="com.liferay.portlet.blogs.BlogsPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.blogs.BlogsSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@
@@ -32,28 +33,19 @@ page import="com.liferay.portlet.blogs.util.BlogsConstants" %><%@
 page import="com.liferay.portlet.blogs.util.BlogsUtil" %>
 
 <%
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	portletId = portletResource;
+	portletName = portletResource;
+}
+
+BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsUtil.getBlogsPortletInstanceSettings(layout, portletId);
 BlogsSettings blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId);
 
-int pageDelta = blogsSettings.getPageDelta();
-String displayStyle = blogsSettings.getDisplayStyle();
-long displayStyleGroupId = blogsSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
-boolean enableFlags = blogsSettings.getEnableFlags();
-boolean enableRelatedAssets = blogsSettings.getEnableRelatedAssets();
-boolean enableRatings = blogsSettings.getEnableRatings();
-boolean enableComments = blogsSettings.getEnableComments();
-boolean enableCommentRatings = blogsSettings.getEnableCommentRatings();
-boolean enableSocialBookmarks = blogsSettings.getEnableSocialBookmarks();
-
-String socialBookmarksDisplayStyle = blogsSettings.getSocialBookmarksDisplayStyle();
-
-String socialBookmarksDisplayPosition = blogsSettings.getSocialBookmarksDisplayPosition();
-String socialBookmarksTypes = blogsSettings.getSocialBookmarksTypes();
-
-boolean enableRSS = blogsSettings.getEnableRSS();
-int rssDelta = blogsSettings.getRssDelta();
-String rssDisplayStyle = blogsSettings.getRssDisplayStyle();
-String rssFeedType = blogsSettings.getRssFeedType();
 
 boolean showSearch = true;
 boolean showEditEntryPermissions = true;

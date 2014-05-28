@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.portlet.blogsadmin.action;
 
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
@@ -24,8 +24,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
- * @author Jorge Ferrer
- * @author Thiago Moreira
+ * @author Iván Zaera
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 

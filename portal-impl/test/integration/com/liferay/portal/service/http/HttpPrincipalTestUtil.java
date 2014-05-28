@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,33 +14,18 @@
 
 package com.liferay.portal.service.http;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.test.TestPropsUtil;
+import com.liferay.portal.util.test.TestPropsValues;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,46 +34,10 @@ import java.util.List;
  */
 public class HttpPrincipalTestUtil {
 
-	public static final String COMPANY_WEB_ID;
-
-	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
-		GetterUtil.getBoolean(
-			TestPropsUtil.get(
-				"dl.file.entry.processors.trigger.synchronously"));
-
-	public static final int JUNIT_DELAY_FACTOR = GetterUtil.getInteger(
-		TestPropsUtil.get("junit.delay.factor"));
-
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
 
 	public static final String USER_PASSWORD = TestPropsUtil.get(
 		"user.password");
-
-	public static long getCompanyId() throws PortalException, SystemException {
-		if (_companyId > 0) {
-			return _companyId;
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompanyByWebId(
-			HttpPrincipalTestUtil.COMPANY_WEB_ID);
-
-		_companyId = company.getCompanyId();
-
-		return _companyId;
-	}
-
-	public static long getGroupId() throws PortalException, SystemException {
-		if (_groupId > 0) {
-			return _groupId;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			getCompanyId(), GroupConstants.GUEST);
-
-		_groupId = group.getGroupId();
-
-		return _groupId;
-	}
 
 	public static HttpPrincipal getHttpPrincipal() throws Exception {
 		return getHttpPrincipal(getLogin());
@@ -123,35 +72,23 @@ public class HttpPrincipalTestUtil {
 		String authType = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
 
+		User user = TestPropsValues.getUser();
+
 		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-			login = getUser().getEmailAddress();
+			login = user.getEmailAddress();
 
 			if (encodeLogin) {
 				login = HttpUtil.encodeURL(login);
 			}
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			login = getUser().getScreenName();
+			login = user.getScreenName();
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = Long.toString(getUserId());
+			login = Long.toString(TestPropsValues.getUserId());
 		}
 
 		return login;
-	}
-
-	public static long getPlid() throws Exception {
-		return getPlid(getGroupId());
-	}
-
-	public static long getPlid(long groupId) throws Exception {
-		if (_plid > 0) {
-			return _plid;
-		}
-
-		_plid = LayoutLocalServiceUtil.getDefaultPlid(groupId);
-
-		return _plid;
 	}
 
 	public static URL getSoapURL(String serviceName) throws Exception {
@@ -187,65 +124,6 @@ public class HttpPrincipalTestUtil {
 		throws MalformedURLException {
 
 		return getSoapURL(login, true, serviceName);
-	}
-
-	public static User getUser() throws PortalException, SystemException {
-		if (_user == null) {
-			Role role = RoleLocalServiceUtil.getRole(
-				getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			List<User> users = UserLocalServiceUtil.getRoleUsers(
-				role.getRoleId(), 0, 2);
-
-			if (!users.isEmpty()) {
-				_user = users.get(0);
-
-				_userId = _user.getUserId();
-			}
-		}
-
-		return _user;
-	}
-
-	public static long getUserId() throws PortalException, SystemException {
-		if (_userId == 0) {
-			User user = getUser();
-
-			if (user != null) {
-				_userId = user.getUserId();
-			}
-		}
-
-		return _userId;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(HttpPrincipalTestUtil.class);
-
-	private static long _companyId;
-	private static long _groupId;
-	private static long _plid;
-	private static User _user;
-	private static long _userId;
-
-	static {
-		String companyWebId = TestPropsUtil.get("company.web.id");
-
-		try {
-			if (Validator.isNull(companyWebId)) {
-				companyWebId =
-					GetterUtil.getString(
-						PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
-
-				TestPropsUtil.set("company.web.id", companyWebId);
-			}
-		}
-		catch (Exception e) {
-			_log.fatal("Error initializing test properties", e);
-		}
-
-		TestPropsUtil.printProperties();
-
-		COMPANY_WEB_ID = companyWebId;
 	}
 
 }

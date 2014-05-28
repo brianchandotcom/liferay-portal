@@ -37,6 +37,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
@@ -127,7 +128,7 @@ public class JournalArticleServiceTest {
 			"test-journal-content-html-required-field.xml", requiredFields);
 	}
 
-	@Test
+	@Test(expected = StructureXsdException.class)
 	public void testCheckArticleWithInvalidStructure() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());

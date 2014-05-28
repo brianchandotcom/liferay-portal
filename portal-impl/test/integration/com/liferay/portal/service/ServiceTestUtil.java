@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.test;
+package com.liferay.portal.service;
 
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;

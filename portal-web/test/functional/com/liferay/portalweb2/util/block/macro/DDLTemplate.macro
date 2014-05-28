@@ -76,7 +76,7 @@
 
 		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_COPY" value1="Copy" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#type" locator-key1="NAME_FIELD" value1="${dataDefinitionTemplateCopyName}" />
@@ -137,7 +137,7 @@
 
 		<var name="key_dataDefinitionTemplateName" value="${ddlDisplayTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#type" locator-key1="NAME_FIELD" value1="${ddlDisplayTemplateNameEdit}" />
@@ -164,7 +164,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#type" locator-key1="NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />

@@ -1,0 +1,21 @@
+diff --git a/org/apache/jasper/compiler/JspRuntimeContext.java b/org/apache/jasper/compiler/JspRuntimeContext.java
+index 2778dd3..820d629 100644
+--- a/org/apache/jasper/compiler/JspRuntimeContext.java
++++ b/org/apache/jasper/compiler/JspRuntimeContext.java
+@@ -173,10 +172,16 @@ public final class JspRuntimeContext implements Runnable {
+ 
+         // Get the parent class loader
+         parentClassLoader = Thread.currentThread().getContextClassLoader();
++
+         if (parentClassLoader == null) {
+             parentClassLoader = this.getClass().getClassLoader();
+         }
+ 
++		if (!(parentClassLoader instanceof URLClassLoader)) {
++			parentClassLoader = new URLClassLoader(
++				new URL[0], parentClassLoader);
++		}
++
+ 	if (log.isLoggable(Level.FINEST)) {
+ 	    if (parentClassLoader != null) {
+ 		log.finest(Localizer.getMessage("jsp.message.parent_class_loader_is",

@@ -39,6 +39,9 @@ import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
@@ -51,7 +54,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryFactory {
+public abstract class BaseRepositoryFactory<T> {
 
 	protected BaseRepository createExternalRepositoryImpl(
 			long repositoryId, long classNameId)
@@ -117,6 +120,44 @@ public abstract class BaseRepositoryFactory {
 		return baseRepository;
 	}
 
+	protected abstract T createLiferayRepository(long repositoryId)
+		throws PortalException, SystemException;
+
+	protected T createLiferayRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		try {
+			long repositoryId;
+
+			if (folderId != 0) {
+				repositoryId = getFolderRepositoryId(folderId);
+			}
+			else if (fileEntryId != 0) {
+				repositoryId = getFileEntryRepositoryId(fileEntryId);
+			}
+			else if (fileVersionId != 0) {
+				repositoryId = getFileVersionRepositoryId(fileVersionId);
+			}
+			else {
+				throw new InvalidRepositoryIdException(
+					"Missing a valid ID for folder, file entry or file " +
+						"version");
+			}
+
+			return createLiferayRepository(repositoryId);
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return null;
+		}
+		catch (NoSuchFileVersionException nsfve) {
+			return null;
+		}
+	}
+
 	protected AssetEntryLocalService getAssetEntryLocalService() {
 		return _assetEntryLocalService;
 	}
@@ -169,6 +210,19 @@ public abstract class BaseRepositoryFactory {
 	protected DLFolderService getDlFolderService() {
 		return _dlFolderService;
 	}
+
+	protected abstract long getFileEntryRepositoryId(long fileEntryId)
+		throws PortalException, SystemException;
+
+	protected abstract long getFileVersionRepositoryId(long fileVersionId)
+		throws PortalException, SystemException;
+
+	protected abstract long getFolderRepositoryId(long folderId)
+		throws PortalException, SystemException;
+
+	protected abstract com.liferay.portal.model.Repository getRepository(
+			long repositoryId)
+		throws PortalException, SystemException;
 
 	protected long getRepositoryClassNameId(long repositoryId)
 		throws SystemException {

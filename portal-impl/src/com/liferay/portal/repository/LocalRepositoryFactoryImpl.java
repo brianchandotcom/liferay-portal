@@ -17,15 +17,11 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -33,7 +29,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 /**
  * @author Adolfo Pérez
  */
-public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
+public class LocalRepositoryFactoryImpl
+	extends BaseRepositoryFactory<LocalRepository>
 	implements LocalRepositoryFactory {
 
 	@Override
@@ -74,6 +71,7 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 		return baseRepository.getLocalRepository();
 	}
 
+	@Override
 	protected LocalRepository createLiferayRepository(long repositoryId)
 		throws PortalException, SystemException {
 
@@ -103,42 +101,8 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 			getResourceLocalService(), groupId, actualRepositoryId, dlFolderId);
 	}
 
-	protected LocalRepository createLiferayRepository(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
-
-		try {
-			long repositoryId;
-
-			if (folderId != 0) {
-				repositoryId = getFolderRepositoryId(folderId);
-			}
-			else if (fileEntryId != 0) {
-				repositoryId = getFileEntryRepositoryId(fileEntryId);
-			}
-			else if (fileVersionId != 0) {
-				repositoryId = getFileVersionRepositoryId(fileVersionId);
-			}
-			else {
-				throw new InvalidRepositoryIdException(
-					"Missing a valid ID for folder, file entry or file " +
-						"version");
-			}
-
-			return createLiferayRepository(repositoryId);
-		}
-		catch (NoSuchFolderException nsfe) {
-			return null;
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			return null;
-		}
-		catch (NoSuchFileVersionException nsfve) {
-			return null;
-		}
-	}
-
-	private long getFileEntryRepositoryId(long fileEntryId)
+	@Override
+	protected long getFileEntryRepositoryId(long fileEntryId)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry =
@@ -147,7 +111,8 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 		return dlFileEntry.getRepositoryId();
 	}
 
-	private long getFileVersionRepositoryId(long fileVersionId)
+	@Override
+	protected long getFileVersionRepositoryId(long fileVersionId)
 		throws PortalException, SystemException {
 
 		DLFileVersion dlFileVersion =
@@ -156,7 +121,8 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 		return dlFileVersion.getRepositoryId();
 	}
 
-	private long getFolderRepositoryId(long folderId)
+	@Override
+	protected long getFolderRepositoryId(long folderId)
 		throws PortalException, SystemException {
 
 		DLFolder dlFolder = getDlFolderLocalService().getFolder(folderId);
@@ -164,7 +130,8 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 		return dlFolder.getRepositoryId();
 	}
 
-	private Repository getRepository(long repositoryId)
+	@Override
+	protected Repository getRepository(long repositoryId)
 		throws PortalException, SystemException {
 
 		return getRepositoryLocalService().fetchRepository(repositoryId);

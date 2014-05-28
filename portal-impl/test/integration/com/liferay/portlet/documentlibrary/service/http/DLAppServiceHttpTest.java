@@ -69,7 +69,8 @@ public class DLAppServiceHttpTest {
 		try {
 			if (_folder != null) {
 				DLAppServiceHttp.deleteFolder(
-					HttpPrincipalTestUtil.getHttpPrincipal(), _folder.getFolderId());
+					HttpPrincipalTestUtil.getHttpPrincipal(),
+					_folder.getFolderId());
 			}
 		}
 		catch (Exception e) {
@@ -86,7 +87,8 @@ public class DLAppServiceHttpTest {
 		FileEntry fileEntry = addFileEntry("Test Delete.txt");
 
 		DLAppServiceHttp.deleteFileEntry(
-			HttpPrincipalTestUtil.getHttpPrincipal(), fileEntry.getFileEntryId());
+			HttpPrincipalTestUtil.getHttpPrincipal(),
+			fileEntry.getFileEntryId());
 	}
 
 	@Test
@@ -108,9 +110,9 @@ public class DLAppServiceHttpTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		return DLAppServiceHttp.addFileEntry(
-			HttpPrincipalTestUtil.getHttpPrincipal(), _group.getGroupId(), folderId,
-			title, ContentTypes.TEXT_PLAIN, title, description, changeLog,
-			bytes, serviceContext);
+			HttpPrincipalTestUtil.getHttpPrincipal(), _group.getGroupId(),
+			folderId, title, ContentTypes.TEXT_PLAIN, title, description,
+			changeLog, bytes, serviceContext);
 	}
 
 	private static final String _CONTENT =

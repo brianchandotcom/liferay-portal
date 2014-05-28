@@ -32,7 +32,7 @@ String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, re
 <aui:input checked='<%= mapsAPIProvider.equals("googleMaps") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="settings--mapsAPIProvider--" type="radio" value="googleMaps" />
 
 <div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
-	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label="google-maps-api-key" name="settings--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
+	<aui:input helpMessage="set-the-google-maps-api-key-that-will-be-used-for-this-set-of-pages" label='<%= LanguageUtil.get(pageContext, "google-maps-api-key") + " (" + LanguageUtil.get(pageContext, "optional") + ")" %>' name="settings--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
 </div>
 
 <aui:input checked='<%= mapsAPIProvider.equals("openStreetMap") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="settings--mapsAPIProvider--" type="radio" value="openStreetMap" />

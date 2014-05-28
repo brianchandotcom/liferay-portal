@@ -49,6 +49,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -223,7 +224,7 @@ public class ServiceTestUtil {
 
 		// Settings
 
-		SettingsFactoryStartupAction settingsFactoryStartupAction = 
+		SettingsFactoryStartupAction settingsFactoryStartupAction =
 			new SettingsFactoryStartupAction();
 
 		settingsFactoryStartupAction.run(

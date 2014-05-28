@@ -1526,9 +1526,11 @@ public class SeleniumBuilderFileUtil {
 			String propertyDelimiter = propertyElement.attributeValue(
 				"delimiter");
 
-			if (Validator.isNull(propertyDelimiter)) {
-				throwValidationException(
-					1006, fileName, propertyElement, "delimiter");
+			if (propertyDelimiter != null) {
+				if (Validator.isNull(propertyDelimiter)) {
+					throwValidationException(
+						1006, fileName, propertyElement, "delimiter");
+				}
 			}
 
 			String propertyValue = propertyElement.attributeValue("value");

@@ -1791,10 +1791,11 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<isset property="ignore.error" />
+			<isset property="ignore.errors" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					ignore.error=${ignore.error}
+					ignore.errors=${ignore.errors}
+					ignore.errors.delimiter=${ignore.errors.delimiter}
 				</echo>
 			</then>
 		</if>

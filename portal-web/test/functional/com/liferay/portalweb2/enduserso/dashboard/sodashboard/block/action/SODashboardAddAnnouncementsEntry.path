@@ -63,6 +63,38 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DISPLAY_DATE-->
+<tr>
+	<td>DISPLAY_DATE_DATE_INPUT</td>
+	<td>//input[contains(@id,'displayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME_INPUT</td>
+	<td>//input[contains(@id,'displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[contains(@id,'fmdisplayDateCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPIRATION_DATE-->
+<tr>
+	<td>EXPIRATION_DATE_DATE_INPUT</td>
+	<td>//input[contains(@id,'expirationDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME_INPUT</td>
+	<td>//input[contains(@id,'expirationDateTime')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

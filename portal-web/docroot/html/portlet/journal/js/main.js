@@ -64,6 +64,8 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
+						instance._tooltip.destroy();
+
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
@@ -89,12 +91,6 @@ AUI.add(
 							eventHandles.push(permissionsButton.on(STR_CLICK, instance._viewArticlePermissions, instance));
 						}
 
-						var historyButton = instance.one('#articleHistoryButton');
-
-						if (historyButton) {
-							eventHandles.push(historyButton.on(STR_CLICK, instance._viewArticleHistory, instance));
-						}
-
 						var buttonRow = instance.one('.journal-article-button-row');
 
 						if (buttonRow) {
@@ -107,7 +103,7 @@ AUI.add(
 					_createTooltip: function() {
 						var instance = this;
 
-						new A.Tooltip(
+						instance._tooltip = new A.Tooltip(
 							{
 								trigger: instance.one('#basicPreviewButton'),
 								visible: false,
@@ -348,16 +344,6 @@ AUI.add(
 						var classNameId = instance._getByName(form, 'classNameId');
 
 						return (classNameId && classNameId.val() > 0);
-					},
-
-					_viewArticleHistory: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var article = instance.get(STR_ARTICLE);
-
-						window.location = article.viewHistoryUrl;
 					},
 
 					_viewArticlePermissions: function(event) {

@@ -205,7 +205,14 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 									<aui:button name="articlePermissionsButton" icon="icon-lock" value="permissions" />
 								</c:if>
 
-								<aui:button icon="icon-time" name="articleHistoryButton" value="view-history" />
+								<portlet:renderURL var="viewHistoryURL">
+									<portlet:param name="struts_action" value="/journal/view_article_history" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+									<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+								</portlet:renderURL>
+
+								<aui:button href="<%= viewHistoryURL %>" icon="icon-time" name="articleHistoryButton" value="view-history" />
 							</div>
 						</div>
 					</c:if>
@@ -354,13 +361,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getTemplateId() %>" />
 </liferay-portlet:renderURL>
 
-<portlet:renderURL var="viewHistoryURL">
-	<portlet:param name="struts_action" value="/journal/view_article_history" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-</portlet:renderURL>
-
 <liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 	modelResource="<%= JournalArticle.class.getName() %>"
 	modelResourceDescription="<%= article.getTitle(locale) %>"
@@ -385,8 +385,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 				permissionsUrl: '<%= permissionsURL %>',
 				previewUrl: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>',
-				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
-				viewHistoryUrl: '<%= viewHistoryURL %>'
+				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>'
 			},
 
 			<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

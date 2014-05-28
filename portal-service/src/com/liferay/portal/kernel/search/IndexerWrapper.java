@@ -40,6 +40,11 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public void contributeToFullQuery(SearchContext searchContext) {
+		_indexer.contributeToFullQuery(searchContext);
+	}
+
+	@Override
 	public void delete(long companyId, String uid) throws SearchException {
 		_indexer.delete(companyId, uid);
 	}

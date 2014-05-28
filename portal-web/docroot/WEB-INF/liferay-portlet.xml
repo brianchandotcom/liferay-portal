@@ -398,7 +398,7 @@
 		<portlet-name>33</portlet-name>
 		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs</struts-path>
-		<configuration-action-class>com.liferay.portlet.blogs.action.ConfigurationActionImpl</configuration-action-class>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.SettingsConfigurationAction</configuration-action-class>
 		<indexer-class>com.liferay.portlet.blogs.util.BlogsIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.blogs.util.BlogsOpenSearchImpl</open-search-class>
 		<scheduler-entry>

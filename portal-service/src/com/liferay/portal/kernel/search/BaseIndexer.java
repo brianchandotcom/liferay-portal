@@ -1093,10 +1093,16 @@ public abstract class BaseIndexer implements Indexer {
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, field, like);
-		addSearchTerm(
-			searchQuery, searchContext,
-			DocumentImpl.getLocalizedName(searchContext.getLocale(), field),
-			like);
+
+		String localizedField = DocumentImpl.getLocalizedName(
+			searchContext.getLocale(), field);
+
+		if (Validator.isNull(searchContext.getAttribute(localizedField))) {
+			searchContext.setAttribute(
+				localizedField, searchContext.getAttribute(field));
+		}
+
+		addSearchTerm(searchQuery, searchContext, localizedField, like);
 	}
 
 	protected void addSearchTerm(

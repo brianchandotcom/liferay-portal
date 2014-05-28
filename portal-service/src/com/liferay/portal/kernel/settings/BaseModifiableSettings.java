@@ -14,19 +14,39 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
- * @author Raymond Augé
- * @author Jorge Ferrer
  * @author Iván Zaera
  */
-public interface Settings {
+public abstract class BaseModifiableSettings
+	extends BaseSettings implements ModifiableSettings {
 
-	public ModifiableSettings getModifiableSettings();
+	public BaseModifiableSettings(Settings parentSettings) {
+		super(parentSettings);
+	}
 
-	public Settings getParentSettings();
+	@Override
+	public void reset() {
+		for (String key : getKeys()) {
+			reset(key);
+		}
+	}
 
-	public String getValue(String key, String defaultValue);
+	@Override
+	public ModifiableSettings setValues(ModifiableSettings settings) {
+		for (String key : settings.getKeys()) {
+			String[] values = settings.getValues(key, StringPool.EMPTY_ARRAY);
 
-	public String[] getValues(String key, String[] defaultValue);
+			if (values.length == 1) {
+				setValue(key, values[0]);
+			}
+			else {
+				setValues(key, values);
+			}
+		}
+
+		return this;
+	}
 
 }

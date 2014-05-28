@@ -35,34 +35,18 @@ public class TypedSettingsTest extends PowerMockito {
 
 		localizationUtil.setLocalization(new LocalizationImpl());
 
-		_settings = mock(Settings.class);
+		MemorySettings settings = new MemorySettings();
 
-		when(
-			_settings.getValue(_KEY, null)
-		).thenReturn(
-			"valueDefault"
-		);
+		settings.setValue(_KEY, "valueDefault");
 
-		when(
-			_settings.getValue(_KEY + "_en_GB", null)
-		).thenReturn(
-			"value_en_GB"
-		);
+		settings.setValue(_KEY + "_en_GB", "value_en_GB");
 
-		when(
-			_settings.getValue(_KEY + "_en_US", null)
-		).thenReturn(
-			"value_en_US"
-		);
+		settings.setValue(_KEY + "_en_US", "value_en_US");
 
-		when(
-			_settings.getValue(_KEY + "_es_ES", null)
-		).thenReturn(
-			"value_es_ES"
-		);
+		settings.setValue(_KEY + "_es_ES", "value_es_ES");
 
 		_typedSettings = new TypedSettings(
-			_settings, _DEFAULT_LOCALE, _AVAILABLE_LOCALES);
+			settings, _DEFAULT_LOCALE, _AVAILABLE_LOCALES);
 	}
 
 	@Test
@@ -88,7 +72,6 @@ public class TypedSettingsTest extends PowerMockito {
 
 	private static final String _KEY = "key";
 
-	private Settings _settings;
 	private TypedSettings _typedSettings;
 
 }

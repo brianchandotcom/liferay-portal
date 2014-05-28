@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -122,6 +123,9 @@ public class SettingsConfigurationAction
 
 		Settings settings = getSettings(actionRequest);
 
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
 			String value = entry.getValue();
@@ -129,7 +133,7 @@ public class SettingsConfigurationAction
 			String oldValue = settings.getValue(name, null);
 
 			if (!StringUtil.equalsIgnoreBreakLine(value, oldValue)) {
-				settings.setValue(name, value);
+				modifiableSettings.setValue(name, value);
 			}
 		}
 
@@ -147,7 +151,7 @@ public class SettingsConfigurationAction
 				String[] oldValues = settings.getValues(name, null);
 
 				if (!Validator.equals(values, oldValues)) {
-					settings.setValues(name, values);
+					modifiableSettings.setValues(name, values);
 				}
 			}
 		}
@@ -156,7 +160,7 @@ public class SettingsConfigurationAction
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			try {
-				settings.store();
+				modifiableSettings.store();
 			}
 			catch (ValidatorException ve) {
 				SessionErrors.add(

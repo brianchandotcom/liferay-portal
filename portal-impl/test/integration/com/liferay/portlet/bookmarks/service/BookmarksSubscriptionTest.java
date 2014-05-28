@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.bookmarks.service;
 
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -116,21 +117,26 @@ public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			group.getGroupId(), BookmarksConstants.SERVICE_NAME);
 
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
 		String germanSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
 
-		settings.setValue(germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
+		modifiableSettings.setValue(
+			germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
 
 		String spanishSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 
-		settings.setValue(spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
+		modifiableSettings.setValue(
+			spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
 
-		settings.store();
+		modifiableSettings.store();
 	}
 
 	@Override

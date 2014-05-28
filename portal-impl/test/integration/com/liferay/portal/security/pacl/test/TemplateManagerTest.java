@@ -44,20 +44,13 @@ public class TemplateManagerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				TemplateContextHelper.class.getName(), Level.OFF);
-
-		captureAppender.close();
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			TemplateContextHelper.class.getName(), Level.OFF);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				TemplateContextHelper.class.getName(), null);
-
-		captureAppender.close();
+		_captureAppender.close();
 	}
 
 	@Test
@@ -217,5 +210,7 @@ public class TemplateManagerTest {
 
 		Assert.assertEquals(11, GetterUtil.getInteger(result));
 	}
+
+	private static CaptureAppender _captureAppender;
 
 }

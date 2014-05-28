@@ -229,6 +229,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_LANGUAGE</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Language')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Message Boards')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY</td>
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Web Content Display')]</td>
 	<td></td>

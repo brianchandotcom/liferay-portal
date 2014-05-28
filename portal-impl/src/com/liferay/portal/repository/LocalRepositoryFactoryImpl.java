@@ -75,10 +75,9 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 	}
 
 	protected LocalRepository createLiferayRepository(long repositoryId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		Repository repository = getRepositoryLocalService().fetchRepository(
-			repositoryId);
+		Repository repository = getRepository(repositoryId);
 
 		long groupId;
 		long actualRepositoryId;
@@ -112,23 +111,13 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 			long repositoryId;
 
 			if (folderId != 0) {
-				DLFolder dlFolder = getDlFolderLocalService().getFolder(
-					folderId);
-
-				repositoryId = dlFolder.getRepositoryId();
+				repositoryId = getFolderRepositoryId(folderId);
 			}
 			else if (fileEntryId != 0) {
-				DLFileEntry dlFileEntry =
-					getDlFileEntryLocalService().getFileEntry(fileEntryId);
-
-				repositoryId = dlFileEntry.getRepositoryId();
+				repositoryId = getFileEntryRepositoryId(fileEntryId);
 			}
 			else if (fileVersionId != 0) {
-				DLFileVersion dlFileVersion =
-					getDlFileVersionLocalService().getFileVersion(
-						fileVersionId);
-
-				repositoryId = dlFileVersion.getRepositoryId();
+				repositoryId = getFileVersionRepositoryId(fileVersionId);
 			}
 			else {
 				throw new InvalidRepositoryIdException(
@@ -147,6 +136,38 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 		catch (NoSuchFileVersionException nsfve) {
 			return null;
 		}
+	}
+
+	private long getFileEntryRepositoryId(long fileEntryId)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry =
+			getDlFileEntryLocalService().getFileEntry(fileEntryId);
+
+		return dlFileEntry.getRepositoryId();
+	}
+
+	private long getFileVersionRepositoryId(long fileVersionId)
+		throws PortalException, SystemException {
+
+		DLFileVersion dlFileVersion =
+			getDlFileVersionLocalService().getFileVersion(fileVersionId);
+
+		return dlFileVersion.getRepositoryId();
+	}
+
+	private long getFolderRepositoryId(long folderId)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDlFolderLocalService().getFolder(folderId);
+
+		return dlFolder.getRepositoryId();
+	}
+
+	private Repository getRepository(long repositoryId)
+		throws PortalException, SystemException {
+
+		return getRepositoryLocalService().fetchRepository(repositoryId);
 	}
 
 }

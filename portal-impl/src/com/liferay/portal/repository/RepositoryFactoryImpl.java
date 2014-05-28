@@ -69,22 +69,22 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 	protected LiferayRepository createLiferayRepository(long repositoryId)
 		throws PortalException, SystemException {
 
+		com.liferay.portal.model.Repository repository = getRepository(
+			repositoryId);
+
 		long groupId;
 		long actualRepositoryId;
 		long dlFolderId;
 
-		try {
-			com.liferay.portal.model.Repository repository =
-				getRepositoryService().getRepository(repositoryId);
-
-			groupId = repository.getGroupId();
-			actualRepositoryId = repository.getRepositoryId();
-			dlFolderId = repository.getDlFolderId();
-		}
-		catch (NoSuchRepositoryException nsre) {
+		if (repository == null) {
 			groupId = repositoryId;
 			actualRepositoryId = repositoryId;
 			dlFolderId = 0;
+		}
+		else {
+			groupId = repository.getGroupId();
+			actualRepositoryId = repository.getRepositoryId();
+			dlFolderId = repository.getDlFolderId();
 		}
 
 		return new LiferayRepository(
@@ -104,21 +104,13 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 			long repositoryId;
 
 			if (folderId != 0) {
-				DLFolder dlFolder = getDlFolderService().getFolder(folderId);
-
-				repositoryId = dlFolder.getRepositoryId();
+				repositoryId = getFolderRepositoryId(folderId);
 			}
 			else if (fileEntryId != 0) {
-				DLFileEntry dlFileEntry = getDlFileEntryService().getFileEntry(
-					fileEntryId);
-
-				repositoryId = dlFileEntry.getRepositoryId();
+				repositoryId = getFileEntryRepositoryId(fileEntryId);
 			}
 			else if (fileVersionId != 0) {
-				DLFileVersion dlFileVersion =
-					getDlFileVersionService().getFileVersion(fileVersionId);
-
-				repositoryId = dlFileVersion.getRepositoryId();
+				repositoryId = getFileVersionRepositoryId(fileVersionId);
 			}
 			else {
 				throw new InvalidRepositoryIdException(
@@ -137,6 +129,44 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 		catch (NoSuchFileVersionException nsfve) {
 			return null;
 		}
+	}
+
+	protected com.liferay.portal.model.Repository getRepository(
+			long repositoryId)
+		throws PortalException, SystemException {
+
+		try {
+			return getRepositoryService().getRepository(repositoryId);
+		}
+		catch (NoSuchRepositoryException nsre) {
+			return null;
+		}
+	}
+
+	private long getFileEntryRepositoryId(long fileEntryId)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = getDlFileEntryService().getFileEntry(
+			fileEntryId);
+
+		return dlFileEntry.getRepositoryId();
+	}
+
+	private long getFileVersionRepositoryId(long fileVersionId)
+		throws PortalException, SystemException {
+
+		DLFileVersion dlFileVersion =
+			getDlFileVersionService().getFileVersion(fileVersionId);
+
+		return dlFileVersion.getRepositoryId();
+	}
+
+	private long getFolderRepositoryId(long folderId)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDlFolderService().getFolder(folderId);
+
+		return dlFolder.getRepositoryId();
 	}
 
 }

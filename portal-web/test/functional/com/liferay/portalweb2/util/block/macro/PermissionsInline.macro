@@ -100,7 +100,7 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ACTIONS" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />

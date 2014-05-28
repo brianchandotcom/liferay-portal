@@ -65,22 +65,22 @@
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_VIEWS_CURRENT_SELECT</td>
-	<td>//select[contains(@id,'_currentDisplayViews')]</td>
+	<td>//select[contains(@id,'currentDisplayViews')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT</td>
-	<td>//select[contains(@id,'_availableDisplayViews')]</td>
+	<td>//select[contains(@id,'availableDisplayViews')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_VIEW_CURRENT_PRESENT</td>
-	<td>//select[contains(@id,'_currentDisplayViews')]/option</td>
+	<td>//select[contains(@id,'currentDisplayViews')]/option</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_VIEW_AVAILABLE_PRESENT</td>
-	<td>//select[contains(@id,'_availableDisplayViews')]/option</td>
+	<td>//select[contains(@id,'availableDisplayViews')]/option</td>
 	<td></td>
 </tr>
 <tr>

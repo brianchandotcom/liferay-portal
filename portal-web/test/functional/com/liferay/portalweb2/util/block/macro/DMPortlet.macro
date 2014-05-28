@@ -1,5 +1,11 @@
 <definition>
 	<command name="configureCurrentDisplayStyleViewsPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
 		<if>
 			<condition action="PGDocumentsandmediaConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS_DROPDOWN_COLLAPSED" />
 			<then>
@@ -19,8 +25,6 @@
 				</while>
 
 				<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
-					<var name="currentDisplayStyleView" value="${currentDisplayStyleView}" />
-
 					<execute action="PGDocumentsandmediaConfiguration#select" locator-key1="DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
 					<execute action="PGDocumentsandmediaConfiguration#click" locator-key1="MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
 					<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />

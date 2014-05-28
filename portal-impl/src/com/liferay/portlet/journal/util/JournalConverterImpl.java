@@ -867,6 +867,16 @@ public class JournalConverterImpl implements JournalConverter {
 				element.addAttribute("type", "option");
 				element.addAttribute("value", HttpUtil.decodeURL(type));
 
+				Attribute indexTypeAttribute = element.attribute("index-type");
+
+				if (indexTypeAttribute != null) {
+					String indexType = indexTypeAttribute.getValue();
+
+					element.remove(indexTypeAttribute);
+
+					element.addAttribute("indexType", indexType);
+				}
+
 				return;
 			}
 		}

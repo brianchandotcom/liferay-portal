@@ -1112,13 +1112,12 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		if ((updatingUser != null) && !updatingUser.equals(updatedUser)) {
-			if (UserPermissionUtil.contains(
-					permissionChecker, updatingUser.getUserId(),
-					ActionKeys.UPDATE_USER)) {
+		if ((updatingUser != null) && !updatingUser.equals(updatedUser) &&
+			UserPermissionUtil.contains(
+				permissionChecker, updatingUser.getUserId(),
+				ActionKeys.UPDATE_USER)) {
 
-				return true;
-			}
+			return true;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {

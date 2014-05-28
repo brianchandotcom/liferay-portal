@@ -158,13 +158,6 @@
 		}
 	}
 
-	.tags-admin-search {
-		background-image: url(@theme_image_path@/common/search.png);
-		background-position: 5px center;
-		background-repeat: no-repeat;
-		padding-left: 25px;
-	}
-
 	.tags-pagination {
 		margin: 10px 0;
 		text-align: center;

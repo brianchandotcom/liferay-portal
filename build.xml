@@ -83,7 +83,7 @@
 				casesensitive="false"
 				delimiter=","
 				distinct="true"
-				match="app\.(server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere)).+\.dir"
+				match="app\.(server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
 				override="true"
 				property="app.server.dir.property.list"
 				select="\1"

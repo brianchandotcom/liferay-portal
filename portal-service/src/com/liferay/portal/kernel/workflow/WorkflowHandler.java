@@ -49,6 +49,8 @@ public interface WorkflowHandler {
 
 	public String getClassName();
 
+	public String getIconCssClass();
+
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
 
 	/**

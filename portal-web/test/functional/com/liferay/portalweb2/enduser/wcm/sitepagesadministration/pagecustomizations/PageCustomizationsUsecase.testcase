@@ -364,4 +364,176 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="SiteMemberWithCustomizablePagePermissionsWillOnlySeePortletsInCustomizableView" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerActions">
+			<var name="actionsDescription" value="Clean Up Permissions" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Customize" />
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Roles Regrole Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="Liferay" />
+		</execute>
+
+		<execute macro="PageCustomizations#enableSectionCustomizableCP">
+			<var name="columnId" value="1" />
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
+		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
 </definition>

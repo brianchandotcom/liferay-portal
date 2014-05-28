@@ -56,6 +56,38 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
  */
 public abstract class BaseRepositoryFactory<T> {
 
+	public T create(long repositoryId) throws PortalException, SystemException {
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		if (classNameId == getDefaultClassNameId()) {
+			return createLiferayRepository(repositoryId);
+		}
+		else {
+			return createExternalRepository(repositoryId, classNameId);
+		}
+	}
+
+	public T create(long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		T liferayRepository = createLiferayRepository(
+			folderId, fileEntryId, fileVersionId);
+
+		if (liferayRepository != null) {
+			return liferayRepository;
+		}
+
+		return createExternalRepository(folderId, fileEntryId, fileVersionId);
+	}
+
+	protected abstract T createExternalRepository(
+			long repositoryId, long classNameId)
+		throws PortalException, SystemException;
+
+	protected abstract T createExternalRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException;
+
 	protected BaseRepository createExternalRepositoryImpl(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {

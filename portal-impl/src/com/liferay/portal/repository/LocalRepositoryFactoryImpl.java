@@ -34,34 +34,6 @@ public class LocalRepositoryFactoryImpl
 	implements LocalRepositoryFactory {
 
 	@Override
-	public LocalRepository create(long repositoryId)
-		throws PortalException, SystemException {
-
-		long classNameId = getRepositoryClassNameId(repositoryId);
-
-		if (classNameId == getDefaultClassNameId()) {
-			return createLiferayRepository(repositoryId);
-		}
-		else {
-			return createExternalRepository(repositoryId, classNameId);
-		}
-	}
-
-	@Override
-	public LocalRepository create(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
-
-		LocalRepository localRepository = createLiferayRepository(
-			folderId, fileEntryId, fileVersionId);
-
-		if (localRepository != null) {
-			return localRepository;
-		}
-
-		return createExternalRepository(folderId, fileEntryId, fileVersionId);
-	}
-
 	protected LocalRepository createExternalRepository(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
@@ -72,6 +44,7 @@ public class LocalRepositoryFactoryImpl
 		return baseRepository.getLocalRepository();
 	}
 
+	@Override
 	protected LocalRepository createExternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {

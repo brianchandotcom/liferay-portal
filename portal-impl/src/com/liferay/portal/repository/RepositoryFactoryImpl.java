@@ -32,34 +32,6 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	implements RepositoryFactory {
 
 	@Override
-	public Repository create(long repositoryId)
-		throws PortalException, SystemException {
-
-		long classNameId = getRepositoryClassNameId(repositoryId);
-
-		if (classNameId == getDefaultClassNameId()) {
-			return createLiferayRepository(repositoryId);
-		}
-		else {
-			return createExternalRepository(repositoryId, classNameId);
-		}
-	}
-
-	@Override
-	public Repository create(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException, SystemException {
-
-		Repository liferayRepository = createLiferayRepository(
-			folderId, fileEntryId, fileVersionId);
-
-		if (liferayRepository != null) {
-			return liferayRepository;
-		}
-
-		return createExternalRepository(folderId, fileEntryId, fileVersionId);
-	}
-
 	protected BaseRepository createExternalRepository(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
@@ -67,6 +39,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		return createExternalRepositoryImpl(repositoryId, classNameId);
 	}
 
+	@Override
 	protected Repository createExternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {

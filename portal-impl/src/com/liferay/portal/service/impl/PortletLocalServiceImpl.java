@@ -1417,6 +1417,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("user-notification-definitions"),
 				portletModel.getUserNotificationDefinitions()));
+		portletModel.setSocialInteractionsConfiguration(
+			GetterUtil.getBoolean(
+				portletElement.elementText("social-interactions-configuration"),
+				portletModel.getSocialInteractionsConfiguration()));
 
 		List<String> userNotificationHandlerClasses = new ArrayList<String>();
 

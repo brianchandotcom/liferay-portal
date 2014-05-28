@@ -1,0 +1,69 @@
+<definition>
+	<command name="addPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<if>
+			<condition action="PGKnowledgebasedisplayArticle#isElementPresent" locator-key1="COMMENT_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGKnowledgebasedisplayArticle#click" locator-key1="COMMENT_DROPDOWN_COLLAPSED" />
+			</then>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayArticle#type" locator-key1="ADD_COMMENT_FIELD" value1="${kbArticleComment}" />
+		<execute action="PGKnowledgebasedisplayArticle#assertElementPresent" locator-key1="ADD_COMMENT_QUESTION" value1="Was this information helpful?" />
+
+		<if>
+			<equals arg1="${answerNo}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayArticle#click" locator-key1="ADD_COMMENT_ANSWER_NO_RADIO" />
+			</then>
+			<else>
+				<execute action="PGKnowledgebasedisplayArticle#click" locator-key1="ADD_COMMENT_ANSWER_YES_RADIO" />
+			</else>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayArticle#assertClick" locator-key1="ADD_COMMENT_POST" value1="Post" />
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deletePG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplayArticle#assertClick" locator-key1="COMMENT_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasedisplayArticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewNoPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplayArticle#assertTextNotPresent" value1="${kbArticleComment}" />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplayArticle#assertElementPresent" locator-key1="COMMENT_USER_IMAGE" value1="Delete" />
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="COMMENT_USER_NAME" value1="${userName}" />
+
+		<if>
+			<equals arg1="${answerNo}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="COMMENT_QUESTION_ANSWER" value1="No" />
+			</then>
+			<else>
+				<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="COMMENT_QUESTION_ANSWER" value1="Yes" />
+			</else>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="COMMENT_BODY" value1="${kbArticleComment}" />
+	</command>
+</definition>

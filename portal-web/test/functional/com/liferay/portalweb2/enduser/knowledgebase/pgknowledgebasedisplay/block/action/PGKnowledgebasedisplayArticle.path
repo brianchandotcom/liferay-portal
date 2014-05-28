@@ -23,6 +23,93 @@
 	<td>PGKnowledgebasearticle</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_DROPDOWN</td>
+	<td>//div[contains(@class,'accordion-heading') and contains(@class,'toggler-header-expanded')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'accordion-heading') and contains(@class,'toggler-header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USER_IMAGE</td>
+	<td>//span[@class='user-profile-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_QUESTION_ANSWER</td>
+	<td>xpath=(//div/strong[contains(@class,'kb')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY</td>
+	<td>//div[@class='kb-article-comment']//td/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE</td>
+	<td>//div[@class='kb-article-comment']//span[@class='item-remove']//span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_COMMENT-->
+<tr>
+	<td>ADD_COMMENT_FIELD</td>
+	<td>//textarea[contains(@id,'_WAR_knowledgebaseportlet_content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_QUESTION</td>
+	<td>//span[@class='kb-helpful-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_ANSWER_YES_RADIO</td>
+	<td>//label[contains(@for,'_WAR_knowledgebaseportlet_') and contains(.,'Yes')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_ANSWER_NO_RADIO</td>
+	<td>//label[contains(@for,'_WAR_knowledgebaseportlet_') and contains(.,'No')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_POST</td>
+	<td>//button[contains(.,'Post')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

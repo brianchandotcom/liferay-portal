@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_ARTICLE_BUTTON</td>
-	<td>//button[contains(.,'Add Article')]</td>
+	<td>//a[contains(.,'Add Article')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,18 +60,64 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_TABLE_PRIORITY</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_TITLE_GENERIC</td>
-	<td>//tr[1]/td[4]</td>
+	<td>//tr[1]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[9]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE_MENULIST-->
+<tr>
+	<td>ARTICLE_MENULIST_VIEW</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_view')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_MENULIST_EDIT</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_MENULIST_PERMISSIONS</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_MENULIST_SUBSCRIBE</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_MENULIST_MOVE</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_MENULIST_DELETE</td>
+	<td>//a[contains(@id,'kbArticlesSearchContainer') and contains(@id,'menu_delete')]</td>
 	<td></td>
 </tr>
 </tbody>

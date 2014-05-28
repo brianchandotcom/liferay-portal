@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KB_ARTICLE_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KB_ARTICLE_ENTITY_BODY</td>
 	<td>//div[@class='kb-entity-body']</td>
 	<td></td>

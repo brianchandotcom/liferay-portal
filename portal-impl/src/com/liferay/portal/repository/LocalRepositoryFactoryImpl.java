@@ -16,19 +16,39 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
+import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
+import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 
 /**
  * @author Adolfo Pérez
  */
-public class LocalRepositoryFactoryImpl implements LocalRepositoryFactory {
+public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
+	implements LocalRepositoryFactory {
 
 	@Override
 	public LocalRepository create(long repositoryId)
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		if (classNameId == getDefaultClassNameId()) {
+			return new LiferayLocalRepository(
+				getRepositoryLocalService(), getRepositoryService(),
+				getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+				getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+				getDlFileVersionLocalService(), getDlFileVersionService(),
+				getDlFolderLocalService(), getDlFolderService(),
+				getResourceLocalService(), repositoryId);
+		}
+		else {
+			BaseRepository baseRepository = createRepositoryImpl(
+				repositoryId, classNameId);
+
+			return baseRepository.getLocalRepository();
+		}
 	}
 
 	@Override
@@ -36,7 +56,25 @@ public class LocalRepositoryFactoryImpl implements LocalRepositoryFactory {
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		LocalRepository localRepository = new LiferayLocalRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), folderId, fileEntryId, fileVersionId);
+
+		if (localRepository.getRepositoryId() != 0) {
+			return localRepository;
+		}
+
+		long repositoryId = getRepositoryId(
+			folderId, fileEntryId, fileVersionId);
+
+		BaseRepository baseRepository =
+			(BaseRepository)RepositoryFactoryUtil.create(repositoryId);
+
+		return baseRepository.getLocalRepository();
 	}
 
 }

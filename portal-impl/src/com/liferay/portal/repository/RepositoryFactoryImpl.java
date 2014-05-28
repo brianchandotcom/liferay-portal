@@ -18,17 +18,32 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 
 /**
  * @author Adolfo Pérez
  */
-public class RepositoryFactoryImpl implements RepositoryFactory {
+public class RepositoryFactoryImpl extends BaseRepositoryFactory
+	implements RepositoryFactory {
 
 	@Override
 	public Repository create(long repositoryId)
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not Implemented");
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		if (classNameId == getDefaultClassNameId()) {
+			return new LiferayRepository(
+				getRepositoryLocalService(), getRepositoryService(),
+				getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+				getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+				getDlFileVersionLocalService(), getDlFileVersionService(),
+				getDlFolderLocalService(), getDlFolderService(),
+				getResourceLocalService(), repositoryId);
+		}
+		else {
+			return createRepositoryImpl(repositoryId, classNameId);
+		}
 	}
 
 	@Override
@@ -36,7 +51,22 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		LiferayRepository liferayRepository = new LiferayRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), folderId, fileEntryId, fileVersionId);
+
+		if (liferayRepository.getRepositoryId() != 0) {
+			return liferayRepository;
+		}
+
+		long repositoryId = getRepositoryId(
+			folderId, fileEntryId, fileVersionId);
+
+		return create(repositoryId);
 	}
 
 }

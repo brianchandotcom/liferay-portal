@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,10 +26,27 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.service.ClassNameLocalService;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryLocalService;
+import com.liferay.portal.service.RepositoryService;
+import com.liferay.portal.service.ResourceLocalService;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
 /**
  * @author Adolfo Pérez
@@ -44,9 +62,9 @@ public abstract class BaseRepositoryFactory {
 		Repository repository = null;
 
 		try {
-			repository = getRepository(repositoryId);
+			repository = _repositoryLocalService.getRepository(repositoryId);
 
-			ClassName className = classNameLocalService.getClassName(
+			ClassName className = _classNameLocalService.getClassName(
 				classNameId);
 
 			String repositoryImplClassName = className.getValue();
@@ -99,26 +117,70 @@ public abstract class BaseRepositoryFactory {
 		return baseRepository;
 	}
 
+	protected AssetEntryLocalService getAssetEntryLocalService() {
+		return _assetEntryLocalService;
+	}
+
+	protected ClassNameLocalService getClassNameLocalService() {
+		return _classNameLocalService;
+	}
+
+	protected CompanyLocalService getCompanyLocalService() {
+		return _companyLocalService;
+	}
+
 	protected long getDefaultClassNameId() {
 		if (_defaultClassNameId == 0) {
-			_defaultClassNameId = classNameLocalService.getClassNameId(
+			_defaultClassNameId = _classNameLocalService.getClassNameId(
 				LiferayRepository.class.getName());
 		}
 
 		return _defaultClassNameId;
 	}
 
+	protected DLAppHelperLocalService getDlAppHelperLocalService() {
+		return _dlAppHelperLocalService;
+	}
+
+	protected DLFileEntryLocalService getDlFileEntryLocalService() {
+		return _dlFileEntryLocalService;
+	}
+
+	protected DLFileEntryService getDlFileEntryService() {
+		return _dlFileEntryService;
+	}
+
+	protected DLFileEntryTypeLocalService getDlFileEntryTypeLocalService() {
+		return _dlFileEntryTypeLocalService;
+	}
+
+	protected DLFileVersionLocalService getDlFileVersionLocalService() {
+		return _dlFileVersionLocalService;
+	}
+
+	protected DLFileVersionService getDlFileVersionService() {
+		return _dlFileVersionService;
+	}
+
+	protected DLFolderLocalService getDlFolderLocalService() {
+		return _dlFolderLocalService;
+	}
+
+	protected DLFolderService getDlFolderService() {
+		return _dlFolderService;
+	}
+
 	protected long getRepositoryClassNameId(long repositoryId)
 		throws SystemException {
 
-		Repository repository = repositoryPersistence.fetchByPrimaryKey(
+		Repository repository = _repositoryLocalService.fetchRepository(
 			repositoryId);
 
 		if (repository != null) {
 			return repository.getClassNameId();
 		}
 
-		return classNameLocalService.getClassNameId(
+		return _classNameLocalService.getClassNameId(
 			LiferayRepository.class.getName());
 	}
 
@@ -146,23 +208,197 @@ public abstract class BaseRepositoryFactory {
 		return repositoryEntryId;
 	}
 
+	protected RepositoryEntryLocalService getRepositoryEntryLocalService() {
+		return _repositoryEntryLocalService;
+	}
+
+	protected long getRepositoryId(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
+
+		long repositoryEntryId = getRepositoryEntryId(
+			folderId, fileEntryId, fileVersionId);
+
+		RepositoryEntry repositoryEntry =
+			_repositoryEntryLocalService.getRepositoryEntry(
+				repositoryEntryId);
+
+		return repositoryEntry.getRepositoryId();
+	}
+
+	protected RepositoryLocalService getRepositoryLocalService() {
+		return _repositoryLocalService;
+	}
+
+	protected RepositoryService getRepositoryService() {
+		return _repositoryService;
+	}
+
+	protected ResourceLocalService getResourceLocalService() {
+		return _resourceLocalService;
+	}
+
+	protected UserLocalService getUserLocalService() {
+		return _userLocalService;
+	}
+
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	protected void setDlAppHelperLocalService(
+		DLAppHelperLocalService dlAppHelperLocalService) {
+
+		_dlAppHelperLocalService = dlAppHelperLocalService;
+	}
+
+	protected void setDlFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	protected void setDlFileEntryService(
+		DLFileEntryService dlFileEntryService) {
+
+		_dlFileEntryService = dlFileEntryService;
+	}
+
+	protected void setDlFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	protected void setDlFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	protected void setDlFileVersionService(
+		DLFileVersionService dlFileVersionService) {
+
+		_dlFileVersionService = dlFileVersionService;
+	}
+
+	protected void setDlFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	protected void setDlFolderService(DLFolderService dlFolderService) {
+		_dlFolderService = dlFolderService;
+	}
+
+	protected void setRepositoryEntryLocalService(
+		RepositoryEntryLocalService repositoryEntryLocalService) {
+
+		_repositoryEntryLocalService = repositoryEntryLocalService;
+	}
+
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
+	}
+
+	protected void setRepositoryService(RepositoryService repositoryService) {
+
+		_repositoryService = repositoryService;
+	}
+
+	protected void setResourceLocalService(
+		ResourceLocalService resourceLocalService) {
+
+		_resourceLocalService = resourceLocalService;
+	}
+
 	protected void setupRepository(
 		long repositoryId, Repository repository,
 		BaseRepository baseRepository) {
 
-		baseRepository.setAssetEntryLocalService(assetEntryLocalService);
+		baseRepository.setAssetEntryLocalService(_assetEntryLocalService);
 		baseRepository.setCompanyId(repository.getCompanyId());
-		baseRepository.setCompanyLocalService(companyLocalService);
-		baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
+		baseRepository.setCompanyLocalService(_companyLocalService);
+		baseRepository.setDLAppHelperLocalService(_dlAppHelperLocalService);
 		baseRepository.setGroupId(repository.getGroupId());
 		baseRepository.setRepositoryEntryLocalService(
-			repositoryEntryLocalService);
+			_repositoryEntryLocalService);
 		baseRepository.setRepositoryId(repositoryId);
 		baseRepository.setTypeSettingsProperties(
 			repository.getTypeSettingsProperties());
-		baseRepository.setUserLocalService(userLocalService);
+		baseRepository.setUserLocalService(_userLocalService);
 	}
 
+	protected void setUserLocalService(UserLocalService userLocalService) {
+
+		_userLocalService = userLocalService;
+	}
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
+
 	private long _defaultClassNameId;
+
+	@BeanReference(type = DLAppHelperLocalService.class)
+	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@BeanReference(type = DLFileEntryLocalService.class)
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@BeanReference(type = DLFileEntryService.class)
+	private DLFileEntryService _dlFileEntryService;
+
+	@BeanReference(type = DLFileEntryTypeLocalService.class)
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@BeanReference(type = DLFileVersionLocalService.class)
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@BeanReference(type = DLFileVersionService.class)
+	private DLFileVersionService _dlFileVersionService;
+
+	@BeanReference(type = DLFolderLocalService.class)
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@BeanReference(type = DLFolderService.class)
+	private DLFolderService _dlFolderService;
+
+	@BeanReference(type = RepositoryEntryLocalService.class)
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
+
+	@BeanReference(type = RepositoryLocalService.class)
+	private RepositoryLocalService _repositoryLocalService;
+
+	@BeanReference(type = RepositoryService.class)
+	private RepositoryService _repositoryService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

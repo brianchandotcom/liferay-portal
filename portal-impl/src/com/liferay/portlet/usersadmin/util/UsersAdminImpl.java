@@ -103,6 +103,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -1174,9 +1175,9 @@ public class UsersAdminImpl implements UsersAdmin {
 	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
- 		PermissionChecker permissionChecker =
- 			PermissionThreadLocal.getPermissionChecker();
- 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		return hasUpdateFieldPermission(permissionChecker, null, user, field);
 	}
 

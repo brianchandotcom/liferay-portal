@@ -1809,7 +1809,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String[] pathArray = dlReference.split(StringPool.SLASH);
 
 			if (pathArray.length < 3) {
-				return null;
+				return map;
 			}
 
 			map.put("groupId", new String[] {pathArray[2]});
@@ -2058,7 +2058,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	protected FileEntry getFileEntry(Map<String, String[]> map) {
-		if (map == null) {
+		if (MapUtil.isEmpty(map)) {
 			return null;
 		}
 

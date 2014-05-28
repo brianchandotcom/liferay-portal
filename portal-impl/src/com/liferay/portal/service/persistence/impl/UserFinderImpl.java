@@ -72,6 +72,9 @@ public class UserFinderImpl
 	public static final String FIND_BY_NO_GROUPS =
 		UserFinder.class.getName() + ".findByNoGroups";
 
+	public static final String FIND_BY_C_S =
+		UserFinder.class.getName() + ".findByC_S";
+
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
 
@@ -733,23 +736,35 @@ public class UserFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+			boolean hasAnyKeyword =
+				!isEmpty(firstNames) || !isEmpty(middleNames) ||
+				!isEmpty(lastNames) || !isEmpty(screenNames) ||
+				!isEmpty(emailAddresses);
 
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.firstName)", StringPool.LIKE, false,
-				firstNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.middleName)", StringPool.LIKE, false,
-				middleNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.lastName)", StringPool.LIKE, false,
-				lastNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.screenName)", StringPool.LIKE, false,
-				screenNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
-				emailAddresses);
+			String sql = null;
+
+			if (hasAnyKeyword) {
+				sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "lower(User_.firstName)", StringPool.LIKE, false,
+					firstNames);
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "lower(User_.middleName)", StringPool.LIKE, false,
+					middleNames);
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "lower(User_.lastName)", StringPool.LIKE, false,
+					lastNames);
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "lower(User_.screenName)", StringPool.LIKE, false,
+					screenNames);
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
+					emailAddresses);
+			}
+			else {
+				sql = CustomSQLUtil.get(FIND_BY_C_S);
+			}
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
@@ -798,11 +813,14 @@ public class UserFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(false);
-			qPos.add(firstNames, 2);
-			qPos.add(middleNames, 2);
-			qPos.add(lastNames, 2);
-			qPos.add(screenNames, 2);
-			qPos.add(emailAddresses, 2);
+
+			if (hasAnyKeyword) {
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+			}
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -813,11 +831,14 @@ public class UserFinderImpl
 
 				qPos.add(companyId);
 				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
+
+				if (hasAnyKeyword) {
+					qPos.add(firstNames, 2);
+					qPos.add(middleNames, 2);
+					qPos.add(lastNames, 2);
+					qPos.add(screenNames, 2);
+					qPos.add(emailAddresses, 2);
+				}
 
 				if (status != WorkflowConstants.STATUS_ANY) {
 					qPos.add(status);
@@ -829,11 +850,14 @@ public class UserFinderImpl
 
 				qPos.add(companyId);
 				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
+
+				if (hasAnyKeyword) {
+					qPos.add(firstNames, 2);
+					qPos.add(middleNames, 2);
+					qPos.add(lastNames, 2);
+					qPos.add(screenNames, 2);
+					qPos.add(emailAddresses, 2);
+				}
 
 				if (status != WorkflowConstants.STATUS_ANY) {
 					qPos.add(status);
@@ -845,11 +869,14 @@ public class UserFinderImpl
 
 				qPos.add(companyId);
 				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
+
+				if (hasAnyKeyword) {
+					qPos.add(firstNames, 2);
+					qPos.add(middleNames, 2);
+					qPos.add(lastNames, 2);
+					qPos.add(screenNames, 2);
+					qPos.add(emailAddresses, 2);
+				}
 
 				if (status != WorkflowConstants.STATUS_ANY) {
 					qPos.add(status);
@@ -883,21 +910,35 @@ public class UserFinderImpl
 		String[] emailAddresses, int status,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+		boolean hasAnyKeyword =
+			!isEmpty(firstNames) || !isEmpty(middleNames) ||
+			!isEmpty(lastNames) || !isEmpty(screenNames) ||
+			!isEmpty(emailAddresses);
 
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false,
-			middleNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false,
-			screenNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
-			emailAddresses);
+		String sql = null;
+
+		if (hasAnyKeyword) {
+			sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.firstName)", StringPool.LIKE, false,
+				firstNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.middleName)", StringPool.LIKE, false,
+				middleNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.lastName)", StringPool.LIKE, false,
+				lastNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.screenName)", StringPool.LIKE, false,
+				screenNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
+				emailAddresses);
+		}
+		else {
+			sql = CustomSQLUtil.get(FIND_BY_C_S);
+		}
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
@@ -916,11 +957,14 @@ public class UserFinderImpl
 
 		qPos.add(companyId);
 		qPos.add(false);
-		qPos.add(firstNames, 2);
-		qPos.add(middleNames, 2);
-		qPos.add(lastNames, 2);
-		qPos.add(screenNames, 2);
-		qPos.add(emailAddresses, 2);
+
+		if (hasAnyKeyword) {
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			qPos.add(status);
@@ -1229,6 +1273,20 @@ public class UserFinderImpl
 		}
 
 		return join;
+	}
+
+	protected boolean isEmpty(String[] values) {
+		if (ArrayUtil.isEmpty(values)) {
+			return true;
+		}
+
+		for (String value : values) {
+			if (Validator.isNotNull(value)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected String replaceJoinAndWhere(

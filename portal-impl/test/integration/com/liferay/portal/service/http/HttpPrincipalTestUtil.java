@@ -28,9 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
- * @author Raymond Augé
+ * @author Manuel de la Peña
  */
 public class HttpPrincipalTestUtil {
 

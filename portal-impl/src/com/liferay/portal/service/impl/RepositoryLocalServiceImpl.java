@@ -16,32 +16,24 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchRepositoryException;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
-import com.liferay.portal.repository.util.RepositoryFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
@@ -444,79 +436,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return (BaseRepository)getRepositoryImpl(repositoryId);
 	}
 
-	protected BaseRepository createRepositoryImpl(
-			long repositoryId, long classNameId)
-		throws PortalException, SystemException {
-
-		BaseRepository baseRepository = null;
-
-		Repository repository = null;
-
-		try {
-			repository = getRepository(repositoryId);
-
-			ClassName className = classNameLocalService.getClassName(
-				classNameId);
-
-			String repositoryImplClassName = className.getValue();
-
-			baseRepository = RepositoryFactoryUtil.getInstance(
-				repositoryImplClassName);
-		}
-		catch (Exception e) {
-			throw new RepositoryException(
-				"There is no valid repository class with class name id " +
-					classNameId,
-				e);
-		}
-
-		CMISRepositoryHandler cmisRepositoryHandler = null;
-
-		if (baseRepository instanceof CMISRepositoryHandler) {
-			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
-		}
-		else if (baseRepository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean)baseRepository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				cmisRepositoryHandler = (CMISRepositoryHandler)bean;
-			}
-		}
-
-		if (cmisRepositoryHandler != null) {
-			CMISRepository cmisRepository = new CMISRepository(
-				cmisRepositoryHandler);
-
-			cmisRepositoryHandler.setCmisRepository(cmisRepository);
-
-			setupRepository(repositoryId, repository, cmisRepository);
-		}
-
-		setupRepository(repositoryId, repository, baseRepository);
-
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			baseRepository.initRepository();
-		}
-
-		return baseRepository;
-	}
-
-	protected long getDefaultClassNameId() {
-		if (_defaultClassNameId == 0) {
-			_defaultClassNameId = classNameLocalService.getClassNameId(
-				LiferayRepository.class.getName());
-		}
-
-		return _defaultClassNameId;
-	}
-
 	protected long getDLFolderId(
 			User user, long groupId, long repositoryId, long parentFolderId,
 			String name, String description, boolean hidden,
@@ -532,20 +451,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			description, hidden, serviceContext);
 
 		return dlFolder.getFolderId();
-	}
-
-	protected long getRepositoryClassNameId(long repositoryId)
-		throws SystemException {
-
-		Repository repository = repositoryPersistence.fetchByPrimaryKey(
-			repositoryId);
-
-		if (repository != null) {
-			return repository.getClassNameId();
-		}
-
-		return classNameLocalService.getClassNameId(
-			LiferayRepository.class.getName());
 	}
 
 	protected long getRepositoryEntryId(
@@ -572,27 +477,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repositoryEntryId;
 	}
 
-	protected void setupRepository(
-		long repositoryId, Repository repository,
-		BaseRepository baseRepository) {
-
-		baseRepository.setAssetEntryLocalService(assetEntryLocalService);
-		baseRepository.setCompanyId(repository.getCompanyId());
-		baseRepository.setCompanyLocalService(companyLocalService);
-		baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
-		baseRepository.setGroupId(repository.getGroupId());
-		baseRepository.setRepositoryEntryLocalService(
-			repositoryEntryLocalService);
-		baseRepository.setRepositoryId(repositoryId);
-		baseRepository.setTypeSettingsProperties(
-			repository.getTypeSettingsProperties());
-		baseRepository.setUserLocalService(userLocalService);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		RepositoryLocalServiceImpl.class);
 
-	private long _defaultClassNameId;
 	private Map<Long, LocalRepository> _localRepositoriesByRepositoryEntryId =
 		new ConcurrentHashMap<Long, LocalRepository>();
 	private Map<Long, LocalRepository> _localRepositoriesByRepositoryId =

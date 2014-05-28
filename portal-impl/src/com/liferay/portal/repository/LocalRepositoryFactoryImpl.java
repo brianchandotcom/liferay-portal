@@ -43,10 +43,7 @@ public class LocalRepositoryFactoryImpl
 			return createLiferayRepository(repositoryId);
 		}
 		else {
-			BaseRepository baseRepository = createExternalRepositoryImpl(
-				repositoryId, classNameId);
-
-			return baseRepository.getLocalRepository();
+			return createExternalRepository(repositoryId, classNameId);
 		}
 	}
 
@@ -61,6 +58,23 @@ public class LocalRepositoryFactoryImpl
 		if (localRepository != null) {
 			return localRepository;
 		}
+
+		return createExternalRepository(folderId, fileEntryId, fileVersionId);
+	}
+
+	protected LocalRepository createExternalRepository(
+			long repositoryId, long classNameId)
+		throws PortalException, SystemException {
+
+		BaseRepository baseRepository = createExternalRepositoryImpl(
+			repositoryId, classNameId);
+
+		return baseRepository.getLocalRepository();
+	}
+
+	protected LocalRepository createExternalRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
 
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);

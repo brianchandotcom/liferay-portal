@@ -17,6 +17,7 @@ package com.liferay.portal.repository;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -40,7 +41,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			return createLiferayRepository(repositoryId);
 		}
 		else {
-			return createExternalRepositoryImpl(repositoryId, classNameId);
+			return createExternalRepository(repositoryId, classNameId);
 		}
 	}
 
@@ -55,6 +56,20 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		if (liferayRepository != null) {
 			return liferayRepository;
 		}
+
+		return createExternalRepository(folderId, fileEntryId, fileVersionId);
+	}
+
+	protected BaseRepository createExternalRepository(
+			long repositoryId, long classNameId)
+		throws PortalException, SystemException {
+
+		return createExternalRepositoryImpl(repositoryId, classNameId);
+	}
+
+	protected Repository createExternalRepository(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException, SystemException {
 
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);

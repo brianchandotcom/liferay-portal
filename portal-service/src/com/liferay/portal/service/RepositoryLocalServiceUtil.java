@@ -398,6 +398,13 @@ public class RepositoryLocalServiceUtil {
 		return getService().fetchRepository(groupId, name, portletId);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getGroupLocalRepositoryImpl(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupLocalRepositoryImpl(groupId);
+	}
+
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -411,13 +418,6 @@ public class RepositoryLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getLocalRepositoryImplByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getGroupLocalRepositoryImpl(groupId);
 	}
 
 	public static com.liferay.portal.model.Repository getRepository(

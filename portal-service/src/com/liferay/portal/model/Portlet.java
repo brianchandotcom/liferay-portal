@@ -909,6 +909,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public com.liferay.portlet.social.model.SocialRequestInterpreter getSocialRequestInterpreterInstance();
 
 	/**
+	* Returns <code>true</code> if the portlet uses Social Interactions
+	* Configuration
+	*
+	* @return <code>true</code> if the portlet uses Social Interactions
+	Configuration
+	*/
+	public boolean getSocialInteractionsConfiguration();
+
+	/**
 	* Returns the names of the classes that represent staged model data
 	* handlers associated with the portlet.
 	*
@@ -2133,6 +2142,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setSocialRequestInterpreterClass(
 		java.lang.String socialRequestInterpreterClass);
+
+	public void setSocialInteractionsConfiguration(
+		boolean socialInteractionsConfiguration);
 
 	/**
 	* Sets the names of the classes that represent staged model data handlers

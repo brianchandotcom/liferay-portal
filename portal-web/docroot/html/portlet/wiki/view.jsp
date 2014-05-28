@@ -152,7 +152,7 @@ if (wikiPage != null) {
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()), wikiPortletInstanceSettings.getDisplayStyle());
 %>
 
 <c:choose>
@@ -346,7 +346,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</div>
 
-			<c:if test="<%= enableRelatedAssets %>">
+			<c:if test="<%= wikiPortletInstanceSettings.getEnableRelatedAssets() %>">
 				<div class="entry-links">
 					<liferay-ui:asset-links
 						assetEntryId="<%= assetEntry.getEntryId() %>"
@@ -354,7 +354,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</c:if>
 
-			<c:if test="<%= enablePageRatings %>">
+			<c:if test="<%= wikiPortletInstanceSettings.getEnablePageRatings() %>">
 				<div class="page-ratings">
 					<liferay-ui:ratings
 						className="<%= WikiPage.class.getName() %>"
@@ -363,7 +363,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</c:if>
 
-			<c:if test="<%= enableComments %>">
+			<c:if test="<%= wikiPortletInstanceSettings.getEnableComments() %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
@@ -375,7 +375,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
 							formAction="<%= discussionURL %>"
 							formName="fm2"
-							ratingsEnabled="<%= enableCommentRatings %>"
+							ratingsEnabled="<%= wikiPortletInstanceSettings.getEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= wikiPage.getUserId() %>"
 						/>

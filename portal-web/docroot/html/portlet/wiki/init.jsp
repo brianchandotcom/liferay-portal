@@ -37,7 +37,9 @@ page import="com.liferay.portlet.wiki.PageTitleException" %><%@
 page import="com.liferay.portlet.wiki.PageVersionException" %><%@
 page import="com.liferay.portlet.wiki.RequiredNodeException" %><%@
 page import="com.liferay.portlet.wiki.WikiFormatException" %><%@
+page import="com.liferay.portlet.wiki.WikiPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.wiki.WikiSettings" %><%@
+page import="com.liferay.portlet.wiki.context.WikiConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.wiki.importers.WikiImporterKeys" %><%@
 page import="com.liferay.portlet.wiki.model.WikiNode" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
@@ -60,33 +62,15 @@ page import="com.liferay.portlet.wiki.util.WikiUtil" %><%@
 page import="com.liferay.portlet.wiki.util.comparator.PageVersionComparator" %>
 
 <%
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	 portletId = ParamUtil.getString(request, "portletResource");
+}
+
 WikiSettings wikiSettings = WikiUtil.getWikiSettings(scopeGroupId);
-
-String displayStyle = wikiSettings.getDisplayStyle();
-long displayStyleGroupId = wikiSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
-boolean enableRelatedAssets = wikiSettings.getEnableRelatedAssets();
-boolean enablePageRatings = wikiSettings.getEnablePageRatings();
-boolean enableComments = wikiSettings.getEnableComments();
-boolean enableCommentRatings = wikiSettings.getEnableCommentRatings();
-
-List<WikiNode> allNodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
-List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
-
-String[] visibleNodes = wikiSettings.getVisibleNodes();
-
-if (ArrayUtil.isNotEmpty(visibleNodes)) {
-	allNodes = WikiUtil.orderNodes(allNodes, visibleNodes);
-}
-else {
-	visibleNodes = allNodeNames.toArray(new String[allNodeNames.size()]);
-}
-
-String[] hiddenNodes = wikiSettings.getHiddenNodes();
-
-boolean enableRSS = wikiSettings.getEnableRSS();
-int rssDelta = wikiSettings.getRssDelta();
-String rssDisplayStyle = wikiSettings.getRssDisplayStyle();
-String rssFeedType = wikiSettings.getRssFeedType();
+WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiUtil.getWikiPortletInstanceSettings(layout, portletId);
+WikiConfigurationDisplayContext wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, wikiPortletInstanceSettings);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

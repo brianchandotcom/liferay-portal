@@ -15,17 +15,17 @@
 --%>
 
 <aui:fieldset>
-	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= wikiPortletInstanceSettings.getEnableRelatedAssets() %>" />
 
 	<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED || PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
 		<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED %>">
-			<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= enablePageRatings %>" />
+			<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.getEnablePageRatings() %>" />
 		</c:if>
 
 		<c:if test="<%= PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
-			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettings.getEnableComments() %>" />
 
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.getEnableCommentRatings() %>" />
 		</c:if>
 	</c:if>
 </aui:fieldset>
@@ -39,8 +39,8 @@
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-			displayStyle="<%= displayStyle %>"
-			displayStyleGroupId="<%= displayStyleGroupId %>"
+			displayStyle="<%= wikiPortletInstanceSettings.getDisplayStyle() %>"
+			displayStyleGroupId="<%= wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 			refreshURL="<%= configurationRenderURL %>"
 			showEmptyOption="<%= true %>"
 		/>
@@ -52,23 +52,28 @@
 	<aui:input name="preferences--hiddenNodes--" type="hidden" />
 
 	<%
-	Set<String> currentVisibleNodes = new HashSet<String>(allNodeNames);
+	Set<String> currentVisibleNodes = new HashSet<String>(wikiConfigurationDisplayContext.getAllNodeNames());
 
 	// Left list
 
 	List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-	for (String folderColumn : visibleNodes) {
+	String[] visibleNodeNames = wikiConfigurationDisplayContext.getVisibleNodeNames();
+
+	for (String folderColumn : visibleNodeNames) {
 		if (currentVisibleNodes.contains(folderColumn)) {
 			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
 		}
 	}
 
-	Arrays.sort(visibleNodes);
+	Arrays.sort(visibleNodeNames);
+
+	String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
+
 	Arrays.sort(hiddenNodes);
 
 	for (String folderColumn : currentVisibleNodes) {
-		if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodes, folderColumn) < 0)) {
+		if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
 			leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
 		}
 	}
@@ -79,7 +84,7 @@
 
 	for (String folderColumn : hiddenNodes) {
 		if (currentVisibleNodes.contains(folderColumn)) {
-			if (Arrays.binarySearch(visibleNodes, folderColumn) < 0) {
+			if (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0) {
 				rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(pageContext, folderColumn))));
 			}
 		}

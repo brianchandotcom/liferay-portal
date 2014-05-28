@@ -39,10 +39,10 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory
 				getDlFileEntryService(), getDlFileEntryTypeLocalService(),
 				getDlFileVersionLocalService(), getDlFileVersionService(),
 				getDlFolderLocalService(), getDlFolderService(),
-				getResourceLocalService(), repositoryId);
+				getResourceLocalService(), repositoryId, repositoryId, 0);
 		}
 		else {
-			return createRepositoryImpl(repositoryId, classNameId);
+			return createExternalRepositoryImpl(repositoryId, classNameId);
 		}
 	}
 

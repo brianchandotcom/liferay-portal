@@ -44,7 +44,7 @@ public class LocalRepositoryFactoryImpl extends BaseRepositoryFactory
 				getResourceLocalService(), repositoryId);
 		}
 		else {
-			BaseRepository baseRepository = createRepositoryImpl(
+			BaseRepository baseRepository = createExternalRepositoryImpl(
 				repositoryId, classNameId);
 
 			return baseRepository.getLocalRepository();

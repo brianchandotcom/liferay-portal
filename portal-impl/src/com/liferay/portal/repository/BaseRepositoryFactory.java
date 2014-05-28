@@ -53,7 +53,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
  */
 public abstract class BaseRepositoryFactory {
 
-	protected BaseRepository createRepositoryImpl(
+	protected BaseRepository createExternalRepositoryImpl(
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
 

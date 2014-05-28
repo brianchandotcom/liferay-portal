@@ -32,7 +32,7 @@ if (!strutsAction.equals("/login/forgot_password") && (company.isSendPassword() 
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="help"
+		iconCssClass="icon-question-sign"
 		message="forgot-password"
 		url="<%= forgotPasswordURL %>"
 	/>

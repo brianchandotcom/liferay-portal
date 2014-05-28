@@ -28,7 +28,7 @@ if (!strutsAction.equals("/login/create_account") && company.isStrangers() && !p
 
 <c:if test="<%= showCreateAccountIcon %>">
 	<liferay-ui:icon
-		image="add_user"
+		iconCssClass="icon-plus"
 		message="create-account"
 		url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
 	/>

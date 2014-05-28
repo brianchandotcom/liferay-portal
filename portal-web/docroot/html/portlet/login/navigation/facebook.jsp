@@ -46,7 +46,7 @@ if (!strutsAction.startsWith("/login/facebook_connect") && FacebookConnectUtil.i
 	%>
 
 	<liferay-ui:icon
-		image="../social_bookmarks/facebook"
+		iconCssClass="icon-facebook"
 		message="facebook"
 		url="<%= taglibOpenFacebookConnectLoginWindow %>"
 	/>

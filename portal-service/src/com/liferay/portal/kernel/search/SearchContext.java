@@ -24,9 +24,11 @@ import com.liferay.portal.model.Layout;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,12 +38,24 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SearchContext implements Serializable {
 
+	public void addEntryClassNameForFullQuery(String entryClassName) {
+		if (_entryClassNamesForFullQuery == null) {
+			_entryClassNamesForFullQuery = new HashSet<String>();
+		}
+
+		_entryClassNamesForFullQuery.add(entryClassName);
+	}
+
 	public void addFacet(Facet facet) {
 		if (facet == null) {
 			return;
 		}
 
 		_facets.put(facet.getFieldName(), facet);
+	}
+
+	public void clearEntryClassNamesForFullQuery() {
+		_entryClassNamesForFullQuery = null;
 	}
 
 	public long[] getAssetCategoryIds() {
@@ -94,6 +108,15 @@ public class SearchContext implements Serializable {
 		}
 
 		return _entryClassNames;
+	}
+
+	public String[] getEntryClassNamesForFullQuery() {
+		if (_entryClassNamesForFullQuery == null) {
+			return new String[0];
+		}
+
+		return _entryClassNamesForFullQuery.toArray(
+			new String[_entryClassNamesForFullQuery.size()]);
 	}
 
 	public Facet getFacet(String fieldName) {
@@ -379,6 +402,7 @@ public class SearchContext implements Serializable {
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;
+	private Set<String> _entryClassNamesForFullQuery;
 	private Map<String, Facet> _facets = new ConcurrentHashMap<String, Facet>();
 	private long[] _folderIds;
 	private long[] _groupIds;

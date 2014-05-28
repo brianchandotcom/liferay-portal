@@ -22,6 +22,8 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getTemplateId());
 %>
 
-<%= JournalArticleLocalServiceUtil.getArticleContent(article, ddmTemplateKey, null, themeDisplay.getLanguageId(), new PortletRequestModel(renderRequest, renderResponse), themeDisplay) %>
+<div class="preview-article-content">
+	<%= JournalArticleLocalServiceUtil.getArticleContent(article, ddmTemplateKey, null, themeDisplay.getLanguageId(), new PortletRequestModel(renderRequest, renderResponse), themeDisplay) %>
+</div>
 
 <liferay-util:include page="/html/common/themes/bottom.jsp" />

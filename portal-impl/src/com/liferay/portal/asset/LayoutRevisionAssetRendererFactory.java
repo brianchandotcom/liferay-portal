@@ -110,6 +110,11 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-file";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

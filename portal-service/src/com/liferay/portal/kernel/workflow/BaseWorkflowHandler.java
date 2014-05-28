@@ -78,6 +78,17 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getIconCssClass();
+		}
+
+		return "icon-file-alt";
+	}
+
+	@Override
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(

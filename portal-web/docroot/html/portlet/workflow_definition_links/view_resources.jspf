@@ -77,19 +77,13 @@ portletURL.setParameter("tabs1", "default-configuration");
 			/>
 
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				name="resource"
 			>
-
-				<%
-				buffer.append("<img align=\"left\" alt=\"");
-				buffer.append(LanguageUtil.get(locale, "icon"));
-				buffer.append("\" src=\"");
-				buffer.append(workflowHandler.getIconPath(liferayPortletRequest));
-				buffer.append("\" style=\"margin-right: 5px;\">");
-				buffer.append(ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()));
-				%>
-
+				<liferay-ui:icon
+					iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+					label="<%= true %>"
+					message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -180,19 +174,13 @@ portletURL.setParameter("tabs1", "default-configuration");
 			/>
 
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				name="resource"
 			>
-
-				<%
-				buffer.append("<img align=\"left\" alt=\"");
-				buffer.append(LanguageUtil.get(locale, "icon"));
-				buffer.append("\" src=\"");
-				buffer.append(workflowHandler.getIconPath(liferayPortletRequest));
-				buffer.append("\" style=\"margin-right: 5px;\">");
-				buffer.append(ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()));
-				%>
-
+				<liferay-ui:icon
+					iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+					label="<%= true %>"
+					message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

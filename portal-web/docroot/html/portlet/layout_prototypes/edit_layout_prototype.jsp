@@ -72,7 +72,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					image="view"
+					iconCssClass="icon-search"
 					label="<%= true %>"
 					message="open-page-template"
 					method="get"

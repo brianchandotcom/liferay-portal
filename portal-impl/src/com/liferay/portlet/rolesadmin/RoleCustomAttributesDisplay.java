@@ -29,6 +29,11 @@ public class RoleCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-user";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/guest_icon.png";
 	}

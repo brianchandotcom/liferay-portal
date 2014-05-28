@@ -922,16 +922,6 @@ $editLayoutPanelWidth: 460px;
 			display: block;
 		}
 
-		.current-version-pointer {
-			display: inline-block;
-			width: 0;
-
-			img {
-				left: -25px;
-				position: relative;
-			}
-		}
-
 		.layout-variation-name {
 			color: #666;
 			font-size: 1.15em;

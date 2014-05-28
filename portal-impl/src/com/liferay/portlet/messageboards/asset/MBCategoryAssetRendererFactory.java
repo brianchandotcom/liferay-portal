@@ -68,6 +68,11 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-comments";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

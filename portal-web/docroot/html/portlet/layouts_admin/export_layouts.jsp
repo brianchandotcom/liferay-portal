@@ -381,7 +381,7 @@ if (!cmd.equals(Constants.ADD)) {
 											</liferay-util:buffer>
 
 											<liferay-ui:icon
-												image="calendar"
+												iconCssClass="icon-calendar"
 												label="<%= true %>"
 												message='<%= LanguageUtil.get(pageContext, "date-range") + selectedLabelsHTML %>'
 											/>

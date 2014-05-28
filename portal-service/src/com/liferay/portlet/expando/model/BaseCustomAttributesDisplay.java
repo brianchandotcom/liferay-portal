@@ -15,6 +15,8 @@
 package com.liferay.portlet.expando.model;
 
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 /**
  * @author Jorge Ferrer
@@ -24,6 +26,19 @@ public abstract class BaseCustomAttributesDisplay
 
 	public long getClassNameId() {
 		return _classNameId;
+	}
+
+	@Override
+	public String getIconCssClass() {
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getClassName());
+
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getIconCssClass();
+		}
+
+		return "icon-file-alt";
 	}
 
 	@Override

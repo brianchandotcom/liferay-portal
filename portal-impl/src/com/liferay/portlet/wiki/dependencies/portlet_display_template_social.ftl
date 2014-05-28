@@ -138,7 +138,7 @@
 		${addPageURL.setParameter("parentTitle", entry.getTitle())}
 
 		<@liferay_ui["icon"]
-			image="add_article"
+			iconCssClass="icon-plus"
 			label=true
 			message="add-child-page"
 			url=addPageURL?string
@@ -152,7 +152,7 @@
 	${viewPageAttachmentsURL.setParameter("struts_action", "/wiki/view_page_attachments") }
 
 	<@liferay_ui["icon"]
-		image="clip"
+		iconCssClass="icon-paperclip"
 		label=true
 		message='${entry.getAttachmentsFileEntriesCount() + languageUtil.get(locale, "attachments")}'
 		url=viewPageAttachmentsURL?string
@@ -190,7 +190,7 @@
 		${editPageURL.setParameter("title", entry.getTitle())}
 
 		<@liferay_ui["icon"]
-			image="edit"
+			iconCssClass="icon-edit"
 			message=entry.getTitle()
 			url=editPageURL?string
 		/>
@@ -204,7 +204,7 @@
 	${viewPageDetailsURL.setParameter("redirect", currentURL)}
 
 	<@liferay_ui["icon"]
-		image="history"
+		iconCssClass="icon-file-alt"
 		message="details"
 		url=viewPageDetailsURL?string
 	/>
@@ -220,7 +220,7 @@
 	<#assign taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});" />
 
 	<@liferay_ui["icon"]
-		image="print"
+		iconCssClass="icon-print"
 		message="print"
 		url=taglibPrintURL
 	/>

@@ -30,6 +30,11 @@ public class OrganizationCustomAttributesDisplay
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-globe";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return
 			themeDisplay.getPathThemeImages() + "/common/organization_icon.png";

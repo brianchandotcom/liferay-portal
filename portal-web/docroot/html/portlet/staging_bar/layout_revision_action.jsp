@@ -50,7 +50,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				image='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "../aui/shuffle" : "../aui/circle-check" %>'
+				iconCssClass='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "icon-random" : "icon-check" %>'
 				message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication" %>'
 				url="<%= taglibURL %>"
 			/>
@@ -72,7 +72,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				image="export"
+				iconCssClass="icon-save"
 				message="save"
 				url="<%= taglibURL %>"
 			/>

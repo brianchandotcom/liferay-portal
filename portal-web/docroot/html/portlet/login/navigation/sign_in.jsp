@@ -44,7 +44,7 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 	%>
 
 	<liferay-ui:icon
-		image="status_online"
+		iconCssClass="icon-signin"
 		message="sign-in"
 		url="<%= signInURL %>"
 	/>

@@ -90,38 +90,6 @@
 		border: 3px solid #369;
 	}
 
-	.lfr-header-row {
-		margin-bottom: 0.5em;
-
-		.icon-add, .icon-copy, .icon-delete, .icon-export, .icon-permissions, .icon-search {
-			background: url() no-repeat 0 0;
-		}
-
-		.icon-add {
-			background-image: url(@theme_image_path@/common/add.png);
-		}
-
-		.icon-copy {
-			background-image: url(@theme_image_path@/common/copy.png);
-		}
-
-		.icon-delete {
-			background-image: url(@theme_image_path@/common/delete.png);
-		}
-
-		.icon-export {
-			background-image: url(@theme_image_path@/common/export.png);
-		}
-
-		.icon-permissions {
-			background-image: url(@theme_image_path@/common/permissions.png);
-		}
-
-		.icon-search {
-			background-image: url(@theme_image_path@/common/search.png);
-		}
-	}
-
 	.button-holder.edit-toolbar {
 		margin: 0;
 	}
@@ -222,7 +190,6 @@
 
 	.organizations-msg-info {
 		background-color: #FEFEFE;
-		background-image: url(@theme_image_path@/common/organization_icon.png);
 		border-color: #BBB;
 	}
 
@@ -324,10 +291,6 @@
 			cursor: move;
 		}
 	}
-}
-
-.lfr-page-locked .tree-icon {
-	background-image: url(@theme_image_path@/trees/page_locked.png);
 }
 
 .export-dialog-tree {
@@ -493,14 +456,6 @@
 
 .lfr-tree-controls-item {
 	padding: 0 0 6px 6px;
-}
-
-.lfr-tree-controls-expand {
-	background-image: url(@theme_image_path@/trees/expand_all.png);
-}
-
-.lfr-tree-controls-collapse {
-	background-image: url(@theme_image_path@/trees/collapse_all.png);
 }
 
 .ie6 {

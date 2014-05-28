@@ -58,8 +58,8 @@ else {
 		%>
 
 		<liferay-ui:icon
+			iconCssClass="icon-time"
 			id="viewHistoryLink"
-			image="../aui/time"
 			message="history"
 			method="get"
 			url="<%= taglibURL %>"
@@ -74,8 +74,8 @@ else {
 			%>
 
 			<liferay-ui:icon
+				iconCssClass="icon-undo"
 				id="undoLink"
-				image="../aui/undo"
 				message="undo"
 				url="<%= taglibURL %>"
 			/>
@@ -96,8 +96,8 @@ else {
 				%>
 
 				<liferay-ui:icon
+					iconCssClass="icon-repeat"
 					id="redoLink"
-					image="../aui/repeat"
 					message="redo"
 					url="<%= taglibURL %>"
 				/>
@@ -157,8 +157,8 @@ else {
 
 			<liferay-ui:icon
 				cssClass="submit-link"
+				iconCssClass="icon-random"
 				id="reviewTaskIcon"
-				image="../aui/random"
 				message="workflow"
 				method="get"
 				url="<%= portletURL.toString() %>"
@@ -213,8 +213,8 @@ else {
 
 			<liferay-ui:icon
 				cssClass="label label-submit"
+				iconCssClass="icon-ok"
 				id="submitLink"
-				image="../aui/ok"
 				label="<%= true %>"
 				message="<%= label %>"
 				url="<%= taglibURL %>"

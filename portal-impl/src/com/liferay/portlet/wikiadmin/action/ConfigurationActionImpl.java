@@ -14,10 +14,7 @@
 
 package com.liferay.portlet.wikiadmin.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portlet.wiki.WikiSettings;
 
 import javax.portlet.ActionRequest;
@@ -44,13 +41,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	protected Settings getSettings(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		return new WikiSettings(super.getSettings(actionRequest));
 	}
 
 }

@@ -10,6 +10,8 @@ AUI.add(
 
 		var CSS_ACTIVE_AREA_PROXY = 'active-area-proxy';
 
+		var CSS_ICON_REPLY = 'icon-reply-all';
+
 		var DATA_FOLDER_ID = 'data-folder-id';
 
 		var SELECTOR_DRAGGABLE_NODES = '[data-draggable]';
@@ -281,6 +283,7 @@ AUI.add(
 						var proxyNode = event.target.get(STR_DRAG_NODE);
 
 						proxyNode.removeClass(CSS_ACTIVE_AREA_PROXY);
+						proxyNode.removeClass(CSS_ICON_REPLY);
 
 						proxyNode.empty();
 
@@ -376,6 +379,7 @@ AUI.add(
 						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 
 						proxyNode.addClass(CSS_ACTIVE_AREA_PROXY);
+						proxyNode.addClass(CSS_ICON_REPLY);
 
 						var dd = instance._ddHandler.dd;
 

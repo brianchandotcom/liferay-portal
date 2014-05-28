@@ -326,8 +326,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				%>
 
 				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-edit"
-					image="edit"
+					cssClass="lfr-icon-action"
+					iconCssClass="icon-pencil"
 					label="<%= true %>"
 					message="edit"
 					url="<%= taglibEditArticleURL %>"
@@ -349,8 +349,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				%>
 
 				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-edit-template"
-					image="../file_system/small/xml"
+					cssClass="lfr-icon-action"
+					iconCssClass="icon-edit"
 					label="<%= true %>"
 					message="edit-template"
 					url="<%= taglibEditTemplateURL %>"
@@ -359,8 +359,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 
 			<c:if test="<%= showSelectArticleIcon %>">
 				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-configuration"
-					image="configuration"
+					cssClass="lfr-icon-action"
+					iconCssClass="icon-cog"
 					label="<%= true %>"
 					message="select-web-content"
 					method="get"
@@ -373,6 +373,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				<liferay-ui:icon-menu
 					cssClass="lfr-icon-action lfr-icon-action-add"
 					direction="down"
+					icon="../aui/plus"
 					message="add"
 					showArrow="<%= false %>"
 					showWhenSingleIcon="<%= true %>"

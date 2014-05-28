@@ -54,7 +54,7 @@
 				vertical-align: inherit;
 
 				a {
-					background-image: url(@theme_image_path@/common/add_white.png);
+					background: none;
 					border: 0;
 					padding: 0;
 					vertical-align: inherit;

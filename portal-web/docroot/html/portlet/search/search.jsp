@@ -58,9 +58,17 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<aui:fieldset id="searchContainer">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(keywords) %>" />
 
-		<aui:input inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
+		<liferay-ui:icon
+			iconCssClass="icon-search"
+			id="searchButton"
+			url="javascript:;"
+		/>
 
-		<aui:input inlineField="<%= true %>" label="" name="clearSearch" src='<%= themeDisplay.getPathThemeImages() + "/common/close.png" %>' title="clear-search" type="image" />
+		<liferay-ui:icon
+			iconCssClass="icon-remove"
+			id="clearSearch"
+			url="javascript:;"
+		/>
 	</aui:fieldset>
 
 	<div class="lfr-token-list" id="<portlet:namespace />searchTokens">
@@ -114,12 +122,12 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 </aui:form>
 
 <aui:script use="aui-base">
-	A.on(
+	A.one('#<portlet:namespace />searchContainer').delegate(
 		'click',
 		function(event) {
-			var targetId = event.target.get('id');
+			var targetId = event.currentTarget.get('id');
 
-			if (targetId === '<portlet:namespace />search') {
+			if (targetId === '<portlet:namespace />searchButton') {
 				<portlet:namespace />search();
 			}
 			else if (targetId === '<portlet:namespace />clearSearch') {
@@ -130,7 +138,18 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 				window.location.href = '<%= clearSearchURL %>';
 			}
 		},
-		'#<portlet:namespace />searchContainer'
+		'a'
+	);
+
+	A.one('#<portlet:namespace />keywords').on(
+		'keydown',
+		function(event) {
+			keyCode = event.keyCode;
+
+			if (keyCode === 13) {
+				<portlet:namespace />search();
+			}
+		}
 	);
 
 	var searchContainer = A.one('.portlet-search .result .lfr-search-container');

@@ -221,11 +221,6 @@
 		font-weight: bold;
 		margin: 10px 0;
 	}
-
-	.taglib-asset-categories-summary .asset-vocabulary {
-		background: url(@theme_image_path@/common/folder.png) no-repeat 0 50%;
-		padding: 2px 5px 2px 20px;
-	}
 }
 
 .portlet-search.portlet-configuration {

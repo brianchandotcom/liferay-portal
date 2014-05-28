@@ -22,10 +22,10 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
  */
 public class DDMFormXSDSerializerUtil {
 
-	public static DDMForm getDDMForm(String serializedDDMForm)
+	public static DDMForm deserialize(String serializedDDMForm)
 		throws Exception {
 
-		return getDDMFormXSDSerializer().getDDMForm(serializedDDMForm);
+		return getDDMFormXSDSerializer().deserialize(serializedDDMForm);
 	}
 
 	public static DDMFormXSDSerializer getDDMFormXSDSerializer() {

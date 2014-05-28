@@ -61,78 +61,76 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testAllFieldsStructureConversion() throws Exception {
+	public void testAllFieldsTypesDeserialization() throws Exception {
 		String xsd = readXML("dynamic-data-mapping-all-fields-structure.xml");
 
-		DDMForm form = DDMFormXSDSerializerUtil.getDDMForm(xsd);
+		DDMForm ddmForm = DDMFormXSDSerializerUtil.deserialize(xsd);
 
-		checkExpectedDefaultLanguage(form);
+		checkExpectedDefaultLanguage(ddmForm);
 
-		checkExpectedAvailableLanguages(form);
+		checkExpectedAvailableLanguages(ddmForm);
 
-		Map<String, DDMFormField> fieldsMap = form.getDDMFormFieldsMap(true);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
-		checkBooleanField(fieldsMap.get("Boolean2282"));
+		checkBooleanDDMFormField(ddmFormFieldsMap.get("Boolean2282"));
 
-		checkDateField(fieldsMap.get("Date2510"));
+		checkDateDDMFormField(ddmFormFieldsMap.get("Date2510"));
 
-		checkDecimalField(fieldsMap.get("Decimal3479"));
+		checkDecimalDDMFormField(ddmFormFieldsMap.get("Decimal3479"));
 
-		checkDocumentLibraryField(fieldsMap.get("Documents_and_Media4036"));
+		checkDocumentLibraryDDMFormField(
+			ddmFormFieldsMap.get("Documents_and_Media4036"));
 
-		checkRadioField(fieldsMap.get("Radio5699"));
+		checkRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
 
-		checkNestedFields(fieldsMap.get("Text6980"));
+		checkNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
 	}
 
-	protected void checkBooleanField(DDMFormField booleanField) {
-		Assert.assertNotNull(booleanField);
+	protected void checkBooleanDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		Assert.assertEquals("boolean", booleanField.getDataType());
-		Assert.assertEquals("keyword", booleanField.getIndexType());
+		Assert.assertEquals("boolean", ddmFormField.getDataType());
+		Assert.assertEquals("keyword", ddmFormField.getIndexType());
 
-		Assert.assertFalse(booleanField.isRepeatable());
-		Assert.assertFalse(booleanField.isRequired());
+		Assert.assertFalse(ddmFormField.isRepeatable());
+		Assert.assertFalse(ddmFormField.isRequired());
 
-		Assert.assertEquals("checkbox", booleanField.getType());
+		Assert.assertEquals("checkbox", ddmFormField.getType());
 
-		LocalizedValue label = booleanField.getLabel();
+		LocalizedValue label = ddmFormField.getLabel();
 
 		Assert.assertEquals("Boolean", label.getValue(LocaleUtil.US));
 		Assert.assertEquals("Booleano", label.getValue(LocaleUtil.BRAZIL));
 
-		LocalizedValue predefinedValue = booleanField.getPredefinedValue();
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
 	}
 
-	protected void checkDateField(DDMFormField dateField) {
-		Assert.assertNotNull(dateField);
+	protected void checkDateDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		Assert.assertEquals("date", dateField.getDataType());
-		Assert.assertEquals("ddm-date", dateField.getType());
+		Assert.assertEquals("date", ddmFormField.getDataType());
+		Assert.assertEquals("ddm-date", ddmFormField.getType());
 	}
 
-	protected void checkDecimalField(DDMFormField decimalField) {
-		Assert.assertNotNull(decimalField);
+	protected void checkDecimalDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		Assert.assertEquals("double", decimalField.getDataType());
-		Assert.assertEquals("ddm-decimal", decimalField.getType());
+		Assert.assertEquals("double", ddmFormField.getDataType());
+		Assert.assertEquals("ddm-decimal", ddmFormField.getType());
 	}
 
-	protected void checkDocumentLibraryField(
-		DDMFormField documentLibraryField) {
+	protected void checkDocumentLibraryDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		Assert.assertNotNull(documentLibraryField);
-
-		Assert.assertEquals(
-			"document-library", documentLibraryField.getDataType());
-		Assert.assertEquals(
-			"ddm-documentlibrary", documentLibraryField.getType());
+		Assert.assertEquals("document-library", ddmFormField.getDataType());
+		Assert.assertEquals("ddm-documentlibrary", ddmFormField.getType());
 	}
 
-	protected void checkExpectedAvailableLanguages(DDMForm form) {
-		List<Locale> availableLocales = form.getAvailableLocales();
+	protected void checkExpectedAvailableLanguages(DDMForm ddmForm) {
+		List<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Assert.assertEquals(2, availableLocales.size());
 
@@ -140,52 +138,57 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.BRAZIL));
 	}
 
-	protected void checkExpectedDefaultLanguage(DDMForm form) {
-		Locale defaultLocale = form.getDefaultLocale();
+	protected void checkExpectedDefaultLanguage(DDMForm ddmForm) {
+		Locale defaultLocale = ddmForm.getDefaultLocale();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		Assert.assertEquals("en_US", defaultLanguageId);
 	}
 
-	protected void checkNestedFields(DDMFormField textField) {
-		Assert.assertNotNull(textField);
+	protected void checkNestedDDMFormFields(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		List<DDMFormField> nestedFields = textField.getNestedFields();
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
 
-		Assert.assertEquals(1, nestedFields.size());
+		Assert.assertEquals(1, nestedDDMFormFields.size());
 
-		DDMFormField separatorField = nestedFields.get(0);
+		DDMFormField separatorDDMFormField = nestedDDMFormFields.get(0);
 
-		Assert.assertEquals("Separator7211", separatorField.getName());
+		Assert.assertEquals("Separator7211", separatorDDMFormField.getName());
 
-		nestedFields = separatorField.getNestedFields();
+		nestedDDMFormFields = separatorDDMFormField.getNestedDDMFormFields();
 
-		Assert.assertEquals(1, nestedFields.size());
+		Assert.assertEquals(1, nestedDDMFormFields.size());
 
-		DDMFormField selectField = nestedFields.get(0);
+		DDMFormField selectDDMFormField = nestedDDMFormFields.get(0);
 
-		Assert.assertEquals("Select7450", selectField.getName());
+		Assert.assertEquals("Select7450", selectDDMFormField.getName());
 
-		DDMFormFieldOptions selectOptions = selectField.getOptions();
+		DDMFormFieldOptions selectDDMFormFieldOptions =
+			selectDDMFormField.getDDMFormFieldOptions();
 
-		Assert.assertEquals(3, selectOptions.getOptionsValues().size());
+		Set<String> optionValues = selectDDMFormFieldOptions.getOptionsValues();
+
+		Assert.assertEquals(3, optionValues.size());
 	}
 
-	protected void checkRadioField(DDMFormField radioField) {
-		Assert.assertNotNull(radioField);
+	protected void checkRadioDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
 
-		Assert.assertEquals("string", radioField.getDataType());
-		Assert.assertEquals("radio", radioField.getType());
+		Assert.assertEquals("string", ddmFormField.getDataType());
+		Assert.assertEquals("radio", ddmFormField.getType());
 
-		LocalizedValue predefinedValue = radioField.getPredefinedValue();
+		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		Assert.assertEquals(
 			"[\"value 1\"]", predefinedValue.getValue(LocaleUtil.US));
 
-		DDMFormFieldOptions options = radioField.getOptions();
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
 
-		Set<String> optionsValues = options.getOptionsValues();
+		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
 
 		Assert.assertEquals(3, optionsValues.size());
 
@@ -193,7 +196,8 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 		Assert.assertTrue(optionsValues.contains("value 2"));
 		Assert.assertTrue(optionsValues.contains("value 3"));
 
-		LocalizedValue value1Labels = options.getOptionLabels("value 1");
+		LocalizedValue value1Labels = ddmFormFieldOptions.getOptionLabels(
+			"value 1");
 
 		Assert.assertEquals("option 1", value1Labels.getValue(LocaleUtil.US));
 		Assert.assertEquals(

@@ -39,20 +39,20 @@ import java.util.Locale;
 public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 
 	@Override
-	public DDMForm getDDMForm(String serializedDDMForm) throws Exception {
+	public DDMForm deserialize(String serializedDDMForm) throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		Document document = SAXReaderUtil.read(serializedDDMForm);
 
-		setFormAvailableLocales(document.getRootElement(), ddmForm);
-		setFormDefaultLocale(document.getRootElement(), ddmForm);
-		setFormFields(document.getRootElement(), ddmForm);
+		setDDMFormAvailableLocales(document.getRootElement(), ddmForm);
+		setDDMFormDefaultLocale(document.getRootElement(), ddmForm);
+		setDDMFormFields(document.getRootElement(), ddmForm);
 
 		return ddmForm;
 	}
 
 	protected void addOptionValueLabels(
-		Element dynamicElementElement, DDMFormFieldOptions options,
+		Element dynamicElementElement, DDMFormFieldOptions ddmFormFieldOptions,
 		String optionValue) {
 
 		List<Element> metadataElements = dynamicElementElement.elements(
@@ -65,7 +65,8 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 
 			Element labelElement = fetchMetadataEntry(metadataElement, "label");
 
-			options.addOptionLabel(optionValue, locale, labelElement.getText());
+			ddmFormFieldOptions.addOptionLabel(
+				optionValue, locale, labelElement.getText());
 		}
 	}
 
@@ -107,23 +108,23 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
-		setFieldDataType(dynamicElementElement, ddmFormField);
-		setFieldIndexType(dynamicElementElement, ddmFormField);
-		setFieldMultiple(dynamicElementElement, ddmFormField);
-		setFieldRequired(dynamicElementElement, ddmFormField);
+		setDDMFormFieldDataType(dynamicElementElement, ddmFormField);
+		setDDMFormFieldIndexType(dynamicElementElement, ddmFormField);
+		setDDMFormFieldMultiple(dynamicElementElement, ddmFormField);
+		setDDMFormFieldRequired(dynamicElementElement, ddmFormField);
 
 		List<Element> metadataElements = dynamicElementElement.elements(
 			"meta-data");
 
 		for (Element metadataElement : metadataElements) {
-			setFieldMetadata(metadataElement, ddmFormField);
+			setDDMFormFieldMetadata(metadataElement, ddmFormField);
 		}
 
 		if (type.equals("radio") || type.equals("select")) {
-			setFieldOptions(dynamicElementElement, ddmFormField);
+			setDDMFormFieldOptions(dynamicElementElement, ddmFormField);
 		}
 		else {
-			setFieldNestedField(dynamicElementElement, ddmFormField);
+			setNestedDDMFormField(dynamicElementElement, ddmFormField);
 		}
 
 		return ddmFormField;
@@ -150,9 +151,9 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
 
 		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
-			DDMFormField field = getDDMFormField(dynamicElement);
+			DDMFormField ddmFormField = getDDMFormField(dynamicElement);
 
-			ddmFormFields.add(field);
+			ddmFormFields.add(ddmFormField);
 		}
 
 		return ddmFormFields;
@@ -164,7 +165,23 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		return LocaleUtil.fromLanguageId(defaultLanguageId);
 	}
 
-	protected void setFieldDataType(
+	protected void setDDMFormAvailableLocales(
+		Element rootElement, DDMForm ddmForm) {
+
+		List<Locale> availableLocales = getAvailableLocales(rootElement);
+
+		ddmForm.setAvailableLocales(availableLocales);
+	}
+
+	protected void setDDMFormDefaultLocale(
+		Element rootElement, DDMForm ddmForm) {
+
+		Locale defaultLocale = getDefaultLocale(rootElement);
+
+		ddmForm.setDefaultLocale(defaultLocale);
+	}
+
+	protected void setDDMFormFieldDataType(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
 		String dataType = dynamicElementElement.attributeValue("dataType");
@@ -172,7 +189,7 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setDataType(dataType);
 	}
 
-	protected void setFieldIndexType(
+	protected void setDDMFormFieldIndexType(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
 		String indexType = dynamicElementElement.attributeValue("indexType");
@@ -180,7 +197,7 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setIndexType(indexType);
 	}
 
-	protected void setFieldMetadata(
+	protected void setDDMFormFieldMetadata(
 		Element metadataElement, DDMFormField ddmFormField) {
 
 		String languageId = metadataElement.attributeValue("locale");
@@ -190,40 +207,39 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		Element labelElement = fetchMetadataEntry(metadataElement, "label");
 
 		if (labelElement != null) {
-			LocalizedValue fieldLabel = ddmFormField.getLabel();
+			LocalizedValue label = ddmFormField.getLabel();
 
-			fieldLabel.addValue(currentLocale, labelElement.getText());
+			label.addValue(currentLocale, labelElement.getText());
 		}
 
 		Element predefinedValueElement = fetchMetadataEntry(
 			metadataElement, "predefinedValue");
 
 		if (predefinedValueElement != null) {
-			LocalizedValue fieldPredefinedValue =
-				ddmFormField.getPredefinedValue();
+			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-			fieldPredefinedValue.addValue(
+			predefinedValue.addValue(
 				currentLocale, predefinedValueElement.getText());
 		}
 
 		Element tipElement = fetchMetadataEntry(metadataElement, "tip");
 
 		if (tipElement != null) {
-			LocalizedValue fieldTip = ddmFormField.getTip();
+			LocalizedValue tip = ddmFormField.getTip();
 
-			fieldTip.addValue(currentLocale, tipElement.getText());
+			tip.addValue(currentLocale, tipElement.getText());
 		}
 
 		Element styleElement = fetchMetadataEntry(metadataElement, "style");
 
 		if (styleElement != null) {
-			LocalizedValue fieldStyle = ddmFormField.getStyle();
+			LocalizedValue style = ddmFormField.getStyle();
 
-			fieldStyle.addValue(currentLocale, styleElement.getText());
+			style.addValue(currentLocale, styleElement.getText());
 		}
 	}
 
-	protected void setFieldMultiple(
+	protected void setDDMFormFieldMultiple(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
 		boolean multiple = GetterUtil.getBoolean(
@@ -232,25 +248,16 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setMultiple(multiple);
 	}
 
-	protected void setFieldNestedField(
+	protected void setDDMFormFieldOptions(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		List<DDMFormField> nestedFields = getDDMFormFields(
-			dynamicElementElement);
-
-		ddmFormField.setNestedFields(nestedFields);
-	}
-
-	protected void setFieldOptions(
-		Element dynamicElementElement, DDMFormField ddmFormField) {
-
-		DDMFormFieldOptions options = getDDMFormFieldOptions(
+		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			dynamicElementElement.elements("dynamic-element"));
 
-		ddmFormField.setOptions(options);
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 	}
 
-	protected void setFieldRequired(
+	protected void setDDMFormFieldRequired(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
 		boolean required = GetterUtil.getBoolean(
@@ -259,24 +266,19 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setRequired(required);
 	}
 
-	protected void setFormAvailableLocales(
-		Element rootElement, DDMForm ddmForm) {
-
-		List<Locale> availableLocales = getAvailableLocales(rootElement);
-
-		ddmForm.setAvailableLocales(availableLocales);
-	}
-
-	protected void setFormDefaultLocale(Element rootElement, DDMForm ddmForm) {
-		Locale defaultLocale = getDefaultLocale(rootElement);
-
-		ddmForm.setDefaultLocale(defaultLocale);
-	}
-
-	protected void setFormFields(Element rootElement, DDMForm ddmForm) {
+	protected void setDDMFormFields(Element rootElement, DDMForm ddmForm) {
 		List<DDMFormField> ddmFormFields = getDDMFormFields(rootElement);
 
 		ddmForm.setDDMFormFields(ddmFormFields);
+	}
+
+	protected void setNestedDDMFormField(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		List<DDMFormField> nestedDDMFormFields = getDDMFormFields(
+			dynamicElementElement);
+
+		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
 	}
 
 }

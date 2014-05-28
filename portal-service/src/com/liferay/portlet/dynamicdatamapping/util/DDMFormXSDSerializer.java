@@ -14,9 +14,13 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+
 /**
  * @author Pablo Carvalho
  */
-public interface DDMFormXSDSerializer extends DDMFormSerializer {
+public interface DDMFormXSDSerializer {
+
+	public DDMForm deserialize(String serializedDDMForm) throws Exception;
 
 }

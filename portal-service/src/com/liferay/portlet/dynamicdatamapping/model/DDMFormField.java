@@ -33,6 +33,10 @@ public class DDMFormField {
 		return _dataType;
 	}
 
+	public DDMFormFieldOptions getDDMFormFieldOptions() {
+		return _ddmFormFieldOptions;
+	}
+
 	public String getIndexType() {
 		return _indexType;
 	}
@@ -45,25 +49,23 @@ public class DDMFormField {
 		return _name;
 	}
 
-	public List<DDMFormField> getNestedFields() {
-		return _nestedFields;
+	public List<DDMFormField> getNestedDDMFormFields() {
+		return _nestedDDMFormFields;
 	}
 
-	public Map<String, DDMFormField> getNestedFieldsMap() {
-		Map<String, DDMFormField> fieldsMap =
+	public Map<String, DDMFormField> getNestedDDMFormFieldsMap() {
+		Map<String, DDMFormField> ddmFormfieldsMap =
 			new HashMap<String, DDMFormField>();
 
-		for (DDMFormField nestedField : _nestedFields) {
-			fieldsMap.put(nestedField.getName(), nestedField);
+		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
+			ddmFormfieldsMap.put(
+				nestedDDMFormField.getName(), nestedDDMFormField);
 
-			fieldsMap.putAll(nestedField.getNestedFieldsMap());
+			ddmFormfieldsMap.putAll(
+				nestedDDMFormField.getNestedDDMFormFieldsMap());
 		}
 
-		return fieldsMap;
-	}
-
-	public DDMFormFieldOptions getOptions() {
-		return _options;
+		return ddmFormfieldsMap;
 	}
 
 	public LocalizedValue getPredefinedValue() {
@@ -98,6 +100,12 @@ public class DDMFormField {
 		_dataType = dataType;
 	}
 
+	public void setDDMFormFieldOptions(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		_ddmFormFieldOptions = ddmFormFieldOptions;
+	}
+
 	public void setIndexType(String indexType) {
 		_indexType = indexType;
 	}
@@ -114,12 +122,8 @@ public class DDMFormField {
 		_name = name;
 	}
 
-	public void setNestedFields(List<DDMFormField> nestedFields) {
-		_nestedFields = nestedFields;
-	}
-
-	public void setOptions(DDMFormFieldOptions options) {
-		_options = options;
+	public void setNestedDDMFormFields(List<DDMFormField> nestedDDMFormFields) {
+		_nestedDDMFormFields = nestedDDMFormFields;
 	}
 
 	public void setPredefinedValue(LocalizedValue predefinedValue) {
@@ -147,12 +151,14 @@ public class DDMFormField {
 	}
 
 	private String _dataType;
+	private DDMFormFieldOptions _ddmFormFieldOptions =
+		new DDMFormFieldOptions();
 	private String _indexType;
 	private LocalizedValue _label = new LocalizedValue();
 	private boolean _multiple;
 	private String _name;
-	private List<DDMFormField> _nestedFields = new ArrayList<DDMFormField>();
-	private DDMFormFieldOptions _options = new DDMFormFieldOptions();
+	private List<DDMFormField> _nestedDDMFormFields =
+		new ArrayList<DDMFormField>();
 	private LocalizedValue _predefinedValue = new LocalizedValue();
 	private boolean _repeatable;
 	private boolean _required;

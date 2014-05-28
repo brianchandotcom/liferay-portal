@@ -47,7 +47,8 @@ public class DDMForm {
 			ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
 
 			if (includeNestedFields) {
-				ddmFormFieldsMap.putAll(ddmFormField.getNestedFieldsMap());
+				ddmFormFieldsMap.putAll(
+					ddmFormField.getNestedDDMFormFieldsMap());
 			}
 		}
 
@@ -62,8 +63,8 @@ public class DDMForm {
 		_availableLocales = availableLocales;
 	}
 
-	public void setDDMFormFields(List<DDMFormField> fields) {
-		_ddmFormFields = fields;
+	public void setDDMFormFields(List<DDMFormField> ddmFormFields) {
+		_ddmFormFields = ddmFormFields;
 	}
 
 	public void setDefaultLocale(Locale defaultLocale) {

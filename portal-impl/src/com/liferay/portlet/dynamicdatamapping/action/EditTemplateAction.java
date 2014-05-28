@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -47,8 +49,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.Map;
@@ -236,26 +236,35 @@ public class EditTemplateAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	protected String getScript(UploadPortletRequest uploadPortletRequest) {
-		InputStream inputStream = null;
+	protected String getScript(UploadPortletRequest uploadPortletRequest)
+		throws Exception {
 
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("script");
+		String scriptContent = ParamUtil.getString(
+			uploadPortletRequest, "scriptContent");
 
-			if (inputStream != null) {
-				return new String(FileUtil.getBytes(inputStream));
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
-			}
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return scriptContent;
 		}
 
-		return null;
+		if (!isTextFile(file)) {
+			throw new TemplateScriptException();
+		}
+
+		String script = FileUtil.read(file);
+
+		return GetterUtil.getString(script, scriptContent);
+	}
+
+	protected boolean isTextFile(File file) {
+		String contentType = MimeTypesUtil.getContentType(file);
+
+		if (contentType.startsWith(ContentTypes.TEXT)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
@@ -281,12 +290,6 @@ public class EditTemplateAction extends PortletAction {
 			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
 		String script = getScript(uploadPortletRequest);
-		String scriptContent = ParamUtil.getString(
-			uploadPortletRequest, "scriptContent");
-
-		if (Validator.isNull(script)) {
-			script = scriptContent;
-		}
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");

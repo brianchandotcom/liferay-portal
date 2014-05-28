@@ -37,6 +37,19 @@
 		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="executeServerActions">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<var name="key_actionsDescription" value="${actionsDescription}" />
+
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />
+		<execute action="CPServeradministration#assertTextEquals" locator-key1="RESOURCES_ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
+		<execute action="CPServeradministration#assertClick" locator-key1="RESOURCES_ACTIONS_TABLE_EXECUTE" value1="Execute" />
+		<execute action="CPServeradministration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="searchPortalPropertiesCP">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PROPERTIES" value1="Properties" />
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />

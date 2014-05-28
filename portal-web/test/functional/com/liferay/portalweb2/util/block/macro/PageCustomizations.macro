@@ -1,4 +1,17 @@
 <definition>
+	<command name="enableSectionCustomizableCP">
+		<var name="key_columnId" value="${columnId}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
+
+		<execute action="CPSitepagesPublicpage#assertClick" locator-key1="NAVIGATION_CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
+
+		<execute action="CPSitepagesPublicpageCustomizationSettings#check" locator-key1="CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO" value1="Customizable" />
+		<execute action="CPSitepagesPublicpageCustomizationSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepagesPublicpageCustomizationSettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitepagesPublicpageCustomizationSettings#assertChecked" locator-key1="CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO" value1="Customizable" />
+	</command>
+
 	<command name="enableSectionCustomizablePG">
 		<var name="key_columnId" value="${columnId}" />
 

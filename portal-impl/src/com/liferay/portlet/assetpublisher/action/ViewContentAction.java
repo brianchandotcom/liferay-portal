@@ -61,6 +61,9 @@ public class ViewContentAction extends WebContentAction {
 						WebKeys.LAYOUT_ASSET_ENTRY);
 
 				if (layoutAssetEntry == null) {
+					renderResponse.setProperty(
+						"clear-request-parameters", "true");
+
 					return actionMapping.findForward(
 						"portlet.asset_publisher.view");
 				}

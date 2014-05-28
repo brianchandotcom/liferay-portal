@@ -3310,7 +3310,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (!PropsValues.USERS_INDEXER_ENABLED ||
-			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseComplexSQL(params)) {
 
 			return userFinder.countByKeywords(
 				companyId, keywords, status, params);
@@ -3399,7 +3399,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (!PropsValues.USERS_INDEXER_ENABLED ||
-			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+			!PropsValues.USERS_SEARCH_WITH_INDEX || isUseComplexSQL(params)) {
 
 			return userFinder.countByC_FN_MN_LN_SN_EA_S(
 				companyId, firstName, middleName, lastName, screenName,
@@ -6026,6 +6026,29 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return userIds;
+	}
+
+	protected boolean isUseComplexSQL(LinkedHashMap<String, Object> params) {
+		for (String key : params.keySet()) {
+			if (!key.equals("inherit") &&
+				!key.equals("usersGroups") &&
+				!key.equals("usersOrgs") &&
+				!key.equals("usersOrgsCount") &&
+				!key.equals("usersRoles") &&
+				!key.equals("usersTeams") &&
+				!key.equals("usersUserGroups")) {
+
+				return true;
+			}
+		}
+
+		Boolean inherit = (Boolean)params.get("inherit");
+
+		if ((inherit != null) && inherit) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void notifyUser(

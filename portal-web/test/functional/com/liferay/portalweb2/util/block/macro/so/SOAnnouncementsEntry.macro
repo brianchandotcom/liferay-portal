@@ -9,10 +9,26 @@
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
 		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
+
+		<if>
+			<equals arg1="${scheduleFutureTime}" arg2="true" />
+			<then>
+				<execute macro="SOAnnouncementsEntry#scheduleFutureTimeCmd" />
+			</then>
+		</if>
+
 		<execute action="SODashboardAddAnnouncementsEntry#click" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
 
-		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" />
+		<if>
+			<equals arg1="${viewImmediately}" arg2="false" />
+			<then>
+				<execute action="SODashboard#assertTextNotPresent" value1="${entryTitle}" />
+			</then>
+			<else>
+				<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" />
+			</else>
+		</if>
 	</command>
 
 	<command name="deletePG">
@@ -80,6 +96,42 @@
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
 	</command>
 
+	<command name="scheduleFutureTimeCmd">
+		<execute action="SODashboardAddAnnouncementsEntry#uncheck" locator-key1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
+		<execute action="SODashboardAddAnnouncementsEntry#pause" locator1="5000" />
+
+		<var attribute="value" locator="//input[contains(@id,'displayDateHour')]" name="displayDateHour" />
+		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
+
+		<if>
+			<equals arg1="${displayDateHourLength}" arg2="1" />
+			<then>
+				<var name="displayDateHour" value="0${displayDateHour}" />
+			</then>
+		</if>
+
+		<var attribute="value" locator="//input[contains(@id,'displayDateAmPm')]" name="displayDateAMPM" />
+		<var name="displayDateAMPM" value="${displayDateAMPM?replace('0', 'AM')}" />
+		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
+
+		<var attribute="value" locator="//input[contains(@id,'displayDateMinute')]" name="displayDateMinute" />
+		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
+		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
+
+		<if>
+			<equals arg1="${displayDateMinuteFutureLength}" arg2="1" />
+			<then>
+				<var name="displayDateMinuteFuture" value="0${displayDateMinuteFuture}" />
+			</then>
+		</if>
+
+		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
+
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
+		<execute action="SODashboardAddAnnouncementsEntry#pause" locator1="5000" />
+	</command>
+
 	<command name="tearDownPG">
 		<execute macro="SOUser#firstLoginPG" />
 
@@ -108,6 +160,32 @@
 		</while>
 	</command>
 
+	<command name="viewEmptyPG">
+		<execute action="SODashboard#assertTextNotPresent" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${entryContent}" />
+
+		<if>
+			<equals arg1="${viewManageEntries}" arg2="false" />
+			<then>
+				<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+			</then>
+			<else>
+				<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+
+				<var name="key_entryTitle" value="${entryTitle}" />
+
+				<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
+
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
+				<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewNotificationPG">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
@@ -123,20 +201,29 @@
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<var name="key_entryTitle" value="${entryTitle}" />
+		<if>
+			<equals arg1="${viewManageEntries}" arg2="false" />
+			<then>
+				<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+			</then>
+			<else>
+				<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
 
-		<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
-		<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
-		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
-		<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
+				<var name="key_entryTitle" value="${entryTitle}" />
+
+				<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
+				<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+				<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
+			</else>
+		</if>
 	</command>
 </definition>

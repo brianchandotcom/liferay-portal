@@ -737,7 +737,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (!PropsValues.USER_GROUPS_INDEXER_ENABLED ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX) {
+			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
+			isUseComplexSQL(params)) {
 
 			return userGroupFinder.countByKeywords(companyId, keywords, params);
 		}
@@ -798,7 +799,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (!PropsValues.USER_GROUPS_INDEXER_ENABLED ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX) {
+			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
+			isUseComplexSQL(params)) {
 
 			return userGroupFinder.countByC_N_D(
 				companyId, name, description, params, andOperator);
@@ -1160,6 +1162,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			layoutLocalService.importLayouts(
 				userId, groupId, false, parameterMap, publicLayoutsFile);
 		}
+	}
+
+	protected boolean isUseComplexSQL(LinkedHashMap<String, Object> params) {
+		if (params.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected void validate(long userGroupId, long companyId, String name)

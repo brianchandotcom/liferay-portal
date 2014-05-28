@@ -63,32 +63,6 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	}
 
 	@Override
-	protected LiferayRepository createLiferayRepository(long repositoryId)
-		throws PortalException, SystemException {
-
-		com.liferay.portal.model.Repository repository = getRepository(
-			repositoryId);
-
-		long groupId;
-		long actualRepositoryId;
-		long dlFolderId;
-
-		if (repository == null) {
-			groupId = repositoryId;
-			actualRepositoryId = repositoryId;
-			dlFolderId = 0;
-		}
-		else {
-			groupId = repository.getGroupId();
-			actualRepositoryId = repository.getRepositoryId();
-			dlFolderId = repository.getDlFolderId();
-		}
-
-		return createLiferayRepositoryInstance(
-			groupId, actualRepositoryId, dlFolderId);
-	}
-
-	@Override
 	protected LiferayRepository createLiferayRepositoryInstance(
 		long groupId, long repositoryId, long dlFolderId) {
 

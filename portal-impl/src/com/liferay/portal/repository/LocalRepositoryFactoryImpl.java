@@ -72,31 +72,6 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected LocalRepository createLiferayRepository(long repositoryId)
-		throws PortalException, SystemException {
-
-		Repository repository = getRepository(repositoryId);
-
-		long groupId;
-		long actualRepositoryId;
-		long dlFolderId;
-
-		if (repository == null) {
-			groupId = repositoryId;
-			actualRepositoryId = repositoryId;
-			dlFolderId = 0;
-		}
-		else {
-			groupId = repository.getGroupId();
-			actualRepositoryId = repository.getRepositoryId();
-			dlFolderId = repository.getDlFolderId();
-		}
-
-		return createLiferayRepositoryInstance(
-			groupId, actualRepositoryId, dlFolderId);
-	}
-
-	@Override
 	protected LiferayLocalRepository createLiferayRepositoryInstance(
 		long groupId, long repositoryId, long dlFolderId) {
 

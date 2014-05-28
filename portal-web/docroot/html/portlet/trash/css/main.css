@@ -17,16 +17,6 @@
 		float: right;
 	}
 
-	.lfr-header-row {
-		.icon-delete {
-			background-image: url(@theme_image_path@/common/delete.png);
-		}
-
-		.icon-undo {
-			background-image: url(@theme_image_path@/common/undo.png);
-		}
-	}
-
 	.trash-root-entry {
 		color: #999;
 		float: right;

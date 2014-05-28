@@ -75,9 +75,98 @@
 			<liferay-util:include page="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>" />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:app-view-toolbar>
-				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "entryToolbar" %>' />
-			</liferay-ui:app-view-toolbar>
+			<div class="edit-toolbar" id="<portlet:namespace />entryToolbar">
+				<div class="btn-group">
+					<c:choose>
+						<c:when test="<%= entry != null %>">
+							<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
+
+							<aui:script use="aui-base">
+								<portlet:actionURL var="restoreEntryURL">
+									<portlet:param name="struts_action" value="/trash/edit_entry" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+									<portlet:param name="redirect" value="<%= redirect %>" />
+									<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</portlet:actionURL>
+
+								A.one('#<portlet:namespace />restoreEntryButton').on(
+									'click',
+									function(event) {
+										Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+									}
+								);
+							</aui:script>
+
+							<c:if test="<%= trashHandler.isDeletable() %>">
+								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
+
+								<aui:script use="aui-base">
+									<portlet:actionURL var="deleteEntryURL">
+										<portlet:param name="struts_action" value="/trash/edit_entry" />
+										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+									</portlet:actionURL>
+
+									A.one('#<portlet:namespace />removeEntryButton').on(
+										'click',
+										function(event) {
+											if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+												submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+											}
+										}
+									);
+								</aui:script>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="<%= trashHandler.isMovable() %>">
+								<aui:button icon="icon-undo" name="moveEntryButton" value="restore" />
+
+								<aui:script use="aui-base">
+									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+										<portlet:param name="struts_action" value="/trash/view_container_model" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+									</portlet:renderURL>
+
+									A.one('#<portlet:namespace />moveEntryButton').on(
+										'click',
+										function(event) {
+											<portlet:namespace />restoreDialog('<%= moveURL %>');
+										}
+									);
+								</aui:script>
+							</c:if>
+
+							<c:if test="<%= trashHandler.isDeletable() %>">
+								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
+
+								<aui:script use="aui-base">
+									<portlet:actionURL var="deleteEntryURL">
+										<portlet:param name="struts_action" value="/trash/edit_entry" />
+										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
+									</portlet:actionURL>
+
+									A.one('#<portlet:namespace />removeEntryButton').on(
+										'click',
+										function(event) {
+											if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+												submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+											}
+										}
+									);
+								</aui:script>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</c:otherwise>
 	</c:choose>
 
@@ -270,113 +359,3 @@
 		</c:if>
 	</c:if>
 </div>
-
-<c:if test="<%= Validator.isNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-	<aui:script use="aui-base,aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />entryToolbar');
-
-		var entryToolbarGroup = [];
-
-		<c:choose>
-			<c:when test="<%= entry != null %>">
-				<portlet:actionURL var="restoreEntryURL">
-					<portlet:param name="struts_action" value="/trash/edit_entry" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-				</portlet:actionURL>
-
-				entryToolbarGroup.push(
-					{
-						icon: 'icon-backward',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>',
-						on: {
-							click: function(event) {
-								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
-							}
-						}
-					}
-				);
-
-				<c:if test="<%= trashHandler.isDeletable() %>">
-					<portlet:actionURL var="deleteEntryURL">
-						<portlet:param name="struts_action" value="/trash/edit_entry" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-					</portlet:actionURL>
-
-					entryToolbarGroup.push(
-						{
-							icon: 'icon-remove',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
-							on: {
-								click: function(event) {
-									if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-										submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
-									}
-								}
-							}
-						}
-					);
-				</c:if>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= trashHandler.isMovable() %>">
-					<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/trash/view_container_model" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
-						<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
-					</portlet:renderURL>
-
-					entryToolbarGroup.push(
-						{
-							icon: 'icon-backward',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>',
-							on: {
-								click: function(event) {
-									<portlet:namespace />restoreDialog('<%= moveURL %>');
-								}
-							}
-						}
-					);
-				</c:if>
-
-				<c:if test="<%= trashHandler.isDeletable() %>">
-					<portlet:actionURL var="deleteEntryURL">
-						<portlet:param name="struts_action" value="/trash/edit_entry" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
-					</portlet:actionURL>
-
-					entryToolbarGroup.push(
-						{
-							icon: 'icon-remove',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
-							on: {
-								click: function(event) {
-									if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-										submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
-									}
-								}
-							}
-						}
-					);
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-
-		var entryToolbar = new A.Toolbar(
-			{
-				boundingBox: buttonRow,
-				children: [entryToolbarGroup]
-			}
-		).render();
-
-		buttonRow.setData('entryToolbar', entryToolbar);
-	</aui:script>
-</c:if>

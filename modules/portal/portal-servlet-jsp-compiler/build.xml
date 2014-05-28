@@ -8,8 +8,6 @@
 	<property name="osgi.runtime.dependencies" value="javax.*.jar,jetty-*.jar,phidias.jar" />
 	<property name="plugin.full.version" value="7.0.0.1" />
 	<property name="plugin.name" value="com.liferay.portal.servlet.jsp.compiler" />
-	<property name="schemas.dir" value="src/javax/servlet/jsp/resources" />
-	<property name="schemas.url" value="http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
@@ -23,65 +21,6 @@
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
 			<param name="patch.source" value="patches" />
 		</antcall>
-
-		<if>
-			<not>
-				<available file="${schemas.dir}" />
-			</not>
-			<then>
-				<mkdir dir="${schemas.dir}" />
-
-				<get
-					dest="${schemas.dir}/jsp_2_0.xsd"
-					src="${schemas.url}/jsp_2_0.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/jsp_2_1.xsd"
-					src="${schemas.url}/jsp_2_1.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/jsp_2_2.xsd"
-					src="${schemas.url}/jsp_2_2.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/jsp_2_3.xsd"
-					src="${schemas.url}/jsp_2_3.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/jspxml.dtd"
-					src="${schemas.url}/jspxml.dtd"
-				/>
-
-				<get
-					dest="${schemas.dir}/jspmlx.xsd"
-					src="${schemas.url}/jspxml.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/web-jsptaglibrary_1_1.dtd"
-					src="${schemas.url}/web-jsptaglibrary_1_1.dtd"
-				/>
-
-				<get
-					dest="${schemas.dir}/web-jsptaglibrary_1_2.dtd"
-					src="${schemas.url}/web-jsptaglibrary_1_2.dtd"
-				/>
-
-				<get
-					dest="${schemas.dir}/web-jsptaglibrary_2_0.xsd"
-					src="${schemas.url}/web-jsptaglibrary_2_0.xsd"
-				/>
-
-				<get
-					dest="${schemas.dir}/web-jsptaglibrary_2_1.xsd"
-					src="${schemas.url}/web-jsptaglibrary_2_1.xsd"
-				/>
-			</then>
-		</if>
 
 		<compile
 			module.dir="${basedir}"

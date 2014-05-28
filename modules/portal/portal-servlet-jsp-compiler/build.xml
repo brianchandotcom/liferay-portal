@@ -21,7 +21,7 @@
 			<param name="patch.original.lib.name" value="${original.lib.name}" />
 			<param name="patch.original.lib.version" value="${original.lib.version}" />
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
-			<param name="patch.source" value="patches/LPS-35513.patch" />
+			<param name="patch.source" value="patches" />
 		</antcall>
 
 		<if>

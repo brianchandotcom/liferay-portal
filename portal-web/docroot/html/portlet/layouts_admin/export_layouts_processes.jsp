@@ -112,7 +112,7 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 						%>
 
 						<liferay-ui:icon
-							image="download"
+							iconCssClass="icon-download"
 							label="<%= true %>"
 							message="<%= sb.toString() %>"
 							url="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
@@ -130,7 +130,7 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 					%>
 
 					<liferay-ui:icon
-						image="download"
+						iconCssClass="icon-download"
 						label="<%= true %>"
 						message='<%= HtmlUtil.escape(MapUtil.getString(taskContextMap, "fileName")) %>'
 					/>
@@ -141,7 +141,16 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
-				<liferay-ui:icon-menu>
+				<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+					<portlet:actionURL var="relaunchURL">
+						<portlet:param name="struts_action" value="/group_pages/edit_export_configuration" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
+
 					<portlet:actionURL var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
@@ -157,15 +166,6 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
 						url="<%= deleteBackgroundTaskURL %>"
 					/>
-
-					<portlet:actionURL var="relaunchURL">
-						<portlet:param name="struts_action" value="/group_pages/edit_export_configuration" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon image="submit" message="relaunch" url="<%= relaunchURL %>" />
 				</liferay-ui:icon-menu>
 			</c:if>
 		</liferay-ui:search-container-column-text>

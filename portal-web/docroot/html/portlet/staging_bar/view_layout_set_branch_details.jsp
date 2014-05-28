@@ -73,8 +73,8 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 			<div class="manage-layout-set-branches page-variations">
 				<liferay-ui:icon
+					iconCssClass="icon-cog"
 					id="manageLayoutSetBranches"
-					image="../aui/cog"
 					message="manage-site-pages-variations"
 					url="<%= layoutSetBranchesURL %>"
 				/>

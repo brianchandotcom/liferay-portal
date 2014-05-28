@@ -43,7 +43,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 		String taglibActionHandler = liferayPortletResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
 		%>
 
-		<liferay-ui:icon image="manage_nodes" message="manage-actions" onClick="<%= taglibActionHandler %>" url="javascript:;" />
+		<liferay-ui:icon iconCssClass="icon-cog" message="manage-actions" onClick="<%= taglibActionHandler %>" url="javascript:;" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.PERMISSIONS) %>">
@@ -55,7 +55,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
-		<liferay-ui:icon image="permissions" url="<%= permissionsURL %>" useDialog="<%= true %>" />
+		<liferay-ui:icon iconCssClass="icon-lock" message="permissions" url="<%= permissionsURL %>" useDialog="<%= true %>" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">

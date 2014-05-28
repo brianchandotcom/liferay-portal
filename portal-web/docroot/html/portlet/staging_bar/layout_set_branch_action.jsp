@@ -39,7 +39,8 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		%>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= taglibURL %>"
 		/>
 	</c:if>
@@ -54,25 +55,11 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= !layoutSetBranch.isMaster() && LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutSetBranch.getGroupId()) %>" />
-			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
-			<portlet:param name="currentLayoutSetBranchId" value="<%= String.valueOf(currentLayoutSetBranchId) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
 		/>
 	</c:if>
 
@@ -90,9 +77,24 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		%>
 
 		<liferay-ui:icon
-			image="copy"
+			iconCssClass="icon-copy"
 			message="merge"
 			url="<%= taglibURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= !layoutSetBranch.isMaster() && LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.DELETE) %>">
+		<portlet:actionURL var="deleteURL">
+			<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutSetBranch.getGroupId()) %>" />
+			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+			<portlet:param name="currentLayoutSetBranchId" value="<%= String.valueOf(currentLayoutSetBranchId) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -41,7 +41,8 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 		%>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= taglibURL %>"
 		/>
 

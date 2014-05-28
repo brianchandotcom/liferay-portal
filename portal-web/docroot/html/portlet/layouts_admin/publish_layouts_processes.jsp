@@ -137,7 +137,18 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
-				<liferay-ui:icon-menu>
+				<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+					<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
+						<portlet:actionURL var="relaunchURL">
+							<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
+							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+						</portlet:actionURL>
+
+						<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
+					</c:if>
+
 					<portlet:actionURL var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 						<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
@@ -153,17 +164,6 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
 						url="<%= deleteBackgroundTaskURL %>"
 					/>
-
-					<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
-						<portlet:actionURL var="relaunchURL">
-							<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
-							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon image="submit" message="relaunch" url="<%= relaunchURL %>" />
-					</c:if>
 				</liferay-ui:icon-menu>
 			</c:if>
 		</liferay-ui:search-container-column-text>

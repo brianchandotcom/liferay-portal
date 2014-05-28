@@ -94,13 +94,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						long timeAgo = now.getTime() - curLayoutRevision.getCreateDate().getTime();
 
 						if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
-							buffer.append("<div class=\"current-version-pointer\"><img alt=\"");
-							buffer.append(LanguageUtil.get(pageContext, "current-version"));
-							buffer.append("\" src=\"");
-							buffer.append(themeDisplay.getPathThemeImages());
-							buffer.append("/arrows/01_right.png\" title=\"");
-							buffer.append(LanguageUtil.get(pageContext, "current-version"));
-							buffer.append("\" /></div>");
+							buffer.append("<i class=\"icon-arrow-right\"></i>");
 						}
 
 						buffer.append("<span class=\"approximate-date\">");
@@ -124,10 +118,10 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 							<c:choose>
 								<c:when test="<%= curLayoutRevision.isHead() %>">
-									<aui:workflow-status showLabel="<%= false %>" status="<%= status %>" statusMessage="ready-for-publication" />
+									<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" statusMessage="ready-for-publication" />
 								</c:when>
 								<c:otherwise>
-									<aui:workflow-status showLabel="<%= false %>" status="<%= status %>" />
+									<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 								</c:otherwise>
 							</c:choose>
 

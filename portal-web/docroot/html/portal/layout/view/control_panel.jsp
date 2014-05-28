@@ -83,7 +83,6 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 		}
 		else {
 			panelCategory += " panel-manage-frontpage";
-			showControlPanelMenu = false;
 		}
 
 		Group group = themeDisplay.getScopeGroup();

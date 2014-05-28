@@ -499,6 +499,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		> .active > a {
 			&, &:focus, &:hover {
 				background: #60BFEF;
+				color: #FFF;
 			}
 		}
 	}
@@ -773,12 +774,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Single site admin ---------- */
+	/* ---------- Single Site Admin ---------- */
+
+	.manage-layout-set-branches-link {
+		width: 100%;
+
+		@include respond-to(desktop) {
+			width: auto;
+		}
+	}
 
 	.panel-manage-frontpage {
 		#controlPanelSiteHeading {
 			border-bottom: 1px solid #CFCFCF;
-			padding: 17px 20px 5px;
+			padding: 17px 35px 5px;
 			position: relative;
 			z-index: 10;
 
@@ -857,17 +866,31 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
+		.control-panel-bar-secondary {
+			padding: 15px 25px;
+		}
+
 		.form-navigator.well {
 			background: #FCFCFC;
 			border: 1px solid #D1D1D1;
 			border-width: 0 0 0 1px;
-			padding-top: 0;
+			padding: 0;
+
+			.button-holder {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
 
 			.nav-header {
 				background: #F3F3F3;
 				font-size: 14px;
 				font-weight: 200;
 				text-transform: none;
+			}
+
+			li a {
+				padding-bottom: 3px;
+				padding-top: 3px;
 			}
 		}
 	}

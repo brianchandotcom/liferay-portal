@@ -22,7 +22,7 @@
 			<i class="icon-search"></i>
 
 			<div class="search-panels-bar">
-				<aui:input cssClass="search-panels-input search-query col-md-12" label="" name="searchPanel" />
+				<aui:input cssClass="form-control search-panels-input search-query" label="" name="searchPanel" />
 			</div>
 		</div>
 	</div>
@@ -116,7 +116,7 @@
 					</c:if>
 				</c:if>
 
-				<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets" role="menu">
+				<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
 
 					<%
 					List<Portlet> portlets = siteAdministrationCategoriesMap.get(siteAdministrationCategory);

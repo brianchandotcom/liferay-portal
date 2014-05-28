@@ -55,11 +55,19 @@
 		padding: 2px;
 	}
 
+	&.panel-default .panel-heading {
+		border-bottom-width: 0;
+	}
+
 	.lfr-panel-content .undo-queue {
 		border-left-width: 0;
 		border-right-width: 0;
 		border-top-width: 0;
 		margin: -0.5em 0 10px;
+	}
+
+	.toggler-header {
+		cursor: pointer;
 	}
 }
 

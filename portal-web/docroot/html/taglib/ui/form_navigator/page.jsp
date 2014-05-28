@@ -76,10 +76,10 @@ if (Validator.isNotNull(historyKey)) {
 		<c:otherwise>
 
 			<%
-			String wrapperCssClass = "row";
+			String wrapperCssClass = "";
 
 			if (displayStyle.equals("steps")) {
-				wrapperCssClass = wrapperCssClass.concat(" form-steps");
+				wrapperCssClass = "form-steps";
 			}
 			%>
 

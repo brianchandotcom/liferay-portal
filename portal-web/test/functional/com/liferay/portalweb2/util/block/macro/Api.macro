@@ -17,7 +17,7 @@
 		<execute action="Jsonwebservices#click" locator-key1="ADDRESS_ADD_ADDRESS" />
 
 		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/address/add-address" />
-		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE" />
+		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE_BUTTON" />
 	</command>
 
 	<command name="apiJsonwsView">
@@ -36,6 +36,18 @@
 		<execute action="Jsonwebservices#click" locator-key1="WIKI_PAGE_ADD_PAGE" />
 
 		<execute action="JsonwebservicesWiki#assertTextEquals" locator-key1="API_METHOD" value1="/wikipage/add-page" />
-		<execute action="JsonwebservicesWiki#assertElementPresent" locator-key1="INVOKE" />
+		<execute action="JsonwebservicesWiki#assertElementPresent" locator-key1="INVOKE_BUTTON" />
+	</command>
+
+	<command name="gotoPAuthURL">
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
+
+		<execute action="Jsonwebservices#click" locator-key1="ADDRESS_ADD_ADDRESS" />
+
+		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/address/add-address" />
+
+		<var locator-key="P_AUTH_FIELD" name="pAuth" path="JsonwebservicesAddress" />
+
+		<execute action="Home#open" locator1="${url}${pAuth}" />
 	</command>
 </definition>

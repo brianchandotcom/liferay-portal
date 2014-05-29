@@ -26,7 +26,9 @@
 	<p class="${coordinatesContainerCssClass}" id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
 		<strong><@liferay_ui.message key="location" />:</strong>
 
-		<span id="${portletNamespace}${namespacedFieldName}Coordinates">${latitude}, ${longitude}</span>
+		<span id="${portletNamespace}${namespacedFieldName}Coordinates">
+		    <@fmt.formatNumber value=latitude type="NUMBER" />, <@fmt.formatNumber value=longitude type="NUMBER" />
+		</span>
 	</p>
 
 	${fieldStructure.children}

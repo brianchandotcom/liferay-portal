@@ -14,7 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.util.test;
 
-import com.liferay.portal.mobile.device.rulegroup.action.impl.SimpleRedirectActionHandler;
+import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
+import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -29,6 +30,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalSe
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,10 +42,17 @@ public class MDRTestUtil {
 	public static MDRAction addAction(long ruleGroupInstanceId)
 		throws Exception {
 
+		Collection<ActionHandler> actionHandlers =
+			ActionHandlerManagerUtil.getActionHandlers();
+
+		Object[] actionHandlersArray = actionHandlers.toArray();
+
+		ActionHandler actionHandler = (ActionHandler)actionHandlersArray[0];
+
 		return addAction(
 			ruleGroupInstanceId, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			SimpleRedirectActionHandler.getHandlerType(), null);
+			RandomTestUtil.randomLocaleStringMap(), actionHandler.getType(),
+			null);
 	}
 
 	public static MDRAction addAction(

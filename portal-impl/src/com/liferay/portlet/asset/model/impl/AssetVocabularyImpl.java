@@ -18,18 +18,15 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
 import java.util.List;
 import java.util.Locale;
@@ -51,18 +48,18 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public long[] getRequiredClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsProperties settingsProperties =
+			getSettingsProperties();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("requiredClassNameIds"), 0L);
+		return settingsProperties.getRequiredAssetRendererFactoryClassNameIds();
 	}
 
 	@Override
 	public long[] getSelectedClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsProperties settingsProperties =
+			getSettingsProperties();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("selectedClassNameIds"), 0L);
+		return settingsProperties.getAssetRendererFactoryClassNameIds();
 	}
 
 	@Override
@@ -76,11 +73,10 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getSettingsProperties() {
+	public AssetVocabularySettingsProperties getSettingsProperties() {
 		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
-
-			_settingsProperties.fastLoad(super.getSettings());
+			_settingsProperties = new AssetVocabularySettingsProperties(
+				super.getSettings());
 		}
 
 		return _settingsProperties;
@@ -170,7 +166,10 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
-		return isClassNameIdSpecified(classNameId, getSelectedClassNameIds());
+		AssetVocabularySettingsProperties settingsProperties =
+			getSettingsProperties();
+
+		return settingsProperties.hasAssetRendererFactory(classNameId);
 	}
 
 	@Override
@@ -178,7 +177,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			long classNameId, final long[] categoryIds)
 		throws SystemException {
 
-		if (!isClassNameIdSpecified(classNameId, getRequiredClassNameIds())) {
+		if (!isRequired(classNameId)) {
 			return false;
 		}
 
@@ -198,15 +197,18 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsProperties settingsProperties =
+			getSettingsProperties();
 
-		return GetterUtil.getBoolean(
-			settingsProperties.getProperty("multiValued"), true);
+		return settingsProperties.isMultiValued();
 	}
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		return ArrayUtil.contains(getRequiredClassNameIds(), classNameId);
+		AssetVocabularySettingsProperties settingsProperties =
+			getSettingsProperties();
+
+		return settingsProperties.isAssetRendererFactoryRequired(classNameId);
 	}
 
 	@Override
@@ -217,29 +219,14 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public void setSettingsProperties(UnicodeProperties settingsProperties) {
+	public void setSettingsProperties(
+		AssetVocabularySettingsProperties settingsProperties) {
+
 		_settingsProperties = settingsProperties;
 
 		super.setSettings(settingsProperties.toString());
 	}
 
-	protected boolean isClassNameIdSpecified(
-		long classNameId, long[] classNameIds) {
-
-		if (classNameIds.length == 0) {
-			return false;
-		}
-
-		if ((classNameIds[0] !=
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
-			!ArrayUtil.contains(classNameIds, classNameId)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private UnicodeProperties _settingsProperties;
+	private AssetVocabularySettingsProperties _settingsProperties;
 
 }

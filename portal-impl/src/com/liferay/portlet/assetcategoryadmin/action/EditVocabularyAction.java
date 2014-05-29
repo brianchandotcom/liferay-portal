@@ -25,14 +25,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsProperties;
 
-import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -91,51 +89,31 @@ public class EditVocabularyAction extends PortletAction {
 	protected UnicodeProperties getSettingsProperties(
 		ActionRequest actionRequest) {
 
-		UnicodeProperties settingsProperties = new UnicodeProperties();
+		AssetVocabularySettingsProperties settingsProperties =
+			new AssetVocabularySettingsProperties();
 
 		boolean multiValued = ParamUtil.getBoolean(
 			actionRequest, "multiValued");
 
-		settingsProperties.setProperty(
-			"multiValued", String.valueOf(multiValued));
+		settingsProperties.setMultiValued(multiValued);
 
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
-		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
-		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
+		long[] classNameIds = new long[indexes.length];
+		boolean[] areRequired = new boolean[indexes.length];
 
-		for (int index : indexes) {
-			long classNameId = ParamUtil.getLong(
+		for (int i = 0; i < indexes.length; i++) {
+			int index = indexes[i];
+
+			classNameIds[i] = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
 
-			boolean required = ParamUtil.getBoolean(
+			areRequired[i] = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
-
-			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
-				selectedClassNameIds.clear();
-				selectedClassNameIds.add(classNameId);
-
-				if (required) {
-					requiredClassNameIds.clear();
-					requiredClassNameIds.add(classNameId);
-				}
-
-				break;
-			}
-			else {
-				selectedClassNameIds.add(classNameId);
-
-				if (required) {
-					requiredClassNameIds.add(classNameId);
-				}
-			}
 		}
 
-		settingsProperties.setProperty(
-			"selectedClassNameIds", StringUtil.merge(selectedClassNameIds));
-		settingsProperties.setProperty(
-			"requiredClassNameIds", StringUtil.merge(requiredClassNameIds));
+		settingsProperties.setAssetRendererFactories(classNameIds, areRequired);
 
 		return settingsProperties;
 	}

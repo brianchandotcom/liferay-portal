@@ -41,7 +41,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public long[] getSelectedClassNameIds();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
+	public com.liferay.portlet.asset.util.AssetVocabularySettingsProperties getSettingsProperties();
 
 	public java.lang.String getUnambiguousTitle(
 		java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> vocabularies,
@@ -63,5 +63,5 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public boolean isRequired(long classNameId);
 
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+		com.liferay.portlet.asset.util.AssetVocabularySettingsProperties settingsProperties);
 }

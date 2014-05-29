@@ -814,7 +814,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
+	public com.liferay.portlet.asset.util.AssetVocabularySettingsProperties getSettingsProperties() {
 		return _assetVocabulary.getSettingsProperties();
 	}
 
@@ -859,7 +859,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 
 	@Override
 	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+		com.liferay.portlet.asset.util.AssetVocabularySettingsProperties settingsProperties) {
 		_assetVocabulary.setSettingsProperties(settingsProperties);
 	}
 

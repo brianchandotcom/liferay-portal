@@ -14,9 +14,20 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -34,6 +45,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -41,6 +53,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -48,19 +61,18 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -91,6 +103,17 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_userIds[i] = user.getUserId();
 		}
+
+		MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+		_originalSyncDestination = messageBus.getDestination(
+			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
+
+		SynchronousDestination destination = new SynchronousDestination();
+		destination.setName(
+			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
+
+		messageBus.addDestination(destination);
 	}
 
 	@After
@@ -105,6 +128,15 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			UserLocalServiceUtil.deleteUser(_userIds[i]);
 		}
+
+		MessageBusUtil.removeDestination(
+			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
+
+		if (_originalSyncDestination != null) {
+			MessageBusUtil.addDestination(_originalSyncDestination);
+		}
+
+		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test
@@ -405,6 +437,62 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			fileEntry.getVersion());
 	}
 
+	@Test
+	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
+		int[] messagesReceived = registerStubSyncMessageListener(
+			DLSyncConstants.EVENT_ADD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		Assert.assertEquals(1, messagesReceived[0]);
+	}
+
+	@Test
+	public void testWhenAddingAFolderItsAssetIsCreated()
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		Assert.assertNotNull(assetEntry);
+	}
+
+	@Test
+	public void testWhenCopyingAFolderAllSyncEventsAreFired() throws Exception {
+		int[] messagesReceived = registerStubSyncMessageListener(
+			DLSyncConstants.EVENT_ADD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		DLAppServiceUtil.addFolder(
+			group.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		DLAppServiceUtil.copyFolder(
+			folder.getRepositoryId(), folder.getFolderId(),
+			parentFolder.getParentFolderId(), folder.getName(),
+			folder.getDescription(), serviceContext);
+
+		Assert.assertEquals(4, messagesReceived[0]);
+	}
+
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
@@ -414,6 +502,30 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		return DLAppTestUtil.addFileEntry(
 			group.getGroupId(), folderId, "Title.txt");
+	}
+
+	protected int[] registerStubSyncMessageListener(final String targetEvent) {
+		final int[] messagesReceived = {0};
+
+		MessageBusUtil.registerMessageListener(
+			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
+			new MessageListener() {
+
+				@Override
+				public void receive(Message message)
+					throws MessageListenerException {
+
+					Object event = message.get("event");
+
+					if (targetEvent.equals(event)) {
+						messagesReceived[0]++;
+					}
+				}
+
+			}
+		);
+
+		return messagesReceived;
 	}
 
 	protected void search(
@@ -497,6 +609,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
+	private Destination _originalSyncDestination;
 	private long[] _userIds;
 
 	private class AddFileEntryThread extends DoAsUserThread {

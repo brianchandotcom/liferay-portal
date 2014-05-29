@@ -220,6 +220,16 @@ public interface LiferaySelenium extends Selenium {
 
 	public void sikuliClick(String image) throws Exception;
 
+	public void sikuliLeftMouseDown() throws Exception;
+
+	public void sikuliLeftMouseUp() throws Exception;
+
+	public void sikuliMouseMove(String image) throws Exception;
+
+	public void sikuliRightMouseDown() throws Exception;
+
+	public void sikuliRightMouseUp() throws Exception;
+
 	public void sikuliType(String image, String value) throws Exception;
 
 	public void sikuliUploadCommonFile(String image, String value)

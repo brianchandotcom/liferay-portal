@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import org.sikuli.api.robot.Key;
+import org.sikuli.script.Button;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
@@ -841,6 +842,57 @@ public class LiferaySeleniumHelper {
 		_screen.click(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
+	}
+
+	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseDown(Button.LEFT);
+	}
+
+	public static void sikuliLeftMouseUp(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseUp(Button.LEFT);
+	}
+
+	public static void sikuliMouseMove(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		Match match = _screen.exists(
+			liferaySelenium.getProjectDirName() +
+			liferaySelenium.getSikuliImagesDirName() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match == null) {
+			return;
+		}
+
+		_screen.mouseMove(
+			liferaySelenium.getProjectDirName() +
+			liferaySelenium.getSikuliImagesDirName() + image);
+	}
+
+	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseDown(Button.RIGHT);
+	}
+
+	public static void sikuliRightMouseUp(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseUp(Button.RIGHT);
 	}
 
 	public static void sikuliType(

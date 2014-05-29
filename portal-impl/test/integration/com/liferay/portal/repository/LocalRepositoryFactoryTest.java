@@ -44,7 +44,7 @@ public class LocalRepositoryFactoryTest {
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreatingARepositoryOnAFakeFileEntryFails()
+	public void testCreateRepositoryFromInexistingFileEntryId()
 		throws Exception {
 
 		long fileEntryId = 42L;
@@ -53,7 +53,7 @@ public class LocalRepositoryFactoryTest {
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreatingARepositoryOnAFakeFileVersionFails()
+	public void testCreateRepositoryFromInexistingFileVersionId()
 		throws Exception {
 
 		long fileVersionId = 42L;
@@ -62,53 +62,53 @@ public class LocalRepositoryFactoryTest {
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreatingARepositoryOnAFakeFolderFails() throws Exception {
+	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
 		long folderId = 42L;
 
 		LocalRepositoryFactoryUtil.create(folderId, 0, 0);
 	}
 
 	@Test
-	public void testCreatingARepositoryOnAnExistingFileEntrySucceeds()
-		throws Exception {
+	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFolder folder = DLTestUtil.addFolder(_group.getGroupId());
-		DLFileEntry fileEntry = DLTestUtil.addFileEntry(folder);
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(dlFolder);
 
-		LocalRepositoryFactoryUtil.create(0, fileEntry.getFileEntryId(), 0);
+		LocalRepositoryFactoryUtil.create(0, dlFileEntry.getFileEntryId(), 0);
 	}
 
 	@Test
-	public void testCreatingARepositoryOnAnExistingFileVersionSucceeds()
+	public void testCreateRepositoryFromExistingFileVersionId()
 		throws Exception {
 
-		DLFolder folder = DLTestUtil.addFolder(_group.getGroupId());
-		DLFileEntry fileEntry = DLTestUtil.addFileEntry(folder);
-		DLFileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		LocalRepositoryFactoryUtil.create(0, 0, fileVersion.getFileVersionId());
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(dlFolder);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		LocalRepositoryFactoryUtil.create(
+			0, 0, dlFileVersion.getFileVersionId());
 	}
 
 	@Test
-	public void testCreatingARepositoryOnAnExistingFolderSucceeds()
-		throws Exception {
+	public void testCreateRepositoryFromExistingFolderId() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFolder folder = DLTestUtil.addFolder(_group.getGroupId());
-
-		LocalRepositoryFactoryUtil.create(folder.getFolderId(), 0, 0);
+		LocalRepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
 	}
 
 	@Test
-	public void testCreatingARepositoryOnAnExistingRepositorySucceeds()
+	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
 
-		DLFolder folder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		LocalRepositoryFactoryUtil.create(folder.getRepositoryId());
+		LocalRepositoryFactoryUtil.create(dlFolder.getRepositoryId());
 	}
 
 	@Test
-	public void testCreatingARepositoryThatDoesntExistSucceeds()
+	public void testCreateRepositoryFromInexistingRepositoryId()
 		throws Exception {
 
 		long repositoryId = RandomTestUtil.nextLong();

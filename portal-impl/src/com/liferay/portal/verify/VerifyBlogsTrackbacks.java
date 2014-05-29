@@ -78,6 +78,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	private void _verifyPost(BlogsEntry entry, MBMessage message)
 		throws PortalException, SystemException {
 
+		long commentId = message.getMessageId();
 		String entryURL =
 			Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
 		String body = message.getBody();
@@ -102,7 +103,6 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 				companyId);
 
 			if (userId == defaultUserId) {
-				long commentId = message.getMessageId();
 				_linkbackConsumer.verifyTrackback(commentId, url, entryURL);
 			}
 		}

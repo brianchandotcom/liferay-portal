@@ -240,6 +240,13 @@
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="ERROR_MESSAGE_FIELD_REQUIRED" value1="This field is required." />
+
+		<if>
+			<isset var="webContentContent" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addPGViaAP">

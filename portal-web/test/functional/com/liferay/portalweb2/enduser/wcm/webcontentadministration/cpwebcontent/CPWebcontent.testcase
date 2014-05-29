@@ -13,18 +13,6 @@
 		<execute macro="WebContentStructures#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlankWebContentTitleAndContentNotLost" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addNullCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-
-		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="CONTENT_FIELD" value1="WC WebContent Content" />
-	</command>
-
 	<command name="AddFolder" priority="5">
 		<var name="folderDescription" value="WC Folder Description" />
 		<var name="folderName" value="WC Folder Name" />
@@ -1210,6 +1198,16 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="ViewContentNotLostWithBlankTitle" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addNullCP">
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 </definition>

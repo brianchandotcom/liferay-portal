@@ -600,8 +600,13 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void sikuliMouseDown(String type) throws Exception {
-		LiferaySeleniumHelper.sikuliMouseDown(this, type);
+	public void sikuliLeftMouseDown() throws Exception {
+		LiferaySeleniumHelper.sikuliLeftMouseDown(this);
+	}
+
+	@Override
+	public void sikuliLeftMouseUp() throws Exception {
+		LiferaySeleniumHelper.sikuliLeftMouseUp(this);
 	}
 
 	@Override
@@ -610,8 +615,13 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void sikuliMouseUp(String type) throws Exception {
-		LiferaySeleniumHelper.sikuliMouseUp(this, type);
+	public void sikuliRightMouseDown() throws Exception {
+		LiferaySeleniumHelper.sikuliRightMouseDown(this);
+	}
+
+	@Override
+	public void sikuliRightMouseUp() throws Exception {
+		LiferaySeleniumHelper.sikuliRightMouseUp(this);
 	}
 
 	@Override

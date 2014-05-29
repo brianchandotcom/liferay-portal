@@ -1,0 +1,5 @@
+<definition>
+	<command name="sikuliLeftMouseDown">
+		<execute selenium="sikuliLeftMouseDown" />
+	</command>
+</definition>

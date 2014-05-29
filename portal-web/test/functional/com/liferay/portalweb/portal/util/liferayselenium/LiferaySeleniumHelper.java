@@ -844,20 +844,20 @@ public class LiferaySeleniumHelper {
 			liferaySelenium.getSikuliImagesDirName() + image);
 	}
 
-	public static void sikuliMouseDown(
-			LiferaySelenium liferaySelenium, String type)
+	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		if (type.equals("LEFT")) {
-			liferaySelenium.pause("1000");
+		liferaySelenium.pause("1000");
 
-			_screen.mouseDown(Button.LEFT);
-		}
-		else {
-			liferaySelenium.pause("1000");
+		_screen.mouseDown(Button.LEFT);
+	}
 
-			_screen.mouseDown(Button.RIGHT);
-		}
+	public static void sikuliLeftMouseUp(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseUp(Button.LEFT);
 	}
 
 	public static void sikuliMouseMove(
@@ -879,20 +879,20 @@ public class LiferaySeleniumHelper {
 			liferaySelenium.getSikuliImagesDirName() + image);
 	}
 
-	public static void sikuliMouseUp(
-			LiferaySelenium liferaySelenium, String type)
+	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		if (type.equals("LEFT")) {
-			liferaySelenium.pause("1000");
+		liferaySelenium.pause("1000");
 
-			_screen.mouseUp(Button.LEFT);
-		}
-		else {
-			liferaySelenium.pause("1000");
+		_screen.mouseDown(Button.RIGHT);
+	}
 
-			_screen.mouseUp(Button.RIGHT);
-		}
+	public static void sikuliRightMouseUp(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		liferaySelenium.pause("1000");
+
+		_screen.mouseUp(Button.RIGHT);
 	}
 
 	public static void sikuliType(

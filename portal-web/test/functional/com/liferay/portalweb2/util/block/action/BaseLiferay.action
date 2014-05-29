@@ -355,27 +355,43 @@
 		</default>
 	</command>
 
-	<command name="sikuliMouseDown">
+	<command name="sikuliLeftMouseDown">
 		<default>
-			<description message="Click left mouse down." />
+			<description message="Push left mouse button down." />
 
-			<execute function="SikuliMouseDown#sikuliMouseDown" />
+			<execute function="SikuliLeftMouseDown#sikuliLeftMouseDown" />
+		</default>
+	</command>
+
+	<command name="sikuliLeftMouseUp">
+		<default>
+			<description message="Lift left mouse button up." />
+
+			<execute function="SikuliLeftMouseUp#sikuliLeftMouseUp" />
 		</default>
 	</command>
 
 	<command name="sikuliMouseMove">
 		<default>
-			<description message="Moves the mouse on top of ${locator1}." />
+			<description message="Mouse over the ${locator1}." />
 
 			<execute function="SikuliMouseMove#sikuliMouseMove" />
 		</default>
 	</command>
 
-	<command name="sikuliMouseUp">
+	<command name="sikuliRightMouseDown">
 		<default>
-			<description message="Click left mouse up." />
+			<description message="Push right mouse button down." />
 
-			<execute function="SikuliMouseUp#sikuliMouseUp" />
+			<execute function="SikuliRightMouseDown#sikuliRightMouseDown" />
+		</default>
+	</command>
+
+	<command name="sikuliRightMouseUp">
+		<default>
+			<description message="Lift right mouse button up." />
+
+			<execute function="SikuliRightMouseUp#sikuliRightMouseUp" />
 		</default>
 	</command>
 

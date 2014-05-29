@@ -36,10 +36,11 @@
 		</if>
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="You are signed in as Test Test." />
-		<execute action="BasePortlet#sikuliMouseMove" locator-key1="SIGN_IN_PORTLET" />
-		<execute action="BasePortlet#sikuliMouseDown" locator1="LEFT" />
-		<execute action="BasePortlet#sikuliMouseMove" locator-key1="HELLO_WORLD_PORTLET" />
-		<execute action="BasePortlet#sikuliMouseUp" locator1="LEFT" />
-		<execute action="BasePortlet#assertVisible" locator-key1="PAGE_COLUMN_2_SIGN_IN_PORTLET" />
+
+		<execute action="Home#sikuliMouseMove" locator-key1="SIGN_IN_PORTLET" />
+		<execute action="Home#sikuliLeftMouseDown" />
+		<execute action="Home#sikuliMouseMove" locator-key1="HELLO_WORLD_PORTLET" />
+		<execute action="Home#sikuliLeftMouseUp" />
+		<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_2_SIGN_IN_PORTLET" />
 	</command>
 </definition>

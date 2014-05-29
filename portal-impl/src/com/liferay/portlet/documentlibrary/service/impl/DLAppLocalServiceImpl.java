@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -767,6 +769,26 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
 		}
+	}
+
+	@Override
+	public FileEntry moveFileEntryFromTrash(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = getFileEntryLocalRepository(
+			fileEntryId);
+
+		if (!(localRepository instanceof LiferayLocalRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + localRepository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		return dlAppHelperLocalService.moveFileEntryFromTrash(
+			serviceContext.getUserId(), fileEntry, newFolderId, serviceContext);
 	}
 
 	/**

@@ -246,11 +246,11 @@ public class EditTemplateAction extends PortletAction {
 			return scriptContent;
 		}
 
-		if (!isTextFile(file)) {
+		String script = FileUtil.read(file);
+
+		if (Validator.isNotNull(script) && !isTextFile(file)) {
 			throw new TemplateScriptException();
 		}
-
-		String script = FileUtil.read(file);
 
 		return GetterUtil.getString(script, scriptContent);
 	}

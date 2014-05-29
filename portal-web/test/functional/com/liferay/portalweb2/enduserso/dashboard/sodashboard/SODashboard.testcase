@@ -45,7 +45,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -55,7 +55,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -296,7 +296,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -408,7 +408,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 
@@ -434,7 +434,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -443,7 +443,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#deletePG" />
 	</command>
@@ -456,7 +456,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -466,7 +466,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -475,7 +475,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -494,7 +494,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -503,7 +503,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -522,7 +522,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -531,7 +531,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -541,7 +541,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#markAsUnreadPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -559,7 +559,7 @@
 		<var name="portletName" value="Calendar" />
 		<var name="soPage" value="true" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
@@ -678,7 +678,7 @@
 		<var name="portletName" value="Calendar" />
 		<var name="soPage" value="true" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
@@ -737,7 +737,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
@@ -763,7 +763,7 @@
 		<var name="portletName" value="Calendar" />
 		<var name="soPage" value="true" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
@@ -803,7 +803,7 @@
 		<var name="portletName" value="Calendar" />
 		<var name="soPage" value="true" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
@@ -880,7 +880,7 @@
 		<var name="soPage" value="true" />
 		<var name="startDateTime" value="12:00 AM" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
@@ -916,7 +916,7 @@
 	</command>
 
 	<command name="ViewLinkContactscenter" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
 
@@ -924,7 +924,7 @@
 	</command>
 
 	<command name="ViewLinkHome" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
@@ -933,7 +933,7 @@
 	</command>
 
 	<command name="ViewLinkMicroblogs" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -941,7 +941,7 @@
 	</command>
 
 	<command name="ViewLinkMydocuments" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
@@ -949,7 +949,7 @@
 	</command>
 
 	<command name="ViewLinkPrivateMessaging" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
 
@@ -957,7 +957,7 @@
 	</command>
 
 	<command name="ViewLinkTasks" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
 
@@ -1351,7 +1351,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1371,7 +1371,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="Microblogs Post Comment" />

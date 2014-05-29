@@ -1585,7 +1585,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -1616,7 +1616,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 
@@ -1673,7 +1673,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -1690,7 +1690,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -1832,7 +1832,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -1863,7 +1863,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 
@@ -1920,7 +1920,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -1937,7 +1937,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2025,9 +2025,7 @@
 			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
 		</execute>
 
-		<execute macro="SOUserBar#dashboardPG">
-			<var name="userName" value="${adminName}" />
-		</execute>
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${bookmarksEntryDescription}" />
@@ -2685,9 +2683,7 @@
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit2}" />
 		</execute>
 
-		<execute macro="SOUserBar#dashboardPG">
-			<var name="userName" value="${adminName}" />
-		</execute>
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContentEdited">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -3585,7 +3581,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
@@ -3802,7 +3798,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
@@ -4120,9 +4116,7 @@
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
 		</execute>
 
-		<execute macro="SOUserBar#dashboardPG">
-			<var name="userName" value="${adminName}" />
-		</execute>
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />

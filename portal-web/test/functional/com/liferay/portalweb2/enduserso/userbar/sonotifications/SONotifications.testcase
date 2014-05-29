@@ -257,7 +257,8 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
@@ -673,7 +674,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1131,7 +1132,7 @@
 		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -1141,7 +1142,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
 			<var name="entryAuthor" value="${adminName}" />
@@ -1174,7 +1175,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -1189,7 +1190,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOAnnouncementsEntry#viewNotificationPG">
 			<var name="entryAuthor" value="${adminName}" />
@@ -1309,7 +1310,8 @@
 
 		<var name="entryAuthor" value="${adminName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />

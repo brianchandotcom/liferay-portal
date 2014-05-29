@@ -892,7 +892,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -970,7 +970,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -1048,7 +1048,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />
@@ -1126,7 +1126,7 @@
 			<var name="userLoginFullName" value="${userName4}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewSiteContent">
 			<var name="blogsAction" value="Wrote a new blog entry." />

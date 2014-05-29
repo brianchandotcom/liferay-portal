@@ -36,7 +36,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -48,7 +48,7 @@
 			<var name="commentContent" value="${commentContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsCommentActivityEntry">
 			<var name="commentCount" value="1" />
@@ -119,7 +119,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -131,14 +131,14 @@
 			<var name="commentContent" value="${commentContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#deleteActivityEntryComment">
 			<var name="commentContent" value="${commentContent}" />
 			<var name="commentCount" value="1" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -181,7 +181,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -193,7 +193,7 @@
 			<var name="commentContent" value="${commentContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#editActivityEntryComment">
 			<var name="commentContent" value="${commentContent}" />
@@ -201,7 +201,7 @@
 			<var name="commentCount" value="1" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsCommentActivityEntry">
 			<var name="commentCount" value="1" />
@@ -331,7 +331,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -384,7 +384,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -409,7 +409,7 @@
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -445,7 +445,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />

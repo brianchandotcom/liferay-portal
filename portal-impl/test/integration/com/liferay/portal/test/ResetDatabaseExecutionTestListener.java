@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.log.test.Log4JLoggerTestUtil;
+import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtil;
 import com.liferay.portal.upgrade.util.Table;

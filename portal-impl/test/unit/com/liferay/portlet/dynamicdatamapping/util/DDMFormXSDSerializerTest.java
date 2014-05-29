@@ -158,7 +158,7 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 
 		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
 
-		Assert.assertEquals("testbox", ddmFormField.getType());
+		Assert.assertEquals("checkbox", ddmFormField.getType());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
 	}

@@ -15,8 +15,9 @@
 package com.liferay.portlet.mobiledevicerules.util.test;
 
 import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
+import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
-import com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler;
+import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -67,10 +68,17 @@ public class MDRTestUtil {
 	}
 
 	public static MDRRule addRule(long ruleGroupId) throws Exception {
+		Collection<RuleHandler> ruleHandlers =
+			RuleGroupProcessorUtil.getRuleHandlers();
+
+		Object[] ruleHandlersArray = ruleHandlers.toArray();
+
+		RuleHandler ruleHandler = (RuleHandler)ruleHandlersArray[0];
+
 		return addRule(
 			ruleGroupId, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			SimpleRuleHandler.getHandlerType(), null);
+			RandomTestUtil.randomLocaleStringMap(), ruleHandler.getType(),
+			null);
 	}
 
 	public static MDRRule addRule(

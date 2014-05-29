@@ -1,6 +1,6 @@
 <definition>
 	<command name="addWhatsHappeningEntry">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
@@ -35,7 +35,7 @@
 	</command>
 
 	<command name="addWhatsHappeningEntryInvalid">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
@@ -68,7 +68,7 @@
 		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_POST_BUTTON" />
 		<execute action="SODashboard#pause" value1="1000" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
 			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
@@ -81,7 +81,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
@@ -101,7 +101,7 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
 			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
@@ -261,7 +261,7 @@
 	</command>
 
 	<command name="viewTodaysEvent">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -308,7 +308,7 @@
 	</command>
 
 	<command name="viewTodaysEventDeletedEvent">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -329,7 +329,7 @@
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -381,7 +381,7 @@
 	</command>
 
 	<command name="viewUpcomingEvent">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -399,7 +399,7 @@
 	</command>
 
 	<command name="viewUpcomingTask">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 		<var name="key_taskDescription" value="${taskDescription}" />
@@ -436,7 +436,7 @@
 			</else>
 		</if>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertClick" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
@@ -446,7 +446,7 @@
 	<command name="viewUpcomingTaskNone">
 		<var name="key_taskDescription" value="${taskDescription}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 		<execute action="SODashboard#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_HIGH" />

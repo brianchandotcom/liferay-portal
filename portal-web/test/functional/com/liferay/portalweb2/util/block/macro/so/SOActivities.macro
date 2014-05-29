@@ -959,7 +959,7 @@
 
 		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_userName" value="${microblogsEntryRepostAuthorName}" />
 

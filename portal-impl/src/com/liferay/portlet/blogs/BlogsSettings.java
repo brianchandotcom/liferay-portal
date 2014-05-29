@@ -14,44 +14,52 @@
 
 package com.liferay.portlet.blogs;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portlet.blogs.util.BlogsConstants;
+
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
 public class BlogsSettings {
 
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
+	static {
+		FallbackKeys fallbackKeys = _getFallbackKeys();
 
-		fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-		fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		SettingsFactory settingsFactory =
+			SettingsFactoryUtil.getSettingsFactory();
 
-		return fallbackKeys;
+		settingsFactory.registerFallbackKeys(
+			BlogsConstants.SERVICE_NAME, fallbackKeys);
+	}
+
+	public static BlogsSettings getBlogsSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BlogsConstants.SERVICE_NAME);
+
+		return new BlogsSettings(settings);
+	}
+
+	public static BlogsSettings getBlogsSettings(long groupId, Map parameterMap)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BlogsConstants.SERVICE_NAME);
+
+		return new BlogsSettings(
+			new ParameterMapSettings(parameterMap, settings));
 	}
 
 	public BlogsSettings(Settings settings) {
@@ -115,6 +123,35 @@ public class BlogsSettings {
 
 	public String getEmailFromName() {
 		return _typedSettings.getValue("emailFromName");
+	}
+
+	private static FallbackKeys _getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add(
+			"emailEntryAddedBody", PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
+		fallbackKeys.add(
+			"emailEntryAddedEnabled",
+			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED);
+		fallbackKeys.add(
+			"emailEntryAddedSubject",
+			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
+		fallbackKeys.add(
+			"emailEntryUpdatedBody", PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
+		fallbackKeys.add(
+			"emailEntryUpdatedEnabled",
+			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED);
+		fallbackKeys.add(
+			"emailEntryUpdatedSubject",
+			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.BLOGS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add(
+			"emailFromName", PropsKeys.BLOGS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		return fallbackKeys;
 	}
 
 	private TypedSettings _typedSettings;

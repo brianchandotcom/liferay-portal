@@ -59,7 +59,6 @@ import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.portlet.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.portlet.bookmarks.social.BookmarksActivityKeys;
-import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -698,7 +697,7 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksSettings bookmarksSettings =
-			BookmarksUtil.getBookmarksSettings(entry.getGroupId());
+			BookmarksSettings.getBookmarksSettings(entry.getGroupId());
 
 		if ((serviceContext.isCommandAdd() &&
 			 !bookmarksSettings.getEmailEntryAddedEnabled()) ||

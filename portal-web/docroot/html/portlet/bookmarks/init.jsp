@@ -34,7 +34,7 @@ page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
 
 <%
-BookmarksSettings bookmarksSettings = BookmarksUtil.getBookmarksSettings(scopeGroupId);
+BookmarksSettings bookmarksSettings = BookmarksSettings.getBookmarksSettings(scopeGroupId);
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

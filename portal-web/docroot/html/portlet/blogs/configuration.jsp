@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-blogsPortletInstanceSettings = BlogsUtil.getBlogsPortletInstanceSettings(layout, portletId, request);
+blogsPortletInstanceSettings = BlogsPortletInstanceSettings.getBlogsPortletInstanceSettings(layout, portletId, request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

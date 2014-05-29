@@ -78,7 +78,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-MBSettings mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId());
+MBSettings mbSettings = MBSettings.getMBSettings(themeDisplay.getSiteGroupId());
 
 String[] priorities = mbSettings.getPriorities(currentLanguageId);
 

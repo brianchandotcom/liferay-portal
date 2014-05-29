@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -50,7 +47,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -64,7 +60,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -185,7 +180,7 @@ public class DLImpl implements DL {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
-			DLUtil.getDLPortletInstanceSettings(
+			DLPortletInstanceSettings.getDLPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		data.put("folder-id", dlPortletInstanceSettings.getDefaultFolderId());
@@ -208,7 +203,7 @@ public class DLImpl implements DL {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
-			DLUtil.getDLPortletInstanceSettings(
+			DLPortletInstanceSettings.getDLPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		long defaultFolderId = dlPortletInstanceSettings.getDefaultFolderId();
@@ -476,54 +471,6 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
-	}
-
-	@Override
-	public DLPortletInstanceSettings getDLPortletInstanceSettings(
-			Layout layout, String portletId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new DLPortletInstanceSettings(settings);
-	}
-
-	@Override
-	public DLPortletInstanceSettings getDLPortletInstanceSettings(
-			Layout layout, String portletId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		Settings parameterMapSettings = new ParameterMapSettings(
-			request.getParameterMap(), settings);
-
-		return new DLPortletInstanceSettings(parameterMapSettings);
-	}
-
-	@Override
-	public DLSettings getDLSettings(long groupId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, DLConstants.SERVICE_NAME);
-
-		return new DLSettings(settings);
-	}
-
-	@Override
-	public DLSettings getDLSettings(long groupId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, DLConstants.SERVICE_NAME);
-
-		Settings parameterMapSettings = new ParameterMapSettings(
-			request.getParameterMap(), settings);
-
-		return new DLSettings(parameterMapSettings);
 	}
 
 	@Override

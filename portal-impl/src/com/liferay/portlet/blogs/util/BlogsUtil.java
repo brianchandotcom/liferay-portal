@@ -19,15 +19,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -35,8 +31,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
-import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
-import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.LinkedHashMap;
@@ -45,8 +39,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,47 +51,6 @@ public class BlogsUtil {
 	public static final String DISPLAY_STYLE_FULL_CONTENT = "full-content";
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
-
-	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
-			Layout layout, String portletId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new BlogsPortletInstanceSettings(settings);
-	}
-
-	public static BlogsPortletInstanceSettings getBlogsPortletInstanceSettings(
-			Layout layout, String portletId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new BlogsPortletInstanceSettings(
-			new ParameterMapSettings(request.getParameterMap(), settings));
-	}
-
-	public static BlogsSettings getBlogsSettings(long groupId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BlogsConstants.SERVICE_NAME);
-
-		return new BlogsSettings(settings);
-	}
-
-	public static BlogsSettings getBlogsSettings(
-			long groupId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, BlogsConstants.SERVICE_NAME);
-
-		return new BlogsSettings(
-			new ParameterMapSettings(request.getParameterMap(), settings));
-	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,

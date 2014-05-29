@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,7 +75,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -138,7 +134,8 @@ public class ShoppingUtil {
 			if (shoppingSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingSettings = getShoppingSettings(category.getGroupId());
+				shoppingSettings = ShoppingSettings.getShoppingSettings(
+					category.getGroupId());
 
 				break;
 			}
@@ -323,7 +320,8 @@ public class ShoppingUtil {
 			if (shoppingSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingSettings = getShoppingSettings(category.getGroupId());
+				shoppingSettings = ShoppingSettings.getShoppingSettings(
+					category.getGroupId());
 			}
 
 			ShoppingItemPrice itemPrice = _getItemPrice(item, count.intValue());
@@ -389,7 +387,8 @@ public class ShoppingUtil {
 			if (shoppingSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingSettings = getShoppingSettings(category.getGroupId());
+				shoppingSettings = ShoppingSettings.getShoppingSettings(
+					category.getGroupId());
 			}
 
 			if (item.isRequiresShipping()) {
@@ -472,7 +471,8 @@ public class ShoppingUtil {
 			if (shoppingSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingSettings = getShoppingSettings(category.getGroupId());
+				shoppingSettings = ShoppingSettings.getShoppingSettings(
+					category.getGroupId());
 
 				break;
 			}
@@ -989,28 +989,6 @@ public class ShoppingUtil {
 			return Character.toUpperCase(ppPaymentStatus.charAt(0)) +
 				ppPaymentStatus.substring(1);
 		}
-	}
-
-	public static ShoppingSettings getShoppingSettings(long groupId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, ShoppingConstants.SERVICE_NAME);
-
-		return new ShoppingSettings(settings);
-	}
-
-	public static ShoppingSettings getShoppingSettings(
-			long groupId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, ShoppingConstants.SERVICE_NAME);
-
-		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
-			request.getParameterMap(), settings);
-
-		return new ShoppingSettings(parameterMapSettings);
 	}
 
 	public static boolean isInStock(ShoppingItem item) {

@@ -14,17 +14,24 @@
 
 package com.liferay.portlet.shopping;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.shopping.util.ShoppingConstants;
 
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,6 +40,16 @@ import java.util.TreeSet;
  * @author Eduardo Garcia
  */
 public class ShoppingSettings {
+
+	static {
+		FallbackKeys fallbackKeys = _getFallbackKeys();
+
+		SettingsFactory settingsFactory =
+			SettingsFactoryUtil.getSettingsFactory();
+
+		settingsFactory.registerFallbackKeys(
+			ShoppingConstants.SERVICE_NAME, fallbackKeys);
+	}
 
 	public static final String CC_NONE = "none";
 
@@ -81,44 +98,26 @@ public class ShoppingSettings {
 		Double.POSITIVE_INFINITY
 	};
 
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
+	public static ShoppingSettings getShoppingSettings(long groupId)
+		throws PortalException, SystemException {
 
-		fallbackKeys.add("ccTypes", PropsKeys.SHOPPING_CREDIT_CARD_TYPES);
-		fallbackKeys.add("currencyId", PropsKeys.SHOPPING_CURRENCY_ID);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.SHOPPING_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"emailOrderConfirmationBody",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY);
-		fallbackKeys.add(
-			"emailOrderConfirmationEnabled",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED);
-		fallbackKeys.add(
-			"emailOrderConfirmationSubject",
-			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT);
-		fallbackKeys.add(
-			"emailOrderShippingBody",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY);
-		fallbackKeys.add(
-			"emailOrderShippingEnabled",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED);
-		fallbackKeys.add(
-			"emailOrderShippingSubject",
-			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT);
-		fallbackKeys.add("insurance", PropsKeys.SHOPPING_INSURANCE);
-		fallbackKeys.add(
-			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);
-		fallbackKeys.add("shipping", PropsKeys.SHOPPING_SHIPPING);
-		fallbackKeys.add(
-			"shippingFormula", PropsKeys.SHOPPING_SHIPPING_FORMULA);
-		fallbackKeys.add("taxState", PropsKeys.SHOPPING_TAX_STATE);
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, ShoppingConstants.SERVICE_NAME);
 
-		return fallbackKeys;
+		return new ShoppingSettings(settings);
+	}
+
+	public static ShoppingSettings getShoppingSettings(
+			long groupId, Map parameterMap)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, ShoppingConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			parameterMap, settings);
+
+		return new ShoppingSettings(parameterMapSettings);
 	}
 
 	public ShoppingSettings(Settings settings) {
@@ -289,6 +288,46 @@ public class ShoppingSettings {
 
 	public boolean usePayPal() {
 		return Validator.isNotNull(getPayPalEmailAddress());
+	}
+
+	private static FallbackKeys _getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add("ccTypes", PropsKeys.SHOPPING_CREDIT_CARD_TYPES);
+		fallbackKeys.add("currencyId", PropsKeys.SHOPPING_CURRENCY_ID);
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.SHOPPING_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add(
+			"emailFromName", PropsKeys.SHOPPING_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		fallbackKeys.add(
+			"emailOrderConfirmationBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY);
+		fallbackKeys.add(
+			"emailOrderConfirmationEnabled",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED);
+		fallbackKeys.add(
+			"emailOrderConfirmationSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT);
+		fallbackKeys.add(
+			"emailOrderShippingBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY);
+		fallbackKeys.add(
+			"emailOrderShippingEnabled",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED);
+		fallbackKeys.add(
+			"emailOrderShippingSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT);
+		fallbackKeys.add("insurance", PropsKeys.SHOPPING_INSURANCE);
+		fallbackKeys.add(
+			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);
+		fallbackKeys.add("shipping", PropsKeys.SHOPPING_SHIPPING);
+		fallbackKeys.add(
+			"shippingFormula", PropsKeys.SHOPPING_SHIPPING_FORMULA);
+		fallbackKeys.add("taxState", PropsKeys.SHOPPING_TAX_STATE);
+
+		return fallbackKeys;
 	}
 
 	private TypedSettings _typedSettings;

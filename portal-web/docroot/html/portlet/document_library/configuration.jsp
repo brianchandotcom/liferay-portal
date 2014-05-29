@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-dlPortletInstanceSettings = DLUtil.getDLPortletInstanceSettings(layout, portletId, request);
+dlPortletInstanceSettings = DLPortletInstanceSettings.getDLPortletInstanceSettings(layout, portletId, request.getParameterMap());
 
 DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>

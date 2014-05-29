@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
+mbSettings = MBSettings.getMBSettings(themeDisplay.getSiteGroupId(), request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">

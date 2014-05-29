@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
+wikiSettings = WikiSettings.getWikiSettings(themeDisplay.getSiteGroupId(), request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

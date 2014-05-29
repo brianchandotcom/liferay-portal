@@ -14,58 +14,56 @@
 
 package com.liferay.portlet.bookmarks;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.util.BookmarksConstants;
+
+import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
 public class BookmarksSettings {
 
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
+	static {
+		FallbackKeys fallbackKeys = _getFallbackKeys();
 
-		fallbackKeys.add(
-			"emailEntryAddedBody", PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
-		fallbackKeys.add(
-			"emailEntryAddedEnabled",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryAddedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
-		fallbackKeys.add(
-			"emailEntryUpdatedBody",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
-		fallbackKeys.add(
-			"emailEntryUpdatedEnabled",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED);
-		fallbackKeys.add(
-			"emailEntryUpdatedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
-		fallbackKeys.add(
-			"emailFromAddress", PropsKeys.BOOKMARKS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
-		fallbackKeys.add(
-			"emailFromName", PropsKeys.BOOKMARKS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.BOOKMARKS_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add("entryColumns", PropsKeys.BOOKMARKS_ENTRY_COLUMNS);
-		fallbackKeys.add("folderColumns", PropsKeys.BOOKMARKS_FOLDER_COLUMNS);
-		fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.BOOKMARKS_FOLDERS_SEARCH_VISIBLE);
-		fallbackKeys.add(
-			"showSubfolders", PropsKeys.BOOKMARKS_SUBFOLDERS_VISIBLE);
+		SettingsFactory settingsFactory =
+			SettingsFactoryUtil.getSettingsFactory();
 
-		return fallbackKeys;
+		settingsFactory.registerFallbackKeys(
+			BookmarksConstants.SERVICE_NAME, fallbackKeys);
+	}
+
+	public static BookmarksSettings getBookmarksSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BookmarksConstants.SERVICE_NAME);
+
+		return new BookmarksSettings(settings);
+	}
+
+	public static BookmarksSettings getBookmarksSettings(
+			long groupId, Map parameterMap)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BookmarksConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			parameterMap, settings);
+
+		return new BookmarksSettings(parameterMapSettings);
 	}
 
 	public BookmarksSettings(Settings settings) {
@@ -160,6 +158,48 @@ public class BookmarksSettings {
 
 	public boolean getShowSubfolders() {
 		return _typedSettings.getBooleanValue("showSubfolders");
+	}
+
+	private static FallbackKeys _getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add(
+			"emailEntryAddedBody", PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
+		fallbackKeys.add(
+			"emailEntryAddedEnabled",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED);
+		fallbackKeys.add(
+			"emailEntryAddedSubject",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
+		fallbackKeys.add(
+			"emailEntryUpdatedBody",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
+		fallbackKeys.add(
+			"emailEntryUpdatedEnabled",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED);
+		fallbackKeys.add(
+			"emailEntryUpdatedSubject",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.BOOKMARKS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS );
+		fallbackKeys.add(
+			"emailFromName", PropsKeys.BOOKMARKS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		fallbackKeys.add(
+			"enableRelatedAssets", PropsKeys.BOOKMARKS_RELATED_ASSETS_ENABLED);
+		fallbackKeys.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add("entryColumns", PropsKeys.BOOKMARKS_ENTRY_COLUMNS);
+		fallbackKeys.add("folderColumns", PropsKeys.BOOKMARKS_FOLDER_COLUMNS);
+		fallbackKeys.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add(
+			"showFoldersSearch", PropsKeys.BOOKMARKS_FOLDERS_SEARCH_VISIBLE);
+		fallbackKeys.add(
+			"showSubfolders", PropsKeys.BOOKMARKS_SUBFOLDERS_VISIBLE);
+
+		return fallbackKeys;
 	}
 
 	private TypedSettings _typedSettings;

@@ -2023,7 +2023,8 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		DLSettings dlSettings = DLUtil.getDLSettings(fileVersion.getGroupId());
+		DLSettings dlSettings = DLSettings.getDLSettings(
+			fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
 			dlSettings.getEmailFileEntryAddedEnabled()) {

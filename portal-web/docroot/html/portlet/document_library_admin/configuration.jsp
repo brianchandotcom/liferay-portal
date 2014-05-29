@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-dlSettings = DLUtil.getDLSettings(themeDisplay.getSiteGroupId(), request);
+dlSettings = DLSettings.getDLSettings(themeDisplay.getSiteGroupId(), request.getParameterMap());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">

@@ -39,7 +39,6 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
-import com.liferay.portlet.wiki.util.WikiUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -192,7 +191,7 @@ public class EditNodeAction extends PortletAction {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			WikiUtil.getWikiPortletInstanceSettings(
+			WikiPortletInstanceSettings.getWikiPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		return wikiPortletInstanceSettings;

@@ -1412,7 +1412,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		BlogsSettings blogsSettings = BlogsUtil.getBlogsSettings(
+		BlogsSettings blogsSettings = BlogsSettings.getBlogsSettings(
 			entry.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&

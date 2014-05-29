@@ -14,13 +14,22 @@
 
 package com.liferay.portlet.documentlibrary;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+
+import java.util.Map;
 
 /**
  * @author Sergio González
@@ -32,30 +41,46 @@ public class DLPortletInstanceSettings {
 		"mimeTypes"
 	};
 
-	public static FallbackKeys getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
+	static {
+		FallbackKeys fallbackKeys = _getFallbackKeys();
 
-		fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
-		fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
-		fallbackKeys.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add(
-			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
-		fallbackKeys.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
-		fallbackKeys.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
-		fallbackKeys.add(
-			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"fileEntriesPerPage",
-			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-		fallbackKeys.add("showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		SettingsFactory settingsFactory =
+			SettingsFactoryUtil.getSettingsFactory();
 
-		return fallbackKeys;
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.DOCUMENT_LIBRARY, fallbackKeys);
+
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.DOCUMENT_LIBRARY_ADMIN, fallbackKeys);
+
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, fallbackKeys);
+
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.MEDIA_GALLERY_DISPLAY, fallbackKeys);
+	}
+
+	public static DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		return new DLPortletInstanceSettings(settings);
+	}
+
+	public static DLPortletInstanceSettings getDLPortletInstanceSettings(
+			Layout layout, String portletId, Map parameterMap)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			layout, portletId);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			parameterMap, settings);
+
+		return new DLPortletInstanceSettings(parameterMapSettings);
 	}
 
 	public DLPortletInstanceSettings(Settings settings) {
@@ -134,6 +159,32 @@ public class DLPortletInstanceSettings {
 
 	public boolean getShowTabs() {
 		return _typedSettings.getBooleanValue("showTabs");
+	}
+
+	private static FallbackKeys _getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.add("displayViews", PropsKeys.DL_DISPLAY_VIEWS);
+		fallbackKeys.add(
+			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
+		fallbackKeys.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
+		fallbackKeys.add(
+			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
+		fallbackKeys.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
+		fallbackKeys.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
+		fallbackKeys.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
+		fallbackKeys.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add(
+			"fileEntriesPerPage",
+			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add(
+			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		fallbackKeys.add("showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+
+		return fallbackKeys;
 	}
 
 	private static final String[] _MIME_TYPES_DEFAULT = ArrayUtil.toStringArray(

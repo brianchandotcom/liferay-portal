@@ -106,7 +106,7 @@ page import="com.liferay.portlet.shopping.util.ShoppingUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId());
+ShoppingSettings shoppingSettings = ShoppingSettings.getShoppingSettings(themeDisplay.getSiteGroupId());
 
 Currency currency = Currency.getInstance(shoppingSettings.getCurrencyId());
 

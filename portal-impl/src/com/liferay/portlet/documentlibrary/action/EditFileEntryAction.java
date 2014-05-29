@@ -77,7 +77,6 @@ import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -723,7 +722,7 @@ public class EditFileEntryAction extends PortletAction {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLUtil.getDLPortletInstanceSettings(
+				DLPortletInstanceSettings.getDLPortletInstanceSettings(
 					themeDisplay.getLayout(), portletDisplay.getId());
 
 			Set<String> extensions = new HashSet<String>();
@@ -998,7 +997,7 @@ public class EditFileEntryAction extends PortletAction {
 						themeDisplay.getPortletDisplay();
 
 					DLPortletInstanceSettings dlPortletInstanceSettings =
-						DLUtil.getDLPortletInstanceSettings(
+						DLPortletInstanceSettings.getDLPortletInstanceSettings(
 							themeDisplay.getLayout(), portletDisplay.getId());
 
 					String[] mimeTypes =

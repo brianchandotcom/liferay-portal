@@ -29,9 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
@@ -62,7 +58,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
 import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
-import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -94,7 +89,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -457,7 +451,7 @@ public class WikiUtil {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			WikiUtil.getWikiPortletInstanceSettings(
+			WikiPortletInstanceSettings.getWikiPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String[] visibleNodeNames =
@@ -593,47 +587,6 @@ public class WikiUtil {
 		}
 
 		return orderByComparator;
-	}
-
-	public static WikiPortletInstanceSettings getWikiPortletInstanceSettings(
-			Layout layout, String portletId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new WikiPortletInstanceSettings(settings);
-	}
-
-	public static WikiPortletInstanceSettings getWikiPortletInstanceSettings(
-			Layout layout, String portletId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			layout, portletId);
-
-		return new WikiPortletInstanceSettings(
-			new ParameterMapSettings(request.getParameterMap(), settings));
-	}
-
-	public static WikiSettings getWikiSettings(long groupId)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, WikiConstants.SERVICE_NAME);
-
-		return new WikiSettings(settings);
-	}
-
-	public static WikiSettings getWikiSettings(
-			long groupId, HttpServletRequest request)
-		throws PortalException, SystemException {
-
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, WikiConstants.SERVICE_NAME);
-
-		return new WikiSettings(
-			new ParameterMapSettings(request.getParameterMap(), settings));
 	}
 
 	public static List<WikiNode> orderNodes(

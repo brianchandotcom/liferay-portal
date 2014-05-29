@@ -229,7 +229,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
-		MBSettings mbSettings = MBUtil.getMBSettings(groupId);
+		MBSettings mbSettings = MBSettings.getMBSettings(groupId);
 
 		if (mbSettings != null) {
 			if (!mbSettings.isAllowAnonymousPosting()) {
@@ -2020,7 +2020,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		MBSettings mbSettings = MBUtil.getMBSettings(message.getGroupId());
+		MBSettings mbSettings = MBSettings.getMBSettings(message.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
 			mbSettings.isEmailMessageAddedEnabled()) {

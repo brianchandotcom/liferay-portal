@@ -939,13 +939,13 @@ public class LayoutImporter {
 
 				Layout layout = layouts.get(layoutId);
 
-				int priority = GetterUtil.getInteger(
+				int layoutPriority = GetterUtil.getInteger(
 					layoutElement.attributeValue("layout-priority"));
 
-				layoutPriorities.put(layout.getPlid(), priority);
+				layoutPriorities.put(layout.getPlid(), layoutPriority);
 
-				if (maxPriority < priority) {
-					maxPriority = priority;
+				if (maxPriority < layoutPriority) {
+					maxPriority = layoutPriority;
 				}
 			}
 		}

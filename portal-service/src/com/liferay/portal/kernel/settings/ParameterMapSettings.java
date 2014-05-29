@@ -16,14 +16,7 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.IOException;
-
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
@@ -35,90 +28,26 @@ public class ParameterMapSettings extends BaseSettings {
 	public static final String SETTINGS_PREFIX = "settings--";
 
 	public ParameterMapSettings(
-		Map<String, String[]> parameterMap, Settings defaultSettings) {
+		Map<String, String[]> parameterMap, Settings parentSettings) {
 
-		_defaultSettings = defaultSettings;
+		super(parentSettings);
+
 		_parameterMap = parameterMap;
 	}
 
 	@Override
-	public Settings getDefaultSettings() {
-		return _defaultSettings;
-	}
+	protected String doGetValue(String key) {
+		String[] values = doGetValues(key);
 
-	@Override
-	public Collection<String> getKeys() {
-		Set<String> keys = new HashSet<String>();
-
-		for (String key : _parameterMap.keySet()) {
-			if (!key.endsWith(StringPool.DOUBLE_DASH)) {
-				continue;
-			}
-
-			String name = null;
-
-			if (key.startsWith(PREFERENCES_PREFIX)) {
-				name = key.substring(
-					PREFERENCES_PREFIX.length(), key.length() - 2);
-			}
-			else if (key.startsWith(SETTINGS_PREFIX)) {
-				name = key.substring(
-					PREFERENCES_PREFIX.length(), key.length() - 2);
-			}
-
-			if (name != null) {
-				keys.add(name);
-			}
+		if (values == null) {
+			return null;
 		}
 
-		keys.addAll(_defaultSettings.getKeys());
-
-		return keys;
+		return values[0];
 	}
 
 	@Override
-	public String getValue(String key, String defaultValue) {
-		String[] values = getParameterValue(key);
-
-		if (values != null) {
-			return values[0];
-		}
-
-		return _defaultSettings.getValue(key, defaultValue);
-	}
-
-	@Override
-	public String[] getValues(String key, String[] defaultValue) {
-		String[] values = getParameterValue(key);
-
-		if (values != null) {
-			return values;
-		}
-
-		return _defaultSettings.getValues(key, defaultValue);
-	}
-
-	@Override
-	public void reset(String key) {
-		_defaultSettings.reset(key);
-	}
-
-	@Override
-	public Settings setValue(String key, String value) {
-		return _defaultSettings.setValue(key, value);
-	}
-
-	@Override
-	public Settings setValues(String key, String[] values) {
-		return _defaultSettings.setValues(key, values);
-	}
-
-	@Override
-	public void store() throws IOException, ValidatorException {
-		_defaultSettings.store();
-	}
-
-	protected String[] getParameterValue(String key) {
+	protected String[] doGetValues(String key) {
 		String[] values = _parameterMap.get(key);
 
 		if (values == null) {
@@ -134,7 +63,6 @@ public class ParameterMapSettings extends BaseSettings {
 		return values;
 	}
 
-	private Settings _defaultSettings;
 	private Map<String, String[]> _parameterMap;
 
 }

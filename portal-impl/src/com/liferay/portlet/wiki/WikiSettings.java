@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -123,7 +124,10 @@ public class WikiSettings {
 	public void store() throws IOException, ValidatorException {
 		Settings settings = _typedSettings.getWrappedSettings();
 
-		settings.store();
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.store();
 	}
 
 	private TypedSettings _typedSettings;

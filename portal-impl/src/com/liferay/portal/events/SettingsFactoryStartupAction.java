@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.bookmarks.BookmarksSettings;
@@ -29,6 +30,7 @@ import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
+import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
 import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.util.WikiConstants;
 
@@ -50,6 +52,9 @@ public class SettingsFactoryStartupAction extends SimpleAction {
 			BlogsConstants.SERVICE_NAME, BlogsSettings.getFallbackKeys());
 
 		settingsFactory.registerFallbackKeys(
+			PortletKeys.BLOGS, BlogsPortletInstanceSettings.getFallbackKeys());
+
+		settingsFactory.registerFallbackKeys(
 			BookmarksConstants.SERVICE_NAME,
 			BookmarksSettings.getFallbackKeys());
 
@@ -61,6 +66,13 @@ public class SettingsFactoryStartupAction extends SimpleAction {
 
 		settingsFactory.registerFallbackKeys(
 			WikiConstants.SERVICE_NAME, WikiSettings.getFallbackKeys());
+
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.WIKI, WikiPortletInstanceSettings.getFallbackKeys());
+
+		settingsFactory.registerFallbackKeys(
+			PortletKeys.WIKI_DISPLAY,
+			WikiPortletInstanceSettings.getFallbackKeys());
 
 		settingsFactory.registerFallbackKeys(
 			DLConstants.SERVICE_NAME, DLSettings.getFallbackKeys());

@@ -237,7 +237,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		throws PortalException, SystemException {
 
 		DLAppLocalServiceUtil.moveFileEntryFromTrash(
-			classPK, containerModelId, serviceContext);
+			userId, classPK, containerModelId, serviceContext);
 	}
 
 	@Override

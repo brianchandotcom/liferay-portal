@@ -349,18 +349,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = journalArticlePersistence.create(id);
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = ParamUtil.getString(
-			serviceContext, "defaultLanguageId");
-
-		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
-		}
-
-		if (Validator.isNotNull(defaultLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(defaultLanguageId);
-		}
+		Locale locale = getArticleDefaultLocale(content, serviceContext);
 
 		String title = titleMap.get(locale);
 
@@ -4803,18 +4792,7 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(latestArticle.getSmallImageId());
 		}
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = ParamUtil.getString(
-			serviceContext, "defaultLanguageId");
-
-		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
-		}
-
-		if (Validator.isNotNull(defaultLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(defaultLanguageId);
-		}
+		Locale locale = getArticleDefaultLocale(content, serviceContext);
 
 		String title = titleMap.get(locale);
 
@@ -5039,6 +5017,8 @@ public class JournalArticleLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(oldArticle.getUserId());
 
+		Locale defaultLocale = getArticleDefaultLocale(content, serviceContext);
+
 		if (incrementVersion) {
 			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
 
@@ -5057,7 +5037,7 @@ public class JournalArticleLocalServiceImpl
 			article.setClassPK(oldArticle.getClassPK());
 			article.setArticleId(articleId);
 			article.setVersion(newVersion);
-			article.setTitleMap(oldArticle.getTitleMap());
+			article.setTitleMap(oldArticle.getTitleMap(), defaultLocale);
 			article.setUrlTitle(
 				getUniqueUrlTitle(
 					id, articleId, title, oldArticle.getUrlTitle(),
@@ -5091,7 +5071,7 @@ public class JournalArticleLocalServiceImpl
 
 		titleMap.put(locale, title);
 
-		article.setTitleMap(titleMap);
+		article.setTitleMap(titleMap, defaultLocale);
 
 		Map<Locale, String> descriptionMap = article.getDescriptionMap();
 
@@ -6191,6 +6171,23 @@ public class JournalArticleLocalServiceImpl
 				dynamicContent.setText(StringPool.BLANK);
 			}
 		}
+	}
+
+	protected Locale getArticleDefaultLocale(
+		String content, ServiceContext serviceContext) {
+
+		String defaultLanguageId = ParamUtil.getString(
+			serviceContext, "defaultLanguageId");
+
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = LocalizationUtil.getDefaultLanguageId(content);
+		}
+
+		if (Validator.isNotNull(defaultLanguageId)) {
+			return LocaleUtil.fromLanguageId(defaultLanguageId);
+		}
+
+		return LocaleUtil.getSiteDefault();
 	}
 
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(

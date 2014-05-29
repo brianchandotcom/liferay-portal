@@ -376,7 +376,15 @@
 	<command name="configureCurrentLanguagesCP">
 		<var name="key_displaySettings" value="${displaySettings}" />
 
-		<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
+		<if>
+			<condition action="CPSitesettings#isTextEqual" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+			<then>
+				<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+			<else>
+				<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
+			</else>
+		</if>
 
 		<execute action="CPSitesettingsDisplaysettings#check" locator-key1="DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
 

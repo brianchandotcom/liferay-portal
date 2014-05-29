@@ -9,6 +9,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementPresent">
+		<case locator-key1="ACTIVITIES_BOTTOM_BAR">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ACTIVITIES_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />

@@ -68,7 +68,6 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -1070,8 +1069,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		Set<Long> unsetUserIds =
-			SetUtil.fromArray(rolePersistence.getUserPrimaryKeys(roleId));
+		Set<Long> unsetUserIds = SetUtil.fromArray(
+			rolePersistence.getUserPrimaryKeys(roleId));
 
 		unsetUserIds.removeAll(SetUtil.fromArray(userIds));
 

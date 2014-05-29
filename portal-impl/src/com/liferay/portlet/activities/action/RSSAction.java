@@ -48,9 +48,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,12 +58,12 @@ import javax.portlet.ResourceResponse;
 public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 	protected String exportToRSS(
-			PortletRequest portletRequest, String title, String description,
+			HttpServletRequest request, String title, String description,
 			String format, double version, String displayStyle,
 			List<SocialActivity> activities, ServiceContext serviceContext)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		SyndFeed syndFeed = new SyndFeedImpl();
@@ -149,10 +147,10 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 	}
 
 	protected List<SocialActivity> getActivities(
-			PortletRequest portletRequest, int max)
+			HttpServletRequest request, int max)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -177,29 +175,27 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 	}
 
 	@Override
-	protected byte[] getRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+	protected byte[] getRSS(HttpServletRequest request) throws Exception {
 
-		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
+		String feedTitle = ParamUtil.getString(request, "feedTitle");
 		String format = ParamUtil.getString(
-			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
+			request, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
-			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
+			request, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		int max = ParamUtil.getInteger(
-			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+			request, "max", SearchContainer.DEFAULT_DELTA);
 
-		List<SocialActivity> activities = getActivities(resourceRequest, max);
+		List<SocialActivity> activities = getActivities(request, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
+			request);
 
 		String rss = exportToRSS(
-			resourceRequest, feedTitle, null, format, version, displayStyle,
-			activities, serviceContext);
+			request, feedTitle, null, format, version, displayStyle, activities,
+			serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

@@ -41,19 +41,30 @@ import org.testng.Assert;
 public class GeolocationFieldRendererTest {
 
 	@Test
+	public void testRenderedValuesFollowLocaleConventions() {
+		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
+
+		Assert.assertEquals(
+			fieldRenderer.render(createField(), LocaleUtil.SPAIN),
+			"Latitud: 9,876, Longitud: 1,234");
+	}
+
+	@Test
 	public void testRenderedValuesShouldHave3DecimalPlaces() {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
 
+		Assert.assertEquals(
+			fieldRenderer.render(createField(), LocaleUtil.US),
+			"Latitude: 9.876, Longitude: 1.234");
+	}
+
+	protected Field createField() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("latitude", 9.8765);
 		jsonObject.put("longitude", 1.2345);
 
-		Field field = new Field("field", jsonObject.toString());
-
-		Assert.assertEquals(
-			"Latitude: 9.876, Longitude: 1.234",
-			fieldRenderer.render(field, LocaleUtil.US));
+		return new Field("field", jsonObject.toString());
 	}
 
 }

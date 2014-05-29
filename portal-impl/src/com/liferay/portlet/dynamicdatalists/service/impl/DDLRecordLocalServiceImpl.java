@@ -163,6 +163,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		ddlRecordPersistence.remove(record);
 
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			DDLRecord.class.getName(), record.getRecordId());
+
 		// Record Versions
 
 		List<DDLRecordVersion> recordVersions =

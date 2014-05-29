@@ -127,7 +127,7 @@ if (ratingsEntry != null) {
 			<c:when test='<%= type.equals("thumbs") %>'>
 				<c:choose>
 					<c:when test="<%= themeDisplay.isSignedIn() %>">
-						<div class="thumbrating liferay-rating-vote" id="<%= randomNamespace %>ratingThumb">
+						<div class="liferay-rating-vote thumbrating" id="<%= randomNamespace %>ratingThumb">
 							<div class="helper-clearfix rating-content thumbrating-content" id="<%= randomNamespace %>ratingThumbContent">
 								<liferay-util:whitespace-remover>
 									<div class="rating-label">

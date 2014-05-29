@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.util.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
@@ -49,7 +50,8 @@ public class PortletPreferencesFactoryImplTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(expectedXML);
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
+				expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -97,7 +99,7 @@ public class PortletPreferencesFactoryImplTest {
 			portletPreferencesImpl);
 
 		portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(actualXML);
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(actualXML);
 
 		preferencesMap = portletPreferencesImpl.getPreferences();
 
@@ -195,7 +197,8 @@ public class PortletPreferencesFactoryImplTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(expectedXML);
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
+				expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -227,7 +230,8 @@ public class PortletPreferencesFactoryImplTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(expectedXML);
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
+				expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -262,7 +266,8 @@ public class PortletPreferencesFactoryImplTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(expectedXML);
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
+				expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();

@@ -1073,7 +1073,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 			String modelDefaultLanguageId = getDefaultLanguageId();
 

@@ -53,7 +53,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 <h3><liferay-ui:message key="regular-roles" /></h3>
 
 <liferay-ui:search-container
-	curParam="cur2"
+	curParam="regularRolesCur"
 	headerNames="title,null"
 	id="rolesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
@@ -139,7 +139,7 @@ for (Group group : allGroups) {
 </c:if>
 
 <liferay-ui:search-container
-	curParam="cur3"
+	curParam="inheritedRegularRolesCur"
 	headerNames="title,group"
 	id="inheritedRolesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
@@ -185,7 +185,7 @@ for (Group group : allGroups) {
 
 <c:if test="<%= !organizations.isEmpty() %>">
 	<liferay-ui:search-container
-		curParam="cur4"
+		curParam="organizationRolesCur"
 		headerNames="title,organization,null"
 		id="organizationRolesSearchContainer"
 		iteratorURL="<%= currentURLObj %>"
@@ -329,7 +329,7 @@ for (Group group : allGroups) {
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container
-			curParam="cur5"
+			curParam="siteRolesCur"
 			headerNames="title,site,null"
 			id="siteRolesSearchContainer"
 			iteratorURL="<%= currentURLObj %>"
@@ -474,7 +474,7 @@ for (Group group : allGroups) {
 
 <c:if test="<%= !inheritedSiteRoles.isEmpty() %>">
 	<liferay-ui:search-container
-		curParam="cur6"
+		curParam="inheritedSiteRolesCur"
 		headerNames="title,site,user-group"
 		id="inheritedSiteRolesSearchContainer"
 		iteratorURL="<%= currentURLObj %>"

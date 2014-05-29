@@ -38,7 +38,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 <h3><liferay-ui:message key="user-groups" /></h3>
 
 <liferay-ui:search-container
-	curParam="cur9"
+	curParam="userGroupsCur"
 	headerNames="name,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= userGroups.size() %>"

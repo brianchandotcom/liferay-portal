@@ -39,7 +39,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 <h3><liferay-ui:message key="sites" /></h3>
 
 <liferay-ui:search-container
-	curParam="cur7"
+	curParam="sitesCur"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= groups.size() %>"
@@ -193,7 +193,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 </c:if>
 
 <liferay-ui:search-container
-	curParam="cur8"
+	curParam="inheritedSitesCur"
 	headerNames="name,roles"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= inheritedSites.size() %>"

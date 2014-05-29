@@ -1529,6 +1529,18 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns <code>true</code> if the portlet uses Social Interactions
+	* Configuration
+	*
+	* @return <code>true</code> if the portlet uses Social Interactions
+	Configuration
+	*/
+	@Override
+	public boolean getSocialInteractionsConfiguration() {
+		return _portlet.getSocialInteractionsConfiguration();
+	}
+
+	/**
 	* Returns the names of the classes that represent staged model data
 	* handlers associated with the portlet.
 	*
@@ -3208,6 +3220,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setSocialRequestInterpreterClass(
 		java.lang.String socialRequestInterpreterClass) {
 		_portlet.setSocialRequestInterpreterClass(socialRequestInterpreterClass);
+	}
+
+	@Override
+	public void setSocialInteractionsConfiguration(
+		boolean socialInteractionsConfiguration) {
+		_portlet.setSocialInteractionsConfiguration(socialInteractionsConfiguration);
 	}
 
 	/**

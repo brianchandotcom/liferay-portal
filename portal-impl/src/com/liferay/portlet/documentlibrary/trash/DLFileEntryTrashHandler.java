@@ -34,7 +34,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
@@ -237,11 +236,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(classPK);
-
-		DLAppHelperLocalServiceUtil.moveFileEntryFromTrash(
-			userId, repository.getFileEntry(classPK), containerModelId,
-			serviceContext);
+		DLAppLocalServiceUtil.moveFileEntryFromTrash(
+			classPK, containerModelId, serviceContext);
 	}
 
 	@Override

@@ -233,6 +233,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TABLE_THREAD_LOCKED_ICON</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a/img[@title='Thread Locked']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_TABLE_THREAD</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a</td>
 	<td></td>

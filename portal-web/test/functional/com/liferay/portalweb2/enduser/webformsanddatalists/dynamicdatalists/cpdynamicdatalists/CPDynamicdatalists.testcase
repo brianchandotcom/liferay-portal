@@ -198,6 +198,581 @@
 		</execute>
 	</command>
 
+	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="Contacts" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Liferay" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Company" />
+			<var name="fieldName" value="company" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="test@liferay.com" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Email" />
+			<var name="fieldName" value="email" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="First Name" />
+			<var name="fieldName" value="firstName" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="GTalk" />
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Instant Messenger Service" />
+			<var name="fieldName" value="imService" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="testliferay" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Instant Messenger" />
+			<var name="fieldName" value="imUserName" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="QA Engineer" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Job Title" />
+			<var name="fieldName" value="jobTitle" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Last Name" />
+			<var name="fieldName" value="lastName" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Notes" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Notes" />
+			<var name="fieldName" value="notes" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="(123) 456-7890" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Phone (Mobile)" />
+			<var name="fieldName" value="phoneMobile" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="(123) 111-2222" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Phone (Office)" />
+			<var name="fieldName" value="phoneOffice" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="Events" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Document 4 Title" />
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldName" value="attachment" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="10" />
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Cost" />
+			<var name="fieldName" value="cost" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Date" />
+			<var name="fieldName" value="eventDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Company Party" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Event Name" />
+			<var name="fieldName" value="eventName" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="12:00 pm" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Time" />
+			<var name="fieldName" value="eventTime" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Room 8" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Location" />
+			<var name="fieldName" value="location" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="AddListAndRecordWithInventoryPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="Inventory" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Liferay Portal" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Item" />
+			<var name="fieldName" value="item" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Los Angeles" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Location" />
+			<var name="fieldName" value="location" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Purchase Date" />
+			<var name="fieldName" value="purchaseDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="12000" />
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Purchase Price" />
+			<var name="fieldName" value="purchasePrice" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="100" />
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Quantity" />
+			<var name="fieldName" value="quantity" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="Issues Tracking" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Assigned To" />
+			<var name="fieldName" value="assignedTo" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Document 3 Title" />
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldName" value="attachment" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Comment" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Comments" />
+			<var name="fieldName" value="comments" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Due Date" />
+			<var name="fieldName" value="dueDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="LPS-90000" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Issue ID" />
+			<var name="fieldName" value="issueId" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Minor" />
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Severity" />
+			<var name="fieldName" value="severity" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Open" />
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Status" />
+			<var name="fieldName" value="status" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Minor Issue" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Title" />
+			<var name="fieldName" value="title" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="Meeting Minutes" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Document 2 Title" />
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldName" value="attachment" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Author" />
+			<var name="fieldName" value="author" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="20 Minutes" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Meeting Duration" />
+			<var name="fieldName" value="duration" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Meeting Date" />
+			<var name="fieldName" value="meetingDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Minutes Details" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Minutes" />
+			<var name="fieldName" value="minutes" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="First Meeting" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Title" />
+			<var name="fieldName" value="title" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="AddListAndRecordWithToDoPredefinedDataDefinition" priority="4">
+		<var name="ddlDataDefinitionName" value="To Do" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlDataDefinitionName} Description" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Assigned To" />
+			<var name="fieldName" value="assignedTo" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Document 1 Title" />
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldName" value="attachment" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Comment" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Comments" />
+			<var name="fieldName" value="comments" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="End Date" />
+			<var name="fieldName" value="endDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="7" />
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="% Complete" />
+			<var name="fieldName" value="percentComplete" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Major" />
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Severity" />
+			<var name="fieldName" value="severity" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="startDate" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Pending" />
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Status" />
+			<var name="fieldName" value="status" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Test" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Title" />
+			<var name="fieldName" value="title" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
 	<command name="AddListRecordWithBooleanField" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />

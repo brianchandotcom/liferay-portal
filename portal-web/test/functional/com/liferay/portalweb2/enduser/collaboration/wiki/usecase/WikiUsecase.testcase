@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewWikiDraftPagesViaBreadcrumbPortlet" priority="4">
+	<command name="ViewWikiDraftPagesViaBreadcrumb" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -43,7 +43,7 @@
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPortletPG">
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
 			<var name="breadcrumbListVisible" value="Recent Changes" />
 		</execute>
 
@@ -53,7 +53,7 @@
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPortletPG">
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
 			<var name="breadcrumbListVisible" value="All Pages" />
 		</execute>
 
@@ -63,7 +63,7 @@
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPortletPG">
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
 			<var name="breadcrumbListVisible" value="Draft Pages" />
 		</execute>
 	</command>

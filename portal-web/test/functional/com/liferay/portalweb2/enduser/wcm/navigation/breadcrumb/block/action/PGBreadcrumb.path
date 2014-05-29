@@ -44,7 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_PAGE_PORTLET</td>
+	<td>BREADCRUMB_CURRENT_LOCATION</td>
 	<td>//div/ul[contains(@class,'breadcrumb')]/li[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>

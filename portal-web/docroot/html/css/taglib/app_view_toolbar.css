@@ -26,12 +26,6 @@
 	}
 
 	.navbar {
-		.navbar-search {
-			@include respond-to(phone, tablet) {
-				margin-left: 5px;
-			}
-		}
-
 		.nav-display-style-buttons {
 			margin-left: 15px;
 

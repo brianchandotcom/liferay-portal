@@ -21,7 +21,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 %>
 
 <div class="taglib-search-toggle">
-	<div class="col-md-4 col-lg-3 form-search">
+	<div class="col-xs-12 form-search">
 		<div class="advanced-search input-group" id="<%= id %>simple">
 			<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
 

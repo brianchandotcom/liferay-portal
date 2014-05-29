@@ -17,22 +17,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 .aui {
 	background-color: transparent;
 
-	.navbar-nav {
-		float: none;
-
-		@include respond-to(desktop) {
-			float: left;
-		}
-
-		> li {
-			float: none;
-
-			@include respond-to(desktop) {
-				float: left;
-			}
-		}
-	}
-
 	.separator {
 		border-color: #BFBFBF transparent #FFF;
 		border-style: solid;

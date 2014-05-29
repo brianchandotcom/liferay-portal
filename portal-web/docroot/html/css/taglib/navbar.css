@@ -25,10 +25,12 @@
 		}
 
 		.form-search {
-			margin: 8px 0;
+			margin: 10px 0;
 
 			@media (min-width: 768px) {
 				float: right;
+				margin: 8px 0;
+				max-width: 275px;
 			}
 
 			.input-group {
@@ -63,6 +65,7 @@
 
 			.navbar-collapse {
 				&.open {
+					border-width: 0;
 					display: block;
 					height: auto;
 					overflow: visible;

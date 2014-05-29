@@ -66,18 +66,18 @@ portletURL.setParameter("tag", StringPool.BLANK);
 			<portlet:param name="struts_action" value="/bookmarks/search" />
 		</liferay-portlet:renderURL>
 
-		<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-			<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
+		<aui:nav-bar-search>
+			<div class="col-xs-12 form-search">
+				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+					<liferay-portlet:renderURLParams varImpl="searchURL" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
+					<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
-			<aui:nav-bar-search>
-				<div class="col-sm-5 col-md-4 col-lg-3 form-search">
 					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
-				</div>
-			</aui:nav-bar-search>
-		</aui:form>
+				</aui:form>
+			</div>
+		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>
 

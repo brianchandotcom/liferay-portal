@@ -105,7 +105,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 		<aui:nav-bar-search>
-			<div class="col-sm-5 col-md-4 col-lg-3 form-search">
+			<div class="col-xs-12 form-search">
 				<liferay-portlet:resourceURL varImpl="searchURL">
 					<portlet:param name="struts_action" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

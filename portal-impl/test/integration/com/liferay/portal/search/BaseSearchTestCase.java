@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -43,7 +44,10 @@ import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -52,6 +56,7 @@ import org.junit.Test;
 
 /**
  * @author Eudaldo Alonso
+ * @author Tibor Lipusz
  */
 public abstract class BaseSearchTestCase {
 
@@ -70,6 +75,11 @@ public abstract class BaseSearchTestCase {
 	@Test
 	public void testBaseModelUserPermissions() throws Exception {
 		testUserPermissions(false, true);
+	}
+
+	@Test
+	public void testLocalizedSearch() throws Exception {
+		localizedSearch(getSearchLocale());
 	}
 
 	@Test
@@ -173,6 +183,16 @@ public abstract class BaseSearchTestCase {
 		return addBaseModel(parentBaseModel, true, keywords, serviceContext);
 	}
 
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, boolean approved,
+			Map<Locale, String> keywordsMap, ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			parentBaseModel, approved, keywordsMap.get(getSearchLocale()),
+			serviceContext);
+	}
+
 	protected abstract BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved, String keywords,
 			ServiceContext serviceContext)
@@ -240,12 +260,51 @@ public abstract class BaseSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
+	protected Locale getSearchLocale() {
+		return LocaleUtil.getDefault();
+	}
+
 	protected boolean isCheckBaseModelPermission() {
 		return CHECK_BASE_MODEL_PERMISSION;
 	}
 
 	protected boolean isExpirableAllVersions() {
 		return false;
+	}
+
+	protected void localizedSearch(Locale searchLocale) throws Exception {
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		Map<Locale, String> keywordsMap = new HashMap<Locale, String>();
+
+		keywordsMap.put(LocaleUtil.getDefault(), "entity title");
+		keywordsMap.put(searchLocale, "entitas neve");
+
+		baseModel = addBaseModelWithWorkflow(
+			parentBaseModel, true, keywordsMap, serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		searchContext.setAttribute("title", "nev");
+		searchContext.setLocale(searchLocale);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
 	}
 
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {

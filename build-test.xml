@@ -1151,6 +1151,22 @@ create database lportal2 character set utf8;</echo>
 		<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
 	</target>
 
+	<target name="kill-spi">
+		<if>
+			<os family="unix" />
+			<then>
+				<execute>
+					kill -9 pgrep -n java
+				</execute>
+			</then>
+			<else>
+				<execute>
+					taskkill.exe /F /FI "imagename eq java.exe" /FI "memusage lt 700000" /FI "memusage gt 600000"
+				</execute>
+			</else>
+		</if>
+	</target>
+
 	<target name="merge-jenkins-test-results">
 		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
 

@@ -1,25 +1,21 @@
 @import "compass";
 
 .lfr-device-preview-panel {
-	width: 200px;
+	width: 220px;
 
-	.nav-list {
+	.nav {
 		margin: 20px -10px;
 		padding: 0;
 	}
 
-	.control-group-inline {
-		display: inline;
-	}
-
 	.lfr-device-item {
 		cursor: pointer;
-		height: 60px;
+		height: 80px;
 		padding: 10px;
 
 		.device-info {
-			height: 60px;
-			padding-left: 70px;
+			height: auto;
+			padding: 5px 0 0 70px;
 
 			.device-name, .device-dimensions {
 				display: block;
@@ -28,6 +24,10 @@
 			.device-dimensions {
 				font-size: 13px;
 			}
+		}
+
+		.form-group {
+			margin: -10px 0 0;
 		}
 	}
 }

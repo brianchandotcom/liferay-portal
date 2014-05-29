@@ -23,23 +23,27 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * @author Adolfo Pérez
  * @author Mika Koivisto
- *
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil}
  */
-@Deprecated
-public class RepositoryFactoryUtil {
+public class ExternalRepositoryFactoryUtil {
+
+	public static String[] getExternalRepositoryClassNames() {
+		Set<String> classNames = externalRepositoryFactories.keySet();
+
+		return classNames.toArray(new String[classNames.size()]);
+	}
 
 	public static BaseRepository getInstance(String className)
 		throws Exception {
 
-		RepositoryFactory repositoryFactory = _repositoryFactories.get(
-			className);
+		ExternalRepositoryFactory externalRepositoryFactory =
+			externalRepositoryFactories.get(className);
 
 		BaseRepository baseRepository = null;
 
-		if (repositoryFactory != null) {
-			baseRepository = repositoryFactory.getInstance();
+		if (externalRepositoryFactory != null) {
+			baseRepository = externalRepositoryFactory.getInstance();
 		}
 
 		if (baseRepository != null) {
@@ -50,34 +54,29 @@ public class RepositoryFactoryUtil {
 			"Repository with class name " + className + " is unavailable");
 	}
 
-	public static String[] getRepositoryClassNames() {
-		Set<String> classNames = _repositoryFactories.keySet();
+	public static void registerExternalRepositoryFactory(
+		String className, ExternalRepositoryFactory externalRepositoryFactory) {
 
-		return classNames.toArray(new String[classNames.size()]);
+		externalRepositoryFactories.put(className, externalRepositoryFactory);
 	}
 
-	public static void registerRepositoryFactory(
-		String className, RepositoryFactory repositoryFactory) {
-
-		_repositoryFactories.put(className, repositoryFactory);
+	public static void unregisterExternalRepositoryFactory(String className) {
+		externalRepositoryFactories.remove(className);
 	}
 
-	public static void unregisterRepositoryFactory(String className) {
-		_repositoryFactories.remove(className);
-	}
-
-	private static ConcurrentHashMap<String, RepositoryFactory>
-		_repositoryFactories =
-			new ConcurrentHashMap<String, RepositoryFactory>();
+	private static ConcurrentHashMap<String, ExternalRepositoryFactory>
+		externalRepositoryFactories =
+			new ConcurrentHashMap<String, ExternalRepositoryFactory>();
 
 	static {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			RepositoryFactory repositoryFactory = new RepositoryFactoryImpl(
-				className, classLoader);
+			ExternalRepositoryFactory externalRepositoryFactory =
+				new ExternalRepositoryFactoryImpl(className, classLoader);
 
-			_repositoryFactories.put(className, repositoryFactory);
+			externalRepositoryFactories.put(
+				className, externalRepositoryFactory);
 		}
 	}
 

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
@@ -155,8 +155,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 			String repositoryImplClassName = className.getValue();
 
-			BaseRepository baseRepository = RepositoryFactoryUtil.getInstance(
-				repositoryImplClassName);
+			BaseRepository baseRepository =
+				ExternalRepositoryFactoryUtil.getInstance(
+					repositoryImplClassName);
 
 			return baseRepository.getSupportedConfigurations();
 		}
@@ -176,8 +177,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 			String repositoryImplClassName = className.getValue();
 
-			BaseRepository baseRepository = RepositoryFactoryUtil.getInstance(
-				repositoryImplClassName);
+			BaseRepository baseRepository =
+				ExternalRepositoryFactoryUtil.getInstance(
+					repositoryImplClassName);
 
 			String[] supportedConfigurations =
 				baseRepository.getSupportedConfigurations();

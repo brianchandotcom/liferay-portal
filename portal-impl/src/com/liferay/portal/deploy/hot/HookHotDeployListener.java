@@ -95,9 +95,9 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
-import com.liferay.portal.repository.util.RepositoryFactory;
-import com.liferay.portal.repository.util.RepositoryFactoryImpl;
-import com.liferay.portal.repository.util.RepositoryFactoryUtil;
+import com.liferay.portal.repository.util.ExternalRepositoryFactory;
+import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
+import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.sanitizer.SanitizerImpl;
 import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthPipeline;
@@ -1812,11 +1812,12 @@ public class HookHotDeployListener
 				servletContextName, dlRepositoryContainer);
 
 			for (String dlRepositoryClassName : dlRepositoryClassNames) {
-				RepositoryFactory repositoryFactory = new RepositoryFactoryImpl(
-					dlRepositoryClassName, portletClassLoader);
+				ExternalRepositoryFactory externalRepositoryFactory =
+					new ExternalRepositoryFactoryImpl(
+						dlRepositoryClassName, portletClassLoader);
 
 				dlRepositoryContainer.registerRepositoryFactory(
-					dlRepositoryClassName, repositoryFactory);
+					dlRepositoryClassName, externalRepositoryFactory);
 			}
 		}
 
@@ -3110,17 +3111,19 @@ public class HookHotDeployListener
 	private class DLRepositoryContainer {
 
 		public void registerRepositoryFactory(
-			String className, RepositoryFactory repositoryFactory) {
+			String className,
+			ExternalRepositoryFactory externalRepositoryFactory) {
 
-			RepositoryFactoryUtil.registerRepositoryFactory(
-				className, repositoryFactory);
+			ExternalRepositoryFactoryUtil.registerExternalRepositoryFactory(
+				className, externalRepositoryFactory);
 
 			_classNames.add(className);
 		}
 
 		public void unregisterRepositoryFactories() {
 			for (String className : _classNames) {
-				RepositoryFactoryUtil.unregisterRepositoryFactory(className);
+				ExternalRepositoryFactoryUtil.
+					unregisterExternalRepositoryFactory(className);
 			}
 
 			_classNames.clear();

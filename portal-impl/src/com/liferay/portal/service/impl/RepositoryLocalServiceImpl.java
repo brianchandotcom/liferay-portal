@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -36,6 +35,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
@@ -254,7 +254,7 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		long repositoryEntryId = getRepositoryEntryId(
+		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
 		LocalRepository localRepositoryImpl =
@@ -320,7 +320,7 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		long repositoryEntryId = getRepositoryEntryId(
+		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
 		com.liferay.portal.kernel.repository.Repository repositoryImpl =
@@ -399,30 +399,6 @@ public class RepositoryLocalServiceImpl
 			description, hidden, serviceContext);
 
 		return dlFolder.getFolderId();
-	}
-
-	protected long getRepositoryEntryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws RepositoryException {
-
-		long repositoryEntryId = 0;
-
-		if (folderId != 0) {
-			repositoryEntryId = folderId;
-		}
-		else if (fileEntryId != 0) {
-			repositoryEntryId = fileEntryId;
-		}
-		else if (fileVersionId != 0) {
-			repositoryEntryId = fileVersionId;
-		}
-
-		if (repositoryEntryId == 0) {
-			throw new InvalidRepositoryIdException(
-				"Missing a valid ID for folder, file entry or file version");
-		}
-
-		return repositoryEntryId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

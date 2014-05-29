@@ -38,6 +38,7 @@ import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
@@ -294,30 +295,6 @@ public abstract class BaseRepositoryFactory<T> {
 			LiferayRepository.class.getName());
 	}
 
-	protected long getRepositoryEntryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws RepositoryException {
-
-		long repositoryEntryId = 0;
-
-		if (folderId != 0) {
-			repositoryEntryId = folderId;
-		}
-		else if (fileEntryId != 0) {
-			repositoryEntryId = fileEntryId;
-		}
-		else if (fileVersionId != 0) {
-			repositoryEntryId = fileVersionId;
-		}
-
-		if (repositoryEntryId == 0) {
-			throw new InvalidRepositoryIdException(
-				"Missing a valid ID for folder, file entry, or file version");
-		}
-
-		return repositoryEntryId;
-	}
-
 	protected RepositoryEntryLocalService getRepositoryEntryLocalService() {
 		return _repositoryEntryLocalService;
 	}
@@ -326,7 +303,7 @@ public abstract class BaseRepositoryFactory<T> {
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
 
-		long repositoryEntryId = getRepositoryEntryId(
+		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
 		RepositoryEntry repositoryEntry =

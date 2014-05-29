@@ -264,6 +264,19 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* Returns the entryIds of the asset entries associated with the asset tag.
+	*
+	* @param tagId the tagId of the asset tag
+	* @return long[] the entryIds of asset entries associated with the asset tag
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getAssetEntryPrimaryKeys(long tagId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetEntryPrimaryKeys(tagId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override

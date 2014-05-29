@@ -259,6 +259,18 @@ public class SCFrameworkVersionLocalServiceUtil {
 	}
 
 	/**
+	* Returns the productVersionIds of the s c product versions associated with the s c framework version.
+	*
+	* @param frameworkVersionId the frameworkVersionId of the s c framework version
+	* @return long[] the productVersionIds of s c product versions associated with the s c framework version
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getSCProductVersionPrimaryKeys(long frameworkVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSCProductVersionPrimaryKeys(frameworkVersionId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addSCProductVersionSCFrameworkVersion(

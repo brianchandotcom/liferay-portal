@@ -298,6 +298,17 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the folderIds of the document library folders associated with the document library file entry type.
+	*
+	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
+	* @return long[] the folderIds of document library folders associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId)
@@ -410,6 +421,17 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*/
 	public void setDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the structureIds of the d d m structures associated with the document library file entry type.
+	*
+	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
+	* @return long[] the structureIds of d d m structures associated with the document library file entry type
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getDDMStructurePrimaryKeys(long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -345,6 +345,19 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	/**
+	* Returns the structureIds of the d d m structures associated with the journal folder.
+	*
+	* @param folderId the folderId of the journal folder
+	* @return long[] the structureIds of d d m structures associated with the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getDDMStructurePrimaryKeys(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getDDMStructurePrimaryKeys(folderId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override

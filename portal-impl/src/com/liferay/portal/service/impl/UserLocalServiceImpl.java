@@ -2204,7 +2204,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public long[] getGroupUserIds(long groupId) throws SystemException {
-		return getUserIds(getGroupUsers(groupId));
+		return groupPersistence.getUserPrimaryKeys(groupId);
 	}
 
 	/**
@@ -2298,7 +2298,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public long[] getOrganizationUserIds(long organizationId)
 		throws SystemException {
 
-		return getUserIds(getOrganizationUsers(organizationId));
+		return organizationPersistence.getUserPrimaryKeys(organizationId);
 	}
 
 	/**
@@ -2336,7 +2336,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public long[] getRoleUserIds(long roleId) throws SystemException {
-		return getUserIds(getRoleUsers(roleId));
+		return rolePersistence.getUserPrimaryKeys(roleId);
 	}
 
 	/**
@@ -6017,18 +6017,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return StringUtil.lowerCase(StringUtil.trim(login));
 	}
 
-	protected long[] getUserIds(List<User> users) {
-		long[] userIds = new long[users.size()];
-
-		for (int i = 0; i < users.size(); i++) {
-			User user = users.get(i);
-
-			userIds[i] = user.getUserId();
-		}
-
-		return userIds;
-	}
-
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {
 		if (MapUtil.isEmpty(params)) {
 			return false;
@@ -6203,15 +6191,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		List<Group> oldGroups = userPersistence.getGroups(userId);
+		long[] oldGroupIds = getGroupPrimaryKeys(userId);
 
-		Set<Long> oldGroupIds = new HashSet<Long>(oldGroups.size());
-
-		for (Group oldGroup : oldGroups) {
-			long oldGroupId = oldGroup.getGroupId();
-
-			oldGroupIds.add(oldGroupId);
-
+		for (long oldGroupId : oldGroupIds) {
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
 				unsetGroupUsers(
 					oldGroupId, new long[] {userId}, serviceContext);
@@ -6219,7 +6201,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		for (long newGroupId : newGroupIds) {
-			if (!oldGroupIds.contains(newGroupId)) {
+			if (!ArrayUtil.contains(oldGroupIds, newGroupId)) {
 				addGroupUsers(newGroupId, new long[] {userId});
 			}
 		}
@@ -6242,24 +6224,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		List<Organization> oldOrganizations = userPersistence.getOrganizations(
-			userId);
+		long[] oldOrganizationIds = getOrganizationPrimaryKeys(userId);
 
-		Set<Long> oldOrganizationIds = new HashSet<Long>(
-			oldOrganizations.size());
-
-		for (Organization oldOrganization : oldOrganizations) {
-			long oldOrganizationId = oldOrganization.getOrganizationId();
-
-			oldOrganizationIds.add(oldOrganizationId);
-
+		for (long oldOrganizationId : oldOrganizationIds) {
 			if (!ArrayUtil.contains(newOrganizationIds, oldOrganizationId)) {
 				unsetOrganizationUsers(oldOrganizationId, new long[] {userId});
 			}
 		}
 
 		for (long newOrganizationId : newOrganizationIds) {
-			if (!oldOrganizationIds.contains(newOrganizationId)) {
+			if (!ArrayUtil.contains(oldOrganizationIds, newOrganizationId)) {
 				addOrganizationUsers(newOrganizationId, new long[] {userId});
 			}
 		}
@@ -6308,18 +6282,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			organizationIds = user.getOrganizationIds();
 		}
 
-		long[] organizationGroupIds = new long[organizationIds.length];
+		for (long organizationId : organizationIds) {
+			long[] organizationGroupIds =
+				organizationPersistence.getGroupPrimaryKeys(organizationId);
 
-		for (int i = 0; i < organizationIds.length; i++) {
-			long organizationId = organizationIds[i];
-
-			Organization organization =
-				organizationPersistence.findByPrimaryKey(organizationId);
-
-			organizationGroupIds[i] = organization.getGroupId();
+			validGroupIds = ArrayUtil.append(
+				validGroupIds, organizationGroupIds);
 		}
-
-		validGroupIds = ArrayUtil.append(validGroupIds, organizationGroupIds);
 
 		Arrays.sort(validGroupIds);
 

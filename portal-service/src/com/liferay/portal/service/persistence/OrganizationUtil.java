@@ -2158,10 +2158,10 @@ public class OrganizationUtil {
 	* Returns the primaryKeys of groups associated with the organization.
 	*
 	* @param pk the primary key of the organization
-	* @return List<Long> of the primaryKeys of groups associated with the organization
+	* @return long[] of the primaryKeys of groups associated with the organization
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getGroupPrimaryKeys(long pk)
+	public static long[] getGroupPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getGroupPrimaryKeys(pk);
 	}
@@ -2393,10 +2393,10 @@ public class OrganizationUtil {
 	* Returns the primaryKeys of users associated with the organization.
 	*
 	* @param pk the primary key of the organization
-	* @return List<Long> of the primaryKeys of users associated with the organization
+	* @return long[] of the primaryKeys of users associated with the organization
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getUserPrimaryKeys(long pk)
+	public static long[] getUserPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getUserPrimaryKeys(pk);
 	}

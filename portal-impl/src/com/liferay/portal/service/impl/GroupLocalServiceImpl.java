@@ -4096,12 +4096,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Join by Users_Orgs
 
-			List<Organization> organizations = userPersistence.getOrganizations(
+			long[] organizationIds = userPersistence.getOrganizationPrimaryKeys(
 				userId);
 
-			for (Organization organization : organizations) {
-				long organizationId = organization.getOrganizationId();
-
+			for (long organizationId : organizationIds) {
 				for (Group group : groups) {
 					if (organizationId == group.getClassPK()) {
 						joinedGroups.add(group);
@@ -4111,19 +4109,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Join by Groups_Orgs and Users_Orgs
 
-			for (Organization organization : organizations) {
+			for (long organizationId : organizationIds) {
 				joinedGroups.addAll(
-					organizationPersistence.getGroups(
-						organization.getOrganizationId()));
+					organizationPersistence.getGroups(organizationId));
 			}
 
 			// Join by Groups_UserGroups and Users_UserGroups
 
-			List<UserGroup> userGroups = userPersistence.getUserGroups(userId);
+			long[] userGroupIds = userPersistence.getUserGroupPrimaryKeys(
+				userId);
 
-			for (UserGroup userGroup : userGroups) {
+			for (long userGroupId : userGroupIds) {
 				joinedGroups.addAll(
-					userGroupPersistence.getGroups(userGroup.getUserGroupId()));
+					userGroupPersistence.getGroups(userGroupId));
 			}
 		}
 

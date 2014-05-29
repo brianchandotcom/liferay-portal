@@ -270,6 +270,19 @@ public class SCProductEntryLocalServiceWrapper
 	}
 
 	/**
+	* Returns the licenseIds of the s c licenses associated with the s c product entry.
+	*
+	* @param productEntryId the productEntryId of the s c product entry
+	* @return long[] the licenseIds of s c licenses associated with the s c product entry
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getSCLicensePrimaryKeys(long productEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scProductEntryLocalService.getSCLicensePrimaryKeys(productEntryId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override

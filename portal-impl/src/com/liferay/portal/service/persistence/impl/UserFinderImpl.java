@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -283,10 +284,12 @@ public class UserFinderImpl
 				}
 				else {
 					organizationIds.addAll(
-						GroupUtil.getOrganizationPrimaryKeys(groupId));
+						ListUtil.toList(
+							GroupUtil.getOrganizationPrimaryKeys(groupId)));
 
 					userGroupIds.addAll(
-						GroupUtil.getUserGroupPrimaryKeys(groupId));
+						ListUtil.toList(
+							GroupUtil.getUserGroupPrimaryKeys(groupId)));
 				}
 			}
 
@@ -328,14 +331,16 @@ public class UserFinderImpl
 					}
 					else {
 						organizationIds.addAll(
-							GroupUtil.getOrganizationPrimaryKeys(
-								group.getGroupId()));
+							ListUtil.toList(
+								GroupUtil.getOrganizationPrimaryKeys(
+									group.getGroupId())));
 
 						roleGroupIds.add(group.getGroupId());
 
 						userGroupIds.addAll(
-							GroupUtil.getUserGroupPrimaryKeys(
-								group.getGroupId()));
+							ListUtil.toList(
+								GroupUtil.getUserGroupPrimaryKeys(
+									group.getGroupId())));
 					}
 				}
 			}
@@ -625,10 +630,12 @@ public class UserFinderImpl
 				}
 				else {
 					organizationIds.addAll(
-						GroupUtil.getOrganizationPrimaryKeys(groupId));
+						ListUtil.toList(
+							GroupUtil.getOrganizationPrimaryKeys(groupId)));
 
 					userGroupIds.addAll(
-						GroupUtil.getUserGroupPrimaryKeys(groupId));
+						ListUtil.toList(
+							GroupUtil.getUserGroupPrimaryKeys(groupId)));
 				}
 			}
 
@@ -672,14 +679,16 @@ public class UserFinderImpl
 					}
 					else {
 						organizationIds.addAll(
-							GroupUtil.getOrganizationPrimaryKeys(
-								group.getGroupId()));
+							ListUtil.toList(
+								GroupUtil.getOrganizationPrimaryKeys(
+									group.getGroupId())));
 
 						roleGroupIds.add(group.getGroupId());
 
 						userGroupIds.addAll(
-							GroupUtil.getUserGroupPrimaryKeys(
-								group.getGroupId()));
+							ListUtil.toList(
+								GroupUtil.getUserGroupPrimaryKeys(
+									group.getGroupId())));
 					}
 				}
 			}

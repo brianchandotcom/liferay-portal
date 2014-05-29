@@ -325,6 +325,18 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the entryIds of the asset entries associated with the asset category.
+	*
+	* @param categoryId the categoryId of the asset category
+	* @return long[] the entryIds of asset entries associated with the asset category
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long[] getAssetEntryPrimaryKeys(long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAssetEntryPrimaryKeys(categoryId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void addAssetEntryAssetCategory(long entryId, long categoryId)

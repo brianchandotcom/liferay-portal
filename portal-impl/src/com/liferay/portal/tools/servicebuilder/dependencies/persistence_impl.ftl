@@ -1029,14 +1029,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			 * Returns the primaryKeys of ${tempEntity.humanNames} associated with the ${entity.humanName}.
 			 *
 			 * @param pk the primary key of the ${entity.humanName}
-			 * @return List<Long> of the primaryKeys of ${tempEntity.humanNames} associated with the ${entity.humanName}
+			 * @return long[] of the primaryKeys of ${tempEntity.humanNames} associated with the ${entity.humanName}
 			 * @throws SystemException if a system exception occurred
 			 */
 			@Override
-			public List<Long> get${tempEntity.name}PrimaryKeys(${entity.PKClassName} pk) throws SystemException {
+			public long[] get${tempEntity.name}PrimaryKeys(${entity.PKClassName} pk) throws SystemException {
 				long[] pks = ${entity.varName}To${tempEntity.name}TableMapper.getRightPrimaryKeys(pk);
 
-				return ListUtil.toList(pks);
+				return pks.clone();
 			}
 
 			/**

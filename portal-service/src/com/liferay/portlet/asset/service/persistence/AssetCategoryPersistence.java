@@ -2775,10 +2775,10 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* Returns the primaryKeys of asset entries associated with the asset category.
 	*
 	* @param pk the primary key of the asset category
-	* @return List<Long> of the primaryKeys of asset entries associated with the asset category
+	* @return long[] of the primaryKeys of asset entries associated with the asset category
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getAssetEntryPrimaryKeys(long pk)
+	public long[] getAssetEntryPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

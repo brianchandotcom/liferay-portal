@@ -1970,10 +1970,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Returns the primaryKeys of groups associated with the user.
 	*
 	* @param pk the primary key of the user
-	* @return List<Long> of the primaryKeys of groups associated with the user
+	* @return long[] of the primaryKeys of groups associated with the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getGroupPrimaryKeys(long pk)
+	public long[] getGroupPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -2169,10 +2169,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Returns the primaryKeys of organizations associated with the user.
 	*
 	* @param pk the primary key of the user
-	* @return List<Long> of the primaryKeys of organizations associated with the user
+	* @return long[] of the primaryKeys of organizations associated with the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getOrganizationPrimaryKeys(long pk)
+	public long[] getOrganizationPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -2370,10 +2370,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Returns the primaryKeys of roles associated with the user.
 	*
 	* @param pk the primary key of the user
-	* @return List<Long> of the primaryKeys of roles associated with the user
+	* @return long[] of the primaryKeys of roles associated with the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getRolePrimaryKeys(long pk)
+	public long[] getRolePrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -2569,10 +2569,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Returns the primaryKeys of teams associated with the user.
 	*
 	* @param pk the primary key of the user
-	* @return List<Long> of the primaryKeys of teams associated with the user
+	* @return long[] of the primaryKeys of teams associated with the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getTeamPrimaryKeys(long pk)
+	public long[] getTeamPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -2768,10 +2768,10 @@ public interface UserPersistence extends BasePersistence<User> {
 	* Returns the primaryKeys of user groups associated with the user.
 	*
 	* @param pk the primary key of the user
-	* @return List<Long> of the primaryKeys of user groups associated with the user
+	* @return long[] of the primaryKeys of user groups associated with the user
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<java.lang.Long> getUserGroupPrimaryKeys(long pk)
+	public long[] getUserGroupPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

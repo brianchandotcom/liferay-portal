@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -3750,14 +3749,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 * Returns the primaryKeys of document library folders associated with the document library file entry type.
 	 *
 	 * @param pk the primary key of the document library file entry type
-	 * @return List<Long> of the primaryKeys of document library folders associated with the document library file entry type
+	 * @return long[] of the primaryKeys of document library folders associated with the document library file entry type
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Long> getDLFolderPrimaryKeys(long pk) throws SystemException {
+	public long[] getDLFolderPrimaryKeys(long pk) throws SystemException {
 		long[] pks = dlFileEntryTypeToDLFolderTableMapper.getRightPrimaryKeys(pk);
 
-		return ListUtil.toList(pks);
+		return pks.clone();
 	}
 
 	/**
@@ -4053,15 +4052,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 * Returns the primaryKeys of d d m structures associated with the document library file entry type.
 	 *
 	 * @param pk the primary key of the document library file entry type
-	 * @return List<Long> of the primaryKeys of d d m structures associated with the document library file entry type
+	 * @return long[] of the primaryKeys of d d m structures associated with the document library file entry type
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Long> getDDMStructurePrimaryKeys(long pk)
-		throws SystemException {
+	public long[] getDDMStructurePrimaryKeys(long pk) throws SystemException {
 		long[] pks = dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(pk);
 
-		return ListUtil.toList(pks);
+		return pks.clone();
 	}
 
 	/**

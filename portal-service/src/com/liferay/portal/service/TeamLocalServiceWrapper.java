@@ -262,6 +262,19 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	/**
+	* Returns the userIds of the users associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userIds of users associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getUserPrimaryKeys(long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserPrimaryKeys(teamId);
+	}
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
@@ -409,6 +422,19 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	public void setUserTeams(long userId, long[] teamIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_teamLocalService.setUserTeams(userId, teamIds);
+	}
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the team.
+	*
+	* @param teamId the teamId of the team
+	* @return long[] the userGroupIds of user groups associated with the team
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long[] getUserGroupPrimaryKeys(long teamId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _teamLocalService.getUserGroupPrimaryKeys(teamId);
 	}
 
 	/**

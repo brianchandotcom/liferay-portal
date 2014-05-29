@@ -102,8 +102,8 @@ portletURL.setParameter("eventName", eventName);
 
 					boolean disabled = false;
 
-					for (Role curRole : selUser.getRoles()) {
-						if (curRole.getRoleId() == role.getRoleId()) {
+					for (long curRoleId : selUser.getRoleIds()) {
+						if (curRoleId == role.getRoleId()) {
 							disabled = true;
 
 							break;

@@ -2579,10 +2579,10 @@ public class RoleUtil {
 	* Returns the primaryKeys of groups associated with the role.
 	*
 	* @param pk the primary key of the role
-	* @return List<Long> of the primaryKeys of groups associated with the role
+	* @return long[] of the primaryKeys of groups associated with the role
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getGroupPrimaryKeys(long pk)
+	public static long[] getGroupPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getGroupPrimaryKeys(pk);
 	}
@@ -2814,10 +2814,10 @@ public class RoleUtil {
 	* Returns the primaryKeys of users associated with the role.
 	*
 	* @param pk the primary key of the role
-	* @return List<Long> of the primaryKeys of users associated with the role
+	* @return long[] of the primaryKeys of users associated with the role
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getUserPrimaryKeys(long pk)
+	public static long[] getUserPrimaryKeys(long pk)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getUserPrimaryKeys(pk);
 	}

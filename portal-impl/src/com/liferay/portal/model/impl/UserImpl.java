@@ -65,6 +65,7 @@ import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -516,17 +517,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getGroupIds() throws SystemException {
-		List<Group> groups = getGroups();
-
-		long[] groupIds = new long[groups.size()];
-
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		return groupIds;
+		return UserLocalServiceUtil.getGroupPrimaryKeys(getUserId());
 	}
 
 	@Override
@@ -675,18 +666,8 @@ public class UserImpl extends UserBaseImpl {
 	public long[] getOrganizationIds(boolean includeAdministrative)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations = getOrganizations(
-			includeAdministrative);
-
-		long[] organizationIds = new long[organizations.size()];
-
-		for (int i = 0; i < organizations.size(); i++) {
-			Organization organization = organizations.get(i);
-
-			organizationIds[i] = organization.getOrganizationId();
-		}
-
-		return organizationIds;
+		return OrganizationLocalServiceUtil.getUserOrganizationIds(
+			getUserId(), includeAdministrative);
 	}
 
 	@Override
@@ -812,17 +793,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getRoleIds() throws SystemException {
-		List<Role> roles = getRoles();
-
-		long[] roleIds = new long[roles.size()];
-
-		for (int i = 0; i < roles.size(); i++) {
-			Role role = roles.get(i);
-
-			roleIds[i] = role.getRoleId();
-		}
-
-		return roleIds;
+		return UserLocalServiceUtil.getRolePrimaryKeys(getUserId());
 	}
 
 	@Override
@@ -845,17 +816,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getTeamIds() throws SystemException {
-		List<Team> teams = getTeams();
-
-		long[] teamIds = new long[teams.size()];
-
-		for (int i = 0; i < teams.size(); i++) {
-			Team team = teams.get(i);
-
-			teamIds[i] = team.getTeamId();
-		}
-
-		return teamIds;
+		return UserLocalServiceUtil.getTeamPrimaryKeys(getUserId());
 	}
 
 	@Override
@@ -870,17 +831,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long[] getUserGroupIds() throws SystemException {
-		List<UserGroup> userGroups = getUserGroups();
-
-		long[] userGroupIds = new long[userGroups.size()];
-
-		for (int i = 0; i < userGroups.size(); i++) {
-			UserGroup userGroup = userGroups.get(i);
-
-			userGroupIds[i] = userGroup.getUserGroupId();
-		}
-
-		return userGroupIds;
+		return UserLocalServiceUtil.getUserGroupPrimaryKeys(getUserId());
 	}
 
 	@Override
@@ -936,9 +887,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean hasOrganization() throws PortalException, SystemException {
-		List<Organization> organizations = getOrganizations();
-
-		return !organizations.isEmpty();
+		return OrganizationLocalServiceUtil.hasUserOrganizations(getUserId());
 	}
 
 	@Override

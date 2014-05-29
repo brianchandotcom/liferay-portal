@@ -237,6 +237,17 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the categoryIds of the asset categories associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the categoryIds of asset categories associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getAssetCategoryPrimaryKeys(long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* @throws SystemException if a system exception occurred
 	*/
 	public void addAssetCategoryAssetEntry(long categoryId, long entryId)
@@ -344,6 +355,17 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the tagIds of the asset tags associated with the asset entry.
+	*
+	* @param entryId the entryId of the asset entry
+	* @return long[] the tagIds of asset tags associated with the asset entry
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getAssetTagPrimaryKeys(long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

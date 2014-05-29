@@ -260,4 +260,8 @@ public class SetUtil {
 		return set1;
 	}
 
+	public static Set<Long> intersect(long[] array1, long[] array2) {
+		return intersect(fromArray(array1), fromArray(array2));
+	}
+
 }

@@ -781,11 +781,11 @@ public class SCLicenseUtil {
 	* Returns the primaryKeys of s c product entries associated with the s c license.
 	*
 	* @param pk the primary key of the s c license
-	* @return List<Long> of the primaryKeys of s c product entries associated with the s c license
+	* @return long[] of the primaryKeys of s c product entries associated with the s c license
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<java.lang.Long> getSCProductEntryPrimaryKeys(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getSCProductEntryPrimaryKeys(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().getSCProductEntryPrimaryKeys(pk);
 	}
 

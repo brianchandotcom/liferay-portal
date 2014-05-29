@@ -27,6 +27,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -141,12 +142,16 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		Map<String, LongWrapper> modelAdditionCounters =
 			manifestSummary.getModelAdditionCounters();
 
-		message.put("modelAdditionCounters", modelAdditionCounters);
+		message.put(
+			"modelAdditionCounters",
+			new HashMap<String, LongWrapper>(modelAdditionCounters));
 
 		Map<String, LongWrapper> modelDeletionCounters =
 			manifestSummary.getModelDeletionCounters();
 
-		message.put("modelDeletionCounters", modelDeletionCounters);
+		message.put(
+			"modelDeletionCounters",
+			new HashMap<String, LongWrapper>(modelDeletionCounters));
 
 		return message;
 	}

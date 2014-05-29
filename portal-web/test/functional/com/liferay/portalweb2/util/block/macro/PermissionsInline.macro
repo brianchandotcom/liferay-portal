@@ -255,7 +255,7 @@
 	<command name="gotoPollPermissionsCP">
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute action="CPPolls#assertClick" locator-key1="POLLS_TABLE_ACTION" value1="Actions" />
+		<execute action="CPPolls#click" locator-key1="POLLS_TABLE_ACTION" />
 		<execute action="CPPolls#assertClick" locator-key1="POLLS_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />

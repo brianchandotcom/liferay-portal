@@ -162,7 +162,7 @@
 	<command name="gotoCP">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
 	</command>
 
 	<command name="gotoPG">

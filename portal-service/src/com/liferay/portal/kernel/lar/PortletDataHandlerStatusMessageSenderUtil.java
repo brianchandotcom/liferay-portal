@@ -34,6 +34,11 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 		return _dataHandlerStatusMessageSender;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #sendStatusMessage(String, String[], ManifestSummary)}
+	 */
+	@Deprecated
 	public static void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary) {
 

@@ -36,17 +36,16 @@ import java.util.Map;
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #sendStatusMessage(String,
+	 *             String[], ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary) {
 
-		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			return;
-		}
-
-		Message message = createMessage(messageType, manifestSummary);
-
-		_singleDestinationMessageSender.send(message);
+		sendStatusMessage(messageType, (String[])null, manifestSummary);
 	}
 
 	@Override

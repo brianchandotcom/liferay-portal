@@ -219,6 +219,10 @@
 
 /* ---------- Tabs ---------- */
 
+.lfr-nav.nav-tabs {
+	margin-bottom: 20px;
+}
+
 .tab-active strong {
 	font-weight: normal;
 }

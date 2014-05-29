@@ -49,7 +49,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(script);
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
 					<div class="tabbable">
 						<div class="tabbable-content">
-							<ul class="nav nav-tabs">
+							<ul class="lfr-nav nav nav-tabs">
 								<li class="active">
 									<a href="javascript:;">
 										<liferay-ui:message key="fields" />

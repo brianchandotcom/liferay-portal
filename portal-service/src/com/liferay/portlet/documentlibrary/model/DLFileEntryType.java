@@ -38,7 +38,7 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> fileEntryTypes,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes,
 		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

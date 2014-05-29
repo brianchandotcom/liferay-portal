@@ -568,6 +568,16 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 			newFolderId, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long userId, long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppLocalService.moveFileEntryFromTrash(userId, fileEntryId,
+			newFolderId, serviceContext);
+	}
+
 	/**
 	* Moves the file entry with the primary key to the trash portlet.
 	*

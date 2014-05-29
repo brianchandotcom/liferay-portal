@@ -778,11 +778,11 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 
 	@Override
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> fileEntryTypes,
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes,
 		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryType.getUnambiguousName(fileEntryTypes, groupId,
+		return _dlFileEntryType.getUnambiguousName(dlFileEntryTypes, groupId,
 			locale);
 	}
 

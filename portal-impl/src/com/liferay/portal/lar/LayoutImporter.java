@@ -926,6 +926,10 @@ public class LayoutImporter {
 			String action = layoutElement.attributeValue(Constants.ACTION);
 
 			if (action.equals(Constants.SKIP)) {
+
+				// We only want to update the priorites if there is no element
+				// with SKIP action
+
 				return;
 			}
 

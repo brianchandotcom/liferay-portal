@@ -392,7 +392,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_DOCUMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//input[@id='_20_rowIdsFileEntryCheckbox']</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//input[contains(@id,'Checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -423,7 +423,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_FOLDER_CHECKBOX</td>
-	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//input[@id='_20_rowIdsFolderCheckbox']</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]/input[contains(@id,'Checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

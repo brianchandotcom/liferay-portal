@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[4]/div/a[@title='Actions']/span</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_ACTIONS_1</td>
-	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
+	<td>//tr[1]//div[contains(@class,'lfr-icon-menu')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,17 +88,17 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_EDIT</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-left']/li[contains(.,'Edit')]/a/span</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Edit')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_PERMISSIONS</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-left']/li[contains(.,'Permissions')]/a/span</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Permissions')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-left']/li[contains(.,'Delete')]/a/span</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list')]/li[contains(.,'Delete')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

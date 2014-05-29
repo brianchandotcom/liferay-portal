@@ -56,27 +56,27 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_DOWNLOAD_ICON</td>
-	<td>//span[contains(.,'Download')]/a/img</td>
+	<td>//span[contains(.,'Download')]/a/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_VIEW_ICON</td>
-	<td>//span[contains(.,'View')]/a/img</td>
+	<td>//span[contains(.,'View')]/a/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_EDIT_ICON</td>
-	<td>//span[contains(.,'Edit')]/a/img</td>
+	<td>//span[contains(.,'Edit')]/a/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_PERMISSIONS_ICON</td>
-	<td>//span[contains(.,'Permissions')]/a/img</td>
+	<td>//span[contains(.,'Permissions')]/a/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_ICON</td>
-	<td>//span[contains(.,'Move to the Recycle Bin')]/a/img</td>
+	<td>//span[contains(.,'Move to the Recycle Bin')]/a/i</td>
 	<td></td>
 </tr>
 </tbody>

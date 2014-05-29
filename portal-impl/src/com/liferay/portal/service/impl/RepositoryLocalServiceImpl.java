@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +48,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Alexander Chow
  */
-public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
+public class RepositoryLocalServiceImpl
+	extends RepositoryLocalServiceBaseImpl implements CacheRegistryItem {
 
 	@Override
 	public Repository addRepository(
@@ -113,6 +116,13 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return addRepository(
 			userId, groupId, classNameId, parentFolderId, name, description,
 			portletId, typeSettingsProperties, false, serviceContext);
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		CacheRegistryUtil.register(this);
 	}
 
 	@Override
@@ -266,6 +276,11 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public String getRegistryName() {
+		return RepositoryLocalServiceImpl.class.getName();
+	}
+
+	@Override
 	public Repository getRepository(long groupId, String portletId)
 		throws PortalException, SystemException {
 
@@ -333,6 +348,14 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryId);
 
 		return repository.getTypeSettingsProperties();
+	}
+
+	@Override
+	public void invalidate() {
+		_localRepositoriesByRepositoryEntryId.clear();
+		_localRepositoriesByRepositoryId.clear();
+		_repositoriesByEntryId.clear();
+		_repositoriesByRepositoryId.clear();
 	}
 
 	@Override

@@ -11,13 +11,11 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="PGAssetpublisherConfigurationSites#type" locator-key1="SITES_SEARCH_FIELD" value1="${siteName}" />
-
 		<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_SEARCH_BUTTON" value1="Search" />
 
 		<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
 
-		<execute action="PGAssetpublisherConfiguration#selectFrame" />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#selectFrameTop" locator-key1="ASSET_PUBLISHER_IFRAME" />
 	</command>
 
 	<command name="configureAddSiteScopes">

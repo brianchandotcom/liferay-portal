@@ -2148,32 +2148,6 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.build.bundle.tcat}" arg2="true" />
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
-
-plugins.includes=marketplace-portlet</echo>
-
-				<if>
-					<isset property="test.build.portal.war.url" />
-					<then>
-						<get
-							dest="dist/liferay-portal-${lp.version}.war"
-							src="${test.build.portal.war.url}"
-						/>
-					</then>
-					<else>
-						<ant antfile="build-dist.xml" target="zip-portal-war" inheritAll="false" />
-					</else>
-				</if>
-
-				<ant antfile="build-dist.xml" target="build-dist-tcat" inheritAll="false" />
-
-				<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
-			</then>
-		</if>
-
-		<if>
 			<and>
 				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
 				<isset property="test.build.portal.war.url" />
@@ -2198,6 +2172,8 @@ plugins.includes=marketplace-portlet</echo>
 				</then>
 			</elseif>
 		</if>
+
+		<antcall target="prepare-test-build-dependent" inheritAll="false" />
 
 		<if>
 			<matches pattern="http" string="${test.build.license.xml.zip.url}" />
@@ -2233,6 +2209,34 @@ plugins.includes=marketplace-portlet</echo>
 		<antcall target="compile-test" inheritAll="false" />
 
 		<antcall target="record-test-package-names" inheritAll="false" />
+	</target>
+
+	<target name="prepare-test-build-dependent">
+		<if>
+			<equals arg1="${test.build.bundle.tcat}" arg2="true" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
+
+plugins.includes=marketplace-portlet</echo>
+
+				<if>
+					<isset property="test.build.portal.war.url" />
+					<then>
+						<get
+							dest="dist/liferay-portal-${lp.version}.war"
+							src="${test.build.portal.war.url}"
+						/>
+					</then>
+					<else>
+						<ant antfile="build-dist.xml" target="zip-portal-war" inheritAll="false" />
+					</else>
+				</if>
+
+				<ant antfile="build-dist.xml" target="build-dist-tcat" inheritAll="false" />
+
+				<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-test-bundle">

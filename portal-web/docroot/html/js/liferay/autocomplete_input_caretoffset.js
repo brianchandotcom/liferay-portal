@@ -111,10 +111,10 @@ AUI.add(
 			}
 		};
 
-		A.Base.mix(Liferay.AutoCompleteInput, [AutcompleteInputCaretOffset]);
+		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretOffset]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-input']
+		requires: ['liferay-autocomplete-textarea']
 	}
 );

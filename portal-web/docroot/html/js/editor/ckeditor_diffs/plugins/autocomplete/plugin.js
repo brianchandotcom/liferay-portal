@@ -6,7 +6,7 @@
 				var instance = this;
 
 				AUI().use(
-					'liferay-autocomplete-input-base',
+					'liferay-autocomplete-input',
 					function(A) {
 						var path = instance.path;
 

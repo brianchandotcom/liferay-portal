@@ -158,14 +158,13 @@ public abstract class BaseRepositoryFactory<T> {
 
 		Repository repository = getRepository(repositoryId);
 
-		long groupId;
-		long actualRepositoryId;
-		long dlFolderId;
+		long groupId = 0;
+		long actualRepositoryId = 0;
+		long dlFolderId = 0;
 
 		if (repository == null) {
 			groupId = repositoryId;
 			actualRepositoryId = repositoryId;
-			dlFolderId = 0;
 		}
 		else {
 			groupId = repository.getGroupId();
@@ -182,7 +181,7 @@ public abstract class BaseRepositoryFactory<T> {
 		throws PortalException, SystemException {
 
 		try {
-			long repositoryId;
+			long repositoryId = 0;
 
 			if (folderId != 0) {
 				repositoryId = getFolderRepositoryId(folderId);
@@ -277,8 +276,7 @@ public abstract class BaseRepositoryFactory<T> {
 	protected abstract long getFolderRepositoryId(long folderId)
 		throws PortalException, SystemException;
 
-	protected abstract com.liferay.portal.model.Repository getRepository(
-			long repositoryId)
+	protected abstract Repository getRepository(long repositoryId)
 		throws PortalException, SystemException;
 
 	protected long getRepositoryClassNameId(long repositoryId)

@@ -75,6 +75,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_DATE_HOUR</td>
+	<td>//input[contains(@id,'displayDateHour')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_MINUTE</td>
+	<td>//input[contains(@id,'displayDateMinute')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_MERIDIAN</td>
+	<td>//input[contains(@id,'displayDateAmPm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX</td>
 	<td>//input[contains(@id,'fmdisplayDateCheckbox')]</td>
 	<td></td>

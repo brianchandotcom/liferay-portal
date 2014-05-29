@@ -11,7 +11,7 @@
 		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
 
 		<if>
-			<equals arg1="${scheduleFutureTime}" arg2="true" />
+			<equals arg1="${scheduled}" arg2="true" />
 			<then>
 				<execute macro="SOAnnouncementsEntry#scheduleFutureTimeCmd" />
 			</then>
@@ -98,9 +98,8 @@
 
 	<command name="scheduleFutureTimeCmd">
 		<execute action="SODashboardAddAnnouncementsEntry#uncheck" locator-key1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
-		<execute action="SODashboardAddAnnouncementsEntry#pause" locator1="5000" />
 
-		<var attribute="value" locator="//input[contains(@id,'displayDateHour')]" name="displayDateHour" />
+		<var locator-key="DISPLAY_DATE_DATE_HOUR" name="displayDateHour" path="SODashboardAddAnnouncementsEntry" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -110,11 +109,7 @@
 			</then>
 		</if>
 
-		<var attribute="value" locator="//input[contains(@id,'displayDateAmPm')]" name="displayDateAMPM" />
-		<var name="displayDateAMPM" value="${displayDateAMPM?replace('0', 'AM')}" />
-		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
-
-		<var attribute="value" locator="//input[contains(@id,'displayDateMinute')]" name="displayDateMinute" />
+		<var locator-key="DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" path="SODashboardAddAnnouncementsEntry" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
 		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
@@ -126,10 +121,13 @@
 			</then>
 		</if>
 
-		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
+		<var locator-key="DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" path="SODashboardAddAnnouncementsEntry" />
+		<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
+		<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
+
+		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 
 		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="DISPLAY_DATE_TIME_INPUT" value1="${displayDate}" />
-		<execute action="SODashboardAddAnnouncementsEntry#pause" locator1="5000" />
 	</command>
 
 	<command name="tearDownPG">

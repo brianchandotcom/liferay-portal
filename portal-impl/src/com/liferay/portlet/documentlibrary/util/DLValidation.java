@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.documentlibrary.FileExtensionException;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
@@ -32,6 +34,11 @@ public interface DLValidation {
 
 	public void validateDirectoryName(String directoryName)
 		throws FolderNameException;
+
+	public void validateFileExtension(String fileName)
+		throws FileExtensionException, SystemException;
+
+	public void validateFileName(String fileName) throws FileNameException;
 
 	public void validateFileSize(String fileName, byte[] bytes)
 		throws FileSizeException, SystemException;

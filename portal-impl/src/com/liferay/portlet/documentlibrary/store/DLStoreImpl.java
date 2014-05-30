@@ -32,19 +32,14 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DirectoryNameException;
-import com.liferay.portlet.documentlibrary.FileExtensionException;
-import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -581,29 +576,10 @@ public class DLStoreImpl implements DLStore {
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
-		if (!DLValidationUtil.isValidName(fileName)) {
-			throw new FileNameException(fileName);
-		}
+		DLValidationUtil.validateFileName(fileName);
 
 		if (validateFileExtension) {
-			boolean validFileExtension = false;
-
-			String[] fileExtensions = PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
-
-			for (String fileExtension : fileExtensions) {
-				if (StringPool.STAR.equals(fileExtension) ||
-					StringUtil.endsWith(fileName, fileExtension)) {
-
-					validFileExtension = true;
-
-					break;
-				}
-			}
-
-			if (!validFileExtension) {
-				throw new FileExtensionException(fileName);
-			}
+			DLValidationUtil.validateFileExtension(fileName);
 		}
 	}
 

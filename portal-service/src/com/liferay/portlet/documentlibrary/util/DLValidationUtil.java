@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.FolderNameException;
 
 /**
  * @author Adolfo Pérez
@@ -25,6 +26,16 @@ public class DLValidationUtil {
 		PortalRuntimePermission.checkGetBeanProperty(DLValidationUtil.class);
 
 		return _dlValidation;
+	}
+
+	public static boolean isValidName(String name) {
+		return getDLValidation().isValidName(name);
+	}
+
+	public static final void validateDirectoryName(String directoryName)
+		throws FolderNameException {
+
+		getDLValidation().validateDirectoryName(directoryName);
 	}
 
 	public void setDLValidation(DLValidation dlValidation) {

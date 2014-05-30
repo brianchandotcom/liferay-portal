@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -48,7 +47,6 @@ import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
@@ -56,11 +54,11 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.List;
 
 /**
@@ -356,46 +354,15 @@ public class DLStoreImpl implements DLStore {
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.documentlibrary.util.DLValidationUtil#isValidName(
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isValidName(String name) {
-		if (Validator.isNull(name)) {
-			return false;
-		}
-
-		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
-			if (name.contains(blacklistChar)) {
-				return false;
-			}
-		}
-
-		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
-				blacklistLastChar = UnicodeFormatter.parseString(
-					blacklistLastChar);
-			}
-
-			if (name.endsWith(blacklistLastChar)) {
-				return false;
-			}
-		}
-
-		String nameWithoutExtension = name;
-
-		if (name.contains(StringPool.PERIOD)) {
-			int index = name.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = name.substring(0, index);
-		}
-
-		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			if (StringUtil.equalsIgnoreCase(
-					nameWithoutExtension, blacklistName)) {
-
-				return false;
-			}
-		}
-
-		return true;
+		return DLValidationUtil.isValidName(name);
 	}
 
 	@Override
@@ -742,13 +709,17 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portlet.documentlibrary.util.DLValidationUtil#validateDirectoryName(
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public void validateDirectoryName(String directoryName)
 		throws PortalException {
 
-		if (!isValidName(directoryName)) {
-			throw new FolderNameException(directoryName);
-		}
+		DLValidationUtil.validateDirectoryName(directoryName);
 	}
 
 	protected void isValidVersion(String versionLabel) throws PortalException {
@@ -819,7 +790,5 @@ public class DLStoreImpl implements DLStore {
 	private static final String[] _KEYWORDS_FIELDS = {
 		Field.ASSET_TAG_NAMES, Field.CONTENT, Field.PROPERTIES
 	};
-
-	private static final String _UNICODE_PREFIX = "\\u";
 
 }

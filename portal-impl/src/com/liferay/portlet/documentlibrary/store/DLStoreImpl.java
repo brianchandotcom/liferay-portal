@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -47,12 +46,10 @@ import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
 
 import java.io.File;
@@ -722,21 +719,11 @@ public class DLStoreImpl implements DLStore {
 		DLValidationUtil.validateDirectoryName(directoryName);
 	}
 
-	protected void isValidVersion(String versionLabel) throws PortalException {
-		if (Validator.isNull(versionLabel)) {
-			return;
-		}
-
-		if (!DLUtil.isValidVersion(versionLabel)) {
-			throw new InvalidFileVersionException();
-		}
-	}
-
 	protected void validate(
 			String fileName, boolean validateFileExtension, String versionLabel)
 		throws PortalException, SystemException {
 
-		isValidVersion(versionLabel);
+		DLValidationUtil.validateVersionLabel(versionLabel);
 
 		validate(fileName, validateFileExtension);
 	}
@@ -746,7 +733,7 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, File file, String versionLabel)
 		throws PortalException, SystemException {
 
-		isValidVersion(versionLabel);
+		DLValidationUtil.validateVersionLabel(versionLabel);
 
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension,
@@ -758,7 +745,7 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, InputStream is, String versionLabel)
 		throws PortalException, SystemException {
 
-		isValidVersion(versionLabel);
+		DLValidationUtil.validateVersionLabel(versionLabel);
 
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);

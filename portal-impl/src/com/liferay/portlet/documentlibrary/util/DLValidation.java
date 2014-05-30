@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 
 /**
@@ -30,5 +31,8 @@ public interface DLValidation {
 	public void validateSourceFileExtension(
 			String fileExtension, String sourceFileName)
 		throws SourceFileNameException;
+
+	public void validateVersionLabel(String versionLabel)
+		throws InvalidFileVersionException;
 
 }

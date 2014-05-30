@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.HtmlImpl;
-import com.liferay.portal.xml.SAXReaderImpl;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
@@ -34,11 +33,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -46,19 +43,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Pablo Carvalho
  */
 @PrepareForTest( {
-	DDMFormXSDSerializerUtil.class, HtmlUtil.class, LocaleUtil.class,
-	SAXReaderUtil.class
+	HtmlUtil.class, LocaleUtil.class, SAXReaderUtil.class
 })
 @RunWith(PowerMockRunner.class)
-public class DDMFormXSDSerializerTest extends PowerMockito {
-
-	@Before
-	public void setUp() throws Exception {
-		setUpDDMFormXSDSerializer();
-		setUpHtml();
-		setUpLocale();
-		setUpSAXReader();
-	}
+public class DDMFormXSDSerializerTest extends BaseDDMTest {
 
 	@Test
 	public void testAllFieldsTypesDeserialization() throws Exception {
@@ -88,52 +76,6 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
-	}
-
-	protected void setUpDDMFormXSDSerializer() {
-		spy(DDMFormXSDSerializerUtil.class);
-
-		when(
-			DDMFormXSDSerializerUtil.getDDMFormXSDSerializer()
-		).thenReturn(
-			_ddmFormXSDSerializer
-		);
-	}
-
-	protected void setUpHtml() {
-		spy(HtmlUtil.class);
-
-		when(
-			HtmlUtil.getHtml()
-		).thenReturn(
-			new HtmlImpl()
-		);
-	}
-
-	protected void setUpLocale() {
-		spy(LocaleUtil.class);
-
-		when(
-			LocaleUtil.fromLanguageId("en_US")
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		when(
-			LocaleUtil.fromLanguageId("pt_BR")
-		).thenReturn(
-			LocaleUtil.BRAZIL
-		);
-	}
-
-	protected void setUpSAXReader() {
-		spy(SAXReaderUtil.class);
-
-		when(
-			SAXReaderUtil.getSAXReader()
-		).thenReturn(
-			new SAXReaderImpl()
-		);
 	}
 
 	protected void testAvailableLocales(DDMForm ddmForm) {
@@ -244,8 +186,4 @@ public class DDMFormXSDSerializerTest extends PowerMockito {
 		Assert.assertEquals(
 			"opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
 	}
-
-	private DDMFormXSDSerializer _ddmFormXSDSerializer =
-		new DDMFormXSDSerializerImpl();
-
 }

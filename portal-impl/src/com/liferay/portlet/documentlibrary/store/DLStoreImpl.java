@@ -59,6 +59,7 @@ import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public class DLStoreImpl implements DLStore {
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName) || dirName.equals("/")) {
+		if (!DLValidationUtil.isValidName(dirName) || dirName.equals("/")) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -306,7 +307,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLValidationUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -327,7 +328,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLValidationUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -585,7 +586,7 @@ public class DLStoreImpl implements DLStore {
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
-		if (!isValidName(fileName)) {
+		if (!DLValidationUtil.isValidName(fileName)) {
 			throw new FileNameException(fileName);
 		}
 

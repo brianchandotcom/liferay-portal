@@ -19,7 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
@@ -29,9 +32,11 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 
 import java.util.List;
 
@@ -50,6 +55,62 @@ import javax.servlet.http.HttpServletRequest;
 public interface UsersAdmin {
 
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
+
+	public static final Accessor<UserGroupGroupRole, String> TITLE_GROUP_ROLE_ACCESSOR =
+		new Accessor<UserGroupGroupRole, String>() {
+
+		@Override
+		public String get(UserGroupGroupRole userGroupGroupRole) {
+			try {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					userGroupGroupRole.getRoleId());
+
+				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
+			}
+			catch (SystemException se) {
+			}
+
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public Class<String> getAttributeClass() {
+			return String.class;
+		}
+
+		@Override
+		public Class<UserGroupGroupRole> getTypeClass() {
+			return UserGroupGroupRole.class;
+		}
+	};
+
+	public static final Accessor<UserGroupRole, String> TITLE_ROLE_ACCESSOR =
+		new Accessor<UserGroupRole, String>() {
+
+		@Override
+		public String get(UserGroupRole userGroupRole) {
+			try {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					userGroupRole.getRoleId());
+
+				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
+			}
+			catch (SystemException se) {
+			}
+
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public Class<String> getAttributeClass() {
+			return String.class;
+		}
+
+		@Override
+		public Class<UserGroupRole> getTypeClass() {
+			return UserGroupRole.class;
+		}
+	};
 
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,

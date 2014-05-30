@@ -59,72 +59,55 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="folder"
 		>
 
+			<a href="<%= rowURL %>">
+				<img alt="<%= LanguageUtil.get(pageContext, "folder") %>" class="label-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/folder.png">
+
+				<strong><%= curFolder.getName() %></strong>
+
+				<c:if test="<%= Validator.isNotNull(curFolder.getDescription()) %>"> {
+					<br />
+
+					<%= curFolder.getDescription() %>
+				</c:if>
+			</a>
+
 			<%
-			buffer.append("<a href=\"");
-			buffer.append(rowURL);
-			buffer.append("\">");
-			buffer.append("<img alt=\"");
-			buffer.append(LanguageUtil.get(pageContext, "folder"));
-			buffer.append("\" class=\"label-icon\" src=\"");
-			buffer.append(themeDisplay.getPathThemeImages());
-			buffer.append("/common/folder.png\">");
-			buffer.append("<strong>");
-			buffer.append(curFolder.getName());
-			buffer.append("</strong>");
-
-			if (Validator.isNotNull(curFolder.getDescription())) {
-				buffer.append("<br />");
-				buffer.append(curFolder.getDescription());
-			}
-
-			buffer.append("</a>");
-
 			List subfolders = DLAppServiceUtil.getFolders(repositoryId, curFolder.getFolderId(), 0, 5);
+			%>
 
-			if (!subfolders.isEmpty()) {
+			<c:if test="<%= !subfolders.isEmpty() %>">
+				<br />
+
+				<liferay-ui:message key="subfolders" />:
+
+				<%
 				int subfoldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
-
-				buffer.append("<br /><u>");
-				buffer.append(LanguageUtil.get(pageContext, "subfolders"));
-				buffer.append("</u>: ");
 
 				for (int j = 0; j < subfolders.size(); j++) {
 					Folder subfolder = (Folder)subfolders.get(j);
 
 					subfolder = subfolder.toEscapedModel();
+				%>
 
-					rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
+					<a href="<%= rowURL %>"><%= subfolder.getName() %></a>
 
-					buffer.append("<a href=\"");
-					buffer.append(rowURL);
-					buffer.append("\">");
-					buffer.append(subfolder.getName());
-					buffer.append("</a>");
+					<c:if test="<%= (j + 1) < subfolders.size() %>">
+						,
+					</c:if>
 
-					if ((j + 1) < subfolders.size()) {
-						buffer.append(", ");
-					}
-				}
-
-				if (subfoldersCount > subfolders.size()) {
-					rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-					buffer.append(", <a href=\"");
-					buffer.append(rowURL);
-					buffer.append("\">");
-					buffer.append(LanguageUtil.get(pageContext, "more"));
-					buffer.append(" &raquo;");
-					buffer.append("</a>");
+				<%
 				}
 
 				rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-			}
-			%>
+				%>
 
+				<c:if test="<%= subfoldersCount > subfolders.size() %>">
+					,<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+				</c:if>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<%

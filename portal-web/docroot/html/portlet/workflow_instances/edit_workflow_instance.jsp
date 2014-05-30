@@ -171,35 +171,17 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							/>
 
 							<liferay-ui:search-container-column-text
-								buffer="buffer"
 								name="task"
 							>
-
-								<%
-								buffer.append("<span class=\"task-name\" id=\"");
-								buffer.append(workflowTask.getWorkflowTaskId());
-								buffer.append("\">");
-								buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowTask.getName())));
-								buffer.append("</span>");
-								%>
-
+								<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
+									<liferay-ui:message key="<%= HtmlUtil.escape(workflowTask.getName()) %>" />
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
-								buffer="buffer"
 								name="due-date"
-							>
-
-								<%
-								if (workflowTask.getDueDate() == null) {
-									buffer.append(LanguageUtil.get(pageContext, "never"));
-								}
-								else {
-									buffer.append(dateFormatDateTime.format(workflowTask.getDueDate()));
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
+								value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+							/>
 
 							<liferay-ui:search-container-column-text
 								name="completed"

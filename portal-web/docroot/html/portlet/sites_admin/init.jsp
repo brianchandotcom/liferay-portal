@@ -60,7 +60,8 @@ page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %>
+page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %>
 
 <%
 boolean filterManageableGroups = true;

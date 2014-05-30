@@ -74,6 +74,9 @@ public interface Organization extends OrganizationModel, PersistedModel,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getParentOrganizationName()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public javax.portlet.PortletPreferences getPreferences()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

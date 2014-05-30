@@ -56,27 +56,14 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 		/>
 
+		<%
+		List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId());
+		%>
+
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="roles"
-		>
-
-			<%
-			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId());
-
-			for (UserGroupRole userGroupRole : userGroupRoles) {
-				Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
-
-				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-				buffer.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			if (!userGroupRoles.isEmpty()) {
-				buffer.setIndex(buffer.index() - 1);
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= ListUtil.toString(userGroupRoles, UsersAdmin.TITLE_ROLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+		/>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text>
@@ -208,25 +195,14 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 			value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
 		/>
 
+		<%
+		List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
+		%>
+
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="roles"
-		>
-
-			<%
-			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
-
-			for (Role role : inheritedRoles) {
-				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-				buffer.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			if (!inheritedRoles.isEmpty()) {
-				buffer.setIndex(buffer.index() - 1);
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= ListUtil.toString(inheritedRoles, Role.TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator paginate="<%= false %>" />

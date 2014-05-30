@@ -15,7 +15,7 @@
 
 		<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
 
-		<execute action="PGAssetpublisherConfiguration#selectFrameTop" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureAddSiteScopes">

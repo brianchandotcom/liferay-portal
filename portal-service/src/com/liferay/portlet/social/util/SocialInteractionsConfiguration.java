@@ -25,13 +25,11 @@ public class SocialInteractionsConfiguration {
 
 	public SocialInteractionsConfiguration(
 		boolean socialInteractionsAnyUserEnabled,
-		boolean socialInteractionsEnabled,
 		boolean socialInteractionsSitesEnabled,
 		String socialInteractionsSocialRelationTypes,
 		boolean socialInteractionsSocialRelationTypesEnabled) {
 
 		_socialInteractionsAnyUserEnabled = socialInteractionsAnyUserEnabled;
-		_socialInteractionsEnabled = socialInteractionsEnabled;
 		_socialInteractionsSitesEnabled = socialInteractionsSitesEnabled;
 		_socialInteractionsSocialRelationTypes =
 			socialInteractionsSocialRelationTypes;
@@ -55,10 +53,6 @@ public class SocialInteractionsConfiguration {
 		return _socialInteractionsAnyUserEnabled;
 	}
 
-	public boolean isSocialInteractionsEnabled() {
-		return _socialInteractionsEnabled;
-	}
-
 	public boolean isSocialInteractionsSitesEnabled() {
 		return _socialInteractionsSitesEnabled;
 	}
@@ -68,7 +62,6 @@ public class SocialInteractionsConfiguration {
 	}
 
 	private boolean _socialInteractionsAnyUserEnabled;
-	private boolean _socialInteractionsEnabled;
 	private boolean _socialInteractionSocialRelationTypesEnabled;
 	private boolean _socialInteractionsSitesEnabled;
 	private String _socialInteractionsSocialRelationTypes;

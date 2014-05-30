@@ -14,12 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.SourceFileNameException;
 
 /**
  * @author Adolfo Pérez
@@ -74,6 +76,21 @@ public final class DLValidationImpl implements DLValidation {
 
 		if (!isValidName(directoryName)) {
 			throw new FolderNameException(directoryName);
+		}
+	}
+
+	@Override
+	public void validateSourceFileExtension(
+			String fileExtension, String sourceFileName)
+		throws SourceFileNameException {
+
+		String sourceFileExtension = FileUtil.getExtension(sourceFileName);
+
+		if (Validator.isNotNull(sourceFileName) &&
+			PropsValues.DL_FILE_EXTENSIONS_STRICT_CHECK &&
+			!fileExtension.equals(sourceFileExtension)) {
+
+			throw new SourceFileNameException(sourceFileExtension);
 		}
 	}
 

@@ -48,7 +48,6 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
-import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -770,14 +769,8 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, String versionLabel)
 		throws PortalException, SystemException {
 
-		String sourceFileExtension = FileUtil.getExtension(sourceFileName);
-
-		if (Validator.isNotNull(sourceFileName) &&
-			PropsValues.DL_FILE_EXTENSIONS_STRICT_CHECK &&
-			!fileExtension.equals(sourceFileExtension)) {
-
-			throw new SourceFileNameException(sourceFileExtension);
-		}
+		DLValidationUtil.validateSourceFileExtension(
+			fileExtension, sourceFileName);
 
 		validate(fileName, validateFileExtension, versionLabel);
 	}

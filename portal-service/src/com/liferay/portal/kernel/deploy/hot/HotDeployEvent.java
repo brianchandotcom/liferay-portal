@@ -26,11 +26,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.ServletContext;
 
@@ -152,8 +153,8 @@ public class HotDeployEvent {
 	private ClassLoader _contextClassLoader;
 	private Set<String> _dependentServletContextNames = new TreeSet<String>();
 	private PluginPackage _pluginPackage;
-	private List<PortalLifecycle> _portalLifecycles =
-		new ArrayList<PortalLifecycle>();
+	private Queue<PortalLifecycle> _portalLifecycles =
+		new ConcurrentLinkedQueue<PortalLifecycle>();
 	private ServletContext _servletContext;
 
 }

@@ -288,6 +288,19 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="gotoUserGroupSitePermissionsCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_SITE_PERMISSIONS" value1="Site Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoWCArticle">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

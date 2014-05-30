@@ -263,7 +263,6 @@
 	</command>
 
 	<command name="AddSOBlogsEntryCommentSOUser" priority="5">
-		<var name="adminFullName" value="Test Test" />
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -271,14 +270,12 @@
 		<var name="roleType" value="Site" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
-		<var name="userFullName" value="Social01 Office01 User01" />
 		<var name="userLastName" value="User01" />
 		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -328,7 +325,7 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${entryComment}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="userFullName" value="${userFullName}" />
+			<var name="userFullName" value="${userName}" />
 		</execute>
 	</command>
 
@@ -586,24 +583,19 @@
 	</command>
 
 	<command name="DeleteSOBlogsEntryCommentSOUser" priority="5">
-		<var name="adminFullName" value="Test Test" />
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryPermissionsKey" value="DELETE_DISCUSSION" />
-		<var name="entryPermissionsRoleName" value="Site Member" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="roleName" value="Blogs Site Role Name" />
-		<var name="roleType" value="Site" />
+		<var name="permissionDefinitionKey" value="DELETE_DISCUSSION" />
+		<var name="roleName" value="Site Member" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
-		<var name="userFullName" value="Social01 Office01 User01" />
 		<var name="userLastName" value="User01" />
 		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -619,9 +611,9 @@
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryAddPermissions" value="true" />
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entryPermissionsKey" value="${entryPermissionsKey}" />
-			<var name="entryPermissionsRoleName" value="${entryPermissionsRoleName}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -710,25 +702,20 @@
 	</command>
 
 	<command name="EditSOBlogsEntryCommentSOUser" priority="5">
-		<var name="adminFullName" value="Test Test" />
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryCommentEdit" value="Blogs Entry Comment Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryPermissionsKey" value="UPDATE_DISCUSSION" />
-		<var name="entryPermissionsRoleName" value="Site Member" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="roleName" value="Blogs Site Role Name" />
-		<var name="roleType" value="Site" />
+		<var name="permissionDefinitionKey" value="UPDATE_DISCUSSION" />
+		<var name="roleName" value="Site Member" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
-		<var name="userFullName" value="Social01 Office01 User01" />
 		<var name="userLastName" value="User01" />
 		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -744,9 +731,9 @@
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryAddPermissions" value="true" />
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entryPermissionsKey" value="${entryPermissionsKey}" />
-			<var name="entryPermissionsRoleName" value="${entryPermissionsRoleName}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -791,7 +778,7 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${entryCommentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="userFullName" value="${userFullName}" />
+			<var name="userFullName" value="${userName}" />
 		</execute>
 	</command>
 
@@ -833,7 +820,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="SOBlogs#sikuliAssertElementPresent" locator-key1="SOCIAL_OFFICE_BLOG_ENTRY_CONTENT_INLINE_EDIT_SCREENSHOT_PNG" />
+		<execute action="SOBlogs#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_BLOG_ENTRY_CONTENT_INLINE_EDIT_PNG" />
 	</command>
 
 	<command name="EditSOBlogsEntrySOUser" priority="5">

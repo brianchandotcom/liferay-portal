@@ -151,17 +151,17 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_MORE_OPTIONS_LINK</td>
-	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options »')]</td>
+	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_HIDE_OPTIONS_LINK</td>
-	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'« Hide Options')]</td>
+	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_entryPermissionsRoleName}')]//input[@value='${key_entryPermissionsKey}']</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
 	<td></td>
 </tr>
 <tr>

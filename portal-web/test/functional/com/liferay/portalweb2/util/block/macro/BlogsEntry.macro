@@ -216,11 +216,7 @@
 		<if>
 			<equals arg1="${entryAddPermissions}" arg2="true" />
 			<then>
-				<execute macro="BlogsEntry#entryAddPermissionsCmd">
-					<var name="entryPermissionsKey" value="${entryPermissionsKey}" />
-					<var name="entryPermissionsRoleName" value="${entryPermissionsRoleName}" />
-					<var name="entryPermissionsViewableBy" value="${entryPermissionsViewableBy}" />
-				</execute>
+				<execute macro="BlogsEntry#entryAddPermissionsCmd" />
 			</then>
 		</if>
 
@@ -684,30 +680,30 @@
 
 	<command name="entryAddPermissionsCmd">
 		<if>
-			<isset var="entryPermissionsViewableBy" />
+			<isset var="viewableBy" />
 			<then>
-				<execute action="PGBlogsAdd#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${entryPermissionsViewableBy}" />
+				<execute action="PGBlogsAdd#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBy}" />
 			</then>
 		</if>
 
 		<if>
-			<isset var="entryPermissionsKey" />
+			<isset var="permissionDefinitionKey" />
 			<then>
 				<if>
 					<condition action="PGBlogsAdd#isNotVisible" locator-key1="PERMISSIONS_HIDE_OPTIONS_LINK" />
 					<then>
-						<execute action="PGBlogsAdd#assertClick" locator-key1="PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options »" />
+						<execute action="PGBlogsAdd#assertClick" locator-key1="PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options" />
 					</then>
 				</if>
 
-				<var name="key_entryPermissionsKey" value="${entryPermissionsKey}" />
-				<var name="key_entryPermissionsRoleName" value="${entryPermissionsRoleName}" />
+				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
+				<var name="key_roleName" value="${roleName}" />
 
 				<execute action="PGBlogsAdd#check" locator-key1="PERMISSIONS_CHECKBOX" />
 			</then>
 		</if>
 	</command>
-	
+
 	<command name="flagPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

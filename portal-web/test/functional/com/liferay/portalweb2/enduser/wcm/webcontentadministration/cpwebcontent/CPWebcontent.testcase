@@ -1200,4 +1200,14 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="ViewContentNotLostWithBlankTitle" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addNullCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+	</command>
 </definition>

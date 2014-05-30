@@ -2553,7 +2553,7 @@
 		<!-- Other fields -->
 
 		<column name="groupId" type="long" />
-		<column name="name" type="String" />
+		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
 
 		<!-- Relationships -->

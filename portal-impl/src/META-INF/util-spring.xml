@@ -852,6 +852,11 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.util.DLValidationUtil" class="com.liferay.portlet.documentlibrary.util.DLValidationUtil">
+		<property name="DLValidation">
+			<bean class="com.liferay.portlet.documentlibrary.util.DLValidationImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">
 		<property name="DDLExporters">
 			<map>

@@ -234,23 +234,9 @@ portletURL.setParameter("tabs3", tabs3);
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						buffer="buffer"
 						name="parent-organization"
-					>
-
-						<%
-						if (organization.getParentOrganizationId() > 0) {
-							try {
-								Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(organization.getParentOrganizationId());
-
-								buffer.append(HtmlUtil.escape(parentOrganization.getName()));
-							}
-							catch (Exception e) {
-							}
-						}
-						%>
-
-					</liferay-ui:search-container-column-text>
+						value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
+					/>
 
 					<liferay-ui:search-container-column-text
 						name="type"

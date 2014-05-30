@@ -14,10 +14,15 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
+
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
@@ -38,6 +43,24 @@ public class DLValidationUtil {
 		throws FolderNameException {
 
 		getDLValidation().validateDirectoryName(directoryName);
+	}
+
+	public static void validateFileSize(String fileName, byte[] bytes)
+		throws FileSizeException, SystemException {
+
+		getDLValidation().validateFileSize(fileName, bytes);
+	}
+
+	public static void validateFileSize(String fileName, File file)
+		throws FileSizeException, SystemException {
+
+		getDLValidation().validateFileSize(fileName, file);
+	}
+
+	public static void validateFileSize(String fileName, InputStream is)
+		throws FileSizeException, SystemException {
+
+		getDLValidation().validateFileSize(fileName, is);
 	}
 
 	public static void validateSourceFileExtension(

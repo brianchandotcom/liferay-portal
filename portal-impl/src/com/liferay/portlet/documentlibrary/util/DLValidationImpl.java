@@ -14,15 +14,23 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
@@ -77,6 +85,50 @@ public final class DLValidationImpl implements DLValidation {
 
 		if (!isValidName(directoryName)) {
 			throw new FolderNameException(directoryName);
+		}
+	}
+
+	@Override
+	public void validateFileSize(String fileName, byte[] bytes)
+		throws FileSizeException, SystemException {
+
+		if ((bytes == null) ||
+			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+			 (bytes.length >
+					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
+
+			throw new FileSizeException(fileName);
+		}
+	}
+
+	@Override
+	public void validateFileSize(String fileName, File file)
+		throws FileSizeException, SystemException {
+
+		if ((file == null) ||
+			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+			 (file.length() >
+					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
+
+			throw new FileSizeException(fileName);
+		}
+	}
+
+	@Override
+	public void validateFileSize(String fileName, InputStream is)
+		throws FileSizeException, SystemException {
+
+		try {
+			if ((is == null) ||
+				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+				 (is.available() >
+						PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
+
+				throw new FileSizeException(fileName);
+			}
+		}
+		catch (IOException ioe) {
+			throw new FileSizeException(ioe.getMessage());
 		}
 	}
 

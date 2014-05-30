@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.BaseSearchTestCase;
@@ -25,9 +26,13 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,6 +40,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Istvan Andras Dezsi
+ * @author Tibor Lipusz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -109,6 +115,19 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchWithinDDMStructure() throws Exception {
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, boolean approved,
+			Map<Locale, String> keywordsMap, ServiceContext serviceContext)
+		throws Exception {
+
+		AssetVocabulary vocabulary = (AssetVocabulary)parentBaseModel;
+
+		return AssetCategoryServiceUtil.addCategory(
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, keywordsMap,
+				null, vocabulary.getVocabularyId(), null, serviceContext);
 	}
 
 	@Override

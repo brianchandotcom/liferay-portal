@@ -62,6 +62,12 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testLocalizedSearch() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 	}
 

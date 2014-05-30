@@ -433,6 +433,7 @@ public class AssetVocabularyLocalServiceImpl
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setKeywords(title);
 		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

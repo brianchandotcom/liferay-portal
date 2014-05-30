@@ -2053,12 +2053,12 @@ public class SeleniumBuilderTest {
 
 		test(
 			"TestCasePropertyElementInvalidAttributeName_1.testcase",
-			"Error 1005: Invalid delimiter attribute in " + _DIR_NAME +
+			"Error 3003: Invalid property test at " + _DIR_NAME +
 				"/TestCasePropertyElementInvalidAttributeName_1.testcase:2");
 
 		test(
 			"TestCasePropertyElementInvalidAttributeName_2.testcase",
-			"Error 1005: Invalid test-case attribute in " + _DIR_NAME +
+			"Error 3003: Invalid property error at " + _DIR_NAME +
 				"/TestCasePropertyElementInvalidAttributeName_2.testcase:2");
 	}
 

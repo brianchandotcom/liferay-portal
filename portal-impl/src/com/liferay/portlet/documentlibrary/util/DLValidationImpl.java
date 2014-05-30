@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.FileExtensionException;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
@@ -85,6 +87,37 @@ public final class DLValidationImpl implements DLValidation {
 
 		if (!isValidName(directoryName)) {
 			throw new FolderNameException(directoryName);
+		}
+	}
+
+	@Override
+	public void validateFileExtension(String fileName)
+		throws FileExtensionException, SystemException {
+
+		boolean validFileExtension = false;
+
+		String[] fileExtensions = PrefsPropsUtil.getStringArray(
+			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+
+		for (String fileExtension : fileExtensions) {
+			if (StringPool.STAR.equals(fileExtension) ||
+				StringUtil.endsWith(fileName, fileExtension)) {
+
+				validFileExtension = true;
+
+				break;
+			}
+		}
+
+		if (!validFileExtension) {
+			throw new FileExtensionException(fileName);
+		}
+	}
+
+	@Override
+	public void validateFileName(String fileName) throws FileNameException {
+		if (!isValidName(fileName)) {
+			throw new FileNameException(fileName);
 		}
 	}
 

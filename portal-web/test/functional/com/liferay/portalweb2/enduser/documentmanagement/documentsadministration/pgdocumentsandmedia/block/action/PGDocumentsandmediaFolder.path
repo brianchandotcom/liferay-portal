@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>FOLDER_ENTRIES_DOCUMENT_CHECKBOX</td>
-	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
+	<td>//input[contains(@name,'_rowIdsFileEntryCheckbox')]</td>
 	<td>Select Document</td>
 </tr>
 <tr>

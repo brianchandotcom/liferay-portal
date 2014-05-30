@@ -311,7 +311,7 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
-		<execute action="PGMediagalleryMedia#click" locator-key1="MOVE_TO_THE_RECYCLE_BIN" />
+		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_RECYCLE_BIN_ICON" />
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 		<execute action="PGMediagalleryFolder#assertElementNotPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>

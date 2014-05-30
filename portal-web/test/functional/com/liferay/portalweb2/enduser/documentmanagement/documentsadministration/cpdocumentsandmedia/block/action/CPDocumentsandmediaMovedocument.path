@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_20_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>NEW_FOLDER</td>
-	<td>//input[@id='_20_folderName']</td>
+	<td>//input[contains(@id,'folderName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
-	<td>//button[@id='_20_selectFolderButton']</td>
+	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 <!--FOLDER_WINDOW-->
 <tr>
 	<td>FOLDER_WINDOW_ID</td>
-	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td>//iframe[contains(@id,'selectFolder_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

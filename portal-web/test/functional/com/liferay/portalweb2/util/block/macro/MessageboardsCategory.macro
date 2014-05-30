@@ -116,7 +116,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
@@ -176,7 +176,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
-		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
@@ -227,7 +227,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="${categoriesNumber}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="${threadsNumber}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="${postsNumber}" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="CPMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
@@ -313,7 +313,7 @@
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
-		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboardsCategory#assertElementPresent" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="CPMessageboardsCategory#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${subCategoryName} ${subCategoryDescription}" />
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${subCategoryName}" />
 	</command>
@@ -329,7 +329,7 @@
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_THREADS" value1="0" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_POSTS" value1="0" />
-		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboardsCategory#assertElementPresent" locator-key1="SUBCATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboardsCategory#click" locator-key1="SUBCATEGORY_TABLE_CATEGORY" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${subCategoryName}" />
 	</command>

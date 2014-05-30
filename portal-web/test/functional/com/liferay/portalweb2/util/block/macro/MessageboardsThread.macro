@@ -184,7 +184,7 @@
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_MENULIST_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD" />
@@ -287,7 +287,7 @@
 		</if>
 
 		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboardsMyposts#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
@@ -342,7 +342,7 @@
 			</else>
 		</if>
 
-		<execute action="PGMessageboardsCategory#assertClick" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
+		<execute action="PGMessageboardsCategory#click" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" />
 		<execute action="PGMessageboardsCategory#assertClick" locator-key1="THREAD_MENULIST_MOVE" value1="Move" />
 
 		<execute action="PGMessageboardsMovethread#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
@@ -373,7 +373,7 @@
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
@@ -421,7 +421,7 @@
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
@@ -587,7 +587,7 @@
 		<while>
 			<condition action="PGMessageboards#isElementPresent" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
+				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" />
 				<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
 		</while>
@@ -597,7 +597,7 @@
 		<while>
 			<condition action="PGMessageboardsMyposts#isElementPresent" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
+				<execute action="PGMessageboardsMyposts#click" locator-key1="THREAD_TABLE_ACTIONS_GENERIC" />
 				<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 			</then>
 		</while>
@@ -621,7 +621,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
@@ -795,7 +795,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />

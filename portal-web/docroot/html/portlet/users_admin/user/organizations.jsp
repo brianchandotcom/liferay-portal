@@ -61,27 +61,16 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="roles"
 		>
+			<c:if test="<%= selUser != null %>">
 
-			<%
-			if (selUser != null) {
+				<%
 				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), organization.getGroup().getGroupId());
+				%>
 
-				for (UserGroupRole userGroupRole : userGroupRoles) {
-					Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
-
-					buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-					buffer.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				if (!userGroupRoles.isEmpty()) {
-					buffer.setIndex(buffer.index() - 1);
-				}
-			}
-			%>
-
+				<%= ListUtil.toString(userGroupRoles, UsersAdmin.TITLE_ROLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">

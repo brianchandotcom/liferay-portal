@@ -324,8 +324,8 @@ public class VerifyJournal extends VerifyProcess {
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Could no verify permissions and assets for article " +
-						article.getId(), e);
+					"Unexpected error while checking the associated " +
+						"structure of the article " + article.getId(), e);
 			}
 		}
 	}

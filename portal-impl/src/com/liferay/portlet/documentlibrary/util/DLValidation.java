@@ -14,9 +14,16 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portlet.documentlibrary.FolderNameException;
+
 /**
  * @author Adolfo Pérez
  */
 public interface DLValidation {
+
+	public boolean isValidName(String name);
+
+	public void validateDirectoryName(String directoryName)
+		throws FolderNameException;
 
 }

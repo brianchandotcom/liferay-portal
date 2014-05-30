@@ -16,26 +16,28 @@ package com.liferay.portlet.journal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
@@ -52,8 +54,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,13 +68,15 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		EnvironmentExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
+		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-@Transactional
 public class JournalArticleFinderTest {
+
+	@ClassRule
+	public static TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -148,6 +154,19 @@ public class JournalArticleFinderTest {
 		_folderIds.add(folder.getFolderId());
 
 		_article = _articles.get(0);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		JournalArticleLocalServiceUtil.deleteArticles(_group.getGroupId());
+
+		JournalFolderLocalServiceUtil.deleteFolder(_folder);
+
+		DDMStructureLocalServiceUtil.deleteDDMStructure(
+			_basicWebContentDDMStructure);
+		DDMStructureLocalServiceUtil.deleteDDMStructure(_ddmStructure);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test

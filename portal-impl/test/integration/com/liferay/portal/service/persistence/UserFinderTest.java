@@ -16,7 +16,6 @@ package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -29,7 +28,7 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
@@ -40,24 +39,25 @@ import com.liferay.portal.util.test.UserTestUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Jozsef Illes
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class UserFinderTest {
+
+	@ClassRule
+	public static TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -115,6 +115,15 @@ public class UserFinderTest {
 
 		_inheritedUserRolesParams.put("inherit", Boolean.TRUE);
 		_inheritedUserRolesParams.put("usersRoles", _roleId);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		RoleLocalServiceUtil.deleteRole(_roleId);
+
+		GroupLocalServiceUtil.clearOrganizationGroups(
+			_organization.getOrganizationId());
+		GroupLocalServiceUtil.clearUserGroupGroups(_userGroup.getUserGroupId());
 	}
 
 	@Test

@@ -16,6 +16,10 @@
 		return A.UA.touch;
 	};
 
+	var testTouchMobile = function(A) {
+		return testTouch(A) && A.UA.mobile;
+	}
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -448,7 +452,7 @@
 							'liferay-input-move-boxes-touch': {
 								condition: {
 									name: 'liferay-input-move-boxes-touch',
-									test: testTouch,
+									test: testTouchMobile,
 									trigger: 'liferay-input-move-boxes'
 								}
 							}

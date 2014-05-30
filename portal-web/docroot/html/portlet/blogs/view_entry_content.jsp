@@ -63,7 +63,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 			</portlet:renderURL>
 
-			<c:if test='<%= blogsPortletInstanceSettings.getEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("top") %>'>
+			<c:if test='<%= blogsPortletInstanceSettings.isEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("top") %>'>
 				<liferay-ui:social-bookmarks
 					displayStyle="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle() %>"
 					target="_blank"
@@ -221,7 +221,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</span>
 					</c:if>
 
-					<c:if test="<%= blogsPortletInstanceSettings.getEnableComments() %>">
+					<c:if test="<%= blogsPortletInstanceSettings.isEnableComments() %>">
 						<span class="comments">
 
 							<%
@@ -242,7 +242,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:if>
 				</div>
 
-				<c:if test="<%= blogsPortletInstanceSettings.getEnableFlags() %>">
+				<c:if test="<%= blogsPortletInstanceSettings.isEnableFlags() %>">
 					<liferay-ui:flags
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entry.getEntryId() %>"
@@ -268,7 +268,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</span>
 
 				<c:if test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") %>'>
-					<c:if test="<%= blogsPortletInstanceSettings.getEnableRelatedAssets() %>">
+					<c:if test="<%= blogsPortletInstanceSettings.isEnableRelatedAssets() %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links
 								assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"
@@ -278,14 +278,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
-					<c:if test="<%= blogsPortletInstanceSettings.getEnableRatings() %>">
+					<c:if test="<%= blogsPortletInstanceSettings.isEnableRatings() %>">
 						<liferay-ui:ratings
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
 						/>
 					</c:if>
 
-					<c:if test='<%= blogsPortletInstanceSettings.getEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("bottom") %>'>
+					<c:if test='<%= blogsPortletInstanceSettings.isEnableSocialBookmarks() && blogsPortletInstanceSettings.getSocialBookmarksDisplayPosition().equals("bottom") %>'>
 						<liferay-ui:social-bookmarks
 							contentId="<%= String.valueOf(entry.getEntryId()) %>"
 							displayStyle="<%= blogsPortletInstanceSettings.getSocialBookmarksDisplayStyle() %>"

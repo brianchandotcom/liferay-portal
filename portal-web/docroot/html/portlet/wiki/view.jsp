@@ -346,7 +346,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</div>
 
-			<c:if test="<%= wikiPortletInstanceSettings.getEnableRelatedAssets() %>">
+			<c:if test="<%= wikiPortletInstanceSettings.isEnableRelatedAssets() %>">
 				<div class="entry-links">
 					<liferay-ui:asset-links
 						assetEntryId="<%= assetEntry.getEntryId() %>"
@@ -354,7 +354,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</c:if>
 
-			<c:if test="<%= wikiPortletInstanceSettings.getEnablePageRatings() %>">
+			<c:if test="<%= wikiPortletInstanceSettings.isEnablePageRatings() %>">
 				<div class="page-ratings">
 					<liferay-ui:ratings
 						className="<%= WikiPage.class.getName() %>"
@@ -363,7 +363,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				</div>
 			</c:if>
 
-			<c:if test="<%= wikiPortletInstanceSettings.getEnableComments() %>">
+			<c:if test="<%= wikiPortletInstanceSettings.isEnableComments() %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
@@ -375,7 +375,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
 							formAction="<%= discussionURL %>"
 							formName="fm2"
-							ratingsEnabled="<%= wikiPortletInstanceSettings.getEnableCommentRatings() %>"
+							ratingsEnabled="<%= wikiPortletInstanceSettings.isEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= wikiPage.getUserId() %>"
 						/>

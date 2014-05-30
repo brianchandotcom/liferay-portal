@@ -55,7 +55,7 @@ wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, w
 				<liferay-ui:rss-settings
 					delta="<%= wikiPortletInstanceSettings.getRssDelta() %>"
 					displayStyle="<%= wikiPortletInstanceSettings.getRssDisplayStyle() %>"
-					enabled="<%= wikiPortletInstanceSettings.getEnableRSS() %>"
+					enabled="<%= wikiPortletInstanceSettings.isEnableRSS() %>"
 					feedType="<%= wikiPortletInstanceSettings.getRssFeedType() %>"
 				/>
 			</liferay-ui:section>

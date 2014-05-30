@@ -67,10 +67,6 @@ public class BlogsSettings {
 		return emailEntryAddedBodyMap.getLocalizationXml();
 	}
 
-	public boolean getEmailEntryAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
@@ -93,10 +89,6 @@ public class BlogsSettings {
 		return emailEntryUpdatedBodyMap.getLocalizationXml();
 	}
 
-	public boolean getEmailEntryUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
 	}
@@ -114,6 +106,14 @@ public class BlogsSettings {
 
 	public String getEmailFromName() {
 		return _typedSettings.getValue("emailFromName");
+	}
+
+	public boolean isEmailEntryAddedEnabled() {
+		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
+	}
+
+	public boolean isEmailEntryUpdatedEnabled() {
+		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
 	}
 
 	private static FallbackKeys _getFallbackKeys() {

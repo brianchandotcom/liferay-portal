@@ -72,10 +72,6 @@ public class DLSettings {
 		return emailFileEntryAddedBody.getLocalizationXml();
 	}
 
-	public boolean getEmailFileEntryAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
 		return _typedSettings.getLocalizedValuesMap(
 			"emailFileEntryAddedSubject");
@@ -100,10 +96,6 @@ public class DLSettings {
 		return emailFileEntryUpdatedBody.getLocalizationXml();
 	}
 
-	public boolean getEmailFileEntryUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
 		return _typedSettings.getLocalizedValuesMap(
 			"emailFileEntryUpdatedSubject");
@@ -122,6 +114,14 @@ public class DLSettings {
 
 	public String getEmailFromName() {
 		return _typedSettings.getValue("emailFromName");
+	}
+
+	public boolean isEmailFileEntryAddedEnabled() {
+		return _typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
+	}
+
+	public boolean isEmailFileEntryUpdatedEnabled() {
+		return _typedSettings.getBooleanValue("emailFileEntryUpdatedEnabled");
 	}
 
 	private static FallbackKeys _getFallbackKeys() {

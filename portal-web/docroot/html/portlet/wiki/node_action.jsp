@@ -69,7 +69,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= wikiPortletInstanceSettings.getEnableRSS() %>">
+	<c:if test="<%= wikiPortletInstanceSettings.isEnableRSS() %>">
 		<liferay-ui:rss
 			delta="<%= wikiPortletInstanceSettings.getRssDelta() %>"
 			displayStyle="<%= wikiPortletInstanceSettings.getRssDisplayStyle() %>"
@@ -78,7 +78,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiSettings.getEmailPageAddedEnabled() || wikiSettings.getEmailPageUpdatedEnabled()) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiSettings.isEmailPageAddedEnabled() || wikiSettings.isEmailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

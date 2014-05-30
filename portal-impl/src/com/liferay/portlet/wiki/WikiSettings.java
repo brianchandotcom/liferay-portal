@@ -81,10 +81,6 @@ public class WikiSettings {
 		return emailPageAddedBodyMap.getLocalizationXml();
 	}
 
-	public boolean getEmailPageAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageAddedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailPageAddedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
@@ -106,10 +102,6 @@ public class WikiSettings {
 		return emailPageUpdatedBodyMap.getLocalizationXml();
 	}
 
-	public boolean getEmailPageUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailPageUpdatedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
 	}
@@ -119,6 +111,14 @@ public class WikiSettings {
 			getEmailPageUpdatedSubject();
 
 		return emailPageUpdatedSubjectMap.getLocalizationXml();
+	}
+
+	public boolean isEmailPageAddedEnabled() {
+		return _typedSettings.getBooleanValue("emailPageAddedEnabled");
+	}
+
+	public boolean isEmailPageUpdatedEnabled() {
+		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
 	}
 
 	public void store() throws IOException, ValidatorException {

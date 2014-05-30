@@ -81,7 +81,7 @@ blogsSettings = BlogsSettings.getInstance(scopeGroupId, request.getParameterMap(
 			<liferay-ui:email-notification-settings
 				emailBody="<%= blogsSettings.getEmailEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= blogsSettings.getEmailEntryAddedEnabled() %>"
+				emailEnabled="<%= blogsSettings.isEmailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
 				emailSubject="<%= blogsSettings.getEmailEntryAddedSubjectXml() %>"
 			/>
@@ -91,7 +91,7 @@ blogsSettings = BlogsSettings.getInstance(scopeGroupId, request.getParameterMap(
 			<liferay-ui:email-notification-settings
 				emailBody="<%= blogsSettings.getEmailEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-					emailEnabled="<%= blogsSettings.getEmailEntryUpdatedEnabled() %>"
+					emailEnabled="<%= blogsSettings.isEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
 				emailSubject="<%= blogsSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>

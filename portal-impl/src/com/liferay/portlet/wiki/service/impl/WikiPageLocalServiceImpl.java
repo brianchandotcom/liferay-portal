@@ -2708,9 +2708,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			update = true;
 		}
 
-		if (!update && wikiSettings.getEmailPageAddedEnabled()) {
+		if (!update && wikiSettings.isEmailPageAddedEnabled()) {
 		}
-		else if (update && wikiSettings.getEmailPageUpdatedEnabled()) {
+		else if (update && wikiSettings.isEmailPageUpdatedEnabled()) {
 		}
 		else {
 			return;

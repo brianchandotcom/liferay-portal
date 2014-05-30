@@ -70,10 +70,6 @@ public class BookmarksSettings {
 		return emailEntryAddedBody.getLocalizationXml();
 	}
 
-	public boolean getEmailEntryAddedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
@@ -94,10 +90,6 @@ public class BookmarksSettings {
 		return emailEntryUpdatedBody.getLocalizationXml();
 	}
 
-	public boolean getEmailEntryUpdatedEnabled() {
-		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
-	}
-
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
 		return _typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
 	}
@@ -115,10 +107,6 @@ public class BookmarksSettings {
 
 	public String getEmailFromName() {
 		return _typedSettings.getValue("emailFromName");
-	}
-
-	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
 	public int getEntriesPerPage() {
@@ -142,11 +130,23 @@ public class BookmarksSettings {
 			"rootFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	public boolean getShowFoldersSearch() {
+	public boolean isEmailEntryAddedEnabled() {
+		return _typedSettings.getBooleanValue("emailEntryAddedEnabled");
+	}
+
+	public boolean isEmailEntryUpdatedEnabled() {
+		return _typedSettings.getBooleanValue("emailEntryUpdatedEnabled");
+	}
+
+	public boolean isEnableRelatedAssets() {
+		return _typedSettings.getBooleanValue("enableRelatedAssets");
+	}
+
+	public boolean isShowFoldersSearch() {
 		return _typedSettings.getBooleanValue("showFoldersSearch");
 	}
 
-	public boolean getShowSubfolders() {
+	public boolean isShowSubfolders() {
 		return _typedSettings.getBooleanValue("showSubfolders");
 	}
 

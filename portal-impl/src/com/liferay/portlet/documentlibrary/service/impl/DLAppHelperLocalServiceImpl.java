@@ -2027,10 +2027,10 @@ public class DLAppHelperLocalServiceImpl
 			fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			dlSettings.getEmailFileEntryAddedEnabled()) {
+			dlSettings.isEmailFileEntryAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 dlSettings.getEmailFileEntryUpdatedEnabled()) {
+				 dlSettings.isEmailFileEntryUpdatedEnabled()) {
 		}
 		else {
 			return;

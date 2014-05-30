@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-boolean emailFileEntryAnyEventEnabled = dlSettings.getEmailFileEntryAddedEnabled() || dlSettings.getEmailFileEntryUpdatedEnabled();
+boolean emailFileEntryAnyEventEnabled = dlSettings.isEmailFileEntryAddedEnabled() || dlSettings.isEmailFileEntryUpdatedEnabled();
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 

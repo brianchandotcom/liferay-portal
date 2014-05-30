@@ -443,10 +443,10 @@ public class ShoppingOrderLocalServiceImpl
 			order.getGroupId());
 
 		if (emailType.equals("confirmation") &&
-			shoppingSettings.getEmailOrderConfirmationEnabled()) {
+			shoppingSettings.isEmailOrderConfirmationEnabled()) {
 		}
 		else if (emailType.equals("shipping") &&
-				 shoppingSettings.getEmailOrderShippingEnabled()) {
+				 shoppingSettings.isEmailOrderShippingEnabled()) {
 		}
 		else {
 			return;

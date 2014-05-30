@@ -210,14 +210,14 @@
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="subCategoryEnabled" value="false" />
 		</execute>
 
-		<execute macro="SOForumsCategoryThread#viewPG">
-			<var name="categoryName" value="${categoryName}" />
+		<execute macro="SOForumsCategoryThread#viewSubcategoryPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
+			<var name="subCategoryName" value="${subCategoryName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />

@@ -2010,6 +2010,17 @@ tck.url=true</echo>
 		</if>
 	</target>
 
+	<target name="prepare-so-plugins">
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="clean" />
+
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="portlets" />
+			<property name="plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,deploy-listener-hook,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,portal-compat-hook,private-messaging-portlet,resources-importer-web,so-activities-hook,so-announcements-portlet,so-configurations-portlet,so-hook,so-portlet,so-theme,tasks-portlet,wysiwyg-portlet" />
+		</ant>
+	</target>
+
 	<target name="prepare-test-build">
 		<antcall target="record-git-commit-portal" inheritAll="false" />
 

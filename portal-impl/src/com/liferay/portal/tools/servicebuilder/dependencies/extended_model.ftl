@@ -3,6 +3,11 @@ package ${packagePath}.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Accessor;
+
+<#if entity.isLocalizedModel()>
+	import com.liferay.portal.kernel.util.LocaleThreadLocal;
+</#if>
+
 import com.liferay.portal.model.NestedSetsTreeNodeModel;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PersistedModel;
@@ -78,10 +83,17 @@ public interface ${entity.name} extends
 		<#if column.isAccessor()>
 			public static final Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}> ${textFormatter.format(textFormatter.format(column.name, 7), 0)}_ACCESSOR = new Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}>() {
 
-				@Override
-				public ${serviceBuilder.getPrimitiveObj(column.type)} get(${entity.name} ${entity.varName}) {
-					return ${entity.varName}.get${column.methodName}();
-				}
+				<#if column.isLocalized()>
+					@Override
+					public ${serviceBuilder.getPrimitiveObj(column.type)} get(${entity.name} ${entity.varName}) {
+						return ${entity.varName}.get${column.methodName}(LocaleThreadLocal.getThemeDisplayLocale());
+					}
+				<#else>
+					@Override
+					public ${serviceBuilder.getPrimitiveObj(column.type)} get(${entity.name} ${entity.varName}) {
+						return ${entity.varName}.get${column.methodName}();
+					}
+				</#if>
 
 				@Override
 				public Class<${serviceBuilder.getPrimitiveObj(column.type)}> getAttributeClass() {

@@ -105,28 +105,15 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 		/>
 
 		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+
+			<%
+			List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
+			%>
+
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				name="site-roles"
-			>
-
-				<%
-				List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
-
-				for (int i = 0; i < userGroupGroupRoles.size(); i++) {
-					UserGroupGroupRole userGroupGroupRole = userGroupGroupRoles.get(i);
-
-					Role role = RoleLocalServiceUtil.getRole(userGroupGroupRole.getRoleId());
-
-					buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-
-					if ((i + 1) < userGroupGroupRoles.size()) {
-						buffer.append(StringPool.COMMA_AND_SPACE);
-					}
-				}
-				%>
-
-			</liferay-ui:search-container-column-text>
+				value="<%= ListUtil.toString(userGroupGroupRoles, UsersAdmin.TITLE_GROUP_ROLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				align="right"

@@ -32,6 +32,7 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -54,6 +55,34 @@ import javax.servlet.http.HttpServletRequest;
 public interface UsersAdmin {
 
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
+
+	public static final Accessor<UserGroupGroupRole, String> TITLE_GROUP_ROLE_ACCESSOR =
+		new Accessor<UserGroupGroupRole, String>() {
+
+		@Override
+		public String get(UserGroupGroupRole userGroupGroupRole) {
+			try {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					userGroupGroupRole.getRoleId());
+
+				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
+			}
+			catch (SystemException se) {
+			}
+
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public Class<String> getAttributeClass() {
+			return String.class;
+		}
+
+		@Override
+		public Class<UserGroupGroupRole> getTypeClass() {
+			return UserGroupGroupRole.class;
+		}
+	};
 
 	public static final Accessor<UserGroupRole, String> TITLE_ROLE_ACCESSOR =
 		new Accessor<UserGroupRole, String>() {

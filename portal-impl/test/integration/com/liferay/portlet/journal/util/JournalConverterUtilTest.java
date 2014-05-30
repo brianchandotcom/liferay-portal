@@ -40,13 +40,17 @@ import com.liferay.portal.xml.XMLSchemaImpl;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -61,6 +65,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -318,23 +323,19 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testGetDDMXSD() throws Exception {
-		DDMStructure expectedDDMStructure = new DDMStructureImpl();
+		String expectedXSD = readText("test-ddm-structure-all-fields.xml");
 
-		expectedDDMStructure.setXsd(
-			readText("test-ddm-structure-all-fields.xml"));
+		DDMForm expectedDDMForm = DDMFormXSDSerializerUtil.deserialize(
+			expectedXSD);
 
 		String actualXSD = JournalConverterUtil.getDDMXSD(
 			readText("test-journal-structure-all-fields.xml"));
 
 		validateDDMXSD(actualXSD);
 
-		DDMStructure actualDDMStructure = new DDMStructureImpl();
+		DDMForm actualDDMForm = DDMFormXSDSerializerUtil.deserialize(actualXSD);
 
-		actualDDMStructure.setXsd(actualXSD);
-
-		Assert.assertEquals(
-			expectedDDMStructure.getFieldsMap(),
-			actualDDMStructure.getFieldsMap());
+		assertEquals(expectedDDMForm, actualDDMForm);
 	}
 
 	@Test
@@ -520,6 +521,107 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(expectedMap, actualMap);
 	}
 
+	protected void assertEquals(
+		DDMForm expectedDDMForm, DDMForm actualDDMForm) {
+
+		Map<String, DDMFormField> expectedDDMFormFieldsMap =
+			expectedDDMForm.getDDMFormFieldsMap(true);
+
+		Map<String, DDMFormField> actualDDMFormFieldsMap =
+			actualDDMForm.getDDMFormFieldsMap(true);
+
+		for (Map.Entry<String, DDMFormField> expectedEntry :
+				expectedDDMFormFieldsMap.entrySet()) {
+
+			DDMFormField actualDDMFormField = actualDDMFormFieldsMap.get(
+				expectedEntry.getKey());
+
+			assertEquals(expectedEntry.getValue(), actualDDMFormField);
+		}
+	}
+
+	protected void assertEquals(
+		DDMFormField expectedDDMFormField, DDMFormField actualDDMFormField) {
+
+		// Data type
+
+		Assert.assertEquals(
+			expectedDDMFormField.getDataType(),
+			actualDDMFormField.getDataType());
+
+		// Index type
+
+		Assert.assertEquals(
+			expectedDDMFormField.getIndexType(),
+			actualDDMFormField.getIndexType());
+
+		// Label
+
+		assertEquals(
+			expectedDDMFormField.getLabel(), actualDDMFormField.getLabel());
+
+		// Multiple
+
+		Assert.assertEquals(
+			expectedDDMFormField.isMultiple(), actualDDMFormField.isMultiple());
+
+		// Name
+
+		Assert.assertEquals(
+			expectedDDMFormField.getName(),  actualDDMFormField.getName());
+
+		// Options
+
+		assertEquals(
+			expectedDDMFormField.getDDMFormFieldOptions(),
+			actualDDMFormField.getDDMFormFieldOptions());
+
+		// Repeatable
+
+		Assert.assertEquals(
+			expectedDDMFormField.isRepeatable(),
+			actualDDMFormField.isRepeatable());
+
+		// Required
+
+		Assert.assertEquals(
+			expectedDDMFormField.isRequired(), actualDDMFormField.isRequired());
+
+		// Style
+
+		assertEquals(
+			expectedDDMFormField.getStyle(), actualDDMFormField.getStyle());
+
+		// Tip
+
+		assertEquals(
+			expectedDDMFormField.getTip(), actualDDMFormField.getTip());
+
+		// Type
+
+		Assert.assertEquals(
+			expectedDDMFormField.getType(), actualDDMFormField.getType());
+	}
+
+	protected void assertEquals(
+		DDMFormFieldOptions expectedDDMFormFieldOptions,
+		DDMFormFieldOptions actualDDMFormFieldOptions) {
+
+		Set<String> expectedOptionValues =
+			expectedDDMFormFieldOptions.getOptionsValues();
+
+		for (String expectedOptionValue : expectedOptionValues) {
+			LocalizedValue expectedOptionLabels =
+				expectedDDMFormFieldOptions.getOptionLabels(
+					expectedOptionValue);
+
+			LocalizedValue actualOptionLabels =
+				actualDDMFormFieldOptions.getOptionLabels(expectedOptionValue);
+
+			assertEquals(expectedOptionLabels, actualOptionLabels);
+		}
+	}
+
 	protected void assertEquals(Fields expectedFields, Fields actualFields) {
 		Field expectedFieldsDisplayField = expectedFields.get(
 			DDMImpl.FIELDS_DISPLAY_NAME);
@@ -546,6 +648,23 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		actualFieldsDisplayField.setValue(actualFieldsDisplayFieldValue);
 
 		Assert.assertEquals(expectedFields, actualFields);
+	}
+
+	protected void assertEquals(
+		LocalizedValue expectedLocalizedValue,
+		LocalizedValue actualLocalizedValue) {
+
+		Set<Locale> expectedAvailableLocales =
+			expectedLocalizedValue.getAvailableLocales();
+
+		for (Locale expectedLocale : expectedAvailableLocales) {
+			String expectedValue = expectedLocalizedValue.getValue(
+				expectedLocale);
+
+			String actualValue = actualLocalizedValue.getValue(expectedLocale);
+
+			Assert.assertEquals(expectedValue, actualValue);
+		}
 	}
 
 	protected void assertEquals(String expectedContent, String actualContent)

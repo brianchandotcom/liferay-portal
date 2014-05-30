@@ -817,9 +817,23 @@ public class JournalTestUtil {
 	private static Map<String, String> _getMap(Element dynamicElementElement) {
 		Map<String, String> map = new HashMap<String, String>();
 
+		Element parentElement = dynamicElementElement.getParent();
+
+		String parentType = parentElement.attributeValue("type");
+
 		// Attributes
 
 		for (Attribute attribute : dynamicElementElement.attributes()) {
+
+			// Option element shouldn't contain index type atribute
+
+			if ((Validator.equals(parentType, "list") ||
+				 Validator.equals(parentType, "multi-list")) &&
+				Validator.equals(attribute.getName(), "index-type")) {
+
+				continue;
+			}
+
 			map.put(attribute.getName(), attribute.getValue());
 		}
 

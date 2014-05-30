@@ -918,6 +918,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil">
+		<property name="DDMFormXSDSerializer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
 		<property name="DDMIndexer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />

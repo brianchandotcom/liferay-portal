@@ -39,13 +39,13 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 	<liferay-ui:panel-container extended="<%= true %>" id="imageGalleryDisplaySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryDisplayDisplay" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
-				<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowActions() %>" />
+				<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
 
-				<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFolderMenu() %>" />
+				<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFolderMenu() %>" />
 
-				<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowTabs() %>" />
+				<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
 
-				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>" />
+				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
 
 				<aui:field-wrapper label="show-media-type">
 					<liferay-ui:input-move-boxes
@@ -95,8 +95,8 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryImagesRatingsPanel" persistState="<%= true %>" title="ratings">
-			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableRatings() %>" />
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.getEnableCommentRatings() %>" />
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 

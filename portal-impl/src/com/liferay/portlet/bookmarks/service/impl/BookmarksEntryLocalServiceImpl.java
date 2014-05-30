@@ -700,9 +700,9 @@ public class BookmarksEntryLocalServiceImpl
 			entry.getGroupId());
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksSettings.getEmailEntryAddedEnabled()) ||
+			 !bookmarksSettings.isEmailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksSettings.getEmailEntryUpdatedEnabled())) {
+			 !bookmarksSettings.isEmailEntryUpdatedEnabled())) {
 
 			return;
 		}

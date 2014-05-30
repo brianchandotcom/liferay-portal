@@ -70,38 +70,6 @@ public class BlogsPortletInstanceSettings {
 			"displayStyleGroupId", defaultDisplayStyleGroupId);
 	}
 
-	public boolean getEnableCommentRatings() {
-		return _typedSettings.getBooleanValue("enableCommentRatings");
-	}
-
-	public boolean getEnableComments() {
-		return _typedSettings.getBooleanValue("enableComments");
-	}
-
-	public boolean getEnableFlags() {
-		return _typedSettings.getBooleanValue("enableFlags");
-	}
-
-	public boolean getEnableRatings() {
-		return _typedSettings.getBooleanValue("enableRatings");
-	}
-
-	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
-	}
-
-	public boolean getEnableRSS() {
-		if (!PortalUtil.isRSSFeedsEnabled()) {
-			return false;
-		}
-
-		return _typedSettings.getBooleanValue("enableRss");
-	}
-
-	public boolean getEnableSocialBookmarks() {
-		return _typedSettings.getBooleanValue("enableSocialBookmarks");
-	}
-
 	public int getPageDelta() {
 		return _typedSettings.getIntegerValue("pageDelta");
 	}
@@ -128,6 +96,38 @@ public class BlogsPortletInstanceSettings {
 
 	public String getSocialBookmarksTypes() {
 		return _typedSettings.getValue("socialBookmarksTypes");
+	}
+
+	public boolean isEnableCommentRatings() {
+		return _typedSettings.getBooleanValue("enableCommentRatings");
+	}
+
+	public boolean isEnableComments() {
+		return _typedSettings.getBooleanValue("enableComments");
+	}
+
+	public boolean isEnableFlags() {
+		return _typedSettings.getBooleanValue("enableFlags");
+	}
+
+	public boolean isEnableRatings() {
+		return _typedSettings.getBooleanValue("enableRatings");
+	}
+
+	public boolean isEnableRelatedAssets() {
+		return _typedSettings.getBooleanValue("enableRelatedAssets");
+	}
+
+	public boolean isEnableRSS() {
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
+		}
+
+		return _typedSettings.getBooleanValue("enableRss");
+	}
+
+	public boolean isEnableSocialBookmarks() {
+		return _typedSettings.getBooleanValue("enableSocialBookmarks");
 	}
 
 	private static FallbackKeys _getFallbackKeys() {

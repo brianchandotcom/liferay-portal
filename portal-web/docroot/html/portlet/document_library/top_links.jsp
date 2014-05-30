@@ -31,7 +31,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 		%>
 
-		<c:if test="<%= dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.getShowFoldersSearch() %>">
+		<c:if test="<%= dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch() %>">
 			<aui:nav-bar>
 				<c:if test="<%= dlActionsDisplayContext.isShowTabs() %>">
 					<aui:nav>
@@ -72,7 +72,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 					</aui:nav>
 				</c:if>
 
-				<c:if test="<%= dlPortletInstanceSettings.getShowFoldersSearch() %>">
+				<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 					<liferay-portlet:renderURL varImpl="searchURL">
 						<portlet:param name="struts_action" value="/document_library_display/search" />
 					</liferay-portlet:renderURL>
@@ -101,7 +101,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			</aui:nav-bar>
 		</c:if>
 	</c:when>
-	<c:when test="<%= (dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.getShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= (dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="home"
 		/>

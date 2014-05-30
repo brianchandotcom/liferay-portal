@@ -180,10 +180,6 @@ public class ShoppingSettings {
 		return emailOrderConfirmationBodyMap.getLocalizationXml();
 	}
 
-	public boolean getEmailOrderConfirmationEnabled() {
-		return _typedSettings.getBooleanValue("emailOrderConfirmationEnabled");
-	}
-
 	public LocalizedValuesMap getEmailOrderConfirmationSubject() {
 		LocalizedValuesMap emailOrderConfirmationSubject =
 			_typedSettings.getLocalizedValuesMap(
@@ -208,10 +204,6 @@ public class ShoppingSettings {
 			getEmailOrderShippingBody();
 
 		return emailOrderShippingBodyMap.getLocalizationXml();
-	}
-
-	public boolean getEmailOrderShippingEnabled() {
-		return _typedSettings.getBooleanValue("emailOrderShippingEnabled");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingSubject() {
@@ -256,6 +248,14 @@ public class ShoppingSettings {
 
 	public String getTaxState() {
 		return _typedSettings.getValue("taxState");
+	}
+
+	public boolean isEmailOrderConfirmationEnabled() {
+		return _typedSettings.getBooleanValue("emailOrderConfirmationEnabled");
+	}
+
+	public boolean isEmailOrderShippingEnabled() {
+		return _typedSettings.getBooleanValue("emailOrderShippingEnabled");
 	}
 
 	public boolean useAlternativeShipping() {

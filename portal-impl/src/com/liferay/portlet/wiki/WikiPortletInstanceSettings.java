@@ -76,30 +76,6 @@ public class WikiPortletInstanceSettings {
 			"displayStyleGroupId", defaultDisplayStyleGroupId);
 	}
 
-	public boolean getEnableCommentRatings() {
-		return _typedSettings.getBooleanValue("enableCommentRatings");
-	}
-
-	public boolean getEnableComments() {
-		return _typedSettings.getBooleanValue("enableComments");
-	}
-
-	public boolean getEnablePageRatings() {
-		return _typedSettings.getBooleanValue("enablePageRatings");
-	}
-
-	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
-	}
-
-	public boolean getEnableRSS() {
-		if (!PortalUtil.isRSSFeedsEnabled()) {
-			return false;
-		}
-
-		return _typedSettings.getBooleanValue("enableRss");
-	}
-
 	public String[] getHiddenNodes() {
 		return _typedSettings.getValues("hiddenNodes");
 	}
@@ -118,6 +94,30 @@ public class WikiPortletInstanceSettings {
 
 	public String[] getVisibleNodes() {
 		return _typedSettings.getValues("visibleNodes");
+	}
+
+	public boolean isEnableCommentRatings() {
+		return _typedSettings.getBooleanValue("enableCommentRatings");
+	}
+
+	public boolean isEnableComments() {
+		return _typedSettings.getBooleanValue("enableComments");
+	}
+
+	public boolean isEnablePageRatings() {
+		return _typedSettings.getBooleanValue("enablePageRatings");
+	}
+
+	public boolean isEnableRelatedAssets() {
+		return _typedSettings.getBooleanValue("enableRelatedAssets");
+	}
+
+	public boolean isEnableRSS() {
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
+		}
+
+		return _typedSettings.getBooleanValue("enableRss");
 	}
 
 	public void setHiddenNodes(String[] hiddenNodes) {

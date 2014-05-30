@@ -32,7 +32,7 @@ WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
 <br />
 
-<c:if test="<%= wikiPortletInstanceSettings.getEnableRSS() %>">
+<c:if test="<%= wikiPortletInstanceSettings.isEnableRSS() %>">
 	<liferay-ui:rss
 		delta="<%= wikiPortletInstanceSettings.getRssDelta() %>"
 		displayStyle="<%= wikiPortletInstanceSettings.getRssDisplayStyle() %>"

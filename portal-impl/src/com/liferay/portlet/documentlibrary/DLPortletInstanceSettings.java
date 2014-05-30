@@ -77,18 +77,6 @@ public class DLPortletInstanceSettings {
 		return _typedSettings.getValues("displayViews");
 	}
 
-	public boolean getEnableCommentRatings() {
-		return _typedSettings.getBooleanValue("enableCommentRatings");
-	}
-
-	public boolean getEnableRatings() {
-		return _typedSettings.getBooleanValue("enableRatings");
-	}
-
-	public boolean getEnableRelatedAssets() {
-		return _typedSettings.getBooleanValue("enableRelatedAssets");
-	}
-
 	public int getEntriesPerPage() {
 		return _typedSettings.getIntegerValue("entriesPerPage");
 	}
@@ -122,23 +110,35 @@ public class DLPortletInstanceSettings {
 			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	public boolean getShowActions() {
+	public boolean isEnableCommentRatings() {
+		return _typedSettings.getBooleanValue("enableCommentRatings");
+	}
+
+	public boolean isEnableRatings() {
+		return _typedSettings.getBooleanValue("enableRatings");
+	}
+
+	public boolean isEnableRelatedAssets() {
+		return _typedSettings.getBooleanValue("enableRelatedAssets");
+	}
+
+	public boolean isShowActions() {
 		return _typedSettings.getBooleanValue("showActions");
 	}
 
-	public boolean getShowFolderMenu() {
+	public boolean isShowFolderMenu() {
 		return _typedSettings.getBooleanValue("showFolderMenu");
 	}
 
-	public boolean getShowFoldersSearch() {
+	public boolean isShowFoldersSearch() {
 		return _typedSettings.getBooleanValue("showFoldersSearch");
 	}
 
-	public boolean getShowSubfolders() {
+	public boolean isShowSubfolders() {
 		return _typedSettings.getBooleanValue("showSubfolders");
 	}
 
-	public boolean getShowTabs() {
+	public boolean isShowTabs() {
 		return _typedSettings.getBooleanValue("showTabs");
 	}
 

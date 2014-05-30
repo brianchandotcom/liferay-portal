@@ -81,7 +81,7 @@ dlSettings = DLSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 			<liferay-ui:email-notification-settings
 				emailBody="<%= dlSettings.getEmailFileEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= dlSettings.getEmailFileEntryAddedEnabled() %>"
+				emailEnabled="<%= dlSettings.isEmailFileEntryAddedEnabled() %>"
 				emailParam="emailFileEntryAdded"
 				emailSubject="<%= dlSettings.getEmailFileEntryAddedSubjectXml() %>"
 			/>
@@ -91,7 +91,7 @@ dlSettings = DLSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 			<liferay-ui:email-notification-settings
 				emailBody="<%= dlSettings.getEmailFileEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= dlSettings.getEmailFileEntryUpdatedEnabled() %>"
+				emailEnabled="<%= dlSettings.isEmailFileEntryUpdatedEnabled() %>"
 				emailParam="emailFileEntryUpdated"
 				emailSubject="<%= dlSettings.getEmailFileEntryUpdatedSubjectXml() %>"
 			/>

@@ -85,7 +85,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 			<liferay-ui:email-notification-settings
 				emailBody="<%= wikiSettings.getEmailPageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiSettings.getEmailPageAddedEnabled() %>"
+				emailEnabled="<%= wikiSettings.isEmailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
 				emailSubject="<%= wikiSettings.getEmailPageAddedSubjectXml() %>"
 			/>
@@ -95,7 +95,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 			<liferay-ui:email-notification-settings
 				emailBody="<%= wikiSettings.getEmailPageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiSettings.getEmailPageUpdatedEnabled() %>"
+				emailEnabled="<%= wikiSettings.isEmailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
 				emailSubject="<%= wikiSettings.getEmailPageUpdatedSubjectXml() %>"
 			/>

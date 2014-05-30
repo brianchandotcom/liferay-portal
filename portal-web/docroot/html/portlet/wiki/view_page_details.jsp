@@ -150,7 +150,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 	</tr>
 </c:if>
 
-<c:if test="<%= wikiPortletInstanceSettings.getEnableRSS() %>">
+<c:if test="<%= wikiPortletInstanceSettings.isEnableRSS() %>">
 	<tr>
 		<th class="table-header">
 			<liferay-ui:message key="rss-subscription" />
@@ -166,7 +166,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 	</tr>
 </c:if>
 
-<c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiSettings.getEmailPageAddedEnabled() || wikiSettings.getEmailPageUpdatedEnabled()) %>">
+<c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiSettings.isEmailPageAddedEnabled() || wikiSettings.isEmailPageUpdatedEnabled()) %>">
 	<tr>
 		<th class="table-header">
 			<liferay-ui:message key="email-subscription" />

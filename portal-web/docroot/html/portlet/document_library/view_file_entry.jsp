@@ -211,7 +211,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
-						<c:if test="<%= dlPortletInstanceSettings.getEnableRatings() && fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
 							<span class="lfr-asset-ratings">
 								<liferay-ui:ratings
 									className="<%= DLFileEntryConstants.getClassName() %>"
@@ -220,7 +220,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							</span>
 						</c:if>
 
-						<c:if test="<%= dlPortletInstanceSettings.getEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
 							<div class="entry-links">
 								<liferay-ui:asset-links
 									assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
@@ -273,7 +273,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							classPK="<%= fileEntryId %>"
 							formAction="<%= discussionURL %>"
 							formName="fm2"
-							ratingsEnabled="<%= dlPortletInstanceSettings.getEnableCommentRatings() %>"
+							ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= fileEntry.getUserId() %>"
 						/>

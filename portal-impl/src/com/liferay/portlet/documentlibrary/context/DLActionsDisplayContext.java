@@ -63,7 +63,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.getShowFolderMenu();
+		return _dlPortletInstanceSettings.isShowFolderMenu();
 	}
 
 	public boolean isShowActions() {
@@ -75,7 +75,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.getShowActions();
+		return _dlPortletInstanceSettings.isShowActions();
 	}
 
 	public boolean isShowMinimalActionsButton() {
@@ -99,7 +99,7 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.getShowTabs();
+		return _dlPortletInstanceSettings.isShowTabs();
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {

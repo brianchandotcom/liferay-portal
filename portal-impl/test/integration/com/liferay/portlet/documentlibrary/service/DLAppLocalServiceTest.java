@@ -106,38 +106,6 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateAssetWhenUpdatingFileEntry() throws Throwable {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		FileEntry fileEntry = addFileEntry(serviceContext);
-
-		updateFileEntry(serviceContext, fileEntry);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
-		Assert.assertEquals("New Title", assetEntry.getTitle());
-	}
-
-	@Test
-	public void testUpdateAssetWhenUpdatingFolder() throws Throwable {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		Folder folder = addFolder(false, "Old Name");
-
-		DLAppLocalServiceUtil.updateFolder(
-			folder.getFolderId(), folder.getParentFolderId(), "New Name",
-			RandomTestUtil.randomString(), serviceContext);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			DLFolderConstants.getClassName(), folder.getFolderId());
-
-		Assert.assertEquals("New Name", assetEntry.getTitle());
-	}
-
-	@Test
 	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
 		int[] messagesReceived = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
@@ -170,6 +138,38 @@ public class DLAppLocalServiceTest {
 		updateFileEntry(serviceContext, fileEntry);
 
 		Assert.assertEquals(2, messagesReceived[0]);
+	}
+
+	@Test
+	public void testWhenUpdatingAFileEntryItsAssetIsUpdated() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FileEntry fileEntry = addFileEntry(serviceContext);
+
+		updateFileEntry(serviceContext, fileEntry);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		Assert.assertEquals("New Title", assetEntry.getTitle());
+	}
+
+	@Test
+	public void testWhenUpdatingFolderItsAssetIsUpdated() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		Folder folder = addFolder(false, "Old Name");
+
+		DLAppLocalServiceUtil.updateFolder(
+			folder.getFolderId(), folder.getParentFolderId(), "New Name",
+			RandomTestUtil.randomString(), serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		Assert.assertEquals("New Name", assetEntry.getTitle());
 	}
 
 	protected FileEntry addFileEntry(ServiceContext serviceContext)

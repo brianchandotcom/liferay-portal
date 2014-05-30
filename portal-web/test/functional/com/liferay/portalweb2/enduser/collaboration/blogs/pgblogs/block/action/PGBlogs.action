@@ -28,4 +28,10 @@
 			<execute function="Click#clickWaitForInlineCKEditor" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE_SENDKEYS">
+			<execute function="Type#sendKeys" />
+		</case>
+	</command>
 </definition>

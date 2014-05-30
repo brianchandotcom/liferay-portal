@@ -2081,6 +2081,44 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returns an ordered range of all the users with a social relation with the
+	* user.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param type the type of social relation. The possible types can be found
+	in {@link
+	com.liferay.portlet.social.model.SocialRelationConstants}.
+	* @param equalType the value of type of social relation equals <code>true
+	</code> or <code>false</code>
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the ordered range of users with a social relation with the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
+		long userId, int type, boolean equalType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsers(userId, type, equalType, start,
+			end, obc);
+	}
+
+	/**
 	* Returns an ordered range of all the users with a social relation of the
 	* type with the user.
 	*
@@ -2106,7 +2144,10 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
 		long userId, int type, int start, int end,
@@ -2138,7 +2179,10 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @return the ordered range of users with a social relation with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
 		long userId, int start, int end,
@@ -2228,7 +2272,10 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @return the number of users with a social relation with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSocialUsersCount(long, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2248,12 +2295,35 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSocialUsersCount(long, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public int getSocialUsersCount(long userId, int type)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.getSocialUsersCount(userId, type);
+	}
+
+	/**
+	* Returns the number of users with a social relation with the user.
+	*
+	* @param userId the primary key of the user
+	* @param type the type of social relation. The possible types can be found
+	in {@link
+	com.liferay.portlet.social.model.SocialRelationConstants}.
+	* @param equalType the value of type of social relation equals <code>true
+	</code> or <code>false</code>
+	* @return the number of users with a social relation with the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public int getSocialUsersCount(long userId, int type, boolean equalType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.getSocialUsersCount(userId, type, equalType);
 	}
 
 	/**

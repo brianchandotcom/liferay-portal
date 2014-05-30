@@ -203,17 +203,9 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 
 			<%
 			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
-
-			String[] roleNames = new String[inheritedRoles.size()];
-
-			int i = 0;
-
-			for (Role role : inheritedRoles) {
-				roleNames[i++] = HtmlUtil.escape(role.getTitle(locale));
-			}
 			%>
 
-			<%= StringUtil.merge(roleNames, StringPool.COMMA_AND_SPACE) %>
+			<%= ListUtil.toString(inheritedRoles, Role.TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

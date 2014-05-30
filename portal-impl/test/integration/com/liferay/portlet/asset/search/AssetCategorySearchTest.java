@@ -161,9 +161,4 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 		return "Title";
 	}
 
-	@Override
-	protected Locale getSearchLocale() {
-		return LocaleUtil.HUNGARY;
-	}
-
 }

@@ -196,11 +196,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
-	protected Locale getSearchLocale() {
-		return LocaleUtil.HUNGARY;
-	}
-
-	@Override
 	protected boolean isCheckBaseModelPermission() {
 		return PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED;
 	}

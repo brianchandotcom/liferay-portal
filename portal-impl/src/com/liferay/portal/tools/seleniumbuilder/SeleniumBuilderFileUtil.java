@@ -77,6 +77,9 @@ public class SeleniumBuilderFileUtil {
 
 		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
+		_testcaseAvailablePropertyNames = ListUtil.fromArray(
+			StringUtil.split(
+				properties.getProperty("testcase.available.property.names")));
 		_testrayAvailableComponentNames = ListUtil.fromArray(
 			StringUtil.split(
 				properties.getProperty("testray.available.component.names")));
@@ -573,6 +576,10 @@ public class SeleniumBuilderFileUtil {
 		else if (errorCode == 3002) {
 			throw new IllegalArgumentException(
 				prefix + "Missing property '" + string1 + "' for " + suffix);
+		}
+		else if (errorCode == 3003) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid property " + string1 + " at " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -1522,6 +1529,11 @@ public class SeleniumBuilderFileUtil {
 
 		String propertyName = propertyElement.attributeValue("name");
 
+		if (!_testcaseAvailablePropertyNames.contains(propertyName)) {
+			throwValidationException(
+				3003, fileName, propertyElement, propertyName);
+		}
+
 		if (propertyName.equals("ignore.errors")) {
 			String propertyDelimiter = propertyElement.attributeValue(
 				"delimiter");
@@ -1977,6 +1989,7 @@ public class SeleniumBuilderFileUtil {
 			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
 			"tr", "while", "var"
 		});
+	private static List<String> _testcaseAvailablePropertyNames;
 	private static List<String> _testrayAvailableComponentNames;
 
 	private String _baseDirName;

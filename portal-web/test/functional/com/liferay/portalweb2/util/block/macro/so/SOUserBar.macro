@@ -24,7 +24,7 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="addPortlet">

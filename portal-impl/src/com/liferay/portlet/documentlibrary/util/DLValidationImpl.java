@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 
 /**
@@ -91,6 +92,19 @@ public final class DLValidationImpl implements DLValidation {
 			!fileExtension.equals(sourceFileExtension)) {
 
 			throw new SourceFileNameException(sourceFileExtension);
+		}
+	}
+
+	@Override
+	public void validateVersionLabel(String versionLabel)
+		throws InvalidFileVersionException {
+
+		if (Validator.isNull(versionLabel)) {
+			return;
+		}
+
+		if (!DLUtil.isValidVersion(versionLabel)) {
+			throw new InvalidFileVersionException();
 		}
 	}
 

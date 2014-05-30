@@ -615,8 +615,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			((bytes == null) ||
+		if ((bytes == null) ||
+			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			 (bytes.length >
 				 PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
 
@@ -631,8 +631,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			((file == null) ||
+		if ((file == null) ||
+			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			 (file.length() >
 				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
 
@@ -673,10 +673,10 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			StringPool.BLANK);
 
-		if ((file != null) &&
-			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			(file.length() >
-				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {
+		if ((file == null) ||
+			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+			 (file.length() >
+				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
 
 			throw new FileSizeException(fileName);
 		}
@@ -693,10 +693,10 @@ public class DLStoreImpl implements DLStore {
 			StringPool.BLANK);
 
 		try {
-			if ((is != null) &&
-				(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				(is.available() >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {
+			if ((is == null) ||
+				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+				 (is.available() >
+					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
 
 				throw new FileSizeException(fileName);
 			}

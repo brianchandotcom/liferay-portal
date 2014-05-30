@@ -26,6 +26,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutWrapper;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.Locale;
@@ -159,6 +160,14 @@ public class VirtualLayout extends LayoutWrapper {
 			Group group = _sourceLayout.getGroup();
 
 			StringBundler sb = new StringBundler(4);
+
+			if (_targetGroup.isUser() && isPrivateLayout()) {
+				layoutURL = layoutURL.replaceFirst(
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+			}
 
 			int pos = layoutURL.indexOf(group.getFriendlyURL());
 

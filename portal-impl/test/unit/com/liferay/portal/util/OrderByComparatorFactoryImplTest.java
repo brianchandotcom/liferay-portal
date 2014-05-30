@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.bean.BeanPropertiesImpl;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.EmailAddress;
@@ -28,6 +30,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,6 +38,19 @@ import org.junit.Test;
  * @see    ServiceBeanMethodInvocationFactoryImplTest
  */
 public class OrderByComparatorFactoryImplTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
+
+		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
+
+		OrderByComparatorFactoryUtil orderByComparatorFactoryUtil =
+			new OrderByComparatorFactoryUtil();
+
+		orderByComparatorFactoryUtil.setOrderByComparatorFactory(
+			new OrderByComparatorFactoryImpl());
+	}
 
 	@Test
 	public void testCollectionsSortMultipleColumnsAscending() throws Exception {

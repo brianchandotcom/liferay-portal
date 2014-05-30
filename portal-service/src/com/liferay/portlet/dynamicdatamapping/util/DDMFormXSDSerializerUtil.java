@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
@@ -23,7 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 public class DDMFormXSDSerializerUtil {
 
 	public static DDMForm deserialize(String serializedDDMForm)
-		throws Exception {
+		throws PortalException {
 
 		return getDDMFormXSDSerializer().deserialize(serializedDDMForm);
 	}

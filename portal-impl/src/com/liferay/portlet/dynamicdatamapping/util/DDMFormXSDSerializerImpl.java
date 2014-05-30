@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
@@ -39,16 +41,23 @@ import java.util.Locale;
 public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 
 	@Override
-	public DDMForm deserialize(String serializedDDMForm) throws Exception {
-		Document document = SAXReaderUtil.read(serializedDDMForm);
+	public DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
 
-		DDMForm ddmForm = new DDMForm();
+		try {
+			DDMForm ddmForm = new DDMForm();
 
-		setDDMFormAvailableLocales(document.getRootElement(), ddmForm);
-		setDDMFormDefaultLocale(document.getRootElement(), ddmForm);
-		setDDMFormFields(document.getRootElement(), ddmForm);
+			Document document = SAXReaderUtil.read(serializedDDMForm);
 
-		return ddmForm;
+			setDDMFormAvailableLocales(document.getRootElement(), ddmForm);
+			setDDMFormDefaultLocale(document.getRootElement(), ddmForm);
+			setDDMFormFields(document.getRootElement(), ddmForm);
+
+			return ddmForm;
+		}
+		catch (DocumentException de) {
+			throw new PortalException(de);
+		}
 	}
 
 	protected void addOptionValueLabels(

@@ -936,6 +936,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructure.getDDMForm();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.xml.Document getDocument() {
 		return _ddmStructure.getDocument();
 	}

@@ -20,20 +20,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.DuplicateFeedIdException;
 import com.liferay.portlet.journal.FeedContentFieldException;
@@ -48,6 +45,7 @@ import com.liferay.util.RSSUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -366,18 +364,12 @@ public class JournalFeedLocalServiceImpl
 					classNameLocalService.getClassNameId(JournalArticle.class),
 					structureId);
 
-			Document document = SAXReaderUtil.read(ddmStructure.getXsd());
+			DDMForm ddmForm = ddmStructure.getDDMForm();
 
-			contentField = HtmlUtil.escapeXPathAttribute(contentField);
+			Map<String, DDMFormField> ddmFormFieldsMap =
+				ddmForm.getDDMFormFieldsMap(true);
 
-			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//dynamic-element[@name="+ contentField + "]");
-
-			Node node = xPathSelector.selectSingleNode(document);
-
-			if (node != null) {
-				return true;
-			}
+			return ddmFormFieldsMap.containsKey(contentField);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -3322,16 +3322,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the timestamp of the portlet.
-	*
-	* @param timestamp the timestamp of the portlet
-	*/
-	@Override
-	public void setTimestamp(long timestamp) {
-		_portlet.setTimestamp(timestamp);
-	}
-
-	/**
 	* Sets the names of the classes that represent trash handlers associated to
 	* the portlet.
 	*

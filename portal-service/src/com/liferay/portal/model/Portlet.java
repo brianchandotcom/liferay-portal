@@ -2216,13 +2216,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setTemplateHandlerClass(java.lang.String templateHandlerClass);
 
 	/**
-	* Sets the timestamp of the portlet.
-	*
-	* @param timestamp the timestamp of the portlet
-	*/
-	public void setTimestamp(long timestamp);
-
-	/**
 	* Sets the names of the classes that represent trash handlers associated to
 	* the portlet.
 	*

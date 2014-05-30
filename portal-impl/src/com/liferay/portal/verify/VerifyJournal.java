@@ -322,8 +322,8 @@ public class VerifyJournal extends VerifyProcess {
 			JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isErrorEnabled()) {
+				_log.error(
 					"Unexpected error while checking the associated " +
 						"structure of the article " + article.getId(), e);
 			}

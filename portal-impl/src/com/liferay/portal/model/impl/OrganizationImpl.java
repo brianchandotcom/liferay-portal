@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Address;
@@ -187,6 +188,25 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 		return OrganizationLocalServiceUtil.getOrganization(
 			getParentOrganizationId());
+	}
+
+	@Override
+	public String getParentOrganizationName() throws SystemException {
+		if (getParentOrganizationId() ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+			return StringPool.BLANK;
+		}
+
+		Organization parentOrganization =
+			OrganizationLocalServiceUtil.fetchOrganization(
+				getParentOrganizationId());
+
+		if (parentOrganization != null) {
+			return parentOrganization.getName();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

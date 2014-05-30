@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/custom_fields.jspf" %>
-
 <%
 String[] availableLanguageIds = LocalizationUtil.getAvailableLanguageIds(script);
 

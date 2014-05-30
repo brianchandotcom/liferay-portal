@@ -15,29 +15,25 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
 	name="last-post"
 >
+	<c:choose>
+		<c:when test="<%= thread.getLastPostDate() == null %>">
+			<liferay-ui:message key="none" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="date" />: <%= dateFormatDateTime.format(thread.getLastPostDate()) %>
 
-	<%
-	if (thread.getLastPostDate() == null) {
-		buffer.append(LanguageUtil.get(pageContext, "none"));
-	}
-	else {
-		buffer.append(LanguageUtil.get(pageContext, "date"));
-		buffer.append(": ");
-		buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
+			<%
+			String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
+			%>
 
-		String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
+			<c:if test="<%= Validator.isNotNull(lastPostByUserName) %>">
+				<br />
 
-		if (Validator.isNotNull(lastPostByUserName)) {
-			buffer.append("<br />");
-			buffer.append(LanguageUtil.get(pageContext, "by"));
-			buffer.append(": ");
-			buffer.append(lastPostByUserName);
-		}
-	}
-	%>
-
+				<liferay-ui:message key="by" />: <%= lastPostByUserName %>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:search-container-column-text>

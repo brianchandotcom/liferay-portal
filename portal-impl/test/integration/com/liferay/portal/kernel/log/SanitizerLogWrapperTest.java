@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.log;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.log.test.CaptureAppender;
-import com.liferay.portal.log.test.Log4JLoggerTestUtil;
+import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.util.List;

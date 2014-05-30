@@ -24,6 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
+import com.liferay.portal.service.util.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -87,7 +88,7 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet, portletPreferencesXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
@@ -101,7 +102,7 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet, null);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
@@ -126,7 +127,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), null, null);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
@@ -146,7 +147,7 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet, portletPreferencesXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
@@ -166,7 +167,7 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
@@ -537,7 +538,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		assertOwner(
 			_group,
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences));
 	}
 
@@ -556,7 +557,7 @@ public class PortletPreferencesLocalServiceTest {
 		Assert.assertEquals(1, portletPreferencesList.size());
 
 		PortletPreferencesImpl portletPreferenesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
 		assertOwner(_layout.getGroup(), portletPreferenesImpl);
@@ -797,7 +798,7 @@ public class PortletPreferencesLocalServiceTest {
 		Assert.assertEquals(1, portletPreferencesList.size());
 
 		PortletPreferencesImpl portletPreferenesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
 		assertOwner(_layout, portletPreferenesImpl);
@@ -1118,7 +1119,7 @@ public class PortletPreferencesLocalServiceTest {
 		Assert.assertEquals(1, portletPreferencesList.size());
 
 		PortletPreferencesImpl portletPreferenesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferencesList.get(0));
 
 		assertOwner(_layout, portletPreferenesImpl);
@@ -1463,7 +1464,7 @@ public class PortletPreferencesLocalServiceTest {
 		throws Exception {
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
 		assertValues(portletPreferencesImpl, name, values);

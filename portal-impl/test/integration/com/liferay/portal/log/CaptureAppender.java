@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.log.test;
+package com.liferay.portal.log;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
 

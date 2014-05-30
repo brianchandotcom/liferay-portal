@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -431,7 +430,9 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static Repository addRepository(long groupId) throws Exception {
-		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portal.repository.liferayrepository." +
+				"LiferayRepository");
 
 		return addRepository(groupId, classNameId);
 	}

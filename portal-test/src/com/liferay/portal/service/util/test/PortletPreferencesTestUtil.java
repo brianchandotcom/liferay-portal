@@ -21,8 +21,6 @@ import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.PortletPreferencesImpl;
 
 /**
  * @author Cristina González
@@ -116,27 +114,6 @@ public class PortletPreferencesTestUtil {
 
 	public static String getPortletPreferencesXML(String[] values) {
 		return getPortletPreferencesXML(null, values);
-	}
-
-	public static PortletPreferencesImpl toPortletPreferencesImpl(
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return (PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-			TestPropsValues.getCompanyId(), portletPreferences.getOwnerId(),
-			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
-			portletPreferences.getPortletId(),
-			portletPreferences.getPreferences());
-	}
-
-	public static PortletPreferencesImpl toPortletPreferencesImpl(String xml)
-		throws Exception {
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)
-				PortletPreferencesFactoryUtil.fromDefaultXML(xml);
-
-		return portletPreferencesImpl;
 	}
 
 }

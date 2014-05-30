@@ -80,17 +80,17 @@ public abstract class BaseSearchTestCase {
 
 	@Test
 	public void testLocalizedSearch() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			group.getGroupId());
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		Map<Locale, String> keywordsMap = new HashMap<Locale, String>();
 

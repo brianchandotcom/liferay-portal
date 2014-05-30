@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.search.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;

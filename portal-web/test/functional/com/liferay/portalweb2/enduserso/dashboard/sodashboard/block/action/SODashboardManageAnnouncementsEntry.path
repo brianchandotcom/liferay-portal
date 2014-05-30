@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISTRIBUTION_SCOPE_SELECT</td>
 	<td>//select[contains(@id,'distributionScope')]</td>
 	<td></td>

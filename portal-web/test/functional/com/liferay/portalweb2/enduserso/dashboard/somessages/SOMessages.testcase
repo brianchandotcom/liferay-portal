@@ -235,7 +235,8 @@
 		<execute action="SOMessages#assertTextNotPresent" value1="Message Subject" />
 		<execute action="SOMessages#assertTextNotPresent" value1="Message Body" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOMessages#assertTextNotPresent" value1="${senderName} sent you a message." />

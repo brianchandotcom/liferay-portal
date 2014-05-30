@@ -194,7 +194,8 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
@@ -1763,7 +1764,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${entryTitle}" />
@@ -1866,7 +1867,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
@@ -2084,7 +2085,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2480,7 +2481,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#click" locator-key1="NAVIGATION_ALL" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2788,7 +2789,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${dmDocumentDescription}" />
@@ -2934,7 +2935,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${dmDocumentDescription}" />
@@ -3084,7 +3085,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${dmDocumentDescription}" />
@@ -3232,7 +3233,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${dmDocumentDescription}" />
@@ -3343,7 +3344,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${threadBody}" />
@@ -3469,7 +3470,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${threadBody}" />
@@ -3599,7 +3600,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${threadBody}" />
@@ -3728,7 +3729,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${threadBody}" />
@@ -4055,7 +4056,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetSummary" value="${wikiPageContent}" />
@@ -4132,7 +4133,8 @@
 			<var name="siteType" value="${siteType4}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -4191,7 +4193,8 @@
 
 		<var name="key_siteName" value="${siteName2}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -4206,7 +4209,8 @@
 
 		<var name="key_siteName" value="${siteName3}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -4221,7 +4225,8 @@
 
 		<var name="key_siteName" value="${siteName4}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -4302,7 +4307,8 @@
 			<var name="siteType" value="Open" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertClick" locator-key1="GO_TO_VIEW_ALL" value1="View All (12)" />

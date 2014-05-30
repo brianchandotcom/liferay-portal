@@ -171,7 +171,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -471,7 +471,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -504,7 +504,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -538,7 +538,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
 
@@ -583,7 +583,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -595,7 +595,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -886,7 +886,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="Calendar Test Page" />
@@ -914,7 +914,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="Calendar Test Page" />
@@ -942,7 +942,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="Calendar Test Page" />
@@ -970,7 +970,7 @@
 			<var name="userLoginFullName" value="${userName4}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="Calendar Test Page" />
@@ -1007,7 +1007,7 @@
 			<var name="userName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle3}" />
@@ -1030,7 +1030,7 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle3}" />
@@ -1053,7 +1053,7 @@
 			<var name="userName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
@@ -1076,7 +1076,7 @@
 			<var name="userName" value="${userName4}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle1}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="${siteEventTitle2}" />
@@ -1291,7 +1291,7 @@
 
 		<execute action="SOProfileMicroblogs#assertAlertNotPresent" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
@@ -1328,7 +1328,7 @@
 
 		<execute action="SOMicroblogs#assertAlertNotPresent" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
@@ -1709,7 +1709,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
@@ -1749,7 +1749,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
@@ -1782,14 +1782,14 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
 		<execute action="SOActivities#assertAlertNotPresent" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<var name="key_row" value="01" />
 		<var name="key_userFirstName" value="${userFirstName1}" />
@@ -1829,7 +1829,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
@@ -1844,7 +1844,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertAlertNotPresent" />
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />

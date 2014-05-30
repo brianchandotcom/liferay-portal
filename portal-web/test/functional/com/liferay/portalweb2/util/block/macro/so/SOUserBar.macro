@@ -178,16 +178,11 @@
 		<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="SAVE_BUTTON" />
 	</command>
 
-	<command name="dashboardPG">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="Dockbar#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
-	</command>
-
 	<command name="deleteSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -216,13 +211,22 @@
 	<command name="favoriteSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_FAVORITE_SITE_ICON" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_UNFAVORITE_SITE_ICON" />
+	</command>
+
+	<command name="gotoDashboardPG">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#assertElementPresent" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_BOTTOM_BAR" />
 	</command>
 
 	<command name="hideEditControls">
@@ -245,7 +249,8 @@
 	<command name="joinSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -260,7 +265,8 @@
 	<command name="leaveSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -284,7 +290,8 @@
 	<command name="requestMembershipSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -309,7 +316,8 @@
 	<command name="searchSOSite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 
@@ -352,7 +360,8 @@
 		<while>
 			<condition action="SOUserBar#isTextNotEqual" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 			<then>
-				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+				<execute macro="SOUserBar#gotoDashboardPG" />
+
 				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
 
 				<if>
@@ -362,7 +371,7 @@
 					</then>
 				</if>
 
-				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+				<execute macro="SOUserBar#gotoDashboardPG" />
 			</then>
 		</while>
 	</command>

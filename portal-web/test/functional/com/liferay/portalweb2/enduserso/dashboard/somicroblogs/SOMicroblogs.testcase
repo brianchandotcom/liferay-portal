@@ -1472,7 +1472,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -1533,7 +1533,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1628,7 +1628,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1708,7 +1708,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -1780,7 +1780,7 @@
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsCommentActivityEntry">
 			<var name="commentCount" value="1" />
@@ -1869,7 +1869,7 @@
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsCommentActivityEntry">
 			<var name="commentCount" value="1" />
@@ -1886,7 +1886,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1933,7 +1933,7 @@
 			<var name="microblogsEntryPartialContent" value="${microblogsEntryPartialContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
@@ -2010,7 +2010,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 
@@ -2072,7 +2072,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -2140,7 +2140,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -2229,7 +2229,9 @@
 		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${microblogsEntryCommentAuthorName} commented on your post." />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
@@ -2280,7 +2282,7 @@
 
 		<execute macro="SOMicroblogs#deleteMicroblogsEntry" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2358,7 +2360,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -2486,7 +2488,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
 
@@ -2550,7 +2552,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
 
@@ -2707,7 +2709,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 
@@ -2748,7 +2750,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2789,7 +2791,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
@@ -2911,7 +2913,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 

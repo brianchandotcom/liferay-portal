@@ -75,7 +75,7 @@
 	<command name="tearDownPG">
 		<execute macro="SOUser#firstLoginPG" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
 

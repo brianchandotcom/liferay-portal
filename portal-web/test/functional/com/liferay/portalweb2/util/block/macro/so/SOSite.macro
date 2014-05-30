@@ -112,7 +112,8 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -162,7 +163,8 @@
 	<command name="viewSOSiteDeleted">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
@@ -192,7 +194,8 @@
 	<command name="viewSOSiteFavorite">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Favorites" />
@@ -213,7 +216,8 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -240,7 +244,8 @@
 	<command name="viewSOSiteMembership">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
@@ -302,7 +307,8 @@
 			</else>
 		</if>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
@@ -356,7 +362,8 @@
 	<command name="viewSOSiteNonMembership">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
@@ -382,7 +389,8 @@
 			</else>
 		</if>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />

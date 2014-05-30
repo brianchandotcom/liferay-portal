@@ -35,7 +35,7 @@
 	<command name="tearDownDocumentViewPG">
 		<execute macro="SOUser#firstLoginPG" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
@@ -46,7 +46,7 @@
 	<command name="tearDownPG">
 		<execute macro="SODocuments#tearDownDocumentViewPG" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 

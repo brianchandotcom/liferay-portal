@@ -10,41 +10,46 @@
 	</set-up>
 
 	<command name="ViewLinkContactscenter" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#click" locator-key1="CONTACT_CENTER" value1="Contacts Center" />
 
 		<execute macro="SODashboard#viewLinkContactscenter" />
 	</command>
 
 	<command name="ViewLinkHome" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>
 
 	<command name="ViewLinkMicroblogs" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#click" locator-key1="MICROBLOGS" value1="Microblogs" />
 
 		<execute macro="SODashboard#viewLinkMicroblogs" />
 	</command>
 
 	<command name="ViewLinkMyDocuments" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#click" locator-key1="MY_DOCUMENTS" value1="My Documents" />
 
 		<execute macro="SODashboard#viewLinkMydocuments" />
 	</command>
 
 	<command name="ViewLinkPrivateMessaging" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#click" locator-key1="MESSAGES" value1="Messages" />
 
 		<execute macro="SODashboard#viewLinkPrivateMessaging" />
 	</command>
 
 	<command name="ViewLinkTasks" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
 		<execute action="SOUserBar#click" locator-key1="TASKS" value1="Tasks" />
 
 		<execute macro="SODashboard#viewLinkTasks" />

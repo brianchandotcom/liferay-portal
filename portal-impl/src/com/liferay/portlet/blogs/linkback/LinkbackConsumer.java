@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.service.ServiceContext;
+package com.liferay.portlet.blogs.linkback;
 
 /**
  * @author André de Oliveira
  */
-public interface TrackbackComments {
+public interface LinkbackConsumer {
 
-	public long addTrackbackComment(
-			long userId, long groupId, String className, long classPK,
-			String blogName, String title, String body,
-			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException, SystemException;
+	public void addNewTrackback(long commentId, String url, String entryURL);
+
+	public void verifyNewTrackbacks();
+
+	public void verifyTrackback(long commentId, String url, String entryURL);
 
 }

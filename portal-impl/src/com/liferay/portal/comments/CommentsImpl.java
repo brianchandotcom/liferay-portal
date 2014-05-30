@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
+package com.liferay.portal.comments;
 
+import com.liferay.portal.kernel.comments.Comments;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
@@ -25,15 +26,15 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
- * @author Alexander Chow
  * @author André de Oliveira
+ * @author Alexander Chow
  */
-public class TrackbackCommentsImpl implements TrackbackComments {
+public class CommentsImpl implements Comments {
 
 	@Override
-	public long addTrackbackComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
-			String blogName, String title, String body,
+			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException, SystemException {
 
@@ -51,10 +52,17 @@ public class TrackbackCommentsImpl implements TrackbackComments {
 			MBMessage.class.getName());
 
 		MBMessage message = MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, blogName, groupId, className, classPK, threadId,
-			parentMessageId, title, body, serviceContext);
+			userId, userName, groupId, className, classPK, threadId,
+			parentMessageId, subject, body, serviceContext);
 
 		return message.getMessageId();
+	}
+
+	@Override
+	public void deleteComment(long commentId)
+		throws PortalException, SystemException {
+
+		MBMessageLocalServiceUtil.deleteDiscussionMessage(commentId);
 	}
 
 }

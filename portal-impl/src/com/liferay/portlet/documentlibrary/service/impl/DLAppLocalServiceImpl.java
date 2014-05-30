@@ -370,13 +370,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
-		Folder folder = localRepository.addFolder(
+		return localRepository.addFolder(
 			userId, parentFolderId, name, description, serviceContext);
-
-		dlAppHelperLocalService.addFolder(
-			serviceContext.getUserId(), folder, serviceContext);
-
-		return folder;
 	}
 
 	/**
@@ -1554,9 +1549,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		Folder destinationFolder = destinationLocalRepository.addFolder(
 			userId, parentFolderId, sourceFolder.getName(),
 			sourceFolder.getDescription(), serviceContext);
-
-		dlAppHelperLocalService.addFolder(
-			userId, destinationFolder, serviceContext);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
 			dlAppService.getFoldersAndFileEntriesAndFileShortcuts(

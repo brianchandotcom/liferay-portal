@@ -46,6 +46,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -140,6 +141,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			dlFolderLocalService.updateLastPostDate(parentFolderId, now);
 		}
+
+		// App helper
+
+		dlAppHelperLocalService.addFolder(
+			userId, new LiferayFolder(dlFolder), serviceContext);
 
 		return dlFolder;
 	}

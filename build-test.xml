@@ -17,13 +17,14 @@
 
 	<propertycopy from="browser.${browser.type}.version" name="browser.version" />
 
-	<propertycopy from="database.${database.type}.version" name="database.version" />
+	<propertycopy from="database.${database.type}.version.build" name="database.version.build" />
 
-	<propertycopy from="database.${database.type}${database.version}.host" name="database.host" />
-	<propertycopy from="database.${database.type}${database.version}.password" name="database.password" />
-	<propertycopy from="database.${database.type}${database.version}.schema" name="database.schema" />
-	<propertycopy from="database.${database.type}${database.version}.username" name="database.username" />
-	<propertycopy from="database.${database.type}${database.version}.url" name="database.url" />
+	<propertycopy from="database.${database.type}${database.version.build}.host" name="database.host" />
+	<propertycopy from="database.${database.type}${database.version.build}.password" name="database.password" />
+	<propertycopy from="database.${database.type}${database.version.build}.schema" name="database.schema" />
+	<propertycopy from="database.${database.type}${database.version.build}.username" name="database.username" />
+	<propertycopy from="database.${database.type}${database.version.build}.url" name="database.url" />
+	<propertycopy from="database.${database.type}${database.version.build}.version" name="database.version" />
 
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
@@ -173,8 +174,18 @@
 				replace="\1"
 			/>
 
+			<propertyregex
+				defaultValue="${app.server.major.version}"
+				global="true"
+				input="${app.server.major.version}"
+				override="true"
+				property="app.server.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
 			<propertycopy
-				from="env.option.app.server.${app.server.type}${app.server.major.version}"
+				from="env.option.app.server.${app.server.type}${app.server.major.version.build}"
 				name="env.option.app.server"
 				override="true"
 			/>
@@ -191,8 +202,18 @@
 				replace="\1"
 			/>
 
+			<propertyregex
+				defaultValue="${browser.major.version}"
+				global="true"
+				input="${browser.major.version}"
+				override="true"
+				property="browser.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
 			<propertycopy
-				from="env.option.browser.${browser.type}${browser.major.version}"
+				from="env.option.browser.${browser.type}${browser.major.version.build}"
 				name="env.option.browser"
 				override="true"
 			/>
@@ -209,8 +230,18 @@
 				replace="\1"
 			/>
 
+			<propertyregex
+				defaultValue="${database.major.version}"
+				global="true"
+				input="${database.major.version}"
+				override="true"
+				property="database.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
 			<propertycopy
-				from="env.option.database.${database.type}${database.major.version}"
+				from="env.option.database.${database.type}${database.major.version.build}"
 				name="env.option.database"
 				override="true"
 			/>
@@ -243,8 +274,18 @@
 
 	<macrodef name="record-env-operating-system">
 		<sequential>
+			<propertyregex
+				defaultValue="${operating.system.version}"
+				global="true"
+				input="${operating.system.version}"
+				override="true"
+				property="operating.system.version.build"
+				regexp="\."
+				replace=""
+			/>
+
 			<propertycopy
-				from="env.option.operating.system.${operating.system.type}${operating.system.version}"
+				from="env.option.operating.system.${operating.system.type}${operating.system.version.build}"
 				name="env.option.operating.system"
 				override="true"
 			/>

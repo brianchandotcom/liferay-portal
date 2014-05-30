@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -148,21 +149,26 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			group.getGroupId(), DLConstants.SERVICE_NAME);
 
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
 		String germanSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
 
-		settings.setValue(germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
+		modifiableSettings.setValue(
+			germanSubscriptionBodyPreferencesKey, GERMAN_BODY);
 
 		String spanishSubscriptionBodyPreferencesKey =
 			LocalizationUtil.getPreferencesKey(
 				getSubscriptionBodyPreferenceName(),
 				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 
-		settings.setValue(spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
+		modifiableSettings.setValue(
+			spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
 
-		settings.store();
+		modifiableSettings.store();
 	}
 
 }

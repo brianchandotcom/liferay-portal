@@ -87,6 +87,10 @@
 								position: absolute;
 								right: 0;
 							}
+
+							.dropdown-toggle {
+								padding-top: 0;
+							}
 						}
 
 						.divider {

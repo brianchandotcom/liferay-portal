@@ -45,7 +45,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
-import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -615,13 +614,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((bytes == null) ||
-			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			 (bytes.length >
-				 PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-			throw new FileSizeException(fileName);
-		}
+		DLValidationUtil.validateFileSize(fileName, bytes);
 	}
 
 	@Override
@@ -631,13 +624,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((file == null) ||
-			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			 (file.length() >
-				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-			throw new FileSizeException(fileName);
-		}
+		DLValidationUtil.validateFileSize(fileName, file);
 	}
 
 	@Override
@@ -647,20 +634,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		// LEP-4851
-
-		try {
-			if ((is == null) ||
-				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				 (is.available() >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-				throw new FileSizeException(fileName);
-			}
-		}
-		catch (IOException ioe) {
-			throw new FileSizeException(ioe.getMessage());
-		}
+		DLValidationUtil.validateFileSize(fileName, is);
 	}
 
 	@Override
@@ -673,13 +647,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			StringPool.BLANK);
 
-		if ((file == null) ||
-			((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-			 (file.length() >
-				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-			throw new FileSizeException(fileName);
-		}
+		DLValidationUtil.validateFileSize(fileName, file);
 	}
 
 	@Override
@@ -692,18 +660,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			StringPool.BLANK);
 
-		try {
-			if ((is == null) ||
-				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				 (is.available() >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
-
-				throw new FileSizeException(fileName);
-			}
-		}
-		catch (IOException ioe) {
-			throw new FileSizeException(ioe.getMessage());
-		}
+		DLValidationUtil.validateFileSize(fileName, is);
 	}
 
 	/**

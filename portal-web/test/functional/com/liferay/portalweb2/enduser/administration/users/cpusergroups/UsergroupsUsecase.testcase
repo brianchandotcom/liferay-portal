@@ -752,4 +752,31 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="ViewUserGroupSiteRolePermissions" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoUserGroupSitePermissionsCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<var name="key_roleName" value="Roles Siterole Name" />
+
+		<execute action="Permissions#assertTextEquals" locator-key1="CONTENT_PERMISSIONS_ROLE_NAME" value1="Roles Siterole Name" />
+	</command>
 </definition>

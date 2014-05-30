@@ -281,29 +281,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								value="<%= String.valueOf(thread.getViewCount()) %>"
 							/>
 
-							<liferay-ui:search-container-column-text
+							<liferay-ui:search-container-column-user
+								date="<%= thread.getLastPostDate() %>"
 								href="<%= rowURL %>"
 								name="last-post"
-							>
-								<c:choose>
-									<c:when test="<%= thread.getLastPostDate() == null %>">
-										<liferay-ui:message key="none" />
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="date" />: <%= dateFormatDateTime.format(thread.getLastPostDate()) %>
-
-										<%
-										String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-										%>
-
-										<c:if test="<%= Validator.isNotNull(lastPostByUserName) %>">
-											<br />
-
-											<liferay-ui:message key="by" />: <%= lastPostByUserName %>
-										</c:if>
-									</c:otherwise>
-								</c:choose>
-							</liferay-ui:search-container-column-text>
+								userId="<%= thread.getLastPostByUserId() %>"
+							/>
 
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
@@ -461,29 +444,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						value="<%= String.valueOf(thread.getViewCount()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
+					<liferay-ui:search-container-column-user
+						date="<%= thread.getLastPostDate() %>"
 						href="<%= rowURL %>"
 						name="last-post"
-					>
-						<c:choose>
-							<c:when test="<%= thread.getLastPostDate() == null %>">
-								<liferay-ui:message key="none" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="date" />: <%= dateFormatDateTime.format(thread.getLastPostDate()) %>
-
-								<%
-								String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-								%>
-
-								<c:if test="<%= Validator.isNotNull(lastPostByUserName) %>">
-									<br />
-
-									<liferay-ui:message key="by" />: <%= lastPostByUserName %>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-column-text>
+						userId="<%= thread.getLastPostByUserId() %>"
+					/>
 
 					<liferay-ui:search-container-column-jsp
 						align="right"

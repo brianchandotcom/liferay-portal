@@ -15,7 +15,6 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	name="name"
 >
 
@@ -25,26 +24,15 @@
 	if (name.equals(localizedName)) {
 		localizedName = TextFormatter.format(name, TextFormatter.J);
 	}
-
-	buffer.append("<a href=\"");
-	buffer.append(rowURL.toString());
-	buffer.append("\">");
-	buffer.append("<strong>");
-	buffer.append(HtmlUtil.escape(localizedName));
-	buffer.append("</strong>");
-	buffer.append("</a>");
-
-	buffer.append("<br /><span class=\"key\">");
-	buffer.append(LanguageUtil.get(pageContext, "key"));
-	buffer.append("</span>: ");
-
-	buffer.append("<a href=\"");
-	buffer.append(rowURL.toString());
-	buffer.append("\">");
-	buffer.append(HtmlUtil.escape(name));
-	buffer.append("</a>");
 	%>
 
+	<a href="<%= rowURL.toString() %>"><strong><%= HtmlUtil.escape(localizedName) %></strong></a>
+
+	<br />
+
+	<span class="key"><%= LanguageUtil.get(pageContext, "key") %></span>:
+
+	<a href="<%= rowURL.toString() %>"><%= HtmlUtil.escape(name) %></a>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
@@ -54,39 +42,37 @@
 />
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
 	name="hidden"
 >
 
 	<%
 	boolean hidden = GetterUtil.getBoolean(typeSettings.getProperty(ExpandoColumnConstants.PROPERTY_HIDDEN));
-
-	buffer.append(LanguageUtil.get(pageContext, String.valueOf(hidden)));
 	%>
 
+	<liferay-ui:message key="<%= String.valueOf(hidden) %>" />
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
 	name="searchable"
 >
 
 	<%
 	int indexType = GetterUtil.getInteger(typeSettings.getProperty(ExpandoColumnConstants.INDEX_TYPE));
-
-	if (indexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) {
-		buffer.append(LanguageUtil.get(pageContext, "as-keyword"));
-	}
-	else if (indexType == ExpandoColumnConstants.INDEX_TYPE_TEXT) {
-		buffer.append(LanguageUtil.get(pageContext, "as-text"));
-	}
-	else {
-		buffer.append(LanguageUtil.get(pageContext, "not-searchable"));
-	}
 	%>
 
+	<c:choose>
+		<c:when test="<%= indexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>">
+			<liferay-ui:message key="as-keyword" />
+		</c:when>
+		<c:when test="<%= indexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>">
+			<liferay-ui:message key="as-text" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="not-searchable" />
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-jsp

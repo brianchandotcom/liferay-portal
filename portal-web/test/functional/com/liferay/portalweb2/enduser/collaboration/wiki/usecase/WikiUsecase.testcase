@@ -28,6 +28,19 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="ViewNoWikiXSSviaAddPage" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#editFrontPagePG">
+			<var name="wikiPageContentEdit"><![CDATA[<script>alert("xss")</script>]]></var>
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertAlertNotPresent" />
+	</command>
+
 	<command name="ViewWikiDraftPagesViaBreadcrumb" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

@@ -2016,8 +2016,23 @@ tck.url=true</echo>
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
 
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="hooks" />
+			<property name="plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+		</ant>
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 			<property name="plugin.types" value="portlets" />
-			<property name="plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,deploy-listener-hook,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,portal-compat-hook,private-messaging-portlet,resources-importer-web,so-activities-hook,so-announcements-portlet,so-configurations-portlet,so-hook,so-portlet,so-theme,tasks-portlet,wysiwyg-portlet" />
+			<property name="plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+		</ant>
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="themes" />
+			<property name="plugins.includes" value="so-theme" />
+		</ant>
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="webs" />
+			<property name="plugins.includes" value="resources-importer-web" />
 		</ant>
 	</target>
 

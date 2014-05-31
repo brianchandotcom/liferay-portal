@@ -25,5 +25,9 @@
 		<case locator-key1="PRIVATE_MESSAGE_REPLY_BODY">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="PRIVATE_MESSAGE_USERS">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

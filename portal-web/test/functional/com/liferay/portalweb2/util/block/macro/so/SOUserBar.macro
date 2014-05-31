@@ -24,7 +24,7 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="addPortlet">
@@ -224,9 +224,9 @@
 	<command name="gotoDashboardPG">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
-		<execute action="SODashboard#assertElementPresent" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
-
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_BOTTOM_BAR" />
+
+		<execute action="SODashboard#assertElementPresent" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
 	</command>
 
 	<command name="hideEditControls">

@@ -106,7 +106,9 @@
 		<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT" />
 
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
-		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} and You" />
+
+		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
+
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
@@ -116,6 +118,83 @@
 				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_ATTACHMENT" />
 				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
 			</then>
+		</if>
+	</command>
+
+	<command name="viewMessageConnectionDetailsView">
+		<if>
+			<isset var="connectionNameList" />
+			<then>
+				<var name="connectionNumber" value="0" />
+
+				<for list="${connectionNameList}" param="connectionName">
+					<var name="connectionNumber" value="${connectionNumber?increment()}" />
+
+					<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="${connectionName}" />
+				</for>
+
+				<var name="connectionNumberLast" value="${connectionNumber}" />
+
+				<var name="connectionNumber" value="0" />
+
+				<for list="${connectionNameList}" param="connectionName">
+					<var name="connectionNumber" value="${connectionNumber?increment()}" />
+
+					<if>
+						<equals arg1="${connectionNumber}" arg2="1" />
+						<then>
+							<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} ," />
+						</then>
+						<elseif>
+							<equals arg1="${connectionNumber}" arg2="${connectionNumberLast}" />
+							<then>
+								<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1=", ${connectionName} and You" />
+							</then>
+						</elseif>
+						<else>
+							<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1=", ${connectionName} ," />
+						</else>
+					</if>
+				</for>
+			</then>
+			<else>
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} and You" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewMessageConnectionListView">
+		<if>
+			<isset var="connectionNameList" />
+			<then>
+				<var name="connectionNumber" value="0" />
+
+				<for list="${connectionNameList}" param="connectionName">
+					<var name="connectionNumber" value="${connectionNumber?increment()}" />
+
+					<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName}" />
+				</for>
+
+				<var name="connectionNumberLast" value="${connectionNumber}" />
+
+				<var name="connectionNumber" value="0" />
+
+				<for list="${connectionNameList}" param="connectionName">
+					<var name="connectionNumber" value="${connectionNumber?increment()}" />
+
+					<if>
+						<not>
+							<equals arg1="${connectionNumber}" arg2="${connectionNumberLast}" />
+						</not>
+						<then>
+							<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName} ," />
+						</then>
+					</if>
+				</for>
+			</then>
+			<else>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+			</else>
 		</if>
 	</command>
 
@@ -130,15 +209,7 @@
 			</else>
 		</if>
 
-		<if>
-			<contains string="${connectionName}" substring=", " />
-			<then>
-				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName}" />
-			</then>
-			<else>
-				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
-			</else>
-		</if>
+		<execute macro="SOMessages#viewMessageConnectionListView" />
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageBody}" />
@@ -192,7 +263,9 @@
 		<var name="key_messageReplyBody" value="${messageReplyBody}" />
 
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
-		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} and You" />
+
+		<execute macro="SOMessages#viewMessageConnectionDetailsView" />
+
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
 		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
 
@@ -227,15 +300,7 @@
 			</else>
 		</if>
 
-		<if>
-			<contains string="${connectionName}" substring=", " />
-			<then>
-				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE" value1="${connectionName}" />
-			</then>
-			<else>
-				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
-			</else>
-		</if>
+		<execute macro="SOMessages#viewMessageConnectionListView" />
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
 

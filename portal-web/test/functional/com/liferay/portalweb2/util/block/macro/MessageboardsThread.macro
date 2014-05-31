@@ -448,6 +448,8 @@
 		<if>
 			<equals arg1="${displayStyle}" arg2="Question" />
 			<then>
+				<var name="key_threadSubject" value="${threadSubject}" />
+
 				<execute action="PGMessageboardsCategory#assertClick" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>

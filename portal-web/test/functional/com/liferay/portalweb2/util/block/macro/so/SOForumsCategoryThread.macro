@@ -588,7 +588,7 @@
 		<if>
 			<isset var="categoryCount" />
 			<then>
-				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="${subCategoryCount}" />
+				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="${categoryCount}" />
 			</then>
 			<else>
 				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="0" />

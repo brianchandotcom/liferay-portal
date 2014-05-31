@@ -22,7 +22,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey", article.getTemplateId());
 %>
 
-<div class="preview-article-content">
+<div class="journal-article-preview">
 	<%= JournalArticleLocalServiceUtil.getArticleContent(article, ddmTemplateKey, null, themeDisplay.getLanguageId(), new PortletRequestModel(renderRequest, renderResponse), themeDisplay) %>
 </div>
 

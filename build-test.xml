@@ -1688,7 +1688,7 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<isset property="default.portal.properties" />
+			<isset property="set.default.portal.properties" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}</echo>
 			</then>

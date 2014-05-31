@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -102,7 +101,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testStagedModelDataHandler() throws Exception {
 
 		// Export

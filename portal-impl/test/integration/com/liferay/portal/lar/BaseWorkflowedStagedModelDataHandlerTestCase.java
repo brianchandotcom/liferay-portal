@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.kernel.xml.Element;
@@ -42,7 +41,6 @@ public abstract class BaseWorkflowedStagedModelDataHandlerTestCase
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Test
-	@Transactional
 	public void testExportWorkflowedStagedModels() throws Exception {
 		initExport();
 

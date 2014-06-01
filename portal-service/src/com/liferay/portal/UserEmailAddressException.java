@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserEmailAddressException extends PortalException {
 
+	@Deprecated
 	public UserEmailAddressException() {
 		super();
 	}

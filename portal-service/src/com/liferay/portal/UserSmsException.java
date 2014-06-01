@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserSmsException extends PortalException {
 
+	@Deprecated
 	public UserSmsException() {
 		super();
 	}

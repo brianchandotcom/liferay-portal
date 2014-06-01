@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserIdException extends PortalException {
 
+	@Deprecated
 	public UserIdException() {
 		super();
 	}

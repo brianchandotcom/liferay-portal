@@ -21,20 +21,29 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DuplicateUserScreenNameException extends PortalException {
 
+	@Deprecated
 	public DuplicateUserScreenNameException() {
 		super();
 	}
 
-	public DuplicateUserScreenNameException(String msg) {
-		super(msg);
+	public DuplicateUserScreenNameException(String screenName, long userId) {
+		super(
+			"The screenName " + screenName + " is already being used by " +
+				"user " + userId);
+
+		_screenName = screenName;
+		_userId = userId;
 	}
 
-	public DuplicateUserScreenNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getScreenName() {
+		return _screenName;
 	}
 
-	public DuplicateUserScreenNameException(Throwable cause) {
-		super(cause);
+	public long getUserId() {
+		return _userId;
 	}
+
+	private String _screenName;
+	private long _userId;
 
 }

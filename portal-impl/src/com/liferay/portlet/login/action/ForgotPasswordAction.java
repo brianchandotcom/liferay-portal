@@ -218,7 +218,7 @@ public class ForgotPasswordAction extends PortletAction {
 		}
 
 		if (user.isLockout()) {
-			throw new UserLockoutException();
+			throw new UserLockoutException(user.getUserId());
 		}
 
 		return user;

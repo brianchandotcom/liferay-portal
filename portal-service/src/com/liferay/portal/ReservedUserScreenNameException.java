@@ -21,20 +21,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ReservedUserScreenNameException extends PortalException {
 
+	@Deprecated
 	public ReservedUserScreenNameException() {
 		super();
 	}
 
-	public ReservedUserScreenNameException(String msg) {
-		super(msg);
+	public ReservedUserScreenNameException(String screenName) {
+		super("{screenName=" + screenName + "}");
+
+		_screenName = screenName;
 	}
 
-	public ReservedUserScreenNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getScreenName() {
+		return _screenName;
 	}
 
-	public ReservedUserScreenNameException(Throwable cause) {
-		super(cause);
-	}
+	private String _screenName;
 
 }

@@ -21,20 +21,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class UserLockoutException extends PortalException {
 
+	@Deprecated
 	public UserLockoutException() {
 		super();
 	}
 
-	public UserLockoutException(String msg) {
-		super(msg);
+	public UserLockoutException(long userId) {
+		super("{userId=" + userId + "}");
+
+		_userId = userId;
 	}
 
-	public UserLockoutException(String msg, Throwable cause) {
-		super(msg, cause);
+	public long getUserId() {
+		return _userId;
 	}
 
-	public UserLockoutException(Throwable cause) {
-		super(cause);
-	}
+	private long _userId;
 
 }

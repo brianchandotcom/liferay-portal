@@ -712,7 +712,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (getUserId() == userId) {
-			throw new RequiredUserException();
+			throw new RequiredUserException(userId);
 		}
 
 		UserPermissionUtil.check(
@@ -1702,7 +1702,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		if ((getUserId() == userId) &&
 			(status != WorkflowConstants.STATUS_APPROVED)) {
 
-			throw new RequiredUserException();
+			throw new RequiredUserException(userId);
 		}
 
 		UserPermissionUtil.check(
@@ -2317,7 +2317,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			if (!company.isStrangersWithMx() &&
 				company.hasCompanyMx(emailAddress)) {
 
-				throw new ReservedUserEmailAddressException();
+				throw new ReservedUserEmailAddressException(emailAddress);
 			}
 		}
 	}
@@ -2693,7 +2693,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				user.getCompanyId());
 
 			if (!company.isStrangersWithMx()) {
-				throw new ReservedUserEmailAddressException();
+				throw new ReservedUserEmailAddressException(emailAddress);
 			}
 		}
 	}

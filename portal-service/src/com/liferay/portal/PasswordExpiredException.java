@@ -21,20 +21,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PasswordExpiredException extends PortalException {
 
+	@Deprecated
 	public PasswordExpiredException() {
 		super();
 	}
 
-	public PasswordExpiredException(String msg) {
-		super(msg);
+	public PasswordExpiredException(long userId) {
+		super("{userId=" + userId + "}");
+
+		_userId = userId;
 	}
 
-	public PasswordExpiredException(String msg, Throwable cause) {
-		super(msg, cause);
+	public long getUserId() {
+		return _userId;
 	}
 
-	public PasswordExpiredException(Throwable cause) {
-		super(cause);
-	}
+	private long _userId;
 
 }

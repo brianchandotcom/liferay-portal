@@ -21,20 +21,31 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DuplicateUserEmailAddressException extends PortalException {
 
+	@Deprecated
 	public DuplicateUserEmailAddressException() {
 		super();
 	}
 
-	public DuplicateUserEmailAddressException(String msg) {
-		super(msg);
+	public DuplicateUserEmailAddressException(
+		String emailAddress, long userId) {
+
+		super(
+			"The emailAddress " + emailAddress + " is already being used by " +
+				"user " + userId);
+
+		_emailAddress = emailAddress;
+		_userId = userId;
 	}
 
-	public DuplicateUserEmailAddressException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getEmailAddress() {
+		return _emailAddress;
 	}
 
-	public DuplicateUserEmailAddressException(Throwable cause) {
-		super(cause);
+	public long getUserId() {
+		return _userId;
 	}
+
+	private String _emailAddress;
+	private long _userId;
 
 }

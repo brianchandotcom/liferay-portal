@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DuplicateUserIdException extends PortalException {
 
+	@Deprecated
 	public DuplicateUserIdException() {
 		super();
 	}

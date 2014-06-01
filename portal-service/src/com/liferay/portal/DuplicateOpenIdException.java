@@ -21,20 +21,29 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DuplicateOpenIdException extends PortalException {
 
+	@Deprecated
 	public DuplicateOpenIdException() {
 		super();
 	}
 
-	public DuplicateOpenIdException(String msg) {
-		super(msg);
+	public DuplicateOpenIdException(String openId, long userId) {
+		super(
+			"The openId " + openId + " is already being used by user " +
+				userId);
+
+		_openId = openId;
+		_userId = userId;
 	}
 
-	public DuplicateOpenIdException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getOpenId() {
+		return _openId;
 	}
 
-	public DuplicateOpenIdException(Throwable cause) {
-		super(cause);
+	public long getUserId() {
+		return _userId;
 	}
+
+	private String _openId;
+	private long _userId;
 
 }

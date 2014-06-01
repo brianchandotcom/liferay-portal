@@ -20,8 +20,6 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-
 import org.powermock.api.mockito.PowerMockito;
 
 /**
@@ -30,10 +28,8 @@ import org.powermock.api.mockito.PowerMockito;
 public class ParameterMapSettingsTest extends PowerMockito {
 
 	public ParameterMapSettingsTest() {
-		_defaultSettings = mock(Settings.class);
-
 		_parameterMapSettings = new ParameterMapSettings(
-			_parameterMap, _defaultSettings);
+			_parameterMap, _parentSettings);
 	}
 
 	@Test
@@ -52,7 +48,7 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	public void testGetValuesWhenFoundInSettings() {
 		String[] values = {"settingsValue1", "settingsValue2"};
 
-		mockSettingsGetValues("key", values);
+		_parentSettings.setValues("key", values);
 
 		Assert.assertArrayEquals(
 			values,
@@ -64,7 +60,7 @@ public class ParameterMapSettingsTest extends PowerMockito {
 	public void testGetValueWhenFoundInParameterMap() {
 		_parameterMap.put("preferences--key--", new String[] {"requestValue"});
 
-		mockSettingsGetValue("key", "settingsValue");
+		_parentSettings.setValue("key", "settingsValue");
 
 		Assert.assertEquals(
 			"requestValue",
@@ -73,33 +69,16 @@ public class ParameterMapSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWhenFoundInSettings() {
-		mockSettingsGetValue("key", "settingsValue");
+		_parentSettings.setValue("key", "settingsValue");
 
 		Assert.assertEquals(
 			"settingsValue",
 			_parameterMapSettings.getValue("key", "defaultValue"));
 	}
 
-	protected void mockSettingsGetValue(String key, String value) {
-		when(
-			_defaultSettings.getValue(Matchers.eq(key), Matchers.anyString())
-		).thenReturn(
-			value
-		);
-	}
-
-	protected void mockSettingsGetValues(String key, String... values) {
-		when(
-			_defaultSettings.getValues(
-				Matchers.eq(key), Matchers.any(String[].class))
-		).thenReturn(
-			values
-		);
-	}
-
-	private Settings _defaultSettings;
 	private Map<String, String[]> _parameterMap =
 		new HashMap<String, String[]>();
 	private ParameterMapSettings _parameterMapSettings;
+	private MemorySettings _parentSettings = new MemorySettings();
 
 }

@@ -100,8 +100,6 @@ public class FallbackSettingsTest extends PowerMockito {
 
 			_settings.getValue(key, null);
 		}
-
-		inOrder.verifyNoMoreInteractions();
 	}
 
 	protected void verifyGetValues(String... keys) {
@@ -112,8 +110,6 @@ public class FallbackSettingsTest extends PowerMockito {
 
 			_settings.getValues(key, null);
 		}
-
-		inOrder.verifyNoMoreInteractions();
 	}
 
 	private FallbackKeys _fallbackKeys;

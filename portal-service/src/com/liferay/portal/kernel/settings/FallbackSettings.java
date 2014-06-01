@@ -14,39 +14,22 @@
 
 package com.liferay.portal.kernel.settings;
 
-import java.io.IOException;
-
-import java.util.Collection;
-
-import javax.portlet.ValidatorException;
-
 /**
  * @author Iván Zaera
  */
 public class FallbackSettings extends BaseSettings {
 
-	public FallbackSettings(Settings settings, FallbackKeys fallbackKeys) {
-		_settings = settings;
+	public FallbackSettings(
+		Settings parentSettings, FallbackKeys fallbackKeys) {
+
+		super(parentSettings);
+
 		_fallbackKeys = fallbackKeys;
 	}
 
 	@Override
-	public Settings getDefaultSettings() {
-		return _settings.getDefaultSettings();
-	}
-
-	@Override
-	public Collection<String> getKeys() {
-		return _settings.getKeys();
-	}
-
-	@Override
-	public String getValue(String key, String defaultValue) {
-		if (key == null) {
-			throw new IllegalArgumentException("Key is null");
-		}
-
-		String value = _settings.getValue(key, null);
+	protected String doGetValue(String key) {
+		String value = parentSettings.getValue(key, null);
 
 		if (value != null) {
 			return value;
@@ -55,23 +38,19 @@ public class FallbackSettings extends BaseSettings {
 		String[] fallbackKeysArray = _fallbackKeys.get(key);
 
 		for (String fallbackKey : fallbackKeysArray) {
-			value = _settings.getValue(fallbackKey, null);
+			value = parentSettings.getValue(fallbackKey, null);
 
 			if (value != null) {
 				return value;
 			}
 		}
 
-		return defaultValue;
+		return null;
 	}
 
 	@Override
-	public String[] getValues(String key, String[] defaultValue) {
-		if (key == null) {
-			throw new IllegalArgumentException("Key is null");
-		}
-
-		String[] values = _settings.getValues(key, null);
+	protected String[] doGetValues(String key) {
+		String[] values = parentSettings.getValues(key, null);
 
 		if (values != null) {
 			return values;
@@ -80,37 +59,16 @@ public class FallbackSettings extends BaseSettings {
 		String[] fallbackKeysArray = _fallbackKeys.get(key);
 
 		for (String fallbackKey : fallbackKeysArray) {
-			values = _settings.getValues(fallbackKey, null);
+			values = parentSettings.getValues(fallbackKey, null);
 
 			if (values != null) {
 				return values;
 			}
 		}
 
-		return defaultValue;
-	}
-
-	@Override
-	public void reset(String key) {
-		_settings.reset(key);
-	}
-
-	@Override
-	public Settings setValue(String key, String value) {
-		return _settings.setValue(key, value);
-	}
-
-	@Override
-	public Settings setValues(String key, String[] values) {
-		return _settings.setValues(key, values);
-	}
-
-	@Override
-	public void store() throws IOException, ValidatorException {
-		_settings.store();
+		return null;
 	}
 
 	private FallbackKeys _fallbackKeys;
-	private Settings _settings;
 
 }

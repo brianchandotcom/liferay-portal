@@ -19,6 +19,7 @@ import com.liferay.portal.PortletItemNameException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -182,6 +183,9 @@ public class EditArchivedSetupsAction extends PortletAction {
 			SettingsFactoryUtil.getPortletInstanceSettings(
 				themeDisplay.getLayout(), portlet.getPortletId());
 
+		ModifiableSettings portletInstanceModifiableSettings =
+			portletInstanceSettings.getModifiableSettings();
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ArchivedSettings archivedSettings =
@@ -189,9 +193,9 @@ public class EditArchivedSetupsAction extends PortletAction {
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
-		portletInstanceSettings.setValues(archivedSettings);
+		portletInstanceModifiableSettings.setValues(archivedSettings);
 
-		portletInstanceSettings.store();
+		portletInstanceModifiableSettings.store();
 	}
 
 	protected void updateSetup(ActionRequest actionRequest, Portlet portlet)
@@ -211,7 +215,10 @@ public class EditArchivedSetupsAction extends PortletAction {
 			SettingsFactoryUtil.getPortletInstanceSettings(
 				themeDisplay.getLayout(), portlet.getPortletId());
 
-		archivedSettings.setValues(portletInstanceSettings);
+		ModifiableSettings portletInstanceModifiableSettings =
+			portletInstanceSettings.getModifiableSettings();
+
+		archivedSettings.setValues(portletInstanceModifiableSettings);
 
 		archivedSettings.store();
 	}

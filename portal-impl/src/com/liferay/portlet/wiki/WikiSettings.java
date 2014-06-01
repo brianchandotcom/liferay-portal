@@ -26,11 +26,7 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.wiki.util.WikiConstants;
 
-import java.io.IOException;
-
 import java.util.Map;
-
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
@@ -124,7 +120,10 @@ public class WikiSettings {
 	public void store() throws IOException, ValidatorException {
 		Settings settings = _typedSettings.getWrappedSettings();
 
-		settings.store();
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.store();
 	}
 
 	private static FallbackKeys _getFallbackKeys() {

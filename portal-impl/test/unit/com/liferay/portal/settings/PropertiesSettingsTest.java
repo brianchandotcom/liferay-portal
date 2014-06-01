@@ -94,22 +94,6 @@ public class PropertiesSettingsTest {
 			"resourceValue", _propertiesSettings.getValue(_SINGLE_KEY, null));
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
-	public void testSetValueIsUnsupported() {
-		_propertiesSettings.setValue(_SINGLE_KEY, _SINGLE_VALUE);
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testSetValuesIsUnsupported() {
-		_propertiesSettings.setValues(
-			_SINGLE_KEY, new String[] {_SINGLE_VALUE});
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testStoreIsUnsupported() throws Exception {
-		_propertiesSettings.store();
-	}
-
 	private static final String _MULTIPLE_KEY = "multipleKey";
 
 	private static final String _MULTIPLE_VALUES = "value0,value1,value2";

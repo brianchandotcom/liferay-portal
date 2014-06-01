@@ -14,34 +14,82 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
 public abstract class BaseSettings implements Settings {
 
+	public BaseSettings() {
+	}
+
+	public BaseSettings(Settings parentSettings) {
+		this.parentSettings = parentSettings;
+	}
+
 	@Override
-	public void reset() {
-		for (String key : getKeys()) {
-			reset(key);
+	public ModifiableSettings getModifiableSettings() {
+		if (this instanceof ModifiableSettings) {
+			return (ModifiableSettings)this;
+		}
+		else if (parentSettings == null) {
+			return null;
+		}
+		else {
+			return parentSettings.getModifiableSettings();
 		}
 	}
 
 	@Override
-	public Settings setValues(Settings settings) {
-		for (String key : settings.getKeys()) {
-			String[] values = settings.getValues(key, StringPool.EMPTY_ARRAY);
+	public Settings getParentSettings() {
+		return parentSettings;
+	}
 
-			if (values.length == 1) {
-				setValue(key, values[0]);
-			}
-			else {
-				setValues(key, values);
-			}
+	@Override
+	public String getValue(String key, String defaultValue) {
+		if (key == null) {
+			throw new IllegalArgumentException("Key is null");
 		}
 
-		return this;
+		String value = doGetValue(key);
+
+		if (Validator.isNull(value) && (parentSettings != null)) {
+			value = parentSettings.getValue(key, defaultValue);
+		}
+
+		if (Validator.isNull(value)) {
+			value = defaultValue;
+		}
+
+		return value;
 	}
+
+	@Override
+	public String[] getValues(String key, String[] defaultValue) {
+		if (key == null) {
+			throw new IllegalArgumentException("Key is null");
+		}
+
+		String[] values = doGetValues(key);
+
+		if (ArrayUtil.isEmpty(values) && (parentSettings != null)) {
+			values = parentSettings.getValues(key, defaultValue);
+		}
+
+		if (ArrayUtil.isEmpty(values)) {
+			values = defaultValue;
+		}
+
+		return values;
+	}
+
+	protected abstract String doGetValue(String key);
+
+	protected abstract String[] doGetValues(String key);
+
+	protected Settings parentSettings;
 
 }

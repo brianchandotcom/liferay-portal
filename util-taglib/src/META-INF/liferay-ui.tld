@@ -599,11 +599,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>showCurrentPortlet</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>showGuestGroup</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

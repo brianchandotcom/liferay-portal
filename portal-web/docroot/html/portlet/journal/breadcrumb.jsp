@@ -24,7 +24,6 @@ JournalUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse)
 
 <liferay-ui:breadcrumb
 	showCurrentGroup="<%= false %>"
-	showCurrentPortlet="<%= false %>"
 	showGuestGroup="<%= false %>"
 	showLayout="<%= false %>"
 	showParentGroups="<%= false %>"

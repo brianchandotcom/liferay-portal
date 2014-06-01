@@ -44,11 +44,14 @@ import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
+import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -348,8 +351,76 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		contextObjects.putAll(_getPortletPreferences(renderRequest));
 
+		// Custom context objects
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				ddmTemplate.getClassNameId());
+
+		if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
+			BasePortletDisplayTemplateHandler portletDisplayTemplateHandler =
+				(BasePortletDisplayTemplateHandler)templateHandler;
+
+			Map<String, Object> customContextObjects =
+				portletDisplayTemplateHandler.getCustomContextObjects();
+
+			for (String contextObjectKey : customContextObjects.keySet()) {
+				if (contextObjects.containsKey(contextObjectKey)) {
+					continue;
+				}
+
+				Object contextObjectValue = customContextObjects.get(
+					contextObjectKey);
+
+				if (contextObjectValue instanceof Class) {
+					if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
+						_addStaticClassSupportFTL(
+							contextObjects, contextObjectKey,
+							(Class)contextObjectValue);
+					}
+					else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
+						_addStaticClassSupportVM(
+							contextObjects, contextObjectKey,
+							(Class)contextObjectValue);
+					}
+				}
+				else {
+					contextObjects.put(contextObjectKey, contextObjectValue);
+				}
+			}
+		}
+
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language);
+	}
+
+	private void _addStaticClassSupportFTL(
+		Map<String, Object> contextObjects, String variableName,
+		Class variableClass) {
+
+		try {
+			BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
+
+			TemplateHashModel templateHashModel =
+				beansWrapper.getStaticModels();
+
+			TemplateModel templateModel = templateHashModel.get(
+				variableClass.getCanonicalName());
+
+			contextObjects.put(variableName, templateModel);
+		}
+		catch (TemplateModelException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Variable " + variableName + " registration fail", e);
+			}
+		}
+	}
+
+	private void _addStaticClassSupportVM(
+		Map<String, Object> contextObjects, String variableName,
+		Class variableClass) {
+
+		contextObjects.put(variableName, variableClass);
 	}
 
 	private void _addTaglibSupportFTL(

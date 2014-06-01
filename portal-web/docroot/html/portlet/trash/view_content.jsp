@@ -58,7 +58,6 @@
 
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
-		showCurrentPortlet="<%= true %>"
 		showGuestGroup="<%= false %>"
 		showLayout="<%= false %>"
 		showParentGroups="<%= false %>"

@@ -41,6 +41,11 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public long[] getSelectedClassNameIds();
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement because the settings
+	object shouldn't be manipulated outside of the model layer
+	*/
+	@java.lang.Deprecated()
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
 	public java.lang.String getUnambiguousTitle(
@@ -62,6 +67,11 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public boolean isRequired(long classNameId);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement because the settings
+	object shouldn't be manipulated outside of the model layer
+	*/
+	@java.lang.Deprecated()
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
 }

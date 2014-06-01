@@ -25,26 +25,13 @@ List<AssetRendererFactory> availableAssetFactories = ListUtil.filter(
 
 	});
 
-boolean required = false;
-
 long[] selectedClassNameIds = null;
-long[] requiredClassNameIds = null;
 
 if (vocabulary != null) {
 	selectedClassNameIds = vocabulary.getSelectedClassNameIds();
-	requiredClassNameIds = vocabulary.getRequiredClassNameIds();
-
-	if ((requiredClassNameIds != null) && _isDefaultClassNameIds(requiredClassNameIds)) {
-		required = true;
-	}
 }
-
-if (ArrayUtil.isEmpty(selectedClassNameIds)) {
-	selectedClassNameIds = new long[] {0};
-}
-
-if (ArrayUtil.isEmpty(requiredClassNameIds)) {
-	requiredClassNameIds = new long[] {0};
+else {
+	selectedClassNameIds = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSNAME_IDS;
 }
 %>
 
@@ -56,20 +43,25 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 		<%
 		List<String> indexes = new ArrayList<String>();
 
-		if (_isDefaultClassNameIds(selectedClassNameIds)) {
-			indexes.add("0");
+		for (int index = 0; index < selectedClassNameIds.length; index++) {
+			indexes.add(String.valueOf(index));
 		%>
 
 			<div class="lfr-form-row lfr-form-row-inline">
 				<div class="row-fields">
-					<aui:select label="choose-asset-type" name="classNameId0">
-						<aui:option label="all-asset-types" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
+					<aui:select label="choose-asset-type" name='<%= "classNameId" + index %>'>
+						<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 						<%
 						for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
+							boolean selected = false;
+
+							if (assetRendererFactory.getClassNameId() == selectedClassNameIds[index]) {
+								selected = true;
+							}
 						%>
 
-							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= false %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= selected %>" value="<%= assetRendererFactory.getClassNameId() %>" />
 
 						<%
 						}
@@ -77,51 +69,11 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 					</aui:select>
 
-					<aui:input cssClass="vocabulary-checkbox" label="required" name="required0" type="checkbox" value="<%= required %>" />
+					<aui:input cssClass="vocabulary-checkbox" label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(selectedClassNameIds[index]) : false %>" />
 				</div>
 			</div>
 
 		<%
-		}
-		else {
-			for (int index = 0; index < selectedClassNameIds.length; index++) {
-				indexes.add(String.valueOf(index));
-
-				boolean requiredIndex = false;
-
-				if (ArrayUtil.contains(requiredClassNameIds, selectedClassNameIds[index])) {
-					requiredIndex = true;
-				}
-		%>
-
-				<div class="lfr-form-row lfr-form-row-inline">
-					<div class="row-fields">
-						<aui:select label="choose-asset-type" name='<%= "classNameId" + index %>'>
-							<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
-
-							<%
-							for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
-								boolean selected = false;
-
-								if (assetRendererFactory.getClassNameId() == selectedClassNameIds[index]) {
-									selected = true;
-								}
-							%>
-
-								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= selected %>" value="<%= assetRendererFactory.getClassNameId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-
-						<aui:input cssClass="vocabulary-checkbox" label="required" name='<%= "required" + index %>' type="checkbox" value="<%= requiredIndex %>" />
-					</div>
-				</div>
-
-		<%
-			}
 		}
 		%>
 
@@ -142,14 +94,3 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 
 	extraFields.setData('autoFieldsInstance', autoFields);
 </aui:script>
-
-<%!
-private boolean _isDefaultClassNameIds(long[] classNameIds) {
-	if ((classNameIds.length == 1) && (classNameIds[0] == 0)) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-%>

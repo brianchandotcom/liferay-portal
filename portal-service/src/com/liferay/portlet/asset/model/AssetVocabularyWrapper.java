@@ -813,6 +813,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.getSelectedClassNameIds();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement because the settings
+	object shouldn't be manipulated outside of the model layer
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _assetVocabulary.getSettingsProperties();
@@ -857,6 +862,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.isRequired(classNameId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement because the settings
+	object shouldn't be manipulated outside of the model layer
+	*/
+	@Deprecated
 	@Override
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {

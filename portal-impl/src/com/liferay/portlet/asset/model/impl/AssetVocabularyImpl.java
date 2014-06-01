@@ -18,18 +18,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.List;
 import java.util.Locale;
@@ -51,39 +49,42 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public long[] getRequiredClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("requiredClassNameIds"), 0L);
+		return settingsHelper.getRequiredClassNameIds();
 	}
 
 	@Override
 	public long[] getSelectedClassNameIds() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
 
-		return StringUtil.split(
-			settingsProperties.getProperty("selectedClassNameIds"), 0L);
+		return settingsHelper.getClassNameIds();
 	}
 
 	@Override
 	public String getSettings() {
-		if (_settingsProperties == null) {
+		if (_settingsHelper == null) {
 			return super.getSettings();
 		}
 		else {
-			return _settingsProperties.toString();
+			return _settingsHelper.toString();
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement because the settings
+	 * object shouldn't be manipulated outside of the model layer
+	 */
+	@Deprecated
 	@Override
 	public UnicodeProperties getSettingsProperties() {
-		if (_settingsProperties == null) {
-			_settingsProperties = new UnicodeProperties(true);
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
 
-			_settingsProperties.fastLoad(super.getSettings());
-		}
+		UnicodeProperties properties = new UnicodeProperties(true);
 
-		return _settingsProperties;
+		properties.fastLoad(settingsHelper.toString());
+
+		return properties;
 	}
 
 	@Override
@@ -170,7 +171,9 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
-		return isClassNameIdSpecified(classNameId, getSelectedClassNameIds());
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
+
+		return settingsHelper.hasClassNameId(classNameId);
 	}
 
 	@Override
@@ -178,7 +181,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			long classNameId, final long[] categoryIds)
 		throws SystemException {
 
-		if (!isClassNameIdSpecified(classNameId, getRequiredClassNameIds())) {
+		if (!isRequired(classNameId)) {
 			return false;
 		}
 
@@ -198,48 +201,46 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
 
-		return GetterUtil.getBoolean(
-			settingsProperties.getProperty("multiValued"), true);
+		return settingsHelper.isMultiValued();
 	}
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		return ArrayUtil.contains(getRequiredClassNameIds(), classNameId);
+		AssetVocabularySettingsHelper settingsHelper = getSettingsHelper();
+
+		return settingsHelper.isClassNameIdRequired(classNameId);
 	}
 
 	@Override
 	public void setSettings(String settings) {
-		_settingsProperties = null;
+		_settingsHelper = null;
 
 		super.setSettings(settings);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement because the settings
+	 * object shouldn't be manipulated outside of the model layer
+	 */
+	@Deprecated
 	@Override
 	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		_settingsProperties = settingsProperties;
-
 		super.setSettings(settingsProperties.toString());
+
+		_settingsHelper = getSettingsHelper();
 	}
 
-	protected boolean isClassNameIdSpecified(
-		long classNameId, long[] classNameIds) {
-
-		if (classNameIds.length == 0) {
-			return false;
+	protected AssetVocabularySettingsHelper getSettingsHelper() {
+		if (_settingsHelper == null) {
+			_settingsHelper = new AssetVocabularySettingsHelper(
+				super.getSettings());
 		}
 
-		if ((classNameIds[0] !=
-				AssetCategoryConstants.ALL_CLASS_NAME_IDS) &&
-			!ArrayUtil.contains(classNameIds, classNameId)) {
-
-			return false;
-		}
-
-		return true;
+		return _settingsHelper;
 	}
 
-	private UnicodeProperties _settingsProperties;
+	private AssetVocabularySettingsHelper _settingsHelper;
 
 }

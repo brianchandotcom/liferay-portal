@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.jsp.compiler.jsp;
 
+import org.apache.jasper.runtime.JspFactoryImpl;
+
 import java.util.ServiceLoader;
 
 import javax.servlet.jsp.JspFactory;
@@ -24,14 +26,8 @@ import javax.servlet.jsp.JspFactory;
 public class JspFactoryFactory {
 
 	public static JspFactory getJspFactory() {
-		ServiceLoader<JspFactory> jspFactories = ServiceLoader.load(
-			JspFactory.class);
-
-		for (JspFactory jspFactory : jspFactories) {
-			return jspFactory;
-		}
-
-		return JspFactory.getDefaultFactory();
+		return _jspFactory;
 	}
 
+	private static JspFactory _jspFactory = new JspFactoryImpl();
 }

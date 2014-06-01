@@ -94,6 +94,30 @@
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewCurrentLocationPG">
+		<if>
+			<isset var="breadcrumbListVisible" />
+			<then>
+				<for list="${breadcrumbListVisible}" param="breadcrumbName">
+					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+					<execute action="PGBreadcrumb#assertTextEquals" locator-key1="BREADCRUMB_CURRENT_LOCATION" value1="${breadcrumbName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="breadcrumbListNotVisible" />
+			<then>
+				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
+					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+					<execute action="PGBreadcrumb#assertElementNotPresent" locator-key1="BREADCRUMB_CURRENT_LOCATION" />
+				</for>
+			</then>
+		</if>
+	</command>
+
 	<command name="viewPG">
 		<if>
 			<isset var="breadcrumbListVisible" />

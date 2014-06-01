@@ -1,0 +1,70 @@
+<definition component-name="portal-collaboration">
+	<property name="testray.main.component.name" value="Collaboration" />
+
+	<var name="pageName" value="Wiki Test Page" />
+	<var name="portletName" value="Wiki" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewWikiDraftPagesViaBreadcrumb" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListVisible" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
+			<var name="breadcrumbListVisible" value="Recent Changes" />
+		</execute>
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListVisible" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
+			<var name="breadcrumbListVisible" value="All Pages" />
+		</execute>
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListVisible" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewCurrentLocationPG">
+			<var name="breadcrumbListVisible" value="Draft Pages" />
+		</execute>
+	</command>
+</definition>

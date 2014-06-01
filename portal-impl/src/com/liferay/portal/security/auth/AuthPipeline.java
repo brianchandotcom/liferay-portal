@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PropsValues;
@@ -30,7 +31,6 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.util.StringPlus;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -382,8 +382,7 @@ public class AuthPipeline {
 			boolean added = false;
 
 			for (String key : keys) {
-				List<Authenticator> authenticators = Arrays.asList(
-					_authenticators.get(key));
+				Authenticator[] authenticators = _authenticators.get(key);
 
 				if (authenticators == null) {
 					continue;
@@ -391,12 +390,10 @@ public class AuthPipeline {
 
 				added = true;
 
-				authenticators.add(authenticator);
+				authenticators = ArrayUtil.append(
+					authenticators, authenticator);
 
-				_authenticators.put(
-					key,
-					authenticators.toArray(
-						new Authenticator[authenticators.size()]));
+				_authenticators.put(key, authenticators);
 			}
 
 			if (!added) {
@@ -425,18 +422,20 @@ public class AuthPipeline {
 				serviceReference.getProperty("key"));
 
 			for (String key : keys) {
-				List<Authenticator> authenticators = Arrays.asList(
-					_authenticators.get(key));
+				Authenticator[] authenticators = _authenticators.get(key);
 
 				if (authenticators == null) {
 					continue;
 				}
 
-				if (authenticators.remove(authenticator)) {
+				List<Authenticator> authenticatorList = ListUtil.toList(
+					authenticators);
+
+				if (authenticatorList.remove(authenticator)) {
 					_authenticators.put(
 						key,
-						authenticators.toArray(
-							new Authenticator[authenticators.size()]));
+						authenticatorList.toArray(
+							new Authenticator[authenticatorList.size()]));
 				}
 			}
 		}
@@ -460,8 +459,7 @@ public class AuthPipeline {
 			boolean added = false;
 
 			for (String key : keys) {
-				List<AuthFailure> authFailures = Arrays.asList(
-					_authFailures.get(key));
+				AuthFailure[] authFailures = _authFailures.get(key);
 
 				if (authFailures == null) {
 					continue;
@@ -469,11 +467,9 @@ public class AuthPipeline {
 
 				added = true;
 
-				authFailures.add(authFailure);
+				authFailures = ArrayUtil.append(authFailures, authFailure);
 
-				_authFailures.put(
-					key,
-					authFailures.toArray(new AuthFailure[authFailures.size()]));
+				_authFailures.put(key, authFailures);
 			}
 
 			if (!added) {
@@ -504,18 +500,20 @@ public class AuthPipeline {
 				serviceReference.getProperty("key"));
 
 			for (String key : keys) {
-				List<AuthFailure> authFailures = Arrays.asList(
-					_authFailures.get(key));
+				AuthFailure[] authFailures = _authFailures.get(key);
 
 				if (authFailures == null) {
 					continue;
 				}
 
-				if (authFailures.remove(authFailure)) {
+				List<AuthFailure> authFailureList = ListUtil.fromArray(
+					authFailures);
+
+				if (authFailureList.remove(authFailure)) {
 					_authFailures.put(
 						key,
-						authFailures.toArray(
-							new AuthFailure[authFailures.size()]));
+						authFailureList.toArray(
+							new AuthFailure[authFailureList.size()]));
 				}
 			}
 		}

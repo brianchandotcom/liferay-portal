@@ -20,6 +20,8 @@
 User selUser = (User)request.getAttribute("user.selUser");
 
 List<Organization> organizations = (List<Organization>)request.getAttribute("user.organizations");
+
+currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organizations");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="organizations" />
@@ -37,11 +39,13 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 <h3><liferay-ui:message key="organizations" /></h3>
 
 <liferay-ui:search-container
+	curParam="organizationsCur"
 	headerNames="name,type,roles,null"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= organizations.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= organizations %>"
-		total="<%= organizations.size() %>"
+		results="<%= organizations.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -91,7 +95,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">

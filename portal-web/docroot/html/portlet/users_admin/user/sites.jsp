@@ -20,6 +20,8 @@
 User selUser = (User)request.getAttribute("user.selUser");
 List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSites");
+
+currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="sites" />
@@ -37,11 +39,13 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 <h3><liferay-ui:message key="sites" /></h3>
 
 <liferay-ui:search-container
+	curParam="sitesCur"
 	headerNames="name,roles,null"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= groups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= groups %>"
-		total="<%= groups.size() %>"
+		results="<%= groups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -87,7 +91,7 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
@@ -189,11 +193,13 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 </c:if>
 
 <liferay-ui:search-container
+	curParam="inheritedSitesCur"
 	headerNames="name,roles"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= inheritedSites.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= inheritedSites %>"
-		total="<%= inheritedSites.size() %>"
+		results="<%= inheritedSites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -229,5 +235,5 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>

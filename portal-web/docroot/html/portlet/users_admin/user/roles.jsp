@@ -31,6 +31,8 @@ List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
 userGroupRoles.addAll(organizationRoles);
 userGroupRoles.addAll(siteRoles);
+
+currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="roles" />
@@ -51,12 +53,14 @@ userGroupRoles.addAll(siteRoles);
 <h3><liferay-ui:message key="regular-roles" /></h3>
 
 <liferay-ui:search-container
+	curParam="regularRolesCur"
 	headerNames="title,null"
 	id="rolesSearchContainer"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= roles.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= roles %>"
-		total="<%= roles.size() %>"
+		results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -79,7 +83,7 @@ userGroupRoles.addAll(siteRoles);
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
@@ -135,12 +139,14 @@ for (Group group : allGroups) {
 </c:if>
 
 <liferay-ui:search-container
+	curParam="inheritedRegularRolesCur"
 	headerNames="title,group"
 	id="inheritedRolesSearchContainer"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= roleGroups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= roleGroups %>"
-		total="<%= roleGroups.size() %>"
+		results="<%= roleGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -168,7 +174,7 @@ for (Group group : allGroups) {
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <h3><liferay-ui:message key="organization-roles" /></h3>
@@ -179,12 +185,14 @@ for (Group group : allGroups) {
 
 <c:if test="<%= !organizations.isEmpty() %>">
 	<liferay-ui:search-container
+		curParam="organizationRolesCur"
 		headerNames="title,organization,null"
 		id="organizationRolesSearchContainer"
+		iteratorURL="<%= currentURLObj %>"
+		total="<%= organizationRoles.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= organizationRoles %>"
-			total="<%= organizationRoles.size() %>"
+			results="<%= organizationRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -227,7 +235,7 @@ for (Group group : allGroups) {
 			</c:if>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator paginate="<%= false %>" />
+		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 
 	<aui:script use="liferay-search-container">
@@ -321,12 +329,14 @@ for (Group group : allGroups) {
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container
+			curParam="siteRolesCur"
 			headerNames="title,site,null"
 			id="siteRolesSearchContainer"
+			iteratorURL="<%= currentURLObj %>"
+			total="<%= siteRoles.size() %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= siteRoles %>"
-				total="<%= siteRoles.size() %>"
+				results="<%= siteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -369,7 +379,7 @@ for (Group group : allGroups) {
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator paginate="<%= false %>" />
+			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
@@ -464,12 +474,14 @@ for (Group group : allGroups) {
 
 <c:if test="<%= !inheritedSiteRoles.isEmpty() %>">
 	<liferay-ui:search-container
+		curParam="inheritedSiteRolesCur"
 		headerNames="title,site,user-group"
 		id="inheritedSiteRolesSearchContainer"
+		iteratorURL="<%= currentURLObj %>"
+		total="<%= inheritedSiteRoles.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= inheritedSiteRoles %>"
-			total="<%= inheritedSiteRoles.size() %>"
+			results="<%= inheritedSiteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -496,7 +508,7 @@ for (Group group : allGroups) {
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator paginate="<%= false %>" />
+		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </c:if>
 

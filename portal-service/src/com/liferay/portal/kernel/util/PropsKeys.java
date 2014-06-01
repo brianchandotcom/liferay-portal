@@ -287,8 +287,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_LINKBACK_EXCERPT_LENGTH = "blogs.linkback.excerpt.length";
 
-	public static final String BLOGS_LINKBACK_JOB_INTERVAL = "blogs.linkback.job.interval";
-
 	public static final String BLOGS_PAGE_ABSTRACT_LENGTH = "blogs.page.abstract.length";
 
 	public static final String BLOGS_PING_GOOGLE_ENABLED = "blogs.ping.google.enabled";

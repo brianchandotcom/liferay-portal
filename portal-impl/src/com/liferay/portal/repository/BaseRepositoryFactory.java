@@ -156,24 +156,21 @@ public abstract class BaseRepositoryFactory<T> {
 	protected T createLiferayRepository(long repositoryId)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(repositoryId);
-
-		long groupId = 0;
-		long actualRepositoryId = 0;
 		long dlFolderId = 0;
+		long groupId = 0;
+
+		Repository repository = getRepository(repositoryId);
 
 		if (repository == null) {
 			groupId = repositoryId;
-			actualRepositoryId = repositoryId;
 		}
 		else {
 			groupId = repository.getGroupId();
-			actualRepositoryId = repository.getRepositoryId();
 			dlFolderId = repository.getDlFolderId();
 		}
 
 		return createLiferayRepositoryInstance(
-			groupId, actualRepositoryId, dlFolderId);
+			groupId, repositoryId, dlFolderId);
 	}
 
 	protected T createLiferayRepository(

@@ -83,27 +83,27 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						modelVar="curLayoutRevision"
 					>
 						<liferay-ui:search-container-column-text
-							buffer="buffer"
 							cssClass='<%= (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) ? "layout-revision-current" : StringPool.BLANK %>'
 							name="date"
 						>
 
-						<%
-						Date now = new Date();
+							<c:if test="<%= curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId %>">
+								<i class="icon-arrow-right"></i>
+							</c:if>
 
-						long timeAgo = now.getTime() - curLayoutRevision.getCreateDate().getTime();
+							<%
+							Date now = new Date();
 
-						if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
-							buffer.append("<i class=\"icon-arrow-right\"></i>");
-						}
+							long timeAgo = now.getTime() - curLayoutRevision.getCreateDate().getTime();
+							%>
 
-						buffer.append("<span class=\"approximate-date\">");
-						buffer.append(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, timeAgo, true), false));
-						buffer.append("</span><span class=\"real-date\">");
-						buffer.append(dateFormatDateTime.format(curLayoutRevision.getCreateDate()));
-						buffer.append("</span>");
-						%>
+							<span class="approximate-date">
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, timeAgo, true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</span>
 
+							<span class="real-date">
+								<%= dateFormatDateTime.format(curLayoutRevision.getCreateDate()) %>
+							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
@@ -128,53 +128,39 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							buffer="buffer"
 							name="version"
 						>
-
-							<%
-							if (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) {
-								buffer.append("<span class=\"layout-revision-current\">");
-								buffer.append(curLayoutRevision.getLayoutRevisionId());
-								buffer.append("</span><span class=\"current-version\">");
-								buffer.append(LanguageUtil.get(pageContext, "current-version"));
-								buffer.append("</span>");
-							}
-							else {
-								buffer.append("<a class=\"layout-revision selection-handle\" data-layoutRevisionId=\"");
-								buffer.append(curLayoutRevision.getLayoutRevisionId());
-								buffer.append("\" data-layoutSetBranchId=\"");
-								buffer.append(curLayoutRevision.getLayoutSetBranchId());
-								buffer.append("\" href=\"#\" title=\"");
-								buffer.append(LanguageUtil.get(pageContext, "go-to-this-version"));
-								buffer.append("\">");
-								buffer.append(curLayoutRevision.getLayoutRevisionId());
-								buffer.append("</a>");
-							}
-							%>
-
+							<c:choose>
+								<c:when test="<%= curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId %>">
+									<span class="layout-revision-current"><%= curLayoutRevision.getLayoutRevisionId() %></span>
+									<span class="current-version"><liferay-ui:message key="current-version" /></span>
+								</c:when>
+								<c:otherwise>
+									<a class="layout-revision selection-handle" data-layoutRevisionId="<%= curLayoutRevision.getLayoutRevisionId() %>" data-layoutSetBranchId="<%= curLayoutRevision.getLayoutSetBranchId() %>" href="#" title="<%= LanguageUtil.get(pageContext, "go-to-this-version") %>">
+										<%= curLayoutRevision.getLayoutRevisionId() %>
+									</a>
+								</c:otherwise>
+							</c:choose>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							buffer="buffer"
 							name="user"
 						>
 
 							<%
 							User curUser = UserLocalServiceUtil.fetchUserById(curLayoutRevision.getUserId());
-
-							if (curUser != null) {
-								buffer.append("<a class=\"user-handle\" href=\"");
-								buffer.append(curUser.getDisplayURL(themeDisplay));
-								buffer.append("\">");
-								buffer.append(HtmlUtil.escape(curUser.getFullName()));
-								buffer.append("</a>");
-							}
-							else {
-								buffer.append(curLayoutRevision.getUserName());
-							}
 							%>
 
+							<c:choose>
+								<c:when test="<%= curUser != null %>">
+									<a class="user-handle" href="<%= curUser.getDisplayURL(themeDisplay) %>">
+										<%= HtmlUtil.escape(curUser.getFullName()) %>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<%= curLayoutRevision.getUserName() %>
+								</c:otherwise>
+							</c:choose>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp

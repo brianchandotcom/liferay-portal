@@ -15,65 +15,53 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	name="category[message-board]"
 >
 
+	<a href="<%= rowURL %>">
+		<span class="category-title">
+			<%= curCategory.getName() %>
+		</span>
+
+		<c:if test="<%= Validator.isNotNull(curCategory.getDescription()) %>">
+			<span class="category-description"><%= curCategory.getDescription() %></span>
+		</c:if>
+	</a>
+
 	<%
-	buffer.append("<a href=\"");
-	buffer.append(rowURL);
-	buffer.append("\">");
-	buffer.append("<span class=\"category-title\">");
-	buffer.append(curCategory.getName());
-	buffer.append("</span>");
-
-	if (Validator.isNotNull(curCategory.getDescription())) {
-		buffer.append("<span class=\"category-description\">");
-		buffer.append(curCategory.getDescription());
-		buffer.append("</span>");
-	}
-
-	buffer.append("</a>");
-
 	List subcategories = MBCategoryServiceUtil.getCategories(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED, 0, 5);
 
 	int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
+	%>
 
-	if (subcategoriesCount > 0) {
-		buffer.append("<span class=\"subcategories\">");
-		buffer.append(LanguageUtil.get(pageContext, "subcategories[message-board]"));
-		buffer.append("</span>: ");
+	<c:if test="<%= subcategoriesCount > 0 %>">
+		<span class="subcategories">
+			<liferay-ui:message key="subcategories[message-board]" />:
+		</span>
 
+		<%
 		for (int j = 0; j < subcategories.size(); j++) {
 			MBCategory subcategory = (MBCategory)subcategories.get(j);
 
 			rowURL.setParameter("mbCategoryId", String.valueOf(subcategory.getCategoryId()));
+		%>
 
-			buffer.append("<a href=\"");
-			buffer.append(rowURL);
-			buffer.append("\">");
-			buffer.append(HtmlUtil.escape(subcategory.getName()));
-			buffer.append("</a>");
+			<a href="<%= rowURL %>"><%= HtmlUtil.escape(subcategory.getName()) %></a>
 
-			if ((j + 1) < subcategories.size()) {
-				buffer.append(", ");
-			}
-		}
+			<c:if test="<%= (j + 1) < subcategories.size() %>">
+				,
+			</c:if>
 
-		if (subcategoriesCount > subcategories.size()) {
-			rowURL.setParameter("mbCategoryId", String.valueOf(curCategory.getCategoryId()));
-
-			buffer.append(", <a href=\"");
-			buffer.append(rowURL);
-			buffer.append("\">");
-			buffer.append(LanguageUtil.get(pageContext, "more"));
-			buffer.append(" &raquo;");
-			buffer.append("</a>");
+		<%
 		}
 
 		rowURL.setParameter("mbCategoryId", String.valueOf(curCategory.getCategoryId()));
-	}
-	%>
+		%>
+
+		<c:if test="<%= subcategoriesCount > subcategories.size() %>">
+			, <a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+		</c:if>
+	</c:if>
 
 </liferay-ui:search-container-column-text>
 

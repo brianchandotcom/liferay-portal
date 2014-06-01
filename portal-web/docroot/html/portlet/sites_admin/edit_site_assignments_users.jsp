@@ -117,13 +117,12 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="name"
 		>
 
-			<%
-			buffer.append(user2.getFullName());
+			<%= user2.getFullName() %>
 
+			<%
 			List<String> names = new ArrayList<String>();
 
 			List<String> organizationNames = SitesUtil.getOrganizationNames(group, user2);
@@ -141,27 +140,18 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			boolean userGroupUser = !userGroupNames.isEmpty();
 
 			row.setParameter("userGroupUser", userGroupUser);
-
-			String message = StringPool.BLANK;
-
-			if (organizationUser || userGroupUser) {
-				if (names.size() == 1) {
-					message = LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)}, false);
-				}
-				else {
-					message = LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)}, false);
-				}
 			%>
 
-				<liferay-util:buffer var="iconHelp">
-					<liferay-ui:icon-help message="<%= message %>" />
-				</liferay-util:buffer>
-
-			<%
-				buffer.append(iconHelp);
-			}
-			%>
-
+			<c:if test="<%= organizationUser || userGroupUser %>">
+				<c:choose>
+					<c:when test="<%= names.size() == 1 %>">
+						<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)}, false) %>' />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-user-is-a-member-of-x-because-he-belongs-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)}, false) %>' />
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
@@ -172,42 +162,19 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				name="site-roles-and-teams"
 			>
 
 				<%
 				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());
-
-				for (int i = 0; i < userGroupRoles.size(); i++) {
-					UserGroupRole userGroupRole = userGroupRoles.get(i);
-
-					Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
-
-					buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-
-					if ((i + 1) < userGroupRoles.size()) {
-						buffer.append(StringPool.COMMA_AND_SPACE);
-					}
-				}
-
 				List<Team> teams = TeamLocalServiceUtil.getUserTeams(user2.getUserId(), group.getGroupId());
-
-				if (!teams.isEmpty() && !userGroupRoles.isEmpty()) {
-					buffer.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				for (int i = 0; i < teams.size(); i++) {
-					Team team = teams.get(i);
-
-					buffer.append(HtmlUtil.escape(team.getName()));
-
-					if ((i + 1) < teams.size()) {
-						buffer.append(StringPool.COMMA_AND_SPACE);
-					}
-				}
 				%>
 
+				<%= ListUtil.toString(userGroupRoles, UsersAdmin.TITLE_ROLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>
+
+				<c:if test="<%= !teams.isEmpty() %>">
+					, <%= ListUtil.toString(teams, Team.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE) %>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp

@@ -245,51 +245,23 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							</liferay-portlet:renderURL>
 
 							<liferay-ui:search-container-column-text
-								buffer="buffer"
 								href="<%= rowURL %>"
 								name="thread"
 							>
 
 								<%
-								String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
-
-								if ((threadPriority != null) && (thread.getPriority() > 0)) {
-									buffer.append("<img alt=\"");
-									buffer.append(threadPriority[0]);
-									buffer.append("\" class=\"thread-priority\" src=\"");
-									buffer.append(threadPriority[1]);
-									buffer.append("\" title=\"");
-									buffer.append(threadPriority[0]);
-									buffer.append("\" />");
-								}
-
-								if (thread.isLocked()) {
-									buffer.append("<i class=\"icon-lock\" title=\"");
-									buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-									buffer.append("\"></i>");
-								}
-
-								buffer.append(message.getSubject());
+								request.setAttribute("thread_priority.jsp-message", message);
+								request.setAttribute("thread_priority.jsp-thread", thread);
 								%>
 
+								<liferay-util:include page="/html/portlet/message_boards/thread_priority.jsp" />
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
-								buffer="buffer"
 								href="<%= rowURL %>"
 								name="flag"
-							>
-
-								<%
-								if (MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId())) {
-									buffer.append(LanguageUtil.get(pageContext, "resolved"));
-								}
-								else if (thread.isQuestion()) {
-									buffer.append(LanguageUtil.get(pageContext, "waiting-for-an-answer"));
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
+								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(pageContext, "resolved") : LanguageUtil.get(pageContext, "waiting-for-an-answer") %>'
+							/>
 
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
@@ -309,33 +281,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								value="<%= String.valueOf(thread.getViewCount()) %>"
 							/>
 
-							<liferay-ui:search-container-column-text
-								buffer="buffer"
+							<liferay-ui:search-container-column-user
+								date="<%= thread.getLastPostDate() %>"
 								href="<%= rowURL %>"
 								name="last-post"
-							>
-
-								<%
-								if (thread.getLastPostDate() == null) {
-									buffer.append(LanguageUtil.get(pageContext, "none"));
-								}
-								else {
-									buffer.append(LanguageUtil.get(pageContext, "date"));
-									buffer.append(": ");
-									buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
-
-									String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-
-									if (Validator.isNotNull(lastPostByUserName)) {
-										buffer.append("<br />");
-										buffer.append(LanguageUtil.get(pageContext, "by"));
-										buffer.append(": ");
-										buffer.append(lastPostByUserName);
-									}
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
+								userId="<%= thread.getLastPostByUserId() %>"
+							/>
 
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
@@ -463,37 +414,16 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					</liferay-portlet:renderURL>
 
 					<liferay-ui:search-container-column-text
-						buffer="buffer"
 						href="<%= rowURL %>"
 						name="thread"
 					>
 
 						<%
-						String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
-
-						if ((threadPriority != null) && (thread.getPriority() > 0)) {
-							buffer.append("<img alt=\"");
-							buffer.append(threadPriority[0]);
-							buffer.append("\" class=\"thread-priority\" src=\"");
-							buffer.append(threadPriority[1]);
-							buffer.append("\" title=\"");
-							buffer.append(threadPriority[0]);
-							buffer.append("\" />");
-						}
-
-						if (thread.isLocked()) {
-							buffer.append("<img alt=\"");
-							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-							buffer.append("\" class=\"thread-priority\" src=\"");
-							buffer.append(themeDisplay.getPathThemeImages() + "/common/lock.png");
-							buffer.append("\" title=\"");
-							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-							buffer.append("\" />");
-						}
-
-						buffer.append(message.getSubject());
+						request.setAttribute("thread_priority.jsp-message", message);
+						request.setAttribute("thread_priority.jsp-thread", thread);
 						%>
 
+						<liferay-util:include page="/html/portlet/message_boards/thread_priority.jsp" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -514,33 +444,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						value="<%= String.valueOf(thread.getViewCount()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						buffer="buffer"
+					<liferay-ui:search-container-column-user
+						date="<%= thread.getLastPostDate() %>"
 						href="<%= rowURL %>"
 						name="last-post"
-					>
-
-						<%
-						if (thread.getLastPostDate() == null) {
-							buffer.append(LanguageUtil.get(pageContext, "none"));
-						}
-						else {
-							buffer.append(LanguageUtil.get(pageContext, "date"));
-							buffer.append(": ");
-							buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
-
-							String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-
-							if (Validator.isNotNull(lastPostByUserName)) {
-								buffer.append("<br />");
-								buffer.append(LanguageUtil.get(pageContext, "by"));
-								buffer.append(": ");
-								buffer.append(lastPostByUserName);
-							}
-						}
-						%>
-
-					</liferay-ui:search-container-column-text>
+						userId="<%= thread.getLastPostByUserId() %>"
+					/>
 
 					<liferay-ui:search-container-column-jsp
 						align="right"

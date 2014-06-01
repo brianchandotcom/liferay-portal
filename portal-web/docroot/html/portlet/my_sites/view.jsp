@@ -142,32 +142,25 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			%>
 
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				name="name"
 				orderable="<%= true %>"
 			>
+				<c:choose>
+					<c:when test="<%= rowURL != null %>">
+						<a href="<%= rowURL.toString() %>" target="_blank">
+							<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+					</c:otherwise>
+				</c:choose>
 
-			<%
-			if (rowURL != null) {
-				buffer.append("<a href=\"");
-				buffer.append(rowURL.toString());
-				buffer.append("\" target=\"_blank\"><strong>");
-				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
-				buffer.append("</strong></a>");
-			}
-			else {
-				buffer.append("<strong>");
-				buffer.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
-				buffer.append("</strong>");
-			}
+				<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription()) %>'>
+					<br />
 
-			if (!tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription())) {
-				buffer.append("<br /><em>");
-				buffer.append(HtmlUtil.escape(group.getDescription()));
-				buffer.append("</em>");
-			}
-			%>
-
+					<em><%= HtmlUtil.escape(group.getDescription()) %></em>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 			<%

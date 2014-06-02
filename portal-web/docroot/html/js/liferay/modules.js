@@ -18,7 +18,7 @@
 
 	var testTouchMobile = function(A) {
 		return testTouch(A) && A.UA.mobile;
-	}
+	};
 
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',

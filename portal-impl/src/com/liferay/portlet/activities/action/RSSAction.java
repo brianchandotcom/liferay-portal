@@ -176,7 +176,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-
 		String feedTitle = ParamUtil.getString(request, "feedTitle");
 		String format = ParamUtil.getString(
 			request, "type", RSSUtil.FORMAT_DEFAULT);

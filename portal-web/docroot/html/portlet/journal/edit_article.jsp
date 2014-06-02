@@ -202,7 +202,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 								</c:if>
 
 								<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
-									<aui:button name="articlePermissionsButton" icon="icon-lock" value="permissions" />
+									<aui:button icon="icon-lock" name="articlePermissionsButton" value="permissions" />
 								</c:if>
 
 								<portlet:renderURL var="viewHistoryURL">

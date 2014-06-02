@@ -63,6 +63,14 @@
 	</command>
 
 	<command name="addCommentPG">
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<if>
@@ -373,6 +381,32 @@
 		<execute action="PGWikidisplayDraftpages#assertElementPresent" locator-key1="PENDING_APPROVAL_TABLE_DATE" />
 	</command>
 
+	<command name="addPermissionsPGCmd">
+		<if>
+			<isset var="viewableBy" />
+			<then>
+				<execute action="PGWikiAddpage#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBy}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="permissionsDefinitionKey" />
+			<then>
+				<if>
+					<condition action="PGWikiAddpage#isNotVisible" locator-key1="PERMISSIONS_HIDE_OPTIONS_LINK" />
+					<then>
+						<execute action="PGWikiAddpage#assertClick" locator-key1="PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options »" />
+					</then>
+				</if>
+
+				<var name="key_permissionsDefinitionKey" value="${permissionsDefinitionKey}" />
+				<var name="key_roleName" value="${roleName}" />
+
+				<execute action="PGWikiAddpage#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+	</command>
+
 	<command name="addPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -423,6 +457,13 @@
 			<then>
 				<execute action="CKEditor#assertVisible" locator-key1="RESIZER" />
 				<execute action="CKEditor#mouseDown" locator-key1="RESIZER" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${pageAddPermissions}" arg2="true" />
+			<then>
+				<execute macro="WikiPage#addPermissionsPGCmd" />
 			</then>
 		</if>
 
@@ -648,6 +689,32 @@
 		</if>
 	</command>
 
+	<command name="deleteCommentPG">
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_COMMENT_DELETE" value1="Delete" />
+				<execute action="PGWiki#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+			</then>
+			<else>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_COMMENT_DELETE" value1="Delete" />
+				<execute action="PGWiki#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+			</else>
+		</if>
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+	</command>
+	
 	<command name="deleteCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
@@ -695,6 +762,27 @@
 		</if>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="editCommentPG">
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="COMMENTS_COMMENT_EDIT" value1="Edit" />
+		<execute action="PGWiki#type" locator-key1="COMMENTS_COMMENT_EDIT_BODY_FIELD" value1="${commentBodyEdit}" />
+		<execute action="PGWiki#assertClick" locator-key1="COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+
+		<var name="key_commentBody" value="${commentBodyEdit}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBodyEdit}" />
 	</command>
 
 	<command name="editFrontPagePG">

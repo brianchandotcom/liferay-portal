@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -48,7 +47,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public abstract class LiferayRepositoryBase extends LiferayBase {
+public abstract class LiferayRepositoryBase {
 
 	public LiferayRepositoryBase(
 		RepositoryLocalService repositoryLocalService,

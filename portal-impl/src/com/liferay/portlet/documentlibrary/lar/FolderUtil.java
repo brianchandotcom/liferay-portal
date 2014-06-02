@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.lar;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
@@ -28,7 +27,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public class FolderUtil extends LiferayBase {
+public class FolderUtil {
 
 	public static Folder fetchByR_P_N(
 			long groupId, long parentFolderId, String name)

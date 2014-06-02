@@ -14,13 +14,12 @@
 
 package com.liferay.portal.repository.liferayrepository.model;
 
-import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 /**
  * @author Alexander Chow
  */
-public abstract class LiferayModel extends LiferayBase {
+public abstract class LiferayModel {
 
 	public abstract long getCompanyId();
 

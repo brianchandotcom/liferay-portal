@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -34,7 +33,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public class FileEntryUtil extends LiferayBase {
+public class FileEntryUtil {
 
 	public static FileEntry fetchByPrimaryKey(long fileEntryId)
 		throws SystemException {

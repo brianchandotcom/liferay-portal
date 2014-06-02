@@ -73,8 +73,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jodd.util.StringUtil;
-
 /**
  * @author Marcellus Tavares
  */
@@ -372,10 +370,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	protected void updateFileUploadReferences(DDMForm ddmForm)
 		throws Exception {
 
-		List<DDMFormField> fields = ddmForm.getDDMFormFields();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-		for (DDMFormField field : fields) {
-			updateFileUploadReferences(field);
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			updateFileUploadReferences(ddmFormField);
 		}
 	}
 
@@ -512,7 +510,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	protected void verifyDDMFormField(DDMFormField ddmFormField) {
 		String dataType = ddmFormField.getDataType();
 
-		if (StringUtil.equals(dataType, "image")) {
+		if (Validator.equals(dataType, "image")) {
 			ddmFormField.setNamespace("ddm");
 			ddmFormField.setType("ddm-image");
 		}

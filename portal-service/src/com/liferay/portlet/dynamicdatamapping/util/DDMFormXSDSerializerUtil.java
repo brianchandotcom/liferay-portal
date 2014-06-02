@@ -33,10 +33,12 @@ public class DDMFormXSDSerializerUtil {
 		return getDDMFormXSDSerializer().serialize(ddmForm);
 	}
 
-	public void setDDMFormXSDSerializer(DDMFormXSDSerializer converter) {
+	public void setDDMFormXSDSerializer(
+		DDMFormXSDSerializer ddmFormXSDSerializer) {
+
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_ddmFormXSDSerializer = converter;
+		_ddmFormXSDSerializer = ddmFormXSDSerializer;
 	}
 
 	private static DDMFormXSDSerializer _ddmFormXSDSerializer;

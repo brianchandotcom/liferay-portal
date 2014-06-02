@@ -68,6 +68,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -800,7 +801,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return;
 		}
 
-		Set<String> parameterNames = serviceContext.getAttributes().keySet();
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+		Set<String> parameterNames = attributes.keySet();
 
 		for (String parameterName : parameterNames) {
 			if (parameterName.startsWith(StagingConstants.STAGED_PORTLET) &&

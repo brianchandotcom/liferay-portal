@@ -22,6 +22,7 @@ import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Bruno Basto
+ * @author Levente Hudák
  */
 public class DDLPermission {
 
@@ -40,9 +41,18 @@ public class DDLPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
+		return contains(
+			permissionChecker, groupId, PortletKeys.DYNAMIC_DATA_LISTS,
+			actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, long groupId, String portletId,
+		String actionId) {
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.DYNAMIC_DATA_LISTS, actionId);
+			permissionChecker, groupId, RESOURCE_NAME, groupId, portletId,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

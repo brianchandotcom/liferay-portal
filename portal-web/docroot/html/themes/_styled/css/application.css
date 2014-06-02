@@ -612,6 +612,7 @@
 body.html-editor {
 	background: #FFF;
 	color: #000;
+	line-height: 1;
 	padding: 1em;
 }
 

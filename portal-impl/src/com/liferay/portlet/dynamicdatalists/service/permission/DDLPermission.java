@@ -41,16 +41,9 @@ public class DDLPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.DYNAMIC_DATA_LISTS, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+		return contains(
+			permissionChecker, groupId, PortletKeys.DYNAMIC_DATA_LISTS,
+			actionId);
 	}
 
 	public static boolean contains(

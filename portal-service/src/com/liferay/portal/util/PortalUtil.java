@@ -1541,6 +1541,10 @@ public class PortalUtil {
 		return getPortal().getPortletBreadcrumbList(request);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil#getPortletBreadcrumbEntries(HttpServletRequest)}
+	 */
 	public static List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
 

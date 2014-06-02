@@ -64,7 +64,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 	<aui:col width="<%= 50 %>">
 
 		<%
-		List<BreadcrumbEntry> breadcrumbEntries = PortalUtil.getPortletBreadcrumbs(request);
+		List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getPortletBreadcrumbEntries(request);
 
 		breadcrumbEntries.clear();
 		%>

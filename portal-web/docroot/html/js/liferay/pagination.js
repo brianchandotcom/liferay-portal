@@ -55,9 +55,11 @@ AUI.add(
 								value,
 								{
 									items: Liferay.Language.get('items'),
+									next: Liferay.Language.get('next'),
 									of: Liferay.Language.get('of'),
 									page: Liferay.Language.get('page'),
 									per: Liferay.Language.get('per'),
+									prev: Liferay.Language.get('previous'),
 									results: Liferay.Language.get('results'),
 									showing: Liferay.Language.get('showing')
 								}

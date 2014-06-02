@@ -35,10 +35,10 @@ Map<String,String> fileBrowserParams = new HashMap();
 fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
 
 if (format.equals("html")) {
-	fileBrowserParams.put("Types", "Document,Page,Attachment");
+	fileBrowserParams.put("tabs1Names", "documents,pages,attachments");
 }
 else {
-	fileBrowserParams.put("Type", "Attachment");
+	fileBrowserParams.put("tabs1Names", "attachments");
 }
 
 fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));

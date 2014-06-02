@@ -75,6 +75,10 @@ public class FileEntryUtil {
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<FileEntry> findByR_F(long repositoryId, long folderId)
 		throws SystemException {
 
@@ -84,6 +88,10 @@ public class FileEntryUtil {
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static FileEntry findByR_F_T(
 			long repositoryId, long folderId, String title)
 		throws NoSuchFileEntryException, SystemException {

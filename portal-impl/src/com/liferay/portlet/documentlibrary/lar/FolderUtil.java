@@ -63,6 +63,10 @@ public class FolderUtil {
 		return new LiferayFolder(dlFolder);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<Folder> findByR_P(long repositoryId, long parentFolderId)
 		throws SystemException {
 
@@ -72,6 +76,10 @@ public class FolderUtil {
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<Folder> findByRepositoryId(long repositoryId)
 		throws SystemException {
 

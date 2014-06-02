@@ -174,7 +174,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 			ThemeDisplay themeDisplay, long groupId, Document result)
 		throws Exception {
 
-		String articleId = result.get(Field.ENTRY_CLASS_PK);
+		String articleId = result.get("articleId");
 
 		JournalArticle article = JournalArticleServiceUtil.getArticle(
 			groupId, articleId);

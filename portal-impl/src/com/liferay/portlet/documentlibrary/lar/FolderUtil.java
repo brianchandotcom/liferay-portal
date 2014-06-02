@@ -17,17 +17,17 @@ package com.liferay.portlet.documentlibrary.lar;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
 import java.util.List;
 
 /**
  * @author Alexander Chow
  */
-public class FolderUtil extends LiferayBase {
+public class FolderUtil {
 
 	public static Folder fetchByR_P_N(
 			long groupId, long parentFolderId, String name)
@@ -63,23 +63,29 @@ public class FolderUtil extends LiferayBase {
 		return new LiferayFolder(dlFolder);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<Folder> findByR_P(long repositoryId, long parentFolderId)
 		throws SystemException {
 
 		List<DLFolder> dlFolders = DLFolderUtil.findByG_P(
 			repositoryId, parentFolderId);
 
-		return _instance.toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<Folder> findByRepositoryId(long repositoryId)
 		throws SystemException {
 
 		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
 
-		return _instance.toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
-
-	private static FolderUtil _instance = new FolderUtil();
 
 }

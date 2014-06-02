@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
+import com.liferay.portal.comment.CommentManagerImpl;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1310,16 +1312,27 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, entry.getUserName(), groupId,
-				BlogsEntry.class.getName(), entry.getEntryId(),
-				WorkflowConstants.ACTION_PUBLISH);
+			CommentManager commentManager = getCommentManager();
+
+			commentManager.addInitialDiscussion(
+				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
+				entry.getUserName());
 		}
 	}
 
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
-		mbMessageLocalService.deleteDiscussionMessages(
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
+	protected CommentManager getCommentManager() {
+		CommentManagerImpl commentManager = new CommentManagerImpl();
+
+		commentManager.setMBMessageLocalService(mbMessageLocalService);
+
+		return commentManager;
 	}
 
 	protected String getEntryURL(

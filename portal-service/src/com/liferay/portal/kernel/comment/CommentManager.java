@@ -29,6 +29,14 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
+	public void addInitialDiscussion(
+			long userId, long groupId, String className, long classPK,
+			String userName)
+		throws PortalException;
+
 	public void deleteComment(long commentId) throws PortalException;
+
+	public void deleteDiscussion(String className, long classPK)
+		throws PortalException;
 
 }

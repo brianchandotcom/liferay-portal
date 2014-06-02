@@ -251,9 +251,9 @@ AUI.add(
 					_previewArticle: function(event) {
 						var instance = this;
 
-						var strings = instance.get(STR_STRINGS);
-
 						event.preventDefault();
+
+						var strings = instance.get(STR_STRINGS);
 
 						if (!instance._hasUnsavedChanges()) {
 							var article = instance.get(STR_ARTICLE);
@@ -349,8 +349,9 @@ AUI.add(
 					_viewArticlePermissions: function(event) {
 						var instance = this;
 
-						var strings = instance.get(STR_STRINGS);
+						event.preventDefault();
 
+						var strings = instance.get(STR_STRINGS);
 						var article = instance.get(STR_ARTICLE);
 
 						Liferay.Util.openWindow(
@@ -364,8 +365,6 @@ AUI.add(
 								uri: article.permissionsUrl
 							}
 						);
-
-						event.preventDefault();
 					}
 				}
 			}

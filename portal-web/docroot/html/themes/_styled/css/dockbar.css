@@ -912,11 +912,6 @@ $editLayoutPanelWidth: 460px;
 		margin: 1em 0 0 1em;
 		padding: 0;
 
-		.approximate-date {
-			color: #999;
-			font-weight: bold;
-		}
-
 		.current-version {
 			color: #41801D;
 			display: block;
@@ -927,16 +922,6 @@ $editLayoutPanelWidth: 460px;
 			font-size: 1.15em;
 			margin-bottom: 0.1em;
 			text-transform: uppercase;
-		}
-
-		.layout-revision-current {
-			color: #666;
-		}
-
-		.real-date {
-			color: #999;
-			display: block;
-			text-align: right;
 		}
 
 		.taglib-workflow-status .workflow-status {

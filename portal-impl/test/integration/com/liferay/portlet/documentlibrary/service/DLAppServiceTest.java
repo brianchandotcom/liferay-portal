@@ -137,8 +137,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		if (_originalSyncDestination != null) {
 			MessageBusUtil.addDestination(_originalSyncDestination);
 		}
-
-		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test

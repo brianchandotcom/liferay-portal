@@ -20,9 +20,9 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 /**
  * @author Michael C. Han
  */
-public interface FacetProcessor<T extends Facet> {
+public interface FacetProcessor {
 
 	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, T facet);
+		SearchRequestBuilder searchRequestBuilder, Facet facet);
 
 }

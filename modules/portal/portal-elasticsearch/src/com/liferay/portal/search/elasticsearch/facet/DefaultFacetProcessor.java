@@ -23,7 +23,7 @@ import org.elasticsearch.search.facet.terms.TermsFacetBuilder;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-public class DefaultFacetProcessor implements FacetProcessor<Facet> {
+public class DefaultFacetProcessor implements FacetProcessor {
 
 	@Override
 	public void processFacet(

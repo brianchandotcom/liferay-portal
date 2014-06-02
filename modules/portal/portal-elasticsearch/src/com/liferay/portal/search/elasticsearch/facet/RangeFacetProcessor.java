@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,11 +27,13 @@ import org.elasticsearch.search.facet.range.RangeFacetBuilder;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-public class RangeFacetProcessor implements FacetProcessor<RangeFacet> {
+public class RangeFacetProcessor implements FacetProcessor {
 
 	@Override
 	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, RangeFacet rangeFacet) {
+		SearchRequestBuilder searchRequestBuilder, Facet facet) {
+
+		RangeFacet rangeFacet = (RangeFacet)facet;
 
 		FacetConfiguration facetConfiguration =
 			rangeFacet.getFacetConfiguration();

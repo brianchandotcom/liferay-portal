@@ -58,7 +58,23 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 			message="spreadsheet-view"
 			url="<%= viewRecordSetURL %>"
 		/>
+	</c:if>
 
+	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
+			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-ui:icon
+			image="edit"
+			url="<%= editRecordSetURL %>"
+			/>
+	</c:if>
+
+	<c:if test="<%= hasViewPermission %>">
 		<portlet:resourceURL var="exportRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/export" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
@@ -78,20 +94,6 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		<liferay-ui:icon
 			image="export"
 			url="<%= sb.toString() %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			image="edit"
-			url="<%= editRecordSetURL %>"
 		/>
 	</c:if>
 

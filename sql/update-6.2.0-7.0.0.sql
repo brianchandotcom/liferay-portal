@@ -46,3 +46,6 @@ insert into Region (regionId, countryId, regionCode, name, active_) values (3300
 insert into Region (regionId, countryId, regionCode, name, active_) values (33007, 33, 'AT-7', 'Tirol', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33008, 33, 'AT-8', 'Vorarlberg', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33009, 33, 'AT-9', 'Vienna', TRUE);
+
+update Region set regionCode = 'BB' where regionId = 4004 and regionCode = 'BR';
+update Region set name = 'Monza e Brianza', regionCode = 'MB' where regionId = 8060 and regionCode = 'MZ';

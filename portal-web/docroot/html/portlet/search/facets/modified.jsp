@@ -215,6 +215,8 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 <aui:script use="aui-datepicker-deprecated,aui-form-validator">
 	var Util = Liferay.Util;
 
+	var DATE_FORMAT = '%Y-%m-%d';
+
 	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
@@ -245,7 +247,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				var dateValue = null;
 
 				if (validDate) {
-					dateValue = A.Date.parse(val);
+					dateValue = A.Date.parse(DATE_FORMAT, val);
 				}
 
 				if (fieldNode === customRangeFrom) {
@@ -306,7 +308,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			},
 			calendar: {
-				dateFormat: '%Y-%m-%d',
+				dateFormat: DATE_FORMAT,
 				firstDayOfWeek: <%= firstDayOfWeek %>,
 				locale: '<%= locale %>',
 
@@ -342,7 +344,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			},
 			calendar: {
-				dateFormat: '%Y-%m-%d',
+				dateFormat: DATE_FORMAT,
 				firstDayOfWeek: <%= firstDayOfWeek %>,
 				locale: '<%= locale %>',
 

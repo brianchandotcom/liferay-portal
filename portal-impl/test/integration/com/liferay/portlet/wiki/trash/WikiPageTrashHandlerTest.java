@@ -32,6 +32,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -885,6 +886,42 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashRecentBaseModel() throws Exception {
+	}
+
+	@Test
+	@Transactional
+	public void testTrashVersionCreationWhenMovingToTrash()
+		throws Exception {
+
+		int initialVersionPagesCount =
+			TrashVersionLocalServiceUtil.getTrashVersionsCount();
+
+		WikiTestUtil.addTrashedParentPageWithRedirectPage(
+			group.getGroupId(), _node.getNodeId(), false, false);
+
+		Assert.assertEquals(
+			initialVersionPagesCount + 2,
+			TrashVersionLocalServiceUtil.getTrashVersionsCount());
+	}
+
+	@Test
+	@Transactional
+	public void testTrashVersionDeletionWhenRestoringFromTrash()
+		throws Exception {
+
+		int initialVersionPagesCount =
+			TrashVersionLocalServiceUtil.getTrashVersionsCount();
+
+		WikiPage[] pages = WikiTestUtil.addTrashedParentPageWithRedirectPage(
+			group.getGroupId(), _node.getNodeId(), false, false);
+
+		WikiPage parentPage = pages[0];
+
+		restoreTrashEntry(parentPage);
+
+		Assert.assertEquals(
+			initialVersionPagesCount,
+			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 
 	@Ignore()

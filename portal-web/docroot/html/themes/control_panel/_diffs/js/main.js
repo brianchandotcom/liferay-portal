@@ -213,7 +213,7 @@ if (!themeDisplay.isStatePopUp()) {
 				_panelHolderHandleClick: function(event) {
 					var currentTarget = event.currentTarget;
 
-					var accordionGroup = currentTarget.ancestor('.accordion-group');
+					var accordionGroup = currentTarget.ancestor();
 
 					accordionGroup.toggleClass('open');
 

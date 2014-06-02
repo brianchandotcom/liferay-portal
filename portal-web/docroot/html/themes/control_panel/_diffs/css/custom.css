@@ -534,7 +534,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			font-size: 20px;
 			height: 17px;
 			position: absolute;
-			right: -18px;
+			right: -5px;
 			text-align: center;
 			text-decoration: none;
 			top: 7px;
@@ -653,23 +653,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.panels-minimized {
+		.panel-group .panel {
+			overflow: visible;
+		}
+
 		.panel-page-menu {
-			width: 50px;
+			width: auto;
 
 			.panel.panel-default {
 				&.open {
 					.toggler-content {
 						border: 1px solid #DDD;
-						left: 48px;
+						left: 100%;
 						margin-top: 0 !important;
-
-						.panel-body {
-							border-top-width: 0;
-						}
 					}
 
 					.toggler-header {
 						background-color: #DDD;
+
+						.accordion-toggle {
+							background: none no-repeat right;
+						}
 					}
 				}
 			}
@@ -689,7 +693,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.control-panel-tools {
 				cursor: pointer;
-				padding: 12px 0;
+				padding: 12px 0 13px;
 
 				&:hover {
 					background-color: #DDD;
@@ -706,10 +710,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.panel-group {
 					border-bottom-width: 0;
 
-					.toggler-header .accordion-toggle {
-						background: none no-repeat right;
-					}
-
 					.panel.panel-default {
 						background: #FFF;
 						border: solid #D1D1D1;
@@ -717,13 +717,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 						margin-bottom: 0;
 						position: relative;
 
-						&:first-child {
-							border-top-width: 1px;
-						}
-
 						&:last-child {
 							.toggler-header-collapsed {
 								border-bottom-width: 1px;
+							}
+						}
+
+						.toggler-header {
+							border-width: 0 0 0 1px;
+							padding: 12px 10px;
+
+							@include respond-to(desktop) {
+								border-width: 1px 0 0 0;
+							}
+
+							.accordion-toggle {
+								background: none no-repeat right;
 							}
 						}
 					}
@@ -735,10 +744,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						&:hover {
 							background-color: #DDD;
 						}
-					}
-
-					.toggler-header {
-						padding: 12px 10px;
 					}
 				}
 			}
@@ -759,7 +764,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.toggler-content {
 				left: -250px;
 				position: absolute;
-				top: -1px;
+				top: 0;
 				width: 225px;
 				z-index: 1;
 			}
@@ -1107,33 +1112,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.portlet-title {
-			display: inline-block;
-			width: 85%;
-		}
-
-		.portlet-journal {
-			.journal-article-header-edit {
-				border-top-width: 1px;
-			}
-		}
-
-		.nav-list .nav-header {
-			margin-left: 0;
-			margin-right: 0;
-		}
-
-		.taglib-form-navigator .nav.form-navigator.well {
-			border-top-width: 0;
-			margin-top: 0;
-			padding: 0;
-		}
-	}
-
-	@include respond-to(phone) {
-
-		/* ---------- Panel page menu ---------- */
-
 		.panel-page-menu {
 			.minimize-panels a {
 				display: block;
@@ -1148,7 +1126,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.panels-minimized {
-			.panel-page-body.span9 {
+			.col-md-9.panel-page-body {
 				width: 100%;
 
 				&:before {
@@ -1185,6 +1163,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					z-index: 399;
 
 					&:after {
+						background-color: transparent;
 						background-image: none;
 					}
 
@@ -1217,6 +1196,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 							&.open {
 								.toggler-content {
+									@include box-sizing(content-box);
+
 									left: -1px;
 									margin-top: 0 !important;
 									position: absolute;
@@ -1229,6 +1210,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 							border-bottom-width: 0;
 							border-left-width: 1px;
 						}
+					}
+				}
+
+				.portlet-boundary {
+					padding: 0 10px;
+
+					@include respond-to(desktop) {
+						padding: 0;
 					}
 				}
 
@@ -1248,15 +1237,39 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
-			padding: 0;
+		.portlet-title {
+			display: inline-block;
+			width: 85%;
 		}
 
+		.portlet-journal {
+			.journal-article-header-edit {
+				border-top-width: 1px;
+			}
+		}
+
+		.nav-list .nav-header {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.taglib-form-navigator .nav.form-navigator.well {
+			border-top-width: 0;
+			margin-top: 0;
+			padding: 0;
+		}
+	}
+
+	@include respond-to(phone) {
 		.col-md-6 {
 			&.article-structure, &.article-template {
 				float: left;
 				width: 45%;
 			}
+		}
+
+		.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+			padding: 0;
 		}
 	}
 }

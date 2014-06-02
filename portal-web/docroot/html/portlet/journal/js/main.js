@@ -133,9 +133,11 @@ AUI.add(
 					_getByName: function(currentForm, name, withoutNamespace) {
 						var instance = this;
 
-						var inputName = withoutNamespace ? name : instance.NS + name;
+						if (!withoutNamespace) {
+							name = instance.ns(name);
+						}
 
-						return instance.one('[name=' + inputName + ']', currentForm);
+						return instance.one('[name=' + name + ']', currentForm);
 					},
 
 					_getPrincipalForm: function(formName) {
@@ -299,24 +301,26 @@ AUI.add(
 
 							var articleId = article.id;
 
+							if (cmd === 'publish') {
+								var workflowActionInput = instance._getByName(form, 'workflowAction');
+
+								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
+
+								cmd = null;
+							}
+
 							if (!cmd) {
 								cmd = articleId ? STR_UPDATE : STR_ADD;
 							}
 
-							var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
 							var cmdInput = instance._getByName(form, STR_CMD);
-							var newArticleIdInput = instance._getByName(form, 'newArticleId');
-							var workflowActionInput = instance._getByName(form, 'workflowAction');
-
-							if (cmd === 'publish') {
-								workflowActionInput.val(Liferay.Workflow.ACTION_PUBLISH);
-
-								cmd = articleId ? STR_UPDATE : STR_ADD;
-							}
 
 							cmdInput.val(cmd);
 
 							if (!articleId) {
+								var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
+								var newArticleIdInput = instance._getByName(form, 'newArticleId');
+
 								articleIdInput.val(newArticleIdInput.val());
 							}
 

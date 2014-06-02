@@ -15,12 +15,14 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockPageContext;
@@ -29,6 +31,17 @@ import org.springframework.mock.web.MockPageContext;
  * @author Pablo Carvalho
  */
 public class DDMXSDImplTest extends BaseDDMTest {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_document = createSampleDocument();
+
+		_fieldsContextKey = _PORTLET_NAMESPACE.concat(
+			_NAMESPACE).concat("fieldsContext");
+	}
 
 	@Test
 	public void testGetFieldsContext() throws Exception {
@@ -95,7 +108,13 @@ public class DDMXSDImplTest extends BaseDDMTest {
 		Assert.assertFalse(fieldContext.containsKey("disabled"));
 	}
 
+	private static final String _NAMESPACE = "_namespace_";
+
+	private static final String _PORTLET_NAMESPACE = "_portletNamespace_";
+
 	private DDMXSDImpl _ddmXSD = new DDMXSDImpl();
+	private Document _document;
+	private String _fieldsContextKey;
 	private MockPageContext _mockPageContext = new MockPageContext();
 
 }

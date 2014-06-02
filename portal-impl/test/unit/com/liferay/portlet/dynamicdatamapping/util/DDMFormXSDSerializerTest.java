@@ -14,10 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -33,20 +31,24 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pablo Carvalho
  */
-@PrepareForTest( {
-	HtmlUtil.class, LocaleUtil.class, SAXReaderUtil.class
-})
-@RunWith(PowerMockRunner.class)
+@PrepareForTest({DDMFormXSDSerializerUtil.class})
 public class DDMFormXSDSerializerTest extends BaseDDMTest {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormXSDSerializer();
+	}
 
 	@Test
 	public void testAllFieldsTypesDeserialization() throws Exception {
@@ -76,6 +78,16 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	protected void setUpDDMFormXSDSerializer() {
+		spy(DDMFormXSDSerializerUtil.class);
+
+		when(
+			DDMFormXSDSerializerUtil.getDDMFormXSDSerializer()
+		).thenReturn(
+			_ddmFormXSDSerializer
+		);
 	}
 
 	protected void testAvailableLocales(DDMForm ddmForm) {
@@ -186,4 +198,8 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 		Assert.assertEquals(
 			"opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
 	}
+
+	private DDMFormXSDSerializer _ddmFormXSDSerializer =
+		new DDMFormXSDSerializerImpl();
+
 }

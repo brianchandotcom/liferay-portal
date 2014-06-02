@@ -32,5 +32,4 @@ import org.junit.runners.Suite.SuiteClasses;
 	DDMXMLImplTest.class, DDMXSDImplTest.class
 })
 public class DDMTestSuite {
-
 }

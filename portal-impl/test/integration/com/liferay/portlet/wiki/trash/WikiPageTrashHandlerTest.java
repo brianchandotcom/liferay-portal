@@ -1049,12 +1049,12 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), primaryKey);
 	}
 
-	protected void restoreTrashEntry(WikiPage childPage) throws Exception {
+	protected void restoreTrashEntry(WikiPage page) throws Exception {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
 
 		trashHandler.restoreTrashEntry(
-			TestPropsValues.getUserId(), getTrashEntryClassPK(childPage));
+			TestPropsValues.getUserId(), getTrashEntryClassPK(page));
 	}
 
 	@Override

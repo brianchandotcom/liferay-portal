@@ -37,7 +37,7 @@
 
 	<liferay-ui:search-container
 		curParam="cur2"
-		delta="<%= dlPortletInstanceSettings.getEntriesPerPage() %>"
+		delta="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>"
 		deltaConfigurable="<%= false %>"
 		emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
 		headerNames="<%= StringUtil.merge(fileEntryColumns) %>"

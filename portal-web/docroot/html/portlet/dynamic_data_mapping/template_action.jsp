@@ -23,7 +23,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>" triggerCssClass="btn">
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, refererPortletName, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -40,7 +40,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, refererPortletName, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDMTemplate.class.getName() %>"
 			modelResourceDescription="<%= template.getName(locale) %>"
@@ -80,7 +80,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, template, refererPortletName, ActionKeys.DELETE) %>">
+	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

@@ -66,7 +66,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 		data.put("displaystylegroupid", curDDMTemplate.getGroupId());
 
-		if (!DDMTemplatePermission.contains(permissionChecker, curDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATES, ActionKeys.VIEW)) {
+		if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, curDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATES, ActionKeys.VIEW)) {
 			continue;
 		}
 	%>

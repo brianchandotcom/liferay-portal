@@ -24,15 +24,6 @@ AUI.add(
 		var AutoCompleteInputBase = function() {};
 
 		AutoCompleteInputBase.ATTRS = {
-			acConfig: {
-				validator: Lang.isObject,
-				value: {
-					activateFirstItem: true,
-					resultFilters: STR_PHRASE_MATCH,
-					resultHighlighter: STR_PHRASE_MATCH
-				}
-			},
-
 			inputNode: {
 				setter: A.one,
 				writeOnce: true
@@ -70,25 +61,23 @@ AUI.add(
 			}
 		};
 
-		AutoCompleteInputBase.NAME = 'liferay-autocomplete-input-base';
-
 		AutoCompleteInputBase.prototype = {
 			initializer: function() {
 				var instance = this;
 
-				var ac = new A.AutoComplete(instance._getACConfig()).render();
+				var tplResults = instance.get(STR_TPL_RESULTS);
 
-				ac.get('boundingBox').addClass('lfr-autocomplete-input-list');
+				if (tplResults) {
+					instance.set('resultFormatter', A.bind('_acResultFormatter', instance));
+				}
 
-				instance._ac = ac;
+				instance.get('boundingBox').addClass('lfr-autocomplete-input-list');
 
 				instance._bindUIACIBase();
 			},
 
 			destructor: function() {
 				var instance = this;
-
-				instance._ac.destroy();
 
 				(new A.EventHandle(instance._eventHandles)).detach();
 			},
@@ -106,7 +95,7 @@ AUI.add(
 				);
 			},
 
-			_acSelectValue: function(event) {
+			_defSelectFn: function(event) {
 				var instance = this;
 
 				var text = event.result.text;
@@ -117,22 +106,18 @@ AUI.add(
 					text = Lang.sub(tplReplace, event.result.raw);
 				}
 
-				var ac = instance._ac;
+				instance._inputNode.focus();
 
-				ac._inputNode.focus();
+				instance._updateValue(text);
 
-				ac._updateValue(text);
-
-				ac._ariaSay(
+				instance._ariaSay(
 					'item_selected',
 					{
 						item: event.result.text
 					}
 				);
 
-				ac.hide();
-
-				event.preventDefault();
+				instance.hide();
 			},
 
 			_adjustACPosition: function() {
@@ -160,7 +145,7 @@ AUI.add(
 				xy[0] += caretXY.x + offsetX + acOffset[0];
 				xy[1] += caretXY.y + offsetY + acOffset[1];
 
-				instance._ac.get('boundingBox').setXY(xy);
+				instance.get('boundingBox').setXY(xy);
 			},
 
 			_afterACVisibleChange: function(event) {
@@ -169,60 +154,24 @@ AUI.add(
 				if (event.newVal) {
 					instance._adjustACPosition();
 				}
+
+				instance._uiSetVisible(event.newVal);
 			},
 
 			_bindUIACIBase: function() {
 				var instance = this;
 
-				var ac = instance._ac;
+				instance.on('query', instance._onACQuery, instance);
 
-				ac.on('query', instance._onACQuery, instance);
-
-				ac.on('select', instance._acSelectValue, instance);
-
-				ac.after('visibleChange', instance._afterACVisibleChange, instance);
-
-				ac._keys[KEY_DOWN] = A.bind('_onACKeyDown', instance);
-
-				A.Do.before(instance._syncACPosition, ac, '_syncUIPosAlign', instance);
-
-				ac._updateValue = A.bind('_acUpdateValue', instance);
+				instance.after('visibleChange', instance._afterACVisibleChange, instance);
 			},
 
-			_getACConfig: function() {
+			_keyDown: function() {
 				var instance = this;
 
-				var acConfig = instance.get('acConfig');
-
-				var tplResults = instance.get(STR_TPL_RESULTS);
-
-				if (tplResults) {
-					acConfig.resultFormatter = A.bind('_acResultFormatter', instance);
+				if (instance.get(STR_VISIBLE)) {
+					instance._activateNextItem();
 				}
-
-				acConfig.inputNode = instance.get(STR_INPUT_NODE);
-
-				var source = instance.get(STR_SOURCE);
-
-				if (source) {
-					acConfig.source = source;
-				}
-
-				return acConfig;
-			},
-
-			_onACKeyDown: function() {
-				var instance = this;
-
-				var ac = instance._ac;
-
-				var acVisible = ac.get(STR_VISIBLE);
-
-				if (acVisible) {
-					ac._activateNextItem();
-				}
-
-				return acVisible;
 			},
 
 			_onACQuery: function(event) {
@@ -236,10 +185,8 @@ AUI.add(
 				else {
 					event.preventDefault();
 
-					var ac = instance._ac;
-
-					if (ac.get(STR_VISIBLE)) {
-						ac.hide();
+					if (instance.get(STR_VISIBLE)) {
+						instance.hide();
 					}
 				}
 			},
@@ -247,15 +194,13 @@ AUI.add(
 			_processKeyUp: function(query) {
 				var instance = this;
 
-				var ac = instance._ac;
-
 				if (query) {
 					query = query.substring(1);
 
-					ac.sendRequest(query);
+					instance.sendRequest(query);
 				}
-				else if (ac.get(STR_VISIBLE)) {
-					ac.hide();
+				else if (instance.get(STR_VISIBLE)) {
+					instance.hide();
 				}
 			},
 
@@ -265,9 +210,7 @@ AUI.add(
 				return new RegExp(value.replace(REGEX_TERM, instance.get(STR_TERM)));
 			},
 
-			_syncACPosition: function() {
-				return new A.Do.Halt(null, -1);
-			},
+			_syncUIPosAlign: function() {},
 
 			_validateOffset: function(value) {
 				return (Lang.isArray(value) || Lang.isNumber(value));

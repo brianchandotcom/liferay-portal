@@ -24,7 +24,7 @@
 											editor: editor
 										}
 									)
-								);
+								).render();
 							}
 						);
 					}

@@ -15,477 +15,467 @@
 
 	var TPL_REPLACE_HTML = '<span class="lfr-ac-content">{html}</span>';
 
-	var AutoCompleteCKEditor = A.Component.create(
-		{
-			ATTRS: {
-				editor: {
-					validator: Lang.isObject,
-					writeOnce: true
-				},
+	var AutoCompleteCKEditor = function() {};
 
-				inputNode: {
-					valueFn: '_getInputElement',
-					writeOnce: true
-				},
+	AutoCompleteCKEditor.ATTRS = {
+		editor: {
+			validator: Lang.isObject,
+			writeOnce: true
+		},
 
-				replaceMode: {
-					validator: Lang.isString,
-					value: 'text'
+		inputNode: {
+			valueFn: '_getInputElement',
+			writeOnce: true
+		},
+
+		replaceMode: {
+			validator: Lang.isString,
+			value: 'text'
+		}
+	};
+
+	AutoCompleteCKEditor.prototype= {
+		initializer: function() {
+			var instance = this;
+
+			instance._replaceFn = {
+				html: A.bind('_replaceHtml', instance),
+				text: A.bind('_replaceText', instance)
+			};
+
+			instance._bindUI();
+		},
+
+		_bindUI: function() {
+			var instance = this;
+
+			instance._processCaret = A.bind('_processCaretPosition', instance);
+
+			var editor = instance.get(STR_EDITOR);
+
+			instance._eventHandles = [
+				editor.on('key', A.bind('_onEditorKey', instance))
+			];
+
+			editor.once(
+				'instanceReady',
+				function(event) {
+					var editorBody = A.one(event.editor.document.$.body);
+
+					instance._eventHandles.push(
+						editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
+					);
 				}
-			},
+			);
+		},
 
-			AUGMENTS: [Liferay.AutoCompleteInputBase],
+		_getACPositionBase: function() {
+			var instance = this;
 
-			EXTENDS: A.Base,
+			if (!instance._contentsContainer) {
+				var inputElement = instance._getInputElement();
 
-			NAME: 'liferay-autocomplete-ckeditor',
+				instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
+			}
 
-			prototype: {
-				initializer: function() {
-					var instance = this;
+			return instance._contentsContainer.getXY();
+		},
 
-					instance._replaceFn = {
-						html: A.bind('_replaceHtml', instance),
-						text: A.bind('_replaceText', instance)
-					};
+		_getACPositionOffset: function() {
+			var instance = this;
 
-					A.Do.after(instance._bindUI, instance, '_bindUIACIBase', instance);
-				},
+			var caretContainer = instance._getCaretContainer();
 
-				_acUpdateValue: function(value) {
-					var instance = this;
+			var containerAscendantElement = instance._getContainerAscendant(caretContainer);
 
-					var prevTermPosition = instance._getPrevTermPosition();
+			var containerAscendantNode = A.one(containerAscendantElement.$);
 
-					var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTermPosition);
+			return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
+		},
 
-					instance._setCaretIndex(caretPosition.node, caretPosition.index);
+		_getCaretContainer: function() {
+			var instance = this;
 
-					var editor = instance.get('editor');
+			return instance._getCaretRange().startContainer;
+		},
 
-					editor.fire('saveSnapshot');
-				},
+		_getCaretIndex: function(node) {
+			var instance = this;
 
-				_bindUI: function() {
-					var instance = this;
+			var range = instance._getCaretRange();
 
-					instance._processCaret = A.bind('_processCaretPosition', instance);
+			return {
+				end: range.endOffset,
+				start: range.startOffset
+			};
+		},
 
-					var editor = instance.get(STR_EDITOR);
+		_getCaretOffset: function() {
+			var instance = this;
 
-					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance))
-					];
+			var editor = instance.get(STR_EDITOR);
 
-					editor.once(
-						'instanceReady',
-						function(event) {
-							var editorBody = A.one(event.editor.document.$.body);
+			var bookmarks = editor.getSelection().createBookmarks();
 
-							instance._eventHandles.push(
-								editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
-							);
-						}
-					);
-				},
+			var bookmarkNodeEl = bookmarks[0].startNode.$;
 
-				_getACPositionBase: function() {
-					var instance = this;
+			A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
 
-					if (!instance._contentsContainer) {
-						var inputElement = instance._getInputElement();
+			var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
+			var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
 
-						instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
-					}
+			bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
 
-					return instance._contentsContainer.getXY();
-				},
+			return {
+				x: inputCaretOffsetX,
+				y: inputCaretOffsetY
+			};
+		},
 
-				_getACPositionOffset: function() {
-					var instance = this;
+		_getCaretRange: function() {
+			var instance = this;
 
-					var caretContainer = instance._getCaretContainer();
+			var editor = instance.get(STR_EDITOR);
 
-					var containerAscendantElement = instance._getContainerAscendant(caretContainer);
+			return editor.getSelection().getRanges()[0];
+		},
 
-					var containerAscendantNode = A.one(containerAscendantElement.$);
+		_getContainerAscendant: function(container, ascendant) {
+			if (!ascendant) {
+				ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
+			}
 
-					return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
-				},
+			return container.getAscendant(ascendant, true);
+		},
 
-				_getCaretContainer: function() {
-					var instance = this;
+		_getInputElement: function(value) {
+			var instance = this;
 
-					return instance._getCaretRange().startContainer;
-				},
+			return A.one(instance.get(STR_EDITOR).element.$);
+		},
 
-				_getCaretIndex: function(node) {
-					var instance = this;
+		_getPrevTermPosition: function() {
+			var instance = this;
 
-					var range = instance._getCaretRange();
+			var term = instance.get(STR_TERM);
 
-					return {
-						end: range.endOffset,
-						start: range.startOffset
-					};
-				},
+			var caretContainer = instance._getCaretContainer();
+			var caretIndex = instance._getCaretIndex();
 
-				_getCaretOffset: function() {
-					var instance = this;
+			var query = caretContainer.getText().substring(0, caretIndex.start);
 
-					var editor = instance.get(STR_EDITOR);
+			var termContainer = caretContainer;
 
-					var bookmarks = editor.getSelection().createBookmarks();
+			var termIndex = query.lastIndexOf(term);
 
-					var bookmarkNodeEl = bookmarks[0].startNode.$;
+			if (termIndex === -1) {
+				var termWalker = instance._getWalker(termContainer);
 
-					A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
+				termWalker.guard = function(node) {
+					var hasTerm = false;
 
-					var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
-					var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
+					if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
+						var nodeText = node.getText();
 
-					bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
+						termIndex = nodeText.lastIndexOf(term);
 
-					return {
-						x: inputCaretOffsetX,
-						y: inputCaretOffsetY
-					};
-				},
+						hasTerm = (termIndex !== -1);
 
-				_getCaretRange: function() {
-					var instance = this;
+						if (hasTerm) {
+							query = nodeText.substring(termIndex) + query;
 
-					var editor = instance.get(STR_EDITOR);
-
-					return editor.getSelection().getRanges()[0];
-				},
-
-				_getContainerAscendant: function(container, ascendant) {
-					if (!ascendant) {
-						ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
-					}
-
-					return container.getAscendant(ascendant, true);
-				},
-
-				_getInputElement: function(value) {
-					var instance = this;
-
-					return A.one(instance.get(STR_EDITOR).element.$);
-				},
-
-				_getPrevTermPosition: function() {
-					var instance = this;
-
-					var term = instance.get(STR_TERM);
-
-					var caretContainer = instance._getCaretContainer();
-					var caretIndex = instance._getCaretIndex();
-
-					var query = caretContainer.getText().substring(0, caretIndex.start);
-
-					var termContainer = caretContainer;
-
-					var termIndex = query.lastIndexOf(term);
-
-					if (termIndex === -1) {
-						var termWalker = instance._getWalker(termContainer);
-
-						termWalker.guard = function(node) {
-							var hasTerm = false;
-
-							if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
-								var nodeText = node.getText();
-
-								termIndex = nodeText.lastIndexOf(term);
-
-								hasTerm = (termIndex !== -1);
-
-								if (hasTerm) {
-									query = nodeText.substring(termIndex) + query;
-
-									termContainer = node;
-								}
-								else {
-									query = node.getText() + query;
-								}
-							}
-
-							return !hasTerm;
-						};
-
-						termWalker.checkBackward();
-					}
-					else {
-						query = query.substring(termIndex);
-					}
-
-					return {
-						container: termContainer,
-						index: termIndex,
-						query: query
-					};
-				},
-
-				_getQuery: function() {
-					var instance = this;
-
-					var query = instance._getPrevTermPosition().query;
-
-					var regExp = instance.get('regExp');
-
-					var res = regExp.exec(query);
-
-					var term = instance.get(STR_TERM);
-
-					var result;
-
-					if (res && ((res.index + res[1].length + term.length) === query.length)) {
-						result = query;
-					}
-
-					return result;
-				},
-
-				_getWalker: function(endContainer, startContainer) {
-					var instance = this;
-
-					endContainer = endContainer || instance._getCaretContainer();
-
-					startContainer = startContainer || instance._getContainerAscendant(endContainer);
-
-					var range = new CKEDITOR.dom.range(startContainer);
-
-					range.setStart(startContainer, 0);
-					range.setEnd(endContainer, endContainer.getText().length);
-
-					var walker = new CKEDITOR.dom.walker(range);
-
-					return walker;
-				},
-
-				_isEmptySelection: function() {
-					var instance = this;
-
-					var editor = instance.get(STR_EDITOR);
-
-					var selection = editor.getSelection();
-
-					var ranges = selection.getRanges();
-
-					return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
-				},
-
-				_normalizeCKEditorKeyEvent: function(event) {
-					return new A.DOMEventFacade(
-						{
-							keyCode: event.data.keyCode,
-							preventDefault: event.cancel,
-							stopPropagation: event.stop,
-							type: 'keydown'
-						}
-					);
-				},
-
-				_onEditorKey: function(event) {
-					var instance = this;
-
-					if (instance._isEmptySelection()) {
-						event = instance._normalizeCKEditorKeyEvent(event);
-
-						var ac = instance._ac;
-
-						var acVisible = ac.get('visible');
-
-						if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
-							var editor = instance.get(STR_EDITOR);
-
-							var inlineEditor = editor.editable().isInline();
-
-							if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
-								ac._onInputKey(event);
-							}
+							termContainer = node;
 						}
 						else {
-							A.soon(instance._processCaret);
+							query = node.getText() + query;
 						}
 					}
-				},
 
-				_processCaretPosition: function() {
-					var instance = this;
+					return !hasTerm;
+				};
 
-					var query = instance._getQuery();
+				termWalker.checkBackward();
+			}
+			else {
+				query = query.substring(termIndex);
+			}
 
-					instance._processKeyUp(query);
-				},
+			return {
+				container: termContainer,
+				index: termIndex,
+				query: query
+			};
+		},
 
-				_replaceHtml: function(text, prevTermPosition) {
-					var instance = this;
+		_getQuery: function() {
+			var instance = this;
 
-					var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+			var query = instance._getPrevTermPosition().query;
 
-					if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
-						replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
-					}
+			var regExp = instance.get('regExp');
 
-					var newElement = CKEDITOR.dom.element.createFromHtml(
-						Lang.sub(
-							TPL_REPLACE_HTML,
-							{
-								html: text
-							}
-						)
-					);
+			var res = regExp.exec(query);
 
-					newElement.replace(replaceContainer);
+			var term = instance.get(STR_TERM);
 
-					var nextElement = newElement.getNext();
+			var result;
 
-					if (nextElement) {
-						var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+			if (res && ((res.index + res[1].length + term.length) === query.length)) {
+				result = query;
+			}
 
-						var updateWalker = instance._getWalker(containerAscendant, nextElement);
+			return result;
+		},
 
-						var node = updateWalker.next();
+		_getWalker: function(endContainer, startContainer) {
+			var instance = this;
 
-						var removeNodes = [];
+			endContainer = endContainer || instance._getCaretContainer();
 
-						while (node) {
-							var nodeText = node.getText();
+			startContainer = startContainer || instance._getContainerAscendant(endContainer);
 
-							var spaceIndex = nodeText.indexOf(STR_SPACE);
+			var range = new CKEDITOR.dom.range(startContainer);
 
-							if (spaceIndex !== -1) {
-								node.setText(nodeText.substring(spaceIndex));
+			range.setStart(startContainer, 0);
+			range.setEnd(endContainer, endContainer.getText().length);
 
-								updateWalker.end();
-							}
-							else {
-								removeNodes.push(node);
-							}
+			var walker = new CKEDITOR.dom.walker(range);
 
-							node = updateWalker.next();
-						}
+			return walker;
+		},
 
-						A.Array.invoke(removeNodes, 'remove');
+		_isEmptySelection: function() {
+			var instance = this;
 
-						nextElement = newElement.getNext();
-					}
+			var editor = instance.get(STR_EDITOR);
 
-					if (!nextElement) {
-						nextElement = new CKEDITOR.dom.text(STR_SPACE);
+			var selection = editor.getSelection();
 
-						nextElement.insertAfter(newElement);
-					}
+			var ranges = selection.getRanges();
 
-					return {
-						index: 1,
-						node: nextElement
-					};
-				},
+			return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
+		},
 
-				_replaceText: function(text, prevTermPosition) {
-					var instance = this;
+		_normalizeCKEditorKeyEvent: function(event) {
+			return new A.DOMEventFacade(
+				{
+					keyCode: event.data.keyCode,
+					preventDefault: event.cancel,
+					stopPropagation: event.stop,
+					type: 'keydown'
+				}
+			);
+		},
 
-					var addChars;
+		_onEditorKey: function(event) {
+			var instance = this;
 
-					var prevTermContainer = prevTermPosition.container;
-					var offset = prevTermPosition.index;
+			if (instance._isEmptySelection()) {
+				event = instance._normalizeCKEditorKeyEvent(event);
 
-					var containerAscendant = instance._getContainerAscendant(prevTermContainer);
+				var acVisible = instance.get('visible');
 
-					var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
-
-					var term = instance.get(STR_TERM);
-
-					var node = updateWalker.next();
-
-					var prevNode = node;
-
-					var remainingChars = term + text;
-
-					while (node) {
-						if (node.type === CKEDITOR.NODE_TEXT) {
-							var nodeText = node.getText();
-
-							var availableChars = nodeText.length;
-
-							if (offset !== -1) {
-								availableChars -= offset;
-
-								addChars = remainingChars.substring(0, availableChars);
-
-								node.setText(nodeText.substring(0, offset) + addChars);
-
-								offset = -1;
-
-								remainingChars = remainingChars.substring(availableChars);
-							}
-							else {
-								var spaceIndex = nodeText.indexOf(STR_SPACE);
-
-								if (!availableChars || spaceIndex === 0) {
-									prevNode.setText(prevNode.getText() + remainingChars);
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else if (spaceIndex !== -1) {
-									node.setText(remainingChars + nodeText.substring(spaceIndex));
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else {
-									addChars = remainingChars.substring(0, availableChars);
-
-									node.setText(addChars);
-
-									remainingChars = remainingChars.substring(availableChars);
-								}
-							}
-
-							prevNode = node;
-						}
-
-						node = updateWalker.next();
-					}
-
-					if (remainingChars.length) {
-						prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
-					}
-
-					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
-
-					if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
-						caretIndex = prevNode.getText().length;
-					}
-
-					return {
-						index: caretIndex,
-						node: prevNode
-					};
-				},
-
-				_setCaretIndex: function(node, caretIndex) {
-					var instance = this;
-
+				if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
 					var editor = instance.get(STR_EDITOR);
 
-					var caretRange = editor.createRange();
+					var inlineEditor = editor.editable().isInline();
 
-					caretRange.setStart(node, caretIndex);
-					caretRange.setEnd(node, caretIndex);
-
-					editor.getSelection().selectRanges([caretRange]);
-					editor.focus();
+					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
+						instance._onInputKey(event);
+					}
+				}
+				else {
+					A.soon(instance._processCaret);
 				}
 			}
+		},
+
+		_processCaretPosition: function() {
+			var instance = this;
+
+			var query = instance._getQuery();
+
+			instance._processKeyUp(query);
+		},
+
+		_replaceHtml: function(text, prevTermPosition) {
+			var instance = this;
+
+			var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+
+			if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
+				replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
+			}
+
+			var newElement = CKEDITOR.dom.element.createFromHtml(
+				Lang.sub(
+					TPL_REPLACE_HTML,
+					{
+						html: text
+					}
+				)
+			);
+
+			newElement.replace(replaceContainer);
+
+			var nextElement = newElement.getNext();
+
+			if (nextElement) {
+				var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+
+				var updateWalker = instance._getWalker(containerAscendant, nextElement);
+
+				var node = updateWalker.next();
+
+				var removeNodes = [];
+
+				while (node) {
+					var nodeText = node.getText();
+
+					var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+					if (spaceIndex !== -1) {
+						node.setText(nodeText.substring(spaceIndex));
+
+						updateWalker.end();
+					}
+					else {
+						removeNodes.push(node);
+					}
+
+					node = updateWalker.next();
+				}
+
+				A.Array.invoke(removeNodes, 'remove');
+
+				nextElement = newElement.getNext();
+			}
+
+			if (!nextElement) {
+				nextElement = new CKEDITOR.dom.text(STR_SPACE);
+
+				nextElement.insertAfter(newElement);
+			}
+
+			return {
+				index: 1,
+				node: nextElement
+			};
+		},
+
+		_replaceText: function(text, prevTermPosition) {
+			var instance = this;
+
+			var addChars;
+
+			var prevTermContainer = prevTermPosition.container;
+			var offset = prevTermPosition.index;
+
+			var containerAscendant = instance._getContainerAscendant(prevTermContainer);
+
+			var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
+
+			var term = instance.get(STR_TERM);
+
+			var node = updateWalker.next();
+
+			var prevNode = node;
+
+			var remainingChars = term + text;
+
+			while (node) {
+				if (node.type === CKEDITOR.NODE_TEXT) {
+					var nodeText = node.getText();
+
+					var availableChars = nodeText.length;
+
+					if (offset !== -1) {
+						availableChars -= offset;
+
+						addChars = remainingChars.substring(0, availableChars);
+
+						node.setText(nodeText.substring(0, offset) + addChars);
+
+						offset = -1;
+
+						remainingChars = remainingChars.substring(availableChars);
+					}
+					else {
+						var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+						if (!availableChars || spaceIndex === 0) {
+							prevNode.setText(prevNode.getText() + remainingChars);
+
+							updateWalker.end();
+
+							remainingChars = STR_EMPTY;
+						}
+						else if (spaceIndex !== -1) {
+							node.setText(remainingChars + nodeText.substring(spaceIndex));
+
+							updateWalker.end();
+
+							remainingChars = STR_EMPTY;
+						}
+						else {
+							addChars = remainingChars.substring(0, availableChars);
+
+							node.setText(addChars);
+
+							remainingChars = remainingChars.substring(availableChars);
+						}
+					}
+
+					prevNode = node;
+				}
+
+				node = updateWalker.next();
+			}
+
+			if (remainingChars.length) {
+				prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
+			}
+
+			var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
+
+			if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
+				caretIndex = prevNode.getText().length;
+			}
+
+			return {
+				index: caretIndex,
+				node: prevNode
+			};
+		},
+
+		_setCaretIndex: function(node, caretIndex) {
+			var instance = this;
+
+			var editor = instance.get(STR_EDITOR);
+
+			var caretRange = editor.createRange();
+
+			caretRange.setStart(node, caretIndex);
+			caretRange.setEnd(node, caretIndex);
+
+			editor.getSelection().selectRanges([caretRange]);
+			editor.focus();
+		},
+
+		_updateValue: function(value) {
+			var instance = this;
+
+			var prevTermPosition = instance._getPrevTermPosition();
+
+			var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTermPosition);
+
+			instance._setCaretIndex(caretPosition.node, caretPosition.index);
+
+			var editor = instance.get('editor');
+
+			editor.fire('saveSnapshot');
 		}
-	);
+	};
 
 	AutoCompleteCKEditor.CONTAINER_ASCENDANT = {
 		body: 1,
@@ -499,5 +489,11 @@
 		span: 1
 	};
 
-	Liferay.AutoCompleteCKEditor = AutoCompleteCKEditor;
+	Liferay.AutoCompleteCKEditor = A.Base.mix(
+		A.AutoComplete,
+		[
+			Liferay.AutoCompleteInputBase,
+			AutoCompleteCKEditor
+		]
+	);
 })();

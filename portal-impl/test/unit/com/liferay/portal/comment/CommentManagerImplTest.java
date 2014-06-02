@@ -14,7 +14,6 @@
 
 package com.liferay.portal.comment;
 
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -54,6 +53,8 @@ public class CommentManagerImplTest extends PowerMockito {
 
 		setUpMessageBoards();
 		setUpServiceContext();
+
+		_commentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
 	}
 
 	@Test
@@ -89,7 +90,7 @@ public class CommentManagerImplTest extends PowerMockito {
 
 		Assert.assertEquals(
 			mbMessageId,
-			_commentManager.addComment(
+			_commentManagerImpl.addComment(
 				userId, groupId, className, classPK, "__blogName__",
 				"__title__", "__body__", _serviceContextFunction));
 
@@ -112,15 +113,44 @@ public class CommentManagerImplTest extends PowerMockito {
 	}
 
 	@Test
+	public void testAddInitialDiscussion() throws Exception {
+		long userId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		_commentManagerImpl.addInitialDiscussion(
+			userId, groupId, "__ClassName__", classPK, "__UserName__");
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			userId, "__UserName__", groupId, "__ClassName__", classPK,
+			WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	@Test
 	public void testDeleteComment() throws Exception {
 		long mbMessageId = RandomTestUtil.randomLong();
 
-		_commentManager.deleteComment(mbMessageId);
+		_commentManagerImpl.deleteComment(mbMessageId);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).deleteDiscussionMessage(
 			mbMessageId
+		);
+	}
+
+	@Test
+	public void testDeleteDiscussion() throws Exception {
+		long classPK = RandomTestUtil.randomLong();
+
+		_commentManagerImpl.deleteDiscussion("__ClassName__", classPK);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).deleteDiscussionMessages(
+			"__ClassName__", classPK
 		);
 	}
 
@@ -169,7 +199,7 @@ public class CommentManagerImplTest extends PowerMockito {
 		);
 	}
 
-	private CommentManager _commentManager = new CommentManagerImpl();
+	private CommentManagerImpl _commentManagerImpl = new CommentManagerImpl();
 
 	@Mock
 	private MBMessage _mbMessage;

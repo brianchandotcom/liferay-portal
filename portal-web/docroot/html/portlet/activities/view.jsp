@@ -31,14 +31,9 @@ else if (group.isUser()) {
 	activities = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), 0, max);
 }
 
-ResourceURL rssURL = liferayPortletResponse.createResourceURL();
-
-rssURL.setCacheability(ResourceURL.FULL);
-rssURL.setParameter("struts_action", "/activities/rss");
-
 String feedTitle = LanguageUtil.format(pageContext, "x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 
-rssURL.setParameter("feedTitle", feedTitle);
+String rssURL = themeDisplay.getPathMain() + "/activities/rss?feedTitle=" + feedTitle;
 
 String taglibFeedTitle = LanguageUtil.format(pageContext, "subscribe-to-x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 %>

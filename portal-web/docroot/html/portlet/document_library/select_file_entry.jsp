@@ -137,7 +137,7 @@ if (folder != null) {
 			>
 
 				<%
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
 				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFile.getFileEntryId());
 				%>

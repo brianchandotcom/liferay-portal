@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,7 +54,7 @@ public class AssetVocabularySettingsHelper {
 			return DEFAULT_SELECTED_CLASSNAME_IDS;
 		}
 
-		return StringUtil.split(propertyValue, 0L);
+		return getClassNameIds(StringUtil.split(propertyValue));
 	}
 
 	public long[] getRequiredClassNameIds() {
@@ -64,7 +65,7 @@ public class AssetVocabularySettingsHelper {
 			return new long[0];
 		}
 
-		return StringUtil.split(propertyValue, 0L);
+		return getClassNameIds(StringUtil.split(propertyValue));
 	}
 
 	public boolean hasClassNameId(long classNameId) {
@@ -153,6 +154,24 @@ public class AssetVocabularySettingsHelper {
 	protected String getClassNameAndTypeId(long classNameId, long classTypeId) {
 		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
 			String.valueOf(classTypeId));
+	}
+
+	protected long getClassNameId(String classNameAndTypeId) {
+		String[] parts = StringUtil.split(classNameAndTypeId, CharPool.COLON);
+
+		return Long.valueOf(parts[0]);
+	}
+
+	protected long[] getClassNameIds(String[] classNameAndTypeIds) {
+		long[] classNameIds = new long[classNameAndTypeIds.length];
+
+		for (int i = 0; i < classNameAndTypeIds.length; i++) {
+			long classNameId = getClassNameId(classNameAndTypeIds[i]);
+
+			classNameIds[i] = classNameId;
+		}
+
+		return classNameIds;
 	}
 
 	private static final String _KEY_MULTI_VALUED = "multiValued";

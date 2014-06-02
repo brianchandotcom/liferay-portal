@@ -73,6 +73,7 @@ public class DLAppLocalServiceTest {
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 
 		SynchronousDestination destination = new SynchronousDestination();
+
 		destination.setName(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 

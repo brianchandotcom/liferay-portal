@@ -24,12 +24,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -49,7 +50,9 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -80,6 +83,7 @@ import javax.portlet.PortletPreferences;
  * @author Wesley Gong
  * @author Hugo Huijser
  * @author Daniel Kocsis
+ * @author László Csontos
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalContentPortletDataHandler
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
@@ -205,10 +209,16 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			folderActionableDynamicQuery.performActions();
 
+			Map<JournalArticleKey, JournalArticle> latestArtciles =
+				new LinkedHashMap<JournalArticleKey, JournalArticle>();
+
 			ActionableDynamicQuery articleActionableDynamicQuery =
-				getArticleActionableDynamicQuery(portletDataContext);
+				getArticleActionableDynamicQuery(
+					portletDataContext, latestArtciles);
 
 			articleActionableDynamicQuery.performActions();
+
+			exportLatestArticles(portletDataContext, latestArtciles);
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -293,7 +303,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery articleActionableDynamicQuery =
-			getArticleActionableDynamicQuery(portletDataContext);
+			getArticleActionableDynamicQuery(
+				portletDataContext,
+				new LinkedHashMap<JournalArticleKey, JournalArticle>());
 
 		articleActionableDynamicQuery.performCount();
 
@@ -331,8 +343,20 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		folderActionableDynamicQuery.performCount();
 	}
 
+	protected void exportLatestArticles(
+			PortletDataContext portletDataContext,
+			Map<JournalArticleKey, JournalArticle> latestArtciles)
+		throws PortletDataException {
+
+		for (JournalArticle article : latestArtciles.values()) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, article);
+		}
+	}
+
 	protected ActionableDynamicQuery getArticleActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		final PortletDataContext portletDataContext,
+		final Map<JournalArticleKey, JournalArticle> latestArtciles) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			JournalArticleLocalServiceUtil.getExportActionableDynamicQuery(
@@ -347,24 +371,29 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 					JournalArticle article = (JournalArticle)object;
 
-					boolean latestVersion = false;
-
-					try {
-						latestVersion =
-							JournalArticleLocalServiceUtil.isLatestVersion(
-								article.getGroupId(), article.getArticleId(),
-								article.getVersion(),
-								WorkflowConstants.STATUS_APPROVED);
-					}
-					catch (Exception e) {
-					}
-
 					if (portletDataContext.getBooleanParameter(
-							NAMESPACE, "version-history") ||
-						latestVersion) {
+							NAMESPACE, "version-history")) {
 
 						StagedModelDataHandlerUtil.exportStagedModel(
 							portletDataContext, article);
+
+						return;
+					}
+
+					if (!article.isApproved()) {
+						return;
+					}
+
+					JournalArticleKey articleKey = new JournalArticleKey(
+						article);
+
+					JournalArticle latestArticle = latestArtciles.get(
+						articleKey);
+
+					if ((latestArticle == null) ||
+						(latestArticle.getVersion() < article.getVersion())) {
+
+						latestArtciles.put(articleKey, article);
 					}
 				}
 
@@ -472,6 +501,40 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				DDMTemplate.class.getName(), DDMStructure.class.getName()));
 
 		return exportActionableDynamicQuery;
+	}
+
+	private static class JournalArticleKey {
+
+		public JournalArticleKey(JournalArticle article) {
+			_articleId = article.getArticleId();
+			_groupId = article.getGroupId();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			JournalArticleKey journalArticleKey = (JournalArticleKey)obj;
+
+			if (Validator.equals(journalArticleKey._articleId, _articleId) &&
+				Validator.equals(journalArticleKey._groupId, _groupId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			return (int)(_articleId.hashCode() * 11 + _groupId);
+		}
+
+		private String _articleId;
+		private long _groupId;
+
 	}
 
 }

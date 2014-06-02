@@ -893,14 +893,14 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashVersionCreationWhenMovingToTrash()
 		throws Exception {
 
-		int initialVersionPagesCount =
+		int initialTrashVersionsCount =
 			TrashVersionLocalServiceUtil.getTrashVersionsCount();
 
 		WikiTestUtil.addTrashedParentPageWithRedirectPage(
 			group.getGroupId(), _node.getNodeId(), false, false);
 
 		Assert.assertEquals(
-			initialVersionPagesCount + 2,
+			initialTrashVersionsCount + 2,
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 
@@ -909,7 +909,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashVersionDeletionWhenRestoringFromTrash()
 		throws Exception {
 
-		int initialVersionPagesCount =
+		int initialTrashVersionCount =
 			TrashVersionLocalServiceUtil.getTrashVersionsCount();
 
 		WikiPage[] pages = WikiTestUtil.addTrashedParentPageWithRedirectPage(
@@ -920,7 +920,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		restoreTrashEntry(parentPage);
 
 		Assert.assertEquals(
-			initialVersionPagesCount,
+			initialTrashVersionCount,
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 

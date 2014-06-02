@@ -64,29 +64,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			value="<%= LanguageUtil.get(pageContext, organization.getType()) %>"
 		/>
 
+		<%
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		if (selUser != null) {
+			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), organization.getGroup().getGroupId());
+		}
+		%>
+
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="roles"
-		>
-
-			<%
-			if (selUser != null) {
-				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), organization.getGroup().getGroupId());
-
-				for (UserGroupRole userGroupRole : userGroupRoles) {
-					Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
-
-					buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-					buffer.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				if (!userGroupRoles.isEmpty()) {
-					buffer.setIndex(buffer.index() - 1);
-				}
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= ListUtil.toString(userGroupRoles, UsersAdmin.TITLE_ROLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+		/>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
 			<liferay-ui:search-container-column-text>

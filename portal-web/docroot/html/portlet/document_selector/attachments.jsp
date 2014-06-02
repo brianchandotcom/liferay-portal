@@ -14,174 +14,63 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+long groupId = ParamUtil.getLong(request, "groupId");
 
-boolean viewTrashAttachments = ParamUtil.getBoolean(request, "viewTrashAttachments");
+String eventName = ParamUtil.getString(request, "eventName");
 
-if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
-	viewTrashAttachments = false;
-}
+String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
 
-WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
-WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
+PortletURL portletURL = renderResponse.createRenderURL();
 
-PortletURL portletURL = renderResponse.createActionURL();
-
-portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-portletURL.setParameter("title", wikiPage.getTitle());
-
-portletURL.setParameter("struts_action", "/wiki/view");
-
-PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
-
-portletURL.setParameter("struts_action", "/wiki/view_page_attachments");
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "attachments"), portletURL.toString());
+portletURL.setParameter("struts_action", "/document_selector/view");
+portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("groupId", String.valueOf(groupId));
 %>
 
-<c:if test="<%= !viewTrashAttachments %>">
-	<portlet:actionURL var="undoTrashURL">
-		<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
+<aui:form method="post" name="selectDocumentFm">
 
-	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
-</c:if>
+	<%
+	PortletURL iteratorURL = renderResponse.createRenderURL();
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+	iteratorURL.setParameter("struts_action", "/document_selector/view");
+	iteratorURL.setParameter("eventName", eventName);
+	iteratorURL.setParameter("groupId", String.valueOf(groupId));
+	%>
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
-	<liferay-util:param name="tabs1" value="attachments" />
-</liferay-util:include>
-
-<c:if test="<%= viewTrashAttachments %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="removed-attachments"
-	/>
-</c:if>
-
-<c:if test="<%= WikiNodePermission.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
-	<c:choose>
-		<c:when test="<%= viewTrashAttachments %>">
-			<portlet:actionURL var="emptyTrashURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-				<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
-				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:trash-empty
-				confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
-				emptyMessage="remove-the-attachments-for-this-page"
-				infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
-				portletURL="<%= emptyTrashURL.toString() %>"
-				totalEntries="<%= wikiPage.getDeletedAttachmentsFileEntriesCount() %>"
-			/>
-		</c:when>
-		<c:otherwise>
-
-			<%
-			int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
-			%>
-
-			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
-				<portlet:renderURL var="viewTrashAttachmentsURL">
-					<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
-					<portlet:param name="tabs1" value="attachments" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					cssClass="trash-attachments"
-					iconCssClass="icon-trash"
-					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount, false) %>'
-					url="<%= viewTrashAttachmentsURL %>"
-				/>
-			</c:if>
-
-			<portlet:renderURL var="addAttachmentsURL">
-				<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-				<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<div class="btn-toolbar">
-
-				<%
-				String taglibAddAttachments = "location.href = '" + addAttachmentsURL + "';";
-				%>
-
-				<aui:button onClick="<%= taglibAddAttachments %>" value="add-attachments" />
-			</div>
-		</c:otherwise>
-	</c:choose>
-</c:if>
-
-<%
-String emptyResultsMessage = null;
-
-if (viewTrashAttachments) {
-	emptyResultsMessage = "this-page-does-not-have-file-attachments-in-the-recycle-bin";
-}
-else {
-	emptyResultsMessage = "this-page-does-not-have-file-attachments";
-}
-
-PortletURL iteratorURL = renderResponse.createRenderURL();
-
-iteratorURL.setParameter("struts_action", "/wiki/view_page_attachments");
-iteratorURL.setParameter("redirect", currentURL);
-iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachments));
-%>
-
-<liferay-ui:search-container
-	emptyResultsMessage="<%= emptyResultsMessage %>"
-	iteratorURL="<%= iteratorURL %>"
-	total="<%= viewTrashAttachments ? wikiPage.getDeletedAttachmentsFileEntriesCount() : wikiPage.getAttachmentsFileEntriesCount() %>"
->
-	<c:choose>
-		<c:when test="<%= viewTrashAttachments %>">
-			<liferay-ui:search-container-results
-				results="<%= wikiPage.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:search-container-results
-				results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-		</c:otherwise>
-	</c:choose>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.repository.model.FileEntry"
-		escapedModel="<%= true %>"
-		keyProperty="fileEntryId"
-		modelVar="fileEntry"
-		rowVar="row"
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-documents-in-this-folder"
+		iteratorURL="<%= iteratorURL %>"
 	>
 
 		<%
-		int status = WorkflowConstants.STATUS_APPROVED;
+		long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 
-		if (viewTrashAttachments) {
-			status = WorkflowConstants.STATUS_IN_TRASH;
+		WikiPageResource pageResource = WikiPageResourceLocalServiceUtil.fetchWikiPageResource(wikiPageResourcePrimKey);
+
+		WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), pageResource.getTitle());
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
+
+		for (String param : httpServletRequest.getParameterMap().keySet()) {
+			String[] values = httpServletRequest.getParameterValues(param);
+
+			params.put(param, StringUtil.merge(values));
 		}
-
-		String rowHREF = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, "status=" + status);
 		%>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="file-name"
+		<liferay-ui:search-container-results
+			results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.repository.model.FileEntry"
+			keyProperty="fileEntryId"
+			modelVar="fileEntry"
 		>
 
 			<%
@@ -190,31 +79,41 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 			%>
 
-			<liferay-ui:icon
-				iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-				label="<%= true %>"
-				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
+			<liferay-ui:search-container-column-text
+				name="file-name"
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					label="<%= true %>"
+					message="<%= fileEntry.getTitle() %>"
+				/>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="size"
+				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
-		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-		/>
+			<liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			path="/html/portlet/wiki/page_attachment_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+				<%
+				Map<String, Object> data = new HashMap<String, Object>(params);
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+				data.put("groupid", fileEntry.getGroupId());
+				data.put("title", fileEntry.getTitle());
+				data.put("url", attachmentURLPrefix + fileEntry.getTitle());
+				data.put("uuid", fileEntry.getUuid());
+				data.put("version", fileEntry.getVersion());
+				%>
 
-<liferay-ui:restore-entry
-	duplicateEntryAction="/wiki/restore_entry"
-	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"
-	renameMessage="keep-both-attachments-and-rename-the-removed-attachment-as"
-	restoreEntryAction="/wiki/restore_page_attachment"
-/>
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script use="aui-base">
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDocumentFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+</aui:script>

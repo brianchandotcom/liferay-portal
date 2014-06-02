@@ -113,6 +113,51 @@
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_LIST" />
+
+		<if>
+			<equals arg1="${workflow}" arg2="Draft" />
+			<then>
+				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+
+				<if>
+					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+					<then>
+						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+					</else>
+				</if>
+			</then>
+			<elseif>
+				<equals arg1="${workflow}" arg2="Checkedout" />
+				<then>
+					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+
+					<if>
+						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+						<then>
+							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
+						</then>
+						<else>
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						</else>
+					</if>
+
+					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_LIST_DOCUMENT_LOCKED" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${workflow}" arg2="Locked" />
+				<then>
+					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_LIST_DOCUMENT_LOCKED" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
 		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -173,51 +218,6 @@
 		</if>
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_LIST" />
-
-		<if>
-			<equals arg1="${workflow}" arg2="Draft" />
-			<then>
-				<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
-
-				<if>
-					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
-					<then>
-						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
-					</then>
-					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
-					</else>
-				</if>
-			</then>
-			<elseif>
-				<equals arg1="${workflow}" arg2="Checkedout" />
-				<then>
-					<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
-
-					<if>
-						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
-						<then>
-							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_WORKFLOW" value1="Draft" />
-						</then>
-						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
-						</else>
-					</if>
-
-					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_LIST_DOCUMENT_LOCKED" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${workflow}" arg2="Locked" />
-				<then>
-					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_LIST_DOCUMENT_LOCKED" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_STYLE" />
 		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_ICON" />
 		<execute action="PGDocumentsandmedia#assertTextPresent" locator-key1="BREADCRUMB_HOME" value1="Home" />

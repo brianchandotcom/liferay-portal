@@ -36,11 +36,8 @@ public class ElasticsearchEngineConfigurator
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			ElasticsearchConnectionManager.getInstance();
-
 		ElasticsearchConnection elasticsearchConnection =
-			elasticsearchConnectionManager.getElasticsearchConnection();
+			_elasticsearchConnectionManager.getElasticsearchConnection();
 
 		elasticsearchConnection.initialize();
 
@@ -58,11 +55,8 @@ public class ElasticsearchEngineConfigurator
 	public void destroy() {
 		super.destroy();
 
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			ElasticsearchConnectionManager.getInstance();
-
 		ElasticsearchConnection elasticsearchConnection =
-			elasticsearchConnectionManager.getElasticsearchConnection();
+			_elasticsearchConnectionManager.getElasticsearchConnection();
 
 		elasticsearchConnection.close();
 	}
@@ -94,6 +88,12 @@ public class ElasticsearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
+	public void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+	}
+
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
 	}
@@ -113,6 +113,7 @@ public class ElasticsearchEngineConfigurator
 	private static Log _log = LogFactoryUtil.getLog(
 		ElasticsearchEngineConfigurator.class);
 
+	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;

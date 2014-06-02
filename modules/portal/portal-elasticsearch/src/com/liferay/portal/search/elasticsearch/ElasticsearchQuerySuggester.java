@@ -45,6 +45,12 @@ import java.util.Map;
  */
 public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
+	public void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+	}
+
 	@Override
 	public Map<String, List<String>> spellCheckKeywords(
 		SearchContext searchContext, int max) {
@@ -55,7 +61,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		SuggestBuilder.SuggestionBuilder<TermSuggestionBuilder>
 			suggestionBuilder = SuggestBuilder.termSuggestion(
-				_REQUEST_TYPE_SPELL_CHECK);
+			_REQUEST_TYPE_SPELL_CHECK);
 
 		Suggest.Suggestion<?> suggestion = getSuggestion(
 			searchContext, suggestionBuilder, DocumentTypes.SPELL_CHECK,
@@ -147,19 +153,12 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		return keywordQueries.toArray(new String[keywordQueries.size()]);
 	}
 
-	protected Client getClient() {
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			ElasticsearchConnectionManager.getInstance();
-
-		return elasticsearchConnectionManager.getClient();
-	}
-
 	protected Suggest.Suggestion<?> getSuggestion(
 		SearchContext searchContext,
 		SuggestBuilder.SuggestionBuilder<?> suggestionBuilder,
 		String documentType, String fieldName, String requestType, int max) {
 
-		Client client = getClient();
+		Client client = _elasticsearchConnectionManager.getClient();
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
 			String.valueOf(searchContext.getCompanyId()));
@@ -194,5 +193,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQuerySuggester.class);
+
+	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
 }

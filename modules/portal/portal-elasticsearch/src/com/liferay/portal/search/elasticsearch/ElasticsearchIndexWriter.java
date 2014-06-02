@@ -65,7 +65,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			Client client = getClient();
+			Client client = _elasticsearchConnectionManager.getClient();
 
 			DeleteRequestBuilder deleteRequestBuilder = client.prepareDelete(
 				String.valueOf(searchContext.getCompanyId()),
@@ -88,7 +88,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			Client client = getClient();
+			Client client = _elasticsearchConnectionManager.getClient();
 
 			BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
 
@@ -118,7 +118,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			Client client = getClient();
+			Client client = _elasticsearchConnectionManager.getClient();
 
 			DeleteByQueryRequestBuilder deleteByQueryRequestBuilder =
 				client.prepareDeleteByQuery(
@@ -142,6 +142,12 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			throw new SearchException(
 				"Unable to delete data for portlet " + portletId, e);
 		}
+	}
+
+	public void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
 	public void setElasticsearchUpdateDocumentCommand(
@@ -168,16 +174,10 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			DocumentTypes.LIFERAY, searchContext, documents);
 	}
 
-	protected Client getClient() {
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			ElasticsearchConnectionManager.getInstance();
-
-		return elasticsearchConnectionManager.getClient();
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexWriter.class);
 
+	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchUpdateDocumentCommand
 		_elasticsearchUpdateDocumentCommand;
 

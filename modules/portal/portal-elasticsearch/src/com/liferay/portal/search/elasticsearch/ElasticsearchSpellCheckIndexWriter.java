@@ -65,6 +65,12 @@ public class ElasticsearchSpellCheckIndexWriter
 		}
 	}
 
+	public void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+	}
+
 	public void setElasticsearchUpdateDocumentCommand(
 		ElasticsearchUpdateDocumentCommand elasticsearchUpdateDocumentCommand) {
 
@@ -117,10 +123,7 @@ public class ElasticsearchSpellCheckIndexWriter
 	protected void deleteIndices(SearchContext searchContext, String indexType)
 		throws Exception {
 
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			ElasticsearchConnectionManager.getInstance();
-
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = _elasticsearchConnectionManager.getClient();
 
 		DeleteByQueryRequestBuilder deleteByQueryRequestBuilder =
 			client.prepareDeleteByQuery(
@@ -141,6 +144,7 @@ public class ElasticsearchSpellCheckIndexWriter
 	private static Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSpellCheckIndexWriter.class);
 
+	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchUpdateDocumentCommand
 		_elasticsearchUpdateDocumentCommand;
 

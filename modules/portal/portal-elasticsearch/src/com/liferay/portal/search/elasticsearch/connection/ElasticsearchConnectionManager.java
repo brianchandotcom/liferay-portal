@@ -21,10 +21,6 @@ import org.elasticsearch.client.Client;
  */
 public class ElasticsearchConnectionManager {
 
-	public static ElasticsearchConnectionManager getInstance() {
-		return _instance;
-	}
-
 	public Client getClient() {
 		if (_elasticsearchConnection == null) {
 			throw new IllegalStateException(
@@ -44,9 +40,6 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConnection = elasticsearchConnection;
 	}
 
-	private static ElasticsearchConnectionManager _instance =
-		new ElasticsearchConnectionManager();
-
-	private static ElasticsearchConnection _elasticsearchConnection;
+	private ElasticsearchConnection _elasticsearchConnection;
 
 }

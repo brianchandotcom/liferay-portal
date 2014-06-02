@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.search.elasticsearch.io.StringOutputStream;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
@@ -42,7 +42,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	public void createIndices(AdminClient adminClient) throws Exception {
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		for (Company company : companies) {
 			IndicesExistsRequestBuilder indicesExistsRequestBuilder =
@@ -90,12 +90,17 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 	}
 
+	public void setCompanyLocalService(CompanyLocalService companyLocalService) {
+		_companyLocalService = companyLocalService;
+	}
+
 	public void setTypeMappings(Map<String, String> typeMappings) {
 		_typeMappings = typeMappings;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);
 
+	private CompanyLocalService _companyLocalService;
 	private Map<String, String> _typeMappings = new HashMap<String, String>();
 
 }

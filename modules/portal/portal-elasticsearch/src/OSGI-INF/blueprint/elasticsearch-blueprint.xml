@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+  ~
+  ~ This library is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU Lesser General Public License as published by the Free
+  ~ Software Foundation; either version 2.1 of the License, or (at your option)
+  ~ any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  ~ details.
+  -->
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+	<!-- Elasticsearch engine adapter -->
+
+	<bean id="com.liferay.portal.search.elasticsearch.ElasticsearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
+		<property name="clusteredWrite" value="false" />
+		<property name="indexSearcher" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" />
+		<property name="indexWriter" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" />
+		<property name="luceneBased" value="true" />
+		<property name="vendor" value="Elasticsearch" />
+	</bean>
+	<bean id="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" class="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher">
+		<property name="querySuggester">
+			<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchQuerySuggester" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" class="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" >
+		<property name="elasticsearchUpdateDocumentCommand" ref="com.liferay.portal.search.elasticsearch.ElasticsearchUpdateDocumentCommand" />
+		<property name="spellCheckIndexWriter" ref="com.liferay.portal.search.elasticsearch.ElasticsearchSpellCheckIndexWriter" />
+	</bean>
+	<bean id="com.liferay.portal.search.elasticsearch.ElasticsearchSpellCheckIndexWriter" class="com.liferay.portal.search.elasticsearch.ElasticsearchSpellCheckIndexWriter">
+		<property name="elasticsearchUpdateDocumentCommand" ref="com.liferay.portal.search.elasticsearch.ElasticsearchUpdateDocumentCommand" />
+	</bean>
+	<bean id="com.liferay.portal.search.elasticsearch.ElasticsearchUpdateDocumentCommand" class="com.liferay.portal.search.elasticsearch.ElasticsearchUpdateDocumentCommandImpl">
+		<property name="elasticsearchDocumentFactory" ref="com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory" />
+	</bean>
+
+	<!-- Elasticsearch connection -->
+
+	<bean id="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection" class="com.liferay.portal.search.elasticsearch.connection.EmbeddedElasticsearchConnection">
+		<property name="clusterName" value="LiferayElasticSearch" />
+		<property name="configFileName" value="/META-INF/elasticsearch-embedded.yml" />
+		<property name="indexFactory" ref="com.liferay.portal.search.elasticsearch.index.IndexFactory" />
+	</bean>
+
+	<bean id="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" class="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager">
+		<property name="elasticsearchConnection" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection" />
+	</bean>
+	<bean id="com.liferay.portal.search.elasticsearch.index.IndexFactory" class="com.liferay.portal.search.elasticsearch.index.CompanyIndexFactory">
+		<property name="companyLocalService" ref="com.liferay.portal.service.CompanyLocalService" />
+		<property name="typeMappings">
+			<map>
+				<entry key="LiferayDocumentType" value="/META-INF/type_mappings.json" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Elasticsearch document -->
+
+	<bean id="com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory" class="com.liferay.portal.search.elasticsearch.document.DefaultElasticsearchDocumentFactory" />
+
+	<!-- Elasticsearch facet -->
+
+	<bean id="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" class="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" />
+	<bean id="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" class="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
+	<bean id="com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil" class="com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil">
+		<property name="defaultFacetProcessor" ref="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" />
+		<property name="facetProcessors">
+			<map>
+				<entry key="com.liferay.portal.kernel.search.facet.RangeFacet"
+					   value-ref="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
+			</map>
+		</property>
+	</bean>
+
+	<reference id="com.liferay.portal.service.CompanyLocalService" interface="com.liferay.portal.service.CompanyLocalService" timeout="30000" />
+	<reference id="messageBus" interface="com.liferay.portal.kernel.messaging.MessageBus" timeout="30000" />
+
+	<!-- Configurator -->
+
+	<service auto-export="all-classes" id="searchEngineConfigurator.elasticsearch">
+		<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchEngineConfigurator">
+			<property name="indexFactory" ref="com.liferay.portal.search.elasticsearch.index.IndexFactory" />
+			<property name="indexSearcher" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" />
+			<property name="indexWriter" ref="com.liferay.portal.search.elasticsearch.ElasticsearchIndexWriter" />
+			<property name="messageBus" ref="messageBus" />
+			<property name="searchEngines">
+				<map>
+					<entry key="SYSTEM_ENGINE" value-ref="com.liferay.portal.search.elasticsearch.ElasticsearchEngineImpl" />
+				</map>
+			</property>
+		</bean>
+	</service>
+</blueprint>

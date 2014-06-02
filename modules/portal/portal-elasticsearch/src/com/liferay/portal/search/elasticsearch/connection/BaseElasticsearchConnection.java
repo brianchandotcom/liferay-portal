@@ -48,6 +48,10 @@ public abstract class BaseElasticsearchConnection
 		return _clusterName;
 	}
 
+	public String getConfigFileName() {
+		return _configFileName;
+	}
+
 	@Override
 	public void initialize() {
 		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
@@ -59,6 +63,10 @@ public abstract class BaseElasticsearchConnection
 
 	public void setClusterName(String clusterName) {
 		_clusterName = clusterName;
+	}
+
+	public void setConfigFileName(String configFileName) {
+		_configFileName = configFileName;
 	}
 
 	public void setIndexFactory(IndexFactory indexFactory) {
@@ -91,6 +99,7 @@ public abstract class BaseElasticsearchConnection
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseElasticsearchConnection.class);
 
+	private String _configFileName;
 	private Client _client;
 	private String _clusterName;
 	private IndexFactory _indexFactory;

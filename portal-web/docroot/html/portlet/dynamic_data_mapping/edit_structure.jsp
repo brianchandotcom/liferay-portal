@@ -188,14 +188,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<div class="input-append">
-						<c:choose>
-							<c:when test="<%= (structure == null) || Validator.isNotNull(parentStructureId) %>">
-								<aui:input name="parentStructureName" type="resource" value="<%= parentStructureName %>" />
-							</c:when>
-							<c:otherwise>
-								<aui:input name="parentStructureName" type="resource" />
-							</c:otherwise>
-						</c:choose>
+						<aui:input label="" name="parentStructureName" type="resource" value="<%= parentStructureName %>" />
 
 						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
 

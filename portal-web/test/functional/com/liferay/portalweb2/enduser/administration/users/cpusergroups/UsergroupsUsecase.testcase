@@ -743,7 +743,7 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_ACTIONS" />
 
 		<execute macro="User#logoutUserPG" />
 

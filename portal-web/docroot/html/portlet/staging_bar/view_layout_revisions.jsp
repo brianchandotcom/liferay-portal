@@ -37,7 +37,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 <c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
 	<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
-		<aui:select cssClass="variation-selector" inlineLabel="left" label="page-variation" name="variationsSelector">
+		<aui:select cssClass="variation-selector" inlineLabel="left" label="" name="variationsSelector">
 
 			<%
 			for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
@@ -82,29 +82,10 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						keyProperty="layoutRevisionId"
 						modelVar="curLayoutRevision"
 					>
-						<liferay-ui:search-container-column-text
-							cssClass='<%= (curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId) ? "layout-revision-current" : StringPool.BLANK %>'
+						<liferay-ui:search-container-column-date
 							name="date"
-						>
-
-							<c:if test="<%= curLayoutRevision.getLayoutRevisionId() == currentLayoutRevisionId %>">
-								<i class="icon-arrow-right"></i>
-							</c:if>
-
-							<%
-							Date now = new Date();
-
-							long timeAgo = now.getTime() - curLayoutRevision.getCreateDate().getTime();
-							%>
-
-							<span class="approximate-date">
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, timeAgo, true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</span>
-
-							<span class="real-date">
-								<%= dateFormatDateTime.format(curLayoutRevision.getCreateDate()) %>
-							</span>
-						</liferay-ui:search-container-column-text>
+							value="<%= curLayoutRevision.getCreateDate() %>"
+						/>
 
 						<liferay-ui:search-container-column-text
 							name="status"

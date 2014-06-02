@@ -27,7 +27,7 @@
 
 	.navbar {
 		.nav-display-style-buttons {
-			margin-left: 15px;
+			margin: 8px 0 8px 15px;
 
 			.display-style-buttons-container .dropdown-toggle .caret {
 				border-bottom-color: #333;

@@ -1641,7 +1641,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
-			new ServiceContext());
+			new ServiceContext(), new HashMap<String, Serializable>());
 
 		// Trash
 
@@ -1875,7 +1875,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		updateStatus(
-			userId, page, trashEntry.getStatus(), new ServiceContext());
+			userId, page, trashEntry.getStatus(), new ServiceContext(),
+			new HashMap<String, Serializable>());
 
 		// Child pages
 

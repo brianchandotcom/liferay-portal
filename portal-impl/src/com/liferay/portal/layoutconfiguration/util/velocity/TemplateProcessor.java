@@ -17,6 +17,9 @@ package com.liferay.portal.layoutconfiguration.util.velocity;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,7 +30,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -205,13 +207,39 @@ public class TemplateProcessor implements ColumnProcessor {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 		}
 	}
-	
+
 	@Override
-	public String processPortlet(String portletId, String defaultPreferences) throws Exception {
-		if (Validator.isNotNull(defaultPreferences)) {
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				_request, portletId, defaultPreferences);
+	public String processPortlet(
+			String portletId, Map<String, ?> defaultSettings)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
+			themeDisplay.getLayout(), portletId);
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		for (Map.Entry<String, ?> entry : defaultSettings.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (value instanceof String) {
+				modifiableSettings.setValue(key, (String)value);
+			}
+			else if (value instanceof String[]) {
+				modifiableSettings.setValues(key, (String[])value);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported type " + value.getClass().getName() +
+					" for key " + key );
+			}
 		}
+
+		modifiableSettings.store();
 
 		return processPortlet(portletId);
 	}

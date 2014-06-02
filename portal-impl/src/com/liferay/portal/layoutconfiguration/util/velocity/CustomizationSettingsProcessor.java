@@ -24,6 +24,8 @@ import com.liferay.taglib.aui.InputTag;
 
 import java.io.Writer;
 
+import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
@@ -126,11 +128,12 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		return StringPool.BLANK;
 	}
-	
+
 	@Override
-	public String processPortlet(String portletId, String defaultPreferences)
+	public String processPortlet(
+			String portletId, Map<String, ?> defaultSettings)
 		throws Exception {
-	
+
 		return processPortlet(portletId);
 	}
 

@@ -50,7 +50,7 @@ import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -325,7 +325,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	public void testGetDDMXSD() throws Exception {
 		String expectedXSD = readText("test-ddm-structure-all-fields.xml");
 
-		DDMForm expectedDDMForm = DDMFormXSDSerializerUtil.deserialize(
+		DDMForm expectedDDMForm = DDMFormXSDDeserializerUtil.deserialize(
 			expectedXSD);
 
 		String actualXSD = JournalConverterUtil.getDDMXSD(
@@ -333,7 +333,8 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		validateDDMXSD(actualXSD);
 
-		DDMForm actualDDMForm = DDMFormXSDSerializerUtil.deserialize(actualXSD);
+		DDMForm actualDDMForm = DDMFormXSDDeserializerUtil.deserialize(
+			actualXSD);
 
 		assertEquals(expectedDDMForm, actualDDMForm);
 	}

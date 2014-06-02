@@ -49,6 +49,10 @@ public class DDMFormField {
 		return _name;
 	}
 
+	public String getNamespace() {
+		return _namespace;
+	}
+
 	public List<DDMFormField> getNestedDDMFormFields() {
 		return _nestedDDMFormFields;
 	}
@@ -84,8 +88,16 @@ public class DDMFormField {
 		return _type;
 	}
 
+	public boolean isLocalizable() {
+		return _localizable;
+	}
+
 	public boolean isMultiple() {
 		return _multiple;
+	}
+
+	public boolean isReadOnly() {
+		return _readOnly;
 	}
 
 	public boolean isRepeatable() {
@@ -114,6 +126,10 @@ public class DDMFormField {
 		_label = label;
 	}
 
+	public void setLocalizable(boolean localizable) {
+		_localizable = localizable;
+	}
+
 	public void setMultiple(boolean multiple) {
 		_multiple = multiple;
 	}
@@ -122,12 +138,20 @@ public class DDMFormField {
 		_name = name;
 	}
 
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
+	}
+
 	public void setNestedDDMFormFields(List<DDMFormField> nestedDDMFormFields) {
 		_nestedDDMFormFields = nestedDDMFormFields;
 	}
 
 	public void setPredefinedValue(LocalizedValue predefinedValue) {
 		_predefinedValue = predefinedValue;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
 	}
 
 	public void setRepeatable(boolean repeatable) {
@@ -155,11 +179,14 @@ public class DDMFormField {
 		new DDMFormFieldOptions();
 	private String _indexType;
 	private LocalizedValue _label = new LocalizedValue();
+	private boolean _localizable;
 	private boolean _multiple;
 	private String _name;
+	private String _namespace;
 	private List<DDMFormField> _nestedDDMFormFields =
 		new ArrayList<DDMFormField>();
 	private LocalizedValue _predefinedValue = new LocalizedValue();
+	private boolean _readOnly;
 	private boolean _repeatable;
 	private boolean _required;
 	private LocalizedValue _style = new LocalizedValue();

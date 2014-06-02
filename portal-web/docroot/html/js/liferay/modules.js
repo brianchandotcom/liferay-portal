@@ -16,6 +16,10 @@
 		return A.UA.touch;
 	};
 
+	var testTouchMobile = function(A) {
+		return testTouch(A) && A.UA.mobile;
+	};
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -274,18 +278,6 @@
 							'event-mouseenter'
 						]
 					},
-					'liferay-dockbar-portlet-dd': {
-						path: 'dockbar_portlet_dd.js',
-						requires: [
-							'aui-base',
-							'dd',
-							'liferay-dockbar',
-							'liferay-layout',
-							'liferay-layout-column',
-							'liferay-layout-freeform',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-dockbar-add-content-search': {
 						path: 'dockbar_add_content_search.js',
 						requires: [
@@ -339,6 +331,18 @@
 						requires: [
 							'node-focusmanager',
 							'plugin'
+						]
+					},
+					'liferay-dockbar-portlet-dd': {
+						path: 'dockbar_portlet_dd.js',
+						requires: [
+							'aui-base',
+							'dd',
+							'liferay-dockbar',
+							'liferay-layout',
+							'liferay-layout-column',
+							'liferay-layout-freeform',
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-dockbar-underlay': {
@@ -448,7 +452,7 @@
 							'liferay-input-move-boxes-touch': {
 								condition: {
 									name: 'liferay-input-move-boxes-touch',
-									test: testTouch,
+									test: testTouchMobile,
 									trigger: 'liferay-input-move-boxes'
 								}
 							}
@@ -467,11 +471,11 @@
 							'sortable'
 						]
 					},
-					'liferay-layout': {
-						path: 'layout.js'
-					},
 					'liferay-language': {
 						path: 'language.js'
+					},
+					'liferay-layout': {
+						path: 'layout.js'
 					},
 					'liferay-layout-column': {
 						path: 'layout_column.js',
@@ -607,17 +611,17 @@
 							'liferay-navigation'
 						]
 					},
+					'liferay-node': {
+						path: 'node.js',
+						requires: [
+							'dom-base'
+						]
+					},
 					'liferay-notice': {
 						path: 'notice.js',
 						requires: [
 							'aui-base',
 							'transition'
-						]
-					},
-					'liferay-node': {
-						path: 'node.js',
-						requires: [
-							'dom-base'
 						]
 					},
 					'liferay-pagination': {
@@ -672,13 +676,13 @@
 						]
 					},
 					'liferay-resize-rtl': {
-						path: 'resize_rtl.js',
 						condition: {
 							test: function(A) {
 								return document.documentElement.dir === 'rtl';
 							},
 							trigger: 'resize-base'
-						}
+						},
+						path: 'resize_rtl.js'
 					},
 					'liferay-restore-entry': {
 						path: 'restore_entry.js',
@@ -811,17 +815,17 @@
 							'widget'
 						]
 					},
-					'liferay-xml-formatter': {
-						path: 'xml_formatter.js',
-						requires: [
-							'aui-base'
-						]
-					},
 					'liferay-widget-zindex': {
 						path: 'widget_zindex.js',
 						requires: [
 							'aui-modal',
 							'plugin'
+						]
+					},
+					'liferay-xml-formatter': {
+						path: 'xml_formatter.js',
+						requires: [
+							'aui-base'
 						]
 					}
 				},
@@ -832,11 +836,11 @@
 				base: PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,
 				modules: {
-					'swfupload': {
-						path: '/swfupload/swfupload.js'
-					},
 					'swfobject': {
 						path: '/swfobject.js'
+					},
+					'swfupload': {
+						path: '/swfupload/swfupload.js'
 					}
 				},
 				root: PATH_JAVASCRIPT + '/misc/'

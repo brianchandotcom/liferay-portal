@@ -83,7 +83,7 @@ AUI.add(
 						function(event) {
 							event.preventDefault();
 						},
-						SELECTOR_SORT_LIST_ACTIVE + SELECTOR_TITLE
+						SELECTOR_SORT_LIST_ACTIVE + ' ' + SELECTOR_TITLE
 					);
 
 					instance._sortableContainer.delegate(

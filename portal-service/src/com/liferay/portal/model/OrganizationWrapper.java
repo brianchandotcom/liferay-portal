@@ -762,6 +762,12 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
+	public java.lang.String getParentOrganizationName()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organization.getParentOrganizationName();
+	}
+
+	@Override
 	public javax.portlet.PortletPreferences getPreferences()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _organization.getPreferences();

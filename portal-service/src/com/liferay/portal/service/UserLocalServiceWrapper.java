@@ -2095,8 +2095,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* </p>
 	*
 	* @param userId the primary key of the user
-	* @param socialRelationType the type of social relation. The possible types can be found
-	in {@link
+	* @param socialRelationType the type of social relation. The possible
+	types can be found in {@link
 	com.liferay.portlet.social.model.SocialRelationConstants}.
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
@@ -2104,10 +2104,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	<code>null</code>)
 	* @return the ordered range of users with a social relation of the type
 	with the user
-	* @throws PortalException if a user with the primary key could not be found
+	* @throws PortalException if a user with the primary key could not be
+	found
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSocialUsers(long, int, String, int, int, OrderByComparator)}
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
+	String, int, int, OrderByComparator)}
 	*/
 	@Deprecated
 	@Override
@@ -2139,11 +2140,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @param end the upper bound of the range of users (not inclusive)
 	* @param obc the comparator to order the users by (optionally
 	<code>null</code>)
-	* @return the ordered range of users with a social relation with the user
-	* @throws PortalException if a user with the primary key could not be found
+	* @return the ordered range of users with a social relation with the
+	user
+	* @throws PortalException if a user with the primary key could not be
+	found
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSocialUsers(long, int, boolean, int, int, OrderByComparator)}
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
+	boolean, int, int, OrderByComparator)}
 	*/
 	@Deprecated
 	@Override
@@ -2182,8 +2185,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*
 	* @param userId1 the primary key of the first user
 	* @param userId2 the primary key of the second user
-	* @param socialRelationType the type of social relation. The possible types can be found
-	in {@link
+	* @param socialRelationType the type of social relation. The possible
+	types can be found in {@link
 	com.liferay.portlet.social.model.SocialRelationConstants}.
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
@@ -2244,10 +2247,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*
 	* @param userId the primary key of the user
 	* @return the number of users with a social relation with the user
-	* @throws PortalException if a user with the primary key could not be found
+	* @throws PortalException if a user with the primary key could not be
+	found
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSocialUsersCount(long, int, String)}
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsersCount(long,
+	int, String)}
 	*/
 	@Deprecated
 	@Override
@@ -2262,15 +2266,16 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* user.
 	*
 	* @param userId the primary key of the user
-	* @param socialRelationType the type of social relation. The possible types can be found
-	in {@link
+	* @param socialRelationType the type of social relation. The possible
+	types can be found in {@link
 	com.liferay.portlet.social.model.SocialRelationConstants}.
-	* @return the number of users with a social relation of the type with the
-	user
-	* @throws PortalException if a user with the primary key could not be found
+	* @return the number of users with a social relation of the type with
+	the user
+	* @throws PortalException if a user with the primary key could not be
+	found
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSocialUsersCount(long, int, String)}
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsersCount(long,
+	int, String)}
 	*/
 	@Deprecated
 	@Override
@@ -2284,11 +2289,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* Returns the number of users with a social relation with the user.
 	*
 	* @param userId the primary key of the user
-	* @param socialRelationType the type of social relation. The possible types can be found
-	in {@link
+	* @param socialRelationType the type of social relation. The possible
+	types can be found in {@link
 	com.liferay.portlet.social.model.SocialRelationConstants}.
-	* @param equalType the value of type of social relation equals <code>true
-	</code> or <code>false</code>
 	* @return the number of users with a social relation with the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
@@ -2325,8 +2328,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*
 	* @param userId1 the primary key of the first user
 	* @param userId2 the primary key of the second user
-	* @param socialRelationType the type of social relation. The possible types can be found
-	in {@link
+	* @param socialRelationType the type of social relation. The possible
+	types can be found in {@link
 	com.liferay.portlet.social.model.SocialRelationConstants}.
 	* @return the number of users with a mutual social relation of the type
 	with the user

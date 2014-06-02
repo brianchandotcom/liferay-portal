@@ -202,8 +202,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_BOTTOM_BAR</td>
-	<td>//div[@class='loading-bar loaded']</td>
+	<td>ACTIVITIES_PORTLET_LOADED</td>
+	<td>//div[@class='social-activities']/div</td>
 	<td></td>
 </tr>
 <tr>

@@ -379,10 +379,7 @@
 
 		<setup-sdk />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="clean"
-		/>
+		<ant dir="${project.dir}/modules" antfile="build.xml" target="clean" />
 
 		<antcall target="print-current-time" />
 	</target>
@@ -810,10 +807,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			</then>
 		</if>
 
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="deploy"
-		/>
+		<ant dir="${project.dir}/modules" antfile="build.xml" target="deploy" />
 
 		<antcall target="print-current-time" />
 	</target>
@@ -1111,10 +1105,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	<target name="start">
 		<setup-sdk />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="compile"
-		/>
+		<ant dir="${project.dir}/modules/core/registry-api" antfile="build.xml" target="compile" />
 
 		<antcall target="compile" />
 

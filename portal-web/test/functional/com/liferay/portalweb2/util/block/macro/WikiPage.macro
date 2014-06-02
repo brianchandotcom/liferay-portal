@@ -395,7 +395,7 @@
 				<if>
 					<condition action="PGWikiAddpage#isNotVisible" locator-key1="PERMISSIONS_HIDE_OPTIONS_LINK" />
 					<then>
-						<execute action="PGWikiAddpage#assertClick" locator-key1="PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options »" />
+						<execute action="PGWikiAddpage#assertClick" locator-key1="PERMISSIONS_MORE_OPTIONS_LINK" value1="More Options" />
 					</then>
 				</if>
 
@@ -714,7 +714,7 @@
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 	</command>
-	
+
 	<command name="deleteCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 

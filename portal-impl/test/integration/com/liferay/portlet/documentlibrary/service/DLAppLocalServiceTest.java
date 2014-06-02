@@ -119,7 +119,7 @@ public class DLAppLocalServiceTest {
 	public void testWhenAddingAFolderItsAssetIsCreated() throws Exception {
 		Folder folder = addFolder(false);
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
 
 		Assert.assertNotNull(assetEntry);

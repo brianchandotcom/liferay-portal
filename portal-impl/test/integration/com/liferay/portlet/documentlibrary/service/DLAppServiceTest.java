@@ -465,7 +465,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
 
 		Assert.assertNotNull(assetEntry);

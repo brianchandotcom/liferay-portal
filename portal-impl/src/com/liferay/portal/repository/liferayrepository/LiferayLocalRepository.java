@@ -48,6 +48,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -272,7 +273,7 @@ public class LiferayLocalRepository
 			dlFileEntryLocalService.getGroupFileEntries(
 				getGroupId(), 0, rootFolderId, start, end, obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override

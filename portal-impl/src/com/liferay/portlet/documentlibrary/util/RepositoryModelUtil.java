@@ -30,14 +30,17 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * @author Adolfo Pérez
  * @author Alexander Chow
  */
-public abstract class RepositoryModelUtil {
+public class RepositoryModelUtil {
 
 	/**
 	 * @see com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl#toFileEntries
 	 */
-	public List<FileEntry> toFileEntries(List<DLFileEntry> dlFileEntries) {
+	public static List<FileEntry> toFileEntries(
+		List<DLFileEntry> dlFileEntries) {
+
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>(
 			dlFileEntries.size());
 
@@ -55,7 +58,7 @@ public abstract class RepositoryModelUtil {
 		}
 	}
 
-	public List<Object> toFileEntriesAndFolders(
+	public static List<Object> toFileEntriesAndFolders(
 		List<Object> dlFileEntriesAndDLFolders) {
 
 		List<Object> fileEntriesAndFolders = new ArrayList<Object>(
@@ -89,7 +92,7 @@ public abstract class RepositoryModelUtil {
 		}
 	}
 
-	public List<FileVersion> toFileVersions(
+	public static List<FileVersion> toFileVersions(
 		List<DLFileVersion> dlFileVersions) {
 
 		List<FileVersion> fileVersions = new ArrayList<FileVersion>(
@@ -109,7 +112,7 @@ public abstract class RepositoryModelUtil {
 		}
 	}
 
-	public List<Folder> toFolders(List<DLFolder> dlFolders) {
+	public static List<Folder> toFolders(List<DLFolder> dlFolders) {
 		List<Folder> folders = new ArrayList<Folder>(dlFolders.size());
 
 		for (DLFolder dlFolder : dlFolders) {

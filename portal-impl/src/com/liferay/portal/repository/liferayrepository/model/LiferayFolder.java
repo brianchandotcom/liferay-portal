@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
@@ -106,7 +107,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 
 	@Override
 	public List<Folder> getAncestors() throws PortalException, SystemException {
-		return toFolders(_dlFolder.getAncestors());
+		return RepositoryModelUtil.toFolders(_dlFolder.getAncestors());
 	}
 
 	@Override

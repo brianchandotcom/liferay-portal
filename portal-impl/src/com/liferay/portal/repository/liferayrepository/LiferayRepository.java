@@ -56,6 +56,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.util.DLSearcher;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -308,7 +309,7 @@ public class LiferayRepository
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), start, end, obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override
@@ -321,7 +322,7 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), fileEntryTypeId, start, end,
 			obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override
@@ -333,7 +334,7 @@ public class LiferayRepository
 		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
 			getGroupId(), toFolderId(folderId), mimeTypes, start, end, obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override
@@ -345,7 +346,8 @@ public class LiferayRepository
 			dlFolderService.getFileEntriesAndFileShortcuts(
 				getGroupId(), toFolderId(folderId), status, start, end);
 
-		return toFileEntriesAndFolders(dlFileEntriesAndFileShortcuts);
+		return RepositoryModelUtil.toFileEntriesAndFolders(
+			dlFileEntriesAndFileShortcuts);
 	}
 
 	@Override
@@ -470,7 +472,7 @@ public class LiferayRepository
 			getGroupId(), toFolderId(parentFolderId), status,
 			includeMountfolders, start, end, obc);
 
-		return toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
 
 	@Override
@@ -484,7 +486,8 @@ public class LiferayRepository
 				getGroupId(), toFolderId(folderId), status, includeMountFolders,
 				start, end, obc);
 
-		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
+		return RepositoryModelUtil.toFileEntriesAndFolders(
+			dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
 	@Override
@@ -499,7 +502,8 @@ public class LiferayRepository
 				getGroupId(), toFolderId(folderId), status, mimeTypes,
 				includeMountFolders, start, end, obc);
 
-		return toFileEntriesAndFolders(dlFoldersAndFileEntriesAndFileShortcuts);
+		return RepositoryModelUtil.toFileEntriesAndFolders(
+			dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
 	@Override
@@ -557,7 +561,7 @@ public class LiferayRepository
 		List<DLFolder> dlFolders = dlFolderService.getMountFolders(
 			getGroupId(), toFolderId(parentFolderId), start, end, obc);
 
-		return toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
 
 	@Override
@@ -579,7 +583,7 @@ public class LiferayRepository
 				getGroupId(), userId, toFolderId(rootFolderId), start, end,
 				obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override
@@ -593,7 +597,7 @@ public class LiferayRepository
 				getGroupId(), userId, getRepositoryId(),
 				toFolderId(rootFolderId), mimeTypes, status, start, end, obc);
 
-		return toFileEntries(dlFileEntries);
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
 	@Override

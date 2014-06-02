@@ -21,6 +21,7 @@ import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class FolderUtil extends LiferayBase {
 		List<DLFolder> dlFolders = DLFolderUtil.findByG_P(
 			repositoryId, parentFolderId);
 
-		return _instance.toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
 
 	public static List<Folder> findByRepositoryId(long repositoryId)
@@ -77,9 +78,7 @@ public class FolderUtil extends LiferayBase {
 
 		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
 
-		return _instance.toFolders(dlFolders);
+		return RepositoryModelUtil.toFolders(dlFolders);
 	}
-
-	private static FolderUtil _instance = new FolderUtil();
 
 }

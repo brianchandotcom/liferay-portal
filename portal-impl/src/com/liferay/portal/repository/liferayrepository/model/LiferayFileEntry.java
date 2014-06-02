@@ -34,6 +34,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.InputStream;
@@ -222,7 +223,8 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 
-		return toFileVersions(_dlFileEntry.getFileVersions(status));
+		return RepositoryModelUtil.toFileVersions(
+			_dlFileEntry.getFileVersions(status));
 	}
 
 	@Override

@@ -147,6 +147,36 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
+	protected void addComment(
+			long userId, long groupId, String className, long classPK,
+			String body, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		MBMessageDisplay messageDisplay =
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				userId, groupId, className, classPK,
+				WorkflowConstants.STATUS_APPROVED);
+
+		MBThread thread = messageDisplay.getThread();
+
+		long threadId = thread.getThreadId();
+		long parentMessageId = thread.getRootMessageId();
+
+		List<MBMessage> messages =
+			MBMessageLocalServiceUtil.getThreadMessages(
+				threadId, WorkflowConstants.STATUS_APPROVED);
+
+		for (MBMessage message : messages) {
+			if (message.getBody().equals(body)) {
+				throw new DuplicateCommentException();
+			}
+		}
+
+		MBMessageLocalServiceUtil.addDiscussionMessage(
+			userId, StringPool.BLANK, groupId, className, classPK, threadId,
+			parentMessageId, StringPool.BLANK, body, serviceContext);
+	}
+
 	protected void addPingback(long companyId) throws Exception {
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED) {
 			throw new PingbackDisabledException("Pingbacks are disabled");
@@ -165,38 +195,17 @@ public class PingbackMethodImpl implements Method {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
+		String urlTitle = entry.getUrlTitle();
 
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
 		String body =
 			"[...] " + getExcerpt() + " [...] [url=" + _sourceUri + "]" +
-				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
-					"[/url]";
-
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				threadId, WorkflowConstants.STATUS_APPROVED);
-
-		for (MBMessage message : messages) {
-			if (message.getBody().equals(body)) {
-				throw new DuplicateCommentException();
-			}
-		}
-
-		String urlTitle = entry.getUrlTitle();
+			LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
+			"[/url]";
 
 		ServiceContext serviceContext = buildServiceContext(
 			companyId, groupId, urlTitle);
 
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, StringPool.BLANK, groupId, className, classPK, threadId,
-			parentMessageId, StringPool.BLANK, body, serviceContext);
+		addComment(userId, groupId, className, classPK, body, serviceContext);
 	}
 
 	protected ServiceContext buildServiceContext(

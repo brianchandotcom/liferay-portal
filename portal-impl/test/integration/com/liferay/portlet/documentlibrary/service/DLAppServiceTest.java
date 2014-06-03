@@ -18,14 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
@@ -45,7 +42,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -105,18 +101,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			_userIds[i] = user.getUserId();
 		}
-
-		MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-		_originalSyncDestination = messageBus.getDestination(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		SynchronousDestination destination = new SynchronousDestination();
-
-		destination.setName(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		messageBus.addDestination(destination);
 	}
 
 	@After
@@ -130,13 +114,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
 			UserLocalServiceUtil.deleteUser(_userIds[i]);
-		}
-
-		MessageBusUtil.removeDestination(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		if (_originalSyncDestination != null) {
-			MessageBusUtil.addDestination(_originalSyncDestination);
 		}
 	}
 
@@ -610,7 +587,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private FileEntry _fileEntry;
 	private long[] _fileEntryIds;
-	private Destination _originalSyncDestination;
 	private long[] _userIds;
 
 	private class AddFileEntryThread extends DoAsUserThread {

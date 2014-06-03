@@ -135,13 +135,15 @@ for (int j = 0; j < folderColumns.length; j++) {
 							Folder subfolder = (Folder)subfolders.get(k);
 
 							rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
+
+							String name = HtmlUtil.escape(subfolder.getName());
+
+							if (((k + 1) < subfolders.size()) || (curFoldersCount > subfolders.size())) {
+								name += StringPool.COMMA_AND_SPACE;
+							}
 						%>
 
-							<a href="<%= rowURL %>" /><%= HtmlUtil.escape(subfolder.getName()) %></a>
-
-							<c:if test="<%= (k + 1) < subfolders.size() %>">
-								,
-							</c:if>
+							<a href="<%= rowURL %>" /><%= name %></a>
 
 						<%
 						}
@@ -150,7 +152,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 						%>
 
 						<c:if test="<%= curFoldersCount > subfolders.size() %>">
-							,<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+							<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
 						</c:if>
 					</c:if>
 				</c:if>

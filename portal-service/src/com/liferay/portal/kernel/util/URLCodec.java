@@ -247,11 +247,11 @@ public class URLCodec {
 	}
 
 	private static int _charToHex(char c) {
-		if ((c >= CharPool.LOWER_CASE_A) && (c <= CharPool.LOWER_CASE_Z)) {
+		if ((c >= CharPool.LOWER_CASE_A) && (c <= CharPool.LOWER_CASE_F)) {
 			return c - CharPool.LOWER_CASE_A + 10;
 		}
 
-		if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
+		if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_F)) {
 			return c - CharPool.UPPER_CASE_A + 10;
 		}
 
@@ -274,6 +274,11 @@ public class URLCodec {
 			else {
 				break;
 			}
+		}
+
+		if (encodedString.length() < (start + count * 3)) {
+			throw new IllegalArgumentException(
+				"Invalid URL encoding " + encodedString);
 		}
 
 		ByteBuffer byteBuffer = ByteBuffer.allocate(count);

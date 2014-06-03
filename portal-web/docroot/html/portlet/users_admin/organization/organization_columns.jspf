@@ -15,29 +15,11 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
 	name="name"
 >
 
 	<%
-	if (rowURL != null) {
-		buffer.append("<a href=\"");
-		buffer.append(rowURL);
-		buffer.append("\">");
-	}
-
-	buffer.append("<img class=\"organization-icon\" alt=\"\" src=\"");
-	buffer.append(themeDisplay.getPathThemeImages());
-	buffer.append("/common/organization_icon.png\">");
-	buffer.append("<strong>");
-	buffer.append(curOrganization.getName());
-	buffer.append("</strong>");
-
-	if (rowURL != null) {
-		buffer.append("</a>");
-	}
-
 	int suborganizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), curOrganization.getOrganizationId(), null, null, null, null, organizationParams);
 
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
@@ -45,26 +27,47 @@
 	userParams.put("usersOrgs", curOrganization.getOrganizationId());
 
 	int organizationUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, userParams);
-
-	if ((suborganizationsCount > 0) || (organizationUserCount > 0)) {
-		buffer.append("<br /><em class=\"organization-details\">");
-
-		if (suborganizationsCount > 0) {
-			buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount), false) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount), false));
-		}
-
-		if ((suborganizationsCount > 0) && (organizationUserCount > 0)) {
-			buffer.append(StringPool.SPACE + StringUtil.toLowerCase(LanguageUtil.get(pageContext, "and")) + StringPool.SPACE);
-		}
-
-		if (organizationUserCount > 0) {
-			buffer.append((organizationUserCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(organizationUserCount), false) : LanguageUtil.format(pageContext, "x-users", String.valueOf(organizationUserCount), false));
-		}
-
-		buffer.append("</em>");
-	}
 	%>
 
+	<c:if test="<%= rowURL != null %>">
+		<a href="<%= rowURL %>">
+			<img alt="" class="organization-icon" src="<%= themeDisplay.getPathThemeImages() + "/common/organization_icon.png" %>">
+
+			<strong><%= curOrganization.getName() %></strong>
+		</a>
+	</c:if>
+
+	<c:if test="<%= (suborganizationsCount > 0) || (organizationUserCount > 0) %>">
+		<br />
+
+		<em class="organization-details">
+			<c:if test="<%= suborganizationsCount > 0 %>">
+				<c:choose>
+					<c:when test="<%= suborganizationsCount == 1 %>">
+						<liferay-ui:message arguments="<%= suborganizationsCount %>" key="x-suborganization" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= suborganizationsCount %>" key="x-suborganizations" />
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+
+			<c:if test="<%= (suborganizationsCount > 0) && (organizationUserCount > 0) %>">
+			   <%= StringUtil.toLowerCase(LanguageUtil.get(pageContext, "and")) %>
+			</c:if>
+
+			<c:if test="<%= organizationUserCount > 0 %>">
+				<c:choose>
+					<c:when test="<%= organizationUserCount == 1 %>">
+						<liferay-ui:message arguments="<%= organizationUserCount %>" key="x-user" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= organizationUserCount %>" key="x-users" />
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</em>
+	</c:if>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text

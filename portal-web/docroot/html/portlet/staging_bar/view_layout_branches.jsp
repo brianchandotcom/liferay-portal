@@ -111,7 +111,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
 
 				<c:if test="<%= layoutBranch.isMaster() %>">
-					(*)
+					<i class="icon-asterisk"></i>
 				</c:if>
 
 				<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">

@@ -17,33 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-
-// Names
-
-String[] names = (String[])request.getAttribute("liferay-ui:tabs:names");
-String namesJS = JS.toScript(names);
-
-// Values
-
-String[] values = (String[])request.getAttribute("liferay-ui:tabs:values");
-
-if ((values == null) || (values.length < names.length)) {
-	values = names;
-}
-
-// Form name
-
 String formName = (String)request.getAttribute("liferay-ui:tabs:formName");
-
-// Param
-
+String[] names = (String[])request.getAttribute("liferay-ui:tabs:names");
+String namesJS = (String)request.getAttribute("liferay-ui:tabs:namesJS");
 String param = (String)request.getAttribute("liferay-ui:tabs:param");
-
-// Value
-
 String value = (String)request.getAttribute("liferay-ui:tabs:value");
-
-if (value == null) {
-	value = ParamUtil.getString(request, param, values[0]);
-}
+String[] values = (String[])request.getAttribute("liferay-ui:tabs:values");
 %>

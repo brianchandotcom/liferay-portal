@@ -104,10 +104,10 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
 
 		ddmFormFields.add(
-			createNestedDDMFormFields(_PARENT_FIELD_NAME, _CHILD_FIELD_NAME));
-		ddmFormFields.add(createRadioDDMFormField(_BOOLEAN_FIELD_NAME));
-		ddmFormFields.add(createSelectDDMFormField(_SELECT_FIELD_NAME));
-		ddmFormFields.add(createTextDDMFormField(_TEXT_FIELD_NAME));
+			createNestedDDMFormFields("ParentField", "ChildField"));
+		ddmFormFields.add(createRadioDDMFormField("BooleanField"));
+		ddmFormFields.add(createSelectDDMFormField("SelectField"));
+		ddmFormFields.add(createTextDDMFormField("TextField"));
 
 		return ddmFormFields;
 	}
@@ -219,16 +219,6 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 
 		Assert.assertEquals(expectedXSD, actualXSD);
 	}
-
-	private static final String _BOOLEAN_FIELD_NAME = "BooleanField";
-
-	private static final String _CHILD_FIELD_NAME = "ChildField";
-
-	private static final String _PARENT_FIELD_NAME = "ParentField";
-
-	private static final String _SELECT_FIELD_NAME = "SelectField";
-
-	private static final String _TEXT_FIELD_NAME = "TextField";
 
 	private DDMFormXSDSerializer _ddmFormXSDSerializer =
 		new DDMFormXSDSerializerImpl();

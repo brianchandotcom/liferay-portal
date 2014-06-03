@@ -746,7 +746,19 @@ public class HttpImpl implements Http {
 				String value = StringPool.BLANK;
 
 				if (kvp.length > 1) {
-					value = decodeURL(kvp[1]);
+					try {
+						value = decodeURL(kvp[1]);
+					}
+					catch (IllegalArgumentException e) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skipping parameter " + key +
+									", it has invalid value " + kvp[1] + " .",
+								e);
+						}
+
+						continue;
+					}
 				}
 
 				List<String> values = tempParameterMap.get(key);
@@ -1088,7 +1100,18 @@ public class HttpImpl implements Http {
 
 				String redirect = param.substring(pos + 1);
 
-				redirect = decodeURL(redirect);
+				try {
+					redirect = decodeURL(redirect);
+				}
+				catch (IllegalArgumentException e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to decode parameter " + param +
+								". Skipping.", e);
+					}
+
+					continue;
+				}
 
 				String newURL = shortenURL(redirect, count - 1);
 

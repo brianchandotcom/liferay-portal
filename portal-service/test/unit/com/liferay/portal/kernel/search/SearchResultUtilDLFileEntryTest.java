@@ -72,14 +72,15 @@ public class SearchResultUtilDLFileEntryTest
 			null
 		);
 
-		searchSingleDocument(createDLFileEntryDocumentWithAlternateKey());
+		SearchResult searchResult = searchSingleDocument(
+			createDLFileEntryDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertThat(
 			"DLAppLocalService is attempted, no file entry returned",
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
 
 		Mockito.verify(
 			dlAppLocalService
@@ -89,7 +90,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertNull(
 			"Indexer and AssetRenderer are both attempted, no summary returned",
-			result.getSummary());
+			searchResult.getSummary());
 
 		verifyStatic();
 
@@ -100,7 +101,7 @@ public class SearchResultUtilDLFileEntryTest
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 			DOCUMENT_CLASS_NAME);
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -132,14 +133,14 @@ public class SearchResultUtilDLFileEntryTest
 
 		document.add(new Field(Field.SNIPPET, "__snippet__"));
 
-		searchSingleDocument(document);
+		SearchResult searchResult = searchSingleDocument(document);
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertNull(
 			"Indexer is attempted, exception is discarded, no summary returned",
-			result.getSummary());
+			searchResult.getSummary());
 
 		verifyStatic();
 
@@ -153,7 +154,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertThat(
 			"no file entry tuples even though a FileEntry was found",
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
 
 		Mockito.verify(
 			dlAppLocalService
@@ -161,7 +162,7 @@ public class SearchResultUtilDLFileEntryTest
 			ENTRY_CLASS_PK
 		);
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -260,21 +261,22 @@ public class SearchResultUtilDLFileEntryTest
 			fileEntry
 		);
 
-		searchSingleDocument(createDLFileEntryDocumentWithAlternateKey());
+		SearchResult searchResult = searchSingleDocument(
+			createDLFileEntryDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
-		Summary summaryFromResult = result.getSummary();
+		Summary summaryFromResult = searchResult.getSummary();
 
 		Assert.assertNotSame(
-			"Summary in result is not the same one returned by the Indexer",
+			"Summary in searchResult is not the same one returned by the Indexer",
 			summary, summaryFromResult);
 
 		Assert.assertEquals(SUMMARY_CONTENT, summaryFromResult.getContent());
 		Assert.assertEquals(SUMMARY_TITLE, summaryFromResult.getTitle());
 
-		List<Tuple> tuples = result.getFileEntryTuples();
+		List<Tuple> tuples = searchResult.getFileEntryTuples();
 
 		Assert.assertEquals(1, tuples.size());
 
@@ -293,33 +295,38 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals("FileEntry Content", summaryFromTuple.getContent());
 		Assert.assertEquals("FileEntry Title", summaryFromTuple.getTitle());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
 	public void testDLFileEntryWithoutKeyInDocument() throws Exception {
-		searchSingleDocument(createDLFileEntryDocument());
+		SearchResult searchResult = searchSingleDocument(
+			createDLFileEntryDocument());
 
-		Assert.assertEquals(DLFILEENTRY_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertThat(
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
 
-		Assert.assertNull(result.getSummary());
+		Assert.assertNull(searchResult.getSummary());
 
 		Assert.assertThat(
 			"DLAppLocalService must not be invoked at all",
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
 
 		verifyZeroInteractions(dlAppLocalService);
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty() {
-		Assert.assertThat(result.getMBMessages(), IsEmptyCollection.empty());
-		Assert.assertThat(result.getVersions(), IsEmptyCollection.empty());
+	protected void assertThatEverythingUnrelatedIsEmpty(
+		SearchResult searchResult) {
+
+		Assert.assertThat(
+			searchResult.getMBMessages(), IsEmptyCollection.empty());
+		Assert.assertThat(
+			searchResult.getVersions(), IsEmptyCollection.empty());
 	}
 
 	protected Document createDLFileEntryDocument() {

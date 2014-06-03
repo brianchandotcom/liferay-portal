@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<root available-locales="pt_BR,en_US" default-locale="en_US">
+	<dynamic-element dataType="string" localizable="false" multiple="false" name="BooleanField" readOnly="false" repeatable="false" required="true" type="radio">
+		<dynamic-element name="option_1234" type="option" value="value 1">
+			<meta-data locale="en_US">
+				<entry name="label">option 1</entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label">opcao 1</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option_1234" type="option" value="value 2">
+			<meta-data locale="en_US">
+				<entry name="label">option 2</entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label">opcao 2</entry>
+			</meta-data>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="ParentField" readOnly="false" repeatable="true" required="false" type="text">
+		<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="ChildField" readOnly="false" repeatable="false" required="false" type="select">
+			<dynamic-element name="option_1234" type="option" value="value 1">
+				<meta-data locale="en_US">
+					<entry name="label">option 1</entry>
+				</meta-data>
+				<meta-data locale="pt_BR">
+					<entry name="label">opcao 1</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option_1234" type="option" value="value 2">
+				<meta-data locale="en_US">
+					<entry name="label">option 2</entry>
+				</meta-data>
+				<meta-data locale="pt_BR">
+					<entry name="label">opcao 2</entry>
+				</meta-data>
+			</dynamic-element>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="predefinedValue">Example</entry>
+			<entry name="label">Text</entry>
+		</meta-data>
+		<meta-data locale="pt_BR">
+			<entry name="predefinedValue">Exemplo</entry>
+			<entry name="label">Texto</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="SelectField" readOnly="false" repeatable="false" required="false" type="select">
+		<dynamic-element name="option_1234" type="option" value="value 1">
+			<meta-data locale="en_US">
+				<entry name="label">option 1</entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label">opcao 1</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option_1234" type="option" value="value 2">
+			<meta-data locale="en_US">
+				<entry name="label">option 2</entry>
+			</meta-data>
+			<meta-data locale="pt_BR">
+				<entry name="label">opcao 2</entry>
+			</meta-data>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="TextField" readOnly="false" repeatable="true" required="false" type="text">
+		<meta-data locale="en_US">
+			<entry name="predefinedValue">Example</entry>
+			<entry name="label">Text</entry>
+		</meta-data>
+		<meta-data locale="pt_BR">
+			<entry name="predefinedValue">Exemplo</entry>
+			<entry name="label">Texto</entry>
+		</meta-data>
+	</dynamic-element>
+</root>

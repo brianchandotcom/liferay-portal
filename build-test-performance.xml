@@ -12,7 +12,7 @@
 				export PATH=${PATH}:${ANT_HOME}/bin:${JAVA_HOME}/bin
 				export SSH_TTY=/dev/pts/7
 
-				cd /home/trunks/svn/benchmark/trunk
+				cd /home/trunks/git/liferay-benchmark-ee
 
 				ant stop all-database all-portal start-visualvm all-grinder all-sample stop
 			]]>

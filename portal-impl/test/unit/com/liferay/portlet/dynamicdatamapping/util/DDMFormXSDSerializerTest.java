@@ -16,13 +16,12 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +29,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -210,14 +210,16 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 		);
 	}
 
-	protected void testXSDMatchesExpected(String xsd) throws Exception {
+	protected void testXSDMatchesExpected(String actualXSD) throws Exception {
 		String expectedXSD = readXML("ddm-form-xsd-serializer-test-data.xml");
 
-		Document document = SAXReaderUtil.read(xsd);
+		Map<String, Map<String, String>> expectedMap =
+			DDMStructureTestUtil.getXSDMap(expectedXSD);
 
-		String actualXSD = document.formattedString();
+		Map<String, Map<String, String>> actualMap =
+			DDMStructureTestUtil.getXSDMap(actualXSD);
 
-		Assert.assertEquals(expectedXSD, actualXSD);
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	private DDMFormXSDSerializer _ddmFormXSDSerializer =

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<root available-locales="pt_BR,en_US" default-locale="en_US">
+<root available-locales="en_US,pt_BR" default-locale="en_US">
 	<dynamic-element dataType="string" localizable="false" multiple="false" name="BooleanField" readOnly="false" repeatable="false" required="true" type="radio">
 		<dynamic-element name="option_1234" type="option" value="value 1">
 			<meta-data locale="en_US">

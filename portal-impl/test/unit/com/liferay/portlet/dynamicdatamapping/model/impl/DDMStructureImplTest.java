@@ -41,7 +41,7 @@ public class DDMStructureImplTest extends BaseDDMTest {
 
 	@Before
 	@Override
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 
 		setUpDDMStructureLocalServiceUtil();
@@ -82,11 +82,20 @@ public class DDMStructureImplTest extends BaseDDMTest {
 		return structure;
 	}
 
-	protected void setUpDDMStructureLocalServiceUtil() throws Exception {
+	protected DDMStructure getStructure(long structureId) {
+		try {
+			return DDMStructureLocalServiceUtil.getStructure(structureId);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected void setUpDDMStructureLocalServiceUtil() {
 		mockStatic(DDMStructureLocalServiceUtil.class);
 
 		when(
-			DDMStructureLocalServiceUtil.getStructure(Matchers.anyLong())
+			getStructure(Matchers.anyLong())
 		).then(
 			new Answer<DDMStructure>() {
 

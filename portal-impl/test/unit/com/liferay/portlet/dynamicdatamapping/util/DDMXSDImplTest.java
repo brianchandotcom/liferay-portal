@@ -34,7 +34,7 @@ public class DDMXSDImplTest extends BaseDDMTest {
 
 	@Before
 	@Override
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 
 		_document = createSampleDocument();

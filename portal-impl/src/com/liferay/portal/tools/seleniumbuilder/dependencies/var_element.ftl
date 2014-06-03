@@ -126,6 +126,10 @@
 	</#if>
 
 	${variableContext}.put("${varName}", RuntimeVariables.replaceRegularExpression(RuntimeVariables.evaluateVariable("${input}", ${variableContext}), "${pattern}", ${group}));
+<#elseif varElement.attributeValue("property-value")??>
+	<#assign propertyValue = varElement.attributeValue("property-value")?upper_case>
+
+	${variableContext}.put("${varName}", TestPropsValues.${propertyValue?replace(".", "_")});
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

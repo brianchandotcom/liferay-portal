@@ -386,7 +386,11 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ServerAdministration#executeServerActions">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
 			<var name="actionsDescription" value="Clean Up Permissions" />
 		</execute>
 

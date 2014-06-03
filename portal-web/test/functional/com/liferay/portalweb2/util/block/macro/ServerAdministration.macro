@@ -37,11 +37,7 @@
 		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="executeServerActions">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
-		</execute>
-
+	<command name="executeServerResourcesActions">
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />

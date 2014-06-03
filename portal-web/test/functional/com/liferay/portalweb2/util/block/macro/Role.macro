@@ -629,16 +629,16 @@
 			</elseif>
 			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_LANGUAGE" />
-					<then>
-						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_LANGUAGE" />
-						<var name="permissionNavigationValue" value="Language" />
-					</then>
-				</elseif>
-				<elseif>
-					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS" />
 				<then>
-						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS" />
-						<var name="permissionNavigationValue" value="Message Boards" />
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_LANGUAGE" />
+					<var name="permissionNavigationValue" value="Language" />
+				</then>
+			</elseif>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS" />
+				<then>
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS" />
+					<var name="permissionNavigationValue" value="Message Boards" />
 				</then>
 			</elseif>
 			<elseif>
@@ -732,9 +732,9 @@
 			<else>
 				<while>
 					<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />
-				<then>
+					<then>
 						<execute action="CPRoles#assertClick" locator-key1="PAGINATION_NEXT_BUTTON" value1="Next" />
-				</then>
+					</then>
 				</while>
 
 				<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />

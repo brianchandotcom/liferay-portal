@@ -247,6 +247,70 @@ public class DynamicCSSUtil {
 		return parsedContent;
 	}
 
+	/**
+	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
+	 *      com.liferay.portal.servlet.filters.aggregate.ServletPaths, String)
+	 */
+	protected static String propagateQueryString(
+		String content, String queryString) {
+
+		StringBuilder sb = new StringBuilder(content.length());
+
+		int pos = 0;
+
+		while (true) {
+			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
+			int importY = content.indexOf(
+				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
+
+			if ((importX == -1) || (importY == -1)) {
+				sb.append(content.substring(pos));
+
+				break;
+			}
+
+			sb.append(_CSS_IMPORT_BEGIN);
+
+			String url = content.substring(
+				importX + _CSS_IMPORT_BEGIN.length(), importY);
+
+			char firstChar = url.charAt(0);
+
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
+			}
+
+			url = StringUtil.unquote(url);
+
+			sb.append(url);
+
+			if (url.indexOf(CharPool.QUESTION) != -1) {
+				sb.append(CharPool.AMPERSAND);
+			}
+			else {
+				sb.append(CharPool.QUESTION);
+			}
+
+			sb.append(queryString);
+
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
+			}
+
+			sb.append(_CSS_IMPORT_END);
+
+			pos = importY + _CSS_IMPORT_END.length();
+		}
+
+		return sb.toString();
+	}
+
 	private static URL _getCacheResourceURL(
 			ServletContext servletContext, HttpServletRequest request,
 			String resourcePath)
@@ -512,39 +576,6 @@ public class DynamicCSSUtil {
 		}
 
 		return content;
-	}
-
-	/**
-	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
-	 *      com.liferay.portal.servlet.filters.aggregate.ServletPaths, String)
-	 */
-	private static String propagateQueryString(
-		String content, String queryString) {
-
-		StringBuilder sb = new StringBuilder(content.length());
-
-		int pos = 0;
-
-		while (true) {
-			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
-			int importY = content.indexOf(
-				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
-
-			if ((importX == -1) || (importY == -1)) {
-				sb.append(content.substring(pos));
-
-				break;
-			}
-
-			sb.append(content.substring(pos, importY));
-			sb.append(CharPool.QUESTION);
-			sb.append(queryString);
-			sb.append(_CSS_IMPORT_END);
-
-			pos = importY + _CSS_IMPORT_END.length();
-		}
-
-		return sb.toString();
 	}
 
 	private static final String _CSS_IMPORT_BEGIN = "@import url(";

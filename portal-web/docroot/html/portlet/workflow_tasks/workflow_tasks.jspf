@@ -59,24 +59,15 @@ else if (type.equals("assigned-to-my-roles")) {
 		%>
 
 		<c:if test="<%= allTasks %>">
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-			>
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= workflowTask.isAssignedToSingleUser() && (workflowTask.getAssigneeUserId() > 0) %>">
 
-				<%
-				if (workflowTask.isAssignedToSingleUser() && (workflowTask.getAssigneeUserId() > 0)) {
+					<%
 					User assigneeUser = UserLocalServiceUtil.getUser(workflowTask.getAssigneeUserId());
+					%>
 
-					buffer.append("<img alt=\"");
-					buffer.append(HtmlUtil.escape(assigneeUser.getFullName()));
-					buffer.append("\" class=\"user-avatar\" src=\"");
-					buffer.append(assigneeUser.getPortraitURL(themeDisplay));
-					buffer.append("\" title=\"");
-					buffer.append(HtmlUtil.escape(assigneeUser.getFullName()));
-					buffer.append("\" />");
-				}
-				%>
-
+					<img alt="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" class="user-avatar" src="<%= assigneeUser.getPortraitURL(themeDisplay) %>" title="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" />
+				</c:if>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 
@@ -87,83 +78,48 @@ else if (type.equals("assigned-to-my-roles")) {
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="task"
 		>
-
-			<%
-			buffer.append("<span class=\"task-name\" id=\"");
-			buffer.append(workflowTask.getWorkflowTaskId());
-			buffer.append("\">");
-			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowTask.getName())));
-			buffer.append("</span>");
-			%>
-
+			<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
+				<liferay-ui:message key="<%= HtmlUtil.escape(workflowTask.getName()) %>" />
+			</span>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="asset-title"
-		>
-
-			<%
-			buffer.append(HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)));
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="asset-type"
-		>
+			value="<%= workflowHandler.getType(locale) %>"
+		/>
 
-			<%
-			buffer.append(workflowHandler.getType(locale));
-			%>
+		<%
+		List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
 
-		</liferay-ui:search-container-column-text>
+		WorkflowLog workflowLog = null;
+
+		if (!workflowLogs.isEmpty()) {
+			workflowLog = workflowLogs.get(0);
+		}
+		%>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="last-activity-date"
-		>
-
-			<%
-			List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
-
-			if (workflowLogs.isEmpty()) {
-				buffer.append(LanguageUtil.get(pageContext, "never"));
-			}
-			else {
-				WorkflowLog workflowLog = workflowLogs.get(0);
-
-				buffer.append(dateFormatDateTime.format(workflowLog.getCreateDate()));
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value='<%= (workflowLog == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="due-date"
 			orderable="<%= true %>"
-		>
-
-			<%
-			if (workflowTask.getDueDate() == null) {
-				buffer.append(LanguageUtil.get(pageContext, "never"));
-			}
-			else {
-				buffer.append(dateFormatDateTime.format(workflowTask.getDueDate()));
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+		/>
 
 		<c:if test='<%= !allTasks && !tabs1.equals("completed") %>'>
 			<liferay-ui:search-container-column-jsp

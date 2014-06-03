@@ -52,7 +52,7 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticle() {
-		searchSingleDocument(newDocumentJournalArticleWithVersion());
+		searchSingleDocument(createJournalArticleDocumentWithVersion());
 
 		assertThatSearchResultHasVersion();
 
@@ -80,7 +80,7 @@ public class SearchResultUtilJournalArticleTest
 			indexer
 		);
 
-		Document document = newDocumentJournalArticleWithVersion();
+		Document document = createJournalArticleDocumentWithVersion();
 
 		searchSingleDocument(document);
 
@@ -111,8 +111,8 @@ public class SearchResultUtilJournalArticleTest
 		Assert.assertEquals(1, versions.size());
 	}
 
-	protected Document newDocumentJournalArticleWithVersion() {
-		Document document = newDocument(JOURNALARTICLE_CLASS_NAME);
+	protected Document createJournalArticleDocumentWithVersion() {
+		Document document = createDocument(JOURNALARTICLE_CLASS_NAME);
 
 		document.add(new Field(Field.VERSION, DOCUMENT_VERSION));
 

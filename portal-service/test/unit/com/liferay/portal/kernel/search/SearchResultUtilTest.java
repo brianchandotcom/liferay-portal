@@ -142,8 +142,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	public void testTwoDocumentsWithSameEntryKey() {
 		String className = "__className__";
 
-		Document documentA = newDocument(className);
-		Document documentB = newDocument(className);
+		Document documentA = createDocument(className);
+		Document documentB = createDocument(className);
 
 		List<SearchResult> searchResults = getSearchResults(
 			documentA, documentB);

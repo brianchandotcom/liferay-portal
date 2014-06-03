@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -356,6 +361,11 @@
 <tr>
 	<td>COMMENTS_UNSUBSCRIBE_FROM_COMMENTS</td>
 	<td>link=Unsubscribe from Comments</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_AUTHOR</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>

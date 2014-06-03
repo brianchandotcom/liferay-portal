@@ -192,6 +192,63 @@
 		</if>
 	</command>
 
+	<command name="addPGViaFlashUploader">
+		<if>
+			<equals arg1="${stagingActivated}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+
+		<if>
+			<isset var="dmDocumentFileList" />
+			<then>
+				<for list="${dmDocumentFileList}" param="dmDocumentFile">
+					<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
+
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+
+					<if>
+						<equals arg1="${uploadTempFile}" arg2="true" />
+						<then>
+							<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						</then>
+						<else>
+							<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						</else>
+					</if>
+
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
+
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+
+				<if>
+					<equals arg1="${uploadTempFile}" arg2="true" />
+					<then>
+						<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+					</then>
+					<else>
+						<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+					</else>
+				</if>
+
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+				<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+			</else>
+		</if>
+
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+	</command>
+
 	<command name="addPGViaMG">
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
 
@@ -293,6 +350,17 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="CHECKOUT_SUCCESS_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 	</command>
 
+	<command name="deleteCommentPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmediaDocument#makeVisible" locator-key1="COMMENTS_DELETE" value1="Delete" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_DELETE_LINK" value1="Delete" />
+		<execute action="PGDocumentsandmediaDocument#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
 	<command name="deletePG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -338,6 +406,14 @@
 		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
 
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download (${dmDocumentSize})" />
+	</command>
+
+	<command name="downloadPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
 	</command>
 
 	<command name="editCmdPG">

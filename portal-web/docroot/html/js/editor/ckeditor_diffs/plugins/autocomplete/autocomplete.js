@@ -26,22 +26,12 @@
 		inputNode: {
 			valueFn: '_getInputElement',
 			writeOnce: true
-		},
-
-		replaceMode: {
-			validator: Lang.isString,
-			value: 'text'
 		}
 	};
 
 	AutoCompleteCKEditor.prototype= {
 		initializer: function() {
 			var instance = this;
-
-			instance._replaceFn = {
-				html: A.bind('_replaceHtml', instance),
-				text: A.bind('_replaceText', instance)
-			};
 
 			instance._bindUI();
 		},
@@ -390,91 +380,6 @@
 			};
 		},
 
-		_replaceText: function(text, prevTermPosition) {
-			var instance = this;
-
-			var addChars;
-
-			var prevTermContainer = prevTermPosition.container;
-			var offset = prevTermPosition.index;
-
-			var containerAscendant = instance._getContainerAscendant(prevTermContainer);
-
-			var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
-
-			var term = instance.get(STR_TERM);
-
-			var node = updateWalker.next();
-
-			var prevNode = node;
-
-			var remainingChars = term + text;
-
-			while (node) {
-				if (node.type === CKEDITOR.NODE_TEXT) {
-					var nodeText = node.getText();
-
-					var availableChars = nodeText.length;
-
-					if (offset !== -1) {
-						availableChars -= offset;
-
-						addChars = remainingChars.substring(0, availableChars);
-
-						node.setText(nodeText.substring(0, offset) + addChars);
-
-						offset = -1;
-
-						remainingChars = remainingChars.substring(availableChars);
-					}
-					else {
-						var spaceIndex = nodeText.indexOf(STR_SPACE);
-
-						if (!availableChars || spaceIndex === 0) {
-							prevNode.setText(prevNode.getText() + remainingChars);
-
-							updateWalker.end();
-
-							remainingChars = STR_EMPTY;
-						}
-						else if (spaceIndex !== -1) {
-							node.setText(remainingChars + nodeText.substring(spaceIndex));
-
-							updateWalker.end();
-
-							remainingChars = STR_EMPTY;
-						}
-						else {
-							addChars = remainingChars.substring(0, availableChars);
-
-							node.setText(addChars);
-
-							remainingChars = remainingChars.substring(availableChars);
-						}
-					}
-
-					prevNode = node;
-				}
-
-				node = updateWalker.next();
-			}
-
-			if (remainingChars.length) {
-				prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
-			}
-
-			var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
-
-			if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
-				caretIndex = prevNode.getText().length;
-			}
-
-			return {
-				index: caretIndex,
-				node: prevNode
-			};
-		},
-
 		_setCaretIndex: function(node, caretIndex) {
 			var instance = this;
 
@@ -494,7 +399,7 @@
 
 			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
-			var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTriggerPosition);
+			var caretPosition = instance._replaceHtml(value, prevTriggerPosition);
 
 			instance._setCaretIndex(caretPosition.node, caretPosition.index);
 

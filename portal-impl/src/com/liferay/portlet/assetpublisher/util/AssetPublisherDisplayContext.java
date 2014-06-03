@@ -81,12 +81,19 @@ public class AssetPublisherDisplayContext {
 
 			String selectionStyle = getSelectionStyle();
 
+			long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+
 			if (selectionStyle.equals("dynamic")) {
 				_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 					_portletPreferences);
-			}
 
-			long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+				if (assetCategoryId > 0 &&
+					!ArrayUtil.contains(_allAssetCategoryIds, assetCategoryId))
+				{
+					_allAssetCategoryIds = ArrayUtil.append(
+						_allAssetCategoryIds, assetCategoryId);
+				}
+			}
 
 			if (assetCategoryId > 0) {
 				if (selectionStyle.equals("manual")) {
@@ -105,12 +112,19 @@ public class AssetPublisherDisplayContext {
 
 			String selectionStyle = getSelectionStyle();
 
+			String assetTagName = ParamUtil.getString(_request, "tag");
+
 			if (selectionStyle.equals("dynamic")) {
 				_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
 					_portletPreferences);
-			}
 
-			String assetTagName = ParamUtil.getString(_request, "tag");
+				if (!assetTagName.isEmpty() &&
+					!ArrayUtil.contains(_allAssetTagNames, assetTagName)) {
+
+					_allAssetTagNames = ArrayUtil.append(
+						_allAssetTagNames, assetTagName);
+				}
+			}
 
 			if (Validator.isNotNull(assetTagName)) {
 				if (selectionStyle.equals("manual")) {

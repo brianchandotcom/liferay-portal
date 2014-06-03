@@ -244,35 +244,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 							</liferay-portlet:renderURL>
 
-							<liferay-ui:search-container-column-text
-								buffer="buffer"
-								href="<%= rowURL %>"
-								name="thread"
-							>
-
-								<%
-								String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
-
-								if ((threadPriority != null) && (thread.getPriority() > 0)) {
-									buffer.append("<img alt=\"");
-									buffer.append(threadPriority[0]);
-									buffer.append("\" class=\"thread-priority\" src=\"");
-									buffer.append(threadPriority[1]);
-									buffer.append("\" title=\"");
-									buffer.append(threadPriority[0]);
-									buffer.append("\" />");
-								}
-
-								if (thread.isLocked()) {
-									buffer.append("<i class=\"icon-lock\" title=\"");
-									buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-									buffer.append("\"></i>");
-								}
-
-								buffer.append(message.getSubject());
-								%>
-
-							</liferay-ui:search-container-column-text>
+							<%@ include file="/html/portlet/message_boards/thread_priority.jspf" %>
 
 							<liferay-ui:search-container-column-text
 								buffer="buffer"
@@ -440,39 +412,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 					</liferay-portlet:renderURL>
 
-					<liferay-ui:search-container-column-text
-						buffer="buffer"
-						href="<%= rowURL %>"
-						name="thread"
-					>
-
-						<%
-						String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
-
-						if ((threadPriority != null) && (thread.getPriority() > 0)) {
-							buffer.append("<img alt=\"");
-							buffer.append(threadPriority[0]);
-							buffer.append("\" class=\"thread-priority\" src=\"");
-							buffer.append(threadPriority[1]);
-							buffer.append("\" title=\"");
-							buffer.append(threadPriority[0]);
-							buffer.append("\" />");
-						}
-
-						if (thread.isLocked()) {
-							buffer.append("<img alt=\"");
-							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-							buffer.append("\" class=\"thread-priority\" src=\"");
-							buffer.append(themeDisplay.getPathThemeImages() + "/common/lock.png");
-							buffer.append("\" title=\"");
-							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
-							buffer.append("\" />");
-						}
-
-						buffer.append(message.getSubject());
-						%>
-
-					</liferay-ui:search-container-column-text>
+					<%@ include file="/html/portlet/message_boards/thread_priority.jspf" %>
 
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"

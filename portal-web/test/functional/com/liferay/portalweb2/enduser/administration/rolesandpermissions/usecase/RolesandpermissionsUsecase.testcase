@@ -214,13 +214,9 @@
 
 		<execute action="Permissions#assertTextEquals" locator-key1="CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="${teamName}" />
 
-		<execute macro="Page#gotoUsersCP">
+		<execute macro="PermissionsInline#gotoSiteTeamsCP">
 			<var name="portletName" value="Site Teams" />
 			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="Team#viewPermissionsCP">
-			<var name="teamName" value="Site Team Name" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

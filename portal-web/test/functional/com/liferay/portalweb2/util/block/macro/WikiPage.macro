@@ -390,14 +390,6 @@
 		</if>
 
 		<if>
-			<isset var="useHTML" />
-			<then>
-				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
-				<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
 				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="Creole" />
@@ -427,10 +419,10 @@
 		</if>
 
 		<if>
-			<equals arg1="${viewWYSIWYGResize}" arg2="true" />
+			<equals arg1="${viewCKEditorResizer}" arg2="true" />
 			<then>
-				<execute action="PGWikiAddpage#assertElementPresent" locator-key1="RESIZE_TOGGLE" />
-				<execute action="PGWikiAddpage#mouseDown" locator-key1="RESIZE_TOGGLE" />
+				<execute action="CKEditor#assertVisible" locator-key1="RESIZER" />
+				<execute action="CKEditor#mouseDown" locator-key1="RESIZER" />
 			</then>
 		</if>
 
@@ -1199,6 +1191,23 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 	</command>
 
+	<command name="viewCKEditorResizer">
+		<execute macro="WikiPage#gotoPageEditPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<if>
+			<equals arg1="${changeWikiFormat}" arg2="true" />
+			<then>
+				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="${newFormat}" />
+				<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from ${oldFormat} to ${newFormat}. Do you want to continue?" />
+			</then>
+		</if>
+
+		<execute action="CKEditor#assertVisible" locator-key1="RESIZER" />
+		<execute action="CKEditor#mouseDown" locator-key1="RESIZER" />
+	</command>
+
 	<command name="viewCommentPG">
 		<var name="key_commentBody" value="${commentBody}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
@@ -1542,22 +1551,5 @@
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TAG" value1="${tagName}" />
-	</command>
-
-	<command name="viewWYSIWYGResize">
-		<execute macro="WikiPage#gotoPageEditPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
-		<if>
-			<equals arg1="${wikiFormat}" arg2="true" />
-			<then>
-				<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="${newFormat}" />
-				<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from ${oldFormat} to ${newFormat}. Do you want to continue?" />
-			</then>
-		</if>
-
-		<execute action="PGWikiAddpage#assertElementPresent" locator-key1="RESIZE_TOGGLE" />
-		<execute action="PGWikiAddpage#mouseDown" locator-key1="RESIZE_TOGGLE" />
 	</command>
 </definition>

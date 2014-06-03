@@ -28,6 +28,31 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="ViewCKEditorResizerAfterEditing" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="viewCKEditorResizer" value="true" />
+			<var name="viewFormat" value="true" />
+			<var name="wikiFormat" value="Creole" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#viewCKEditorResizer">
+			<var name="changeWikiFormat" value="true" />
+			<var name="newFormat" value="HTML" />
+			<var name="oldFormat" value="Creole" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+	</command>
+
 	<command name="ViewNoWikiXSSviaAddPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -78,31 +103,6 @@
 
 		<execute macro="Breadcrumb#viewCurrentLocationPG">
 			<var name="breadcrumbListVisible" value="Draft Pages" />
-		</execute>
-	</command>
-
-	<command name="ViewWikiEditorResizerAfterEditing" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#addPG">
-			<var name="viewFormat" value="true" />
-			<var name="viewWYSIWYGResize" value="true" />
-			<var name="wikiFormat" value="Creole" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#viewWYSIWYGResize">
-			<var name="newFormat" value="HTML" />
-			<var name="oldFormat" value="Creole" />
-			<var name="wikiFormat" value="true" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 	</command>
 </definition>

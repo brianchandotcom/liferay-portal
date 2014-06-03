@@ -74,11 +74,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESIZE_TOGGLE</td>
-	<td>//span[@id='cke_1_resizer']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORIZATION_DROPDOWN</td>
 	<td>//div[@id='wikiPageCategorizationPanel']/div</td>
 	<td></td>

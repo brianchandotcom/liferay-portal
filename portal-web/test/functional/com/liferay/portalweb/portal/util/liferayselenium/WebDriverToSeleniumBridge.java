@@ -353,24 +353,15 @@ public class WebDriverToSeleniumBridge
 	public void dragAndDrop(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
-
-		String[] coords = coordString.split(",");
-
-		int x = GetterUtil.getInteger(coords[0]);
-		int y = GetterUtil.getInteger(coords[1]);
-
 		try {
-			WebElement scrolledWebElement = getWebElement(locator);
+			Point point = webElement.getLocation();
 
-			Point point = scrolledWebElement.getLocation();
-
-			int xCoordinate = point.getX() + 45;
-			int yCoordinate = point.getY() + 100;
+			int x = point.getX() + 45;
+			int y = point.getY() + 100;
 
 			Robot robot = new Robot();
 
-			robot.mouseMove(xCoordinate, yCoordinate);
+			robot.mouseMove(x, y);
 
 			robot.delay(1500);
 
@@ -378,7 +369,12 @@ public class WebDriverToSeleniumBridge
 
 			robot.delay(1500);
 
-			robot.mouseMove((xCoordinate + x), (yCoordinate + y));
+			String[] coords = coordString.split(",");
+
+			x += GetterUtil.getInteger(coords[0]);
+			y += GetterUtil.getInteger(coords[1]);
+
+			robot.mouseMove(x, y);
 
 			robot.delay(1500);
 

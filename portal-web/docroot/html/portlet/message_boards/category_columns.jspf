@@ -44,13 +44,15 @@
 			MBCategory subcategory = (MBCategory)subcategories.get(j);
 
 			rowURL.setParameter("mbCategoryId", String.valueOf(subcategory.getCategoryId()));
+
+			String name = HtmlUtil.escape(subcategory.getName());
+
+			if (((j + 1) < subcategories.size()) || (subcategoriesCount > subcategories.size())) {
+				name += StringPool.COMMA_AND_SPACE;
+			}
 		%>
 
-			<a href="<%= rowURL %>"><%= HtmlUtil.escape(subcategory.getName()) %></a>
-
-			<c:if test="<%= (j + 1) < subcategories.size() %>">
-				,
-			</c:if>
+			<a href="<%= rowURL %>"><%= name %></a>
 
 		<%
 		}
@@ -59,7 +61,7 @@
 		%>
 
 		<c:if test="<%= subcategoriesCount > subcategories.size() %>">
-			, <a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+			<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
 		</c:if>
 	</c:if>
 

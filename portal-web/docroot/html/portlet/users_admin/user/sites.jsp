@@ -201,25 +201,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
 		/>
 
+		<%
+		List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
+		%>
+
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			name="roles"
-		>
-
-			<%
-			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
-
-			for (Role role : inheritedRoles) {
-				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-				buffer.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			if (!inheritedRoles.isEmpty()) {
-				buffer.setIndex(buffer.index() - 1);
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= ListUtil.toString(inheritedRoles, Role.TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

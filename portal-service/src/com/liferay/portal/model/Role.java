@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 /**
  * The extended model interface for the Role service. Represents a row in the &quot;Role_&quot; database table, with each column mapped to a property of this class.
@@ -55,6 +56,23 @@ public interface Role extends RoleModel, PersistedModel {
 			@Override
 			public String get(Role role) {
 				return role.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<Role> getTypeClass() {
+				return Role.class;
+			}
+		};
+
+	public static final Accessor<Role, String> TITLE_ACCESSOR = new Accessor<Role, String>() {
+			@Override
+			public String get(Role role) {
+				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
 			}
 
 			@Override

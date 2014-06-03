@@ -2067,9 +2067,14 @@ public class SeleniumBuilderTest {
 		throws Exception {
 
 		test(
-			"TestCasePropertyElementInvalidAttributeValue.testcase",
+			"TestCasePropertyElementInvalidAttributeValue_1.testcase",
+			"Error 1006: Invalid delimiter attribute value in " + _DIR_NAME +
+				"/TestCasePropertyElementInvalidAttributeValue_1.testcase:2");
+
+		test(
+			"TestCasePropertyElementInvalidAttributeValue_2.testcase",
 			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
-				"/TestCasePropertyElementInvalidAttributeValue.testcase:2");
+				"/TestCasePropertyElementInvalidAttributeValue_2.testcase:2");
 	}
 
 	@Test

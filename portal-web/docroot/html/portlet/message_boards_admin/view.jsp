@@ -309,33 +309,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								value="<%= String.valueOf(thread.getViewCount()) %>"
 							/>
 
-							<liferay-ui:search-container-column-text
-								buffer="buffer"
-								href="<%= rowURL %>"
+							<liferay-ui:search-container-column-user
+								date="<%= thread.getLastPostDate() %>"
 								name="last-post"
-							>
-
-								<%
-								if (thread.getLastPostDate() == null) {
-									buffer.append(LanguageUtil.get(pageContext, "none"));
-								}
-								else {
-									buffer.append(LanguageUtil.get(pageContext, "date"));
-									buffer.append(": ");
-									buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
-
-									String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-
-									if (Validator.isNotNull(lastPostByUserName)) {
-										buffer.append("<br />");
-										buffer.append(LanguageUtil.get(pageContext, "by"));
-										buffer.append(": ");
-										buffer.append(lastPostByUserName);
-									}
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
+								userId="<%= thread.getLastPostByUserId() %>"
+							/>
 
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
@@ -514,33 +492,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						value="<%= String.valueOf(thread.getViewCount()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						buffer="buffer"
-						href="<%= rowURL %>"
+					<liferay-ui:search-container-column-user
+						date="<%= thread.getLastPostDate() %>"
 						name="last-post"
-					>
-
-						<%
-						if (thread.getLastPostDate() == null) {
-							buffer.append(LanguageUtil.get(pageContext, "none"));
-						}
-						else {
-							buffer.append(LanguageUtil.get(pageContext, "date"));
-							buffer.append(": ");
-							buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
-
-							String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-
-							if (Validator.isNotNull(lastPostByUserName)) {
-								buffer.append("<br />");
-								buffer.append(LanguageUtil.get(pageContext, "by"));
-								buffer.append(": ");
-								buffer.append(lastPostByUserName);
-							}
-						}
-						%>
-
-					</liferay-ui:search-container-column-text>
+						userId="<%= thread.getLastPostByUserId() %>"
+					/>
 
 					<liferay-ui:search-container-column-jsp
 						align="right"

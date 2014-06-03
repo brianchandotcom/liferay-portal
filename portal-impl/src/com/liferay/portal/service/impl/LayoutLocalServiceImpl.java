@@ -80,7 +80,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
-import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
@@ -910,9 +910,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException, SystemException {
 
-		if (!DLValidationUtil.isValidName(
-				exportImportConfiguration.getName())) {
-
+		if (!DLValidatorUtil.isValidName(exportImportConfiguration.getName())) {
 			throw new LARFileNameException(exportImportConfiguration.getName());
 		}
 

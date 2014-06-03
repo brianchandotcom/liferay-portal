@@ -37,7 +37,7 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public final class DLValidationImpl implements DLValidation {
+public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public boolean isValidName(String name) {

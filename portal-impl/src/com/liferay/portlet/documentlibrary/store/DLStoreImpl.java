@@ -43,7 +43,7 @@ import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.util.DLValidationUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +62,7 @@ public class DLStoreImpl implements DLStore {
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!DLValidationUtil.isValidName(dirName) || dirName.equals("/")) {
+		if (!DLValidatorUtil.isValidName(dirName) || dirName.equals("/")) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -296,7 +296,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!DLValidationUtil.isValidName(dirName)) {
+		if (!DLValidatorUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -317,7 +317,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!DLValidationUtil.isValidName(dirName)) {
+		if (!DLValidatorUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -346,13 +346,13 @@ public class DLStoreImpl implements DLStore {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.documentlibrary.util.DLValidationUtil#isValidName(
+	 *             com.liferay.portlet.documentlibrary.util.DLValidatorUtil#isValidName(
 	 *             String)}
 	 */
 	@Deprecated
 	@Override
 	public boolean isValidName(String name) {
-		return DLValidationUtil.isValidName(name);
+		return DLValidatorUtil.isValidName(name);
 	}
 
 	@Override
@@ -575,10 +575,10 @@ public class DLStoreImpl implements DLStore {
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
-		DLValidationUtil.validateFileName(fileName);
+		DLValidatorUtil.validateFileName(fileName);
 
 		if (validateFileExtension) {
-			DLValidationUtil.validateFileExtension(fileName);
+			DLValidatorUtil.validateFileExtension(fileName);
 		}
 	}
 
@@ -589,7 +589,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidationUtil.validateFileSize(fileName, bytes);
+		DLValidatorUtil.validateFileSize(fileName, bytes);
 	}
 
 	@Override
@@ -599,7 +599,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidationUtil.validateFileSize(fileName, file);
+		DLValidatorUtil.validateFileSize(fileName, file);
 	}
 
 	@Override
@@ -609,7 +609,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidationUtil.validateFileSize(fileName, is);
+		DLValidatorUtil.validateFileSize(fileName, is);
 	}
 
 	@Override
@@ -621,7 +621,7 @@ public class DLStoreImpl implements DLStore {
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
-		DLValidationUtil.validateFileSize(fileName, file);
+		DLValidatorUtil.validateFileSize(fileName, file);
 	}
 
 	@Override
@@ -633,12 +633,12 @@ public class DLStoreImpl implements DLStore {
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
-		DLValidationUtil.validateFileSize(fileName, is);
+		DLValidatorUtil.validateFileSize(fileName, is);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.documentlibrary.util.DLValidationUtil#validateDirectoryName(
+	 *             com.liferay.portlet.documentlibrary.util.DLValidatorUtil#validateDirectoryName(
 	 *             String)}
 	 */
 	@Deprecated
@@ -646,7 +646,7 @@ public class DLStoreImpl implements DLStore {
 	public void validateDirectoryName(String directoryName)
 		throws PortalException {
 
-		DLValidationUtil.validateDirectoryName(directoryName);
+		DLValidatorUtil.validateDirectoryName(directoryName);
 	}
 
 	protected void validate(
@@ -655,7 +655,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidationUtil.validateVersionLabel(versionLabel);
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
 	protected void validate(
@@ -665,7 +665,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidationUtil.validateSourceFileExtension(
+		DLValidatorUtil.validateSourceFileExtension(
 			fileExtension, sourceFileName);
 	}
 
@@ -678,7 +678,7 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			file);
 
-		DLValidationUtil.validateVersionLabel(versionLabel);
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
 	protected void validate(
@@ -689,7 +689,7 @@ public class DLStoreImpl implements DLStore {
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
 
-		DLValidationUtil.validateVersionLabel(versionLabel);
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
 	@BeanReference(type = GroupLocalService.class)

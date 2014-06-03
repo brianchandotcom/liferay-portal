@@ -28,7 +28,7 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public interface DLValidation {
+public interface DLValidator {
 
 	public boolean isValidName(String name);
 

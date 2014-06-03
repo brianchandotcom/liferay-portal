@@ -29,74 +29,74 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class DLValidationUtil {
+public class DLValidatorUtil {
 
-	public static DLValidation getDLValidation() {
-		PortalRuntimePermission.checkGetBeanProperty(DLValidationUtil.class);
+	public static DLValidator getDLValidator() {
+		PortalRuntimePermission.checkGetBeanProperty(DLValidatorUtil.class);
 
-		return _dlValidation;
+		return _dlValidator;
 	}
 
 	public static boolean isValidName(String name) {
-		return getDLValidation().isValidName(name);
+		return getDLValidator().isValidName(name);
 	}
 
 	public static final void validateDirectoryName(String directoryName)
 		throws FolderNameException {
 
-		getDLValidation().validateDirectoryName(directoryName);
+		getDLValidator().validateDirectoryName(directoryName);
 	}
 
 	public static void validateFileExtension(String fileName)
 		throws FileExtensionException, SystemException {
 
-		getDLValidation().validateFileExtension(fileName);
+		getDLValidator().validateFileExtension(fileName);
 	}
 
 	public static void validateFileName(String fileName)
 		throws FileNameException {
 
-		getDLValidation().validateFileName(fileName);
+		getDLValidator().validateFileName(fileName);
 	}
 
 	public static void validateFileSize(String fileName, byte[] bytes)
 		throws FileSizeException, SystemException {
 
-		getDLValidation().validateFileSize(fileName, bytes);
+		getDLValidator().validateFileSize(fileName, bytes);
 	}
 
 	public static void validateFileSize(String fileName, File file)
 		throws FileSizeException, SystemException {
 
-		getDLValidation().validateFileSize(fileName, file);
+		getDLValidator().validateFileSize(fileName, file);
 	}
 
 	public static void validateFileSize(String fileName, InputStream is)
 		throws FileSizeException, SystemException {
 
-		getDLValidation().validateFileSize(fileName, is);
+		getDLValidator().validateFileSize(fileName, is);
 	}
 
 	public static void validateSourceFileExtension(
 			String fileExtension, String sourceFileName)
 		throws SourceFileNameException {
 
-		getDLValidation().validateSourceFileExtension(
+		getDLValidator().validateSourceFileExtension(
 			fileExtension, sourceFileName);
 	}
 
 	public static void validateVersionLabel(String versionLabel)
 		throws InvalidFileVersionException {
 
-		getDLValidation().validateVersionLabel(versionLabel);
+		getDLValidator().validateVersionLabel(versionLabel);
 	}
 
-	public void setDLValidation(DLValidation dlValidation) {
+	public void setDLValidation(DLValidator dlValidator) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_dlValidation = dlValidation;
+		_dlValidator = dlValidator;
 	}
 
-	private static DLValidation _dlValidation;
+	private static DLValidator _dlValidator;
 
 }

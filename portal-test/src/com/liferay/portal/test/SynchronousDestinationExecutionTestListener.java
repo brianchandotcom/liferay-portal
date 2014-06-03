@@ -87,6 +87,8 @@ public class SynchronousDestinationExecutionTestListener
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
+			replaceDestination(
+				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
@@ -107,6 +109,17 @@ public class SynchronousDestinationExecutionTestListener
 
 				messageBus.replace(synchronousDestination);
 			}
+
+			if (destination == null) {
+				_absentDestinationNames.add(destinationName);
+
+				SynchronousDestination synchronousDestination =
+					new SynchronousDestination();
+
+				synchronousDestination.setName(destinationName);
+
+				messageBus.addDestination(synchronousDestination);
+			}
 		}
 
 		public void restorePreviousSync() {
@@ -116,14 +129,16 @@ public class SynchronousDestinationExecutionTestListener
 
 			ProxyModeThreadLocal.setForceSync(_forceSync);
 
-			if (!_asyncServiceDestinations.isEmpty()) {
-				MessageBus messageBus = MessageBusUtil.getMessageBus();
+			MessageBus messageBus = MessageBusUtil.getMessageBus();
 
-				for (Destination destination : _asyncServiceDestinations) {
-					messageBus.replace(destination);
-				}
+			for (Destination destination : _asyncServiceDestinations) {
+				messageBus.replace(destination);
+			}
 
-				_asyncServiceDestinations.clear();
+			_asyncServiceDestinations.clear();
+
+			for (String absentDestinationName : _absentDestinationNames) {
+				messageBus.removeDestination(absentDestinationName);
 			}
 		}
 
@@ -135,6 +150,7 @@ public class SynchronousDestinationExecutionTestListener
 			_sync = sync;
 		}
 
+		private List<String> _absentDestinationNames = new ArrayList<String>();
 		private List<Destination> _asyncServiceDestinations =
 			new ArrayList<Destination>();
 		private boolean _forceSync;

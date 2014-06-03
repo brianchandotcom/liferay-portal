@@ -14,14 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -66,29 +63,10 @@ public class DLAppLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-		_originalSyncDestination = messageBus.getDestination(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		SynchronousDestination destination = new SynchronousDestination();
-
-		destination.setName(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		messageBus.addDestination(destination);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		MessageBusUtil.removeDestination(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		if (_originalSyncDestination != null) {
-			MessageBusUtil.addDestination(_originalSyncDestination);
-		}
-
 		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
@@ -268,6 +246,5 @@ public class DLAppLocalServiceTest {
 	}
 
 	private Group _group;
-	private Destination _originalSyncDestination;
 
 }

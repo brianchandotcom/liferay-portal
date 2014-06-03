@@ -34,7 +34,7 @@
 	value="<%= String.valueOf(thread.getViewCount()) %>"
 />
 
-<%@ include file="/html/portlet/message_boards/user_thread_columns_last_post.jspf" %>
+<%@ include file="/html/portlet/message_boards/thread_columns_last_post.jspf" %>
 
 <c:if test='<%= topLink.equals("my-posts") %>'>
 	<liferay-ui:search-container-column-status

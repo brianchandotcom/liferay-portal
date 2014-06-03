@@ -1,0 +1,135 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Portlet#tearDownPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+	</tear-down>
+
+	<command known-issues="LIFERAYQA-8943" name="SalesDemo" priority="5">
+		<var name="webContentContent" value="DHS Content" />
+		<var name="webContentTitle" value="DHS Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="2_columns_i" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="WebContentDisplayPortlet#searchWebContent">
+			<var name="addSearchedContent" value="true" />
+			<var name="webContentSearchValue" value="${webContentTitle}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Content#addPG">
+			<var name="assetTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userFirstName" value="test1" />
+			<var name="userLastName" value="last" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test1@liferay.com" />
+			<var name="userLoginFullName" value="Test1 Last" />
+		</execute>
+
+		<execute macro="WebContent#viewNoEditWCViaWCD" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="${pageName}" value="Sales Page" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="tablet" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="smartphone" />
+		</execute>
+
+		<execute macro="MobilePage#gotoPG">
+			<var name="mobilePreview" value="true" />
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="MobilePage#viewPortlet">
+			<var name="mobilePreview" value="true" />
+			<var name="pageName" value="Welcome" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute action="BasePortlet#sikuliAssertElementPresent" locator-key1="PORTLET_ORDER_SINGLE_COLUMN" />
+
+		<execute macro="Page#openURL" />
+	</command>
+</definition>

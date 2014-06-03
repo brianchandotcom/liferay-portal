@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="plugin.full.version" value="7.0.0.1" />
+	<property name="plugin.name" value="com.liferay.portal.wab.extender" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<property name="dependency.visitor.file.source" value="svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java" />
+	<property name="dependency.visitor.file.destination" value="org/objectweb/asm/depend/" />
+
+	<target name="compile">
+		<if>
+			<not>
+				<available file="src/org/objectweb/asm/depend/DependencyVisitor.java" />
+			</not>
+			<then>
+				<mkdir dir="${dependency.visitor.file.destination}" />
+
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${plugin.source.dir}" executable="/bin/sh">
+							<arg line='-c "svn export ${dependency.visitor.file.source} ${dependency.visitor.file.destination}"' />
+						</exec>
+					</then>
+					<else>
+						<exec dir="${plugin.source.dir}" executable="cmd.exe" failonerror="true">
+							<arg line='/c "svn export ${dependency.visitor.file.source} ${dependency.visitor.file.destination}"' />
+						</exec>
+					</else>
+				</if>
+
+				<patch dir="${plugin.source.dir}" patchfile="patches/LPS-47293.patch" strip="1" />
+			</then>
+		</if>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

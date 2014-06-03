@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="com.liferay"
+		module="portal-wab-extender"
+		revision="working@miguels-mbp-3.liferay.org.es"
+		conf="default"
+		confs="default"
+		date="20140602160829"/>
+	<dependencies>
+		<module organisation="org.osgi" name="org.osgi.core">
+			<revision name="5.0.0" status="release" pubdate="20120614043413" resolver="liferay-public" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="1">
+				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
+				<metadata-artifact status="no" details="" size="2674" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.core/ivy-5.0.0.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.core/5.0.0/org.osgi.core-5.0.0.pom"/>
+				<caller organisation="com.liferay" name="portal-wab-extender" conf="default" rev="5.0.0" rev-constraint-default="5.0.0" rev-constraint-dynamic="5.0.0" callerrev="working@miguels-mbp-3.liferay.org.es"/>
+				<artifacts>
+					<artifact name="org.osgi.core" type="jar" ext="jar" status="no" details="" size="430350" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.core/5.0.0/org.osgi.core-5.0.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.osgi" name="org.osgi.compendium">
+			<revision name="5.0.0" status="release" pubdate="20130924131221" resolver="liferay-public" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="0">
+				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
+				<metadata-artifact status="no" details="" size="2670" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.compendium/ivy-5.0.0.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.compendium/5.0.0/org.osgi.compendium-5.0.0.pom"/>
+				<caller organisation="com.liferay" name="portal-wab-extender" conf="default" rev="5.0.0" rev-constraint-default="5.0.0" rev-constraint-dynamic="5.0.0" callerrev="working@miguels-mbp-3.liferay.org.es"/>
+				<artifacts>
+					<artifact name="org.osgi.compendium" type="jar" ext="jar" status="no" details="" size="771157" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.compendium/5.0.0/org.osgi.compendium-5.0.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

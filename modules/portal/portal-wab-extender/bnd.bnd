@@ -1,0 +1,5 @@
+Bundle-Activator: ${classes;IMPLEMENTS;org.osgi.framework.BundleActivator}
+Bundle-Name: Liferay Web Bundle Application Extender
+Include-Resource: classes
+Private-Package: \
+	org.objectweb.asm.depend

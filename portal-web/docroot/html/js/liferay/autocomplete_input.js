@@ -21,6 +21,12 @@ AUI.add(
 
 		var STR_VISIBLE = 'visible';
 
+		var TERM_CONFIG_DEFAULTS = {
+			activateFirstItem: true,
+			resultFilters: STR_PHRASE_MATCH,
+			resultHighlighter: STR_PHRASE_MATCH
+		};
+
 		var AutoCompleteInputBase = function() {};
 
 		AutoCompleteInputBase.ATTRS = {
@@ -40,7 +46,7 @@ AUI.add(
 			},
 
 			regExp: {
-				setter: '_setRegExp',
+				getter: '_getRegExp',
 				value: '(?:\\sterm|^term)([^\\s]+)'
 			},
 
@@ -48,7 +54,7 @@ AUI.add(
 			},
 
 			term: {
-				validator: Lang.isString,
+				setter: AArray,
 				value: '@'
 			},
 
@@ -65,13 +71,9 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var tplResults = instance.get(STR_TPL_RESULTS);
-
-				if (tplResults) {
-					instance.set('resultFormatter', A.bind('_acResultFormatter', instance));
-				}
-
 				instance.get('boundingBox').addClass('lfr-autocomplete-input-list');
+
+				instance.set('resultFormatter', A.bind('_acResultFormatter', instance));
 
 				instance._bindUIACIBase();
 			},
@@ -166,6 +168,33 @@ AUI.add(
 				instance.after('visibleChange', instance._afterACVisibleChange, instance);
 			},
 
+			_getRegExp: function(value) {
+				var instance = this;
+
+				var termsExpr = '[' + instance._getTerms().join('|') + ']';
+
+				return new RegExp(value.replace(REGEX_TERM, termsExpr));
+			},
+
+			_getTerms: function() {
+				var instance = this;
+
+				if (!instance._terms) {
+					var terms = [];
+
+					AArray.each(
+						instance.get(STR_TERM),
+						function(item, index, collection) {
+							terms.push(Lang.isString(item) ? item : item.trigger);
+						}
+					);
+
+					instance._terms = terms;
+				}
+
+				return instance._terms;
+			},
+
 			_keyDown: function() {
 				var instance = this;
 
@@ -180,6 +209,8 @@ AUI.add(
 				var input = instance._getQuery(event.query);
 
 				if (input) {
+					instance._setTermConfig(input[0]);
+
 					event.query = input.substring(1);
 				}
 				else {
@@ -195,6 +226,8 @@ AUI.add(
 				var instance = this;
 
 				if (query) {
+					instance._setTermConfig(query[0]);
+
 					query = query.substring(1);
 
 					instance.sendRequest(query);
@@ -204,10 +237,12 @@ AUI.add(
 				}
 			},
 
-			_setRegExp: function(value) {
+			_setTermConfig: function(term) {
 				var instance = this;
 
-				return new RegExp(value.replace(REGEX_TERM, instance.get(STR_TERM)));
+				var termConfig = instance.get(STR_TERM)[instance._terms.indexOf(term)];
+
+				instance.setAttrs(A.merge(TERM_CONFIG_DEFAULTS, termConfig));
 			},
 
 			_syncUIPosAlign: function() {},

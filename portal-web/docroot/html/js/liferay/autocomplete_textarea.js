@@ -66,22 +66,30 @@ AUI.add(
 				return instance.get(STR_INPUT_NODE).val();
 			},
 
-			_getPrevTermIndex: function(content, position) {
+			_getPrevTerm: function(content, position) {
 				var instance = this;
 
 				var result = -1;
 
-				var term = instance.get(STR_TERM);
+				var term = null;
+
+				var terms = instance._getTerms();
 
 				for (var i = position; i >= 0; --i) {
-					if (content.charAt(i) === term) {
+					var termIndex = terms.indexOf(content.charAt(i));
+
+					if (termIndex >=0 ) {
 						result = i;
+						term = terms[termIndex];
 
 						break;
 					}
 				}
 
-				return result;
+				return {
+					index: result,
+					term: term
+				}
 			},
 
 			_getQuery: function(val) {
@@ -94,21 +102,26 @@ AUI.add(
 				if (caretIndex) {
 					val = val.substring(0, caretIndex.start);
 
-					var term = instance.get(STR_TERM);
+					AArray.each(
+						instance._getTerms(),
+						function(item, index, collection) {
+							var term = item;
 
-					var lastTermIndex = val.lastIndexOf(term);
+							var lastTermIndex = val.lastIndexOf(term);
 
-					if (lastTermIndex >= 0) {
-						val = val.substring(lastTermIndex);
+							if (lastTermIndex >= 0) {
+								val = val.substring(lastTermIndex);
 
-						var regExp = instance.get(STR_REG_EXP);
+								var regExp = instance.get(STR_REG_EXP);
 
-						var res = regExp.exec(val);
+								var res = regExp.exec(val);
 
-						if (res && ((res.index + res[1].length + term.length) === val.length)) {
-							result = val;
+								if (res && ((res.index + res[1].length + term.length) === val.length) && (!result || val.length < result.length)) {
+									result = val;
+								}
+							}
 						}
-					}
+					);
 				}
 
 				return result;
@@ -145,7 +158,9 @@ AUI.add(
 					var val = instance._getACVal();
 
 					if (val) {
-						var lastTermIndex = instance._getPrevTermIndex(val, caretIndex.start);
+						var lastTerm = instance._getPrevTerm(val, caretIndex.start);
+
+						var lastTermIndex = lastTerm.index;
 
 						if (lastTermIndex >= 0) {
 							var prefix = val.substring(0, lastTermIndex);
@@ -167,7 +182,7 @@ AUI.add(
 									spaceAdded = 0;
 								}
 
-								var resultText = prefix + instance.get(STR_TERM) + text;
+								var resultText = prefix + lastTerm.term + text;
 
 								var resultEndPos = resultText.length + spaceAdded;
 

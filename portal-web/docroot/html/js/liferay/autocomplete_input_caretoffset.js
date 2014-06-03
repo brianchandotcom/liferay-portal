@@ -47,7 +47,7 @@ AUI.add(
 				}
 				else {
 					if (instance.get('caretAtTerm')) {
-						caretIndex = instance._getPrevTermIndex(value, caretIndex) + 1;
+						caretIndex = instance._getPrevTerm(value, caretIndex).index + 1;
 					}
 
 					value = value.substring(0, caretIndex) + instance.TPL_CARET + value.substring(caretIndex + 1);

@@ -157,8 +157,6 @@
 		_getPrevTermPosition: function() {
 			var instance = this;
 
-			var term = instance.get(STR_TERM);
-
 			var caretContainer = instance._getCaretContainer();
 			var caretIndex = instance._getCaretIndex();
 
@@ -166,7 +164,21 @@
 
 			var termContainer = caretContainer;
 
-			var termIndex = query.lastIndexOf(term);
+			var termIndex = -1;
+
+			var term = null;
+
+			A.Array.each(
+				instance._terms,
+				function(item, index, collection) {
+					var termPosition = query.lastIndexOf(item);
+
+					if (termPosition !== -1 && termPosition > termIndex) {
+						term = item;
+						termIndex = termPosition;
+					}
+				}
+			);
 
 			if (termIndex === -1) {
 				var termWalker = instance._getWalker(termContainer);
@@ -177,7 +189,17 @@
 					if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
 						var nodeText = node.getText();
 
-						termIndex = nodeText.lastIndexOf(term);
+						A.Array.each(
+							instance._terms,
+							function(item, index, collection) {
+								var termPosition = nodeText.lastIndexOf(item);
+
+								if (termPosition !== -1 && termPosition > termIndex) {
+									term = item
+									termIndex = termPosition;
+								}
+							}
+						);
 
 						hasTerm = (termIndex !== -1);
 
@@ -203,20 +225,23 @@
 			return {
 				container: termContainer,
 				index: termIndex,
-				query: query
+				query: query,
+				term: term
 			};
 		},
 
 		_getQuery: function() {
 			var instance = this;
 
-			var query = instance._getPrevTermPosition().query;
+			var prevTermPosition = instance._getPrevTermPosition();
+
+			var term = prevTermPosition.term;
+
+			var query = prevTermPosition.query;
 
 			var regExp = instance.get('regExp');
 
 			var res = regExp.exec(query);
-
-			var term = instance.get(STR_TERM);
 
 			var result;
 

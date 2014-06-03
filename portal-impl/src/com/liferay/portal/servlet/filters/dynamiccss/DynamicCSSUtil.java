@@ -536,9 +536,33 @@ public class DynamicCSSUtil {
 				break;
 			}
 
-			sb.append(content.substring(pos, importY));
-			sb.append(CharPool.QUESTION);
+			Boolean hasQuotes = false;
+
+			String urlStart = content.substring(pos, importY);
+
+			Matcher urlQuotesMatcher = _urlQuotesPattern.matcher(urlStart);
+
+			if (urlQuotesMatcher.find()) {
+				urlStart = urlQuotesMatcher.replaceAll("$1");
+				hasQuotes = true;
+			}
+
+			sb.append(urlStart);
+
+			if (urlStart.indexOf(CharPool.QUESTION) == -1) {
+				sb.append(CharPool.QUESTION);
+			}
+
+			else {
+				sb.append(CharPool.AMPERSAND);
+			}
+
 			sb.append(queryString);
+
+			if (hasQuotes) {
+				sb.append(CharPool.QUOTE);
+			}
+
 			sb.append(_CSS_IMPORT_END);
 
 			pos = importY + _CSS_IMPORT_END.length();
@@ -566,5 +590,7 @@ public class DynamicCSSUtil {
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
+	private static Pattern _urlQuotesPattern = Pattern.compile(
+		"(url\\(\"[\\s\\S]+)\"");
 
 }

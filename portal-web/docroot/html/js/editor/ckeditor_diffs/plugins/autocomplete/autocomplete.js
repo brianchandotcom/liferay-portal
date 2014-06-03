@@ -154,7 +154,7 @@
 			return A.one(instance.get(STR_EDITOR).element.$);
 		},
 
-		_getPrevTermPosition: function() {
+		_getPrevTriggerPosition: function() {
 			var instance = this;
 
 			var caretContainer = instance._getCaretContainer();
@@ -162,82 +162,84 @@
 
 			var query = caretContainer.getText().substring(0, caretIndex.start);
 
-			var termContainer = caretContainer;
+			var triggerContainer = caretContainer;
 
-			var termIndex = -1;
+			var triggerIndex = -1;
 
-			var term = null;
+			var trigger = null;
+
+			var triggers = instance._getTriggers();
 
 			A.Array.each(
-				instance._terms,
+				triggers,
 				function(item, index, collection) {
-					var termPosition = query.lastIndexOf(item);
+					var triggerPosition = query.lastIndexOf(item);
 
-					if (termPosition !== -1 && termPosition > termIndex) {
-						term = item;
-						termIndex = termPosition;
+					if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
+						trigger = item;
+						triggerIndex = triggerPosition;
 					}
 				}
 			);
 
-			if (termIndex === -1) {
-				var termWalker = instance._getWalker(termContainer);
+			if (triggerIndex === -1) {
+				var triggerWalker = instance._getWalker(triggerContainer);
 
-				termWalker.guard = function(node) {
-					var hasTerm = false;
+				triggerWalker.guard = function(node) {
+					var hasTrigger = false;
 
 					if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
 						var nodeText = node.getText();
 
 						A.Array.each(
-							instance._terms,
+							triggers,
 							function(item, index, collection) {
-								var termPosition = nodeText.lastIndexOf(item);
+								var triggerPosition = nodeText.lastIndexOf(item);
 
-								if (termPosition !== -1 && termPosition > termIndex) {
-									term = item
-									termIndex = termPosition;
+								if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
+									trigger = item
+									triggerIndex = triggerPosition;
 								}
 							}
 						);
 
-						hasTerm = (termIndex !== -1);
+						hasTrigger = (triggerIndex !== -1);
 
-						if (hasTerm) {
-							query = nodeText.substring(termIndex) + query;
+						if (hasTrigger) {
+							query = nodeText.substring(triggerIndex) + query;
 
-							termContainer = node;
+							triggerContainer = node;
 						}
 						else {
 							query = node.getText() + query;
 						}
 					}
 
-					return !hasTerm;
+					return !hasTrigger;
 				};
 
-				termWalker.checkBackward();
+				triggerWalker.checkBackward();
 			}
 			else {
-				query = query.substring(termIndex);
+				query = query.substring(triggerIndex);
 			}
 
 			return {
-				container: termContainer,
-				index: termIndex,
+				container: triggerContainer,
+				index: triggerIndex,
 				query: query,
-				term: term
+				value: trigger
 			};
 		},
 
 		_getQuery: function() {
 			var instance = this;
 
-			var prevTermPosition = instance._getPrevTermPosition();
+			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
-			var term = prevTermPosition.term;
+			var trigger = prevTriggerPosition.value;
 
-			var query = prevTermPosition.query;
+			var query = prevTriggerPosition.query;
 
 			var regExp = instance.get('regExp');
 
@@ -245,7 +247,7 @@
 
 			var result;
 
-			if (res && ((res.index + res[1].length + term.length) === query.length)) {
+			if (res && ((res.index + res[1].length + trigger.length) === query.length)) {
 				result = query;
 			}
 
@@ -323,13 +325,13 @@
 			instance._processKeyUp(query);
 		},
 
-		_replaceHtml: function(text, prevTermPosition) {
+		_replaceHtml: function(text, prevTriggerPosition) {
 			var instance = this;
 
-			var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+			var replaceContainer = instance._getContainerAscendant(prevTriggerPosition.container, 'span');
 
 			if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
-				replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
+				replaceContainer = prevTriggerPosition.container.split(prevTriggerPosition.index);
 			}
 
 			var newElement = CKEDITOR.dom.element.createFromHtml(
@@ -346,7 +348,7 @@
 			var nextElement = newElement.getNext();
 
 			if (nextElement) {
-				var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+				var containerAscendant = instance._getContainerAscendant(prevTriggerPosition.container);
 
 				var updateWalker = instance._getWalker(containerAscendant, nextElement);
 
@@ -490,9 +492,9 @@
 		_updateValue: function(value) {
 			var instance = this;
 
-			var prevTermPosition = instance._getPrevTermPosition();
+			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
-			var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTermPosition);
+			var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTriggerPosition);
 
 			instance._setCaretIndex(caretPosition.node, caretPosition.index);
 

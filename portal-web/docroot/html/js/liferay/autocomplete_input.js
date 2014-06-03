@@ -7,7 +7,7 @@ AUI.add(
 
 		var KEY_DOWN = KeyMap.DOWN;
 
-		var REGEX_TERM = /term/g;
+		var REGEX_TRIGGER = /trigger/g;
 
 		var STR_INPUT_NODE = 'inputNode';
 
@@ -15,13 +15,13 @@ AUI.add(
 
 		var STR_SOURCE = 'source';
 
-		var STR_TERM = 'term';
-
 		var STR_TPL_RESULTS = 'tplResults';
+
+		var STR_TRIGGER = 'trigger';
 
 		var STR_VISIBLE = 'visible';
 
-		var TERM_CONFIG_DEFAULTS = {
+		var TRIGGER_CONFIG_DEFAULTS = {
 			activateFirstItem: true,
 			resultFilters: STR_PHRASE_MATCH,
 			resultHighlighter: STR_PHRASE_MATCH
@@ -47,15 +47,10 @@ AUI.add(
 
 			regExp: {
 				getter: '_getRegExp',
-				value: '(?:\\sterm|^term)([^\\s]+)'
+				value: '(?:\\strigger|^trigger)([^\\s]+)'
 			},
 
 			source: {
-			},
-
-			term: {
-				setter: AArray,
-				value: '@'
 			},
 
 			tplReplace: {
@@ -64,6 +59,11 @@ AUI.add(
 
 			tplResults: {
 				validator: Lang.isString
+			},
+
+			trigger: {
+				setter: AArray,
+				value: '@'
 			}
 		};
 
@@ -171,28 +171,28 @@ AUI.add(
 			_getRegExp: function(value) {
 				var instance = this;
 
-				var termsExpr = '[' + instance._getTerms().join('|') + ']';
+				var triggersExpr = '[' + instance._getTriggers().join('|') + ']';
 
-				return new RegExp(value.replace(REGEX_TERM, termsExpr));
+				return new RegExp(value.replace(REGEX_TRIGGER, triggersExpr));
 			},
 
-			_getTerms: function() {
+			_getTriggers: function() {
 				var instance = this;
 
-				if (!instance._terms) {
-					var terms = [];
+				if (!instance._triggers) {
+					var triggers = [];
 
 					AArray.each(
-						instance.get(STR_TERM),
+						instance.get(STR_TRIGGER),
 						function(item, index, collection) {
-							terms.push(Lang.isString(item) ? item : item.trigger);
+							triggers.push(Lang.isString(item) ? item : item.term);
 						}
 					);
 
-					instance._terms = terms;
+					instance._triggers = triggers;
 				}
 
-				return instance._terms;
+				return instance._triggers;
 			},
 
 			_keyDown: function() {
@@ -209,7 +209,7 @@ AUI.add(
 				var input = instance._getQuery(event.query);
 
 				if (input) {
-					instance._setTermConfig(input[0]);
+					instance._setTriggerConfig(input[0]);
 
 					event.query = input.substring(1);
 				}
@@ -226,7 +226,7 @@ AUI.add(
 				var instance = this;
 
 				if (query) {
-					instance._setTermConfig(query[0]);
+					instance._setTriggerConfig(query[0]);
 
 					query = query.substring(1);
 
@@ -237,12 +237,14 @@ AUI.add(
 				}
 			},
 
-			_setTermConfig: function(term) {
+			_setTriggerConfig: function(trigger) {
 				var instance = this;
 
-				var termConfig = instance.get(STR_TERM)[instance._terms.indexOf(term)];
+				var triggers = instance._getTriggers();
 
-				instance.setAttrs(A.merge(TERM_CONFIG_DEFAULTS, termConfig));
+				var triggerConfig = instance.get(STR_TRIGGER)[triggers.indexOf(trigger)];
+
+				instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
 			},
 
 			_syncUIPosAlign: function() {},

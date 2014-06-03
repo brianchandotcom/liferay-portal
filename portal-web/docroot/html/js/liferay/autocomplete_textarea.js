@@ -66,21 +66,21 @@ AUI.add(
 				return instance.get(STR_INPUT_NODE).val();
 			},
 
-			_getPrevTerm: function(content, position) {
+			_getPrevTrigger: function(content, position) {
 				var instance = this;
 
 				var result = -1;
 
-				var term = null;
+				var trigger = null;
 
-				var terms = instance._getTerms();
+				var triggers = instance._getTriggers();
 
 				for (var i = position; i >= 0; --i) {
-					var termIndex = terms.indexOf(content.charAt(i));
+					var triggerIndex = triggers.indexOf(content.charAt(i));
 
-					if (termIndex >=0 ) {
+					if (triggerIndex >=0 ) {
 						result = i;
-						term = terms[termIndex];
+						trigger = triggers[triggerIndex];
 
 						break;
 					}
@@ -88,7 +88,7 @@ AUI.add(
 
 				return {
 					index: result,
-					term: term
+					value: trigger
 				}
 			},
 
@@ -103,20 +103,18 @@ AUI.add(
 					val = val.substring(0, caretIndex.start);
 
 					AArray.each(
-						instance._getTerms(),
+						instance._getTriggers(),
 						function(item, index, collection) {
-							var term = item;
+							var lastTriggerIndex = val.lastIndexOf(item);
 
-							var lastTermIndex = val.lastIndexOf(term);
-
-							if (lastTermIndex >= 0) {
-								val = val.substring(lastTermIndex);
+							if (lastTriggerIndex >= 0) {
+								val = val.substring(lastTriggerIndex);
 
 								var regExp = instance.get(STR_REG_EXP);
 
 								var res = regExp.exec(val);
 
-								if (res && ((res.index + res[1].length + term.length) === val.length) && (!result || val.length < result.length)) {
+								if (res && ((res.index + res[1].length + item.length) === val.length) && (!result || val.length < result.length)) {
 									result = val;
 								}
 							}
@@ -158,14 +156,14 @@ AUI.add(
 					var val = instance._getACVal();
 
 					if (val) {
-						var lastTerm = instance._getPrevTerm(val, caretIndex.start);
+						var lastTrigger = instance._getPrevTrigger(val, caretIndex.start);
 
-						var lastTermIndex = lastTerm.index;
+						var lastTriggerIndex = lastTrigger.index;
 
-						if (lastTermIndex >= 0) {
-							var prefix = val.substring(0, lastTermIndex);
+						if (lastTriggerIndex >= 0) {
+							var prefix = val.substring(0, lastTriggerIndex);
 
-							val = val.substring(lastTermIndex);
+							val = val.substring(lastTriggerIndex);
 
 							var regExp = instance.get(STR_REG_EXP);
 
@@ -182,7 +180,7 @@ AUI.add(
 									spaceAdded = 0;
 								}
 
-								var resultText = prefix + lastTerm.term + text;
+								var resultText = prefix + lastTrigger.value + text;
 
 								var resultEndPos = resultText.length + spaceAdded;
 

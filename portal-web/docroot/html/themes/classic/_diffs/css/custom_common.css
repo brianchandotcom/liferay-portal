@@ -1084,7 +1084,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.navbar {
 		.container, .container-fluid {
 			.btn {
-				&, .icon-bar {
+				.icon-bar {
 					@include box-shadow(0 1px 0 #FFF);
 				}
 			}

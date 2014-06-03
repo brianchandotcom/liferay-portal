@@ -1196,6 +1196,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public void updateDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		_ddmStructure.updateDDMForm(ddmForm);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

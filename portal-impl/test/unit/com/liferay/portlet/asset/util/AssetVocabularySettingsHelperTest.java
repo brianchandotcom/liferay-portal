@@ -25,6 +25,96 @@ import org.junit.Test;
 public class AssetVocabularySettingsHelperTest {
 
 	@Test
+	public void testGetClassNameId() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(1, 2, true);
+
+		long[] classNameIds = vocabularySettingsHelper.getClassNameIds();
+
+		Assert.assertNotNull(classNameIds);
+		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(1, classNameIds[0]);
+	}
+
+	@Test
+	public void testGetClassTypeId() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(1, 2, true);
+
+		long[] classTypeIds = vocabularySettingsHelper.getClassTypeIds();
+
+		Assert.assertNotNull(classTypeIds);
+		Assert.assertEquals(1, classTypeIds.length);
+		Assert.assertEquals(2, classTypeIds[0]);
+	}
+
+	@Test
+	public void testGetRequiredClassNameId() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(1, 2, true);
+
+		long[] classNameIds =
+			vocabularySettingsHelper.getRequiredClassNameIds();
+
+		Assert.assertNotNull(classNameIds);
+		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(1, classNameIds[0]);
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(1, 2, false);
+
+		classNameIds = vocabularySettingsHelper.getRequiredClassNameIds();
+
+		Assert.assertNotNull(classNameIds);
+		Assert.assertEquals(0, classNameIds.length);
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(
+				false, new long[] {1, 2}, new long[] {1, 2},
+			new boolean[] {true, false});
+
+		classNameIds = vocabularySettingsHelper.getRequiredClassNameIds();
+
+		Assert.assertNotNull(classNameIds);
+		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(1, classNameIds[0]);
+	}
+
+	@Test
+	public void testGetRequiredClassTypeId() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(1, 2, true);
+
+		long[] classTypeIds = vocabularySettingsHelper.getClassTypeIds();
+
+		Assert.assertNotNull(classTypeIds);
+		Assert.assertEquals(1, classTypeIds.length);
+		Assert.assertEquals(2, classTypeIds[0]);
+	}
+
+	@Test
+	public void testHasClassNameAndTypeId() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(
+				AssetCategoryConstants.ALL_CLASS_NAMES_ID, true);
+
+		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 1));
+		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(2, 2));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(
+			1, AssetCategoryConstants.ALL_CLASS_TYPES_ID, true);
+
+		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 0));
+		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 1));
+		Assert.assertFalse(
+			vocabularySettingsHelper.hasClassNameAndTypeId(2, 2));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(1, 1, true);
+
+		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 1));
+		Assert.assertFalse(
+			vocabularySettingsHelper.hasClassNameAndTypeId(2, 2));
+	}
+
+	@Test
 	public void testHasClassNameId() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
@@ -37,6 +127,40 @@ public class AssetVocabularySettingsHelperTest {
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameId(1));
 		Assert.assertFalse(vocabularySettingsHelper.hasClassNameId(2));
+	}
+
+	@Test
+	public void testIsClassNameAndTypeIdRequired() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(
+				AssetCategoryConstants.ALL_CLASS_NAMES_ID, false);
+
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(
+			AssetCategoryConstants.ALL_CLASS_NAMES_ID, true);
+
+		Assert.assertTrue(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
+		Assert.assertTrue(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(1, 1, false);
+
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
+
+		vocabularySettingsHelper = getVocabularySettingsHelper(1, 1, true);
+
+		Assert.assertTrue(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
+		Assert.assertFalse(
+			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
 	}
 
 	@Test

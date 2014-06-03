@@ -15,10 +15,6 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
-		var STR_TERM = 'term';
-
-		var STR_VISIBLE = 'visible';
-
 		var AutoCompleteTextarea = function() {};
 
 		AutoCompleteTextarea.prototype = {
@@ -76,7 +72,7 @@ AUI.add(
 				var triggers = instance._getTriggers();
 
 				for (var i = position; i >= 0; --i) {
-					var triggerIndex = triggers.indexOf(content.charAt(i));
+					var triggerIndex = AArray.indexOf(triggers, content.charAt(i));
 
 					if (triggerIndex >=0 ) {
 						result = i;
@@ -89,7 +85,7 @@ AUI.add(
 				return {
 					index: result,
 					value: trigger
-				}
+				};
 			},
 
 			_getQuery: function(val) {
@@ -128,7 +124,7 @@ AUI.add(
 			_onKeyUp: function(event) {
 				var instance = this;
 
-				var acVisible = instance.get(STR_VISIBLE);
+				var acVisible = instance.get('visible');
 
 				if (!acVisible || event.isKeyInSet('left', 'right')) {
 					var inputNode = instance.get(STR_INPUT_NODE);

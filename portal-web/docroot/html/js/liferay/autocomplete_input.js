@@ -2,20 +2,11 @@ AUI.add(
 	'liferay-autocomplete-input',
 	function(A) {
 		var AArray = A.Array;
-		var KeyMap = A.Event.KeyMap;
 		var Lang = A.Lang;
-
-		var KEY_DOWN = KeyMap.DOWN;
 
 		var REGEX_TRIGGER = /trigger/g;
 
-		var STR_INPUT_NODE = 'inputNode';
-
 		var STR_PHRASE_MATCH = 'phraseMatch';
-
-		var STR_SOURCE = 'source';
-
-		var STR_TPL_RESULTS = 'tplResults';
 
 		var STR_TRIGGER = 'trigger';
 
@@ -87,7 +78,7 @@ AUI.add(
 			_acResultFormatter: function(query, results) {
 				var instance = this;
 
-				var tplResults = instance.get(STR_TPL_RESULTS);
+				var tplResults = instance.get('tplResults');
 
 				return AArray.map(
 					results,
@@ -242,7 +233,7 @@ AUI.add(
 
 				var triggers = instance._getTriggers();
 
-				var triggerConfig = instance.get(STR_TRIGGER)[triggers.indexOf(trigger)];
+				var triggerConfig = instance.get(STR_TRIGGER)[AArray.indexOf(triggers, trigger)];
 
 				instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
 			},

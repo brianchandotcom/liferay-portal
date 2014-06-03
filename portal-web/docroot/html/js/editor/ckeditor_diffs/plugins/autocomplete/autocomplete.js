@@ -7,11 +7,7 @@
 
 	var STR_EDITOR = 'editor';
 
-	var STR_EMPTY = '';
-
 	var STR_SPACE = ' ';
-
-	var STR_TERM = 'term';
 
 	var TPL_REPLACE_HTML = '<span class="lfr-ac-content">{html}</span>';
 

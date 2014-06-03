@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.util.JS;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -35,15 +35,13 @@ public class TabsTag extends IncludeTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
-
 			include(getEndPage());
 
 			request.removeAttribute("liferay-ui:tabs:backLabel");
 			request.removeAttribute("liferay-ui:tabs:backURL");
 			request.removeAttribute("liferay-ui:tabs:formName");
 			request.removeAttribute("liferay-ui:tabs:names");
+			request.removeAttribute("liferay-ui:tabs:namesJS");
 			request.removeAttribute("liferay-ui:tabs:onClick");
 			request.removeAttribute("liferay-ui:tabs:param");
 			request.removeAttribute("liferay-ui:tabs:portletURL");
@@ -75,6 +73,7 @@ public class TabsTag extends IncludeTag {
 				_endPage = null;
 				_formName = StringPool.BLANK;
 				_names = null;
+				_namesJS = null;
 				_namesPos = 0;
 				_onClick = null;
 				_param = "tabs1";
@@ -104,11 +103,20 @@ public class TabsTag extends IncludeTag {
 		try {
 			request.setAttribute("liferay-ui:tabs:names", _names);
 
+			_namesJS = JS.toScript(_names);
+
+			request.setAttribute("liferay-ui:tabs:namesJS", _namesJS);
+
 			if ((_tabsValues == null) || (_tabsValues.length < _names.length)) {
 				_tabsValues = _names;
 			}
 
 			request.setAttribute("liferay-ui:tabs:param", _param);
+
+			if ((_tabsValues == null) || (_tabsValues.length < _names.length)) {
+				_tabsValues = _names;
+			}
+
 			request.setAttribute("liferay-ui:tabs:values", _tabsValues);
 
 			if (_value == null) {
@@ -191,6 +199,10 @@ public class TabsTag extends IncludeTag {
 
 			if (_url9 != null) {
 				request.setAttribute("liferay-ui:tabs:url9", _url9);
+			}
+
+			if (_value == null) {
+				_value = ParamUtil.getString(request, _param, _tabsValues[0]);
 			}
 
 			request.setAttribute("liferay-ui:tabs:value", _value);
@@ -366,6 +378,7 @@ public class TabsTag extends IncludeTag {
 	private String _endPage;
 	private String _formName;
 	private String[] _names;
+	private String _namesJS;
 	private int _namesPos;
 	private String _onClick;
 	private String _param = "tabs1";

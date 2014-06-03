@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.List;
-
-import org.hamcrest.collection.IsEmptyCollection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,9 +66,11 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
-		Assert.assertThat(
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(
 			"MBMessageLocalService is attempted, no message returned",
-			searchResult.getMBMessages(), IsEmptyCollection.empty());
+			mbMessages.isEmpty());
 
 		Mockito.verify(
 			mbMessageLocalService
@@ -129,9 +130,11 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(MBMESSAGE_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		Assert.assertThat(
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(
 			"MBMessageLocalService must not be invoked at all",
-			searchResult.getMBMessages(), IsEmptyCollection.empty());
+			mbMessages.isEmpty());
 
 		verifyZeroInteractions(mbMessageLocalService);
 
@@ -163,10 +166,13 @@ public class SearchResultUtilMBMessageTest
 	protected void assertThatEverythingUnrelatedIsEmpty(
 		SearchResult searchResult) {
 
-		Assert.assertThat(
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(
-			searchResult.getVersions(), IsEmptyCollection.empty());
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(fileEntryTuples.isEmpty());
+
+		List<String> versions = searchResult.getVersions();
+
+		Assert.assertTrue(versions.isEmpty());
 	}
 
 	protected Document createMBMessageDocument() {

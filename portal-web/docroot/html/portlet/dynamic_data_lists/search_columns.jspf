@@ -29,19 +29,11 @@
 />
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
 	name="description"
 	orderable="<%= false %>"
->
-
-	<%
-	String description = recordSet.getDescription(locale);
-
-	buffer.append(StringUtil.shorten(description, 100));
-	%>
-
-</liferay-ui:search-container-column-text>
+	value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
+/>
 
 <liferay-ui:search-container-column-date
 	href="<%= rowURL %>"

@@ -35,6 +35,10 @@ public class TabsTag extends IncludeTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
+			request.setAttribute("liferay-ui:tabs:namesJS", _namesJS);
+			request.setAttribute("liferay-ui:tabs:param", _param);
+			request.setAttribute("liferay-ui:tabs:value", _value);
+
 			include(getEndPage());
 
 			request.removeAttribute("liferay-ui:tabs:backLabel");

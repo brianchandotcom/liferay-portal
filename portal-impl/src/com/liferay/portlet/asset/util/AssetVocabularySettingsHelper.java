@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -59,11 +60,15 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	public boolean hasClassNameId(long classNameId) {
-		return isClassNameIdSpecified(classNameId, getClassNameIds());
+		return isClassNameAndTypeIdSpecified(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPES_ID,
+			getClassNameAndTypeIds());
 	}
 
 	public boolean isClassNameIdRequired(long classNameId) {
-		return isClassNameIdSpecified(classNameId, getRequiredClassNameIds());
+		return isClassNameAndTypeIdSpecified(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPES_ID,
+			getRequiredClassNameAndTypeIds());
 	}
 
 	public boolean isMultiValued() {
@@ -172,18 +177,31 @@ public class AssetVocabularySettingsHelper {
 		return StringUtil.split(propertyValue);
 	}
 
-	protected boolean isClassNameIdSpecified(
-		long classNameId, long[] classNameIds) {
+	protected boolean isClassNameAndTypeIdSpecified(
+		long classNameId, long classTypeId, String[] classNameAndTypeIds) {
 
-		if (classNameIds.length == 0) {
+		if (classNameAndTypeIds.length == 0) {
 			return false;
 		}
 
-		if (classNameIds[0] == AssetCategoryConstants.ALL_CLASS_NAMES_ID) {
+		if (classNameAndTypeIds[0].equals(
+			AssetCategoryConstants.ALL_CLASS_NAMES_AND_TYPES_ID)) {
+
 			return true;
 		}
 
-		return ArrayUtil.contains(classNameIds, classNameId);
+		if (classTypeId == AssetCategoryConstants.ALL_CLASS_TYPES_ID) {
+			PrefixPredicateFilter prefixPredicateFilter =
+				new PrefixPredicateFilter(classNameId + StringPool.COLON, true);
+
+			return ArrayUtil.exists(classNameAndTypeIds, prefixPredicateFilter);
+		}
+		else {
+			String classNameAndType = getClassNameAndTypeId(
+				classNameId, classTypeId);
+
+			return ArrayUtil.contains(classNameAndTypeIds, classNameAndType);
+		}
 	}
 
 	private static final String _KEY_MULTI_VALUED = "multiValued";

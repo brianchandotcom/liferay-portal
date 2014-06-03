@@ -42,6 +42,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,12 +88,12 @@ public class DLAppLocalServiceTest {
 
 	@Test
 	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
-		int[] messagesReceived = registerStubSyncMessageListener(
+		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 
 		addFolder(true);
 
-		Assert.assertEquals(1, messagesReceived[0]);
+		Assert.assertEquals(1, counter.get());
 	}
 
 	@Test
@@ -106,7 +108,7 @@ public class DLAppLocalServiceTest {
 
 	@Test
 	public void testWhenUpdatingAFileEntryASyncEventIsFired() throws Throwable {
-		int[] messagesReceived = registerStubSyncMessageListener(
+		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_UPDATE);
 
 		ServiceContext serviceContext =
@@ -116,7 +118,7 @@ public class DLAppLocalServiceTest {
 
 		updateFileEntry(serviceContext, fileEntry);
 
-		Assert.assertEquals(2, messagesReceived[0]);
+		Assert.assertEquals(2, counter.get());
 	}
 
 	@Test
@@ -210,8 +212,10 @@ public class DLAppLocalServiceTest {
 			name, StringPool.BLANK, serviceContext);
 	}
 
-	protected int[] registerStubSyncMessageListener(final String targetEvent) {
-		final int[] messagesReceived = {0};
+	protected AtomicInteger registerStubSyncMessageListener(
+		final String targetEvent) {
+
+		final AtomicInteger counter = new AtomicInteger();
 
 		MessageBusUtil.registerMessageListener(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
@@ -224,14 +228,14 @@ public class DLAppLocalServiceTest {
 					Object event = message.get("event");
 
 					if (targetEvent.equals(event)) {
-						messagesReceived[0]++;
+						counter.incrementAndGet();
 					}
 				}
 
 			}
 		);
 
-		return messagesReceived;
+		return counter;
 	}
 
 	protected FileEntry updateFileEntry(

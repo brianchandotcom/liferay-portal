@@ -65,6 +65,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -417,7 +418,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
-		int[] messagesReceived = registerStubSyncMessageListener(
+		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 
 		ServiceContext serviceContext =
@@ -427,7 +428,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		Assert.assertEquals(1, messagesReceived[0]);
+		Assert.assertEquals(1, counter.get());
 	}
 
 	@Test
@@ -449,7 +450,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testWhenCopyingAFolderAllSyncEventsAreFired() throws Exception {
-		int[] messagesReceived = registerStubSyncMessageListener(
+		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 
 		ServiceContext serviceContext =
@@ -468,7 +469,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			parentFolder.getParentFolderId(), folder.getName(),
 			folder.getDescription(), serviceContext);
 
-		Assert.assertEquals(4, messagesReceived[0]);
+		Assert.assertEquals(4, counter.get());
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
@@ -482,8 +483,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			group.getGroupId(), folderId, "Title.txt");
 	}
 
-	protected int[] registerStubSyncMessageListener(final String targetEvent) {
-		final int[] messagesReceived = {0};
+	protected AtomicInteger registerStubSyncMessageListener(
+		final String targetEvent) {
+
+		final AtomicInteger counter = new AtomicInteger();
 
 		MessageBusUtil.registerMessageListener(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
@@ -496,14 +499,14 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					Object event = message.get("event");
 
 					if (targetEvent.equals(event)) {
-						messagesReceived[0]++;
+						counter.incrementAndGet();
 					}
 				}
 
 			}
 		);
 
-		return messagesReceived;
+		return counter;
 	}
 
 	protected void search(

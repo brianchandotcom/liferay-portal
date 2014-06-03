@@ -88,6 +88,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
 		</div>
 
+		<span id="<portlet:namespace />addButton">
+			<liferay-util:include page="/html/portlet/document_library/add_button.jsp" />
+		</span>
+
 		<span id="<portlet:namespace />sortButton">
 			<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
 		</span>

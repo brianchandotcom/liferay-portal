@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,8 +25,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
-import org.hamcrest.collection.IsEmptyCollection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -162,12 +162,17 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(StringPool.BLANK, searchResult.getClassName());
 		Assert.assertEquals(0L, searchResult.getClassPK());
 
-		Assert.assertThat(
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(
-			searchResult.getMBMessages(), IsEmptyCollection.empty());
-		Assert.assertThat(
-			searchResult.getVersions(), IsEmptyCollection.empty());
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(fileEntryTuples.isEmpty());
+
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(mbMessages.isEmpty());
+
+		List<String> versions = searchResult.getVersions();
+
+		Assert.assertTrue(versions.isEmpty());
 	}
 
 	protected SearchResult searchBlankDocument() {

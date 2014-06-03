@@ -21,6 +21,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -31,8 +32,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
-import org.hamcrest.collection.IsEmptyCollection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,9 +77,11 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
-		Assert.assertThat(
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(
 			"DLAppLocalService is attempted, no file entry returned",
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+			fileEntryTuples.isEmpty());
 
 		Mockito.verify(
 			dlAppLocalService
@@ -152,9 +153,11 @@ public class SearchResultUtilDLFileEntryTest
 			document, "__snippet__", portletURL, null, null
 		);
 
-		Assert.assertThat(
-			"no file entry tuples even though a FileEntry was found",
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(
+			"No file entry tuples even though a FileEntry was found",
+			fileEntryTuples.isEmpty());
 
 		Mockito.verify(
 			dlAppLocalService
@@ -276,11 +279,11 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(SUMMARY_CONTENT, summaryFromResult.getContent());
 		Assert.assertEquals(SUMMARY_TITLE, summaryFromResult.getTitle());
 
-		List<Tuple> tuples = searchResult.getFileEntryTuples();
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
-		Assert.assertEquals(1, tuples.size());
+		Assert.assertEquals(1, fileEntryTuples.size());
 
-		Tuple tuple = tuples.get(0);
+		Tuple tuple = fileEntryTuples.get(0);
 
 		FileEntry fileEntryFromTuple = (FileEntry)tuple.getObject(0);
 
@@ -306,14 +309,13 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		Assert.assertThat(
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(
+			"DLAppLocalService must not be invoked at all",
+			fileEntryTuples.isEmpty());
 
 		Assert.assertNull(searchResult.getSummary());
-
-		Assert.assertThat(
-			"DLAppLocalService must not be invoked at all",
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
 
 		verifyZeroInteractions(dlAppLocalService);
 
@@ -323,10 +325,13 @@ public class SearchResultUtilDLFileEntryTest
 	protected void assertThatEverythingUnrelatedIsEmpty(
 		SearchResult searchResult) {
 
-		Assert.assertThat(
-			searchResult.getMBMessages(), IsEmptyCollection.empty());
-		Assert.assertThat(
-			searchResult.getVersions(), IsEmptyCollection.empty());
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(mbMessages.isEmpty());
+
+		List<String> versions = searchResult.getVersions();
+
+		Assert.assertTrue(versions.isEmpty());
 	}
 
 	protected Document createDLFileEntryDocument() {

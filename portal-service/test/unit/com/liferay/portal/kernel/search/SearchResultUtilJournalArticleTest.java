@@ -15,16 +15,16 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
-import org.hamcrest.collection.IsEmptyCollection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,10 +103,13 @@ public class SearchResultUtilJournalArticleTest
 			JOURNALARTICLE_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		Assert.assertThat(
-			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(
-			searchResult.getMBMessages(), IsEmptyCollection.empty());
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(fileEntryTuples.isEmpty());
+
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(mbMessages.isEmpty());
 
 		List<String> versions = searchResult.getVersions();
 

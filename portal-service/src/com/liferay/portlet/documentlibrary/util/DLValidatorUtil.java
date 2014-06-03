@@ -91,7 +91,7 @@ public class DLValidatorUtil {
 		getDLValidator().validateVersionLabel(versionLabel);
 	}
 
-	public void setDLValidation(DLValidator dlValidator) {
+	public void setDLValidator(DLValidator dlValidator) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_dlValidator = dlValidator;

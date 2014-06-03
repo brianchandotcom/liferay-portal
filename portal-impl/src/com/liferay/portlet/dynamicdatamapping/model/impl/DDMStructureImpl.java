@@ -50,7 +50,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm getDDMForm() throws PortalException {
-		return DDMFormXSDSerializerUtil.deserialize(getXsd());
+		return DDMFormXSDDeserializerUtil.deserialize(getXsd());
 	}
 
 	@Override

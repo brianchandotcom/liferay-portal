@@ -15,13 +15,35 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
  * @author Pablo Carvalho
  */
-public interface DDMFormXSDSerializer {
+public class DDMFormXSDDeserializerUtil {
 
-	public DDMForm deserialize(String serializedDDMForm) throws PortalException;
+	public static DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
+
+		return getDDMFormXSDDeserializer().deserialize(serializedDDMForm);
+	}
+
+	public static DDMFormXSDDeserializer getDDMFormXSDDeserializer() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DDMFormXSDDeserializerUtil.class);
+
+		return _ddmFormXSDDeserializer;
+	}
+
+	public void setDDMFormXSDDeserializer(
+		DDMFormXSDDeserializer ddmFormXSDSerializer) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_ddmFormXSDDeserializer = ddmFormXSDSerializer;
+	}
+
+	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
 }

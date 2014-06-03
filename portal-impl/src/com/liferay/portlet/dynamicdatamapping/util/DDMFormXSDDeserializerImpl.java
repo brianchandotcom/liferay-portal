@@ -38,7 +38,7 @@ import java.util.Locale;
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
+public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 
 	@Override
 	public DDMForm deserialize(String serializedDDMForm)

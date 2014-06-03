@@ -913,9 +913,9 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerUtil">
-		<property name="DDMFormXSDSerializer">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDSerializerImpl" />
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerUtil">
+		<property name="DDMFormXSDDeserializer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">

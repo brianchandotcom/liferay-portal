@@ -293,6 +293,7 @@
 
 	<command name="addPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" />
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 
@@ -899,6 +900,21 @@
 		<execute action="CPWebcontent#assertClick" locator-key1="ACTION_MENULIST_EXPIRE" value1="Expire" />
 	</command>
 
+	<command name="expirePGViaWCD">
+		<var name="key_historyStatus" value="Expired" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="TOOLBAR_VIEW_HISTORY" value1="View History" />
+
+		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#click" locator-key1="VERSIONS_TABLE_ACTIONS" />
+		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#assertClick" locator-key1="ACTIONS_MENULIST_EXPIRE" value1="Expire" />
+
+		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#assertTextEquals" locator-key1="VERSIONS_TABLE_STATUS" value1="Expired" />
+	</command>
+
 	<command name="expireSpecificVersionCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -1334,7 +1350,15 @@
 	</command>
 
 	<command name="viewPGViaWCD">
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<if>
+			<equals arg1="${expiredContent}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is expired." />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${availableLanguages}" arg2="true" />

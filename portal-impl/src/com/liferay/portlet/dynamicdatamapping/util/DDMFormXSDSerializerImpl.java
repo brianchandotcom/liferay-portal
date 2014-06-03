@@ -119,7 +119,10 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 
 		setDDMFormFieldDataType(dynamicElementElement, ddmFormField);
 		setDDMFormFieldIndexType(dynamicElementElement, ddmFormField);
+		setDDMFormFieldLocalizable(dynamicElementElement, ddmFormField);
 		setDDMFormFieldMultiple(dynamicElementElement, ddmFormField);
+		setDDMFormFieldNamespace(dynamicElementElement, ddmFormField);
+		setDDMFormFieldReadOnly(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRequired(dynamicElementElement, ddmFormField);
 
 		List<Element> metadataElements = dynamicElementElement.elements(
@@ -206,6 +209,15 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setIndexType(indexType);
 	}
 
+	protected void setDDMFormFieldLocalizable(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		boolean localizable = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("localizable"), true);
+
+		ddmFormField.setLocalizable(localizable);
+	}
+
 	protected void setDDMFormFieldMetadata(
 		Element metadataElement, DDMFormField ddmFormField) {
 
@@ -257,6 +269,15 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 		ddmFormField.setMultiple(multiple);
 	}
 
+	protected void setDDMFormFieldNamespace(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		String fieldNamespace = dynamicElementElement.attributeValue(
+			"fieldNamespace");
+
+		ddmFormField.setNamespace(fieldNamespace);
+	}
+
 	protected void setDDMFormFieldOptions(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
@@ -264,6 +285,15 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 			dynamicElementElement.elements("dynamic-element"));
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+	}
+
+	protected void setDDMFormFieldReadOnly(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		boolean readOnly = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("readOnly"));
+
+		ddmFormField.setReadOnly(readOnly);
 	}
 
 	protected void setDDMFormFieldRequired(

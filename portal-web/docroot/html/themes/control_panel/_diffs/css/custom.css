@@ -462,6 +462,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	/* -------- App View Navigation Entry --------- */
+
+	.navigation-pane .app-view-navigation-entry {
+		.overlay.entry-action {
+			a.btn {
+				padding: 11px 14px;
+
+				@include respond-to(desktop) {
+					padding: 14px 10px;
+				}
+			}
+		}
+	}
+
 	/* ---------- Form navigator ---------- */
 
 	.portlet-journal {

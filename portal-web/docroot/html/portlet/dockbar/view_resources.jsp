@@ -36,7 +36,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 				panelTitle = "search-results";
 			}
 
-			String navListCssClass = "add-content nav-list ";
+			String navListCssClass = "add-content ";
 
 			if (displayStyle.equals("icon")) {
 				navListCssClass += "add-content-icon";

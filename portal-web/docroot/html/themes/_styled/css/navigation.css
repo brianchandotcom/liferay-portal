@@ -126,6 +126,20 @@
 	}
 }
 
+/* ---------- General Navigation ---------- */
+
+.nav.list-group .list-group-item {
+	padding: 0;
+}
+
+.navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
+	padding: 11px 14px;
+
+	@include respond-to(desktop) {
+		padding: 14px 10px;
+	}
+}
+
 /* ---------- Navigation portlet ---------- */
 
 .nav-menu {

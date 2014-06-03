@@ -40,7 +40,7 @@ if (row != null) {
 else {
 	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
 
-	cssClass = "nav nav-list list-unstyled well";
+	cssClass = "nav list-group";
 
 	view = true;
 }
@@ -56,6 +56,7 @@ else {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass="list-group-item"
 			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
@@ -72,6 +73,7 @@ else {
 		/>
 
 		<liferay-ui:icon
+			cssClass="list-group-item"
 			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
@@ -91,6 +93,7 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="list-group-item"
 					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
@@ -105,6 +108,7 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="list-group-item"
 					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeURL %>"
@@ -127,6 +131,7 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			cssClass="list-group-item"
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>

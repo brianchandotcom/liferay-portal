@@ -102,7 +102,7 @@ else {
 				<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 
 				<aui:fieldset cssClass="template-selector" label="type">
-					<aui:nav cssClass="nav-list" id="templateList">
+					<aui:nav cssClass="list-group" id="templateList">
 						<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
 							<aui:nav-item cssClass="lfr-page-template" data-search='<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "empty-page")) %>'>
 								<div class="active lfr-page-template-title toggler-header toggler-header-expanded" data-type="portlet">

@@ -54,7 +54,7 @@ if (!portletCategories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-content-category panel-page-category list-unstyled" extended="<%= true %>" title="<%= title %>">
-		<aui:nav cssClass="nav-list">
+		<aui:nav cssClass="list-group">
 
 			<%
 			for (PortletCategory curPortletCategory : portletCategories) {

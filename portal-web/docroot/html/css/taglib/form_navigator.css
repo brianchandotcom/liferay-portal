@@ -2,7 +2,7 @@
 @import "mixins";
 
 .taglib-form-navigator {
-	ul.form-navigator.well {
+	ul.form-navigator.list-group {
 		float: right;
 	}
 

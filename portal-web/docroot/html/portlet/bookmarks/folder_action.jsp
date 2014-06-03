@@ -60,7 +60,7 @@ String cssClass = StringPool.BLANK;
 boolean view = false;
 
 if (row == null) {
-	cssClass = "nav nav-list list-unstyled well";
+	cssClass = "nav list-group";
 
 	view = true;
 }
@@ -76,6 +76,7 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass="list-group-item"
 			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
@@ -92,6 +93,7 @@ if (row == null) {
 		/>
 
 		<liferay-ui:icon
+			cssClass="list-group-item"
 			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
@@ -111,6 +113,7 @@ if (row == null) {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="list-group-item"
 					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
@@ -125,6 +128,7 @@ if (row == null) {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
+					cssClass="list-group-item"
 					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeURL %>"
@@ -140,7 +144,7 @@ if (row == null) {
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
+		<liferay-ui:icon cssClass="list-group-item" iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
 	</c:if>
 
 	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ENTRY) %>">
@@ -151,6 +155,7 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass="list-group-item"
 			iconCssClass="icon-plus"
 			message="add-bookmark"
 			url="<%= editEntryURL %>"
@@ -171,6 +176,7 @@ if (row == null) {
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			cssClass="list-group-item"
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>

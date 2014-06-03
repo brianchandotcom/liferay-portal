@@ -51,7 +51,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
 				<div class="control-group">
-					<aui:input name="rootFolder" type="resource" value="<%= rootFolderName %>" />
+					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
 					<aui:button name="openFolderSelectorButton" value="select" />
 

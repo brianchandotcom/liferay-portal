@@ -15,29 +15,21 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	buffer="buffer"
 	href="<%= rowURL %>"
-	name="last-post"
+	name="thread"
 >
 
 	<%
-	if (thread.getLastPostDate() == null) {
-		buffer.append(LanguageUtil.get(pageContext, "none"));
-	}
-	else {
-		buffer.append(LanguageUtil.get(pageContext, "date"));
-		buffer.append(": ");
-		buffer.append(dateFormatDateTime.format(thread.getLastPostDate()));
-
-		String lastPostByUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
-
-		if (Validator.isNotNull(lastPostByUserName)) {
-			buffer.append("<br />");
-			buffer.append(LanguageUtil.get(pageContext, "by"));
-			buffer.append(": ");
-			buffer.append(lastPostByUserName);
-		}
-	}
+	String[] threadPriority = MBUtil.getThreadPriority(mbSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
 	%>
 
+	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
+		<img alt="<%= threadPriority[0] %>" class="thread-priority" src="<%= threadPriority[1] %>" title="<%= threadPriority[0] %>" />
+	</c:if>
+
+	<c:if test="<%= thread.isLocked() %>">
+		<i class="icon-lock" title="<%= LanguageUtil.get(pageContext, "thread-locked") %>"></i>
+	</c:if>
+
+	<%= message.getSubject() %>
 </liferay-ui:search-container-column-text>

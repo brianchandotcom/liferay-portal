@@ -582,10 +582,13 @@ public class LayoutStagedModelDataHandler
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
-		int priority = _layoutLocalServiceHelper.getNextPriority(
-			groupId, privateLayout, parentLayoutId, null, -1);
+		if (existingLayout == null) {
+			int priority = _layoutLocalServiceHelper.getNextPriority(
+				groupId, privateLayout, parentLayoutId, null, -1);
 
-		importedLayout.setPriority(priority);
+			importedLayout.setPriority(priority);
+		}
+
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());

@@ -90,13 +90,15 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 					Folder subfolder = (Folder)subfolders.get(j);
 
 					subfolder = subfolder.toEscapedModel();
+
+					String name = HtmlUtil.escape(subfolder.getName());
+
+					if (((j + 1) < subfolders.size()) || (subfoldersCount > subfolders.size())) {
+						name += StringPool.COMMA_AND_SPACE;
+					}
 				%>
 
-					<a href="<%= rowURL %>"><%= subfolder.getName() %></a>
-
-					<c:if test="<%= (j + 1) < subfolders.size() %>">
-						,
-					</c:if>
+					<a href="<%= rowURL %>"><%= name %></a>
 
 				<%
 				}
@@ -105,7 +107,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				%>
 
 				<c:if test="<%= subfoldersCount > subfolders.size() %>">
-					,<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+					<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
 				</c:if>
 			</c:if>
 		</liferay-ui:search-container-column-text>

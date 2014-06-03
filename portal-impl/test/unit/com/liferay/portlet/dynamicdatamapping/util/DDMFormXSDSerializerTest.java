@@ -83,19 +83,19 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 	protected DDMFormFieldOptions createDDMFormFieldOptions() {
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-		ddmFormFieldOptions.addOption("value 1");
+		ddmFormFieldOptions.addOption("Value 1");
 
 		ddmFormFieldOptions.addOptionLabel(
-			"value 1", LocaleUtil.BRAZIL, "opcao 1");
+			"Value 1", LocaleUtil.BRAZIL, "Opcao 1");
 		ddmFormFieldOptions.addOptionLabel(
-			"value 1", LocaleUtil.US, "option 1");
+			"Value 1", LocaleUtil.US, "Option 1");
 
-		ddmFormFieldOptions.addOption("value 2");
+		ddmFormFieldOptions.addOption("Value 2");
 
 		ddmFormFieldOptions.addOptionLabel(
-			"value 2", LocaleUtil.BRAZIL, "opcao 2");
+			"Value 2", LocaleUtil.BRAZIL, "Opcao 2");
 		ddmFormFieldOptions.addOptionLabel(
-			"value 2", LocaleUtil.US, "option 2");
+			"Value 2", LocaleUtil.US, "Option 2");
 
 		return ddmFormFieldOptions;
 	}

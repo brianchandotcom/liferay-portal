@@ -32,6 +32,8 @@
 						</exec>
 					</else>
 				</if>
+
+				<patch dir="${plugin.source.dir}" patchfile="patches/LPS-47293.patch" strip="1" />
 			</then>
 		</if>
 

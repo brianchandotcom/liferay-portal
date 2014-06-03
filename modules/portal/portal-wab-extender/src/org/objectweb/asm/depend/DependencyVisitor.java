@@ -1,3 +1,4 @@
+/* @generated */
 /***
  * ASM examples: examples showing how ASM can be used
  * Copyright (c) 2000-2011 INRIA, France Telecom
@@ -58,12 +59,13 @@ public class DependencyVisitor extends ClassVisitor {
 
     Map<String, Integer> current;
 
-    public Map<String, Map<String, Integer>> getGlobals() {
-        return groups;
+    public Set<String> getGlobals() {
+        Set<String> globals = groups.keySet();
+        return filterPackages(globals, "java/");
     }
 
     public Set<String> getPackages() {
-        return packages;
+        return filterPackages(packages, "java/");
     }
 
     public DependencyVisitor() {
@@ -398,5 +400,17 @@ public class DependencyVisitor extends ClassVisitor {
             addInternalName(h.getOwner());
             addMethodDesc(h.getDesc());
         }
+    }
+
+    private Set<String> filterPackages(Set<String> packages, String filter) {
+        Set<String> filteredPackages = new HashSet<String>(packages.size());
+
+        for (String pkg : packages) {
+            if (!pkg.startsWith(filter)) {
+                filteredPackages.add(pkg);
+            }
+        }
+
+        return filteredPackages;
     }
 }

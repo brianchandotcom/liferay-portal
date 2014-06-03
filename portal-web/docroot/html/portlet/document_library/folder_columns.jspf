@@ -61,68 +61,61 @@ for (int j = 0; j < folderColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= folderColumn.equals("folder") || folderColumn.equals("name") %>'>
 			<liferay-ui:search-container-column-text
-				buffer="buffer"
 				href="<%= repositoryAccess ? rowURL : null %>"
 				name="<%= folderColumn %>"
 			>
 
 				<%
-				if (repositoryAccess) {
-					buffer.append("<a href=\"");
-					buffer.append(rowURL);
-					buffer.append("\">");
-				}
-
-				buffer.append("<span class=\"entry-thumbnail\">");
-				buffer.append("<img align=\"left\" alt=\"");
-				buffer.append(LanguageUtil.get(locale, "thumbnail"));
-				buffer.append("\" src=\"\");");
-				buffer.append(HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()));
+				String folderIcon = "/common/folder_empty.png";
 
 				if (curFolder.isMountPoint()) {
-					buffer.append(repositoryAccess ? "/common/drive.png\">" : "/common/drive_error.png\">");
+					folderIcon = repositoryAccess ? "/common/drive.png" : "/common/drive_error.png";
 				}
 				else {
 					if ((curFoldersCount + curFileEntriesCount) > 0) {
-						buffer.append("/common/folder_full_document.png\">");
-					}
-					else {
-						buffer.append("/common/folder_empty.png\">");
+						folderIcon = "/common/folder_full_document.png";
 					}
 				}
+				%>
 
-				buffer.append("</span>");
-				buffer.append("<div class=\"entry-metadata\">");
+				<c:if test="<%= repositoryAccess %>">
+					<a href="<%= rowURL %>">
+				</c:if>
 
-				if (!repositoryAccess) {
-					buffer.append("<span title=\"");
-					buffer.append(LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository"));
-					buffer.append("\">");
-				}
+				<span class="entry-thumbnail">
+					<img align="left" alt="<%= LanguageUtil.get(locale, "thumbnail") %>" src="<%= HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()) + folderIcon %>" />
+				</span>
 
-				buffer.append("<span class=\"entry-title\">");
-				buffer.append("<span class=\"entry-title-text\">");
-				buffer.append(HtmlUtil.escape(curFolder.getName()));
-				buffer.append("</span>");
-				buffer.append("</span>");
+				<div class="entry-metadata">
 
-				if (!repositoryAccess) {
-					buffer.append("</span>");
-				}
+					<c:if test="<%= !repositoryAccess %>">
+						<span title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+					</c:if>
 
-				if (Validator.isNotNull(curFolder.getDescription())) {
-					buffer.append("<div class=\"entry-description\">");
-					buffer.append(HtmlUtil.escape(curFolder.getDescription()));
-					buffer.append("</div>");
-				}
+					<span class="entry-title">
+						<span class="entry-title-text">
+							<%= HtmlUtil.escape(curFolder.getName()) %>
+						</span>
+					</span>
 
-				buffer.append("</div>");
+					<c:if test="<%= !repositoryAccess %>">
+						</span>
+					</c:if>
 
-				if (repositoryAccess) {
-					buffer.append("</a>");
-				}
+					<c:if test="<%= Validator.isNotNull(curFolder.getDescription()) %>">
+						<div class="entry-description">
+							<%= HtmlUtil.escape(curFolder.getDescription()) %>
+						</div>
+					</c:if>
+				</div>
 
-				if (dlPortletInstanceSettings.isShowSubfolders()) {
+				<c:if test="<%= repositoryAccess %>">
+					</a>
+				</c:if>
+
+				<c:if test="<%= dlPortletInstanceSettings.isShowSubfolders() %>">
+
+					<%
 					List subfolders = new ArrayList();
 
 					try {
@@ -130,44 +123,37 @@ for (int j = 0; j < folderColumns.length; j++) {
 					}
 					catch (Exception e) {
 					}
+					%>
 
-					if (!subfolders.isEmpty()) {
-						buffer.append("<br /><u>");
-						buffer.append(LanguageUtil.get(pageContext, "subfolders"));
-						buffer.append("</u>: ");
+					<br />
 
+					<c:if test="<%= !subfolders.isEmpty() %>">
+						<liferay-ui:message key="subfolders" />:
+
+						<%
 						for (int k = 0; k < subfolders.size(); k++) {
 							Folder subfolder = (Folder)subfolders.get(k);
 
 							rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
+						%>
 
-							buffer.append("<a href=\"");
-							buffer.append(rowURL);
-							buffer.append("\">");
-							buffer.append(HtmlUtil.escape(subfolder.getName()));
-							buffer.append("</a>");
+							<a href="<%= rowURL %>" /><%= HtmlUtil.escape(subfolder.getName()) %></a>
 
-							if ((k + 1) < subfolders.size()) {
-								buffer.append(", ");
-							}
-						}
+							<c:if test="<%= (k + 1) < subfolders.size() %>">
+								,
+							</c:if>
 
-						if (curFoldersCount > subfolders.size()) {
-							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-							buffer.append(", <a href=\"");
-							buffer.append(rowURL);
-							buffer.append("\">");
-							buffer.append(LanguageUtil.get(pageContext, "more"));
-							buffer.append(" &raquo;");
-							buffer.append("</a>");
+						<%
 						}
 
 						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-					}
-				}
-				%>
+						%>
 
+						<c:if test="<%= curFoldersCount > subfolders.size() %>">
+							,<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+						</c:if>
+					</c:if>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 		</c:when>
 		<c:when test='<%= folderColumn.equals("locked") %>'>

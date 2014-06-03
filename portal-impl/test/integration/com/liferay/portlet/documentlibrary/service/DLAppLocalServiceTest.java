@@ -73,6 +73,16 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
+	public void testAddAssetWhenAddingFolder() throws Exception {
+		Folder folder = addFolder(false);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		Assert.assertNotNull(assetEntry);
+	}
+
+	@Test
 	public void testAddFolder() throws Exception {
 		Folder folder = addFolder(true);
 
@@ -94,16 +104,6 @@ public class DLAppLocalServiceTest {
 		addFolder(true);
 
 		Assert.assertEquals(1, counter.get());
-	}
-
-	@Test
-	public void testAddAssetWhenAddingFolder() throws Exception {
-		Folder folder = addFolder(false);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFolderConstants.getClassName(), folder.getFolderId());
-
-		Assert.assertNotNull(assetEntry);
 	}
 
 	@Test

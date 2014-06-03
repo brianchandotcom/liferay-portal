@@ -119,6 +119,23 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testAddAssetWhenAddingFolder()
+		throws PortalException, SystemException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			DLFolderConstants.getClassName(), folder.getFolderId());
+
+		Assert.assertNotNull(assetEntry);
+	}
+
+	@Test
 	public void testAddFileEntriesConcurrently() throws Exception {
 		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
 
@@ -383,6 +400,45 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testFireSyncEventWhenAddingFolder() throws Exception {
+		AtomicInteger counter = registerStubSyncMessageListener(
+			DLSyncConstants.EVENT_ADD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		Assert.assertEquals(1, counter.get());
+	}
+
+	@Test
+	public void testFireSyncEventWhenCopyingFolder() throws Exception {
+		AtomicInteger counter = registerStubSyncMessageListener(
+			DLSyncConstants.EVENT_ADD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		DLAppServiceUtil.addFolder(
+			group.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		DLAppServiceUtil.copyFolder(
+			folder.getRepositoryId(), folder.getFolderId(),
+			parentFolder.getParentFolderId(), folder.getName(),
+			folder.getDescription(), serviceContext);
+
+		Assert.assertEquals(4, counter.get());
+	}
+
+	@Test
 	public void testSearchFileInRootFolder() throws Exception {
 		searchFile(true);
 	}
@@ -414,62 +470,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			"Version label incorrect after major update", "2.0",
 			fileEntry.getVersion());
-	}
-
-	@Test
-	public void testFireSyncEventWhenAddingFolder() throws Exception {
-		AtomicInteger counter = registerStubSyncMessageListener(
-			DLSyncConstants.EVENT_ADD);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		Assert.assertEquals(1, counter.get());
-	}
-
-	@Test
-	public void testAddAssetWhenAddingFolder()
-		throws PortalException, SystemException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFolderConstants.getClassName(), folder.getFolderId());
-
-		Assert.assertNotNull(assetEntry);
-	}
-
-	@Test
-	public void testFireSyncEventWhenCopyingFolder() throws Exception {
-		AtomicInteger counter = registerStubSyncMessageListener(
-			DLSyncConstants.EVENT_ADD);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		Folder folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		DLAppServiceUtil.copyFolder(
-			folder.getRepositoryId(), folder.getFolderId(),
-			parentFolder.getParentFolderId(), folder.getName(),
-			folder.getDescription(), serviceContext);
-
-		Assert.assertEquals(4, counter.get());
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {

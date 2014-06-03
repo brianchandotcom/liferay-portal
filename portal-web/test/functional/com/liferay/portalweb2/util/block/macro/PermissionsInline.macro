@@ -297,8 +297,6 @@
 
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_SITE_PERMISSIONS" value1="Site Permissions" />
-
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoWCArticle">

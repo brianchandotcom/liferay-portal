@@ -94,13 +94,13 @@ public class AssetVocabularySettingsHelperTest {
 	public void testHasClassNameAndTypeId() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
-				AssetCategoryConstants.ALL_CLASS_NAMES_ID, true);
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS, true);
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 1));
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(2, 2));
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(
-			1, AssetCategoryConstants.ALL_CLASS_TYPES_ID, true);
+			1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, true);
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 0));
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameAndTypeId(1, 1));
@@ -133,7 +133,7 @@ public class AssetVocabularySettingsHelperTest {
 	public void testIsClassNameAndTypeIdRequired() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
-				AssetCategoryConstants.ALL_CLASS_NAMES_ID, false);
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS, false);
 
 		Assert.assertFalse(
 			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
@@ -141,7 +141,7 @@ public class AssetVocabularySettingsHelperTest {
 			vocabularySettingsHelper.isClassNameAndTypeIdRequired(2, 2));
 
 		vocabularySettingsHelper = getVocabularySettingsHelper(
-			AssetCategoryConstants.ALL_CLASS_NAMES_ID, true);
+			AssetCategoryConstants.ALL_CLASS_NAME_IDS, true);
 
 		Assert.assertTrue(
 			vocabularySettingsHelper.isClassNameAndTypeIdRequired(1, 1));
@@ -194,7 +194,7 @@ public class AssetVocabularySettingsHelperTest {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
 				false, new long[] {1},
-				new long[] {AssetCategoryConstants.ALL_CLASS_TYPES_ID},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_IDS},
 				new boolean[] {true});
 
 		Assert.assertFalse(vocabularySettingsHelper.isMultiValued());
@@ -222,7 +222,7 @@ public class AssetVocabularySettingsHelperTest {
 		long classNameId, boolean required) {
 
 		return getVocabularySettingsHelper(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPES_ID, required);
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, required);
 	}
 
 	protected AssetVocabularySettingsHelper getVocabularySettingsHelper(

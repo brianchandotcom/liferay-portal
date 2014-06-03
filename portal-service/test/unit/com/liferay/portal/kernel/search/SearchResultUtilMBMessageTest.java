@@ -61,7 +61,7 @@ public class SearchResultUtilMBMessageTest
 			null
 		);
 
-		searchSingleDocument(newDocumentMBMessageWithAlternateKey());
+		searchSingleDocument(createMBMessageDocumentWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -104,7 +104,7 @@ public class SearchResultUtilMBMessageTest
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
 
-		searchSingleDocument(newDocumentMBMessageWithAlternateKey());
+		searchSingleDocument(createMBMessageDocumentWithAlternateKey());
 
 		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
@@ -121,7 +121,7 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testMBMessageWithoutKeyInDocument() throws Exception {
-		searchSingleDocument(newDocumentMBMessage());
+		searchSingleDocument(createMBMessageDocument());
 
 		Assert.assertEquals(MBMESSAGE_CLASS_NAME, result.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());
@@ -141,8 +141,9 @@ public class SearchResultUtilMBMessageTest
 	public void testTwoDocumentsWithSameAlternateKey() {
 		long baseEntryPK = ENTRY_CLASS_PK;
 
-		Document documentA = newDocumentMBMessageWithAlternateKey(baseEntryPK);
-		Document documentB = newDocumentMBMessageWithAlternateKey(
+		Document documentA = createMBMessageDocumentWithAlternateKey(
+			baseEntryPK);
+		Document documentB = createMBMessageDocumentWithAlternateKey(
 			baseEntryPK + 1);
 
 		List<SearchResult> searchResults = getSearchResults(
@@ -162,16 +163,18 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertThat(result.getVersions(), IsEmptyCollection.empty());
 	}
 
-	protected Document newDocumentMBMessage() {
-		return newDocument(MBMESSAGE_CLASS_NAME);
+	protected Document createMBMessageDocument() {
+		return createDocument(MBMESSAGE_CLASS_NAME);
 	}
 
-	protected Document newDocumentMBMessageWithAlternateKey() {
-		return newDocumentWithAlternateKey(MBMESSAGE_CLASS_NAME);
+	protected Document createMBMessageDocumentWithAlternateKey() {
+		return createDocumentWithAlternateKey(MBMESSAGE_CLASS_NAME);
 	}
 
-	protected Document newDocumentMBMessageWithAlternateKey(long entryClassPK) {
-		Document document = newDocument(MBMESSAGE_CLASS_NAME, entryClassPK);
+	protected Document createMBMessageDocumentWithAlternateKey(
+		long entryClassPK) {
+
+		Document document = createDocument(MBMESSAGE_CLASS_NAME, entryClassPK);
 
 		setKeyInDocument(document);
 

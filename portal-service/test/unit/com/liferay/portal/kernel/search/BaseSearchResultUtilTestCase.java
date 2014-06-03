@@ -64,11 +64,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		return SearchResultUtil.getSearchResults(hits, null, portletURL);
 	}
 
-	protected Document newDocument(String entryClassName) {
-		return newDocument(entryClassName, ENTRY_CLASS_PK);
+	protected Document createDocument(String entryClassName) {
+		return createDocument(entryClassName, ENTRY_CLASS_PK);
 	}
 
-	protected Document newDocument(String entryClassName, long entryClassPk) {
+	protected Document createDocument(
+		String entryClassName, long entryClassPk) {
+
 		Document document = new DocumentImpl();
 
 		document.add(new Field(Field.ENTRY_CLASS_NAME, entryClassName));
@@ -78,8 +80,8 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		return document;
 	}
 
-	protected Document newDocumentWithAlternateKey(String entryClassName) {
-		Document document = newDocument(entryClassName);
+	protected Document createDocumentWithAlternateKey(String entryClassName) {
+		Document document = createDocument(entryClassName);
 
 		setKeyInDocument(document);
 

@@ -53,13 +53,13 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testBlankDocument() {
-		searchBlankDocument();
+		SearchResult searchResult = searchBlankDocument();
 
 		Assert.assertNull(
 			"Summary should be null with no Indexer or AssetRenderer defined",
-			result.getSummary());
+			searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -97,16 +97,16 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			assetRendererFactory
 		);
 
-		searchBlankDocument();
+		SearchResult searchResult = searchBlankDocument();
 
-		Summary summary = result.getSummary();
+		Summary summary = searchResult.getSummary();
 
 		Assert.assertEquals(SUMMARY_CONTENT, summary.getContent());
 		Assert.assertEquals(200, summary.getMaxContentLength());
 		Assert.assertSame(portletURL, summary.getPortletURL());
 		Assert.assertEquals(SUMMARY_TITLE, summary.getTitle());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -131,11 +131,11 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			indexer
 		);
 
-		searchBlankDocument();
+		SearchResult searchResult = searchBlankDocument();
 
-		Assert.assertSame(summary, result.getSummary());
+		Assert.assertSame(summary, searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -150,24 +150,28 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Assert.assertEquals("two hits, one result", 1, searchResults.size());
 
-		result = searchResults.get(0);
+		SearchResult searchResult = searchResults.get(0);
 
-		Assert.assertEquals(result.getClassName(), className);
-		Assert.assertEquals(result.getClassPK(), ENTRY_CLASS_PK);
+		Assert.assertEquals(searchResult.getClassName(), className);
+		Assert.assertEquals(searchResult.getClassPK(), ENTRY_CLASS_PK);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty() {
-		Assert.assertEquals(StringPool.BLANK, result.getClassName());
-		Assert.assertEquals(0L, result.getClassPK());
+	protected void assertThatEverythingUnrelatedIsEmpty(
+		SearchResult searchResult) {
+
+		Assert.assertEquals(StringPool.BLANK, searchResult.getClassName());
+		Assert.assertEquals(0L, searchResult.getClassPK());
 
 		Assert.assertThat(
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(result.getMBMessages(), IsEmptyCollection.empty());
-		Assert.assertThat(result.getVersions(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+		Assert.assertThat(
+			searchResult.getMBMessages(), IsEmptyCollection.empty());
+		Assert.assertThat(
+			searchResult.getVersions(), IsEmptyCollection.empty());
 	}
 
-	protected void searchBlankDocument() {
-		searchSingleDocument(new DocumentImpl());
+	protected SearchResult searchBlankDocument() {
+		return searchSingleDocument(new DocumentImpl());
 	}
 
 }

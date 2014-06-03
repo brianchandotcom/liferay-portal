@@ -8,4 +8,35 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<property name="dependency.visitor.file.source" value="svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java" />
+	<property name="dependency.visitor.file.destination" value="org/objectweb/asm/depend/" />
+
+	<target name="compile">
+		<if>
+			<not>
+				<available file="src/org/objectweb/asm/depend/DependencyVisitor.java" />
+			</not>
+			<then>
+				<mkdir dir="${dependency.visitor.file.destination}" />
+
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${plugin.source.dir}" executable="/bin/sh">
+							<arg line='-c "svn export ${dependency.visitor.file.source} ${dependency.visitor.file.destination}"' />
+						</exec>
+					</then>
+					<else>
+						<exec dir="${plugin.source.dir}" executable="cmd.exe" failonerror="true">
+							<arg line='/c "svn export ${dependency.visitor.file.source} ${dependency.visitor.file.destination}"' />
+						</exec>
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

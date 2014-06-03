@@ -24,7 +24,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INVOKE</td>
+	<td>INVOKE_BUTTON</td>
 	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>

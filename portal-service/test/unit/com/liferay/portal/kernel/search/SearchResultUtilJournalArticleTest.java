@@ -52,13 +52,14 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticle() {
-		searchSingleDocument(createJournalArticleDocumentWithVersion());
+		SearchResult searchResult = searchSingleDocument(
+			createJournalArticleDocumentWithVersion());
 
-		assertThatSearchResultHasVersion();
+		assertThatSearchResultHasVersion(searchResult);
 
 		Assert.assertNull(
 			"Summary should be null with no Indexer or AssetRenderer defined",
-			result.getSummary());
+			searchResult.getSummary());
 	}
 
 	@Test
@@ -82,13 +83,13 @@ public class SearchResultUtilJournalArticleTest
 
 		Document document = createJournalArticleDocumentWithVersion();
 
-		searchSingleDocument(document);
+		SearchResult searchResult = searchSingleDocument(document);
 
-		assertThatSearchResultHasVersion();
+		assertThatSearchResultHasVersion(searchResult);
 
 		Assert.assertNull(
 			"Indexer is attempted, exception is discarded, no summary returned",
-			result.getSummary());
+			searchResult.getSummary());
 
 		Mockito.verify(
 			indexer
@@ -97,15 +98,17 @@ public class SearchResultUtilJournalArticleTest
 		);
 	}
 
-	protected void assertThatSearchResultHasVersion() {
-		Assert.assertEquals(JOURNALARTICLE_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());
+	protected void assertThatSearchResultHasVersion(SearchResult searchResult) {
+		Assert.assertEquals(
+			JOURNALARTICLE_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertThat(
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(result.getMBMessages(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+		Assert.assertThat(
+			searchResult.getMBMessages(), IsEmptyCollection.empty());
 
-		List<String> versions = result.getVersions();
+		List<String> versions = searchResult.getVersions();
 
 		Assert.assertEquals(DOCUMENT_VERSION, versions.get(0));
 		Assert.assertEquals(1, versions.size());

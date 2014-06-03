@@ -61,14 +61,15 @@ public class SearchResultUtilMBMessageTest
 			null
 		);
 
-		searchSingleDocument(createMBMessageDocumentWithAlternateKey());
+		SearchResult searchResult = searchSingleDocument(
+			createMBMessageDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertThat(
 			"MBMessageLocalService is attempted, no message returned",
-			result.getMBMessages(), IsEmptyCollection.empty());
+			searchResult.getMBMessages(), IsEmptyCollection.empty());
 
 		Mockito.verify(
 			mbMessageLocalService
@@ -78,7 +79,7 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertNull(
 			"Indexer and AssetRenderer are both attempted, no summary returned",
-			result.getSummary());
+			searchResult.getSummary());
 
 		verifyStatic();
 
@@ -89,7 +90,7 @@ public class SearchResultUtilMBMessageTest
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 			DOCUMENT_CLASS_NAME);
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -104,37 +105,39 @@ public class SearchResultUtilMBMessageTest
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
 
-		searchSingleDocument(createMBMessageDocumentWithAlternateKey());
+		SearchResult searchResult = searchSingleDocument(
+			createMBMessageDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
-		List<MBMessage> mbMessages = result.getMBMessages();
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
 
 		Assert.assertSame(mbMessage, mbMessages.get(0));
 		Assert.assertEquals(1, mbMessages.size());
 
-		Assert.assertNull(result.getSummary());
+		Assert.assertNull(searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
 	public void testMBMessageWithoutKeyInDocument() throws Exception {
-		searchSingleDocument(createMBMessageDocument());
+		SearchResult searchResult = searchSingleDocument(
+			createMBMessageDocument());
 
-		Assert.assertEquals(MBMESSAGE_CLASS_NAME, result.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, result.getClassPK());
+		Assert.assertEquals(MBMESSAGE_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertThat(
 			"MBMessageLocalService must not be invoked at all",
-			result.getMBMessages(), IsEmptyCollection.empty());
+			searchResult.getMBMessages(), IsEmptyCollection.empty());
 
 		verifyZeroInteractions(mbMessageLocalService);
 
-		Assert.assertNull(result.getSummary());
+		Assert.assertNull(searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty();
+		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
 
 	@Test
@@ -151,16 +154,19 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertEquals("two hits, one result", 1, searchResults.size());
 
-		result = searchResults.get(0);
+		SearchResult searchResult = searchResults.get(0);
 
-		Assert.assertEquals(result.getClassName(), DOCUMENT_CLASS_NAME);
-		Assert.assertEquals(result.getClassPK(), DOCUMENT_CLASS_PK);
+		Assert.assertEquals(searchResult.getClassName(), DOCUMENT_CLASS_NAME);
+		Assert.assertEquals(searchResult.getClassPK(), DOCUMENT_CLASS_PK);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty() {
+	protected void assertThatEverythingUnrelatedIsEmpty(
+		SearchResult searchResult) {
+
 		Assert.assertThat(
-			result.getFileEntryTuples(), IsEmptyCollection.empty());
-		Assert.assertThat(result.getVersions(), IsEmptyCollection.empty());
+			searchResult.getFileEntryTuples(), IsEmptyCollection.empty());
+		Assert.assertThat(
+			searchResult.getVersions(), IsEmptyCollection.empty());
 	}
 
 	protected Document createMBMessageDocument() {

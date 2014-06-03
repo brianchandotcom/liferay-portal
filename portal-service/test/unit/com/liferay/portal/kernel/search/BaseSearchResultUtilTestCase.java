@@ -88,12 +88,12 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		return document;
 	}
 
-	protected void searchSingleDocument(Document document) {
+	protected SearchResult searchSingleDocument(Document document) {
 		List<SearchResult> searchResults = getSearchResults(document);
 
 		Assert.assertEquals("one hit, one result", 1, searchResults.size());
 
-		result = searchResults.get(0);
+		return searchResults.get(0);
 	}
 
 	protected void setKeyInDocument(Document document) {
@@ -191,7 +191,5 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	@Mock
 	protected Props props;
-
-	protected SearchResult result;
 
 }

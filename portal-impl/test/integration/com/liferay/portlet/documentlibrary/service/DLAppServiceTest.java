@@ -417,7 +417,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
+	public void testFireSyncEventWhenAddingFolder() throws Exception {
 		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 
@@ -432,7 +432,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testWhenAddingAFolderItsAssetIsCreated()
+	public void testAddAssetWhenAddingFolder()
 		throws PortalException, SystemException {
 
 		ServiceContext serviceContext =
@@ -449,7 +449,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testWhenCopyingAFolderAllSyncEventsAreFired() throws Exception {
+	public void testFireSyncEventWhenCopyingFolder() throws Exception {
 		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 

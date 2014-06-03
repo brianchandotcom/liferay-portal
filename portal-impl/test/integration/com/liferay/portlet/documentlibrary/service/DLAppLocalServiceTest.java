@@ -87,7 +87,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testWhenAddingAFolderASyncEventIsFired() throws Exception {
+	public void testFireSyncEventWhenAddingFolder() throws Exception {
 		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_ADD);
 
@@ -97,7 +97,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testWhenAddingAFolderItsAssetIsCreated() throws Exception {
+	public void testAddAssetWhenAddingFolder() throws Exception {
 		Folder folder = addFolder(false);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
@@ -107,7 +107,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testWhenUpdatingAFileEntryASyncEventIsFired() throws Throwable {
+	public void testFireSyncEventWhenUpdatingFileEntry() throws Throwable {
 		AtomicInteger counter = registerStubSyncMessageListener(
 			DLSyncConstants.EVENT_UPDATE);
 
@@ -122,7 +122,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testWhenUpdatingAFileEntryItsAssetIsUpdated() throws Exception {
+	public void testUpdateAssetWhenUpdatingFileEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -137,7 +137,7 @@ public class DLAppLocalServiceTest {
 	}
 
 	@Test
-	public void testWhenUpdatingFolderItsAssetIsUpdated() throws Exception {
+	public void testUpdateAssetWhenUpdatingFolder() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 

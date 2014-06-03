@@ -52,90 +52,50 @@
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="definition"
-		>
-
-			<%
-			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())));
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="asset-title"
-		>
-
-			<%
-			buffer.append(HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)));
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="asset-type"
-		>
-
-			<%
-			buffer.append(workflowHandler.getType(locale));
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= workflowHandler.getType(locale) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="status"
-		>
+			value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getState())) %>"
+		/>
 
-			<%
-			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getState())));
-			%>
+		<%
+		List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowInstance.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
 
-		</liferay-ui:search-container-column-text>
+		WorkflowLog workflowLog = null;
+
+		if (!workflowLogs.isEmpty()) {
+			workflowLog = workflowLogs.get(0);
+		}
+		%>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="last-activity-date"
-		>
-
-			<%
-			List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowInstance.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
-
-			if (workflowLogs.isEmpty()) {
-				buffer.append(LanguageUtil.get(pageContext, "never"));
-			}
-			else {
-				WorkflowLog workflowLog = workflowLogs.get(0);
-
-				buffer.append(dateFormatDateTime.format(workflowLog.getCreateDate()));
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value='<%= (workflowLog == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+		/>
 
 		<liferay-ui:search-container-column-text
-			buffer="buffer"
 			href="<%= rowURL %>"
 			name="end-date"
-		>
-
-			<%
-			if (workflowInstance.getEndDate() == null) {
-				buffer.append(LanguageUtil.get(pageContext, "never"));
-			}
-			else {
-				buffer.append(dateFormatDateTime.format(workflowInstance.getEndDate()));
-			}
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value='<%= (workflowInstance.getEndDate() == null ) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>'
+		/>
 
 		<c:if test='<%= !allInstances && !tabs2.equals("completed") %>'>
 			<liferay-ui:search-container-column-jsp

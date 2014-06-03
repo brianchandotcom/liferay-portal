@@ -81,9 +81,19 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected Document createDocumentWithAlternateKey(String entryClassName) {
-		Document document = createDocument(entryClassName);
+		return createDocumentWithAlternateKey(entryClassName, ENTRY_CLASS_PK);
+	}
 
-		setKeyInDocument(document);
+	protected Document createDocumentWithAlternateKey(
+		String entryClassName, long entryClassPK) {
+
+		Document document = createDocument(entryClassName, entryClassPK);
+
+		document.add(
+			new Field(
+				Field.CLASS_NAME_ID, String.valueOf(DOCUMENT_CLASS_NAME_ID)));
+		document.add(
+			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
 
 		return document;
 	}
@@ -94,14 +104,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		Assert.assertEquals("one hit, one result", 1, searchResults.size());
 
 		return searchResults.get(0);
-	}
-
-	protected void setKeyInDocument(Document document) {
-		document.add(
-			new Field(
-				Field.CLASS_NAME_ID, String.valueOf(DOCUMENT_CLASS_NAME_ID)));
-		document.add(
-			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
 	}
 
 	protected void setUpFastDateFormatFactory() {

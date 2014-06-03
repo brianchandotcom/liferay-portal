@@ -180,11 +180,8 @@ public class SearchResultUtilMBMessageTest
 	protected Document createMBMessageDocumentWithAlternateKey(
 		long entryClassPK) {
 
-		Document document = createDocument(MBMESSAGE_CLASS_NAME, entryClassPK);
-
-		setKeyInDocument(document);
-
-		return document;
+		return createDocumentWithAlternateKey(
+			MBMESSAGE_CLASS_NAME, entryClassPK);
 	}
 
 	protected void setUpMBMessage() {

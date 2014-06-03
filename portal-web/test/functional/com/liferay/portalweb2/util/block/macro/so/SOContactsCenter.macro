@@ -220,7 +220,6 @@
 
 		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="My Contacts" />
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${contactName}" />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${contactName}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
 
@@ -639,7 +638,6 @@
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -659,7 +657,6 @@
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -690,7 +687,6 @@
 			</else>
 		</if>
 
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -707,7 +703,6 @@
 
 		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="My Contacts" />
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${contactName}" />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${contactName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_NAME" value1="${contactName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_EMAIL" value1="${contactEmailAddress}" />
@@ -736,7 +731,6 @@
 			</else>
 		</if>
 
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -755,7 +749,6 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECTIONS_LINK" value1="You have 0 connections." />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -778,7 +771,6 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOWING_LINK" value1="You are following 0 people." />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
@@ -799,7 +791,6 @@
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
-		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />

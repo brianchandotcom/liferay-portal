@@ -1208,8 +1208,6 @@
 	</command>
 
 	<command name="viewSiteContentEdited">
-		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="\32" />
-
 		<execute macro="SOActivities#viewBookmarksActivityEntry">
 			<var name="action" value="${bookmarkEditAction}" />
 		</execute>
@@ -1233,6 +1231,8 @@
 			<var name="action" value="${calendarEditAction}" />
 			<var name="row" value="05" />
 		</execute>
+
+		<execute action="SOActivities#keyPress" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="\32" />
 
 		<execute macro="SOActivities#viewBookmarksActivityEntry">
 			<var name="action" value="${bookmarkAction}" />

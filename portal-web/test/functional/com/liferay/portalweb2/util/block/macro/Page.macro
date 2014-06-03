@@ -349,7 +349,7 @@
 					<else>
 						<var name="key_pageName" value="${pageName}" />
 
-						<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_BOTTOM_BAR" />
+						<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_PORTLET_LOADED" />
 
 						<execute action="SOSiteHome#click" locator-key1="NAVIGATION_PAGE" />
 					</else>

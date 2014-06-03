@@ -203,9 +203,12 @@
 
 		<execute action="SOProfileAddProfilePicture#uploadCommonFile" locator-key1="UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
 		<execute action="SOProfileAddProfilePicture#pause" value1="1000" />
+
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
 		<execute action="SOProfileAddProfilePicture#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOProfileAddProfilePicture#pause" locator1="1000" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 

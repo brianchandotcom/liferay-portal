@@ -226,6 +226,7 @@
 
 	<command name="gotoDashboardPG">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#pause" locator1="1000" />
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_PORTLET_LOADED" />
 

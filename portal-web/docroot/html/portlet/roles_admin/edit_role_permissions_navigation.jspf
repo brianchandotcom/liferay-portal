@@ -80,13 +80,15 @@
 
 					<div class="permission-navigation-section">
 						<div class="permission-navigation-item-header toggler-header toggler-header-expanded">
-							<span class="permission-navigation-item-header-icon"></span>
+							<span class="permission-navigation-item-header-icon">
+								<i class="icon-caret-down"></i>
+								<i class="icon-caret-right"></i>
+							</span>
 
 							<span><liferay-ui:message key="control-panel" /></span>
 						</div>
 
 						<div class="permission-navigation-item-content toggler-content toggler-content-expanded">
-
 							<div class="permission-navigation-section">
 								<ul class="permission-navigation-item-content">
 									<li class="permission-navigation-item-container">
@@ -107,7 +109,10 @@
 								<c:if test="<%= !categoryPortlets.isEmpty() %>">
 									<div class="permission-navigation-section">
 										<div class='permission-navigation-item-header toggler-header toggler-header-<%= category.equals(PortletCategoryKeys.ALL[0])? "expanded" : "collapsed" %>'>
-											<span class="permission-navigation-item-header-icon"></span>
+											<span class="permission-navigation-item-header-icon">
+												<i class="icon-caret-down"></i>
+												<i class="icon-caret-right"></i>
+											</span>
 
 											<span><liferay-ui:message key='<%= "category." + category %>' /></span>
 										</div>
@@ -150,7 +155,10 @@
 
 			<div class="permission-navigation-section">
 				<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
-					<span class="permission-navigation-item-header-icon"></span>
+					<span class="permission-navigation-item-header-icon">
+						<i class="icon-caret-down"></i>
+						<i class="icon-caret-right"></i>
+					</span>
 
 					<span><liferay-ui:message key="site-administration" /></span>
 				</div>
@@ -165,7 +173,10 @@
 						<c:if test="<%= !categoryPortlets.isEmpty() %>">
 							<div class="permission-navigation-section">
 								<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
-									<span class="permission-navigation-item-header-icon"></span>
+									<span class="permission-navigation-item-header-icon">
+										<i class="icon-caret-down"></i>
+										<i class="icon-caret-right"></i>
+									</span>
 
 									<span><liferay-ui:message key='<%= "category." + category %>' /></span>
 								</div>
@@ -213,7 +224,10 @@
 
 					<div class="permission-navigation-section">
 						<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
-							<span class="permission-navigation-item-header-icon"></span>
+							<span class="permission-navigation-item-header-icon">
+								<i class="icon-caret-down"></i>
+								<i class="icon-caret-right"></i>
+							</span>
 
 							<span><liferay-ui:message key="applications" /></span>
 						</div>
@@ -259,7 +273,10 @@
 			<c:if test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
 				<div class="permission-navigation-section">
 					<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
-						<span class="permission-navigation-item-header-icon"></span>
+						<span class="permission-navigation-item-header-icon">
+							<i class="icon-caret-down"></i>
+							<i class="icon-caret-right"></i>
+						</span>
 
 						<span><liferay-ui:message key="my-account" /></span>
 					</div>

@@ -27,7 +27,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 %>
 
 <c:if test="<%= !orgLabors.isEmpty() %>">
-	<h3><liferay-ui:message key="services" /></h3>
+	<h3 class="icon-cogs"><liferay-ui:message key="services" /></h3>
 
 	<%
 	Calendar cal = CalendarFactoryUtil.getCalendar();

@@ -125,7 +125,6 @@
 		li {
 			list-style: none;
 			margin: 0;
-			padding-left: 25px;
 		}
 
 		ul {
@@ -133,39 +132,8 @@
 		}
 	}
 
-	.entity-addresses {
-		.primary {
-			background-position: 3px 5px;
-		}
-
-		.mailing-name {
-			display: block;
-			font-style: italic;
-		}
-
-		h3 {
-			background-image: url(@theme_image_path@/common/home.png);
-		}
-	}
-
 	.entity-details {
 		clear: both;
-	}
-
-	.entity-comments h3 {
-		background-image: url(@theme_image_path@/common/welcome_message.png);
-	}
-
-	.entity-email-addresses h3 {
-		background-image: url(@theme_image_path@/mail/unread.png);
-	}
-
-	.entity-phones h3 {
-		background-image: url(@theme_image_path@/common/telephone.png);
-	}
-
-	.entity-websites h3 {
-		background-image: url(@theme_image_path@/common/history.png);
 	}
 
 	.radio-holder {
@@ -246,7 +214,6 @@
 				font-weight: bold;
 
 				.permission-navigation-item-header-icon {
-					background: url() no-repeat 50%;
 					display: inline-block;
 					height: 10px;
 					width: 9px;
@@ -257,13 +224,16 @@
 				font-weight: bold;
 			}
 
-			.toggler-header-collapsed .permission-navigation-item-header-icon {
-				background-image: url(@theme_image_path@/arrows/05_right.png);
+			.toggler-header-collapsed {
+				.icon-caret-down {
+					display: none;
+				}
 			}
 
-			.toggler-header-expanded .permission-navigation-item-header-icon {
-				background-image: url(@theme_image_path@/arrows/05_down.png);
-				vertical-align: middle;
+			.toggler-header-expanded {
+				.icon-caret-right {
+					display: none;
+				}
 			}
 
 			.permission-navigation-item-header {

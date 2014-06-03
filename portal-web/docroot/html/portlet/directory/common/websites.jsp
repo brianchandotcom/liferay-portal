@@ -28,24 +28,24 @@ if (classPK > 0) {
 %>
 
 <c:if test="<%= !websites.isEmpty() %>">
-	<h3><liferay-ui:message key="websites" /></h3>
+	<h3 class="icon-file"><liferay-ui:message key="websites" /></h3>
 
 	<ul class="property-list">
 
-	<%
-	for (Website website: websites) {
-		website = website.toEscapedModel();
-	%>
+		<%
+		for (Website website : websites) {
+			website = website.toEscapedModel();
+		%>
 
-		<li class="<%= website.isPrimary() ? "primary" : "" %>">
-			<a href="<%= website.getUrl() %>"><%= website.getUrl() %></a>
+			<li class="<%= (website.isPrimary() && (websites.size() > 1)) ? "icon-star" : StringPool.BLANK %>">
+				<a href="<%= website.getUrl() %>"><%= website.getUrl() %></a>
 
-			<%= LanguageUtil.get(pageContext, website.getType().getName()) %>
-		</li>
+				<%= LanguageUtil.get(pageContext, website.getType().getName()) %>
+			</li>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
 	</ul>
 </c:if>

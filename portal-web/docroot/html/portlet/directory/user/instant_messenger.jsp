@@ -28,7 +28,7 @@ String ym = selContact.getYmSn();
 %>
 
 <c:if test="<%= Validator.isNotNull(aim) || Validator.isNotNull(icq) || Validator.isNotNull(jabber) || Validator.isNotNull(msn) || Validator.isNotNull(skype) || Validator.isNotNull(ym) %>">
-	<h3><liferay-ui:message key="instant-messenger" /></h3>
+	<h3 class="icon-comments"><liferay-ui:message key="instant-messenger" /></h3>
 
 	<dl class="property-list">
 		<c:if test="<%= Validator.isNotNull(aim) %>">

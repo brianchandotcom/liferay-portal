@@ -30,11 +30,7 @@
 	%>
 
 	<c:if test="<%= rowURL != null %>">
-		<a href="<%= rowURL %>">
-			<img alt="" class="organization-icon" src="<%= themeDisplay.getPathThemeImages() + "/common/organization_icon.png" %>">
-
-			<strong><%= curOrganization.getName() %></strong>
-		</a>
+		<a href="<%= rowURL %>"><strong><%= curOrganization.getName() %></strong></a>
 	</c:if>
 
 	<c:if test="<%= (suborganizationsCount > 0) || (organizationUserCount > 0) %>">

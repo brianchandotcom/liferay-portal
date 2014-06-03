@@ -125,7 +125,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		}
 
 		if (_icon == null) {
-			_icon = themeDisplay.getPathThemeImages() + "/common/tool.png";
+			_icon = "../aui/cog";
 		}
 
 		if (Validator.isNull(_id)) {

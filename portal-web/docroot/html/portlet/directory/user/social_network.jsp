@@ -24,7 +24,7 @@ String twitter = selContact.getTwitterSn();
 %>
 
 <c:if test="<%= Validator.isNotNull(facebook) || Validator.isNotNull(twitter) %>">
-	<h3><liferay-ui:message key="social-network" /></h3>
+	<h3 class="icon-group"><liferay-ui:message key="social-network" /></h3>
 
 	<dl class="property-list">
 		<c:if test="<%= Validator.isNotNull(facebook) %>">

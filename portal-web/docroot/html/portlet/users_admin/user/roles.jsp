@@ -41,7 +41,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
-		image="unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

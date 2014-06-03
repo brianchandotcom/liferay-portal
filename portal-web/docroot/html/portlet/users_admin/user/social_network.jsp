@@ -30,13 +30,13 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 			<div class="social-network">
 				<aui:input label="facebook" name="facebookSn" />
 
-				<img alt="<liferay-ui:message key="facebook" />" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/facebook.png" />
+				<i class="icon-facebook-sign"></i>
 			</div>
 
 			<div class="social-network">
 				<aui:input label="twitter" name="twitterSn" />
 
-				<img alt="<liferay-ui:message key="twitter" />" class="social-network-logo" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/twitter.png" />
+				<i class="icon-twitter-sign"></i>
 			</div>
 		</aui:fieldset>
 	</c:when>

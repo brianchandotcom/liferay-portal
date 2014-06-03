@@ -91,10 +91,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
 				</portlet:renderURL>
 
-				<aui:a cssClass="icon-circle-arrow-left previous" href="<%= previousEntryURL %>" label="previous" />
+				<aui:a cssClass="icon-circle-arrow-left" href="<%= previousEntryURL %>" label="previous" />
 			</c:when>
 			<c:otherwise>
-				<span class="icon-circle-arrow-left previous"><liferay-ui:message key="previous" /></span>
+				<span class="icon-circle-arrow-left"><liferay-ui:message key="previous" /></span>
 			</c:otherwise>
 		</c:choose>
 

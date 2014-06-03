@@ -43,15 +43,15 @@ request.setAttribute("websites.classPK", selContact.getContactId());
 		<liferay-util:include page="/html/portlet/directory/user/details.jsp" />
 	</div>
 
-	<div class="section entity-addresses">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/user/addresses.jsp" />
 	</div>
 
-	<div class="section entity-email-addresses">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/common/additional_email_addresses.jsp" />
 	</div>
 
-	<div class="section entity-websites">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/common/websites.jsp" />
 	</div>
 
@@ -59,19 +59,19 @@ request.setAttribute("websites.classPK", selContact.getContactId());
 		<liferay-util:include page="/html/portlet/directory/user/phone_numbers.jsp" />
 	</div>
 
-	<div class="section entity-instant-messenger">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/user/instant_messenger.jsp" />
 	</div>
 
-	<div class="section entity-social-network">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/user/social_network.jsp" />
 	</div>
 
-	<div class="section entity-sms">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/user/sms.jsp" />
 	</div>
 
-	<div class="section entity-comments">
+	<div class="section">
 		<liferay-util:include page="/html/portlet/directory/user/comments.jsp" />
 	</div>
 </div>

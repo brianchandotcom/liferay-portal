@@ -158,7 +158,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 										</liferay-portlet:actionURL>
 
 										<liferay-ui:icon
-											image="view"
+											iconCssClass="icon-search"
 											label="<%= true %>"
 											message="open-pages"
 											method="get"
@@ -228,7 +228,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 										</liferay-portlet:actionURL>
 
 										<liferay-ui:icon
-											image="view"
+											iconCssClass="icon-search"
 											label="<%= true %>"
 											message="open-pages"
 											method="get"

@@ -69,8 +69,8 @@ List groupNames = (List)objArray[8];
 
 	<c:if test="<%= supportsFilterByGroup %>">
 		<liferay-ui:icon
+			iconCssClass="icon-cog"
 			id="<%= HtmlUtil.escapeAttribute(targetId) %>"
-			image="configuration"
 			label="<%= true %>"
 			message="change"
 			url="javascript:;"

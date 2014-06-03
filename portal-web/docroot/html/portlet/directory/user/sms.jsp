@@ -21,7 +21,7 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 %>
 
 <c:if test="<%= Validator.isNotNull(selContact.getSmsSn()) %>">
-	<h3><liferay-ui:message key="sms" /></h3>
+	<h3 class="icon-mobile-phone"><liferay-ui:message key="sms" /></h3>
 
 	<ul class="property-list">
 		<li><%= HtmlUtil.escape(selContact.getSmsSn()) %></li>

@@ -140,7 +140,7 @@ if (organization != null) {
 									<c:choose>
 										<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
-												image="view"
+												iconCssClass="icon-search"
 												label="<%= true %>"
 												message="open-public-pages"
 												method="get"
@@ -216,7 +216,7 @@ if (organization != null) {
 									<c:choose>
 										<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
-												image="view"
+												iconCssClass="icon-search"
 												label="<%= true %>"
 												message="open-private-pages"
 												method="get"

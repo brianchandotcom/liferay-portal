@@ -22,9 +22,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 SCProductVersion productVersion = (SCProductVersion)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= Validator.isNotNull(productVersion.getDownloadPageURL()) %>">
-		<liferay-ui:icon image="download" message="download-page" url="<%= productVersion.getDownloadPageURL() %>" />
+		<liferay-ui:icon iconCssClass="icon-download" message="download-page" url="<%= productVersion.getDownloadPageURL() %>" />
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(productVersion.getDirectDownloadURL()) %>">
@@ -33,7 +33,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 		String taglibDirectDownloadURL = "javascript:location.href = '" + productVersion.getDirectDownloadURL() + "';";
 		%>
 
-		<liferay-ui:icon image="download" message="direct-download" url="<%= taglibDirectDownloadURL %>" />
+		<liferay-ui:icon iconCssClass="icon-download" message="direct-download" url="<%= taglibDirectDownloadURL %>" />
 	</c:if>
 
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productVersion.getProductEntryId(), ActionKeys.UPDATE) %>">
@@ -44,7 +44,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 			<portlet:param name="productVersionId" value="<%= String.valueOf(productVersion.getProductVersionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="edit" url="<%= editURL %>" />
+		<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= editURL %>" />
 
 		<portlet:renderURL var="copyURL">
 			<portlet:param name="struts_action" value="/software_catalog/edit_product_version" />
@@ -54,7 +54,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 			<portlet:param name="copyProductVersionId" value="<%= String.valueOf(productVersion.getProductVersionId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="copy" url="<%= copyURL %>" />
+		<liferay-ui:icon iconCssClass="icon-copy" message="copy" url="<%= copyURL %>" />
 
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/software_catalog/edit_product_version" />

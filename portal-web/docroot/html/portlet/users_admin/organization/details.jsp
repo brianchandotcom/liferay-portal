@@ -46,7 +46,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <liferay-util:buffer var="removeOrganizationIcon">
 	<liferay-ui:icon
-		image="unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

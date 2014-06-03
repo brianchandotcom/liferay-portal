@@ -30,7 +30,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 <liferay-util:buffer var="removeGroupIcon">
 	<liferay-ui:icon
-		image="unlink"
+		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="remove"
 	/>

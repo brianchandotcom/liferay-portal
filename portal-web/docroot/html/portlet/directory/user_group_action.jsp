@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UserGroup userGroup = (UserGroup)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="viewUsersURL">
 		<portlet:param name="struts_action" value="/directory/view" />
 		<portlet:param name="tabs1" value="users" />
@@ -35,7 +35,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="view_users"
+		iconCssClass="icon-search"
 		message="view-users"
 		method="get"
 		url="<%= viewUsersURL %>"

@@ -24,7 +24,7 @@ SCLicense license = (SCLicense)row.getObject();
 String licenseId = String.valueOf(license.getLicenseId());
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= SCLicensePermission.contains(permissionChecker, license.getLicenseId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/software_catalog/edit_license" />
@@ -33,7 +33,7 @@ String licenseId = String.valueOf(license.getLicenseId());
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>

@@ -28,23 +28,23 @@ if (classPK > 0) {
 %>
 
 <c:if test="<%= !addresses.isEmpty() %>">
-	<h3><liferay-ui:message key="address" /></h3>
+	<h3 class="icon-home"><liferay-ui:message key="address" /></h3>
 
 	<ul class="property-list">
 
-	<%
-	for (Address address: addresses) {
-	%>
+		<%
+		for (Address address : addresses) {
+		%>
 
-		<li class="<%= address.isPrimary() ? "primary" : "" %>">
-			<%@ include file="/html/portlet/directory/common/addresses_address_init.jspf" %>
+			<li class="<%= (address.isPrimary() && addresses.size() > 1) ? "icon-star" : StringPool.BLANK %>">
+				<%@ include file="/html/portlet/directory/common/addresses_address_init.jspf" %>
 
-			<%@ include file="/html/portlet/directory/common/addresses_address.jspf" %>
-		</li>
+				<%@ include file="/html/portlet/directory/common/addresses_address.jspf" %>
+			</li>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
 	</ul>
 </c:if>

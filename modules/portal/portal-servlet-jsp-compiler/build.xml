@@ -48,7 +48,7 @@
 
 				<get
 					dest="${schemas.dir}/jsp_2_3.xsd"
-					src="${schemas.url}/jsp_2_3.xsd"
+					src="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd"
 				/>
 
 				<get

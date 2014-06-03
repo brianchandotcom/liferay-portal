@@ -42,6 +42,10 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 if (hints != null) {
 	type = GetterUtil.getString(hints.get("type"), type);
 }
+
+if (type.equals("String")) {
+	cssClass += " form-control";
+}
 %>
 
 <c:if test="<%= type != null %>">

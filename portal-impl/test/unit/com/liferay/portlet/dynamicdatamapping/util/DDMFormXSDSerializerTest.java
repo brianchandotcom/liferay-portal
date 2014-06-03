@@ -21,14 +21,15 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,36 +40,145 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Pablo Carvalho
  */
-@PrepareForTest({DDMFormXSDSerializerUtil.class})
+@PrepareForTest({DDMFormXSDSerializerUtil.class, StringUtil.class})
 public class DDMFormXSDSerializerTest extends BaseDDMTest {
 
 	@Before
 	@Override
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 
-		setUpDDMFormXSDSerializer();
+		setUpDDMFormToXSDSerializer();
+		setUpStringUtil();
 	}
 
 	@Test
-	public void testAllFieldsTypesDeserialization() throws Exception {
-		String xml = readXML("dynamic-data-mapping-all-fields-structure.xml");
+	public void testDDMFormSerialization() throws Exception {
+		DDMForm ddmForm = createDDMForm();
 
-		DDMForm ddmForm = DDMFormXSDSerializerUtil.deserialize(xml);
+		String xsd = DDMFormXSDSerializerUtil.serialize(ddmForm);
 
-		testAvailableLocales(ddmForm);
-		testDefaultLocale(ddmForm);
+		testXSDMatchesExpected(xsd);
+	}
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
+	protected List<Locale> createAvailableLocales() {
+		List<Locale> availableLocales = new ArrayList<Locale>();
 
-		testBooleanDDMFormField(ddmFormFieldsMap.get("Boolean2282"));
-		testDateDDMFormField(ddmFormFieldsMap.get("Date2510"));
-		testDecimalDDMFormField(ddmFormFieldsMap.get("Decimal3479"));
-		testDocumentLibraryDDMFormField(
-			ddmFormFieldsMap.get("Documents_and_Media4036"));
-		testNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
-		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
+		availableLocales.add(LocaleUtil.BRAZIL);
+		availableLocales.add(LocaleUtil.US);
+
+		return availableLocales;
+	}
+
+	protected DDMForm createDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(createAvailableLocales());
+		ddmForm.setDDMFormFields(createDDMFormFields());
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		return ddmForm;
+	}
+
+	protected DDMFormFieldOptions createDDMFormFieldOptions() {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOption("Value 1");
+
+		ddmFormFieldOptions.addOptionLabel(
+			"Value 1", LocaleUtil.BRAZIL, "Opcao 1");
+		ddmFormFieldOptions.addOptionLabel(
+			"Value 1", LocaleUtil.US, "Option 1");
+
+		ddmFormFieldOptions.addOption("Value 2");
+
+		ddmFormFieldOptions.addOptionLabel(
+			"Value 2", LocaleUtil.BRAZIL, "Opcao 2");
+		ddmFormFieldOptions.addOptionLabel(
+			"Value 2", LocaleUtil.US, "Option 2");
+
+		return ddmFormFieldOptions;
+	}
+
+	protected List<DDMFormField> createDDMFormFields() {
+		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
+
+		ddmFormFields.add(
+			createNestedDDMFormFields("ParentField", "ChildField"));
+		ddmFormFields.add(createRadioDDMFormField("BooleanField"));
+		ddmFormFields.add(createSelectDDMFormField("SelectField"));
+		ddmFormFields.add(createTextDDMFormField("TextField"));
+
+		return ddmFormFields;
+	}
+
+	protected DDMFormField createNestedDDMFormFields(
+		String parentName, String childName) {
+
+		DDMFormField parentDDMFormField = createTextDDMFormField(parentName);
+
+		List<DDMFormField> nestedDDMFormFields = new ArrayList<DDMFormField>();
+
+		nestedDDMFormFields.add(createSelectDDMFormField(childName));
+
+		parentDDMFormField.setNestedDDMFormFields(nestedDDMFormFields);
+
+		return parentDDMFormField;
+	}
+
+	protected DDMFormField createRadioDDMFormField(String name) {
+		DDMFormField radioDDMFormField = new DDMFormField(name, "radio");
+
+		radioDDMFormField.setDataType("string");
+		radioDDMFormField.setDDMFormFieldOptions(createDDMFormFieldOptions());
+		radioDDMFormField.setRequired(true);
+
+		return radioDDMFormField;
+	}
+
+	protected DDMFormField createSelectDDMFormField(String name) {
+		DDMFormField selectDDMFormField = new DDMFormField(name, "select");
+
+		selectDDMFormField.setDataType("string");
+		selectDDMFormField.setIndexType("");
+		selectDDMFormField.setMultiple(true);
+
+		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
+
+		selectDDMFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		return selectDDMFormField;
+	}
+
+	protected DDMFormField createTextDDMFormField(String name) {
+		DDMFormField textDDMFormField = new DDMFormField(name, "text");
+
+		textDDMFormField.setDataType("string");
+		textDDMFormField.setIndexType("keyword");
+		textDDMFormField.setLabel(createTextDDMFormFieldLabel());
+		textDDMFormField.setPredefinedValue(
+			createTextDDMFormFieldPredefinedValue());
+		textDDMFormField.setRepeatable(true);
+
+		return textDDMFormField;
+	}
+
+	protected LocalizedValue createTextDDMFormFieldLabel() {
+		LocalizedValue label = new LocalizedValue();
+
+		label.addValue(LocaleUtil.BRAZIL, "Texto");
+		label.addValue(LocaleUtil.US, "Text");
+
+		return label;
+	}
+
+	protected LocalizedValue createTextDDMFormFieldPredefinedValue() {
+		LocalizedValue predefinedValue = new LocalizedValue();
+
+		predefinedValue.addValue(LocaleUtil.BRAZIL, "Exemplo");
+		predefinedValue.addValue(LocaleUtil.US, "Example");
+
+		return predefinedValue;
 	}
 
 	protected String readXML(String fileName) throws IOException {
@@ -80,7 +190,7 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 		return StringUtil.read(inputStream);
 	}
 
-	protected void setUpDDMFormXSDSerializer() {
+	protected void setUpDDMFormToXSDSerializer() {
 		spy(DDMFormXSDSerializerUtil.class);
 
 		when(
@@ -90,113 +200,26 @@ public class DDMFormXSDSerializerTest extends BaseDDMTest {
 		);
 	}
 
-	protected void testAvailableLocales(DDMForm ddmForm) {
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+	protected void setUpStringUtil() {
+		spy(StringUtil.class);
 
-		Assert.assertEquals(2, availableLocales.size());
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.BRAZIL));
+		when(
+			StringUtil.randomId()
+		).thenReturn(
+			"1234"
+		);
 	}
 
-	protected void testBooleanDDMFormField(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals("boolean", ddmFormField.getDataType());
-		Assert.assertEquals("keyword", ddmFormField.getIndexType());
+	protected void testXSDMatchesExpected(String actualXSD) throws Exception {
+		String expectedXSD = readXML("ddm-form-xsd-serializer-test-data.xml");
 
-		LocalizedValue label = ddmFormField.getLabel();
+		Map<String, Map<String, String>> expectedMap =
+			DDMStructureTestUtil.getXSDMap(expectedXSD);
 
-		Assert.assertEquals("Boolean", label.getValue(LocaleUtil.US));
-		Assert.assertEquals("Booleano", label.getValue(LocaleUtil.BRAZIL));
+		Map<String, Map<String, String>> actualMap =
+			DDMStructureTestUtil.getXSDMap(actualXSD);
 
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
-
-		Assert.assertEquals("checkbox", ddmFormField.getType());
-		Assert.assertFalse(ddmFormField.isRepeatable());
-		Assert.assertFalse(ddmFormField.isRequired());
-	}
-
-	protected void testDateDDMFormField(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals("date", ddmFormField.getDataType());
-		Assert.assertEquals("ddm-date", ddmFormField.getType());
-	}
-
-	protected void testDecimalDDMFormField(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals("double", ddmFormField.getDataType());
-		Assert.assertEquals("ddm-decimal", ddmFormField.getType());
-	}
-
-	protected void testDefaultLocale(DDMForm ddmForm) {
-		Locale defaultLocale = ddmForm.getDefaultLocale();
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		Assert.assertEquals("en_US", defaultLanguageId);
-	}
-
-	protected void testDocumentLibraryDDMFormField(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals("document-library", ddmFormField.getDataType());
-		Assert.assertEquals("ddm-documentlibrary", ddmFormField.getType());
-	}
-
-	protected void testNestedDDMFormFields(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
-
-		Assert.assertEquals(1, nestedDDMFormFields.size());
-
-		DDMFormField separatorDDMFormField = nestedDDMFormFields.get(0);
-
-		Assert.assertEquals("Separator7211", separatorDDMFormField.getName());
-
-		nestedDDMFormFields = separatorDDMFormField.getNestedDDMFormFields();
-
-		Assert.assertEquals(1, nestedDDMFormFields.size());
-
-		DDMFormField selectDDMFormField = nestedDDMFormFields.get(0);
-
-		Assert.assertEquals("Select7450", selectDDMFormField.getName());
-
-		DDMFormFieldOptions selectDDMFormFieldOptions =
-			selectDDMFormField.getDDMFormFieldOptions();
-
-		Set<String> optionValues = selectDDMFormFieldOptions.getOptionsValues();
-
-		Assert.assertEquals(3, optionValues.size());
-	}
-
-	protected void testRadioDDMFormField(DDMFormField ddmFormField) {
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals("string", ddmFormField.getDataType());
-		Assert.assertEquals("radio", ddmFormField.getType());
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		Assert.assertEquals(
-			"[\"value 1\"]", predefinedValue.getValue(LocaleUtil.US));
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
-
-		Assert.assertEquals(3, optionsValues.size());
-		Assert.assertTrue(optionsValues.contains("value 1"));
-		Assert.assertTrue(optionsValues.contains("value 2"));
-		Assert.assertTrue(optionsValues.contains("value 3"));
-
-		LocalizedValue value1Labels = ddmFormFieldOptions.getOptionLabels(
-			"value 1");
-
-		Assert.assertEquals("option 1", value1Labels.getValue(LocaleUtil.US));
-		Assert.assertEquals(
-			"opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	private DDMFormXSDSerializer _ddmFormXSDSerializer =

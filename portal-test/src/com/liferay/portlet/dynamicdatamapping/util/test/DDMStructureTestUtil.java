@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -33,6 +36,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -261,6 +265,29 @@ public class DDMStructureTestUtil {
 		return document.asXML();
 	}
 
+	public static Map<String, Map<String, String>> getXSDMap(String xsd)
+		throws Exception {
+
+		Map<String, Map<String, String>> map =
+			new HashMap<String, Map<String, String>>();
+
+		Document document = SAXReaderUtil.read(xsd);
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		for (Node node : nodes) {
+			Element dynamicElementElement = (Element)node;
+
+			String elementName = getElementName(dynamicElementElement);
+
+			map.put(elementName, getElementMap(dynamicElementElement));
+		}
+
+		return map;
+	}
+
 	protected static Document createDocumentContent(
 		String availableLocales, String defaultLocale) {
 
@@ -289,6 +316,56 @@ public class DDMStructureTestUtil {
 			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
 
 		return document;
+	}
+
+	protected static Map<String, String> getElementMap(Element element) {
+		Map<String, String> elementMap = new HashMap<String, String>();
+
+		// Attributes
+
+		for (Attribute attribute : element.attributes()) {
+			elementMap.put(attribute.getName(), attribute.getValue());
+		}
+
+		// Metadata
+
+		Element metadadataElement = element.element("meta-data");
+
+		if (metadadataElement == null) {
+			return elementMap;
+		}
+
+		List<Element> entryElements = metadadataElement.elements("entry");
+
+		for (Element entryElement : entryElements) {
+			elementMap.put(
+				entryElement.attributeValue("name"), entryElement.getText());
+		}
+
+		return elementMap;
+	}
+
+	protected static String getElementName(Element element) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(element.attributeValue("name"));
+
+		Element parentElement = element.getParent();
+
+		while (true) {
+			if ((parentElement == null) ||
+				parentElement.getName().equals("root")) {
+
+				break;
+			}
+
+			sb.insert(
+				0, parentElement.attributeValue("name") + StringPool.SLASH);
+
+			parentElement = parentElement.getParent();
+		}
+
+		return sb.toString();
 	}
 
 }

@@ -250,18 +250,8 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								buffer="buffer"
 								href="<%= rowURL %>"
 								name="flag"
-							>
-
-								<%
-								if (MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId())) {
-									buffer.append(LanguageUtil.get(pageContext, "resolved"));
-								}
-								else if (thread.isQuestion()) {
-									buffer.append(LanguageUtil.get(pageContext, "waiting-for-an-answer"));
-								}
-								%>
-
-							</liferay-ui:search-container-column-text>
+								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(pageContext, "resolved") : LanguageUtil.get(pageContext, "waiting-for-an-answer") %>'
+							/>
 
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"

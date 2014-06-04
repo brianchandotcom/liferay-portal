@@ -63,7 +63,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testNoDocuments() {
-		List<SearchResult> searchResults = getSearchResults();
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
+			portletURL);
 
 		Assert.assertEquals("no hits, no results", 0, searchResults.size());
 	}
@@ -146,8 +147,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Document documentA = SearchTestUtil.createDocument(className);
 		Document documentB = SearchTestUtil.createDocument(className);
 
-		List<SearchResult> searchResults = getSearchResults(
-			documentA, documentB);
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
+			portletURL, documentA, documentB);
 
 		Assert.assertEquals("two hits, one result", 1, searchResults.size());
 

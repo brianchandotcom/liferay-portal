@@ -17,9 +17,11 @@ package com.liferay.portal.repository;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -34,8 +36,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Adolfo Pérez
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class,
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class LocalRepositoryFactoryTest {
 
 	@Before

@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.test;
 
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 /**

@@ -50,8 +50,9 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticle() {
-		SearchResult searchResult = searchSingleDocument(
-			createJournalArticleDocumentWithVersion());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createJournalArticleDocumentWithVersion());
 
 		assertThatSearchResultHasVersion(searchResult);
 
@@ -81,7 +82,8 @@ public class SearchResultUtilJournalArticleTest
 
 		Document document = createJournalArticleDocumentWithVersion();
 
-		SearchResult searchResult = searchSingleDocument(document);
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(document);
 
 		assertThatSearchResultHasVersion(searchResult);
 

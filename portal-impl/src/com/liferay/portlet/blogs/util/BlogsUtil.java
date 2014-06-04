@@ -76,7 +76,7 @@ public class BlogsUtil {
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-blog-entry-description"));
 		definitionTerms.put(
-			"[BLOGS_ENTRY_SITE]",
+			"[$BLOGS_ENTRY_SITE_NAME$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-name-of-the-site-where-the-blog-entry-was-created"));

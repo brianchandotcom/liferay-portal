@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_FIELD</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td>//div[contains(.,'Link to Page')]/select</td>
 	<td></td>
 </tr>
 <tr>

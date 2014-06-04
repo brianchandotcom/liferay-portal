@@ -137,6 +137,11 @@
 </tr>
 <!--PAGE_TREE-->
 <tr>
+	<td>TEST</td>
+	<td>//ul[@class='tree-container']/li/ul/li/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
 	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>
 	<td></td>
@@ -164,6 +169,11 @@
 <tr>
 	<td>PAGE_TREE_PAGE_SPECIFIC_PAGE</td>
 	<td>//span[contains(@class,'tree-label')]/a[contains(.,'${key_sitePageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_PLUS_ICON</td>
+	<td>//div[contains(@class,'tree-collapsed')]/i[contains(@class,'icon-plus')]</td>
 	<td></td>
 </tr>
 <tr>

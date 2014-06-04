@@ -325,9 +325,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		assertThatMBMessagesIsEmpty(searchResult);
 
-		List<String> versions = searchResult.getVersions();
-
-		Assert.assertTrue(versions.isEmpty());
+		assertThatVersionsIsEmpty(searchResult);
 	}
 
 	protected Document createDLFileEntryDocument() {

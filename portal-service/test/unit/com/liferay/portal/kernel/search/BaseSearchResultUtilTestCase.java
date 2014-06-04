@@ -60,6 +60,12 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		Assert.assertTrue(mbMessages.isEmpty());
 	}
 
+	protected void assertThatVersionsIsEmpty(SearchResult searchResult) {
+		List<String> versions = searchResult.getVersions();
+
+		Assert.assertTrue(versions.isEmpty());
+	}
+
 	protected void doSetUp() {
 		MockitoAnnotations.initMocks(this);
 

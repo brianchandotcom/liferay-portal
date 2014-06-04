@@ -167,9 +167,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		assertThatMBMessagesIsEmpty(searchResult);
 
-		List<String> versions = searchResult.getVersions();
-
-		Assert.assertTrue(versions.isEmpty());
+		assertThatVersionsIsEmpty(searchResult);
 	}
 
 	protected SearchResult searchBlankDocument() {

@@ -174,9 +174,7 @@ public class SearchResultUtilMBMessageTest
 
 		assertThatFileEntryTuplesIsEmpty(searchResult);
 
-		List<String> versions = searchResult.getVersions();
-
-		Assert.assertTrue(versions.isEmpty());
+		assertThatVersionsIsEmpty(searchResult);
 	}
 
 	protected Document createMBMessageDocument() {

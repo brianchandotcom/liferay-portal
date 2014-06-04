@@ -32,10 +32,10 @@ import java.util.Set;
  */
 public class AssetVocabularySettingsHelper {
 
-	public static final long[] DEFAULT_SELECTED_CLASSNAME_ID =
+	public static final long[] DEFAULT_SELECTED_CLASSNAME_IDS =
 		{AssetCategoryConstants.ALL_CLASS_NAME_IDS};
 
-	public static final long[] DEFAULT_SELECTED_CLASSTYPE_ID =
+	public static final long[] DEFAULT_SELECTED_CLASSTYPE_IDS =
 		{AssetCategoryConstants.ALL_CLASS_TYPE_IDS};
 
 	public AssetVocabularySettingsHelper() {

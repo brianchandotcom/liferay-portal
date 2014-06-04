@@ -58,6 +58,8 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		deleteStagedModels();
+
 		GroupLocalServiceUtil.deleteGroup(stagingGroup);
 	}
 
@@ -142,6 +144,9 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	protected abstract PortletDataHandler createPortletDataHandler();
+
+	protected void deleteStagedModels() throws Exception {
+	}
 
 	protected Date getEndDate() {
 		return new Date();

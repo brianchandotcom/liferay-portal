@@ -94,6 +94,7 @@ AUI.add(
 						var instance = this;
 
 						instance._createDiffVersionSearch();
+
 						instance._bindUI();
 					},
 

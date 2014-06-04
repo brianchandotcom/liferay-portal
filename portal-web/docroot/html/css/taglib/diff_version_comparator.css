@@ -2,7 +2,7 @@
 
 .diff-version-comparator {
 	.diff-version-head {
-		border-bottom: 1px solid;
+		border-bottom: 1px solid transparent;
 		margin-bottom: 40px;
 		padding-bottom: 10px;
 
@@ -12,10 +12,8 @@
 			position: static;
 			vertical-align: baseline;
 
-			a {
-				.lfr-icon-menu-icon {
-					display: none;
-				}
+			a .lfr-icon-menu-icon {
+				display: none;
 			}
 
 			.caret {
@@ -36,7 +34,7 @@
 		}
 
 		.diff-target-selector {
-			border-left: 1px solid;
+			border-left: 1px solid transparent;
 			padding-left: 40px;
 		}
 
@@ -48,10 +46,8 @@
 	.search-container-column {
 		padding-left: 10px;
 
-		.language-selector {
-			.control-group {
-				margin-bottom: 10px;
-			}
+		.language-selector .control-group {
+			margin-bottom: 10px;
 		}
 
 		.search-panels {
@@ -78,7 +74,7 @@
 		}
 
 		.version-item {
-			border-bottom: 1px solid;
+			border-bottom: 1px solid transparent;
 			cursor: pointer;
 			margin-top: 10px;
 			overflow: hidden;
@@ -113,11 +109,11 @@
 	}
 
 	.diff-container-column {
-		border: 1px solid;
+		border: 1px solid transparent;
 		padding: 25px;
 
 		.diff-container {
-			border: 1px solid;
+			border: 1px solid transparent;
 			min-height: 400px;
 			padding: 25px 20px;
 			position: relative;
@@ -134,7 +130,7 @@
 		}
 
 		.diff-version-filter {
-			border: 1px solid;
+			border: 1px solid transparent;
 			border-bottom-width: 0;
 			padding: 10px 15px;
 
@@ -211,7 +207,7 @@
 				}
 
 				.search-panel-icon {
-					background: url(@theme_image_path@/custom/search_panel_icon.png) no-repeat 0 50%;
+					background: url(@theme_image_path@/diff/search_panel_icon.png) no-repeat 0 50%;
 					color: #D4D4D4;
 					font-size: 0;
 				}

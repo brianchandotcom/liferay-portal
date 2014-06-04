@@ -72,6 +72,29 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Test
 	@Transactional
+	public void testAddPageWithSameTitleAsImplicitlyDeletedPageVersion()
+		throws Exception {
+
+		WikiPage[] wikipages = WikiTestUtil.addPageWithChangedParentPage(
+			group.getGroupId(), _node.getNodeId());
+
+		WikiPage childPage = wikipages[0];
+		WikiPage finalParentPage = wikipages[1];
+
+		String originalChildPageTitle = childPage.getTitle();
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			TestPropsValues.getUserId(), finalParentPage);
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),
+			originalChildPageTitle, true);
+
+		Assert.assertNotNull(page);
+	}
+
+	@Test
+	@Transactional
 	public void testMoveExplicitlyChildPageAndParentPageWithRedirectPageToTrash()
 		throws Exception {
 

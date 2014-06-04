@@ -87,6 +87,17 @@ public class AssetVocabularyImplTest {
 			_group.getGroupId(), vocabulary2.getVocabularyId());
 
 		Assert.assertFalse(
+			vocabulary2.hasMoreThanOneCategorySelected(new long[0]));
+		Assert.assertFalse(
+			vocabulary2.hasMoreThanOneCategorySelected(
+				new long[] {category21.getCategoryId()}));
+		Assert.assertTrue(
+			vocabulary2.hasMoreThanOneCategorySelected(
+				new long[] {
+					category21.getCategoryId(), category22.getCategoryId()
+				}));
+
+		Assert.assertFalse(
 			vocabulary1.hasMoreThanOneCategorySelected(
 				new long[] {
 					category21.getCategoryId(), category22.getCategoryId()

@@ -502,22 +502,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		top: 20px;
 	}
 
-	.nav-list {
-		li > a {
-			&:focus, &:hover {
-				background: #E5F5FC;
-				color: #009AE5;
-			}
-		}
-
-		> .active > a {
-			&, &:focus, &:hover {
-				background: #60BFEF;
-				color: #FFF;
-			}
-		}
-	}
-
 	.lfr-control-panel-help-content.alert {
 		border-width: 1px 0;
 		margin-bottom: 1em;
@@ -1079,12 +1063,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.nav-list {
-		> .active > a {
-			@include text-shadow(none);
-		}
-	}
-
 	.panel-page-menu .portlet-static.portlet-static-end {
 		@include box-shadow(3px 0 2px -2px #F5F5F5);
 	}
@@ -1262,7 +1240,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.nav-list .nav-header {
+		.nav-header {
 			margin-left: 0;
 			margin-right: 0;
 		}

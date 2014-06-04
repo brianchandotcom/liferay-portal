@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -56,11 +56,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryTypeServiceTest {
 
@@ -108,7 +104,7 @@ public class DLFileEntryTypeServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test

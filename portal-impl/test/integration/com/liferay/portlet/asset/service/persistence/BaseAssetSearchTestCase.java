@@ -18,17 +18,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -54,6 +53,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,14 +62,9 @@ import org.junit.runner.RunWith;
 /**
  * @author Eudaldo Alonso
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-@Transactional
 public abstract class BaseAssetSearchTestCase {
 
 	@Before
@@ -143,6 +138,11 @@ public abstract class BaseAssetSearchTestCase {
 		_assetTagsNames1 =
 			new String[] {"liferay", "architecture", "modularity", "osgi"};
 		_assetTagsNames2 = new String[] {"liferay", "architecture", "services"};
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test

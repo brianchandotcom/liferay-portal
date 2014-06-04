@@ -21,7 +21,6 @@ import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
@@ -39,7 +38,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)

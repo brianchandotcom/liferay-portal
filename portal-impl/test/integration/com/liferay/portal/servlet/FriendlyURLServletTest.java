@@ -16,14 +16,13 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -46,13 +45,8 @@ import org.testng.Assert;
 /**
  * @author László Csontos
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class FriendlyURLServletTest {
 
 	@Before
@@ -61,22 +55,24 @@ public class FriendlyURLServletTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
 	public void testGetRedirectWithExistentSite() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		testGetRedirect(
-			getPath(group, layout), Portal.PATH_MAIN,
+			getPath(_group, layout), Portal.PATH_MAIN,
 			new Object[] {getURL(layout), false});
 	}
 
@@ -113,6 +109,7 @@ public class FriendlyURLServletTest {
 	}
 
 	private FriendlyURLServlet _friendlyURLServlet = new FriendlyURLServlet();
+	private Group _group;
 	private HttpServletRequest _request = new MockHttpServletRequest();
 
 }

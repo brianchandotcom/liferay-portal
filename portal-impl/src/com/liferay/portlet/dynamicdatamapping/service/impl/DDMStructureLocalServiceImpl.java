@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1318,76 +1317,6 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			structure.getParentStructureId(), structure.getNameMap(),
 			structure.getDescriptionMap(), xsd, serviceContext, structure);
-	}
-
-	/**
-	 * Updates the structure matching the structure ID, replacing the metadata
-	 * entry of the named field.
-	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  fieldName the name of the field whose metadata to update
-	 * @param  metadataEntryName the metadata entry's name
-	 * @param  metadataEntryValue the metadata entry's value
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
-	 */
-	@Override
-	public void updateXSDFieldMetadata(
-			long structureId, String fieldName, String metadataEntryName,
-			String metadataEntryValue, ServiceContext serviceContext)
-		throws PortalException {
-
-		DDMStructure ddmStructure = fetchDDMStructure(structureId);
-
-		if (ddmStructure == null) {
-			return;
-		}
-
-		String xsd = ddmStructure.getXsd();
-
-		try {
-			Document document = SAXReaderUtil.read(xsd);
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> dynamicElementElements = rootElement.elements(
-				"dynamic-element");
-
-			for (Element dynamicElementElement : dynamicElementElements) {
-				String dynamicElementElementFieldName = GetterUtil.getString(
-					dynamicElementElement.attributeValue("name"));
-
-				if (!dynamicElementElementFieldName.equals(fieldName)) {
-					continue;
-				}
-
-				List<Element> metadataElements = dynamicElementElement.elements(
-					"meta-data");
-
-				for (Element metadataElement : metadataElements) {
-					List<Element> metadataEntryElements =
-						metadataElement.elements();
-
-					for (Element metadataEntryElement : metadataEntryElements) {
-						String metadataEntryElementName = GetterUtil.getString(
-							metadataEntryElement.attributeValue("name"));
-
-						if (metadataEntryElementName.equals(
-								metadataEntryName)) {
-
-							metadataEntryElement.setText(metadataEntryValue);
-						}
-					}
-				}
-			}
-
-			updateXSD(structureId, document.asXML(), serviceContext);
-		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
-		}
 	}
 
 	protected void appendNewStructureRequiredFields(

@@ -114,6 +114,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>iconCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>latestApprovedVersion</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

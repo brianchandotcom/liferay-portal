@@ -1,20 +1,113 @@
 <definition component-name="portal-staging">
 	<property name="testray.main.component.name" value="WCM" />
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
 	<tear-down>
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Page#tearDownPG" />
+
 		<execute macro="Role#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="ExportImportDMRootFolder" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="LAR#exportSiteCP" />
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="DMPortlet#configureRootFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="LAR#exportSiteCP" />
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMPortlet#viewRootFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+	</command>
 
 	<command known-issues="LPS-46906" name="ExportImportPortletWithADT" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
@@ -98,6 +191,46 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_EDIT" value1="Edit" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+	</command>
+
+	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),German (Germany)" />
+			<var name="defaultSiteLanguage" value="German (Germany)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCP">
+			<var name="pollsQuestion" value="Polls Question?" />
+			<var name="pollsQuestionChoiceA" value="Polls Choice A" />
+			<var name="pollsQuestionChoiceB" value="Polls Choice A" />
+			<var name="pollsQuestionTitle" value="Polls Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="PollsExport.lar" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="PollsExport.lar" />
+		</execute>
 	</command>
 
 	<command name="ExportImportSmoke" priority="5">

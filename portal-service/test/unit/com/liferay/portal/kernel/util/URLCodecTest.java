@@ -33,6 +33,17 @@ public class URLCodecTest {
 
 			Assert.assertEquals(_RAW_URLS[i], result);
 		}
+
+		testDecodingFails("%");
+		testDecodingFails("%0");
+		testDecodingFails("%00%");
+		testDecodingFails("%00%0");
+		testDecodingFails("%0" + (char)(CharPool.NUMBER_0 - 1));
+		testDecodingFails("%0" + (char)(CharPool.NUMBER_9 + 1));
+		testDecodingFails("%0" + (char)(CharPool.UPPER_CASE_A - 1));
+		testDecodingFails("%0" + (char)(CharPool.UPPER_CASE_F + 1));
+		testDecodingFails("%0" + (char)(CharPool.LOWER_CASE_A - 1));
+		testDecodingFails("%0" + (char)(CharPool.LOWER_CASE_F + 1));
 	}
 
 	@Test
@@ -52,6 +63,45 @@ public class URLCodecTest {
 		}
 	}
 
+	@Test
+	public void testFourBytesUTFWithSurrogates() throws Exception {
+		int[] codePoints = new int[UNICODE_CATS_AND_DOGS.length];
+
+		for (int i = 0; i < codePoints.length; i++) {
+			codePoints[i] = Integer.valueOf(UNICODE_CATS_AND_DOGS[i], 16);
+		}
+
+		String animals = new String(codePoints, 0, codePoints.length);
+		StringBundler sb = new StringBundler(
+			UNICODE_CATS_AND_DOGS.length * 4 * 2);
+
+		byte[] animalBites = animals.getBytes(StringPool.UTF8);
+
+		for (int i = 0; i < animalBites.length; i++) {
+			sb.append(StringPool.PERCENT);
+			sb.append(Integer.toHexString(0xFF & animalBites[i]));
+		}
+
+		String escapedAnimals = sb.toString();
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(escapedAnimals),
+			StringUtil.toLowerCase(
+				URLCodec.encodeURL(animals, StringPool.UTF8, false)));
+
+		Assert.assertEquals(
+			animals, URLCodec.decodeURL(escapedAnimals, StringPool.UTF8));
+	}
+
+	private void testDecodingFails(String s) {
+		try {
+			URLCodec.decodeURL(s, StringPool.UTF8);
+			Assert.fail(s);
+		}
+		catch (IllegalArgumentException e) {
+		}
+	}
+
 	private static final String[] _ENCODED_URLS = new String[9];
 
 	private static final String[] _ESCAPE_SPACES_ENCODED_URLS = new String[9];
@@ -61,6 +111,9 @@ public class URLCodecTest {
 		"0123456789", ".-*_", " ", "~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试",
 		"/abc/def", "abc <def> ghi"
 	};
+
+	private static final String[] UNICODE_CATS_AND_DOGS =
+		{"1f408", "1f431", "1f415", "1f436"};
 
 	static {
 		try {

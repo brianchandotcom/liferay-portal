@@ -160,8 +160,8 @@ public class SearchResultUtilMBMessageTest
 		Document documentB = createMBMessageDocumentWithAlternateKey(
 			baseEntryPK + 1);
 
-		List<SearchResult> searchResults = getSearchResults(
-			documentA, documentB);
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
+			portletURL, documentA, documentB);
 
 		Assert.assertEquals("two hits, one result", 1, searchResults.size());
 

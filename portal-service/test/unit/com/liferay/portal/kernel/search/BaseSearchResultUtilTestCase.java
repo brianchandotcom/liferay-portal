@@ -64,7 +64,8 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected SearchResult assertThatSearchSingleDocumentReturnsOneSearchResult(
 		Document document) {
 
-		List<SearchResult> searchResults = getSearchResults(document);
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
+			portletURL, document);
 
 		Assert.assertEquals("one hit, one result", 1, searchResults.size());
 
@@ -84,14 +85,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpPortal();
 		setUpProps();
 		setUpRegistries();
-	}
-
-	protected List<SearchResult> getSearchResults(Document... documents) {
-		Hits hits = new HitsImpl();
-
-		hits.setDocs(documents);
-
-		return SearchResultUtil.getSearchResults(hits, null, portletURL);
 	}
 
 	protected void setUpFastDateFormatFactory() {

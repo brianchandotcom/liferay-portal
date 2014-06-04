@@ -15,11 +15,10 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -29,35 +28,41 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class VerifyJournalTest extends BaseVerifyTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
 
 	@Test
 	public void testJournalArticleTreePathWithJournalArticleInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
+			_group.getGroupId(), parentFolder.getFolderId(), "title",
+			"content");
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			article.getArticleId());
 
 		JournalFolderLocalServiceUtil.deleteFolder(
@@ -70,17 +75,16 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 	public void testJournalArticleTreePathWithParentJournalFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder grandparentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), grandparentFolder.getFolderId(),
+			_group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		JournalTestUtil.addArticle(
-			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
+			_group.getGroupId(), parentFolder.getFolderId(), "title",
+			"content");
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
 			TestPropsValues.getUserId(), parentFolder.getFolderId());
@@ -95,13 +99,11 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 	public void testJournalFolderTreePathWithJournalFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			_group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
@@ -117,17 +119,15 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 	public void testJournalFolderTreePathWithParentJournalFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder grandparentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), grandparentFolder.getFolderId(),
+			_group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		JournalTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			_group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
@@ -143,5 +143,7 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyJournal();
 	}
+
+	private Group _group;
 
 }

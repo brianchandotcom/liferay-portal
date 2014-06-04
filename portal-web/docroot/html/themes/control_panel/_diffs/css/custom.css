@@ -884,13 +884,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				padding-right: 15px;
 			}
 
-			.nav-header {
-				background: #F3F3F3;
-				font-size: 14px;
-				font-weight: 200;
-				text-transform: none;
-			}
-
 			li a {
 				padding-bottom: 3px;
 				padding-top: 3px;
@@ -1238,11 +1231,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.journal-article-header-edit {
 				border-top-width: 1px;
 			}
-		}
-
-		.nav-header {
-			margin-left: 0;
-			margin-right: 0;
 		}
 
 		.taglib-form-navigator .nav.form-navigator.well {

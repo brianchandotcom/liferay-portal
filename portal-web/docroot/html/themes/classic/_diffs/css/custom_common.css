@@ -686,14 +686,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		width: 11px;
 	}
 
-	.nav-header {
-		background-color: #E5E5E5;
-		border: solid #DDD;
-		border-width: 1px 0;
-
-		@include ellipsis;
-	}
-
 	.panel-group .panel.panel-default {
 		.panel-heading .accordion-toggle {
 			padding-left: 15px;
@@ -1026,12 +1018,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.modify-pages .delete-tab {
 		@include border-radius(50%);
 		@include text-shadow(none);
-	}
-
-	.nav-header {
-		background-color: #FFF;
-
-		@include background-image(linear-gradient(#FFF 0%, #F2F2F2 100%));
 	}
 
 	.panel.panel-default {

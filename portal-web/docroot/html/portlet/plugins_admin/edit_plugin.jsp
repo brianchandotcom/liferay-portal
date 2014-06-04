@@ -133,7 +133,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
 										</liferay-portlet:renderURL>
 
-										<liferay-ui:icon image="edit" label="<%= true %>" message="change" url="<%= editURL %>" />
+										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL %>" />
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
@@ -175,7 +175,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
 										</liferay-portlet:renderURL>
 
-										<liferay-ui:icon image="edit" label="<%= true %>" message="change" url="<%= editURL %>" />
+										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL %>" />
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 

@@ -195,7 +195,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					%>
 
 					<liferay-ui:icon
-						image="../aui/user"
+						iconCssClass="icon-user"
 						label="<%= true %>"
 						message="assign-users"
 						url="<%= viewUsersURL.toString() %>"

@@ -24,7 +24,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 Group group = (Group)row.getParameter("group");
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
@@ -35,7 +35,7 @@ Group group = (Group)row.getParameter("group");
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="assign_user_group_roles"
+			iconCssClass="icon-signin"
 			message="assign-site-roles"
 			url="<%= assignURL %>"
 		/>
@@ -51,7 +51,7 @@ Group group = (Group)row.getParameter("group");
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="unassign_user_group"
+			iconCssClass="icon-signout"
 			message="remove-membership"
 			url="<%= removeURL %>"
 		/>

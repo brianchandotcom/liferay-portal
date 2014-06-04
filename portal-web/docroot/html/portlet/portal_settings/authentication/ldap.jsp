@@ -169,7 +169,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 								%>
 
 								<liferay-ui:icon
-									image="top"
+									iconCssClass="icon-arrow-up"
 									message="up"
 									url="<%= taglibUpURL %>"
 								/>
@@ -179,7 +179,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 								%>
 
 								<liferay-ui:icon
-									image="bottom"
+									iconCssClass="icon-arrow-down"
 									message="down"
 									url="<%= taglibDownURL %>"
 								/>
@@ -192,7 +192,8 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								image="edit"
+								iconCssClass="icon-edit"
+								message="edit"
 								url="<%= editURL %>"
 							/>
 

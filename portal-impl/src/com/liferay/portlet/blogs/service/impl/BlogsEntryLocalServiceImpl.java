@@ -1457,9 +1457,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setContextAttribute(
 			"[$BLOGS_ENTRY_CONTENT$]", entryContentTrimmed, false);
 
-		String blogsEntrySiteName =
-			GroupLocalServiceUtil.getGroupDescriptiveName(
-				entry.getGroupId(), serviceContext.getLocale());
+		String entrySiteName = GroupLocalServiceUtil.getGroupDescriptiveName(
+			entry.getGroupId(), serviceContext.getLocale());
 
 		String simpleDate = Time.getSimpleDate(
 			entry.getCreateDate(), "yyyy/MM/dd");
@@ -1474,7 +1473,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$BLOGS_ENTRY_CREATE_DATE$]", simpleDate,
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
-			"[BLOGS_ENTRY_SITE]", blogsEntrySiteName,
+			"[$BLOGS_ENTRY_SITE_NAME$]", entrySiteName,
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
 			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]", userPortraitUrl,

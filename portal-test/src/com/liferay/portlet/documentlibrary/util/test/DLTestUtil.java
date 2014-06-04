@@ -35,17 +35,19 @@ import java.io.InputStream;
  */
 public class DLTestUtil {
 
-	public static DLFileEntry addFileEntry(DLFolder folder) throws Exception {
+	public static DLFileEntry addFileEntry(long dlFolderId) throws Exception {
+		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolderId);
+
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(folder.getGroupId());
+			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes();
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), folder.getGroupId(),
-			folder.getRepositoryId(), folder.getFolderId(),
+			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			RandomTestUtil.randomString(), "text/plain",
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
@@ -60,24 +62,33 @@ public class DLTestUtil {
 	}
 
 	public static DLFolder addFolder(
-			long groupId, ServiceContext serviceContext)
+			long groupId, boolean deleteExisting, ServiceContext serviceContext)
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
 
-		try {
-			DLFolder folder = DLFolderLocalServiceUtil.getFolder(
-				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+		if (deleteExisting) {
+			try {
+				DLFolder folder = DLFolderLocalServiceUtil.getFolder(
+					groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
 
-			DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
-		}
-		catch (NoSuchFolderException nsfe) {
+				DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
 		}
 
 		return DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), groupId, groupId, false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, StringPool.BLANK,
 			false, serviceContext);
+	}
+
+	public static DLFolder addFolder(
+			long groupId, ServiceContext serviceContext)
+		throws Exception {
+
+		return addFolder(groupId, true, serviceContext);
 	}
 
 }

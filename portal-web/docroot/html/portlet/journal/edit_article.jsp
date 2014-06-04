@@ -380,7 +380,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	new Liferay.Portlet.Journal(
 		{
 			article: {
-				defaultLanguageId: '<%= defaultLanguageId %>',
+				defaultLanguageId: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 				editUrl: '<%= editArticleURL %>',
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 				permissionsUrl: '<%= permissionsURL %>',

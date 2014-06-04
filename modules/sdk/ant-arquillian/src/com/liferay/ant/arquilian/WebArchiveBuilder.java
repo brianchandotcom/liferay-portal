@@ -35,8 +35,7 @@ public class WebArchiveBuilder {
 
 		Project project = _getProject();
 
-		project.setProperty(
-			"app.server.deploy.dir", tempDir.getAbsolutePath());
+		project.setProperty("app.server.deploy.dir", tempDir.getAbsolutePath());
 		project.setProperty("auto.deploy.unpack.war", "false");
 
 		project.executeTarget("direct-deploy");

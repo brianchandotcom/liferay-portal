@@ -18,6 +18,8 @@ AUI.add(
 			resultHighlighter: STR_PHRASE_MATCH
 		};
 
+		var AC_ATTRS_WHITELIST = [''];
+
 		var AutoCompleteInputBase = function() {};
 
 		AutoCompleteInputBase.ATTRS = {
@@ -37,7 +39,7 @@ AUI.add(
 			},
 
 			regExp: {
-				getter: '_getRegExp',
+				validator: Lang.isRegExp || Lang.isString,
 				value: '(?:\\strigger|^trigger)([^\\s]+)'
 			},
 
@@ -67,6 +69,14 @@ AUI.add(
 				instance.set('resultFormatter', A.bind('_acResultFormatter', instance));
 
 				instance._bindUIACIBase();
+
+				var autocompleteAttrs = A.Object.keys(A.AutoComplete.ATTRS).filter(
+					function(item) {
+						return item !== 'value';
+					}
+				);
+
+				A.mix(TRIGGER_CONFIG_DEFAULTS, instance.getAttrs(), false, autocompleteAttrs);
 			},
 
 			destructor: function() {
@@ -159,12 +169,18 @@ AUI.add(
 				instance.after('visibleChange', instance._afterACVisibleChange, instance);
 			},
 
-			_getRegExp: function(value) {
+			_getRegExp: function() {
 				var instance = this;
 
-				var triggersExpr = '[' + instance._getTriggers().join('|') + ']';
+				var regExp = instance.get('regExp');
 
-				return new RegExp(value.replace(REGEX_TRIGGER, triggersExpr));
+				if (Lang.isString(regExp)) {
+					var triggersExpr = '[' + instance._getTriggers().join('|') + ']';
+
+					regExp = new RegExp(regExp.replace(REGEX_TRIGGER, triggersExpr));
+				}
+
+				return regExp;
 			},
 
 			_getTriggers: function() {
@@ -231,11 +247,15 @@ AUI.add(
 			_setTriggerConfig: function(trigger) {
 				var instance = this;
 
-				var triggers = instance._getTriggers();
+				if (trigger !== instance._trigger) {
+					var triggers = instance._getTriggers();
 
-				var triggerConfig = instance.get(STR_TRIGGER)[AArray.indexOf(triggers, trigger)];
+					var triggerConfig = instance.get(STR_TRIGGER)[AArray.indexOf(triggers, trigger)];
 
-				instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
+					instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
+
+				 	instance._trigger = trigger;
+				}
 			},
 
 			_syncUIPosAlign: function() {},

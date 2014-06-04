@@ -11,8 +11,6 @@ AUI.add(
 
 		var STR_INPUT_NODE = 'inputNode';
 
-		var STR_REG_EXP = 'regExp';
-
 		var STR_SPACE = ' ';
 
 		var AutoCompleteTextarea = function() {};
@@ -106,7 +104,7 @@ AUI.add(
 							if (lastTriggerIndex >= 0) {
 								val = val.substring(lastTriggerIndex);
 
-								var regExp = instance.get(STR_REG_EXP);
+								var regExp = instance._getRegExp();
 
 								var res = regExp.exec(val);
 
@@ -161,7 +159,7 @@ AUI.add(
 
 							val = val.substring(lastTriggerIndex);
 
-							var regExp = instance.get(STR_REG_EXP);
+							var regExp = instance._getRegExp();
 
 							var res = regExp.exec(val);
 

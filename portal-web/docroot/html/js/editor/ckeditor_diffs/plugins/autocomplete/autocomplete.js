@@ -226,9 +226,7 @@
 
 			var query = prevTriggerPosition.query;
 
-			var regExp = instance.get('regExp');
-
-			var res = regExp.exec(query);
+			var res = instance._getRegExp().exec(query);
 
 			var result;
 

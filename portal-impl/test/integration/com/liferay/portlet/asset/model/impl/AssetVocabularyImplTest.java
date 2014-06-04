@@ -90,7 +90,7 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertFalse(
 			vocabulary1.hasMoreThanOneCategorySelected(
-				new long[]{
+				new long[] {
 					category21.getCategoryId(), category22.getCategoryId()
 				}));
 	}

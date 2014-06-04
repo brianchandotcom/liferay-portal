@@ -42,33 +42,6 @@ public class RepositoryLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateLocalRepositoryFromInexistingFileEntryId()
-		throws Exception {
-
-		long fileEntryId = 42L;
-
-		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, fileEntryId, 0);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateLocalRepositoryFromInexistingFileVersionId()
-		throws Exception {
-
-		long fileVersionId = 42L;
-
-		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, 0, fileVersionId);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateLocalRepositoryFromInvalidFolderId()
-		throws Exception {
-
-		long folderId = 42L;
-
-		RepositoryLocalServiceUtil.getLocalRepositoryImpl(folderId, 0, 0);
-	}
-
 	@Test
 	public void testCreateLocalRepositoryFromExistingFileEntryId()
 		throws Exception {
@@ -115,6 +88,24 @@ public class RepositoryLocalServiceTest {
 			dlFolder.getRepositoryId());
 	}
 
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateLocalRepositoryFromInexistingFileEntryId()
+		throws Exception {
+
+		long fileEntryId = 42L;
+
+		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, fileEntryId, 0);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateLocalRepositoryFromInexistingFileVersionId()
+		throws Exception {
+
+		long fileVersionId = 42L;
+
+		RepositoryLocalServiceUtil.getLocalRepositoryImpl(0, 0, fileVersionId);
+	}
+
 	@Test(expected = RepositoryException.class)
 	public void testCreateLocalRepositoryFromInexistingRepositoryId()
 		throws Exception {
@@ -125,28 +116,12 @@ public class RepositoryLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileEntryId()
+	public void testCreateLocalRepositoryFromInvalidFolderId()
 		throws Exception {
 
-		long fileEntryId = 42L;
-
-		RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileVersionId()
-		throws Exception {
-
-		long fileVersionId = 42L;
-
-		RepositoryLocalServiceUtil.getRepositoryImpl(0, 0, fileVersionId);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
 		long folderId = 42L;
 
-		RepositoryLocalServiceUtil.getRepositoryImpl(folderId, 0, 0);
+		RepositoryLocalServiceUtil.getLocalRepositoryImpl(folderId, 0, 0);
 	}
 
 	@Test
@@ -189,6 +164,31 @@ public class RepositoryLocalServiceTest {
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(
 			dlFolder.getRepositoryId());
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileEntryId()
+		throws Exception {
+
+		long fileEntryId = 42L;
+
+		RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileVersionId()
+		throws Exception {
+
+		long fileVersionId = 42L;
+
+		RepositoryLocalServiceUtil.getRepositoryImpl(0, 0, fileVersionId);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
+		long folderId = 42L;
+
+		RepositoryLocalServiceUtil.getRepositoryImpl(folderId, 0, 0);
 	}
 
 	@Test(expected = RepositoryException.class)

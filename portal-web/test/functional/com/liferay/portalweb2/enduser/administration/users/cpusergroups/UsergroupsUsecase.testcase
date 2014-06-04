@@ -130,7 +130,7 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" />
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
 
 		<execute action="CPUsersandorganizationsManagepages#assertClick" locator-key1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />

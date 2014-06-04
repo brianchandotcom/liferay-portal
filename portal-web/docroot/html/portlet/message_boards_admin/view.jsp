@@ -247,7 +247,6 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<%@ include file="/html/portlet/message_boards/thread_priority.jspf" %>
 
 							<liferay-ui:search-container-column-text
-								buffer="buffer"
 								href="<%= rowURL %>"
 								name="flag"
 								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(pageContext, "resolved") : LanguageUtil.get(pageContext, "waiting-for-an-answer") %>'

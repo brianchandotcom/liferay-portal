@@ -21,6 +21,8 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 String eventName = ParamUtil.getString(request, "eventName");
 
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
+
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 
 Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
@@ -34,6 +36,7 @@ Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 	PortletURL selectGroupURL = renderResponse.createRenderURL();
 
 	selectGroupURL.setParameter("struts_action", "/document_selector/view");
+	selectGroupURL.setParameter("CKEditorFuncNum", ckEditorFuncNum);
 	selectGroupURL.setParameter("eventName", eventName);
 	selectGroupURL.setParameter("tabs1", "pages");
 	selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));

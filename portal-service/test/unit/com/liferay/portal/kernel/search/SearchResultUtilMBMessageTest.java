@@ -59,8 +59,9 @@ public class SearchResultUtilMBMessageTest
 			null
 		);
 
-		SearchResult searchResult = searchSingleDocument(
-			createMBMessageDocumentWithAlternateKey());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createMBMessageDocumentWithAlternateKey());
 
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
@@ -107,8 +108,9 @@ public class SearchResultUtilMBMessageTest
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
 
-		SearchResult searchResult = searchSingleDocument(
-			createMBMessageDocumentWithAlternateKey());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createMBMessageDocumentWithAlternateKey());
 
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
@@ -127,8 +129,9 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testMBMessageWithoutKeyInDocument() throws Exception {
-		SearchResult searchResult = searchSingleDocument(
-			createMBMessageDocument());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createMBMessageDocument());
 
 		Assert.assertEquals(MBMESSAGE_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(

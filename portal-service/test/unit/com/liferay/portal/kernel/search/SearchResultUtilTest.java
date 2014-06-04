@@ -171,7 +171,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	}
 
 	protected SearchResult searchBlankDocument() {
-		return searchSingleDocument(new DocumentImpl());
+		return assertThatSearchSingleDocumentReturnsOneSearchResult(
+			new DocumentImpl());
 	}
 
 }

@@ -141,6 +141,7 @@ public class WikiPortletInstanceSettings {
 	private static FallbackKeys _getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
+		fallbackKeys.add("displayStyle", PropsKeys.WIKI_DISPLAY_STYLE);
 		fallbackKeys.add(
 			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
 		fallbackKeys.add(

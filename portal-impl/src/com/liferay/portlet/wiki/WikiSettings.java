@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -27,11 +26,7 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.wiki.util.WikiConstants;
 
-import java.io.IOException;
-
 import java.util.Map;
-
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
@@ -120,15 +115,6 @@ public class WikiSettings {
 
 	public boolean isEmailPageUpdatedEnabled() {
 		return _typedSettings.getBooleanValue("emailPageUpdatedEnabled");
-	}
-
-	public void store() throws IOException, ValidatorException {
-		Settings settings = _typedSettings.getWrappedSettings();
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		modifiableSettings.store();
 	}
 
 	private static FallbackKeys _getFallbackKeys() {

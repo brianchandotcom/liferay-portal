@@ -312,9 +312,13 @@ public class ShoppingSettings {
 		fallbackKeys.add("insurance", PropsKeys.SHOPPING_INSURANCE);
 		fallbackKeys.add(
 			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);
+		fallbackKeys.add("minOrder", PropsKeys.SHOPPING_MIN_ORDER);
+		fallbackKeys.add(
+			"paypalEmailAddress", PropsKeys.SHOPPING_PAYPAL_EMAIL_ADDRESS);
 		fallbackKeys.add("shipping", PropsKeys.SHOPPING_SHIPPING);
 		fallbackKeys.add(
 			"shippingFormula", PropsKeys.SHOPPING_SHIPPING_FORMULA);
+		fallbackKeys.add("taxRate", PropsKeys.SHOPPING_TAX_RATE);
 		fallbackKeys.add("taxState", PropsKeys.SHOPPING_TAX_STATE);
 
 		return fallbackKeys;

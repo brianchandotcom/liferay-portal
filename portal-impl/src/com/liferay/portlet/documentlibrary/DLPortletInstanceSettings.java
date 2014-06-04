@@ -161,9 +161,12 @@ public class DLPortletInstanceSettings {
 		fallbackKeys.add(
 			"fileEntriesPerPage",
 			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		fallbackKeys.add("showActions", PropsKeys.DL_ACTIONS_VISIBLE);
+		fallbackKeys.add("showFolderMenu", PropsKeys.DL_FOLDER_MENU_VISIBLE);
 		fallbackKeys.add(
 			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
 		fallbackKeys.add("showSubfolders", PropsKeys.DL_SUBFOLDERS_VISIBLE);
+		fallbackKeys.add("showTabs", PropsKeys.DL_TABS_VISIBLE);
 
 		return fallbackKeys;
 	}

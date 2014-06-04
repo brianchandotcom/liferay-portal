@@ -246,6 +246,9 @@ public class MBSettings {
 		fallbackKeys.add(
 			"subscribeByDefault",
 			PropsKeys.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
+		fallbackKeys.add(
+			"threadAsQuestionByDefault",
+			PropsKeys.MESSAGE_BOARDS_THREAD_AS_QUESTION_BY_DEFAULT);
 
 		return fallbackKeys;
 	}

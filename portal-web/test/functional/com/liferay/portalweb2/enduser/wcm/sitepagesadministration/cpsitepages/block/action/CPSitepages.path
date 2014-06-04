@@ -167,6 +167,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_PAGE_PLUS_ICON</td>
+	<td>//div[contains(@class,'tree-collapsed')]/i[contains(@class,'icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_PAGE_LINK</td>
 	<td>xpath=(//a[contains(@id,'layoutsTree_layout_') and contains(.,'${key_sitePageName}')])</td>
 	<td></td>

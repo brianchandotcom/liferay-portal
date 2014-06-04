@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_LINK_TO_PAGE</td>
+	<td>//div[@class='journal-content-article']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE</td>
 	<td>//div[@class='portlet-body']/div[contains(@class,'alert-block')]</td>
 	<td></td>

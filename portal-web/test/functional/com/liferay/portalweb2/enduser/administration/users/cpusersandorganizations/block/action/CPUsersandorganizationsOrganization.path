@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/div/a)[1]</td>
 	<td></td>
 </tr>
 </tbody>

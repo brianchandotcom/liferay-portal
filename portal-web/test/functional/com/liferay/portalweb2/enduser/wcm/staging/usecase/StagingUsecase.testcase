@@ -3648,7 +3648,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewHistoryVerionWithDeletedUser" priority="4">
+	<command name="ViewHistoryVersionWithDeletedUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

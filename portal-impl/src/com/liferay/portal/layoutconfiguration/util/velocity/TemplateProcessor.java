@@ -210,7 +210,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 	@Override
 	public String processPortlet(
-			String portletId, Map<String, ?> defaultSettings)
+			String portletId, Map<String, ?> defaultSettingsMap)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
@@ -222,7 +222,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		for (Map.Entry<String, ?> entry : defaultSettings.entrySet()) {
+		for (Map.Entry<String, ?> entry : defaultSettingsMap.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 

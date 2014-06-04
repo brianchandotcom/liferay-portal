@@ -126,7 +126,9 @@
 		<if>
 			<isset var="webContentLinkToPage" />
 			<then>
-				<execute action="CPWebcontentAddwebcontent#type" locator-key1="LINK_TO_PAGE_FIELD" value1="${webContentLinkToPage}" />
+				<var name="key_indexNumber" value="${indexNumber}" />
+
+				<execute action="CPWebcontentAddwebcontent#select" locator-key1="LINK_TO_PAGE_FIELD" value1="index=${key_indexNumber}" />
 			</then>
 		</if>
 
@@ -1280,6 +1282,14 @@
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<command name="viewLinkToPagePGViaWCD">
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="WEB_CONTENT_LINK_TO_PAGE" value1="Link to Page" />
+
+		<execute macro="Page#viewChildPG">
+			<var name="childPageName" value="${childPageName}" />
+		</execute>
 	</command>
 
 	<command name="viewNoContentAsGuestPGViaWCD">

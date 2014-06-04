@@ -46,6 +46,29 @@
 		</if>
 	</command>
 
+	<command name="configureRootFolderPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="ROOT_FOLDER_SELECT_FOLDER_IFRAME" />
+
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="ROOT_FOLDER_SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="ROOT_FOLDER_SELECT_FOLDER_TABLE_FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewDefaultPG">
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Documents and Media" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
@@ -54,5 +77,15 @@
 	<command name="viewNoPermissionCP">
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Documents and Media" />
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+	</command>
+
+	<command name="viewRootFolderPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGDocumentsandmediaConfiguration#assertTextEquals" locator-key1="ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmediaConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

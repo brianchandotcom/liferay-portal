@@ -40,7 +40,30 @@
 		</execute>
 	</command>
 
-	<command name="exportSiteCmd">
+	<command name="exportSitecmd">
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+	</command>
+
+	<command name="exportSiteCP">
+		<execute macro="LAR#gotoExportSiteCmd" />
+
+		<execute macro="LAR#exportSiteOptionsCmd" />
+	</command>
+
+	<command name="exportSiteOptionsCmd">
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
@@ -172,29 +195,6 @@
 				<execute action="BasePortletExport#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="exportSiteCP">
-		<execute macro="LAR#gotoExportSiteCmd" />
-
-		<execute macro="LAR#exportSiteCmd" />
-	</command>
-
-	<command name="exportSiteExportcmd">
-		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
-
-		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
-
-		<echo message="import file name ${larFileName}" />
-
-		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
 	</command>
 
 	<command name="exportUserGroups">

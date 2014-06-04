@@ -530,9 +530,9 @@
 }
 
 .active-area-proxy {
-	background: #FFFFE0 url(@theme_image_path@/portlet/pop_up.png) no-repeat 10px 50%;
+	background-color: #FFFFE0;
 	font-size: 1.2em;
-	padding: 0.3em 0.3em 0.3em 2em;
+	padding: 0.3em;
 }
 
 .ie6, .ie7 {

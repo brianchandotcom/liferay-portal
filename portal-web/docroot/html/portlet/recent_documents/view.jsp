@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/recent_documents/init.jsp" %>
 
 <%
-List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId());
+List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId());
 %>
 
 <c:choose>
@@ -28,9 +28,7 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 		<ul class="recent-documents">
 
 		<%
-		for (int i = 0; i < fileRanks.size(); i++) {
-			DLFileRank fileRank = (DLFileRank)fileRanks.get(i);
-
+		for (DLFileRank fileRank : fileRanks) {
 			try {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileRank.getFileEntryId());
 
@@ -44,10 +42,12 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 		%>
 
 				<li>
-					<a href="<%= rowURL %>">
-						<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= fileEntry.getIcon() %>.png" />
-						<%= fileEntry.getTitle() %>
-					</a>
+					<liferay-ui:icon
+						iconCssClass="<%= fileEntry.getIconCssClass() %>"
+						label="<%= true %>"
+						message="<%= fileEntry.getTitle() %>"
+						url="<%= rowURL.toString() %>"
+					/>
 				</li>
 
 		<%

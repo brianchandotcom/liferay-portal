@@ -394,7 +394,7 @@ for (int i = 0; i < results.size(); i++) {
 
 						<c:otherwise>
 							<div style="float: left; margin: 100px 10px 0px;">
-								<img alt="<liferay-ui:message key="error" />" src="<%= themeDisplay.getPathThemeImages() %>/application/forbidden_action.png" />
+								<i class="icon-ban-circle"></i>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -413,6 +413,10 @@ for (int i = 0; i < results.size(); i++) {
 					<liferay-util:buffer var="fileEntryTitle">
 
 						<%
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
@@ -421,10 +425,10 @@ for (int i = 0; i < results.size(); i++) {
 						%>
 
 						<liferay-ui:app-view-entry
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							displayStyle="list"
 							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= true %>"
-							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) + ".png" %>'
 							title="<%= latestFileVersion.getTitle() %>"
 							url="<%= rowURL.toString() %>"
 						/>
@@ -532,11 +536,9 @@ for (int i = 0; i < results.size(); i++) {
 					<liferay-util:buffer var="folderTitle">
 
 						<%
-						String folderImage = "folder_empty";
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-						if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
-							folderImage = "folder_full_document";
-						}
+						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
@@ -551,11 +553,11 @@ for (int i = 0; i < results.size(); i++) {
 						%>
 
 						<liferay-ui:app-view-entry
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							data="<%= data %>"
 							displayStyle="list"
 							folder="<%= true %>"
 							showCheckbox="<%= false %>"
-							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/common/" + folderImage + ".png" %>'
 							title="<%= curFolder.getName() %>"
 							url="<%= rowURL.toString() %>"
 						/>

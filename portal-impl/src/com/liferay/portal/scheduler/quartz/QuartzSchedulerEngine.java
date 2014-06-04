@@ -1021,6 +1021,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Destination destination = messageBus.getDestination(destinationName);
 
+		if (destination == null) {
+			return;
+		}
+
 		Set<MessageListener> messageListeners =
 			destination.getMessageListeners();
 

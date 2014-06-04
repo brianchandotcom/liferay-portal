@@ -92,11 +92,6 @@
 		}
 	}
 
-	&.display-list.locked {
-		background: url(@theme_image_path@/common/lock.png) no-repeat 100% 50%;
-		padding-right: 20px;
-	}
-
 	.categories {
 		margin-top: 10px;
 	}

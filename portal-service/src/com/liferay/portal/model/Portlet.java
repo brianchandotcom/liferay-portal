@@ -1152,7 +1152,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the workflow handler instances of the portlet
 	*/
-	public java.util.List<com.liferay.portal.kernel.workflow.WorkflowHandler> getWorkflowHandlerInstances();
+	public java.util.List<com.liferay.portal.kernel.workflow.WorkflowHandler<?>> getWorkflowHandlerInstances();
 
 	/**
 	* Returns the name of the XML-RPC method class of the portlet.

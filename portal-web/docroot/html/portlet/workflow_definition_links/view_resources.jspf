@@ -17,7 +17,7 @@
 <%
 long groupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
 
-List<WorkflowHandler> workflowHandlers = null;
+List<WorkflowHandler<?>> workflowHandlers = null;
 
 if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS)) {
 	groupId = WorkflowConstants.DEFAULT_GROUP_ID;
@@ -28,12 +28,12 @@ else {
 	workflowHandlers = WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 }
 
-List<WorkflowHandler> hiddenWorkflowHandlers = new ArrayList<WorkflowHandler>();
+List<WorkflowHandler<?>> hiddenWorkflowHandlers = new ArrayList<WorkflowHandler<?>>();
 
-Iterator<WorkflowHandler> itr = workflowHandlers.iterator();
+Iterator<WorkflowHandler<?>> itr = workflowHandlers.iterator();
 
 while (itr.hasNext()) {
-	WorkflowHandler workflowHandler = itr.next();
+	WorkflowHandler<?> workflowHandler = itr.next();
 
 	if (!workflowHandler.isVisible()) {
 		hiddenWorkflowHandlers.add(workflowHandler);

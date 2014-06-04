@@ -58,7 +58,7 @@ public class WorkflowTasksUserNotificationHandler
 
 		String entryClassName = jsonObject.getString("entryClassName");
 
-		WorkflowHandler workflowHandler =
+		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
 
 		if (workflowHandler == null) {

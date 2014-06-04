@@ -25,10 +25,10 @@ public class WorkflowHandlerUtil {
 	public static String[] getSearchableAssetTypes() {
 		List<String> assetTypes = new ArrayList<String>();
 
-		List<WorkflowHandler> workflowHandlers =
+		List<WorkflowHandler<?>> workflowHandlers =
 			WorkflowHandlerRegistryUtil.getWorkflowHandlers();
 
-		for (WorkflowHandler workflowHandler : workflowHandlers) {
+		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
 			if (!workflowHandler.isAssetTypeSearchable()) {
 				continue;
 			}

@@ -43,7 +43,8 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Alexander Chow
  */
-public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
+public class DLFileEntryWorkflowHandler
+	extends BaseWorkflowHandler<DLFileEntry> {
 
 	@Override
 	public String getClassName() {

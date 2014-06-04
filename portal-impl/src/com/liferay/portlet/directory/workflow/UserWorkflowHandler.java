@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-public class UserWorkflowHandler extends BaseWorkflowHandler {
+public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 	@Override
 	public String getClassName() {
@@ -51,7 +51,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 	}
 
 	@Override
-	public Object updateStatus(
+	public User updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 

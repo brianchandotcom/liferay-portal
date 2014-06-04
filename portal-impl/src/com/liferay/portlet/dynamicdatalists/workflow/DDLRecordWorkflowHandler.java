@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  */
-public class DDLRecordWorkflowHandler extends BaseWorkflowHandler {
+public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 
 	@Override
 	public String getClassName() {

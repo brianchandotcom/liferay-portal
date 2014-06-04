@@ -45,7 +45,8 @@ import java.util.Map;
  * @author Juan Fernández
  * @author Julio Camarero
  */
-public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
+public class JournalArticleWorkflowHandler
+	extends BaseWorkflowHandler<JournalArticle> {
 
 	@Override
 	public String getClassName() {

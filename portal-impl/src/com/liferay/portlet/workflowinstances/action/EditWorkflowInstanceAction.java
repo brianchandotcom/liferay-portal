@@ -148,7 +148,7 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		long classPK = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		WorkflowHandler workflowHandler =
+		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 
 		workflowHandler.updateStatus(

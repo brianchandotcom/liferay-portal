@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler {
+public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 
 	@Override
 	public String getClassName() {

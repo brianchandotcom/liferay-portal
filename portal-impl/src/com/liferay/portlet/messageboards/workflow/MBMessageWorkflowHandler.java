@@ -35,7 +35,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Julio Camarero
  */
-public class MBMessageWorkflowHandler extends BaseWorkflowHandler {
+public class MBMessageWorkflowHandler extends BaseWorkflowHandler<MBMessage> {
 
 	@Override
 	public String getClassName() {
@@ -48,7 +48,7 @@ public class MBMessageWorkflowHandler extends BaseWorkflowHandler {
 	}
 
 	@Override
-	public Object updateStatus(
+	public MBMessage updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 

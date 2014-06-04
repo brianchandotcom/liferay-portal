@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Julio Camarero
  */
-public class WikiPageWorkflowHandler extends BaseWorkflowHandler {
+public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 
 	@Override
 	public String getClassName() {

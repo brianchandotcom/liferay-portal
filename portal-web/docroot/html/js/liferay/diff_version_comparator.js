@@ -140,7 +140,8 @@ AUI.add(
 								results.push(
 									{
 										node: item,
-										searchData: item.one('.version-title').text() + '|' + item.attr('data-user-name')
+										title: item.one('.version-title').text(),
+										user: item.attr('data-user-name')
 									}
 								);
 							}
@@ -154,8 +155,21 @@ AUI.add(
 									inputNode: searchBox,
 									minQueryLength: 0,
 									queryDelay: 0,
-									resultFilters: 'subWordMatch',
-									resultTextLocator: 'searchData',
+									resultFilters: function(query, results) {
+										query = query.toLowerCase();
+
+										return results.filter(
+											function(item) {
+												var result = item.raw;
+
+												var title = result.title.toLowerCase();
+
+												var user = result.user.toLowerCase();
+
+												return ((title.indexOf(query) !== -1) || (user.indexOf(query) !== -1));
+											}
+										);
+									},
 									source: results
 								}
 							);

@@ -1,9 +1,11 @@
 ;(function() {
 	var A = AUI();
 
-	var KeyMap = A.Event.KeyMap;
-
 	var Lang = A.Lang;
+
+	var AArray = A.Array;
+
+	var KeyMap = A.Event.KeyMap;
 
 	var STR_EDITOR = 'editor';
 
@@ -36,6 +38,8 @@
 			var instance = this;
 
 			instance._processCaret = A.bind('_processCaretPosition', instance);
+
+			instance._processCaretTask = A.debounce(instance._processCaret, 50);
 
 			var editor = instance.get(STR_EDITOR);
 
@@ -155,7 +159,7 @@
 
 			var triggers = instance._getTriggers();
 
-			A.Array.each(
+			AArray.each(
 				triggers,
 				function(item, index, collection) {
 					var triggerPosition = query.lastIndexOf(item);
@@ -176,13 +180,13 @@
 					if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
 						var nodeText = node.getText();
 
-						A.Array.each(
+						AArray.each(
 							triggers,
 							function(item, index, collection) {
 								var triggerPosition = nodeText.lastIndexOf(item);
 
 								if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
-									trigger = item
+									trigger = item;
 									triggerIndex = triggerPosition;
 								}
 							}
@@ -295,7 +299,7 @@
 					}
 				}
 				else {
-					A.soon(instance._processCaret);
+					instance._processCaretTask();
 				}
 			}
 		},
@@ -356,7 +360,7 @@
 					node = updateWalker.next();
 				}
 
-				A.Array.invoke(removeNodes, 'remove');
+				AArray.invoke(removeNodes, 'remove');
 
 				nextElement = newElement.getNext();
 			}

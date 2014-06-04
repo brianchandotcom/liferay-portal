@@ -217,12 +217,7 @@ AUI.add(
 
 						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).hide();
 
-						if (event.results.length > 0) {
-							instance.get(STR_VERSION_ITEMS).one('.message-info').hide();
-						}
-						else {
-							instance.get(STR_VERSION_ITEMS).one('.message-info').show();
-						}
+						instance.get(STR_VERSION_ITEMS).one('.message-info').toggle(!event.results.length);
 
 						A.Array.each(
 							event.results,

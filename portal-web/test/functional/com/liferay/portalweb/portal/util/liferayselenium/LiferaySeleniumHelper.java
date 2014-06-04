@@ -35,6 +35,7 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
@@ -49,6 +50,7 @@ import javax.imageio.ImageIO;
 
 import org.sikuli.api.robot.Key;
 import org.sikuli.script.Button;
+import org.sikuli.script.Location;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
@@ -842,6 +844,49 @@ public class LiferaySeleniumHelper {
 		_screen.click(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
+	}
+
+	public static void sikuliDragAndDrop(
+			LiferaySelenium liferaySelenium, String image, String coordString)
+		throws Exception {
+
+		Match match = _screen.exists(
+			liferaySelenium.getProjectDirName() +
+				liferaySelenium.getSikuliImagesDirName() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match == null) {
+			throw new Exception("Image is not present");
+		}
+
+		_screen.mouseMove(
+			liferaySelenium.getProjectDirName() +
+			liferaySelenium.getSikuliImagesDirName() + image);
+
+		Robot robot = new Robot();
+
+		robot.delay(1500);
+
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+
+		Location location = match.getCenter();
+
+		int x = location.x;
+		int y = location.y;
+
+		String[] coords = coordString.split(",");
+
+		x += GetterUtil.getInteger(coords[0]);
+		y += GetterUtil.getInteger(coords[1]);
+
+		robot.delay(1500);
+
+		robot.mouseMove(x, y);
+
+		robot.delay(1500);
+
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 
 	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)

@@ -515,6 +515,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void scrollWebElementIntoView(String locator) throws Exception {
+	}
+
+	@Override
 	public void selectAndWait(String selectLocator, String optionLocator) {
 		super.select(selectLocator, optionLocator);
 		super.waitForPageToLoad("30000");
@@ -597,6 +601,13 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void sikuliClick(String image) throws Exception {
 		LiferaySeleniumHelper.sikuliClick(this, image);
+	}
+
+	@Override
+	public void sikuliDragAndDrop(String image, String coordString)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliDragAndDrop(this, image, coordString);
 	}
 
 	@Override

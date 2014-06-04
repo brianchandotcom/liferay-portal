@@ -18,14 +18,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -39,7 +38,9 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,25 +49,31 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {
 	MainServletExecutionTestListener.class,
-	SynchronousDestinationExecutionTestListener.class,
-	TransactionalExecutionTestListener.class
+	SynchronousDestinationExecutionTestListener.class
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-@Transactional
 public class JournalArticleIndexableTest {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
 
 	@Test
 	public void testJournalArticleIsIndexableByDefault() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				group.getGroupId(), JournalArticle.class.getName(), null, null,
+				_group.getGroupId(), JournalArticle.class.getName(), null, null,
 				new long[] {}, null);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -77,7 +84,7 @@ public class JournalArticleIndexableTest {
 		int total = hits.getLength();
 
 		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
 		Assert.assertTrue(article.isIndexable());
@@ -94,15 +101,13 @@ public class JournalArticleIndexableTest {
 	public void testJournalArticleWithClassNameDDMStructureIsUnindexable()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				group.getGroupId(), JournalArticle.class.getName(), null, null,
+				_group.getGroupId(), JournalArticle.class.getName(), null, null,
 				new long[0], null);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -113,11 +118,13 @@ public class JournalArticleIndexableTest {
 		int total = hits.getLength();
 
 		JournalTestUtil.addArticle(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortalUtil.getClassNameId(DDMStructure.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
-			true, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		hits = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
@@ -127,5 +134,7 @@ public class JournalArticleIndexableTest {
 			"Unindexable articles should not be indexed", total,
 			hits.getLength());
 	}
+
+	private Group _group;
 
 }

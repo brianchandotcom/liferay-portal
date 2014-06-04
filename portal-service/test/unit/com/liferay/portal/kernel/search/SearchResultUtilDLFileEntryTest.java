@@ -79,11 +79,7 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
-
-		Assert.assertTrue(
-			"DLAppLocalService is attempted, no file entry returned",
-			fileEntryTuples.isEmpty());
+		assertThatFileEntryTuplesIsEmpty(searchResult);
 
 		Mockito.verify(
 			dlAppLocalService
@@ -157,11 +153,7 @@ public class SearchResultUtilDLFileEntryTest
 			document, "__snippet__", portletURL, null, null
 		);
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
-
-		Assert.assertTrue(
-			"No file entry tuples even though a FileEntry was found",
-			fileEntryTuples.isEmpty());
+		assertThatFileEntryTuplesIsEmpty(searchResult);
 
 		Mockito.verify(
 			dlAppLocalService
@@ -320,11 +312,7 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
-
-		Assert.assertTrue(
-			"DLAppLocalService must not be invoked at all",
-			fileEntryTuples.isEmpty());
+		assertThatFileEntryTuplesIsEmpty(searchResult);
 
 		Assert.assertNull(searchResult.getSummary());
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -329,17 +330,17 @@ public class DDMStructureTestUtil {
 
 		// Metadata
 
-		Element metadadataElement = element.element("meta-data");
+		for (Element metadadataElement : element.elements("meta-data")) {
+			String metadataLanguageId = metadadataElement.attributeValue(
+				"locale");
 
-		if (metadadataElement == null) {
-			return elementMap;
-		}
+			for (Element entryElement : metadadataElement.elements("entry")) {
+				String entryName = entryElement.attributeValue("name");
 
-		List<Element> entryElements = metadadataElement.elements("entry");
-
-		for (Element entryElement : entryElements) {
-			elementMap.put(
-				entryElement.attributeValue("name"), entryElement.getText());
+				elementMap.put(
+					entryName.concat(metadataLanguageId),
+					entryElement.getText());
+			}
 		}
 
 		return elementMap;
@@ -363,6 +364,14 @@ public class DDMStructureTestUtil {
 				0, parentElement.attributeValue("name") + StringPool.SLASH);
 
 			parentElement = parentElement.getParent();
+		}
+
+		String type = element.attributeValue("type");
+
+		if (Validator.equals(type, "option")) {
+			sb.append(StringPool.SLASH);
+
+			sb.append(element.attributeValue("value"));
 		}
 
 		return sb.toString();

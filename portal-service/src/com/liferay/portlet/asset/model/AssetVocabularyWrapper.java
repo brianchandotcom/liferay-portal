@@ -836,8 +836,8 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
-		return _assetVocabulary.isAssociatedToAssetRendererFactory(classNameId);
+	public boolean isAssociatedToClassNameId(long classNameId) {
+		return _assetVocabulary.isAssociatedToClassNameId(classNameId);
 	}
 
 	@Override

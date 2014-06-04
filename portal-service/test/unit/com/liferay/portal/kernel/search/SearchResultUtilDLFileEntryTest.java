@@ -70,8 +70,9 @@ public class SearchResultUtilDLFileEntryTest
 			null
 		);
 
-		SearchResult searchResult = searchSingleDocument(
-			createDLFileEntryDocumentWithAlternateKey());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createDLFileEntryDocumentWithAlternateKey());
 
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
@@ -131,7 +132,8 @@ public class SearchResultUtilDLFileEntryTest
 
 		document.add(new Field(Field.SNIPPET, "__snippet__"));
 
-		SearchResult searchResult = searchSingleDocument(document);
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(document);
 
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
@@ -260,8 +262,9 @@ public class SearchResultUtilDLFileEntryTest
 			fileEntry
 		);
 
-		SearchResult searchResult = searchSingleDocument(
-			createDLFileEntryDocumentWithAlternateKey());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createDLFileEntryDocumentWithAlternateKey());
 
 		Assert.assertEquals(
 			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
@@ -303,8 +306,9 @@ public class SearchResultUtilDLFileEntryTest
 
 	@Test
 	public void testDLFileEntryWithoutKeyInDocument() throws Exception {
-		SearchResult searchResult = searchSingleDocument(
-			createDLFileEntryDocument());
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createDLFileEntryDocument());
 
 		Assert.assertEquals(
 			DLFILEENTRY_CLASS_NAME, searchResult.getClassName());

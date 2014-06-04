@@ -35,8 +35,6 @@ public class SocialInteractionsConfigurationUtil {
 
 		boolean socialInteractionsAnyUserEnabled = PrefsPropsUtil.getBoolean(
 			companyId, "socialInteractionsAnyUserEnabled", true);
-		boolean socialInteractionsEnabled = PrefsPropsUtil.getBoolean(
-			companyId, "socialInteractionsEnabled", true);
 		boolean socialInteractionsSitesEnabled = PrefsPropsUtil.getBoolean(
 			companyId, "socialInteractionsSitesEnabled", true);
 		String socialInteractionsSocialRelationTypes =
@@ -49,8 +47,7 @@ public class SocialInteractionsConfigurationUtil {
 				true);
 
 		return new SocialInteractionsConfiguration(
-			socialInteractionsAnyUserEnabled, socialInteractionsEnabled,
-			socialInteractionsSitesEnabled,
+			socialInteractionsAnyUserEnabled, socialInteractionsSitesEnabled,
 			socialInteractionsSocialRelationTypes,
 			socialInteractionsSocialRelationTypesEnabled);
 	}
@@ -66,8 +63,6 @@ public class SocialInteractionsConfigurationUtil {
 		boolean socialInteractionsAnyUserEnabled = PrefsParamUtil.getBoolean(
 			portletPreferences, request, "socialInteractionsAnyUserEnabled",
 			true);
-		boolean socialInteractionsEnabled = PrefsParamUtil.getBoolean(
-			portletPreferences, request, "socialInteractionsEnabled", true);
 		boolean socialInteractionsSitesEnabled = PrefsParamUtil.getBoolean(
 			portletPreferences, request, "socialInteractionsSitesEnabled",
 			true);
@@ -80,8 +75,7 @@ public class SocialInteractionsConfigurationUtil {
 				"socialInteractionsSocialRelationTypesEnabled", true);
 
 		return new SocialInteractionsConfiguration(
-			socialInteractionsAnyUserEnabled, socialInteractionsEnabled,
-			socialInteractionsSitesEnabled,
+			socialInteractionsAnyUserEnabled, socialInteractionsSitesEnabled,
 			socialInteractionsSocialRelationTypes,
 			socialInteractionsSocialRelationTypesEnabled);
 	}

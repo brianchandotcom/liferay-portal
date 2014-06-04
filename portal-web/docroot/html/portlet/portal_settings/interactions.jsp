@@ -27,9 +27,7 @@
 SocialInteractionsConfiguration socialInteractionsConfiguration = SocialInteractionsConfigurationUtil.getSocialInteractionsConfiguration(company.getCompanyId(), request);
 %>
 
-<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" label="enable-social-interactions" name="settings--socialInteractionsEnabled--" type="checkbox" value="<%= socialInteractionsConfiguration.isSocialInteractionsEnabled() %>" />
-
-<div class="social-interactions-settings" id="<portlet:namespace />socialInteractionsSettings">
+<div id="<portlet:namespace />socialInteractionsSettings">
 	<aui:input checked="<%= socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label="all-users-can-interact-with-each-other" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= true %>" />
 
 	<aui:input checked="<%= !socialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsChooseUsers" label="define-social-interactions-for-users" name="settings--socialInteractionsAnyUserEnabled--" type="radio" value="<%= false %>" />
@@ -85,7 +83,6 @@ SocialInteractionsConfiguration socialInteractionsConfiguration = SocialInteract
 </div>
 
 <aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.toggleBoxes('<portlet:namespace />socialInteractionsEnabledCheckbox','<portlet:namespace />socialInteractionsSettings');
 	Liferay.Util.toggleBoxes('<portlet:namespace />socialInteractionsSocialRelationTypesEnabledCheckbox','<portlet:namespace />socialRelations');
 
 	Liferay.Util.toggleRadio('<portlet:namespace />socialInteractionsAnyUser', '', '<portlet:namespace />socialInteractionsUsersWrapper');

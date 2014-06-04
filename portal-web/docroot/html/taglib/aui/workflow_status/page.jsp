@@ -60,7 +60,7 @@
 	}
 	%>
 
-	<span class="<%= showIcon ? "workflow-status workflow-status-icon" : "workflow-status" %>">
+	<span class="<%= showIcon ? "icon-file-alt workflow-status" : "workflow-status" %>">
 		<c:if test="<%= showLabel %>">
 			<span class="workflow-label"><liferay-ui:message key="status" />:</span>
 		</c:if>

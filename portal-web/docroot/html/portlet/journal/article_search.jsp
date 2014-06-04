@@ -38,17 +38,17 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	id="<%= renderResponse.getNamespace() %>"
 >
 	<aui:fieldset>
-		<aui:input cssClass="input-medium" inlineField="<%= true %>" label="id" name="<%= displayTerms.ARTICLE_ID %>" size="20" value="<%= displayTerms.getArticleId() %>" />
+		<aui:input inlineField="<%= true %>" label="id" name="<%= displayTerms.ARTICLE_ID %>" size="20" value="<%= displayTerms.getArticleId() %>" />
 
-		<aui:input cssClass="input-medium" inlineField="<%= true %>" name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
 
-		<aui:input cssClass="input-medium" inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input cssClass="input-medium" inlineField="<%= true %>" name="<%= displayTerms.CONTENT %>" size="20" type="text" value="<%= displayTerms.getContent() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.CONTENT %>" size="20" type="text" value="<%= displayTerms.getContent() %>" />
 
-		<aui:select cssClass="input-medium" inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
+		<aui:select inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
 			<aui:option value=""></aui:option>
 
 			<%

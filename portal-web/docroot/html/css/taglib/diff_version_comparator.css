@@ -1,32 +1,24 @@
+@import "compass";
+
 .diff-version-comparator {
 	.diff-version-head {
-		border-bottom: 1px solid #E5E5E5;
+		border-bottom: 1px solid;
 		margin-bottom: 40px;
 		padding-bottom: 10px;
 
 		.diff-selector-version {
-			font-size: inherit;
 			margin-bottom: 0;
 			margin-top: 0;
 			position: static;
 			vertical-align: baseline;
 
 			a {
-				text-decoration: none;
-
 				.lfr-icon-menu-icon {
 					display: none;
-				}
-
-				.lfr-icon-menu-text {
-					&:hover, &:focus {
-						text-decoration: underline;
-					}
 				}
 			}
 
 			.caret {
-				border-top-color: #FFF;
 				margin-top: -4px;
 			}
 		}
@@ -44,19 +36,12 @@
 		}
 
 		.diff-target-selector {
-			border-left: 1px solid #E5E5E5;
+			border-left: 1px solid;
 			padding-left: 40px;
 		}
 
 		.diff-source-selector, .diff-target-selector {
-			font-size: 20px;
-			font-weight: 200;
 			padding-bottom: 20px;
-
-			.diff-selector-version-info {
-				color: #8C8C8C;
-				font-size: 12px;
-			}
 		}
 	}
 
@@ -66,10 +51,6 @@
 		.language-selector {
 			.control-group {
 				margin-bottom: 10px;
-
-				select {
-					font-size: 13px;
-				}
 			}
 		}
 
@@ -80,16 +61,9 @@
 			.search-panels-bar {
 				.control-group {
 					margin-bottom: 10px;
-
-					.search-panels-input {
-						border-radius: 0;
-					}
 				}
 
 				.search-panel-icon {
-					background: url(@theme_image_path@/custom/search_panel_icon.png) no-repeat 0 50%;
-					color: #D4D4D4;
-					font-size: 0;
 					height: 18px;
 					margin-left: 8px;
 					margin-top: 6px;
@@ -98,14 +72,13 @@
 				}
 
 				input {
-					font-size: 14px;
 					padding-left: 40px;
 				}
 			}
 		}
 
 		.version-item {
-			border-bottom: 1px solid #E5E5E5;
+			border-bottom: 1px solid;
 			cursor: pointer;
 			margin-top: 10px;
 			overflow: hidden;
@@ -114,6 +87,143 @@
 			&.last {
 				border-width: 0;
 			}
+
+			.version-avatar {
+				padding-right: 5px;
+
+				.avatar {
+					width: 45px;
+				}
+			}
+
+			.version-title {
+				display: block;
+				margin-bottom: 5px;
+			}
+
+			.version-info {
+				margin-top: 14px;
+
+				.user-info {
+					display: block;
+					line-height: 13px;
+				}
+			}
+		}
+	}
+
+	.diff-container-column {
+		border: 1px solid;
+		padding: 25px;
+
+		.diff-container {
+			border: 1px solid;
+			min-height: 400px;
+			padding: 25px 20px;
+			position: relative;
+
+			.legend-info {
+				bottom: 0;
+				padding-bottom: 10px;
+				position: absolute;
+
+				.legend-item {
+					margin-right: 15px;
+				}
+			}
+		}
+
+		.diff-version-filter {
+			border: 1px solid;
+			border-bottom-width: 0;
+			padding: 10px 15px;
+
+			.close-version-filter {
+				cursor: pointer;
+			}
+
+			.user-name {
+				margin-right: 5px;
+			}
+		}
+	}
+
+	.diff-version-title {
+		display: block;
+		margin-bottom: 10px;
+	}
+}
+
+/* Skin */
+
+.diff-version-comparator {
+	.diff-version-head {
+		border-bottom-color: #E5E5E5;
+
+		.diff-selector-version {
+			font-size: inherit;
+
+			a {
+				text-decoration: none;
+
+				.lfr-icon-menu-text {
+					&:hover, &:focus {
+						text-decoration: underline;
+					}
+				}
+			}
+
+			.caret {
+				border-top-color: #FFF;
+			}
+		}
+
+		.diff-target-selector {
+			border-left-color: #E5E5E5;
+		}
+
+		.diff-source-selector, .diff-target-selector {
+			font-size: 20px;
+			font-weight: 200;
+
+			.diff-selector-version-info {
+				color: #8C8C8C;
+				font-size: 12px;
+			}
+		}
+	}
+
+	.search-container-column {
+		.language-selector {
+			.control-group {
+				select {
+					font-size: 13px;
+				}
+			}
+		}
+
+		.search-panels {
+			.search-panels-bar {
+				.control-group {
+					.search-panels-input {
+						@include border-radius(0);
+					}
+				}
+
+				.search-panel-icon {
+					background: url(@theme_image_path@/custom/search_panel_icon.png) no-repeat 0 50%;
+					color: #D4D4D4;
+					font-size: 0;
+				}
+
+				input {
+					font-size: 14px;
+				}
+			}
+		}
+
+		.version-item {
+			border-bottom-color: #E5E5E5;
 
 			&.selected {
 				.version-title {
@@ -127,27 +237,14 @@
 				}
 			}
 
-			.version-avatar {
-				padding-right: 5px;
-
-				.avatar {
-					width: 45px;
-				}
-			}
-
 			.version-title {
 				color: #009AE5;
-				display: block;
 				font-weight: 400;
-				margin-bottom: 5px;
 			}
 
 			.version-info {
-				margin-top: 14px;
-
 				.user-info {
 					color: #009AE5;
-					display: block;
 					font-size: 13px;
 					line-height: 13px;
 				}
@@ -162,25 +259,13 @@
 
 	.diff-container-column {
 		background-color: #F1F1F1;
-		border: 1px solid #EBEBEB;
-		padding: 25px;
+		border-color: #EBEBEB;
 
 		.diff-container {
 			background-color: #FFF;
-			border: 1px solid #E5E5E5;
-			min-height: 400px;
-			padding: 25px 20px;
-			position: relative;
+			border-color: #E5E5E5;
 
 			.legend-info {
-				bottom: 0;
-				padding-bottom: 10px;
-				position: absolute;
-
-				.legend-item {
-					margin-right: 15px;
-				}
-
 				.add.icon-stop {
 					color: #CFC;
 				}
@@ -193,13 +278,10 @@
 
 		.diff-version-filter {
 			background-color: #F9F9F9;
-			border: 1px solid #E5E5E5;
-			border-bottom-width: 0;
-			padding: 10px 15px;
+			border-color: #E5E5E5;
 
 			.close-version-filter {
 				color: #CCC;
-				cursor: pointer;
 			}
 
 			.display-date {
@@ -210,7 +292,6 @@
 			.user-name {
 				color: #009AE5;
 				font-size: 13px;
-				margin-right: 5px;
 			}
 
 			.version {
@@ -222,8 +303,6 @@
 
 	.diff-version-title {
 		color: #8C8C8C;
-		display: block;
 		font-size: 12px;
-		margin-bottom: 10px;
 	}
 }

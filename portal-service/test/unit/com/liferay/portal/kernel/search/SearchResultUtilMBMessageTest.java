@@ -93,7 +93,7 @@ public class SearchResultUtilMBMessageTest
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 			SearchTestUtil.DOCUMENT_CLASS_NAME);
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -170,7 +170,7 @@ public class SearchResultUtilMBMessageTest
 			searchResult.getClassPK(), SearchTestUtil.DOCUMENT_CLASS_PK);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty(
+	protected void assertThatFileEntryTuplesAndVersionsAreEmpty(
 		SearchResult searchResult) {
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();

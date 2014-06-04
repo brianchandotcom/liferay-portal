@@ -26,6 +26,8 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -90,6 +92,38 @@ public class AssetTestUtil {
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
 			userId, RandomTestUtil.randomString(), serviceContext);
+	}
+
+	public static AssetVocabulary addVocabulary(
+			long groupId, long classNameId, boolean required)
+		throws Exception {
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		titleMap.put(locale, RandomTestUtil.randomString());
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(locale, RandomTestUtil.randomString());
+
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		vocabularySettingsHelper.setClassNameIds(
+			new long[] {classNameId}, new boolean[] {required});
+		vocabularySettingsHelper.setMultiValued(true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		AssetVocabulary vocabulary = AssetVocabularyServiceUtil.addVocabulary(
+			RandomTestUtil.randomString(), titleMap, descriptionMap,
+			vocabularySettingsHelper.toString(), serviceContext);
+
+		return vocabulary;
 	}
 
 }

@@ -306,7 +306,8 @@ public class SearchResultUtilDLFileEntryTest
 		SearchResult searchResult = searchSingleDocument(
 			createDLFileEntryDocument());
 
-		Assert.assertEquals(DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();

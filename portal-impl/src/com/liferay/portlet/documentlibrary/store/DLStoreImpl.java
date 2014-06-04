@@ -614,6 +614,18 @@ public class DLStoreImpl implements DLStore {
 	@Override
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension)
+		throws PortalException, SystemException {
+
+		validate(fileName, validateFileExtension);
+
+		DLValidatorUtil.validateSourceFileExtension(
+			fileExtension, sourceFileName);
+	}
+
+	@Override
+	public void validate(
+			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, File file)
 		throws PortalException, SystemException {
 
@@ -654,17 +666,6 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, validateFileExtension);
 
 		DLValidatorUtil.validateVersionLabel(versionLabel);
-	}
-
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension)
-		throws PortalException, SystemException {
-
-		validate(fileName, validateFileExtension);
-
-		DLValidatorUtil.validateSourceFileExtension(
-			fileExtension, sourceFileName);
 	}
 
 	protected void validate(

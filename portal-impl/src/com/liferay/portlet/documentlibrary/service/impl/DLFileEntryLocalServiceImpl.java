@@ -2547,9 +2547,13 @@ public class DLFileEntryLocalServiceImpl
 				DLStoreUtil.validate(
 					sourceFileName, extension, sourceFileName, true, file);
 			}
-			else {
+			else if (is != null) {
 				DLStoreUtil.validate(
 					sourceFileName, extension, sourceFileName, true, is);
+			}
+			else {
+				DLStoreUtil.validate(
+					sourceFileName, extension, sourceFileName, true);
 			}
 		}
 

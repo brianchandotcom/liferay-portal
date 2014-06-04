@@ -86,28 +86,8 @@
 				overflow: auto;
 				width: 100%;
 
-				.palette-item-header {
+				.title-text {
 					font-weight: bold;
-
-					.palette-item-header-icon {
-						background: url() no-repeat 50%;
-						display: inline-block;
-						height: 10px;
-						width: 9px;
-					}
-				}
-
-				.toggler-header-collapsed .palette-item-header-icon {
-					background-image: url(@theme_image_path@/arrows/05_right.png);
-				}
-
-				.toggler-header-expanded .palette-item-header-icon {
-					background-image: url(@theme_image_path@/arrows/05_down.png);
-					vertical-align: middle;
-				}
-
-				.palette-item-header {
-					cursor: pointer;
 					margin: 0.5em;
 				}
 

@@ -30,7 +30,7 @@ DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_actio
 boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= hasViewPermission %>">
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
@@ -40,7 +40,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view"
+			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewRecordSetURL %>"
 		/>
@@ -54,7 +54,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view_tasks"
+			iconCssClass="icon-table"
 			message="spreadsheet-view"
 			url="<%= viewRecordSetURL %>"
 		/>
@@ -69,7 +69,8 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editRecordSetURL %>"
 		/>
 	</c:if>
@@ -92,7 +93,8 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		%>
 
 		<liferay-ui:icon
-			image="export"
+			iconCssClass="icon-arrow-down"
+			message="export"
 			url="<%= sb.toString() %>"
 		/>
 	</c:if>
@@ -107,7 +109,8 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsRecordSetURL %>"
 			useDialog="<%= true %>"

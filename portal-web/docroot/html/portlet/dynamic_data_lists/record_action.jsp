@@ -37,7 +37,7 @@ if (hasUpdatePermission) {
 }
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
@@ -48,7 +48,7 @@ if (hasUpdatePermission) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="view"
+			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewRecordURL %>"
 		/>
@@ -64,7 +64,8 @@ if (hasUpdatePermission) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editRecordURL %>"
 		/>
 	</c:if>

@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,9 +22,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,14 +40,14 @@ import org.junit.runner.RunWith;
 /**
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class PortalImplAlternateURLTest {
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
@@ -152,27 +152,29 @@ public class PortalImplAlternateURLTest {
 			String expectedI18nPath)
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), "welcome", false);
+			_group.getGroupId(), "welcome", false);
 
 		String canonicalURL = generateURL(
-			portalDomain, StringPool.BLANK, group.getFriendlyURL(),
+			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
 		String actualAlternateURL = PortalUtil.getAlternateURL(
-			canonicalURL, getThemeDisplay(group, canonicalURL), alternateLocale,
-			layout);
+			canonicalURL, getThemeDisplay(_group, canonicalURL),
+			alternateLocale, layout);
 
 		String expectedAlternateURL = generateURL(
-			portalDomain, expectedI18nPath, group.getFriendlyURL(),
+			portalDomain, expectedI18nPath, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
 	}
+
+	private Group _group;
 
 }

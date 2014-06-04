@@ -866,21 +866,18 @@ public class LiferaySeleniumHelper {
 
 		Robot robot = new Robot();
 
-		robot.delay(1500);
+		robot.delay(1000);
 
 		robot.mousePress(InputEvent.BUTTON1_MASK);
 
-		Location location = match.getCenter();
-
-		int x = location.x;
-		int y = location.y;
+		robot.delay(1000);
 
 		String[] coords = coordString.split(",");
 
-		x += GetterUtil.getInteger(coords[0]);
-		y += GetterUtil.getInteger(coords[1]);
+		Location location = match.getCenter();
 
-		robot.delay(1500);
+		int x = location.getX() + GetterUtil.getInteger(coords[0]);
+		int y = location.getY() + GetterUtil.getInteger(coords[1]);
 
 		robot.mouseMove(x, y);
 

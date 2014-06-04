@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
@@ -559,7 +560,9 @@ public class DDMXSDImpl implements DDMXSD {
 			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 				classPK);
 
-			return structure.getCompleteXsd();
+			DDMForm ddmForm = structure.getFullHierarchyDDMForm();
+
+			return DDMFormXSDSerializerUtil.serialize(ddmForm);
 		}
 		else if (classNameId == ddmTemplateClassNameId) {
 			DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(

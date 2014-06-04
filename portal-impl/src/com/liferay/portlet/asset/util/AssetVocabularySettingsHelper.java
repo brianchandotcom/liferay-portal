@@ -32,8 +32,11 @@ import java.util.Set;
  */
 public class AssetVocabularySettingsHelper {
 
-	public static final String[] DEFAULT_SELECTED_CLASSNAME_AND_TYPE_ID =
-		{AssetCategoryConstants.ALL_CLASS_NAME_AND_TYPE_IDS};
+	public static final long[] DEFAULT_SELECTED_CLASSNAME_ID =
+		{AssetCategoryConstants.ALL_CLASS_NAME_IDS};
+
+	public static final long[] DEFAULT_SELECTED_CLASSTYPE_ID =
+		{AssetCategoryConstants.ALL_CLASS_TYPE_IDS};
 
 	public AssetVocabularySettingsHelper() {
 		super();
@@ -154,8 +157,12 @@ public class AssetVocabularySettingsHelper {
 			_KEY_SELECTED_CLASS_NAME_AND_TYPE_IDS);
 
 		if (Validator.isNull(propertyValue)) {
-			return DEFAULT_SELECTED_CLASSNAME_AND_TYPE_ID;
+			return new String[] {
+				getClassNameAndTypeId(
+					AssetCategoryConstants.ALL_CLASS_NAME_IDS,
+					AssetCategoryConstants.ALL_CLASS_TYPE_IDS)};
 		}
+
 
 		return StringUtil.split(propertyValue);
 	}

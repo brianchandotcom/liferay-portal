@@ -25,11 +25,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 request.setAttribute(WebKeys.GROUP, group);
 
-String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
-
-HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-ckEditorFuncNum = ParamUtil.getString(httpServletRequest, "CKEditorFuncNum", ckEditorFuncNum);
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 
 String tabNames = "";
 

@@ -33,11 +33,7 @@ if (folderId > 0) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
-String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
-
-HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-ckEditorFuncNum = ParamUtil.getString(httpServletRequest, "CKEditorFuncNum", ckEditorFuncNum);
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 
 String eventName = ParamUtil.getString(request, "eventName");
 

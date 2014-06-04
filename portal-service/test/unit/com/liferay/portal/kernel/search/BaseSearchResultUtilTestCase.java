@@ -60,6 +60,16 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		Assert.assertTrue(mbMessages.isEmpty());
 	}
 
+	protected SearchResult assertThatSearchSingleDocumentReturnsOneSearchResult(
+		Document document) {
+
+		List<SearchResult> searchResults = getSearchResults(document);
+
+		Assert.assertEquals("one hit, one result", 1, searchResults.size());
+
+		return searchResults.get(0);
+	}
+
 	protected void assertThatVersionsIsEmpty(SearchResult searchResult) {
 		List<String> versions = searchResult.getVersions();
 
@@ -81,16 +91,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		hits.setDocs(documents);
 
 		return SearchResultUtil.getSearchResults(hits, null, portletURL);
-	}
-
-	protected SearchResult assertThatSearchSingleDocumentReturnsOneSearchResult(
-		Document document) {
-
-		List<SearchResult> searchResults = getSearchResults(document);
-
-		Assert.assertEquals("one hit, one result", 1, searchResults.size());
-
-		return searchResults.get(0);
 	}
 
 	protected void setUpFastDateFormatFactory() {

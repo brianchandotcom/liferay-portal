@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,13 +26,15 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -41,6 +42,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,14 +50,24 @@ import org.junit.runner.RunWith;
 /**
  * @author Marcellus Tavares
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class JournalTransformerTest {
+
+	@After
+	public void tearDown() throws Exception {
+		if (_article != null) {
+			JournalArticleLocalServiceUtil.deleteArticle(_article);
+		}
+
+		if (_ddmTemplate != null) {
+			DDMTemplateLocalServiceUtil.deleteDDMTemplate(_ddmTemplate);
+		}
+
+		if (_ddmStructure != null) {
+			DDMStructureLocalServiceUtil.deleteDDMStructure(_ddmStructure);
+		}
+	}
 
 	@Test
 	public void testContentTransformerListener() throws Exception {
@@ -78,19 +90,21 @@ public class JournalTransformerTest {
 
 		String xsd = document.asXML();
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		_ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName(), xsd);
 
 		String xsl = "$name.getData()";
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM, xsl);
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
+			xsl);
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"Joe Bloggs");
 
-		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
-			xml, ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+		_article = JournalTestUtil.addArticleWithXMLContent(
+			xml, _ddmStructure.getStructureKey(),
+			_ddmTemplate.getTemplateKey());
 
 		Map<String, String> tokens = getTokens();
 
@@ -105,7 +119,7 @@ public class JournalTransformerTest {
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");
 
-		element.setText("[@" + article.getArticleId()  + ";name@]");
+		element.setText("[@" + _article.getArticleId()  + ";name@]");
 
 		content = JournalUtil.transform(
 			null, tokens, Constants.VIEW, "en_US", document, null, xsl,
@@ -258,5 +272,9 @@ public class JournalTransformerTest {
 
 		return tokens;
 	}
+
+	private JournalArticle _article;
+	private DDMStructure _ddmStructure;
+	private DDMTemplate _ddmTemplate;
 
 }

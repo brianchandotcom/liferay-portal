@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,7 +30,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -76,13 +74,8 @@ import org.junit.runner.RunWith;
  * @author Bruno Basto
  * @author Marcellus Tavares
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 	@Before
@@ -127,8 +120,8 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields fields = new Fields();
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt");
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test 2.txt");
 
 		Field docLibrary = getDocumentLibraryField(
 			fileEntry, _ddmStructure.getStructureId());
@@ -369,8 +362,8 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields expectedFields = new Fields();
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt");
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test 1.txt");
 
 		Field documentLibraryField = getDocumentLibraryField(
 			fileEntry, _ddmStructure.getStructureId());
@@ -722,8 +715,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		layouts.put(
 			_PRIVATE_LAYOUT,
 			LayoutTestUtil.addLayout(
-				TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
-				true));
+				group.getGroupId(), RandomTestUtil.randomString(), true));
 		layouts.put(
 			_PRIVATE_USER_LAYOUT,
 			LayoutTestUtil.addLayout(
@@ -731,8 +723,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		layouts.put(
 			_PUBLIC_LAYOUT,
 			LayoutTestUtil.addLayout(
-				TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
-				false));
+				group.getGroupId(), RandomTestUtil.randomString(), false));
 		layouts.put(
 			_PUBLIC_USER_LAYOUT,
 			LayoutTestUtil.addLayout(

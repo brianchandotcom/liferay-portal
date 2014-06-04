@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,7 +82,6 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteTrashVersions() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -114,31 +112,26 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndDeleteApproved() throws Exception {
 		trashBaseModel(true, true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndDeleteDraft() throws Exception {
 		trashBaseModel(false, true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndRestoreApproved() throws Exception {
 		trashBaseModel(true, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashAndRestoreDraft() throws Exception {
 		trashBaseModel(false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashBaseModelAndParentAndDeleteGroupTrashEntries()
 		throws Exception {
 
@@ -146,25 +139,21 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testTrashBaseModelAndParentAndDeleteParent() throws Exception {
 		trashParentBaseModel(true, true, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashBaseModelAndParentAndRestoreModel() throws Exception {
 		trashParentBaseModel(true, false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashDuplicate() throws Exception {
 		trashDuplicateBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testTrashGrandparentBaseModelAndRestoreParentModel()
 		throws Exception {
 
@@ -172,85 +161,71 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testTrashIsRestorableBaseModel() throws Exception {
 		trashIsRestorableBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testTrashIsRestorableBaseModelWithParent1() throws Exception {
 		trashIsRestorableBaseModelWithParent(false, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashIsRestorableBaseModelWithParent2() throws Exception {
 		trashIsRestorableBaseModelWithParent(true, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashIsRestorableBaseModelWithParent3() throws Exception {
 		trashIsRestorableBaseModelWithParent(false, true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashIsRestorableBaseModelWithParent4() throws Exception {
 		trashIsRestorableBaseModelWithParent(true, true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashMoveBaseModel() throws Exception {
 		trashMoveBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testTrashMyBaseModel() throws Exception {
 		trashMyBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testTrashParentAndDeleteGroupTrashEntries() throws Exception {
 		trashParentBaseModel(false, false, true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashParentAndDeleteParent() throws Exception {
 		trashParentBaseModel(false, true, false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashRecentBaseModel() throws Exception {
 		trashRecentBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 		trashVersionBaseModel(true);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 		trashVersionBaseModel(false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashVersionParentBaseModel() throws Exception {
 		trashVersionParentBaseModel(false);
 	}
 
 	@Test
-	@Transactional
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 		trashVersionParentBaseModel(true);
 	}

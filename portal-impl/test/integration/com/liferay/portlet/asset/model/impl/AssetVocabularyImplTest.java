@@ -90,7 +90,7 @@ public class AssetVocabularyImplTest {
 
 		Assert.assertFalse(
 			vocabulary1.hasMoreThanOneCategorySelected(
-				new long[] {
+				new long[]{
 					category21.getCategoryId(), category22.getCategoryId()
 				}));
 	}
@@ -101,12 +101,12 @@ public class AssetVocabularyImplTest {
 			_group.getGroupId(), AssetCategoryConstants.ALL_CLASS_NAME_IDS,
 			true);
 
-		Assert.assertTrue(vocabulary.isAssociatedToAssetRendererFactory(1));
+		Assert.assertTrue(vocabulary.isAssociatedToClassNameId(1));
 
 		vocabulary = AssetTestUtil.addVocabulary(_group.getGroupId(), 1, true);
 
-		Assert.assertTrue(vocabulary.isAssociatedToAssetRendererFactory(1));
-		Assert.assertFalse(vocabulary.isAssociatedToAssetRendererFactory(2));
+		Assert.assertTrue(vocabulary.isAssociatedToClassNameId(1));
+		Assert.assertFalse(vocabulary.isAssociatedToClassNameId(2));
 	}
 
 	@Test
@@ -118,12 +118,12 @@ public class AssetVocabularyImplTest {
 			_group.getGroupId(), vocabulary.getVocabularyId());
 
 		Assert.assertFalse(
-			vocabulary.isMissingRequiredCategory(1, new long[] {1}));
+			vocabulary.isMissingRequiredCategory(1, new long[]{1}));
 
 		vocabulary = AssetTestUtil.addVocabulary(_group.getGroupId(), 1, true);
 
 		Assert.assertTrue(
-			vocabulary.isMissingRequiredCategory(1, new long[] {1}));
+			vocabulary.isMissingRequiredCategory(1, new long[]{1}));
 		Assert.assertFalse(
 			vocabulary.isMissingRequiredCategory(2, new long[0]));
 

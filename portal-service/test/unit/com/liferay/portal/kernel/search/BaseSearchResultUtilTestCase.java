@@ -47,23 +47,6 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
-	protected void doSetUp() {
-		MockitoAnnotations.initMocks(this);
-
-		setUpFastDateFormatFactory();
-		setUpPortal();
-		setUpProps();
-		setUpRegistries();
-	}
-
-	protected List<SearchResult> getSearchResults(Document... documents) {
-		Hits hits = new HitsImpl();
-
-		hits.setDocs(documents);
-
-		return SearchResultUtil.getSearchResults(hits, null, portletURL);
-	}
-
 	protected Document createDocument(String entryClassName) {
 		return createDocument(entryClassName, ENTRY_CLASS_PK);
 	}
@@ -96,6 +79,23 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
 
 		return document;
+	}
+
+	protected void doSetUp() {
+		MockitoAnnotations.initMocks(this);
+
+		setUpFastDateFormatFactory();
+		setUpPortal();
+		setUpProps();
+		setUpRegistries();
+	}
+
+	protected List<SearchResult> getSearchResults(Document... documents) {
+		Hits hits = new HitsImpl();
+
+		hits.setDocs(documents);
+
+		return SearchResultUtil.getSearchResults(hits, null, portletURL);
 	}
 
 	protected SearchResult searchSingleDocument(Document document) {

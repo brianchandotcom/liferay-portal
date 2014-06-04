@@ -137,11 +137,6 @@
 </tr>
 <!--PAGE_TREE-->
 <tr>
-	<td>TEST</td>
-	<td>//ul[@class='tree-container']/li/ul/li/div</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
 	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>
 	<td></td>

@@ -40,7 +40,7 @@
 		</execute>
 	</command>
 
-	<command name="exportSitecmd">
+	<command name="exportSiteCmd">
 		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
 
 		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />

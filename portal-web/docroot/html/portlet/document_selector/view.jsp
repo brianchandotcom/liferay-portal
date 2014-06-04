@@ -17,48 +17,6 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
-
-String eventName = ParamUtil.getString(request, "eventName");
-
-boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
-%>
-
-<c:if test="<%= showGroupsSelector %>">
-
-	<%
-	Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
-	%>
-
-	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
-
-		<%
-		String refererPortletName = ParamUtil.getString(request, "refererPortletName");
-
-		PortletURL selectGroupURL = renderResponse.createRenderURL();
-
-		selectGroupURL.setParameter("struts_action", "/document_selector/view");
-		selectGroupURL.setParameter("eventName", eventName);
-		selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
-
-		for (Group group : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {
-			selectGroupURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-		%>
-
-			<liferay-ui:icon
-				iconCssClass="<%= group.getIconCssClass() %>"
-				message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-				url="<%= selectGroupURL.toString() %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</liferay-ui:icon-menu>
-</c:if>
-
-<%
 String tabsString = ParamUtil.getString(renderRequest, "tabs", "documents,pages");
 
 String[] tabs = StringUtil.split(tabsString);
@@ -66,7 +24,7 @@ String[] tabs = StringUtil.split(tabsString);
 
 <c:choose>
 	<c:when test="<%= !ArrayUtil.isEmpty(tabs) && (tabs.length > 1) %>">
-		<liferay-ui:tabs names="<%= tabsString %>" refresh="<%= false %>" type="pills">
+		<liferay-ui:tabs names="<%= tabsString %>" param="tabs1" refresh="<%= false %>" type="pills">
 
 			<%
 			for (String tab : tabs) {

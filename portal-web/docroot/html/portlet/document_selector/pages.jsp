@@ -44,7 +44,44 @@ if (group.getPublicLayoutsPageCount() > 0) {
 if (group.getPrivateLayoutsPageCount() > 0) {
 	tabNames += "private-pages";
 }
+
+boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 %>
+
+<c:if test="<%= showGroupsSelector %>">
+
+	<%
+	Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+	%>
+
+	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn">
+
+		<%
+		String refererPortletName = ParamUtil.getString(request, "refererPortletName");
+
+		PortletURL selectGroupURL = renderResponse.createRenderURL();
+
+		selectGroupURL.setParameter("struts_action", "/document_selector/view");
+		selectGroupURL.setParameter("eventName", eventName);
+		selectGroupURL.setParameter("tabs1", "pages");
+		selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
+
+		for (Group curGroup : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {
+			selectGroupURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
+		%>
+
+			<liferay-ui:icon
+				iconCssClass="<%= curGroup.getIconCssClass() %>"
+				message="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
+				url="<%= selectGroupURL.toString() %>"
+			/>
+
+		<%
+		}
+		%>
+
+	</liferay-ui:icon-menu>
+</c:if>
 
 <liferay-ui:tabs names="<%= tabNames %>" refresh="false">
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">

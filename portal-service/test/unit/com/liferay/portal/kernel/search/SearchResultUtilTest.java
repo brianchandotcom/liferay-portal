@@ -57,7 +57,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			"Summary should be null with no Indexer or AssetRenderer defined",
 			searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatEverythingButSummaryIsEmpty(searchResult);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertSame(portletURL, summary.getPortletURL());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatEverythingButSummaryIsEmpty(searchResult);
 	}
 
 	@Test
@@ -135,7 +135,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Assert.assertSame(summary, searchResult.getSummary());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatEverythingButSummaryIsEmpty(searchResult);
 	}
 
 	@Test
@@ -157,7 +157,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			searchResult.getClassPK(), SearchTestUtil.ENTRY_CLASS_PK);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty(
+	protected void assertThatEverythingButSummaryIsEmpty(
 		SearchResult searchResult) {
 
 		Assert.assertEquals(StringPool.BLANK, searchResult.getClassName());

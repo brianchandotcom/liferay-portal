@@ -171,6 +171,11 @@ public interface DLStore {
 
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension)
+		throws PortalException, SystemException;
+
+	public void validate(
+			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, File file)
 		throws PortalException, SystemException;
 

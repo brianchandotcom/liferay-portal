@@ -762,6 +762,15 @@ public class DLStoreUtil {
 		getStore().validate(fileName, validateFileExtension, is);
 	}
 
+	public static void validate(
+			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension)
+		throws PortalException, SystemException {
+
+		getStore().validate(
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+	}
+
 	/**
 	 * Validates a file's name and data.
 	 *

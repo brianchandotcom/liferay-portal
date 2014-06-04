@@ -361,7 +361,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		Liferay.on(
 			'<%= name %>selectDocument',
 			function(event) {
-				window.CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.url);
+				CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.url);
 			}
 		);
 

@@ -52,6 +52,8 @@ import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -1444,16 +1446,16 @@ public class DDMStructureLocalServiceImpl
 			throw new StructureXsdException();
 		}
 
-		String parentXsd = StringPool.BLANK;
+		DDMForm parentDDMForm = null;
 
 		DDMStructure parentStructure =
 			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
 
 		if (parentStructure != null) {
-			parentXsd = parentStructure.getCompleteXsd();
+			parentDDMForm = parentStructure.getFullHierarchyDDMForm();
 		}
 
-		validate(nameMap, parentXsd, xsd);
+		validate(nameMap, parentDDMForm, xsd);
 
 		structure.setModifiedDate(serviceContext.getModifiedDate(null));
 		structure.setParentStructureId(parentStructureId);
@@ -1504,6 +1506,13 @@ public class DDMStructureLocalServiceImpl
 		structureIds.add(0, structureId);
 
 		return structureIds;
+	}
+
+	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		return ddmFormFieldsMap.keySet();
 	}
 
 	protected Set<String> getElementNames(Document document) {
@@ -1629,6 +1638,18 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
+	protected void validate(DDMForm parentDDMForm, Document childDocument)
+		throws PortalException {
+
+		Set<String> parentElementNames = getDDMFormFieldsNames(parentDDMForm);
+
+		for (String childElementName : getElementNames(childDocument)) {
+			if (parentElementNames.contains(childElementName)) {
+				throw new StructureDuplicateElementException();
+			}
+		}
+	}
+
 	protected void validate(Document document) throws PortalException {
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 
@@ -1654,18 +1675,6 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	protected void validate(Document parentDocument, Document childDocument)
-		throws PortalException {
-
-		Set<String> parentElementNames = getElementNames(parentDocument);
-
-		for (String childElementName : getElementNames(childDocument)) {
-			if (parentElementNames.contains(childElementName)) {
-				throw new StructureDuplicateElementException();
-			}
-		}
-	}
-
 	protected void validate(
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap, String xsd)
@@ -1685,16 +1694,53 @@ public class DDMStructureLocalServiceImpl
 			throw sdske;
 		}
 
-		String parentXsd = StringPool.BLANK;
+		DDMForm parentDDMForm = null;
 
 		DDMStructure parentStructure =
 			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
 
 		if (parentStructure != null) {
-			parentXsd = parentStructure.getCompleteXsd();
+			parentDDMForm = parentStructure.getFullHierarchyDDMForm();
 		}
 
-		validate(nameMap, parentXsd, xsd);
+		validate(nameMap, parentDDMForm, xsd);
+	}
+
+	protected void validate(
+			Map<Locale, String> nameMap, DDMForm parentDDMForm, String childXsd)
+		throws PortalException {
+
+		try {
+			Document document = SAXReaderUtil.read(childXsd);
+
+			Element rootElement = document.getRootElement();
+
+			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+				rootElement.attributeValue("default-locale"));
+
+			validate(nameMap, contentDefaultLocale);
+
+			validate(document);
+
+			if (Validator.isNotNull(parentDDMForm)) {
+				validate(parentDDMForm, document);
+			}
+		}
+		catch (LocaleException le) {
+			throw le;
+		}
+		catch (StructureDuplicateElementException sdee) {
+			throw sdee;
+		}
+		catch (StructureNameException sne) {
+			throw sne;
+		}
+		catch (StructureXsdException sxe) {
+			throw sxe;
+		}
+		catch (Exception e) {
+			throw new StructureXsdException();
+		}
 	}
 
 	protected void validate(
@@ -1721,45 +1767,6 @@ public class DDMStructureLocalServiceImpl
 			le.setTargetAvailableLocales(availableLocales);
 
 			throw le;
-		}
-	}
-
-	protected void validate(
-			Map<Locale, String> nameMap, String parentXsd, String childXsd)
-		throws PortalException {
-
-		try {
-			Document document = SAXReaderUtil.read(childXsd);
-
-			Element rootElement = document.getRootElement();
-
-			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
-				rootElement.attributeValue("default-locale"));
-
-			validate(nameMap, contentDefaultLocale);
-
-			validate(document);
-
-			if (Validator.isNotNull(parentXsd)) {
-				Document parentDocument = SAXReaderUtil.read(parentXsd);
-
-				validate(parentDocument, document);
-			}
-		}
-		catch (LocaleException le) {
-			throw le;
-		}
-		catch (StructureDuplicateElementException sdee) {
-			throw sdee;
-		}
-		catch (StructureNameException sne) {
-			throw sne;
-		}
-		catch (StructureXsdException sxe) {
-			throw sxe;
-		}
-		catch (Exception e) {
-			throw new StructureXsdException();
 		}
 	}
 

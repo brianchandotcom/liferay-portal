@@ -25,15 +25,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 request.setAttribute(WebKeys.GROUP, group);
 
-Map<String, String> params = new HashMap<String, String>();
-
-HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-for (String param : httpServletRequest.getParameterMap().keySet()) {
-	String[] values = httpServletRequest.getParameterValues(param);
-
-	params.put(param, StringUtil.merge(values));
-}
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 
 String tabNames = "";
 
@@ -84,6 +76,13 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 </liferay-ui:tabs>
 
 <div class="alert" id="<portlet:namespace />selectPageMessage">
+
+	<%
+	Map<String, String> params = new HashMap<String, String>();
+
+	params.put("ckeditorfuncnum", ckEditorFuncNum);
+	%>
+
 	<aui:button cssClass="selector-button" data="<%= params %>" disabled="<%= true %>" value="choose" />
 
 	<span class="selected-page-message">

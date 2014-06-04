@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -71,7 +70,6 @@ import org.junit.runner.RunWith;
 public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Test
-	@Transactional
 	public void testArticleImages() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.List;
 import java.util.Locale;
@@ -166,9 +165,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		assertThatFileEntryTuplesIsEmpty(searchResult);
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
-
-		Assert.assertTrue(mbMessages.isEmpty());
+		assertThatMBMessagesIsEmpty(searchResult);
 
 		List<String> versions = searchResult.getVersions();
 

@@ -21,7 +21,6 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -324,9 +323,7 @@ public class SearchResultUtilDLFileEntryTest
 	protected void assertThatMBMessagesAndVersionsAreEmpty(
 		SearchResult searchResult) {
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
-
-		Assert.assertTrue(mbMessages.isEmpty());
+		assertThatMBMessagesIsEmpty(searchResult);
 
 		List<String> versions = searchResult.getVersions();
 

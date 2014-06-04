@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -45,6 +46,12 @@ import org.powermock.api.mockito.PowerMockito;
  * @author André de Oliveira
  */
 public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
+
+	protected void assertThatFileEntryTuplesIsEmpty(SearchResult searchResult) {
+		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+
+		Assert.assertTrue(fileEntryTuples.isEmpty());
+	}
 
 	protected void doSetUp() {
 		MockitoAnnotations.initMocks(this);

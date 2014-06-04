@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -104,9 +103,7 @@ public class SearchResultUtilJournalArticleTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
-
-		Assert.assertTrue(fileEntryTuples.isEmpty());
+		assertThatFileEntryTuplesIsEmpty(searchResult);
 
 		List<MBMessage> mbMessages = searchResult.getMBMessages();
 

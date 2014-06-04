@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
@@ -173,9 +172,7 @@ public class SearchResultUtilMBMessageTest
 	protected void assertThatFileEntryTuplesAndVersionsAreEmpty(
 		SearchResult searchResult) {
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
-
-		Assert.assertTrue(fileEntryTuples.isEmpty());
+		assertThatFileEntryTuplesIsEmpty(searchResult);
 
 		List<String> versions = searchResult.getVersions();
 

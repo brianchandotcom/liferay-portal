@@ -17,7 +17,14 @@ package com.liferay.portal.kernel.search.test;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
+
+import javax.portlet.PortletURL;
+import java.util.List;
 
 /**
  * @author Manuel de la Peña
@@ -71,6 +78,16 @@ public class SearchTestUtil {
 			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
 
 		return document;
+	}
+
+	public static List<SearchResult> getSearchResults(
+		PortletURL portletURL, Document... documents) {
+
+		Hits hits = new HitsImpl();
+
+		hits.setDocs(documents);
+
+		return SearchResultUtil.getSearchResults(hits, null, portletURL);
 	}
 
 }

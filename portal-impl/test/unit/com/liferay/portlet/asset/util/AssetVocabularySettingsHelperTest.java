@@ -37,6 +37,27 @@ public class AssetVocabularySettingsHelperTest {
 	}
 
 	@Test
+	public void testGetClassNameIdWithOldFormat() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			new AssetVocabularySettingsHelper("multiValued=false\n" +
+				"selectedClassNameIds=1\n");
+
+		long[] classNameIds = vocabularySettingsHelper.getClassNameIds();
+
+		Assert.assertNotNull(classNameIds);
+		Assert.assertEquals(1, classNameIds.length);
+		Assert.assertEquals(1, classNameIds[0]);
+
+		long[] classTypeIds = vocabularySettingsHelper.getClassTypeIds();
+
+		Assert.assertNotNull(classTypeIds);
+		Assert.assertEquals(1, classTypeIds.length);
+		Assert.assertEquals(
+			AssetCategoryConstants.ALL_CLASS_TYPE_IDS, classTypeIds[0]);
+	}
+
+
+	@Test
 	public void testGetClassTypeId() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(1, 2, true);

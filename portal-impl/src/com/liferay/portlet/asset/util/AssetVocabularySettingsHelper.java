@@ -199,7 +199,12 @@ public class AssetVocabularySettingsHelper {
 	protected long getClassTypeId(String classNameAndTypeId) {
 		String[] parts = StringUtil.split(classNameAndTypeId, CharPool.COLON);
 
-		return Long.valueOf(parts[1]);
+		if (parts.length == 1) {
+			return AssetCategoryConstants.ALL_CLASS_TYPE_IDS;
+		}
+		else {
+			return Long.valueOf(parts[1]);
+		}
 	}
 
 	protected long[] getClassTypeIds(String[] classNameAndTypeIds) {

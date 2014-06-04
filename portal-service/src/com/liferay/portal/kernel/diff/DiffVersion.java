@@ -14,27 +14,36 @@
 
 package com.liferay.portal.kernel.diff;
 
+import java.util.Date;
+
 /**
  * @author Eudaldo Alonso
  */
 public class DiffVersion {
 
-	public DiffVersion(long userId, double version) {
+	public DiffVersion(long userId, double version, Date modifiedDate) {
 		_userId = userId;
 		_version = version;
+		_modifiedDate = modifiedDate;
 	}
 
 	public DiffVersion(
-		long userId, double version, String summary, String extraInfo) {
+		long userId, double version, Date modifiedDate, String summary,
+		String extraInfo) {
 
 		_userId = userId;
 		_version = version;
+		_modifiedDate = modifiedDate;
 		_summary = summary;
 		_extraInfo = extraInfo;
 	}
 
 	public String getExtraInfo() {
 		return _extraInfo;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
 	}
 
 	public String getSummary() {
@@ -53,6 +62,10 @@ public class DiffVersion {
 		_extraInfo = extraInfo;
 	}
 
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public void setSummary(String summary) {
 		_summary = summary;
 	}
@@ -66,6 +79,7 @@ public class DiffVersion {
 	}
 
 	private String _extraInfo;
+	private Date _modifiedDate;
 	private String _summary;
 	private long _userId;
 	private double _version;

@@ -918,6 +918,11 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
+		<action path="/journal/select_version" type="com.liferay.portlet.journal.action.ViewAction">
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+			<forward name="portlet.journal.view" path="portlet.journal.select_version" />
+		</action>
+
 		<action path="/journal/view" type="com.liferay.portlet.journal.action.ViewAction">
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 			<forward name="portlet.journal.view" path="portlet.journal.view" />

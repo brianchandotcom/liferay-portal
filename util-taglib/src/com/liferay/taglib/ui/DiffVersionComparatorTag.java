@@ -46,16 +46,16 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_diffVersionsInfo = diffVersionsInfo;
 	}
 
-	public void setHideControls(boolean hideControls) {
-		_hideControls = hideControls;
-	}
-
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL;
+	}
+
+	public void setResourceURL(PortletURL resourceURL) {
+		_resourceURL = resourceURL;
 	}
 
 	public void setSourceVersion(double sourceVersion) {
@@ -71,9 +71,9 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_availableLocales = null;
 		_diffHtmlResults = null;
 		_diffVersionsInfo = null;
-		_hideControls = false;
 		_languageId = null;
 		_portletURL = null;
+		_resourceURL = null;
 		_sourceVersion = 0;
 		_targetVersion = 0;
 	}
@@ -100,11 +100,11 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			"liferay-ui:diff-version-comparator:diffVersionsInfo",
 			_diffVersionsInfo);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:hideControls", _hideControls);
-		request.setAttribute(
 			"liferay-ui:diff-version-comparator:languageId", _languageId);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:portletURL", _portletURL);
+		request.setAttribute(
+			"liferay-ui:diff-version-comparator:resourceURL", _resourceURL);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
 		request.setAttribute(
@@ -119,9 +119,9 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	private Set<Locale> _availableLocales;
 	private String _diffHtmlResults;
 	private DiffVersionsInfo _diffVersionsInfo;
-	private boolean _hideControls;
 	private String _languageId;
 	private PortletURL _portletURL;
+	private PortletURL _resourceURL;
 	private double _sourceVersion;
 	private double _targetVersion;
 

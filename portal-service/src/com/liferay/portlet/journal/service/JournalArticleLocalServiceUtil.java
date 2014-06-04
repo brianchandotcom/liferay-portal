@@ -1551,6 +1551,15 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticles(groupId, articleId);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, java.lang.String articleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getArticles(groupId, articleId, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByResourcePrimKey(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -1599,6 +1608,11 @@ public class JournalArticleLocalServiceUtil {
 	public static int getArticlesCount(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getArticlesCount(groupId, folderId, status);
+	}
+
+	public static int getArticlesCount(long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCount(groupId, articleId);
 	}
 
 	/**

@@ -14,54 +14,54 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
+JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/wiki/select_version");
+portletURL.setParameter("struts_action", "/journal/select_version");
 portletURL.setParameter("redirect", currentURL);
-portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-portletURL.setParameter("title", HtmlUtil.unescape(wikiPage.getTitle()));
+portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+portletURL.setParameter("articleId", article.getArticleId());
 portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectVersionFm">
 	<liferay-ui:search-container
-		id="wikiPageVersionSearchContainer"
+		id="journalArticleVersionSearchContainer"
 		iteratorURL="<%= portletURL %>"
-		total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
+		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(article.getGroupId(), article.getArticleId()) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), new PageVersionComparator()) %>"
+			results="<%= JournalArticleLocalServiceUtil.getArticles(article.getGroupId(), article.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.wiki.model.WikiPage"
-			modelVar="curWikiPage"
+			className="com.liferay.portlet.journal.model.JournalArticle"
+			modelVar="curArticle"
 		>
 			<liferay-ui:search-container-column-text
 				name="version"
-				value="<%= String.valueOf(curWikiPage.getVersion()) %>"
+				value="<%= String.valueOf(curArticle.getVersion()) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
 				name="date"
-				value="<%= curWikiPage.getModifiedDate() %>"
+				value="<%= curArticle.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name=""
 			>
-				<c:if test="<%= sourceVersion != curWikiPage.getVersion() %>">
+				<c:if test="<%= sourceVersion != curArticle.getVersion() %>">
 
 					<%
 					double curSourceVersion = sourceVersion;
-					double curTargetVersion = curWikiPage.getVersion();
+					double curTargetVersion = curArticle.getVersion();
 
 					if (curTargetVersion < curSourceVersion) {
 						double tempVersion = curTargetVersion;
@@ -72,12 +72,11 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 
 					PortletURL compareVersionsURL = renderResponse.createRenderURL();
 
-					compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
-					compareVersionsURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-					compareVersionsURL.setParameter("title", wikiPage.getTitle());
+					compareVersionsURL.setParameter("struts_action", "/journal/compare_versions");
+					compareVersionsURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+					compareVersionsURL.setParameter("articleId", article.getArticleId());
 					compareVersionsURL.setParameter("sourceVersion", String.valueOf(curSourceVersion));
 					compareVersionsURL.setParameter("targetVersion", String.valueOf(curTargetVersion));
-					compareVersionsURL.setParameter("type", "html");
 					%>
 
 					<aui:button cssClass="selector-button" href="<%= compareVersionsURL.toString() %>" value="choose" />

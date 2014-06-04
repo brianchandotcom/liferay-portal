@@ -45,6 +45,7 @@ public class ViewAction extends PortletAction {
 		throws Exception {
 
 		try {
+			ActionUtil.getArticle(renderRequest);
 			ActionUtil.getFolder(renderRequest);
 		}
 		catch (Exception e) {

@@ -118,12 +118,10 @@
 				<c:when test='<%= !displayStyle.startsWith("quote") %>'>
 
 					<%
-					long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
-
-					int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+					int commentCount = BlogsUtil.getCommentCount(entry);
 					%>
 
-					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></a>
+					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= commentCount %> <liferay-ui:message key='<%= (commentCount == 1) ? "comment" : "comments" %>' /></a>
 				</c:when>
 			</c:choose>
 		</div>

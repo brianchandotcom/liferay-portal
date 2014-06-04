@@ -235,17 +235,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<span class="comments">
 
 							<%
-							long classNameId = PortalUtil.getClassNameId(BlogsEntry.class.getName());
-
-							int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
+							int commentCount = BlogsUtil.getCommentCount(entry);
 							%>
 
 							<c:choose>
 								<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-									<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
+									<%= commentCount %> <liferay-ui:message key='<%= (commentCount == 1) ? "comment" : "comments" %>' />
 								</c:when>
 								<c:otherwise>
-									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
+									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= commentCount %> <liferay-ui:message key='<%= (commentCount == 1) ? "comment" : "comments" %>' /></aui:a>
 								</c:otherwise>
 							</c:choose>
 						</span>

@@ -46,4 +46,9 @@ public class DummyCommentManagerImpl implements CommentManager {
 	public void deleteDiscussion(String className, long classPK) {
 	}
 
+	@Override
+	public int getCommentCount(String className, long classPK) {
+		return 0;
+	}
+
 }

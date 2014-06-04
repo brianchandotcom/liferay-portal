@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -77,6 +78,14 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+	}
+
+	@Override
+	public int getCommentCount(String className, long classPK) {
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return _mbMessageLocalService.getDiscussionMessagesCount(
+			classNameId, classPK, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public void setMBMessageLocalService(

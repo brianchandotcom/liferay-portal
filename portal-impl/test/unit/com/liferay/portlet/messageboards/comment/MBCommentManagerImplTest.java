@@ -17,6 +17,8 @@ package com.liferay.portlet.messageboards.comment;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -42,6 +44,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		MockitoAnnotations.initMocks(this);
 
 		setUpMBCommentManagerImpl();
+		setUpPortalUtil();
 		setUpServiceContext();
 	}
 
@@ -142,6 +145,30 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 	}
 
+	@Test
+	public void testGetCommentCount() throws Exception {
+		long classPK = RandomTestUtil.randomLong();
+		long classNameId = RandomTestUtil.randomLong();
+		int expectedCommentCount = RandomTestUtil.randomInt();
+
+		Mockito.when(
+			_mbMessageLocalService.getDiscussionMessagesCount(
+				classNameId, classPK, WorkflowConstants.STATUS_APPROVED)
+		).thenReturn(
+			expectedCommentCount
+		);
+
+		Mockito.when(
+			_portal.getClassNameId(_CLASS_NAME)
+		).thenReturn(
+			classNameId
+		);
+
+		Assert.assertEquals(
+			expectedCommentCount,
+			_mbCommentManagerImpl.getCommentCount(_CLASS_NAME, classPK));
+	}
+
 	protected void setUpMBCommentManagerImpl() throws Exception {
 		when(
 			_mbMessageDisplay.getThread()
@@ -173,6 +200,12 @@ public class MBCommentManagerImplTest extends Mockito {
 		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
 	}
 
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
+	}
+
 	protected void setUpServiceContext() {
 		when(
 			_serviceContextFunction.apply(MBMessage.class.getName())
@@ -197,6 +230,9 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Mock
 	private MBThread _mbThread;
+
+	@Mock
+	private Portal _portal;
 
 	private ServiceContext _serviceContext = new ServiceContext();
 

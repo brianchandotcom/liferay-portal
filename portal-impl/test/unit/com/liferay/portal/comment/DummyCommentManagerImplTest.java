@@ -50,6 +50,9 @@ public class DummyCommentManagerImplTest {
 		_commentManager.deleteComment(commentId);
 
 		_commentManager.deleteDiscussion(className, classPK);
+
+		Assert.assertEquals(
+			0, _commentManager.getCommentCount(className, classPK));
 	}
 
 	private CommentManager _commentManager = new DummyCommentManagerImpl();

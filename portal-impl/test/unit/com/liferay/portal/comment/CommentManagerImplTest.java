@@ -162,6 +162,18 @@ public class CommentManagerImplTest extends Mockito {
 		).deleteDiscussion(
 			className, classPK
 		);
+
+		int commentCount = RandomTestUtil.randomInt();
+
+		when(
+			commentManager.getCommentCount(className, classPK)
+		).thenReturn(
+			commentCount
+		);
+
+		Assert.assertEquals(
+			commentCount,
+			_commentManagerImpl.getCommentCount(className, classPK));
 	}
 
 	private CommentManagerImpl _commentManagerImpl;

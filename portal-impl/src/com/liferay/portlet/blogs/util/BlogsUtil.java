@@ -53,6 +53,13 @@ public class BlogsUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
+	public static int getCommentCount(BlogsEntry entry) {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getCommentCount(
+			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
 	public static CommentManager getCommentManager() {
 		return (CommentManager)PortalBeanLocatorUtil.locate(
 			CommentManager.class.getName());

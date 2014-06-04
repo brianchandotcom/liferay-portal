@@ -45,23 +45,25 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	public long[] getClassNameIds() {
-		String value = _properties.getProperty(_KEY_SELECTED_CLASS_NAME_IDS);
+		String propertyValue = _properties.getProperty(
+			_KEY_SELECTED_CLASS_NAME_IDS);
 
-		if (Validator.isNull(value)) {
+		if (Validator.isNull(propertyValue)) {
 			return DEFAULT_SELECTED_CLASSNAME_IDS;
 		}
 
-		return StringUtil.split(value, 0L);
+		return StringUtil.split(propertyValue, 0L);
 	}
 
 	public long[] getRequiredClassNameIds() {
-		String value = _properties.getProperty(_KEY_REQUIRED_CLASS_NAME_IDS);
+		String propertyValue = _properties.getProperty(
+			_KEY_REQUIRED_CLASS_NAME_IDS);
 
-		if (Validator.isNull(value)) {
+		if (Validator.isNull(propertyValue)) {
 			return new long[0];
 		}
 
-		return StringUtil.split(value, 0L);
+		return StringUtil.split(propertyValue, 0L);
 	}
 
 	public boolean hasClassNameId(long classNameId) {

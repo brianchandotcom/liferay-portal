@@ -33,6 +33,17 @@ public class URLCodecTest {
 
 			Assert.assertEquals(_RAW_URLS[i], result);
 		}
+
+		testDecodingFails("%");
+		testDecodingFails("%0");
+		testDecodingFails("%00%");
+		testDecodingFails("%00%0");
+		testDecodingFails("%0" + (char)(CharPool.NUMBER_0 - 1));
+		testDecodingFails("%0" + (char)(CharPool.NUMBER_9 + 1));
+		testDecodingFails("%0" + (char)(CharPool.UPPER_CASE_A - 1));
+		testDecodingFails("%0" + (char)(CharPool.UPPER_CASE_F + 1));
+		testDecodingFails("%0" + (char)(CharPool.LOWER_CASE_A - 1));
+		testDecodingFails("%0" + (char)(CharPool.LOWER_CASE_F + 1));
 	}
 
 	@Test
@@ -49,6 +60,15 @@ public class URLCodecTest {
 			Assert.assertTrue(
 				StringUtil.equalsIgnoreCase(
 					_ESCAPE_SPACES_ENCODED_URLS[i], result));
+		}
+	}
+
+	private void testDecodingFails(String s) {
+		try {
+			URLCodec.decodeURL(s, StringPool.UTF8);
+			Assert.fail(s);
+		}
+		catch (IllegalArgumentException e) {
 		}
 	}
 

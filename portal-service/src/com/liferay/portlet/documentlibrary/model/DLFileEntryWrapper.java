@@ -1142,6 +1142,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public java.lang.String getIconCssClass() {
+		return _dlFileEntry.getIconCssClass();
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,

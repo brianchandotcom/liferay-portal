@@ -210,6 +210,11 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return DLUtil.getFileIconCssClass(getExtension());
+	}
+
+	@Override
 	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws PortalException, SystemException {
 

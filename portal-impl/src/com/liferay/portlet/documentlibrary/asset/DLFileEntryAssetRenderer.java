@@ -121,6 +121,11 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return _fileEntry.getIconCssClass();
+	}
+
+	@Override
 	public String getNewName(String oldName, String token) {
 		String extension = FileUtil.getExtension(oldName);
 

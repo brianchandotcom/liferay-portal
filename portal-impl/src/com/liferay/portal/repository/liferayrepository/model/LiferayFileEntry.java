@@ -257,6 +257,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return _dlFileEntry.getIconCssClass();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 

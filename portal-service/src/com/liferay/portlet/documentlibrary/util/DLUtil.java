@@ -191,6 +191,10 @@ public class DLUtil {
 		return getDL().getFileIcon(extension);
 	}
 
+	public static String getFileIconCssClass(String extension) {
+		return getDL().getFileIconCssClass(extension);
+	}
+
 	public static String getGenericName(String extension) {
 		return getDL().getGenericName(extension);
 	}

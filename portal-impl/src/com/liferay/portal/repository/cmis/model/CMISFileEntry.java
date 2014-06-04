@@ -277,6 +277,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return DLUtil.getFileIconCssClass(getExtension());
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 

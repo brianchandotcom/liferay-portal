@@ -75,7 +75,7 @@ public class WorkflowHandlerRegistryUtil {
 		_instance._register(workflowHandler);
 	}
 
-	public static <T> void startWorkflowInstance(
+	public static <T> T startWorkflowInstance(
 			final long companyId, final long groupId, final long userId,
 			String className, final long classPK, final T model,
 			ServiceContext serviceContext,
@@ -85,7 +85,7 @@ public class WorkflowHandlerRegistryUtil {
 		if (serviceContext.getWorkflowAction() !=
 				WorkflowConstants.ACTION_PUBLISH) {
 
-			return;
+			return model;
 		}
 
 		final WorkflowHandler<T> workflowHandler = getWorkflowHandler(
@@ -97,7 +97,7 @@ public class WorkflowHandlerRegistryUtil {
 					"No workflow handler found for " + className);
 			}
 
-			return;
+			return model;
 		}
 
 		boolean hasWorkflowInstanceInProgress =
@@ -112,7 +112,7 @@ public class WorkflowHandlerRegistryUtil {
 							groupId);
 			}
 
-			return;
+			return model;
 		}
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
@@ -151,17 +151,17 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_TASK_COMMENTS,
 			GetterUtil.getString(serviceContext.getAttribute("comments")));
 
-		workflowHandler.updateStatus(status, workflowContext);
+		T updatedModel = workflowHandler.updateStatus(status, workflowContext);
 
 		if (workflowDefinitionLink != null) {
 			final Map<String, Serializable> tempWorkflowContext =
 				workflowContext;
 
 			TransactionCommitCallbackRegistryUtil.registerCallback(
-				new Callable<Object>() {
+				new Callable<Void>() {
 
 					@Override
-					public Object call() throws Exception {
+					public Void call() throws Exception {
 						workflowHandler.startWorkflowInstance(
 							companyId, groupId, userId, classPK, model,
 							tempWorkflowContext);
@@ -171,6 +171,8 @@ public class WorkflowHandlerRegistryUtil {
 
 				});
 		}
+
+		return updatedModel;
 	}
 
 	public static <T> void startWorkflowInstance(

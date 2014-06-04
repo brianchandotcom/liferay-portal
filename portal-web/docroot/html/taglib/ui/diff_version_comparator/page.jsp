@@ -46,7 +46,7 @@ if (Validator.isNotNull(languageId)) {
 		<aui:row cssClass="diff-version-head">
 			<aui:col cssClass="diff-source-selector" width="30">
 				<div class="diff-selector">
-					<liferay-ui:icon-menu cssClass="pull-right diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+					<liferay-ui:icon-menu cssClass="diff-selector-version pull-right" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(pageContext, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -71,7 +71,7 @@ if (Validator.isNotNull(languageId)) {
 				</div>
 
 				<c:if test="<%= previousVersion == 0 %>">
-					<div class="pull-right diff-selector-version-info">
+					<div class="diff-selector-version-info pull-right">
 						(<liferay-ui:message key="first-version" />)
 					</div>
 				</c:if>
@@ -175,7 +175,7 @@ if (Validator.isNotNull(languageId)) {
 						String displayDate = LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - diffVersion.getModifiedDate().getTime(), true), false);
 					%>
 
-						<div class="version-item <%= (diffVersion.getVersion() >= targetVersion) ? "last" : StringPool.BLANK %>" data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>" data-version-name="<%= LanguageUtil.format(pageContext, "version-x", diffVersion.getVersion()) %>">
+						<div class="<%= (diffVersion.getVersion() >= targetVersion) ? "last" : StringPool.BLANK %> version-item" data-display-date="<%= displayDate %>" data-source-version="<%= previousSourceVersion %>" data-user-name="<%= HtmlUtil.escape(userDisplay.getFullName()) %>" data-version="<%= diffVersion.getVersion() %>" data-version-name="<%= LanguageUtil.format(pageContext, "version-x", diffVersion.getVersion()) %>">
 							<span class="version-title">
 								<liferay-ui:message arguments="<%= diffVersion.getVersion() %>" key="version-x" />
 							</span>
@@ -195,7 +195,7 @@ if (Validator.isNotNull(languageId)) {
 					}
 					%>
 
-					<div class="alert alert-info message-info hide">
+					<div class="alert alert-info hide message-info">
 						<liferay-ui:message key="there-are-no-results" />
 					</div>
 				</div>

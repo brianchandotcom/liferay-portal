@@ -224,7 +224,6 @@ AUI.add(
 						submitForm(instance.get(STR_DIFF_FORM));
 					},
 
-
 					_onSelectVersionItem: function(event) {
 						var instance = this;
 

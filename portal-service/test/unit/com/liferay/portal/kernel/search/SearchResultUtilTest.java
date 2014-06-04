@@ -80,13 +80,13 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		when(
 			assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
-			SUMMARY_CONTENT
+			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		when(
 			assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
-			SUMMARY_TITLE
+			SearchTestUtil.SUMMARY_TITLE
 		);
 
 		stub(
@@ -101,10 +101,11 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Summary summary = searchResult.getSummary();
 
-		Assert.assertEquals(SUMMARY_CONTENT, summary.getContent());
+		Assert.assertEquals(
+			SearchTestUtil.SUMMARY_CONTENT, summary.getContent());
 		Assert.assertEquals(200, summary.getMaxContentLength());
 		Assert.assertSame(portletURL, summary.getPortletURL());
-		Assert.assertEquals(SUMMARY_TITLE, summary.getTitle());
+		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
 		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
@@ -114,7 +115,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Indexer indexer = Mockito.mock(Indexer.class);
 
 		Summary summary = new Summary(
-			null, SUMMARY_TITLE, SUMMARY_CONTENT, null);
+			null, SearchTestUtil.SUMMARY_TITLE, SearchTestUtil.SUMMARY_CONTENT,
+			null);
 
 		when(
 			indexer.getSummary(
@@ -142,8 +144,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	public void testTwoDocumentsWithSameEntryKey() {
 		String className = "__className__";
 
-		Document documentA = createDocument(className);
-		Document documentB = createDocument(className);
+		Document documentA = SearchTestUtil.createDocument(className);
+		Document documentB = SearchTestUtil.createDocument(className);
 
 		List<SearchResult> searchResults = getSearchResults(
 			documentA, documentB);
@@ -153,7 +155,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		SearchResult searchResult = searchResults.get(0);
 
 		Assert.assertEquals(searchResult.getClassName(), className);
-		Assert.assertEquals(searchResult.getClassPK(), ENTRY_CLASS_PK);
+		Assert.assertEquals(
+			searchResult.getClassPK(), SearchTestUtil.ENTRY_CLASS_PK);
 	}
 
 	protected void assertThatEverythingUnrelatedIsEmpty(

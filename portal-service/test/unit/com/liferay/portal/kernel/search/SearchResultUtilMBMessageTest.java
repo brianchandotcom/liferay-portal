@@ -55,7 +55,7 @@ public class SearchResultUtilMBMessageTest
 	@Test
 	public void testMBMessageMissingFromService() throws Exception {
 		when(
-			mbMessageLocalService.getMessage(ENTRY_CLASS_PK)
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
 		);
@@ -63,8 +63,10 @@ public class SearchResultUtilMBMessageTest
 		SearchResult searchResult = searchSingleDocument(
 			createMBMessageDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		List<MBMessage> mbMessages = searchResult.getMBMessages();
 
@@ -75,7 +77,7 @@ public class SearchResultUtilMBMessageTest
 		Mockito.verify(
 			mbMessageLocalService
 		).getMessage(
-			ENTRY_CLASS_PK
+			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
 		Assert.assertNull(
@@ -84,12 +86,12 @@ public class SearchResultUtilMBMessageTest
 
 		verifyStatic();
 
-		IndexerRegistryUtil.getIndexer(DOCUMENT_CLASS_NAME);
+		IndexerRegistryUtil.getIndexer(SearchTestUtil.DOCUMENT_CLASS_NAME);
 
 		verifyStatic();
 
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			DOCUMENT_CLASS_NAME);
+			SearchTestUtil.DOCUMENT_CLASS_NAME);
 
 		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
@@ -97,7 +99,7 @@ public class SearchResultUtilMBMessageTest
 	@Test
 	public void testMBMessageWithKeyInDocument() throws Exception {
 		when(
-			mbMessageLocalService.getMessage(ENTRY_CLASS_PK)
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			mbMessage
 		);
@@ -109,8 +111,10 @@ public class SearchResultUtilMBMessageTest
 		SearchResult searchResult = searchSingleDocument(
 			createMBMessageDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		List<MBMessage> mbMessages = searchResult.getMBMessages();
 
@@ -128,7 +132,8 @@ public class SearchResultUtilMBMessageTest
 			createMBMessageDocument());
 
 		Assert.assertEquals(MBMESSAGE_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		List<MBMessage> mbMessages = searchResult.getMBMessages();
 
@@ -145,7 +150,7 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testTwoDocumentsWithSameAlternateKey() {
-		long baseEntryPK = ENTRY_CLASS_PK;
+		long baseEntryPK = SearchTestUtil.ENTRY_CLASS_PK;
 
 		Document documentA = createMBMessageDocumentWithAlternateKey(
 			baseEntryPK);
@@ -159,8 +164,10 @@ public class SearchResultUtilMBMessageTest
 
 		SearchResult searchResult = searchResults.get(0);
 
-		Assert.assertEquals(searchResult.getClassName(), DOCUMENT_CLASS_NAME);
-		Assert.assertEquals(searchResult.getClassPK(), DOCUMENT_CLASS_PK);
+		Assert.assertEquals(
+			searchResult.getClassName(), SearchTestUtil.DOCUMENT_CLASS_NAME);
+		Assert.assertEquals(
+			searchResult.getClassPK(), SearchTestUtil.DOCUMENT_CLASS_PK);
 	}
 
 	protected void assertThatEverythingUnrelatedIsEmpty(
@@ -176,17 +183,17 @@ public class SearchResultUtilMBMessageTest
 	}
 
 	protected Document createMBMessageDocument() {
-		return createDocument(MBMESSAGE_CLASS_NAME);
+		return SearchTestUtil.createDocument(MBMESSAGE_CLASS_NAME);
 	}
 
 	protected Document createMBMessageDocumentWithAlternateKey() {
-		return createDocumentWithAlternateKey(MBMESSAGE_CLASS_NAME);
+		return SearchTestUtil.createDocumentWithAlternateKey(MBMESSAGE_CLASS_NAME);
 	}
 
 	protected Document createMBMessageDocumentWithAlternateKey(
 		long entryClassPK) {
 
-		return createDocumentWithAlternateKey(
+		return SearchTestUtil.createDocumentWithAlternateKey(
 			MBMESSAGE_CLASS_NAME, entryClassPK);
 	}
 

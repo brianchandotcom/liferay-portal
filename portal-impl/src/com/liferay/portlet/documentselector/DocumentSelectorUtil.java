@@ -31,6 +31,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DocumentSelectorUtil {
 
+	public static String getCKEditorFuncNum(HttpServletRequest request) {
+		String ckEditorFuncNum = ParamUtil.getString(
+			request, "CKEditorFuncNum");
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		return ParamUtil.getString(
+			httpServletRequest, "CKEditorFuncNum", ckEditorFuncNum);
+	}
+
 	public static String[] getMimeTypes(HttpServletRequest request) {
 		HttpServletRequest originalServletRequest =
 			PortalUtil.getOriginalServletRequest(request);

@@ -103,18 +103,17 @@
 
 			var bookmarks = editor.getSelection().createBookmarks();
 
-			var bookmarkNodeEl = bookmarks[0].startNode.$;
+			var bookmarkNode = A.one(bookmarks[0].startNode.$);
 
-			A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
+			bookmarkNode.setStyle('display', 'inline-block');
 
-			var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
-			var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
+			var bookmarkXY = bookmarkNode.getXY();
 
-			bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
+			bookmarkNode.remove();
 
 			return {
-				x: inputCaretOffsetX,
-				y: inputCaretOffsetY
+				x: bookmarkXY[0],
+				y: bookmarkXY[1]
 			};
 		},
 

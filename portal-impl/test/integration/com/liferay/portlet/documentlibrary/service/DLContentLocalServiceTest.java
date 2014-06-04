@@ -17,10 +17,9 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.store.Store;
@@ -29,6 +28,7 @@ import java.io.ByteArrayInputStream;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,11 +38,7 @@ import org.junit.runner.RunWith;
  * @author Tina Tian
  * @author Shuyang Zhou
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLContentLocalServiceTest {
 
@@ -51,96 +47,94 @@ public class DLContentLocalServiceTest {
 		_dlContentLocalService =
 			(DLContentLocalService)PortalBeanLocatorUtil.locate(
 				DLContentLocalService.class.getName());
+
+		_companyId = RandomTestUtil.nextLong();
+		_repositoryId = RandomTestUtil.nextLong();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_dlContentLocalService.deleteContentsByDirectory(
+			_companyId, _repositoryId, StringPool.SLASH);
 	}
 
 	@Test
 	public void testAddContentByByteArray() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			companyId, repositoryId, path);
+			_companyId, _repositoryId, path);
 
 		Assert.assertEquals(addDLContent, getDLContent);
 	}
 
 	@Test
 	public void testAddContentByInputStream() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			new ByteArrayInputStream(_DATA_VERSION_1), 1024);
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			companyId, repositoryId, path);
+			_companyId, _repositoryId, path);
 
 		Assert.assertEquals(addDLContent, getDLContent);
 	}
 
 	@Test
 	public void testDeleteContent() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 
 		_dlContentLocalService.deleteContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT);
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT);
 
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 	}
 
 	@Test
 	public void testDeleteContents() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, "1.1"));
+				_companyId, _repositoryId, path, "1.1"));
 
-		_dlContentLocalService.deleteContents(companyId, repositoryId, path);
+		_dlContentLocalService.deleteContents(_companyId, _repositoryId, path);
 
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, "1.1"));
+				_companyId, _repositoryId, path, "1.1"));
 	}
 
 	@Test
 	public void testDeleteContentsByDirectory() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
-
 		String directory = RandomTestUtil.randomString();
 
 		String path1 = directory + "/" + RandomTestUtil.randomString();
@@ -149,72 +143,67 @@ public class DLContentLocalServiceTest {
 				RandomTestUtil.randomString();
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path1, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path1, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path2, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path2, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path1, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path1, Store.VERSION_DEFAULT));
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path2, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path2, Store.VERSION_DEFAULT));
 
 		_dlContentLocalService.deleteContentsByDirectory(
-			companyId, repositoryId, directory);
+			_companyId, _repositoryId, directory);
 
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path1, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path1, Store.VERSION_DEFAULT));
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path2, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path2, Store.VERSION_DEFAULT));
 	}
 
 	@Test
 	public void testGetContentLatest() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		DLContent getDLContent1 = _dlContentLocalService.getContent(
-			companyId, repositoryId, path);
+			_companyId, _repositoryId, path);
 
 		Assert.assertEquals(addDLContent1, getDLContent1);
 
 		DLContent addDLContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
 
 		DLContent getDLContent2 = _dlContentLocalService.getContent(
-			companyId, repositoryId, path);
+			_companyId, _repositoryId, path);
 
 		Assert.assertEquals(addDLContent2, getDLContent2);
 	}
 
 	@Test
 	public void testGetContentsAll() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
-
 		DLContent dlContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId, RandomTestUtil.randomString(),
+			_companyId, _repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 		DLContent dlContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId, RandomTestUtil.randomString(),
+			_companyId, _repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 		DLContent dlContent3 = _dlContentLocalService.addContent(
-			companyId, repositoryId, RandomTestUtil.randomString(),
+			_companyId, _repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT, _DATA_VERSION_1);
 
 		List<DLContent> dlContents = _dlContentLocalService.getContents(
-			companyId, repositoryId);
+			_companyId, _repositoryId);
 
 		Assert.assertEquals(3, dlContents.size());
 		Assert.assertTrue(dlContents.contains(dlContent1));
@@ -224,29 +213,27 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentsByDirectory() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path1 = RandomTestUtil.randomString();
 		String path2 = RandomTestUtil.randomString();
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId,
+			_companyId, _repositoryId,
 			path1 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 		DLContent dlContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId,
+			_companyId, _repositoryId,
 			path2 + "/" + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		List<DLContent> dlContents =
 			_dlContentLocalService.getContentsByDirectory(
-				companyId, repositoryId, path1);
+				_companyId, _repositoryId, path1);
 
 		Assert.assertEquals(1, dlContents.size());
 		Assert.assertTrue(dlContents.contains(dlContent1));
 
 		dlContents = _dlContentLocalService.getContentsByDirectory(
-			companyId, repositoryId, path2);
+			_companyId, _repositoryId, path2);
 
 		Assert.assertEquals(1, dlContents.size());
 		Assert.assertEquals(dlContent2, dlContents.get(0));
@@ -254,31 +241,29 @@ public class DLContentLocalServiceTest {
 
 	@Test
 	public void testGetContentsVersions() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path1 = RandomTestUtil.randomString();
 		String path2 = RandomTestUtil.randomString();
 
 		DLContent dlContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path1, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path1, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 		DLContent dlContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path1, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path1, "1.1", _DATA_VERSION_2);
 		DLContent dlContent3 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path2, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path2, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 		DLContent dlContent4 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path2, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path2, "1.1", _DATA_VERSION_2);
 
 		List<DLContent> dlContents1 = _dlContentLocalService.getContents(
-			companyId, repositoryId, path1);
+			_companyId, _repositoryId, path1);
 
 		Assert.assertEquals(2, dlContents1.size());
 		Assert.assertTrue(dlContents1.contains(dlContent1));
 		Assert.assertTrue(dlContents1.contains(dlContent2));
 
 		List<DLContent> dlContents2 = _dlContentLocalService.getContents(
-			companyId, repositoryId, path2);
+			_companyId, _repositoryId, path2);
 
 		Assert.assertEquals(2, dlContents2.size());
 		Assert.assertTrue(dlContents2.contains(dlContent3));
@@ -286,82 +271,74 @@ public class DLContentLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetContentVersion() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		DLContent addDLContent1 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		DLContent getDLContent1 = _dlContentLocalService.getContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT);
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT);
 
 		assertEquals(addDLContent1, getDLContent1);
 
 		DLContent addDLContent2 = _dlContentLocalService.addContent(
-			companyId, repositoryId, path, "1.1", _DATA_VERSION_2);
+			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_2);
 
 		DLContent getDLContent2 = _dlContentLocalService.getContent(
-			companyId, repositoryId, path, "1.1");
+			_companyId, _repositoryId, path, "1.1");
 
 		assertEquals(addDLContent2, getDLContent2);
 	}
 
 	@Test
 	public void testHasContent() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
 		String path = RandomTestUtil.randomString();
 
 		// 1.0
 
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, path, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, Store.VERSION_DEFAULT));
+				_companyId, _repositoryId, path, Store.VERSION_DEFAULT));
 
 		// 1.1
 
 		Assert.assertFalse(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, "1.1"));
+				_companyId, _repositoryId, path, "1.1"));
 
 		_dlContentLocalService.addContent(
-			companyId, repositoryId, path, "1.1", _DATA_VERSION_1);
+			_companyId, _repositoryId, path, "1.1", _DATA_VERSION_1);
 
 		Assert.assertTrue(
 			_dlContentLocalService.hasContent(
-				companyId, repositoryId, path, "1.1"));
+				_companyId, _repositoryId, path, "1.1"));
 	}
 
 	@Test
-	@Transactional
 	public void testUpdateContent() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long oldRepositoryId = RandomTestUtil.nextLong();
 		long newRepositoryId = RandomTestUtil.nextLong();
 		String oldPath = RandomTestUtil.randomString();
 		String newPath = RandomTestUtil.randomString();
 
 		DLContent addDLContent = _dlContentLocalService.addContent(
-			companyId, oldRepositoryId, oldPath, Store.VERSION_DEFAULT,
+			_companyId, _repositoryId, oldPath, Store.VERSION_DEFAULT,
 			_DATA_VERSION_1);
 
 		_dlContentLocalService.updateDLContent(
-			companyId, oldRepositoryId, newRepositoryId, oldPath, newPath);
+			_companyId, _repositoryId, newRepositoryId, oldPath, newPath);
 
 		DLContent getDLContent = _dlContentLocalService.getContent(
-			companyId, newRepositoryId, newPath);
+			_companyId, newRepositoryId, newPath);
 
 		addDLContent.setRepositoryId(newRepositoryId);
 		addDLContent.setPath(newPath);
@@ -400,6 +377,7 @@ public class DLContentLocalServiceTest {
 
 	private static final byte[] _DATA_VERSION_2 = new byte[_DATA_SIZE];
 
+	private long _companyId;
 	private DLContentLocalService _dlContentLocalService;
 
 	static {
@@ -408,5 +386,7 @@ public class DLContentLocalServiceTest {
 			_DATA_VERSION_2[i] = (byte)(i + 1);
 		}
 	}
+
+	private long _repositoryId;
 
 }

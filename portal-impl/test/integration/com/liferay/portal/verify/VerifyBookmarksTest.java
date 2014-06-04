@@ -15,12 +15,11 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -31,6 +30,8 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,26 +40,29 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  * @author Sergio González
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class VerifyBookmarksTest extends BaseVerifyTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
 
 	@Test
 	public void testBookmarksEntryTreePathWithBookmarksEntryInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
 			parentFolder.getFolderId(), true, serviceContext);
@@ -76,17 +80,15 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 	public void testBookmarksEntryTreePathWithBookmarksParentFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		BookmarksFolder grandparentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), grandparentFolder.getFolderId(),
+			_group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksTestUtil.addEntry(
 			parentFolder.getFolderId(), true, serviceContext);
@@ -104,13 +106,11 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 	public void testBookmarksFolderTreePathWithBookmarksFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			_group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
@@ -123,21 +123,18 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testBookmarksFolderTreePathWithBookmarksParentFolderInTrash()
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		BookmarksFolder grandparentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), grandparentFolder.getFolderId(),
+			_group.getGroupId(), grandparentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		BookmarksTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			_group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString());
 
 		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
@@ -153,5 +150,7 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyBookmarks();
 	}
+
+	private Group _group;
 
 }

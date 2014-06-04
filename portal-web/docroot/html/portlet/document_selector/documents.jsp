@@ -33,12 +33,31 @@ if (folderId > 0) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
+String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
+
+String eventName = ParamUtil.getString(request, "eventName");
+
+boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+
 long repositoryId = groupId;
 
 if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	PortletURL breadcrumbURL = renderResponse.createRenderURL();
+
+	breadcrumbURL.setParameter("struts_action", "/document_selector/view");
+	breadcrumbURL.setParameter("CKEditorFuncNum", ckEditorFuncNum);
+	breadcrumbURL.setParameter("eventName", eventName);
+	breadcrumbURL.setParameter("groupId", String.valueOf(groupId));
+	breadcrumbURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	breadcrumbURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
+
+	PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.translate("home"), breadcrumbURL.toString());
+
+	breadcrumbURL.setParameter("folderId", String.valueOf(folderId));
+
+	DLUtil.addPortletBreadcrumbEntries(folder, request, breadcrumbURL);
 }
 
 int entryStart = ParamUtil.getInteger(request, "entryStart");
@@ -46,13 +65,10 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONT
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String eventName = ParamUtil.getString(request, "eventName");
-
-boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/document_selector/view");
+portletURL.setParameter("CKEditorFuncNum", ckEditorFuncNum);
 portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -190,6 +206,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 			>
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="struts_action" value="/document_selector/view" />
+					<portlet:param name="CKEditorFuncNum" value="<%= ckEditorFuncNum %>" />
 					<portlet:param name="eventName" value="<%= eventName %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
@@ -244,6 +261,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 	PortletURL backURL = renderResponse.createRenderURL();
 
 	backURL.setParameter("struts_action", "/document_selector/view");
+	backURL.setParameter("CKEditorFuncNum", ckEditorFuncNum);
 	backURL.setParameter("eventName", eventName);
 	backURL.setParameter("groupId", String.valueOf(groupId));
 	backURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
@@ -259,6 +277,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 
 	iteratorURL.setParameter("struts_action", "/document_selector/view");
+	iteratorURL.setParameter("CKEditorFuncNum", ckEditorFuncNum);
 	iteratorURL.setParameter("eventName", eventName);
 	iteratorURL.setParameter("groupId", String.valueOf(groupId));
 	iteratorURL.setParameter("folderId", String.valueOf(folderId));
@@ -285,16 +304,6 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 		searchContext.setStart(entryStart);
 
 		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
-
-		Map<String, String> params = new HashMap<String, String>();
-
-		HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-		for (String param : httpServletRequest.getParameterMap().keySet()) {
-			String[] values = httpServletRequest.getParameterValues(param);
-
-			params.put(param, StringUtil.merge(values));
-		}
 		%>
 
 		<liferay-ui:search-container-results
@@ -333,8 +342,9 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 			<liferay-ui:search-container-column-text>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>(params);
+				Map<String, Object> data = new HashMap<String, Object>();
 
+				data.put("ckeditorfuncnum", ckEditorFuncNum);
 				data.put("groupid", fileEntry.getGroupId());
 				data.put("title", fileEntry.getTitle());
 				data.put("url", DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));

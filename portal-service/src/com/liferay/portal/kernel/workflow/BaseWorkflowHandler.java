@@ -54,7 +54,7 @@ import javax.portlet.WindowStateException;
  * @author Julio Camarero
  * @author Jorge Ferrer
  */
-public abstract class BaseWorkflowHandler implements WorkflowHandler {
+public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 	@Override
 	public AssetRenderer getAssetRenderer(long classPK)
@@ -289,8 +289,8 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 
 	@Override
 	public void startWorkflowInstance(
-			long companyId, long groupId, long userId, long classPK,
-			Object model, Map<String, Serializable> workflowContext)
+			long companyId, long groupId, long userId, long classPK, T model,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		WorkflowInstanceLinkLocalServiceUtil.startWorkflowInstance(

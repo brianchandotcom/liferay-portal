@@ -74,7 +74,9 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.disableObjectResizing = true;
 
-	config.extraPlugins = 'creole,wikilink';
+	config.extraPlugins = 'creole,lfrpopup,wikilink';
+
+	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(locale, "browse") %>';
 
 	config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 

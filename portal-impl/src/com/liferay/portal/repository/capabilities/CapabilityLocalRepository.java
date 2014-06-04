@@ -34,27 +34,16 @@ import java.util.Set;
 /**
  * @author Adolfo Pérez
  */
-public class CapabilityLocalRepository implements LocalRepository {
+public class CapabilityLocalRepository
+	extends BaseCapabilityRepository<LocalRepository>
+	implements LocalRepository {
 
 	public CapabilityLocalRepository(
 		LocalRepository localRepository,
 		Map<Class<? extends Capability>, Capability> capabilityMap,
 		Set<Class<? extends Capability>> exportedCapabilities) {
 
-		Set<Class<? extends Capability>> supportedCababilities =
-			capabilityMap.keySet();
-
-		if (!supportedCababilities.containsAll(exportedCapabilities)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Exporting capabilities not explicitly supported is not " +
-					"allowed. Repository supports %s, but tried to export %s",
-					capabilityMap.keySet(), exportedCapabilities));
-		}
-
-		_localRepository = localRepository;
-		_capabilityMap = capabilityMap;
-		_exportedCapabilities = exportedCapabilities;
+		super(localRepository, capabilityMap, exportedCapabilities);
 	}
 
 	@Override
@@ -64,7 +53,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.addFileEntry(
+		return getRepository().addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 	}
@@ -76,7 +65,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			long size, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.addFileEntry(
+		return getRepository().addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 	}
@@ -87,81 +76,69 @@ public class CapabilityLocalRepository implements LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.addFolder(
+		return getRepository().addFolder(
 			userId, parentFolderId, title, description, serviceContext);
 	}
 
 	@Override
 	public void deleteAll() throws PortalException, SystemException {
-		_localRepository.deleteAll();
+		getRepository().deleteAll();
 	}
 
 	@Override
 	public void deleteFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		_localRepository.deleteFileEntry(fileEntryId);
+		getRepository().deleteFileEntry(fileEntryId);
 	}
 
 	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		_localRepository.deleteFolder(folderId);
-	}
-
-	@Override
-	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
-		if (_exportedCapabilities.contains(capabilityClass)) {
-			return getInternalCapability(capabilityClass);
-		}
-
-		throw new IllegalArgumentException(
-			String.format(
-				"Capability %s not exported by repository %d",
-				capabilityClass.getName(), getRepositoryId()));
+		getRepository().deleteFolder(folderId);
 	}
 
 	@Override
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFileEntry(fileEntryId);
+		return getRepository().getFileEntry(fileEntryId);
 	}
 
 	@Override
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFileEntry(folderId, title);
+		return getRepository().getFileEntry(folderId, title);
 	}
 
 	@Override
 	public FileEntry getFileEntryByUuid(String uuid)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFileEntryByUuid(uuid);
+		return getRepository().getFileEntryByUuid(uuid);
 	}
 
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFileVersion(fileVersionId);
+		return getRepository().getFileVersion(fileVersionId);
 	}
 
 	@Override
 	public Folder getFolder(long folderId)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFolder(folderId);
+		return getRepository().getFolder(folderId);
 	}
 
 	@Override
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException, SystemException {
 
-		return _localRepository.getFolder(parentFolderId, title);
+		return getRepository().getFolder(parentFolderId, title);
 	}
 
 	@Override
@@ -169,20 +146,13 @@ public class CapabilityLocalRepository implements LocalRepository {
 			long rootFolderId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return _localRepository.getRepositoryFileEntries(
+		return getRepository().getRepositoryFileEntries(
 			rootFolderId, start, end, obc);
 	}
 
 	@Override
 	public long getRepositoryId() {
-		return _localRepository.getRepositoryId();
-	}
-
-	@Override
-	public <T extends Capability> boolean isCapabilityProvided(
-			Class<T> capabilityClass) {
-
-		return _exportedCapabilities.contains(capabilityClass);
+		return getRepository().getRepositoryId();
 	}
 
 	@Override
@@ -191,7 +161,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.moveFileEntry(
+		return getRepository().moveFileEntry(
 			userId, fileEntryId, newFolderId, serviceContext);
 	}
 
@@ -201,7 +171,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.moveFolder(
+		return getRepository().moveFolder(
 			userId, folderId, parentFolderId, serviceContext);
 	}
 
@@ -212,7 +182,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
 
-		_localRepository.updateAsset(
+		getRepository().updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds);
 	}
@@ -224,7 +194,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.updateFileEntry(
+		return getRepository().updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 	}
@@ -237,7 +207,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.updateFileEntry(
+		return getRepository().updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}
@@ -248,28 +218,8 @@ public class CapabilityLocalRepository implements LocalRepository {
 			String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		return _localRepository.updateFolder(
+		return getRepository().updateFolder(
 			folderId, parentFolderId, title, description, serviceContext);
 	}
-
-	protected <T extends Capability> T getInternalCapability(
-		Class<T> capabilityClass) {
-
-		Capability<?> capability = _capabilityMap.get(capabilityClass);
-
-		if (capability == null) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Capability %s not supported by repository %d",
-					capabilityClass.getName(), getRepositoryId()));
-		}
-
-		return (T)capability;
-	}
-
-	private final Map<Class<? extends Capability>, Capability>
-		_capabilityMap;
-	private final Set<Class<? extends Capability>> _exportedCapabilities;
-	private final LocalRepository _localRepository;
 
 }

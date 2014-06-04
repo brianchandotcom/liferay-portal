@@ -31,7 +31,7 @@ else {
 }
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
 	<c:if test="<%= !workflowInstance.isComplete() %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="struts_action" value="/workflow_instances/view" />
@@ -45,7 +45,7 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="undo"
+			iconCssClass="icon-undo"
 			message="withdraw-submission"
 			url="<%= deleteURL %>"
 		/>

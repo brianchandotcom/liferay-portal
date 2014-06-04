@@ -19,15 +19,8 @@
 		font-weight: bold;
 	}
 
-	.lfr-asset-assigned, .lfr-asset-due-date, .task-type-1, .task-type-2, .task-type-3, .lfr-asset-date, .lfr-asset-status {
+	.task-type-1, .task-type-2, .task-type-3 {
 		background: url() no-repeat 0 50%;
-	}
-
-	.lfr-asset-assigned {
-		background-image: url(@theme_image_path@/common/assign.png);
-		margin-right: 10px;
-		padding-left: 25px;
-		padding-right: 10px;
 	}
 
 	h3.task-content-title {
@@ -41,40 +34,6 @@
 
 	.task-content-actions {
 		float: right;
-	}
-
-	.lfr-asset-date {
-		background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
-	}
-
-	.lfr-asset-due-date {
-		background-image: url(@theme_image_path@/common/time.png);
-		padding-left: 25px;
-	}
-
-	.task-type-1 {
-		background-image: url(@theme_image_path@/common/assign.png);
-	}
-
-	.task-type-2 {
-		background-image: url(@theme_image_path@/common/time.png);
-	}
-
-	.task-type-3 {
-		background-image: url(@theme_image_path@/common/recent_changes.png);
-	}
-
-	.lfr-asset-date {
-		margin-right: 10px;
-		overflow: auto;
-		padding-left: 25px;
-		padding-right: 10px;
-	}
-
-	.lfr-asset-status {
-		background-image: url(@theme_image_path@/common/recent_changes.png);
-		padding-left: 25px;
-		padding-right: 10px;
 	}
 
 	.asset-metadata {

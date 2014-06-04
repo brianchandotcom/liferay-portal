@@ -67,9 +67,19 @@ public class BlogsUtil {
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-blog-entry-content"));
 		definitionTerms.put(
+			"[$BLOGS_ENTRY_CREATE_DATE$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-date-the-blog-entry-was-created"));
+		definitionTerms.put(
 			"[$BLOGS_ENTRY_DESCRIPTION$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-blog-entry-description"));
+		definitionTerms.put(
+			"[BLOGS_ENTRY_SITE]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-name-of-the-site-where-the-blog-entry-was-created"));
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]",
 			LanguageUtil.get(
@@ -84,9 +94,19 @@ public class BlogsUtil {
 				themeDisplay.getLocale(),
 				"the-email-address-of-the-user-who-added-the-blog-entry"));
 		definitionTerms.put(
+			"[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-portrait-url-of-the-user-who-added-the-blog-entry"));
+		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_NAME$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-user-who-added-the-blog-entry"));
+		definitionTerms.put(
+			"[$BLOGS_ENTRY_USER_URL$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-public-site-url-of-the-user-who-added-the-blog-entry"));
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_URL$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-blog-entry-url"));

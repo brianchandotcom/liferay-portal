@@ -46,52 +46,6 @@ public class RepositoryFactoryTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileEntryId()
-		throws Exception {
-
-		long fileEntryId = 42L;
-
-		RepositoryFactoryUtil.create(0, fileEntryId, 0);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileVersionId()
-		throws Exception {
-
-		long fileVersionId = 42L;
-
-		RepositoryFactoryUtil.create(0, 0, fileVersionId);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
-
-		RepositoryFactoryUtil.create(folderId, 0, 0);
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testCreateRepositoryFromExistingFolderWithoutPermissions()
-		throws Exception {
-
-		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				ALWAYS_FAILING_PERMISSION_CHECKER);
-
-			RepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
 	@Test
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
@@ -121,6 +75,27 @@ public class RepositoryFactoryTest {
 		RepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
 	}
 
+	@Test(expected = PrincipalException.class)
+	public void testCreateRepositoryFromExistingFolderWithoutPermissions()
+		throws Exception {
+
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				ALWAYS_FAILING_PERMISSION_CHECKER);
+
+			RepositoryFactoryUtil.create(dlFolder.getFolderId(), 0, 0);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
 	@Test
 	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
@@ -128,6 +103,31 @@ public class RepositoryFactoryTest {
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
 		RepositoryFactoryUtil.create(dlFolder.getRepositoryId());
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileEntryId()
+		throws Exception {
+
+		long fileEntryId = 42L;
+
+		RepositoryFactoryUtil.create(0, fileEntryId, 0);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileVersionId()
+		throws Exception {
+
+		long fileVersionId = 42L;
+
+		RepositoryFactoryUtil.create(0, 0, fileVersionId);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
+		long folderId = 42L;
+
+		RepositoryFactoryUtil.create(folderId, 0, 0);
 	}
 
 	@Test

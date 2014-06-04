@@ -43,31 +43,6 @@ public class LocalRepositoryFactoryTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileEntryId()
-		throws Exception {
-
-		long fileEntryId = 42L;
-
-		LocalRepositoryFactoryUtil.create(0, fileEntryId, 0);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFileVersionId()
-		throws Exception {
-
-		long fileVersionId = 42L;
-
-		LocalRepositoryFactoryUtil.create(0, 0, fileVersionId);
-	}
-
-	@Test(expected = NoSuchRepositoryEntryException.class)
-	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
-		long folderId = 42L;
-
-		LocalRepositoryFactoryUtil.create(folderId, 0, 0);
-	}
-
 	@Test
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
@@ -105,6 +80,31 @@ public class LocalRepositoryFactoryTest {
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
 		LocalRepositoryFactoryUtil.create(dlFolder.getRepositoryId());
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileEntryId()
+		throws Exception {
+
+		long fileEntryId = 42L;
+
+		LocalRepositoryFactoryUtil.create(0, fileEntryId, 0);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFileVersionId()
+		throws Exception {
+
+		long fileVersionId = 42L;
+
+		LocalRepositoryFactoryUtil.create(0, 0, fileVersionId);
+	}
+
+	@Test(expected = NoSuchRepositoryEntryException.class)
+	public void testCreateRepositoryFromInexistingFolderId() throws Exception {
+		long folderId = 42L;
+
+		LocalRepositoryFactoryUtil.create(folderId, 0, 0);
 	}
 
 	@Test

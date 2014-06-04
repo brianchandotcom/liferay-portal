@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -49,7 +50,9 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -1447,13 +1450,35 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());
 		subscriptionSender.setCompanyId(entry.getCompanyId());
+
+		String entryContentTrimmed = StringUtil.shorten(
+			HtmlUtil.stripHtml(entry.getContent()), 500);
+
 		subscriptionSender.setContextAttribute(
-			"[$BLOGS_ENTRY_CONTENT$]", entry.getContent(), false);
+			"[$BLOGS_ENTRY_CONTENT$]", entryContentTrimmed, false);
+
+		String blogsEntrySiteName =
+			GroupLocalServiceUtil.getGroupDescriptiveName(
+				entry.getGroupId(), serviceContext.getLocale());
+
+		String simpleDate = Time.getSimpleDate(
+			entry.getCreateDate(), "yyyy/MM/dd");
+
+		User user = UserLocalServiceUtil.getUserById(entry.getUserId());
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		String userPortraitUrl = user.getPortraitURL(themeDisplay);
+		String userPublicSiteUrl = user.getDisplayURL(themeDisplay);
+
 		subscriptionSender.setContextAttributes(
+			"[$BLOGS_ENTRY_CREATE_DATE$]", simpleDate,
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
+			"[BLOGS_ENTRY_SITE]", blogsEntrySiteName,
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
-			entryURL);
+			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]", userPortraitUrl,
+			"[$BLOGS_ENTRY_USER_URL$]", userPublicSiteUrl);
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

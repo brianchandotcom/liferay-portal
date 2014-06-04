@@ -274,6 +274,20 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="gotoSiteTeamsCP">
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="${portletName}" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<var name="key_teamName" value="${teamName}" />
+
+		<execute action="CPSiteteams#click" locator-key1="TEAM_TABLE_ACTIONS" />
+		<execute action="CPSiteteams#assertClick" locator-key1="TEAM_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoSiteTemplateCP">
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="${portletName}" />

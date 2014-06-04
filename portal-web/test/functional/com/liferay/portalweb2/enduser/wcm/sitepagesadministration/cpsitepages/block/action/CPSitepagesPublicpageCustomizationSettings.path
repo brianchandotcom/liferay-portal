@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>CPSitepagesPublicpageCustomizationSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitepagesPublicpageCustomizationSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitepagesPublicpageCustomizationSettings</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--CUSTOMATIZATION_SETTINGS-->
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO</td>
+	<td>//input[contains(@name,'TypeSettingsProperties--column-${key_columnId}-customizable--Checkbox')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

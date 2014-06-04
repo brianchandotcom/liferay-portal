@@ -172,7 +172,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
-	public boolean isAssociatedToAssetRendererFactory(long classNameId) {
+	public boolean isAssociatedToClassNameId(long classNameId) {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();
 

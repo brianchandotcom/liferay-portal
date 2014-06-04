@@ -56,7 +56,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean isAssociatedToAssetRendererFactory(long classNameId);
+	public boolean isAssociatedToClassNameId(long classNameId);
 
 	public boolean isMissingRequiredCategory(long classNameId,
 		long[] categoryIds)

@@ -101,7 +101,8 @@ public class SearchResultUtilJournalArticleTest
 	protected void assertThatSearchResultHasVersion(SearchResult searchResult) {
 		Assert.assertEquals(
 			JOURNALARTICLE_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
@@ -118,7 +119,8 @@ public class SearchResultUtilJournalArticleTest
 	}
 
 	protected Document createJournalArticleDocumentWithVersion() {
-		Document document = createDocument(JOURNALARTICLE_CLASS_NAME);
+		Document document = SearchTestUtil.createDocument(
+			JOURNALARTICLE_CLASS_NAME);
 
 		document.add(new Field(Field.VERSION, DOCUMENT_VERSION));
 

@@ -275,7 +275,7 @@ public class SearchResultUtilDLFileEntryTest
 		Summary summaryFromResult = searchResult.getSummary();
 
 		Assert.assertNotSame(
-			"Summary in searchResult is not the same one returned by the Indexer",
+			"Summary in searchResult is not the same one returned by Indexer",
 			summary, summaryFromResult);
 
 		Assert.assertEquals(
@@ -296,7 +296,7 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertSame(fileEntry, fileEntryFromTuple);
 
 		Assert.assertSame(
-			"Summary in tuple must be the same one returned by the Indexer",
+			"Summary in tuple must be the same one returned by Indexer",
 			summary, summaryFromTuple);
 
 		Assert.assertEquals("FileEntry Content", summaryFromTuple.getContent());

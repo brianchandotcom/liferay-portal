@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 
-import javax.portlet.PortletURL;
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Manuel de la Peña

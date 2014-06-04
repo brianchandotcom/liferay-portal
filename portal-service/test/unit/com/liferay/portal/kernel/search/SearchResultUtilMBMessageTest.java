@@ -186,7 +186,8 @@ public class SearchResultUtilMBMessageTest
 	}
 
 	protected Document createMBMessageDocumentWithAlternateKey() {
-		return SearchTestUtil.createDocumentWithAlternateKey(MBMESSAGE_CLASS_NAME);
+		return SearchTestUtil.createDocumentWithAlternateKey(
+			MBMESSAGE_CLASS_NAME);
 	}
 
 	protected Document createMBMessageDocumentWithAlternateKey(

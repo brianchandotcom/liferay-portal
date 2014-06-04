@@ -825,17 +825,18 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizationIds associated with the user. If
-	 * includeAdministrative is <code>true</code>, the result includes those
-	 * organizationIds that are not directly associated to the user but he is an
-	 * administrator or an owner of the organization.
+	 * Returns all the organization IDs associated with the user. If
+	 * <code>includeAdministrative</code> is <code>true</code>, the result
+	 * includes those organization IDs that are indirectly associated to the
+	 * user because he is an administrator or owner of the organization.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  includeAdministrative whether to includes organizations that are
+	 * @param  includeAdministrative whether to include organizations that are
 	 *         indirectly associated to the user because he is an administrator
-	 *         or an owner of the organization
-	 * @return the organizationIds of organizations associated with the user
+	 *         or owner of the organization
+	 * @return the organization IDs of organizations associated with the user
 	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

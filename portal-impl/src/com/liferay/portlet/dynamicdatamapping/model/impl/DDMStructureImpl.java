@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -70,14 +70,25 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		Document document = getDocument();
+		try {
+			DDMForm ddmForm = getDDMForm();
 
-		Element rootElement = document.getRootElement();
+			List<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		String availableLocales = rootElement.attributeValue(
-			"available-locales");
+			String[] availableLanguageIds = new String[availableLocales.size()];
 
-		return StringUtil.split(availableLocales);
+			for (int i = 0; i < availableLocales.size(); ++i) {
+				availableLanguageIds[i] = LocaleUtil.toLanguageId(
+					availableLocales.get(i));
+			}
+
+			return availableLanguageIds;
+		}
+		catch (PortalException pe) {
+			_log.error(pe.getMessage());
+
+			return null;
+		}
 	}
 
 	@Override
@@ -120,41 +131,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public String getDefaultLanguageId() {
-		Document document = getDocument();
+		try {
+			DDMForm ddmForm = getDDMForm();
 
-		if (document == null) {
-			Locale locale = LocaleUtil.getSiteDefault();
-
-			return locale.toString();
+			return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 		}
+		catch (PortalException pe) {
+			_log.error(pe.getMessage());
 
-		Element rootElement = document.getRootElement();
-
-		return rootElement.attributeValue("default-locale");
-	}
-
-	@Override
-	public Document getDocument() {
-		if (_document == null) {
-			try {
-				_document = SAXReaderUtil.read(getXsd());
-			}
-			catch (Exception e) {
-				StackTraceElement[] stackTraceElements = e.getStackTrace();
-
-				for (StackTraceElement stackTraceElement : stackTraceElements) {
-					String className = stackTraceElement.getClassName();
-
-					if (className.endsWith("DDMStructurePersistenceTest")) {
-						return null;
-					}
-				}
-
-				_log.error(e, e);
-			}
+			return null;
 		}
-
-		return _document;
 	}
 
 	@Override
@@ -555,11 +541,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
-	public void setDocument(Document document) {
-		_document = document;
-	}
-
-	@Override
 	public void setLocalizedFieldsMap(
 		Map<String, Map<String, Map<String, String>>> localizedFieldsMap) {
 
@@ -586,7 +567,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public void setXsd(String xsd) {
 		super.setXsd(xsd);
 
-		_document = null;
 		_localizedFieldsMap = null;
 		_localizedPersistentFieldsMap = null;
 		_localizedTransientFieldsMap = null;
@@ -706,7 +686,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 
-		List<Node> nodes = xPathSelector.selectNodes(getDocument());
+		Document document;
+
+		try {
+			document = SAXReaderUtil.read(getXsd());
+		}
+		catch (DocumentException de) {
+			throw new PortalException(de);
+		}
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
 
 		for (Node node : nodes) {
 			Element element = (Element)node;
@@ -761,9 +750,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
-
-	@CacheField
-	private Document _document;
 
 	@CacheField
 	private Map<String, Map<String, Map<String, String>>> _localizedFieldsMap;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -75,13 +74,11 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testBaseModelUserPermissions() throws Exception {
 		testUserPermissions(false, true);
 	}
 
 	@Test
-	@Transactional
 	public void testLocalizedSearch() throws Exception {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			group.getGroupId());
@@ -119,7 +116,6 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testParentBaseModelUserPermissions() throws Exception {
 		testUserPermissions(true, false);
 	}
@@ -145,55 +141,46 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
 		searchByKeywordsInsideParentBaseModel();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchComments() throws Exception {
 		searchComments();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchExpireAllVersions() throws Exception {
 		searchExpireVersions(false);
 	}
 
 	@Test
-	@Transactional
 	public void testSearchExpireLatestVersion() throws Exception {
 		searchExpireVersions(true);
 	}
 
 	@Test
-	@Transactional
 	public void testSearchMyEntries() throws Exception {
 		searchMyEntries();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchRecentEntries() throws Exception {
 		searchRecentEntries();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchStatus() throws Exception {
 		searchStatus();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchVersions() throws Exception {
 		searchVersions();
 	}
 
 	@Test
-	@Transactional
 	public void testSearchWithinDDMStructure() throws Exception {
 		searchWithinDDMStructure();
 	}

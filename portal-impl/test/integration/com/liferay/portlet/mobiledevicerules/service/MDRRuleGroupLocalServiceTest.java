@@ -21,9 +21,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -34,6 +34,7 @@ import com.liferay.portlet.mobiledevicerules.util.test.MDRTestUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,11 +43,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Manuel de la Peña
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		ResetDatabaseExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MDRRuleGroupLocalServiceTest {
 
@@ -58,6 +55,13 @@ public class MDRRuleGroupLocalServiceTest {
 		Group companyGroup = company.getGroup();
 
 		_ruleGroup = MDRTestUtil.addRuleGroup(companyGroup.getGroupId());
+
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -73,10 +77,8 @@ public class MDRRuleGroupLocalServiceTest {
 	protected void testSelectableRuleGroups(boolean includeGlobalGroup)
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
 		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), RandomTestUtil.randomString());
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
@@ -98,6 +100,7 @@ public class MDRRuleGroupLocalServiceTest {
 		}
 	}
 
+	private Group _group;
 	private MDRRuleGroup _ruleGroup;
 
 }

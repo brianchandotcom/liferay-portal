@@ -104,7 +104,7 @@ public class SearchResultUtilDLFileEntryTest
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 			SearchTestUtil.DOCUMENT_CLASS_NAME);
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -169,7 +169,7 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -307,7 +307,7 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals("FileEntry Content", summaryFromTuple.getContent());
 		Assert.assertEquals("FileEntry Title", summaryFromTuple.getTitle());
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
@@ -330,10 +330,10 @@ public class SearchResultUtilDLFileEntryTest
 
 		verifyZeroInteractions(dlAppLocalService);
 
-		assertThatEverythingUnrelatedIsEmpty(searchResult);
+		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
 
-	protected void assertThatEverythingUnrelatedIsEmpty(
+	protected void assertThatMBMessagesAndVersionsAreEmpty(
 		SearchResult searchResult) {
 
 		List<MBMessage> mbMessages = searchResult.getMBMessages();

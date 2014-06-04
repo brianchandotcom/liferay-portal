@@ -56,38 +56,7 @@ portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector)
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-
-	<%
-	Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
-	%>
-
-	<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= HtmlUtil.escape(selectedGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
-
-		<%
-		String refererPortletName = ParamUtil.getString(request, "refererPortletName");
-
-		PortletURL selectGroupURL = renderResponse.createRenderURL();
-
-		selectGroupURL.setParameter("struts_action", "/document_selector/view");
-		selectGroupURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
-		selectGroupURL.setParameter("eventName", eventName);
-		selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
-
-		for (Group group : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {
-			selectGroupURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-		%>
-
-			<liferay-ui:icon
-				iconCssClass="<%= group.getIconCssClass() %>"
-				message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-				url="<%= selectGroupURL.toString() %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</liferay-ui:icon-menu>
+	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" />
 </c:if>
 
 <aui:form method="post" name="selectDocumentFm">

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -46,40 +45,6 @@ import org.powermock.api.mockito.PowerMockito;
  * @author André de Oliveira
  */
 public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
-
-	protected Document createDocument(String entryClassName) {
-		return createDocument(entryClassName, ENTRY_CLASS_PK);
-	}
-
-	protected Document createDocument(
-		String entryClassName, long entryClassPk) {
-
-		Document document = new DocumentImpl();
-
-		document.add(new Field(Field.ENTRY_CLASS_NAME, entryClassName));
-		document.add(
-			new Field(Field.ENTRY_CLASS_PK, String.valueOf(entryClassPk)));
-
-		return document;
-	}
-
-	protected Document createDocumentWithAlternateKey(String entryClassName) {
-		return createDocumentWithAlternateKey(entryClassName, ENTRY_CLASS_PK);
-	}
-
-	protected Document createDocumentWithAlternateKey(
-		String entryClassName, long entryClassPK) {
-
-		Document document = createDocument(entryClassName, entryClassPK);
-
-		document.add(
-			new Field(
-				Field.CLASS_NAME_ID, String.valueOf(DOCUMENT_CLASS_NAME_ID)));
-		document.add(
-			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
-
-		return document;
-	}
 
 	protected void doSetUp() {
 		MockitoAnnotations.initMocks(this);
@@ -120,9 +85,9 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		portalUtil.setPortal(portal);
 
 		when(
-			portal.getClassName(DOCUMENT_CLASS_NAME_ID)
+			portal.getClassName(SearchTestUtil.DOCUMENT_CLASS_NAME_ID)
 		).thenReturn(
-			DOCUMENT_CLASS_NAME
+			SearchTestUtil.DOCUMENT_CLASS_NAME
 		);
 	}
 
@@ -163,21 +128,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
-
-	protected static final String DOCUMENT_CLASS_NAME =
-		"com.liferay.ClassInDocument";
-
-	protected static final long DOCUMENT_CLASS_NAME_ID =
-		RandomTestUtil.randomLong();
-
-	protected static final long DOCUMENT_CLASS_PK = RandomTestUtil.randomLong();
-
-	protected static final long ENTRY_CLASS_PK = RandomTestUtil.randomLong();
-
-	protected static final String SUMMARY_CONTENT =
-		"A long time ago, in a galaxy far, far away...";
-
-	protected static final String SUMMARY_TITLE = "S.R. Wars";
 
 	@Mock
 	protected AssetRenderer assetRenderer;

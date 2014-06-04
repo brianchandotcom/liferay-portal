@@ -66,7 +66,7 @@ public class SearchResultUtilDLFileEntryTest
 	@Test
 	public void testDLFileEntryMissingFromService() throws Exception {
 		when(
-			dlAppLocalService.getFileEntry(ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
 		);
@@ -74,8 +74,10 @@ public class SearchResultUtilDLFileEntryTest
 		SearchResult searchResult = searchSingleDocument(
 			createDLFileEntryDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
@@ -86,7 +88,7 @@ public class SearchResultUtilDLFileEntryTest
 		Mockito.verify(
 			dlAppLocalService
 		).getFileEntry(
-			ENTRY_CLASS_PK
+			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
 		Assert.assertNull(
@@ -95,12 +97,12 @@ public class SearchResultUtilDLFileEntryTest
 
 		verifyStatic();
 
-		IndexerRegistryUtil.getIndexer(DOCUMENT_CLASS_NAME);
+		IndexerRegistryUtil.getIndexer(SearchTestUtil.DOCUMENT_CLASS_NAME);
 
 		verifyStatic();
 
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			DOCUMENT_CLASS_NAME);
+			SearchTestUtil.DOCUMENT_CLASS_NAME);
 
 		assertThatEverythingUnrelatedIsEmpty(searchResult);
 	}
@@ -125,7 +127,7 @@ public class SearchResultUtilDLFileEntryTest
 		);
 
 		when(
-			dlAppLocalService.getFileEntry(ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			fileEntry
 		);
@@ -136,8 +138,10 @@ public class SearchResultUtilDLFileEntryTest
 
 		SearchResult searchResult = searchSingleDocument(document);
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		Assert.assertNull(
 			"Indexer is attempted, exception is discarded, no summary returned",
@@ -162,7 +166,7 @@ public class SearchResultUtilDLFileEntryTest
 		Mockito.verify(
 			dlAppLocalService
 		).getFileEntry(
-			ENTRY_CLASS_PK
+			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
 		assertThatEverythingUnrelatedIsEmpty(searchResult);
@@ -184,7 +188,7 @@ public class SearchResultUtilDLFileEntryTest
 					return indexer;
 				}
 
-				if (DOCUMENT_CLASS_NAME.equals(className)) {
+				if (SearchTestUtil.DOCUMENT_CLASS_NAME.equals(className)) {
 					return null;
 				}
 
@@ -224,7 +228,7 @@ public class SearchResultUtilDLFileEntryTest
 					return null;
 				}
 
-				if (DOCUMENT_CLASS_NAME.equals(className)) {
+				if (SearchTestUtil.DOCUMENT_CLASS_NAME.equals(className)) {
 					return assetRendererFactory;
 				}
 
@@ -241,7 +245,8 @@ public class SearchResultUtilDLFileEntryTest
 		);
 
 		when(
-			assetRendererFactory.getAssetRenderer(DOCUMENT_CLASS_PK)
+			assetRendererFactory.getAssetRenderer(
+				SearchTestUtil.DOCUMENT_CLASS_PK)
 		).thenReturn(
 			assetRenderer
 		);
@@ -249,17 +254,17 @@ public class SearchResultUtilDLFileEntryTest
 		when(
 			assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
-			SUMMARY_CONTENT
+			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		when(
 			assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
-			SUMMARY_TITLE
+			SearchTestUtil.SUMMARY_TITLE
 		);
 
 		when(
-			dlAppLocalService.getFileEntry(ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			fileEntry
 		);
@@ -267,8 +272,10 @@ public class SearchResultUtilDLFileEntryTest
 		SearchResult searchResult = searchSingleDocument(
 			createDLFileEntryDocumentWithAlternateKey());
 
-		Assert.assertEquals(DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(DOCUMENT_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
 
 		Summary summaryFromResult = searchResult.getSummary();
 
@@ -276,8 +283,10 @@ public class SearchResultUtilDLFileEntryTest
 			"Summary in searchResult is not the same one returned by the Indexer",
 			summary, summaryFromResult);
 
-		Assert.assertEquals(SUMMARY_CONTENT, summaryFromResult.getContent());
-		Assert.assertEquals(SUMMARY_TITLE, summaryFromResult.getTitle());
+		Assert.assertEquals(
+			SearchTestUtil.SUMMARY_CONTENT, summaryFromResult.getContent());
+		Assert.assertEquals(
+			SearchTestUtil.SUMMARY_TITLE, summaryFromResult.getTitle());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
@@ -308,7 +317,8 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertEquals(
 			DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(ENTRY_CLASS_PK, searchResult.getClassPK());
+		Assert.assertEquals(
+			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
 
@@ -336,11 +346,12 @@ public class SearchResultUtilDLFileEntryTest
 	}
 
 	protected Document createDLFileEntryDocument() {
-		return createDocument(DLFILEENTRY_CLASS_NAME);
+		return SearchTestUtil.createDocument(DLFILEENTRY_CLASS_NAME);
 	}
 
 	protected Document createDLFileEntryDocumentWithAlternateKey() {
-		return createDocumentWithAlternateKey(DLFILEENTRY_CLASS_NAME);
+		return SearchTestUtil.createDocumentWithAlternateKey(
+			DLFILEENTRY_CLASS_NAME);
 	}
 
 	protected void setUpDLApp() {

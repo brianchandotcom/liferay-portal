@@ -1460,24 +1460,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String entrySiteName = GroupLocalServiceUtil.getGroupDescriptiveName(
 			entry.getGroupId(), serviceContext.getLocale());
 
-		String simpleDate = Time.getSimpleDate(
+		String simpleCreateDate = Time.getSimpleDate(
 			entry.getCreateDate(), "yyyy/MM/dd");
 
 		User user = UserLocalServiceUtil.getUserById(entry.getUserId());
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		String userPortraitUrl = user.getPortraitURL(themeDisplay);
-		String userPublicSiteUrl = user.getDisplayURL(themeDisplay);
-
 		subscriptionSender.setContextAttributes(
-			"[$BLOGS_ENTRY_CREATE_DATE$]", simpleDate,
+			"[$BLOGS_ENTRY_CREATE_DATE$]", simpleCreateDate,
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
 			"[$BLOGS_ENTRY_SITE_NAME$]", entrySiteName,
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
-			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]", userPortraitUrl,
-			"[$BLOGS_ENTRY_USER_URL$]", userPublicSiteUrl);
+			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
+			user.getPortraitURL(themeDisplay),
+			"[$BLOGS_ENTRY_USER_URL$]", user.getDisplayURL(themeDisplay));
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

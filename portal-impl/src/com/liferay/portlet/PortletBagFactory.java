@@ -175,7 +175,7 @@ public class PortletBagFactory {
 		List<TrashHandler> trashHandlerInstances = newTrashHandlerInstances(
 			portlet);
 
-		List<WorkflowHandler> workflowHandlerInstances =
+		List<WorkflowHandler<?>> workflowHandlerInstances =
 			newWorkflowHandlerInstances(portlet);
 
 		List<PreferencesValidator> preferencesValidatorInstances =
@@ -1116,17 +1116,20 @@ public class PortletBagFactory {
 		return webDAVStorageInstances;
 	}
 
-	protected List<WorkflowHandler> newWorkflowHandlerInstances(Portlet portlet)
+	protected List<WorkflowHandler<?>> newWorkflowHandlerInstances(
+			Portlet portlet)
 		throws Exception {
 
-		ServiceTrackerList<WorkflowHandler> workflowHandlerInstances =
-			getServiceTrackerList(WorkflowHandler.class, portlet);
+		ServiceTrackerList<WorkflowHandler<?>> workflowHandlerInstances =
+			getServiceTrackerList(
+				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
+				portlet);
 
 		for (String workflowHandlerClass :
 				portlet.getWorkflowHandlerClasses()) {
 
-			WorkflowHandler workflowHandlerInstance =
-				(WorkflowHandler)newInstance(
+			WorkflowHandler<?> workflowHandlerInstance =
+				(WorkflowHandler<?>)newInstance(
 					WorkflowHandler.class, workflowHandlerClass);
 
 			workflowHandlerInstances.add(workflowHandlerInstance);

@@ -35,9 +35,9 @@ WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderReque
 			<%
 			String displayTermsType = displayTerms.getType();
 
-			List<WorkflowHandler> workflowHandlers = WorkflowHandlerRegistryUtil.getWorkflowHandlers();
+			List<WorkflowHandler<?>> workflowHandlers = WorkflowHandlerRegistryUtil.getWorkflowHandlers();
 
-			for (WorkflowHandler workflowHandler : workflowHandlers) {
+			for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
 				if (!workflowHandler.isAssetTypeSearchable()) {
 					continue;
 				}

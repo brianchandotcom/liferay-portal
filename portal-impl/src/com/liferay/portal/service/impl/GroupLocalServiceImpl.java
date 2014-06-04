@@ -920,10 +920,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Workflow
 
-			List<WorkflowHandler> scopeableWorkflowHandlers =
+			List<WorkflowHandler<?>> scopeableWorkflowHandlers =
 				WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 
-			for (WorkflowHandler scopeableWorkflowHandler :
+			for (WorkflowHandler<?> scopeableWorkflowHandler :
 					scopeableWorkflowHandlers) {
 
 				if (!scopeableWorkflowHandler.isVisible()) {

@@ -37,9 +37,13 @@ public class AssetVocabularySettingsHelperTest {
 
 		Assert.assertTrue(vocabularySettingsHelper.hasClassNameId(1));
 		Assert.assertFalse(vocabularySettingsHelper.hasClassNameId(2));
+	}
 
-		vocabularySettingsHelper = getVocabularySettingsHelper(
-			AssetCategoryConstants.ALL_CLASS_NAME_IDS, false);
+	@Test
+	public void testIsClassNameIdRequired() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper(
+				AssetCategoryConstants.ALL_CLASS_NAME_IDS, false);
 
 		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(1));
 		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(2));
@@ -59,14 +63,8 @@ public class AssetVocabularySettingsHelperTest {
 
 		Assert.assertTrue(vocabularySettingsHelper.isClassNameIdRequired(1));
 		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(2));
-
-		vocabularySettingsHelper = getVocabularySettingsHelper(1, true);
-
-		vocabularySettingsHelper.setClassNameIds(
-			new long[] {1}, new boolean[] {false});
-
-		Assert.assertFalse(vocabularySettingsHelper.isClassNameIdRequired(1));
 	}
+
 
 	@Test
 	public void testIsMultiValued() {

@@ -79,27 +79,23 @@ public class AssetPublisherDisplayContext {
 		if (_allAssetCategoryIds == null) {
 			_allAssetCategoryIds = new long[0];
 
-			String selectionStyle = getSelectionStyle();
-
 			long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+			String selectionStyle = getSelectionStyle();
 
 			if (selectionStyle.equals("dynamic")) {
 				_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 					_portletPreferences);
 
-				if (assetCategoryId > 0 &&
-					!ArrayUtil.contains(_allAssetCategoryIds, assetCategoryId))
-				{
+				if ((assetCategoryId > 0) &&
+					!ArrayUtil.contains(
+						_allAssetCategoryIds, assetCategoryId)) {
+
 					_allAssetCategoryIds = ArrayUtil.append(
 						_allAssetCategoryIds, assetCategoryId);
 				}
 			}
-
-			if (assetCategoryId > 0) {
-				if (selectionStyle.equals("manual")) {
-					_allAssetCategoryIds = ArrayUtil.append(
-						_allAssetCategoryIds, assetCategoryId);
-				}
+			else if (selectionStyle.equals("manual") && (assetCategoryId > 0)) {
+				_allAssetCategoryIds = new long[] {assetCategoryId};
 			}
 		}
 
@@ -110,27 +106,24 @@ public class AssetPublisherDisplayContext {
 		if (_allAssetTagNames == null) {
 			_allAssetTagNames = new String[0];
 
-			String selectionStyle = getSelectionStyle();
-
 			String assetTagName = ParamUtil.getString(_request, "tag");
+			String selectionStyle = getSelectionStyle();
 
 			if (selectionStyle.equals("dynamic")) {
 				_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
 					_portletPreferences);
 
-				if (!assetTagName.isEmpty() &&
+				if (Validator.isNotNull(assetTagName) &&
 					!ArrayUtil.contains(_allAssetTagNames, assetTagName)) {
 
 					_allAssetTagNames = ArrayUtil.append(
 						_allAssetTagNames, assetTagName);
 				}
 			}
+			else if (selectionStyle.equals("manual") &&
+					 Validator.isNotNull(assetTagName)) {
 
-			if (Validator.isNotNull(assetTagName)) {
-				if (selectionStyle.equals("manual")) {
-					_allAssetTagNames = ArrayUtil.append(
-						_allAssetTagNames, assetTagName);
-				}
+				_allAssetTagNames = new String[] {assetTagName};
 			}
 
 			if (isMergeURLTags() || isMergeLayoutTags()) {

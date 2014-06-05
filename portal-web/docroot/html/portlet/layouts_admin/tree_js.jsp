@@ -141,6 +141,10 @@ if (!selectableTree) {
 				data.id = '';
 			}
 
+			if (!data.url) {
+				data.url = '';
+			}
+
 			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {
 				className += ' layout-page-invalid';
 			}
@@ -153,7 +157,7 @@ if (!selectableTree) {
 				}
 			);
 
-			return '<a class="' + className + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
+			return '<a class="' + className + '" data-url="' + Util.escapeHTML(data.url) + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractGroupId: function(node) {
@@ -357,6 +361,7 @@ if (!selectableTree) {
 								label: newNode.label,
 								plid: node.plid,
 								title: title,
+								url: node.friendlyURL,
 								uuid: node.uuid
 							}
 						);

@@ -62,7 +62,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_ORGANIZATIONS" value1="Organizations" />
 
@@ -83,7 +83,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_SITES" value1="Sites" />
 
@@ -104,7 +104,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_USER_GROUPS" value1="User Groups" />
 
@@ -125,7 +125,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -187,11 +187,11 @@
 			<isset var="roleUser" />
 			<then>
 				<execute action="CPRoles#assertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
-				<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 			</then>
 			<else>
 				<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleName}" />
-				<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 			</else>
 		</if>
 
@@ -464,7 +464,7 @@
 		<while>
 			<condition action="CPRoles#isElementPresent" locator-key1="ROLE_TABLE_ACTIONS_1" />
 			<then>
-				<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS_1" value1="Actions" />
+				<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
 				<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPRoles#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
@@ -476,7 +476,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_ORGANIZATIONS" value1="Organizations" />
 
@@ -496,7 +496,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_SITES" value1="Sites" />
 
@@ -517,7 +517,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_USER_GROUPS" value1="User Groups" />
 
@@ -537,7 +537,7 @@
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -556,7 +556,7 @@
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleName}" />
 		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TYPE" value1="${roleType}" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />

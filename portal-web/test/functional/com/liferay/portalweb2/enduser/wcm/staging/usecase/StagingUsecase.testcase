@@ -205,6 +205,10 @@
 		<echo message="override" />
 	</command>
 
+	<command name="AssertExportApplications" priority="5">
+		<echo message="override" />
+	</command>
+
 	<command name="AssertNoEditLink" priority="4">
 		<echo message="override" />
 	</command>
@@ -289,7 +293,7 @@
 		<echo message="override" />
 	</command>
 
-	<command name="PublishCustomPortletTitle" priority="5">
+	<command known-issues="LPS-47429" name="PublishCustomPortletTitle" priority="5">
 		<execute test-case="super#AddSitePagesVariation" />
 
 		<var name="portletName" value="Sites Directory" />
@@ -1670,9 +1674,8 @@
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -1884,9 +1887,8 @@
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
 
-		<execute macro="Workflow#configureSiteWorkflow">
+		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

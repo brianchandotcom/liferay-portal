@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
@@ -51,6 +54,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Adolfo Pérez
  */
@@ -60,7 +68,7 @@ public abstract class BaseRepositoryFactory<T> {
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
-			return createLiferayRepository(repositoryId);
+			return createInternalRepository(repositoryId);
 		}
 		else {
 			return createExternalRepository(repositoryId, classNameId);
@@ -70,7 +78,7 @@ public abstract class BaseRepositoryFactory<T> {
 	public T create(long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		T liferayRepository = createLiferayRepository(
+		T liferayRepository = createInternalRepository(
 			folderId, fileEntryId, fileVersionId);
 
 		if (liferayRepository != null) {
@@ -152,7 +160,7 @@ public abstract class BaseRepositoryFactory<T> {
 		return baseRepository;
 	}
 
-	protected T createLiferayRepository(long repositoryId) {
+	protected T createInternalRepository(long repositoryId) {
 		long dlFolderId = 0;
 		long groupId = 0;
 
@@ -166,11 +174,11 @@ public abstract class BaseRepositoryFactory<T> {
 			dlFolderId = repository.getDlFolderId();
 		}
 
-		return createLiferayRepositoryInstance(
+		return createInternalRepositoryInstance(
 			groupId, repositoryId, dlFolderId);
 	}
 
-	protected T createLiferayRepository(
+	protected T createInternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
@@ -192,7 +200,7 @@ public abstract class BaseRepositoryFactory<T> {
 						"version");
 			}
 
-			return createLiferayRepository(repositoryId);
+			return createInternalRepository(repositoryId);
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			return null;
@@ -205,7 +213,7 @@ public abstract class BaseRepositoryFactory<T> {
 		}
 	}
 
-	protected abstract T createLiferayRepositoryInstance(
+	protected abstract T createInternalRepositoryInstance(
 		long groupId, long repositoryId, long dlFolderId);
 
 	protected AssetEntryLocalService getAssetEntryLocalService() {
@@ -227,6 +235,33 @@ public abstract class BaseRepositoryFactory<T> {
 		}
 
 		return _defaultClassNameId;
+	}
+
+	protected Map<Class<? extends Capability>, Capability>
+		getDefaultExternalCapabilities() {
+
+		return Collections.emptyMap();
+	}
+
+	protected Set<Class<? extends Capability>> getDefaultExternalExports() {
+		return Collections.emptySet();
+	}
+
+	protected Map<Class<? extends Capability>, Capability>
+		getDefaultInternalCapabilities() {
+
+		Map<Class<? extends Capability>, Capability> defaultCapabilities =
+			new HashMap<Class<? extends Capability>, Capability>();
+
+		defaultCapabilities.put(
+			TrashCapability.class, new LiferayTrashCapability());
+
+		return defaultCapabilities;
+	}
+
+	protected Set<Class<? extends Capability>> getDefaultInternalExports() {
+		return Collections.<Class<? extends Capability>>singleton(
+			TrashCapability.class);
 	}
 
 	protected DLAppHelperLocalService getDlAppHelperLocalService() {

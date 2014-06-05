@@ -19,11 +19,8 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
-import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -32,11 +29,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -79,7 +71,7 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected LocalRepository createLiferayRepositoryInstance(
+	protected LocalRepository createInternalRepositoryInstance(
 		long groupId, long repositoryId, long dlFolderId) {
 
 		LocalRepository localRepository = createLiferayInternalRepository(
@@ -90,8 +82,16 @@ public class LocalRepositoryFactoryImpl
 			getDefaultInternalExports());
 	}
 
-	protected Set<Class<? extends Capability>> getDefaultExternalExports() {
-		return Collections.emptySet();
+	protected LocalRepository createLiferayInternalRepository(
+		long groupId, long repositoryId, long dlFolderId) {
+
+		return new LiferayLocalRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), groupId, repositoryId, dlFolderId);
 	}
 
 	@Override
@@ -107,12 +107,6 @@ public class LocalRepositoryFactoryImpl
 		return dlFileEntry.getRepositoryId();
 	}
 
-	protected Map<Class<? extends Capability>, Capability>
-		getDefaultExternalCapabilities() {
-
-		return Collections.emptyMap();
-	}
-
 	@Override
 	protected long getFileVersionRepositoryId(long fileVersionId)
 		throws PortalException {
@@ -124,18 +118,6 @@ public class LocalRepositoryFactoryImpl
 			fileVersionId);
 
 		return dlFileVersion.getRepositoryId();
-	}
-
-	protected Map<Class<? extends Capability>, Capability>
-		getDefaultInternalCapabilities() {
-
-		Map<Class<? extends Capability>, Capability> defaultCapabilities =
-			new HashMap<Class<? extends Capability>, Capability>();
-
-		defaultCapabilities.put(
-			TrashCapability.class, new LiferayTrashCapability());
-
-		return defaultCapabilities;
 	}
 
 	@Override
@@ -153,23 +135,6 @@ public class LocalRepositoryFactoryImpl
 			getRepositoryLocalService();
 
 		return repositoryLocalService.fetchRepository(repositoryId);
-	}
-
-	private LiferayLocalRepository createLiferayInternalRepository(
-		long groupId, long repositoryId, long dlFolderId) {
-
-		return new LiferayLocalRepository(
-			getRepositoryLocalService(), getRepositoryService(),
-			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
-			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
-			getDlFileVersionLocalService(), getDlFileVersionService(),
-			getDlFolderLocalService(), getDlFolderService(),
-			getResourceLocalService(), groupId, repositoryId, dlFolderId);
-	}
-
-	private Set<Class<? extends Capability>> getDefaultInternalExports() {
-		return Collections.<Class<? extends Capability>>singleton(
-			TrashCapability.class);
 	}
 
 }

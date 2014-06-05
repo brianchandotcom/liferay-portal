@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.search.test;
 
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.SearchResult;
@@ -32,13 +32,14 @@ import javax.portlet.PortletURL;
  */
 public class SearchTestUtil {
 
-	public static final String DOCUMENT_CLASS_NAME =
-		"com.liferay.ClassInDocument";
+	public static final String ATTACHMENT_OWNER_CLASS_NAME =
+		"com.liferay.AttachmentOwner";
 
-	public static final long DOCUMENT_CLASS_NAME_ID =
+	public static final long ATTACHMENT_OWNER_CLASS_NAME_ID =
 		RandomTestUtil.randomLong();
 
-	public static final long DOCUMENT_CLASS_PK = RandomTestUtil.randomLong();
+	public static final long ATTACHMENT_OWNER_CLASS_PK =
+		RandomTestUtil.randomLong();
 
 	public static final long ENTRY_CLASS_PK = RandomTestUtil.randomLong();
 
@@ -46,6 +47,23 @@ public class SearchTestUtil {
 		"A long time ago, in a galaxy far, far away...";
 
 	public static final String SUMMARY_TITLE = "S.R. Wars";
+
+	public static Document createAttachmentDocument(String entryClassName) {
+		return createAttachmentDocument(entryClassName, ENTRY_CLASS_PK);
+	}
+
+	public static Document createAttachmentDocument(
+		String entryClassName, long entryClassPK) {
+
+		Document document = createDocument(entryClassName, entryClassPK);
+
+		DocumentHelper helper = new DocumentHelper(document);
+
+		helper.setAttachmentOwnerKey(
+			ATTACHMENT_OWNER_CLASS_NAME_ID, ATTACHMENT_OWNER_CLASS_PK);
+
+		return document;
+	}
 
 	public static Document createDocument(String entryClassName) {
 		return createDocument(entryClassName, ENTRY_CLASS_PK);
@@ -56,27 +74,9 @@ public class SearchTestUtil {
 
 		Document document = new DocumentImpl();
 
-		document.add(new Field(Field.ENTRY_CLASS_NAME, entryClassName));
-		document.add(
-			new Field(Field.ENTRY_CLASS_PK, String.valueOf(entryClassPk)));
+		DocumentHelper helper = new DocumentHelper(document);
 
-		return document;
-	}
-
-	public static Document createDocumentWithAlternateKey(String entryClassName) {
-		return createDocumentWithAlternateKey(entryClassName, ENTRY_CLASS_PK);
-	}
-
-	public static Document createDocumentWithAlternateKey(
-		String entryClassName, long entryClassPK) {
-
-		Document document = createDocument(entryClassName, entryClassPK);
-
-		document.add(
-			new Field(
-				Field.CLASS_NAME_ID, String.valueOf(DOCUMENT_CLASS_NAME_ID)));
-		document.add(
-			new Field(Field.CLASS_PK, String.valueOf(DOCUMENT_CLASS_PK)));
+		helper.setEntryKey(entryClassName, entryClassPk);
 
 		return document;
 	}

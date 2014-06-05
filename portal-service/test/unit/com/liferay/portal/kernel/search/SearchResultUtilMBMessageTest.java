@@ -53,83 +53,7 @@ public class SearchResultUtilMBMessageTest
 	}
 
 	@Test
-	public void testMBMessageMissingFromService() throws Exception {
-		when(
-			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
-		).thenReturn(
-			null
-		);
-
-		SearchResult searchResult =
-			assertThatSearchSingleDocumentReturnsOneSearchResult(
-				createMBMessageDocumentWithAlternateKey());
-
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
-
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
-
-		Assert.assertTrue(
-			"MBMessageLocalService is attempted, no message returned",
-			mbMessages.isEmpty());
-
-		Mockito.verify(
-			mbMessageLocalService
-		).getMessage(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-
-		Assert.assertNull(
-			"Indexer and AssetRenderer are both attempted, no summary returned",
-			searchResult.getSummary());
-
-		verifyStatic();
-
-		IndexerRegistryUtil.getIndexer(SearchTestUtil.DOCUMENT_CLASS_NAME);
-
-		verifyStatic();
-
-		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			SearchTestUtil.DOCUMENT_CLASS_NAME);
-
-		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
-	}
-
-	@Test
-	public void testMBMessageWithKeyInDocument() throws Exception {
-		when(
-			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
-		).thenReturn(
-			mbMessage
-		);
-
-		mockStatic(
-			IndexerRegistryUtil.class,
-			new ThrowsExceptionClass(IllegalStateException.class));
-
-		SearchResult searchResult =
-			assertThatSearchSingleDocumentReturnsOneSearchResult(
-				createMBMessageDocumentWithAlternateKey());
-
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
-
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
-
-		Assert.assertSame(mbMessage, mbMessages.get(0));
-		Assert.assertEquals(1, mbMessages.size());
-
-		Assert.assertNull(searchResult.getSummary());
-
-		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
-	}
-
-	@Test
-	public void testMBMessageWithoutKeyInDocument() throws Exception {
+	public void testMBMessage() throws Exception {
 		SearchResult searchResult =
 			assertThatSearchSingleDocumentReturnsOneSearchResult(
 				createMBMessageDocument());
@@ -152,13 +76,92 @@ public class SearchResultUtilMBMessageTest
 	}
 
 	@Test
-	public void testTwoDocumentsWithSameAlternateKey() {
+	public void testMBMessageAttachment() throws Exception {
+		when(
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
+		).thenReturn(
+			mbMessage
+		);
+
+		mockStatic(
+			IndexerRegistryUtil.class,
+			new ThrowsExceptionClass(IllegalStateException.class));
+
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createMBMessageAttachmentDocument());
+
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,
+			searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
+			searchResult.getClassPK());
+
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertSame(mbMessage, mbMessages.get(0));
+		Assert.assertEquals(1, mbMessages.size());
+
+		Assert.assertNull(searchResult.getSummary());
+
+		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
+	}
+
+	@Test
+	public void testMBMessageAttachmentMissingFromService() throws Exception {
+		when(
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
+		).thenReturn(
+			null
+		);
+
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(
+				createMBMessageAttachmentDocument());
+
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,
+			searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
+			searchResult.getClassPK());
+
+		List<MBMessage> mbMessages = searchResult.getMBMessages();
+
+		Assert.assertTrue(
+			"MBMessageLocalService is attempted, no message returned",
+			mbMessages.isEmpty());
+
+		Mockito.verify(
+			mbMessageLocalService
+		).getMessage(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
+
+		Assert.assertNull(
+			"Indexer and AssetRenderer are both attempted, no summary returned",
+			searchResult.getSummary());
+
+		verifyStatic();
+
+		IndexerRegistryUtil.getIndexer(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
+
+		verifyStatic();
+
+		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
+
+		assertThatFileEntryTuplesAndVersionsAreEmpty(searchResult);
+	}
+
+	@Test
+	public void testTwoDocumentsWithSameAttachmentOwner() {
 		long baseEntryPK = SearchTestUtil.ENTRY_CLASS_PK;
 
-		Document documentA = createMBMessageDocumentWithAlternateKey(
-			baseEntryPK);
-		Document documentB = createMBMessageDocumentWithAlternateKey(
-			baseEntryPK + 1);
+		Document documentA = createMBMessageAttachmentDocument(baseEntryPK);
+		Document documentB = createMBMessageAttachmentDocument(baseEntryPK + 1);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			portletURL, documentA, documentB);
@@ -168,9 +171,11 @@ public class SearchResultUtilMBMessageTest
 		SearchResult searchResult = searchResults.get(0);
 
 		Assert.assertEquals(
-			searchResult.getClassName(), SearchTestUtil.DOCUMENT_CLASS_NAME);
+			searchResult.getClassName(),
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
 		Assert.assertEquals(
-			searchResult.getClassPK(), SearchTestUtil.DOCUMENT_CLASS_PK);
+			searchResult.getClassPK(),
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK);
 	}
 
 	protected void assertThatFileEntryTuplesAndVersionsAreEmpty(
@@ -181,20 +186,17 @@ public class SearchResultUtilMBMessageTest
 		assertThatVersionsIsEmpty(searchResult);
 	}
 
+	protected Document createMBMessageAttachmentDocument() {
+		return SearchTestUtil.createAttachmentDocument(MBMESSAGE_CLASS_NAME);
+	}
+
+	protected Document createMBMessageAttachmentDocument(long entryClassPK) {
+		return SearchTestUtil.createAttachmentDocument(
+			MBMESSAGE_CLASS_NAME, entryClassPK);
+	}
+
 	protected Document createMBMessageDocument() {
 		return SearchTestUtil.createDocument(MBMESSAGE_CLASS_NAME);
-	}
-
-	protected Document createMBMessageDocumentWithAlternateKey() {
-		return SearchTestUtil.createDocumentWithAlternateKey(
-			MBMESSAGE_CLASS_NAME);
-	}
-
-	protected Document createMBMessageDocumentWithAlternateKey(
-		long entryClassPK) {
-
-		return SearchTestUtil.createDocumentWithAlternateKey(
-			MBMESSAGE_CLASS_NAME, entryClassPK);
 	}
 
 	protected void setUpMBMessage() {

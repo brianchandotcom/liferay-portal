@@ -2,30 +2,32 @@
 	<command name="addChildCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
-
 		<if>
-			<equals arg1="${sitePagePrivacy}" arg2="Private" />
+			<not>
+				<isset var="siteScopeSelected" />
+			</not>
 			<then>
-				<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+				<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
+				<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+				<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
+				<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 			</then>
-			<elseif>
-				<equals arg1="${sitePagePrivacy}" arg2="Public" />
-				<then>
-					<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
-			</else>
 		</if>
+
+		<execute macro="SitePage#addCmd" />
 
 		<execute macro="SitePage#expandRootCP" />
 
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+		<if>
+			<isset var="childPageName" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			</then>
+			<else>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			</else>
+		</if>
+
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
@@ -129,6 +131,26 @@
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
 	</command>
 
+	<command name="addSitePageTypeLinkToAPageOfThisSiteCP">
+		<var name="key_pageType" value="${pageType}" />
+
+		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
+
+		<var name="key_indexNumber" value="${indexNumber}" />
+
+		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="index=${indexNumber}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepagesAddpage#assertSelectedLabel" locator-key1="PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="${sitePageName}" />
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+	</command>
+
 	<command name="addSitePageTypeLinkToURLCP">
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
@@ -158,6 +180,45 @@
 		<execute action="DockbarEdit#assertClick" locator-key1="COPY_BUTTON" value1="Copy" />
 
 		<execute action="CPBlogs#assertTextNotPresent" locator-key1="PORTLET_TITLE" value1="Blogs" />
+	</command>
+
+	<command name="deleteAllPrivatepagesCP">
+		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+
+		<if>
+			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+				<execute action="CPSitepages#click" locator-key1="TOOLBAR_DELETE" />
+				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+				<execute action="CPSitepages#assertTextNotPresent" locator-key1="INFO_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="CPSitepages#assertTextNotPresent" locator-key1="INFO_MESSAGE_2" value1="You must have at least one page." />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_LINK" />
+			</then>
+		</if>
+	</command>
+
+	<command name="deleteAllPublicpagesCP">
+		<if>
+			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+				<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="lastPublicSitepage" />
+			<then>
+				<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_2" value1="You must have at least one page." />
+			</then>
+			<else>
+				<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="deleteSitepagesCP">
@@ -226,6 +287,8 @@
 	</command>
 
 	<command name="expandTreeCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 
@@ -314,7 +377,7 @@
 		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 
 		<if>
-			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 				<execute action="CPSitepages#click" locator-key1="TOOLBAR_DELETE" />
@@ -416,6 +479,28 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
+	</command>
+
+	<command name="viewLoadMoreResultsPages">
+		<var name="key_pageName" value="${pageName}" />
+
+		<if>
+			<equals arg1="${siteChildPages}" arg2="false" />
+			<then>
+				<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_4" value1="Page3 Name" />
+				<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_5" value1="Page4 Name" />
+			</then>
+			<elseif>
+				<equals arg1="${siteChildPages}" arg2="true" />
+				<then>
+					<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
+					<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+					<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_5" value1="Child Page4 Name" />
+					<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_6" value1="Child Page5 Name" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">

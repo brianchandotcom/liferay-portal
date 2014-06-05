@@ -109,6 +109,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
 				path="/html/portlet/staging_bar/layout_set_branch_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

@@ -35,5 +35,6 @@
 
 <liferay-ui:search-container-column-jsp
 	align="right"
+	cssClass="entry-action"
 	path="/html/portlet/mobile_device_rules/rule_actions.jsp"
 />

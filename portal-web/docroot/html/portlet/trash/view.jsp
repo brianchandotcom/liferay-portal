@@ -253,17 +253,19 @@ if (Validator.isNotNull(keywords)) {
 			<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
 				<liferay-ui:search-container-column-jsp
 					align="right"
+					cssClass="entry-action"
 					path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
 				/>
 			</c:when>
 			<c:when test="<%= entry.getRootEntry() == null %>">
 				<liferay-ui:search-container-column-jsp
 					align="right"
+					cssClass="entry-action"
 					path="/html/portlet/trash/entry_action.jsp"
 				/>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:search-container-column-text align="right">
+				<liferay-ui:search-container-column-text align="right" cssClass="entry-action">
 
 					<%
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

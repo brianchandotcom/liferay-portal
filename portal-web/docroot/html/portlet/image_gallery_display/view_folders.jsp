@@ -143,6 +143,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
+			cssClass="entry-action"
 			path="/html/portlet/document_library/folder_action.jsp"
 		/>
 	</liferay-ui:search-container-row>

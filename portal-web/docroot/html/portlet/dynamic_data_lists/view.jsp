@@ -65,6 +65,7 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/dynamic_data_lists/record_set_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

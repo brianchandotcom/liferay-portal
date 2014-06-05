@@ -240,6 +240,7 @@
 
 								<liferay-ui:search-container-column-jsp
 									align="right"
+									cssClass="entry-action"
 									path="/html/portlet/trash/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>
@@ -289,6 +290,7 @@
 
 								<liferay-ui:search-container-column-jsp
 									align="right"
+									cssClass="entry-action"
 									path="/html/portlet/trash/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>

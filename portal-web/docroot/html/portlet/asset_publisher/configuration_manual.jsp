@@ -85,6 +85,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 					<liferay-ui:search-container-column-jsp
 						align="right"
+						cssClass="entry-action"
 						path="/html/portlet/asset_publisher/asset_selection_action.jsp"
 					/>
 				</liferay-ui:search-container-row>

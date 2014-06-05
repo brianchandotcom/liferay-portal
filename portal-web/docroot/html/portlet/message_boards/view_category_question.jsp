@@ -161,7 +161,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 		<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
-				cssClass="action-question"
+				cssClass="action-question entry-action"
 				path="/html/portlet/message_boards/message_action.jsp"
 			/>
 		</c:if>

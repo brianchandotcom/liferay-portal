@@ -124,6 +124,7 @@ else if (type.equals("assigned-to-my-roles")) {
 		<c:if test='<%= !allTasks && !tabs1.equals("completed") %>'>
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/workflow_tasks/workflow_task_action.jsp"
 			/>
 		</c:if>

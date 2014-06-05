@@ -99,6 +99,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 		/>
 
 		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action"
 			path="/html/portlet/layouts_admin/export_configuration_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>

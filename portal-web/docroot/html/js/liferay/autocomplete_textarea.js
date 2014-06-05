@@ -72,7 +72,7 @@ AUI.add(
 				for (var i = position; i >= 0; --i) {
 					var triggerIndex = AArray.indexOf(triggers, content.charAt(i));
 
-					if (triggerIndex >=0 ) {
+					if (triggerIndex >= 0) {
 						result = i;
 						trigger = triggers[triggerIndex];
 

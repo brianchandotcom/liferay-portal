@@ -1,10 +1,8 @@
 ;(function() {
 	var A = AUI();
 
-	var Lang = A.Lang;
-
 	var AArray = A.Array;
-
+	var Lang = A.Lang;
 	var KeyMap = A.Event.KeyMap;
 
 	var STR_EDITOR = 'editor';
@@ -227,7 +225,6 @@
 			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
 			var trigger = prevTriggerPosition.value;
-
 			var query = prevTriggerPosition.query;
 
 			var res = instance._getRegExp().exec(query);

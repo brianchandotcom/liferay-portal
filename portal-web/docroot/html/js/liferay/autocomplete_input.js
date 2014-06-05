@@ -4,6 +4,8 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
+		var AC_ATTRS_WHITELIST = [''];
+
 		var REGEX_TRIGGER = /trigger/g;
 
 		var STR_PHRASE_MATCH = 'phraseMatch';
@@ -17,8 +19,6 @@ AUI.add(
 			resultFilters: STR_PHRASE_MATCH,
 			resultHighlighter: STR_PHRASE_MATCH
 		};
-
-		var AC_ATTRS_WHITELIST = [''];
 
 		var AutoCompleteInputBase = function() {};
 
@@ -259,7 +259,7 @@ AUI.add(
 				}
 			},
 
-			_syncUIPosAlign: function() {},
+			_syncUIPosAlign: Lang.emptyFn,
 
 			_validateOffset: function(value) {
 				return (Lang.isArray(value) || Lang.isNumber(value));

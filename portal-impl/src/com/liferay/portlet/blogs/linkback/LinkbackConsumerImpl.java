@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.comment.CommentManagerImpl;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +32,8 @@ import java.util.List;
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
 	public LinkbackConsumerImpl() {
-		_commentManager = new CommentManagerImpl();
+		_commentManager = (CommentManager)PortalBeanLocatorUtil.locate(
+			CommentManager.class.getName());
 	}
 
 	@Override

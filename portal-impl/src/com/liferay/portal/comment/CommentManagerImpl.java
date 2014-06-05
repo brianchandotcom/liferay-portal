@@ -16,13 +16,13 @@ package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author André de Oliveira
@@ -31,60 +31,78 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalService;
  */
 public class CommentManagerImpl implements CommentManager {
 
+	public CommentManagerImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + CommentManager.class.getName() +
+				")(!(objectClass=" + getClass().getName() + ")))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
+
 	@Override
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException {
+		throws PortalException, SystemException {
 
-		MBMessageDisplay mbMessageDisplay =
-			_mbMessageLocalService.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
+		if (_serviceTracker.isEmpty()) {
+			return 0L;
+		}
 
-		MBThread mbThread = mbMessageDisplay.getThread();
+		CommentManager commentManager = _serviceTracker.getService();
 
-		ServiceContext serviceContext = serviceContextFunction.apply(
-			MBMessage.class.getName());
-
-		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
-			userId, userName, groupId, className, classPK,
-			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
-			serviceContext);
-
-		return mbMessage.getMessageId();
+		return commentManager.addComment(
+			userId, groupId, className, classPK, userName, subject, body,
+			serviceContextFunction);
 	}
 
 	@Override
 	public void addInitialDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
-		_mbMessageLocalService.addDiscussionMessage(
-			userId, userName, groupId, className, classPK,
-			WorkflowConstants.ACTION_PUBLISH);
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		CommentManager commentManager = _serviceTracker.getService();
+
+		commentManager.addInitialDiscussion(
+			userId, groupId, className, classPK, userName);
 	}
 
 	@Override
-	public void deleteComment(long commentId) throws PortalException {
-		_mbMessageLocalService.deleteDiscussionMessage(commentId);
+	public void deleteComment(long commentId)
+		throws PortalException, SystemException {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		CommentManager commentManager = _serviceTracker.getService();
+
+		commentManager.deleteComment(commentId);
 	}
 
 	@Override
 	public void deleteDiscussion(String className, long classPK)
-		throws PortalException {
+		throws PortalException, SystemException {
 
-		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		CommentManager commentManager = _serviceTracker.getService();
+
+		commentManager.deleteDiscussion(className, classPK);
 	}
 
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	private MBMessageLocalService _mbMessageLocalService;
+	private ServiceTracker<CommentManager, CommentManager> _serviceTracker;
 
 }

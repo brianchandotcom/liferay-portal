@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.trackback;
 
-import com.liferay.portal.comment.CommentManagerImpl;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
@@ -97,7 +97,9 @@ public class TrackbackImpl implements Trackback {
 		return sb.toString();
 	}
 
-	private CommentManager _commentManager = new CommentManagerImpl();
+	private CommentManager _commentManager =
+		(CommentManager)PortalBeanLocatorUtil.locate(
+			CommentManager.class.getName());
 	private LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 

@@ -2376,14 +2376,20 @@ public class StagingImpl implements Staging {
 				httpPrincipal, remoteGroupId);
 
 			// Ensure that the local group and the remote group are not both
-			// company groups
+			// company groups and are not the same group
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			String groupUuid = group.getUuid();
 
 			Group remoteGroup = GroupServiceHttp.getGroup(
 				httpPrincipal, remoteGroupId);
 
-			if (group.isCompany() ^ remoteGroup.isCompany()) {
+			String remoteGroupUuid = remoteGroup.getUuid();
+
+			if (group.isCompany() ^ remoteGroup.isCompany() ||
+				groupUuid.equals(remoteGroupUuid)) {
+
 				RemoteExportException ree = new RemoteExportException(
 					RemoteExportException.INVALID_GROUP);
 

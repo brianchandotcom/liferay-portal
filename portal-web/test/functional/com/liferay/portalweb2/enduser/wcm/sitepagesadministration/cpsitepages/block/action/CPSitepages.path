@@ -222,6 +222,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_PAGE_LINK_TO_PAGE</td>
+	<td>xpath=(//li[contains(@id,'layoutsTree_layoutId_2')]/div/i[contains(@class,'icon-link')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_LOAD_MORE_RESULTS_LINK</td>
+	<td>//ul/li/div[contains(.,'${key_pageName}')]/../a[@class='tree-node-paginator']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

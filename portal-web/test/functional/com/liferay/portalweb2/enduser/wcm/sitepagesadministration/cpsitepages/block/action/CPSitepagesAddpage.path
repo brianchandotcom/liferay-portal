@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TYPE_LAYOUT</td>
+	<td>//select[@id='_156_type']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -121,6 +126,22 @@
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_156_descriptionUrl']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_TYPE_LINK_TO_PAGE-->
+<tr>
+	<td>PAGE_TYPE_LINK_TO_PAGE_LABEL</td>
+	<td>//div[contains(@class,'link_to_layout')]/div/label[@for='_156_linkToLayoutId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT</td>
+	<td>//div[contains(@class,'link_to_layout')]/div/select[@id='_156_linkToLayoutId']</td>
 	<td></td>
 </tr>
 </tbody>

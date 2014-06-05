@@ -24,12 +24,25 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.LocalizationImpl;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
+import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -41,6 +54,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
+		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
 		HtmlUtil.class, LocaleUtil.class, LocalizationUtil.class,
 		PropsUtil.class, SAXReaderUtil.class
 	})
@@ -51,6 +65,8 @@ public class BaseDDMTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
+		setUpDDMStructureLocalServiceUtil();
+		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();
 		setUpLocaleUtil();
 		setUpLocalizationUtil();
@@ -110,6 +126,102 @@ public class BaseDDMTest extends PowerMockito {
 			document.getRootElement(), "Unlocalizable", "Text 2", false);
 
 		return document;
+	}
+
+	protected DDMStructure createStructure(String name, Document document) {
+		DDMStructure structure = new DDMStructureImpl();
+
+		structure.setName(name);
+		structure.setStructureId(RandomTestUtil.randomLong());
+		structure.setDocument(document);
+
+		_structures.put(structure.getStructureId(), structure);
+
+		return structure;
+	}
+
+	protected DDMStructure createStructure(String name, String... fieldNames) {
+		Document document = createDocument(fieldNames);
+
+		return createStructure(name, document);
+	}
+
+	protected DDMTemplate createTemplate(
+		long templateId, String name, String script) {
+
+		DDMTemplate template = new DDMTemplateImpl();
+
+		template.setTemplateId(templateId);
+		template.setName(name);
+		template.setScript(script);
+
+		_templates.put(template.getTemplateId(), template);
+
+		return template;
+	}
+
+	protected DDMStructure getStructure(long structureId) {
+		try {
+			return DDMStructureLocalServiceUtil.getStructure(structureId);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected DDMTemplate getTemplate(long templateId) {
+		try {
+			return DDMTemplateLocalServiceUtil.getTemplate(templateId);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected void setUpDDMStructureLocalServiceUtil() {
+		mockStatic(DDMStructureLocalServiceUtil.class);
+
+		when(
+			getStructure(Matchers.anyLong())
+		).then(
+			new Answer<DDMStructure>() {
+
+				@Override
+				public DDMStructure answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					Long structureId = (Long)args[0];
+
+					return _structures.get(structureId);
+				}
+
+			}
+		);
+	}
+
+	protected void setUpDDMTemplateLocalServiceUtil() {
+		mockStatic(DDMTemplateLocalServiceUtil.class);
+
+		when(
+			getTemplate(Matchers.anyLong())
+		).then(
+			new Answer<DDMTemplate>() {
+
+				@Override
+				public DDMTemplate answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					Long templateId = (Long)args[0];
+
+					return _templates.get(templateId);
+				}
+
+			}
+		);
 	}
 
 	protected void setUpHtmlUtil() {
@@ -194,5 +306,10 @@ public class BaseDDMTest extends PowerMockito {
 			new SAXReaderImpl()
 		);
 	}
+
+	private Map<Long, DDMStructure> _structures =
+		new HashMap<Long, DDMStructure>();
+	private Map<Long, DDMTemplate> _templates =
+		new HashMap<Long, DDMTemplate>();
 
 }

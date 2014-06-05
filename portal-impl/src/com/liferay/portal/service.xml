@@ -3344,6 +3344,7 @@
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutSetVirtualHost</exception>
 		<exception>LayoutType</exception>
+		<exception>LiferayFileItem</exception>
 		<exception>MembershipRequestComments</exception>
 		<exception>MissingReference</exception>
 		<exception>OldServiceComponent</exception>

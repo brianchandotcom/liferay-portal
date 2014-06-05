@@ -44,6 +44,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.counter.service.CounterLocalServiceUtil" %><%@
+page import="com.liferay.portal.LiferayFileItemException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchLayoutException" %><%@
 page import="com.liferay.portal.NoSuchRoleException" %><%@
@@ -187,6 +188,7 @@ page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.struts.TilesAttributeUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
+page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.ClassLoaderUtil" %><%@
 page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@

@@ -268,15 +268,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
-
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 

@@ -111,7 +111,9 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		</c:if>
 
 		<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) %>">
-			<aui:select inlineField="<%= true %>" name="<%= displayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
+			<div class="separator"><!-- --></div>
+
+			<aui:select name="<%= displayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
 				<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_ANY) %>" value="<%= WorkflowConstants.STATUS_ANY %>" />
 				<aui:option label="<%= WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT) %>" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
 

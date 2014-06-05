@@ -63,6 +63,14 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
+	public long[] getSelectedClassTypeIds() {
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			getVocabularySettingsHelper();
+
+		return vocabularySettingsHelper.getClassTypeIds();
+	}
+
+	@Override
 	public String getSettings() {
 		if (_vocabularySettingsHelper == null) {
 			return super.getSettings();

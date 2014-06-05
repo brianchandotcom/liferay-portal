@@ -69,7 +69,9 @@ public class AssetVocabularySettingsHelperTest {
 	public void testIsMultiValued() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper(
-				false, new long[] {1}, new boolean[] {true});
+				false, new long[] {1},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPES_ID},
+				new boolean[] {true});
 
 		Assert.assertFalse(vocabularySettingsHelper.isMultiValued());
 
@@ -79,12 +81,14 @@ public class AssetVocabularySettingsHelperTest {
 	}
 
 	protected AssetVocabularySettingsHelper getVocabularySettingsHelper(
-		boolean multiValued, long[] classNameIds, boolean[] requireds) {
+		boolean multiValued, long[] classNameIds, long[] classTypeIds,
+		boolean[] requireds) {
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		vocabularySettingsHelper.setClassNameIds(classNameIds, requireds);
+		vocabularySettingsHelper.setClassNameAndTypeIds(
+			classNameIds, classTypeIds, requireds);
 		vocabularySettingsHelper.setMultiValued(multiValued);
 
 		return vocabularySettingsHelper;
@@ -93,10 +97,19 @@ public class AssetVocabularySettingsHelperTest {
 	protected AssetVocabularySettingsHelper getVocabularySettingsHelper(
 		long classNameId, boolean required) {
 
+		return getVocabularySettingsHelper(
+			classNameId, AssetCategoryConstants.ALL_CLASS_TYPES_ID, required);
+	}
+
+	protected AssetVocabularySettingsHelper getVocabularySettingsHelper(
+		long classNameId, long classTypeId, boolean required) {
+
 		long[] classNameIds = {classNameId};
+		long[] classTypeIds = {classTypeId};
 		boolean[] requireds = {required};
 
-		return getVocabularySettingsHelper(true, classNameIds, requireds);
+		return getVocabularySettingsHelper(
+			true, classNameIds, classTypeIds, requireds);
 	}
 
 }

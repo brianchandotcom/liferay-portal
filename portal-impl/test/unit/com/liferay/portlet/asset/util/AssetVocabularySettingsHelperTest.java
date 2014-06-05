@@ -39,8 +39,8 @@ public class AssetVocabularySettingsHelperTest {
 	@Test
 	public void testGetClassNameIdWithOldFormat() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			new AssetVocabularySettingsHelper("multiValued=false\n" +
-				"selectedClassNameIds=1\n");
+			new AssetVocabularySettingsHelper(
+				"multiValued=false\nselectedClassNameIds=1\n");
 
 		long[] classNameIds = vocabularySettingsHelper.getClassNameIds();
 
@@ -55,7 +55,6 @@ public class AssetVocabularySettingsHelperTest {
 		Assert.assertEquals(
 			AssetCategoryConstants.ALL_CLASS_TYPE_IDS, classTypeIds[0]);
 	}
-
 
 	@Test
 	public void testGetClassTypeId() {

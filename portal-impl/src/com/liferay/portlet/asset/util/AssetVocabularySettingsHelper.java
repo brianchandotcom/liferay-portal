@@ -163,7 +163,6 @@ public class AssetVocabularySettingsHelper {
 					AssetCategoryConstants.ALL_CLASS_TYPE_IDS)};
 		}
 
-
 		return StringUtil.split(propertyValue);
 	}
 
@@ -183,17 +182,6 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return classNameIds;
-	}
-
-	protected String[] getRequiredClassNameAndTypeIds() {
-		String propertyValue = _properties.getProperty(
-			_KEY_REQUIRED_CLASS_NAME_AND_TYPE_IDS);
-
-		if (Validator.isNull(propertyValue)) {
-			return new String[0];
-		}
-
-		return StringUtil.split(propertyValue);
 	}
 
 	protected long getClassTypeId(String classNameAndTypeId) {
@@ -217,6 +205,17 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return classTypeIds;
+	}
+
+	protected String[] getRequiredClassNameAndTypeIds() {
+		String propertyValue = _properties.getProperty(
+			_KEY_REQUIRED_CLASS_NAME_AND_TYPE_IDS);
+
+		if (Validator.isNull(propertyValue)) {
+			return new String[0];
+		}
+
+		return StringUtil.split(propertyValue);
 	}
 
 	protected boolean isClassNameAndTypeIdSpecified(

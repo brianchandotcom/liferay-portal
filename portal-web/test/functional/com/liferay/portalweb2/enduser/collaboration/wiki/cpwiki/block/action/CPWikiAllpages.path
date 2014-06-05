@@ -46,27 +46,27 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'FrontPage')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Recent Changes')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Recent Changes')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'All Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Orphan Pages')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Orphan Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DRAFT_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Draft Pages')]</td>
 	<td></td>
 </tr>
 <tr>

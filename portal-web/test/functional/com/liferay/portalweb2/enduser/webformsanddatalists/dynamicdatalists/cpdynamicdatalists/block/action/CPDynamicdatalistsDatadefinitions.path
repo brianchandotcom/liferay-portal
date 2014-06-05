@@ -61,22 +61,22 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'View All')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Add')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//div[@class='navbar ']//input[contains(@class,'search-query')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//input[contains(@class,'search-query')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//div[@class='navbar ']//button[contains(.,'Search')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

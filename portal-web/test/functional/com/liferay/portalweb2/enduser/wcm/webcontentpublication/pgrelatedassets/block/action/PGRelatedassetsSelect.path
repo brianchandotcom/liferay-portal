@@ -51,7 +51,7 @@
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_OPERATOR_SELECTION</td>
-	<td>//div[contains(@class,'control-group')]/select[contains(@id,'andOperator')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[contains(@id,'andOperator')]</td>
 	<td></td>
 </tr>
 <tr>

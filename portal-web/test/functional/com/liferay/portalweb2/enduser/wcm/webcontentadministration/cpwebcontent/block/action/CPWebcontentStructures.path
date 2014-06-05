@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//div[@class='navbar-inner']//span[@class='nav-item-label' and contains(.,'Add')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//span[@class='nav-item-label' and contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_1</td>
-	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_2</td>
-	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
 	<td></td>
 </tr>
 <tr>

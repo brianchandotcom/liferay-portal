@@ -46,22 +46,22 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Actions')]/a</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/div/ul/li[contains(.,'Actions')]/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Add')]/a</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/div/ul/li[contains(.,'Add')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>TOOLBAR_SORT_BY</td>
-	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Sort By')]/a</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/div/ul/li[contains(.,'Sort By')]/a</td>
 	<td>Sort By</td>
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Manage')]/a</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/div/ul/li[contains(.,'Manage')]/a</td>
 	<td>Manage</td>
 </tr>
 <tr>

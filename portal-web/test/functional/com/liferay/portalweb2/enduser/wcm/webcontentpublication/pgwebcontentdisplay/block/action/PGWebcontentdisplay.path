@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-error')]</td>
+	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_ALERT_MESSAGE</td>
-	<td>//div[contains(@class,'alert-error')]</td>
+	<td>//div[(contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
 <tr>

@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//div[contains(@class,'control-group')]/input[contains(@id,'emailFromName')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/input[contains(@id,'emailFromName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESS_FIELD</td>
-	<td>//div[contains(@class,'control-group')]/input[contains(@id,'emailFromAddress')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_FIELD</td>
-	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]/input</td>
 	<td></td>
 </tr>
 <tr>

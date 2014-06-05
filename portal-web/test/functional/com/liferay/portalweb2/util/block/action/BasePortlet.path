@@ -95,12 +95,12 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_1_COLUMN_1</td>
-	<td>xpath=(//div[contains(@id,'column-1')]/div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td>xpath=(//div[contains(@id,'column-1')]/div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_1_COLUMN_2</td>
-	<td>xpath=(//div[contains(@id,'column-2')]/div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td>xpath=(//div[contains(@id,'column-2')]/div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
 	<td></td>
 </tr>
 <tr>

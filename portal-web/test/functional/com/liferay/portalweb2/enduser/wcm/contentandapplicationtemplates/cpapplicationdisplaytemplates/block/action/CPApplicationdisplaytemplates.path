@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>VIEW_ALL</td>
-	<td>//div[@class='navbar ']/div/div/ul/li/a[contains(.,'View All')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/ul/li/a[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//div[@class='navbar ']//a[contains(.,'Add')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>CURRENT_TITLE_FIELD</td>
-	<td>//div[@class='control-group field-wrapper']//input[@value='(None)']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]//input[@value='(None)']</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CURRENT_PARENT_FIELD</td>
-	<td>//div[@class='control-group field-wrapper']//input</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]//input</td>
 	<td></td>
 </tr>
 <tr>

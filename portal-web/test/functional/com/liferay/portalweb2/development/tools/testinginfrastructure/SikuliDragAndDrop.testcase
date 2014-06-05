@@ -1,0 +1,51 @@
+<definition component-name="portal-tools">
+	<property name="portlet.plugins.includes" value="calendar-portlet" />
+	<property name="testray.main.component.name" value="Tools" />
+
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="SikuliDragAndDrop" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1_column" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute action="DragAndDrop#scrollWebElementIntoView" locator-key1="CALENDAR_EVENT" />
+
+		<execute action="SikuliDragAndDrop#sikuliDragAndDrop" locator-key1="CALENDAR_EVENT_IMAGE" value1="80,0" />
+
+		<execute action="CPSites#pause" locator1="5000" />
+	</command>
+</definition>

@@ -307,6 +307,12 @@
 		</default>
 	</command>
 
+	<command name="scrollWebElementIntoView">
+		<default>
+			<execute function="ScrollWebElementIntoView#scrollWebElementIntoView" />
+		</default>
+	</command>
+
 	<command name="select">
 		<default>
 			<execute function="Select#select" />
@@ -352,6 +358,12 @@
 			<description message="Click on the ${locator1}." />
 
 			<execute function="SikuliClick#sikuliClick" />
+		</default>
+	</command>
+
+	<command name="sikuliDragAndDrop">
+		<default>
+			<execute function="SikuliDragAndDrop#sikuliDragAndDrop" />
 		</default>
 	</command>
 

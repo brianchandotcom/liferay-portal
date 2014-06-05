@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.comment;
+package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -23,29 +23,20 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({MBMessageLocalServiceUtil.class})
-@RunWith(PowerMockRunner.class)
-public class CommentManagerImplTest extends PowerMockito {
+public class MBCommentManagerImplTest extends Mockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,8 +44,6 @@ public class CommentManagerImplTest extends PowerMockito {
 
 		setUpMessageBoards();
 		setUpServiceContext();
-
-		_commentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
 	}
 
 	@Test
@@ -90,7 +79,7 @@ public class CommentManagerImplTest extends PowerMockito {
 
 		Assert.assertEquals(
 			mbMessageId,
-			_commentManagerImpl.addComment(
+			_mbCommentManagerImpl.addComment(
 				userId, groupId, className, classPK, "__blogName__",
 				"__title__", "__body__", _serviceContextFunction));
 
@@ -118,7 +107,7 @@ public class CommentManagerImplTest extends PowerMockito {
 		long groupId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
 
-		_commentManagerImpl.addInitialDiscussion(
+		_mbCommentManagerImpl.addInitialDiscussion(
 			userId, groupId, "__ClassName__", classPK, "__UserName__");
 
 		Mockito.verify(
@@ -132,7 +121,7 @@ public class CommentManagerImplTest extends PowerMockito {
 	public void testDeleteComment() throws Exception {
 		long mbMessageId = RandomTestUtil.randomLong();
 
-		_commentManagerImpl.deleteComment(mbMessageId);
+		_mbCommentManagerImpl.deleteComment(mbMessageId);
 
 		Mockito.verify(
 			_mbMessageLocalService
@@ -145,7 +134,7 @@ public class CommentManagerImplTest extends PowerMockito {
 	public void testDeleteDiscussion() throws Exception {
 		long classPK = RandomTestUtil.randomLong();
 
-		_commentManagerImpl.deleteDiscussion("__ClassName__", classPK);
+		_mbCommentManagerImpl.deleteDiscussion("__ClassName__", classPK);
 
 		Mockito.verify(
 			_mbMessageLocalService
@@ -182,13 +171,7 @@ public class CommentManagerImplTest extends PowerMockito {
 			_mbMessageDisplay
 		);
 
-		mockStatic(MBMessageLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
-		);
+		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
 	}
 
 	protected void setUpServiceContext() {
@@ -199,7 +182,8 @@ public class CommentManagerImplTest extends PowerMockito {
 		);
 	}
 
-	private CommentManagerImpl _commentManagerImpl = new CommentManagerImpl();
+	private MBCommentManagerImpl _mbCommentManagerImpl =
+		new MBCommentManagerImpl();
 
 	@Mock
 	private MBMessage _mbMessage;

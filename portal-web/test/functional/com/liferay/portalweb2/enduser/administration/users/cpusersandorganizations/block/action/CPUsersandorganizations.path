@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[4]/div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>

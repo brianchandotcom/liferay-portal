@@ -28,6 +28,7 @@ import com.liferay.portal.util.test.UserGroupTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 
@@ -43,13 +44,26 @@ public class UserGroupStagedModelDataHandlerTest
 	public static TransactionalTestRule transactionalTestRule =
 		new TransactionalTestRule();
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_userGroup = UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+			_userGroup.getUuid(), _userGroup.getCompanyId());
+
+		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
+	}
+
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return UserGroupTestUtil.addUserGroup();
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		return _userGroup;
 	}
 
 	@Override
@@ -77,5 +91,7 @@ public class UserGroupStagedModelDataHandlerTest
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return UserGroup.class;
 	}
+
+	private UserGroup _userGroup;
 
 }

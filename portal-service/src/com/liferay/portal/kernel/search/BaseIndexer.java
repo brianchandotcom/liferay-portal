@@ -1526,8 +1526,10 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
 
-		document.addKeyword(Field.ENTRY_CLASS_NAME, className);
-		document.addKeyword(Field.ENTRY_CLASS_PK, classPK);
+		DocumentHelper helper = new DocumentHelper(document);
+
+		helper.setEntryKey(className, classPK);
+
 		document.addKeyword(Field.PORTLET_ID, portletId);
 
 		if (resourcePrimKey > 0) {
@@ -1537,9 +1539,8 @@ public abstract class BaseIndexer implements Indexer {
 		if (baseModel instanceof AttachedModel) {
 			AttachedModel attachedModel = (AttachedModel)baseModel;
 
-			document.addKeyword(
-				Field.CLASS_NAME_ID, attachedModel.getClassNameId());
-			document.addKeyword(Field.CLASS_PK, attachedModel.getClassPK());
+			helper.setAttachmentOwnerKey(
+				attachedModel.getClassNameId(), attachedModel.getClassPK());
 		}
 
 		if (baseModel instanceof AuditedModel) {

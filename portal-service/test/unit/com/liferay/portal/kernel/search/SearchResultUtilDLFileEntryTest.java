@@ -64,110 +64,27 @@ public class SearchResultUtilDLFileEntryTest
 	}
 
 	@Test
-	public void testDLFileEntryMissingFromService() throws Exception {
-		when(
-			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
-		).thenReturn(
-			null
-		);
-
+	public void testDLFileEntry() throws Exception {
 		SearchResult searchResult =
 			assertThatSearchSingleDocumentReturnsOneSearchResult(
-				createDLFileEntryDocumentWithAlternateKey());
+				createDLFileEntryDocument());
 
 		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+			DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
 		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
+			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		assertThatFileEntryTuplesIsEmpty(searchResult);
 
-		Mockito.verify(
-			dlAppLocalService
-		).getFileEntry(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
+		Assert.assertNull(searchResult.getSummary());
 
-		Assert.assertNull(
-			"Indexer and AssetRenderer are both attempted, no summary returned",
-			searchResult.getSummary());
-
-		verifyStatic();
-
-		IndexerRegistryUtil.getIndexer(SearchTestUtil.DOCUMENT_CLASS_NAME);
-
-		verifyStatic();
-
-		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			SearchTestUtil.DOCUMENT_CLASS_NAME);
+		verifyZeroInteractions(dlAppLocalService);
 
 		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
 
 	@Test
-	public void testDLFileEntryWithDefectiveIndexer() throws Exception {
-		Indexer indexer = Mockito.mock(Indexer.class);
-
-		Mockito.doThrow(
-			IllegalArgumentException.class
-		).when(
-			indexer
-		).getSummary(
-			(Document)Matchers.any(), Matchers.anyString(),
-			(PortletURL)Matchers.any(), (PortletRequest)Matchers.any(),
-			(PortletResponse)Matchers.any());
-
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
-			indexer
-		);
-
-		when(
-			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
-		).thenReturn(
-			fileEntry
-		);
-
-		Document document = createDLFileEntryDocumentWithAlternateKey();
-
-		document.add(new Field(Field.SNIPPET, "__snippet__"));
-
-		SearchResult searchResult =
-			assertThatSearchSingleDocumentReturnsOneSearchResult(document);
-
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
-		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
-
-		Assert.assertNull(
-			"Indexer is attempted, exception is discarded, no summary returned",
-			searchResult.getSummary());
-
-		verifyStatic();
-
-		IndexerRegistryUtil.getIndexer(DLFILEENTRY_CLASS_NAME);
-
-		Mockito.verify(
-			indexer
-		).getSummary(
-			document, "__snippet__", portletURL, null, null
-		);
-
-		assertThatFileEntryTuplesIsEmpty(searchResult);
-
-		Mockito.verify(
-			dlAppLocalService
-		).getFileEntry(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-
-		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
-	}
-
-	@Test
-	public void testDLFileEntryWithKeyInDocument() throws Exception {
+	public void testDLFileEntryAttachment() throws Exception {
 		final Indexer indexer = Mockito.mock(Indexer.class);
 
 		class IndexerRegistryGetIndexer implements InvocationHandler {
@@ -182,7 +99,9 @@ public class SearchResultUtilDLFileEntryTest
 					return indexer;
 				}
 
-				if (SearchTestUtil.DOCUMENT_CLASS_NAME.equals(className)) {
+				if (SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME.equals(
+						className)) {
+
 					return null;
 				}
 
@@ -222,7 +141,9 @@ public class SearchResultUtilDLFileEntryTest
 					return null;
 				}
 
-				if (SearchTestUtil.DOCUMENT_CLASS_NAME.equals(className)) {
+				if (SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME.equals(
+						className)) {
+
 					return assetRendererFactory;
 				}
 
@@ -240,7 +161,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		when(
 			assetRendererFactory.getAssetRenderer(
-				SearchTestUtil.DOCUMENT_CLASS_PK)
+				SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK)
 		).thenReturn(
 			assetRenderer
 		);
@@ -265,12 +186,14 @@ public class SearchResultUtilDLFileEntryTest
 
 		SearchResult searchResult =
 			assertThatSearchSingleDocumentReturnsOneSearchResult(
-				createDLFileEntryDocumentWithAlternateKey());
+				createDLFileEntryAttachmentDocument());
 
 		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_NAME, searchResult.getClassName());
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,
+			searchResult.getClassName());
 		Assert.assertEquals(
-			SearchTestUtil.DOCUMENT_CLASS_PK, searchResult.getClassPK());
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
+			searchResult.getClassPK());
 
 		Summary summaryFromResult = searchResult.getSummary();
 
@@ -306,21 +229,109 @@ public class SearchResultUtilDLFileEntryTest
 	}
 
 	@Test
-	public void testDLFileEntryWithoutKeyInDocument() throws Exception {
+	public void testDLFileEntryMissingFromService() throws Exception {
+		when(
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+		).thenReturn(
+			null
+		);
+
 		SearchResult searchResult =
 			assertThatSearchSingleDocumentReturnsOneSearchResult(
-				createDLFileEntryDocument());
+				createDLFileEntryAttachmentDocument());
 
 		Assert.assertEquals(
-			DLFILEENTRY_CLASS_NAME, searchResult.getClassName());
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,
+			searchResult.getClassName());
 		Assert.assertEquals(
-			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
+			searchResult.getClassPK());
 
 		assertThatFileEntryTuplesIsEmpty(searchResult);
 
-		Assert.assertNull(searchResult.getSummary());
+		Mockito.verify(
+			dlAppLocalService
+		).getFileEntry(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
 
-		verifyZeroInteractions(dlAppLocalService);
+		Assert.assertNull(
+			"Indexer and AssetRenderer are both attempted, no summary returned",
+			searchResult.getSummary());
+
+		verifyStatic();
+
+		IndexerRegistryUtil.getIndexer(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
+
+		verifyStatic();
+
+		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
+
+		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
+	}
+
+	@Test
+	public void testDLFileEntryWithDefectiveIndexer() throws Exception {
+		Indexer indexer = Mockito.mock(Indexer.class);
+
+		Mockito.doThrow(
+			IllegalArgumentException.class
+		).when(
+			indexer
+		).getSummary(
+			(Document)Matchers.any(), Matchers.anyString(),
+			(PortletURL)Matchers.any(), (PortletRequest)Matchers.any(),
+			(PortletResponse)Matchers.any());
+
+		stub(
+			method(IndexerRegistryUtil.class, "getIndexer", String.class)
+		).toReturn(
+			indexer
+		);
+
+		when(
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+		).thenReturn(
+			fileEntry
+		);
+
+		Document document = createDLFileEntryAttachmentDocument();
+
+		document.add(new Field(Field.SNIPPET, "__snippet__"));
+
+		SearchResult searchResult =
+			assertThatSearchSingleDocumentReturnsOneSearchResult(document);
+
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,
+			searchResult.getClassName());
+		Assert.assertEquals(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
+			searchResult.getClassPK());
+
+		Assert.assertNull(
+			"Indexer is attempted, exception is discarded, no summary returned",
+			searchResult.getSummary());
+
+		verifyStatic();
+
+		IndexerRegistryUtil.getIndexer(DLFILEENTRY_CLASS_NAME);
+
+		Mockito.verify(
+			indexer
+		).getSummary(
+			document, "__snippet__", portletURL, null, null
+		);
+
+		assertThatFileEntryTuplesIsEmpty(searchResult);
+
+		Mockito.verify(
+			dlAppLocalService
+		).getFileEntry(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
 
 		assertThatMBMessagesAndVersionsAreEmpty(searchResult);
 	}
@@ -333,13 +344,12 @@ public class SearchResultUtilDLFileEntryTest
 		assertThatVersionsIsEmpty(searchResult);
 	}
 
-	protected Document createDLFileEntryDocument() {
-		return SearchTestUtil.createDocument(DLFILEENTRY_CLASS_NAME);
+	protected Document createDLFileEntryAttachmentDocument() {
+		return SearchTestUtil.createAttachmentDocument(DLFILEENTRY_CLASS_NAME);
 	}
 
-	protected Document createDLFileEntryDocumentWithAlternateKey() {
-		return SearchTestUtil.createDocumentWithAlternateKey(
-			DLFILEENTRY_CLASS_NAME);
+	protected Document createDLFileEntryDocument() {
+		return SearchTestUtil.createDocument(DLFILEENTRY_CLASS_NAME);
 	}
 
 	protected void setUpDLApp() {

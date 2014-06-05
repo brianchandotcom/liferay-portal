@@ -101,9 +101,9 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		portalUtil.setPortal(portal);
 
 		when(
-			portal.getClassName(SearchTestUtil.DOCUMENT_CLASS_NAME_ID)
+			portal.getClassName(SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
 		).thenReturn(
-			SearchTestUtil.DOCUMENT_CLASS_NAME
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
 		);
 	}
 

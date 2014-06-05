@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUt
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -1786,10 +1787,11 @@ public class CMISRepository extends BaseCmisRepository {
 				continue;
 			}
 
-			document.addKeyword(
-				Field.ENTRY_CLASS_NAME, fileEntry.getModelClassName());
-			document.addKeyword(
-				Field.ENTRY_CLASS_PK, fileEntry.getFileEntryId());
+			DocumentHelper helper = new DocumentHelper(document);
+
+			helper.setEntryKey(
+				fileEntry.getModelClassName(), fileEntry.getFileEntryId());
+
 			document.addKeyword(Field.TITLE, fileEntry.getTitle());
 
 			documents.add(document);

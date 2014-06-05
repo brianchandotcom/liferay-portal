@@ -425,8 +425,8 @@ for (int i = 0; i < results.size(); i++) {
 						%>
 
 						<liferay-ui:app-view-entry
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							displayStyle="list"
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= true %>"
 							title="<%= latestFileVersion.getTitle() %>"
@@ -553,10 +553,10 @@ for (int i = 0; i < results.size(); i++) {
 						%>
 
 						<liferay-ui:app-view-entry
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							data="<%= data %>"
 							displayStyle="list"
 							folder="<%= true %>"
+							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							showCheckbox="<%= false %>"
 							title="<%= curFolder.getName() %>"
 							url="<%= rowURL.toString() %>"

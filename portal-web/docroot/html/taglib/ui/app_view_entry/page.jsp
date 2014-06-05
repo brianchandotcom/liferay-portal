@@ -85,10 +85,10 @@ if (showLinkTitle) {
 				</c:otherwise>
 			</c:choose>
 
-			<c:if test="<%=  Validator.isNotNull(iconCssClass) || Validator.isNotNull(thumbnailSrc) %>">
+			<c:if test="<%= Validator.isNotNull(iconCssClass) || Validator.isNotNull(thumbnailSrc) %>">
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(thumbnailSrc)%>" >
+						<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 							<img alt="" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 						</c:when>
 						<c:when test="<%= Validator.isNotNull(iconCssClass) %>">
@@ -139,7 +139,7 @@ if (showLinkTitle) {
 				</c:otherwise>
 			</c:choose>
 
-			<c:if test="<%=  Validator.isNotNull(iconCssClass) || Validator.isNotNull(thumbnailSrc) %>">
+			<c:if test="<%= Validator.isNotNull(iconCssClass) || Validator.isNotNull(thumbnailSrc) %>">
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
@@ -368,8 +368,8 @@ if (showLinkTitle) {
 		<div class="app-view-entry app-view-entry-taglib display-<%= displayStyle %> entry-display-style <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 			<liferay-ui:icon
 				cssClass='<%= showCheckbox ? "pull-left app-view-entry app-view-entry-taglib entry-display-style selectable" : "pull-left app-view-entry app-view-entry-taglib entry-display-style" %>'
-				iconCssClass="<%= iconCssClass %>"
 				data="<%= data %>"
+				iconCssClass="<%= iconCssClass %>"
 				label="<%= true %>"
 				linkCssClass="entry-link"
 				localizeMessage="<%= false %>"

@@ -87,8 +87,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 					_layoutPrototype.getUuid(),
 					_layoutPrototype.getCompanyId());
 
-		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
-			_layoutPrototype);
+		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(_layoutPrototype);
 	}
 
 	protected void addLayout(Class<?> clazz, Layout layout) throws Exception {

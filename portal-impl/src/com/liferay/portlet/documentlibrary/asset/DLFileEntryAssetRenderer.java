@@ -115,14 +115,14 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
-			_fileEntry.getIcon() + ".png";
+	public String getIconCssClass() {
+		return _fileEntry.getIconCssClass();
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return _fileEntry.getIconCssClass();
+	public String getIconPath(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
+			_fileEntry.getIcon() + ".png";
 	}
 
 	@Override

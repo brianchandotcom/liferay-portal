@@ -23,11 +23,11 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author André de Oliveira
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class CommentManagerImpl implements CommentManager {
 
@@ -39,7 +39,7 @@ public class CommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		MBMessageDisplay mbMessageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -48,7 +48,7 @@ public class CommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage mbMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
+		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
 			userId, userName, groupId, className, classPK,
 			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
 			serviceContext);
@@ -69,7 +69,7 @@ public class CommentManagerImpl implements CommentManager {
 
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
-		MBMessageLocalServiceUtil.deleteDiscussionMessage(commentId);
+		_mbMessageLocalService.deleteDiscussionMessage(commentId);
 	}
 
 	@Override

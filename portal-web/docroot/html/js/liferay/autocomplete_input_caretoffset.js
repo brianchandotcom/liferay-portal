@@ -47,7 +47,7 @@ AUI.add(
 				}
 				else {
 					if (instance.get('caretAtTerm')) {
-						caretIndex = instance._getPrevTermIndex(value, caretIndex) + 1;
+						caretIndex = instance._getPrevTrigger(value, caretIndex).index + 1;
 					}
 
 					value = value.substring(0, caretIndex) + instance.TPL_CARET + value.substring(caretIndex + 1);
@@ -63,16 +63,14 @@ AUI.add(
 
 				var inputNode = instance.get(STR_INPUT_NODE);
 
-				var styles = {};
+				var inputMirror = instance._inputMirror;
 
 				AArray.each(
 					MIRROR_STYLES,
 					function(item, index) {
-						styles[item] = inputNode.getStyle(item);
+						inputMirror.setStyle(item, inputNode.getStyle(item));
 					}
 				);
-
-				instance._inputMirror.setStyles(styles);
 			},
 
 			_createInputMirror: function() {
@@ -111,10 +109,10 @@ AUI.add(
 			}
 		};
 
-		A.Base.mix(Liferay.AutoCompleteInput, [AutcompleteInputCaretOffset]);
+		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretOffset]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-input']
+		requires: ['liferay-autocomplete-textarea']
 	}
 );

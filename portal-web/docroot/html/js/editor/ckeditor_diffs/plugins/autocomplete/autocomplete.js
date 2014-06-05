@@ -1,525 +1,407 @@
 ;(function() {
 	var A = AUI();
 
-	var KeyMap = A.Event.KeyMap;
-
+	var AArray = A.Array;
 	var Lang = A.Lang;
+	var KeyMap = A.Event.KeyMap;
 
 	var STR_EDITOR = 'editor';
 
-	var STR_EMPTY = '';
-
 	var STR_SPACE = ' ';
-
-	var STR_TERM = 'term';
 
 	var TPL_REPLACE_HTML = '<span class="lfr-ac-content">{html}</span>';
 
-	var AutoCompleteCKEditor = A.Component.create(
-		{
-			ATTRS: {
-				editor: {
-					validator: Lang.isObject,
-					writeOnce: true
-				},
+	var AutoCompleteCKEditor = function() {};
 
-				inputNode: {
-					valueFn: '_getInputElement',
-					writeOnce: true
-				},
+	AutoCompleteCKEditor.ATTRS = {
+		editor: {
+			validator: Lang.isObject,
+			writeOnce: true
+		},
 
-				replaceMode: {
-					validator: Lang.isString,
-					value: 'text'
-				},
+		inputNode: {
+			valueFn: '_getInputElement',
+			writeOnce: true
+		}
+	};
 
-				tplReplace: {
-					validator: Lang.isString
+	AutoCompleteCKEditor.prototype= {
+		initializer: function() {
+			var instance = this;
+
+			instance._bindUI();
+		},
+
+		_bindUI: function() {
+			var instance = this;
+
+			instance._processCaret = A.bind('_processCaretPosition', instance);
+
+			instance._processCaretTask = A.debounce(instance._processCaret, 50);
+
+			var editor = instance.get(STR_EDITOR);
+
+			instance._eventHandles = [
+				editor.on('key', A.bind('_onEditorKey', instance))
+			];
+
+			editor.once(
+				'instanceReady',
+				function(event) {
+					var editorBody = A.one(event.editor.document.$.body);
+
+					instance._eventHandles.push(
+						editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
+					);
 				}
-			},
+			);
+		},
 
-			AUGMENTS: [Liferay.AutoCompleteInputBase],
+		_getACPositionBase: function() {
+			var instance = this;
 
-			EXTENDS: A.Base,
+			if (!instance._contentsContainer) {
+				var inputElement = instance._getInputElement();
 
-			NAME: 'liferay-autocomplete-ckeditor',
+				instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
+			}
 
-			prototype: {
-				initializer: function() {
-					var instance = this;
+			return instance._contentsContainer.getXY();
+		},
 
-					instance._replaceFn = {
-						html: A.bind('_replaceHtml', instance),
-						text: A.bind('_replaceText', instance)
-					};
+		_getACPositionOffset: function() {
+			var instance = this;
 
-					A.Do.after(instance._bindUI, instance, '_bindUIACIBase', instance);
-				},
+			var caretContainer = instance._getCaretContainer();
 
-				_acSelectValue: function(event) {
-					var instance = this;
+			var containerAscendantElement = instance._getContainerAscendant(caretContainer);
 
-					var text = event.result.text;
+			var containerAscendantNode = A.one(containerAscendantElement.$);
 
-					var tplReplace = instance.get('tplReplace');
+			return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
+		},
 
-					if (tplReplace) {
-						text = Lang.sub(tplReplace, event.result.raw);
+		_getCaretContainer: function() {
+			var instance = this;
+
+			return instance._getCaretRange().startContainer;
+		},
+
+		_getCaretIndex: function(node) {
+			var instance = this;
+
+			var range = instance._getCaretRange();
+
+			return {
+				end: range.endOffset,
+				start: range.startOffset
+			};
+		},
+
+		_getCaretOffset: function() {
+			var instance = this;
+
+			var editor = instance.get(STR_EDITOR);
+
+			var bookmarks = editor.getSelection().createBookmarks();
+
+			var bookmarkNode = A.one(bookmarks[0].startNode.$);
+
+			bookmarkNode.setStyle('display', 'inline-block');
+
+			var bookmarkXY = bookmarkNode.getXY();
+
+			bookmarkNode.remove();
+
+			return {
+				x: bookmarkXY[0],
+				y: bookmarkXY[1]
+			};
+		},
+
+		_getCaretRange: function() {
+			var instance = this;
+
+			var editor = instance.get(STR_EDITOR);
+
+			return editor.getSelection().getRanges()[0];
+		},
+
+		_getContainerAscendant: function(container, ascendant) {
+			if (!ascendant) {
+				ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
+			}
+
+			return container.getAscendant(ascendant, true);
+		},
+
+		_getInputElement: function(value) {
+			var instance = this;
+
+			return A.one(instance.get(STR_EDITOR).element.$);
+		},
+
+		_getPrevTriggerPosition: function() {
+			var instance = this;
+
+			var caretContainer = instance._getCaretContainer();
+			var caretIndex = instance._getCaretIndex();
+
+			var query = caretContainer.getText().substring(0, caretIndex.start);
+
+			var triggerContainer = caretContainer;
+
+			var triggerIndex = -1;
+
+			var trigger = null;
+
+			var triggers = instance._getTriggers();
+
+			AArray.each(
+				triggers,
+				function(item, index, collection) {
+					var triggerPosition = query.lastIndexOf(item);
+
+					if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
+						trigger = item;
+						triggerIndex = triggerPosition;
 					}
+				}
+			);
 
-					var ac = instance._ac;
+			if (triggerIndex === -1) {
+				var triggerWalker = instance._getWalker(triggerContainer);
 
-					ac._inputNode.focus();
+				triggerWalker.guard = function(node) {
+					var hasTrigger = false;
 
-					ac._updateValue(text);
+					if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
+						var nodeText = node.getText();
 
-					ac._ariaSay(
-						'item_selected',
-						{
-							item: event.result.text
-						}
-					);
+						AArray.each(
+							triggers,
+							function(item, index, collection) {
+								var triggerPosition = nodeText.lastIndexOf(item);
 
-					ac.hide();
-
-					event.preventDefault();
-				},
-
-				_acUpdateValue: function(value) {
-					var instance = this;
-
-					var prevTermPosition = instance._getPrevTermPosition();
-
-					var caretPosition = instance._replaceFn[instance.get('replaceMode')](value, prevTermPosition);
-
-					instance._setCaretIndex(caretPosition.node, caretPosition.index);
-
-					var editor = instance.get('editor');
-
-					editor.fire('saveSnapshot');
-				},
-
-				_bindUI: function() {
-					var instance = this;
-
-					instance._processCaret = A.bind('_processCaretPosition', instance);
-
-					var editor = instance.get(STR_EDITOR);
-
-					instance._eventHandles = [
-						editor.on('key', A.bind('_onEditorKey', instance)),
-						instance._ac.on('select', instance._acSelectValue, instance)
-					];
-
-					editor.once(
-						'instanceReady',
-						function(event) {
-							var editorBody = A.one(event.editor.document.$.body);
-
-							instance._eventHandles.push(
-								editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))
-							);
-						}
-					);
-				},
-
-				_getACPositionBase: function() {
-					var instance = this;
-
-					if (!instance._contentsContainer) {
-						var inputElement = instance._getInputElement();
-
-						instance._contentsContainer = inputElement.siblings('.cke').one('.cke_contents') || inputElement;
-					}
-
-					return instance._contentsContainer.getXY();
-				},
-
-				_getACPositionOffset: function() {
-					var instance = this;
-
-					var caretContainer = instance._getCaretContainer();
-
-					var containerAscendantElement = instance._getContainerAscendant(caretContainer);
-
-					var containerAscendantNode = A.one(containerAscendantElement.$);
-
-					return [0, Lang.toInt(containerAscendantNode.getStyle('fontSize'))];
-				},
-
-				_getCaretContainer: function() {
-					var instance = this;
-
-					return instance._getCaretRange().startContainer;
-				},
-
-				_getCaretIndex: function(node) {
-					var instance = this;
-
-					var range = instance._getCaretRange();
-
-					return {
-						end: range.endOffset,
-						start: range.startOffset
-					};
-				},
-
-				_getCaretOffset: function() {
-					var instance = this;
-
-					var editor = instance.get(STR_EDITOR);
-
-					var bookmarks = editor.getSelection().createBookmarks();
-
-					var bookmarkNodeEl = bookmarks[0].startNode.$;
-
-					A.one(bookmarkNodeEl).setStyle('display', 'inline-block');
-
-					var inputCaretOffsetX = bookmarkNodeEl.offsetLeft;
-					var inputCaretOffsetY = bookmarkNodeEl.offsetTop;
-
-					bookmarkNodeEl.parentElement.removeChild(bookmarkNodeEl);
-
-					return {
-						x: inputCaretOffsetX,
-						y: inputCaretOffsetY
-					};
-				},
-
-				_getCaretRange: function() {
-					var instance = this;
-
-					var editor = instance.get(STR_EDITOR);
-
-					return editor.getSelection().getRanges()[0];
-				},
-
-				_getContainerAscendant: function(container, ascendant) {
-					if (!ascendant) {
-						ascendant = AutoCompleteCKEditor.CONTAINER_ASCENDANT;
-					}
-
-					return container.getAscendant(ascendant, true);
-				},
-
-				_getInputElement: function(value) {
-					var instance = this;
-
-					return A.one(instance.get(STR_EDITOR).element.$);
-				},
-
-				_getPrevTermPosition: function() {
-					var instance = this;
-
-					var term = instance.get(STR_TERM);
-
-					var caretContainer = instance._getCaretContainer();
-					var caretIndex = instance._getCaretIndex();
-
-					var query = caretContainer.getText().substring(0, caretIndex.start);
-
-					var termContainer = caretContainer;
-
-					var termIndex = query.lastIndexOf(term);
-
-					if (termIndex === -1) {
-						var termWalker = instance._getWalker(termContainer);
-
-						termWalker.guard = function(node) {
-							var hasTerm = false;
-
-							if (node.type === CKEDITOR.NODE_TEXT && node.$ !== caretContainer.$) {
-								var nodeText = node.getText();
-
-								termIndex = nodeText.lastIndexOf(term);
-
-								hasTerm = (termIndex !== -1);
-
-								if (hasTerm) {
-									query = nodeText.substring(termIndex) + query;
-
-									termContainer = node;
-								}
-								else {
-									query = node.getText() + query;
+								if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
+									trigger = item;
+									triggerIndex = triggerPosition;
 								}
 							}
+						);
 
-							return !hasTerm;
-						};
+						hasTrigger = (triggerIndex !== -1);
 
-						termWalker.checkBackward();
-					}
-					else {
-						query = query.substring(termIndex);
-					}
+						if (hasTrigger) {
+							query = nodeText.substring(triggerIndex) + query;
 
-					return {
-						container: termContainer,
-						index: termIndex,
-						query: query
-					};
-				},
-
-				_getQuery: function() {
-					var instance = this;
-
-					var query = instance._getPrevTermPosition().query;
-
-					var regExp = instance.get('regExp');
-
-					var res = regExp.exec(query);
-
-					var term = instance.get(STR_TERM);
-
-					var result;
-
-					if (res && ((res.index + res[1].length + term.length) === query.length)) {
-						result = query;
-					}
-
-					return result;
-				},
-
-				_getWalker: function(endContainer, startContainer) {
-					var instance = this;
-
-					endContainer = endContainer || instance._getCaretContainer();
-
-					startContainer = startContainer || instance._getContainerAscendant(endContainer);
-
-					var range = new CKEDITOR.dom.range(startContainer);
-
-					range.setStart(startContainer, 0);
-					range.setEnd(endContainer, endContainer.getText().length);
-
-					var walker = new CKEDITOR.dom.walker(range);
-
-					return walker;
-				},
-
-				_isEmptySelection: function() {
-					var instance = this;
-
-					var editor = instance.get(STR_EDITOR);
-
-					var selection = editor.getSelection();
-
-					var ranges = selection.getRanges();
-
-					return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
-				},
-
-				_normalizeCKEditorKeyEvent: function(event) {
-					return new A.DOMEventFacade(
-						{
-							keyCode: event.data.keyCode,
-							preventDefault: event.cancel,
-							stopPropagation: event.stop,
-							type: 'keydown'
-						}
-					);
-				},
-
-				_onEditorKey: function(event) {
-					var instance = this;
-
-					if (instance._isEmptySelection()) {
-						event = instance._normalizeCKEditorKeyEvent(event);
-
-						var ac = instance._ac;
-
-						var acVisible = ac.get('visible');
-
-						if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
-							var editor = instance.get(STR_EDITOR);
-
-							var inlineEditor = editor.editable().isInline();
-
-							if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
-								ac._onInputKey(event);
-							}
+							triggerContainer = node;
 						}
 						else {
-							A.soon(instance._processCaret);
+							query = node.getText() + query;
 						}
 					}
-				},
 
-				_processCaretPosition: function() {
-					var instance = this;
+					return !hasTrigger;
+				};
 
-					var query = instance._getQuery();
+				triggerWalker.checkBackward();
+			}
+			else {
+				query = query.substring(triggerIndex);
+			}
 
-					instance._processKeyUp(query);
-				},
+			return {
+				container: triggerContainer,
+				index: triggerIndex,
+				query: query,
+				value: trigger
+			};
+		},
 
-				_replaceHtml: function(text, prevTermPosition) {
-					var instance = this;
+		_getQuery: function() {
+			var instance = this;
 
-					var replaceContainer = instance._getContainerAscendant(prevTermPosition.container, 'span');
+			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
-					if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
-						replaceContainer = prevTermPosition.container.split(prevTermPosition.index);
-					}
+			var trigger = prevTriggerPosition.value;
+			var query = prevTriggerPosition.query;
 
-					var newElement = CKEDITOR.dom.element.createFromHtml(
-						Lang.sub(
-							TPL_REPLACE_HTML,
-							{
-								html: text
-							}
-						)
-					);
+			var res = instance._getRegExp().exec(query);
 
-					newElement.replace(replaceContainer);
+			var result;
 
-					var nextElement = newElement.getNext();
+			if (res && ((res.index + res[1].length + trigger.length) === query.length)) {
+				result = query;
+			}
 
-					if (nextElement) {
-						var containerAscendant = instance._getContainerAscendant(prevTermPosition.container);
+			return result;
+		},
 
-						var updateWalker = instance._getWalker(containerAscendant, nextElement);
+		_getWalker: function(endContainer, startContainer) {
+			var instance = this;
 
-						var node = updateWalker.next();
+			endContainer = endContainer || instance._getCaretContainer();
 
-						var removeNodes = [];
+			startContainer = startContainer || instance._getContainerAscendant(endContainer);
 
-						while (node) {
-							var nodeText = node.getText();
+			var range = new CKEDITOR.dom.range(startContainer);
 
-							var spaceIndex = nodeText.indexOf(STR_SPACE);
+			range.setStart(startContainer, 0);
+			range.setEnd(endContainer, endContainer.getText().length);
 
-							if (spaceIndex !== -1) {
-								node.setText(nodeText.substring(spaceIndex));
+			var walker = new CKEDITOR.dom.walker(range);
 
-								updateWalker.end();
-							}
-							else {
-								removeNodes.push(node);
-							}
+			return walker;
+		},
 
-							node = updateWalker.next();
-						}
+		_isEmptySelection: function() {
+			var instance = this;
 
-						A.Array.invoke(removeNodes, 'remove');
+			var editor = instance.get(STR_EDITOR);
 
-						nextElement = newElement.getNext();
-					}
+			var selection = editor.getSelection();
 
-					if (!nextElement) {
-						nextElement = new CKEDITOR.dom.text(STR_SPACE);
+			var ranges = selection.getRanges();
 
-						nextElement.insertAfter(newElement);
-					}
+			return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
+		},
 
-					return {
-						index: 1,
-						node: nextElement
-					};
-				},
+		_normalizeCKEditorKeyEvent: function(event) {
+			return new A.DOMEventFacade(
+				{
+					keyCode: event.data.keyCode,
+					preventDefault: event.cancel,
+					stopPropagation: event.stop,
+					type: 'keydown'
+				}
+			);
+		},
 
-				_replaceText: function(text, prevTermPosition) {
-					var instance = this;
+		_onEditorKey: function(event) {
+			var instance = this;
 
-					var addChars;
+			if (instance._isEmptySelection()) {
+				event = instance._normalizeCKEditorKeyEvent(event);
 
-					var prevTermContainer = prevTermPosition.container;
-					var offset = prevTermPosition.index;
+				var acVisible = instance.get('visible');
 
-					var containerAscendant = instance._getContainerAscendant(prevTermContainer);
-
-					var updateWalker = instance._getWalker(containerAscendant, prevTermContainer);
-
-					var term = instance.get(STR_TERM);
-
-					var node = updateWalker.next();
-
-					var prevNode = node;
-
-					var remainingChars = term + text;
-
-					while (node) {
-						if (node.type === CKEDITOR.NODE_TEXT) {
-							var nodeText = node.getText();
-
-							var availableChars = nodeText.length;
-
-							if (offset !== -1) {
-								availableChars -= offset;
-
-								addChars = remainingChars.substring(0, availableChars);
-
-								node.setText(nodeText.substring(0, offset) + addChars);
-
-								offset = -1;
-
-								remainingChars = remainingChars.substring(availableChars);
-							}
-							else {
-								var spaceIndex = nodeText.indexOf(STR_SPACE);
-
-								if (!availableChars || spaceIndex === 0) {
-									prevNode.setText(prevNode.getText() + remainingChars);
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else if (spaceIndex !== -1) {
-									node.setText(remainingChars + nodeText.substring(spaceIndex));
-
-									updateWalker.end();
-
-									remainingChars = STR_EMPTY;
-								}
-								else {
-									addChars = remainingChars.substring(0, availableChars);
-
-									node.setText(addChars);
-
-									remainingChars = remainingChars.substring(availableChars);
-								}
-							}
-
-							prevNode = node;
-						}
-
-						node = updateWalker.next();
-					}
-
-					if (remainingChars.length) {
-						prevNode.setText(prevNode.getText() + remainingChars + STR_SPACE);
-					}
-
-					var caretIndex = prevNode.getText().indexOf(STR_SPACE) + 1;
-
-					if (prevNode.$ === prevTermPosition.container.$ && caretIndex <= prevTermPosition.index) {
-						caretIndex = prevNode.getText().length;
-					}
-
-					return {
-						index: caretIndex,
-						node: prevNode
-					};
-				},
-
-				_setCaretIndex: function(node, caretIndex) {
-					var instance = this;
-
+				if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
 					var editor = instance.get(STR_EDITOR);
 
-					var caretRange = editor.createRange();
+					var inlineEditor = editor.editable().isInline();
 
-					caretRange.setStart(node, caretIndex);
-					caretRange.setEnd(node, caretIndex);
-
-					editor.getSelection().selectRanges([caretRange]);
-					editor.focus();
+					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
+						instance._onInputKey(event);
+					}
+				}
+				else {
+					instance._processCaretTask();
 				}
 			}
+		},
+
+		_processCaretPosition: function() {
+			var instance = this;
+
+			var query = instance._getQuery();
+
+			instance._processKeyUp(query);
+		},
+
+		_replaceHtml: function(text, prevTriggerPosition) {
+			var instance = this;
+
+			var replaceContainer = instance._getContainerAscendant(prevTriggerPosition.container, 'span');
+
+			if (!replaceContainer || !replaceContainer.hasClass('lfr-ac-content')) {
+				replaceContainer = prevTriggerPosition.container.split(prevTriggerPosition.index);
+			}
+
+			var newElement = CKEDITOR.dom.element.createFromHtml(
+				Lang.sub(
+					TPL_REPLACE_HTML,
+					{
+						html: text
+					}
+				)
+			);
+
+			newElement.replace(replaceContainer);
+
+			var nextElement = newElement.getNext();
+
+			if (nextElement) {
+				var containerAscendant = instance._getContainerAscendant(prevTriggerPosition.container);
+
+				var updateWalker = instance._getWalker(containerAscendant, nextElement);
+
+				var node = updateWalker.next();
+
+				var removeNodes = [];
+
+				while (node) {
+					var nodeText = node.getText();
+
+					var spaceIndex = nodeText.indexOf(STR_SPACE);
+
+					if (spaceIndex !== -1) {
+						node.setText(nodeText.substring(spaceIndex));
+
+						updateWalker.end();
+					}
+					else {
+						removeNodes.push(node);
+					}
+
+					node = updateWalker.next();
+				}
+
+				AArray.invoke(removeNodes, 'remove');
+
+				nextElement = newElement.getNext();
+			}
+
+			if (!nextElement) {
+				nextElement = new CKEDITOR.dom.text(STR_SPACE);
+
+				nextElement.insertAfter(newElement);
+			}
+
+			return {
+				index: 1,
+				node: nextElement
+			};
+		},
+
+		_setCaretIndex: function(node, caretIndex) {
+			var instance = this;
+
+			var editor = instance.get(STR_EDITOR);
+
+			var caretRange = editor.createRange();
+
+			caretRange.setStart(node, caretIndex);
+			caretRange.setEnd(node, caretIndex);
+
+			editor.getSelection().selectRanges([caretRange]);
+			editor.focus();
+		},
+
+		_updateValue: function(value) {
+			var instance = this;
+
+			var prevTriggerPosition = instance._getPrevTriggerPosition();
+
+			var caretPosition = instance._replaceHtml(value, prevTriggerPosition);
+
+			instance._setCaretIndex(caretPosition.node, caretPosition.index);
+
+			var editor = instance.get('editor');
+
+			editor.fire('saveSnapshot');
 		}
-	);
+	};
 
 	AutoCompleteCKEditor.CONTAINER_ASCENDANT = {
 		body: 1,
@@ -533,5 +415,11 @@
 		span: 1
 	};
 
-	Liferay.AutoCompleteCKEditor = AutoCompleteCKEditor;
+	Liferay.AutoCompleteCKEditor = A.Base.mix(
+		A.AutoComplete,
+		[
+			Liferay.AutoCompleteInputBase,
+			AutoCompleteCKEditor
+		]
+	);
 })();

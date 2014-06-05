@@ -14,8 +14,8 @@ AUI.add(
 				var input = node.getDOM();
 
 				return {
-					start: input.selectionStart,
-					end: input.selectionStart
+					end: input.selectionStart,
+					start: input.selectionStart
 				};
 			},
 
@@ -32,10 +32,10 @@ AUI.add(
 			}
 		};
 
-		A.Base.mix(Liferay.AutoCompleteInput, [AutcompleteInputCaretIndex]);
+		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretIndex]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-input']
+		requires: ['liferay-autocomplete-textarea']
 	}
 );

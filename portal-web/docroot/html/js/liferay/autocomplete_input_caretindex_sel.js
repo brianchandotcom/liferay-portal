@@ -93,10 +93,10 @@ AUI.add(
 			}
 		};
 
-		A.Base.mix(Liferay.AutoCompleteInput, [AutcompleteInputCaretIndex]);
+		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretIndex]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-input']
+		requires: ['liferay-autocomplete-textarea']
 	}
 );

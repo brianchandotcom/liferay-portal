@@ -6365,18 +6365,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			organizationIds = user.getOrganizationIds();
 		}
 
-		long[] organizationGroupIds = new long[organizationIds.length];
-
-		for (int i = 0; i < organizationIds.length; i++) {
-			long organizationId = organizationIds[i];
-
+		for (long organizationId : organizationIds) {
 			Organization organization =
 				organizationPersistence.findByPrimaryKey(organizationId);
 
-			organizationGroupIds[i] = organization.getGroupId();
+			validGroupIds = ArrayUtil.append(
+				validGroupIds, organization.getGroupId());
 		}
-
-		validGroupIds = ArrayUtil.append(validGroupIds, organizationGroupIds);
 
 		Arrays.sort(validGroupIds);
 

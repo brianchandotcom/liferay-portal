@@ -88,16 +88,13 @@ public class AssetPublisherDisplayContext {
 		if (selectionStyle.equals("dynamic")) {
 			_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 				_portletPreferences);
-
-			if ((assetCategoryId > 0) &&
-				!ArrayUtil.contains(_allAssetCategoryIds, assetCategoryId)) {
-
-				_allAssetCategoryIds = ArrayUtil.append(
-					_allAssetCategoryIds, assetCategoryId);
-			}
 		}
-		else if (selectionStyle.equals("manual") && (assetCategoryId > 0)) {
-			_allAssetCategoryIds = new long[] {assetCategoryId};
+
+		if ((assetCategoryId > 0) &&
+			!ArrayUtil.contains(_allAssetCategoryIds, assetCategoryId)) {
+
+			_allAssetCategoryIds = ArrayUtil.append(
+				_allAssetCategoryIds, assetCategoryId);
 		}
 
 		return _allAssetCategoryIds;
@@ -116,18 +113,13 @@ public class AssetPublisherDisplayContext {
 		if (selectionStyle.equals("dynamic")) {
 			_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
 				_portletPreferences);
-
-			if (Validator.isNotNull(assetTagName) &&
-				!ArrayUtil.contains(_allAssetTagNames, assetTagName)) {
-
-				_allAssetTagNames = ArrayUtil.append(
-					_allAssetTagNames, assetTagName);
-			}
 		}
-		else if (selectionStyle.equals("manual") &&
-				 Validator.isNotNull(assetTagName)) {
 
-			_allAssetTagNames = new String[] {assetTagName};
+		if (Validator.isNotNull(assetTagName) &&
+			!ArrayUtil.contains(_allAssetTagNames, assetTagName)) {
+
+			_allAssetTagNames = ArrayUtil.append(
+				_allAssetTagNames, assetTagName);
 		}
 
 		if (isMergeURLTags() || isMergeLayoutTags()) {

@@ -14,17 +14,28 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -38,6 +49,10 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +61,11 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -139,6 +159,16 @@ public class EditFolderAction extends PortletAction {
 			getForward(renderRequest, "portlet.document_library.edit_folder"));
 	}
 
+	@Override
+	public void serveResource(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws Exception {
+
+		downloadFolder(resourceRequest, resourceResponse);
+	}
+
 	protected void deleteFolders(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
@@ -178,6 +208,55 @@ public class EditFolderAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected void downloadFolder(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
+		long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
+
+		File file = null;
+		InputStream inputStream = null;
+
+		try {
+			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+			_zipFolder(folderId, repositoryId, StringPool.SLASH, zipWriter);
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				resourceResponse);
+
+			String zipFileName = LanguageUtil.get(
+				themeDisplay.getLocale(), "documents-and-media");
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+				zipFileName = folder.getName();
+			}
+
+			file = zipWriter.getFile();
+
+			inputStream = new FileInputStream(file);
+
+			ServletResponseUtil.sendFile(
+				request, response, zipFileName, inputStream,
+				ContentTypes.APPLICATION_ZIP);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+
+			if (file != null) {
+				file.delete();
+			}
 		}
 	}
 
@@ -243,6 +322,41 @@ public class EditFolderAction extends PortletAction {
 		DLAppServiceUtil.updateFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
 			serviceContext);
+	}
+
+	private void _zipFileEntry(
+			FileEntry fileEntry, String path, ZipWriter zipWriter)
+		throws Exception {
+
+		zipWriter.addEntry(
+			path.concat(StringPool.SLASH).concat(fileEntry.getTitle()),
+			fileEntry.getContentStream());
+	}
+
+	private void _zipFolder(
+			long folderId, long repositoryId, String path, ZipWriter zipWriter)
+		throws Exception {
+
+		List<Object> entries =
+			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+				repositoryId, folderId, WorkflowConstants.STATUS_APPROVED,
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Object entry : entries) {
+			if (entry instanceof Folder) {
+				Folder curFolder = (Folder)entry;
+
+				_zipFolder(
+					curFolder.getFolderId(), curFolder.getRepositoryId(),
+					path.concat(StringPool.SLASH).concat(curFolder.getName()),
+					zipWriter);
+			}
+			else if (entry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)entry;
+
+				_zipFileEntry(fileEntry, path, zipWriter);
+			}
+		}
 	}
 
 }

@@ -6,7 +6,8 @@
 				var instance = this;
 
 				AUI().use(
-					'aui-debounce', 'liferay-autocomplete-input',
+					'aui-debounce',
+					'liferay-autocomplete-input',
 					function(A) {
 						var path = instance.path;
 

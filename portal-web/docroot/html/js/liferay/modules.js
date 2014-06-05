@@ -146,12 +146,6 @@
 							'sortable'
 						]
 					},
-					'liferay-autocomplete-textarea': {
-						path: 'autocomplete_textarea.js',
-						requires: [
-							'liferay-autocomplete-input'
-						]
-					},
 					'liferay-autocomplete-input': {
 						path: 'autocomplete_input.js',
 						requires: [
@@ -211,6 +205,12 @@
 						path: 'autocomplete_input_caretoffset_sel.js',
 						requires: [
 							'liferay-autocomplete-textarea'
+						]
+					},
+					'liferay-autocomplete-textarea': {
+						path: 'autocomplete_textarea.js',
+						requires: [
+							'liferay-autocomplete-input'
 						]
 					},
 					'liferay-browser-selectors': {

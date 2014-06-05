@@ -23,14 +23,14 @@ AUI.add(
 		var AutoCompleteInputBase = function() {};
 
 		AutoCompleteInputBase.ATTRS = {
-			inputNode: {
-				setter: A.one,
-				writeOnce: true
-			},
-
 			caretAtTerm: {
 				validator: Lang.isBoolean,
 				value: true
+			},
+
+			inputNode: {
+				setter: A.one,
+				writeOnce: true
 			},
 
 			offset: {
@@ -98,31 +98,6 @@ AUI.add(
 				);
 			},
 
-			_defSelectFn: function(event) {
-				var instance = this;
-
-				var text = event.result.text;
-
-				var tplReplace = instance.get('tplReplace');
-
-				if (tplReplace) {
-					text = Lang.sub(tplReplace, event.result.raw);
-				}
-
-				instance._inputNode.focus();
-
-				instance._updateValue(text);
-
-				instance._ariaSay(
-					'item_selected',
-					{
-						item: event.result.text
-					}
-				);
-
-				instance.hide();
-			},
-
 			_adjustACPosition: function() {
 				var instance = this;
 
@@ -167,6 +142,31 @@ AUI.add(
 				instance.on('query', instance._onACQuery, instance);
 
 				instance.after('visibleChange', instance._afterACVisibleChange, instance);
+			},
+
+			_defSelectFn: function(event) {
+				var instance = this;
+
+				var text = event.result.text;
+
+				var tplReplace = instance.get('tplReplace');
+
+				if (tplReplace) {
+					text = Lang.sub(tplReplace, event.result.raw);
+				}
+
+				instance._inputNode.focus();
+
+				instance._updateValue(text);
+
+				instance._ariaSay(
+					'item_selected',
+					{
+						item: event.result.text
+					}
+				);
+
+				instance.hide();
 			},
 
 			_getRegExp: function() {
@@ -254,7 +254,7 @@ AUI.add(
 
 					instance.setAttrs(A.merge(TRIGGER_CONFIG_DEFAULTS, triggerConfig));
 
-				 	instance._trigger = trigger;
+					instance._trigger = trigger;
 				}
 			},
 

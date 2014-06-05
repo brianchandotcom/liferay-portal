@@ -14,8 +14,8 @@ AUI.add(
 				var input = node.getDOM();
 
 				return {
-					start: input.selectionStart,
-					end: input.selectionStart
+					end: input.selectionStart,
+					start: input.selectionStart
 				};
 			},
 

@@ -41,6 +41,10 @@
 	padding: 0 20px;
 }
 
+.rtl #banner .configuration-title {
+	float: left;
+}
+
 #banner .logo {
 	margin-right: 20px;
 }

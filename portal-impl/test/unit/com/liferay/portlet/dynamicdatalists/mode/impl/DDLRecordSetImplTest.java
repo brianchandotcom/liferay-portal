@@ -14,59 +14,48 @@
 
 package com.liferay.portlet.dynamicdatalists.mode.impl;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.service.BaseDDLServiceTestCase;
+import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DDLRecordSetImplTest extends BaseDDLServiceTestCase {
+public class DDLRecordSetImplTest extends BaseDDMTest {
+
+	@Before
+	@Override
+	public void setUp() {
+		super.setUp();
+	}
 
 	@Test
 	public void testGetDDMStructure() throws Exception {
-		Document document = SAXReaderUtil.createDocument();
+		Document document = createDocument("Text 1", "Text 2", "Text 3");
 
-		Element rootElement = document.addElement("root");
+		DDMStructure ddmStructure = createStructure(
+			"Test Structure", "Text 1", "Text 2", "Text 3");
 
-		rootElement.addAttribute("available-locales", "en_US");
-		rootElement.addAttribute("default-locale", "en_US");
+		DDLRecordSet recordSet = createRecordSet(
+			ddmStructure.getStructureId(), "Test Record Set");
 
-		addTextElement(rootElement, RandomTestUtil.randomString(), "Text 1");
-		addTextElement(rootElement, RandomTestUtil.randomString(), "Text 2");
-		addTextElement(rootElement, RandomTestUtil.randomString(), "Text 3");
-
-		DDMStructure ddmStructure = addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", document.asXML(), StorageType.XML.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT);
-
-		DDLRecordSet recordSet = addRecordSet(ddmStructure.getStructureId());
+		Element rootElement = document.getRootElement();
 
 		Element dynamicElement = rootElement.element("dynamic-element");
 
 		rootElement.remove(dynamicElement);
 
-		DDMTemplate template = addFormTemplate(
+		DDMTemplate template = createTemplate(
 			ddmStructure.getStructureId(), "Test Form Template",
 			document.asXML());
 
@@ -86,21 +75,13 @@ public class DDLRecordSetImplTest extends BaseDDLServiceTestCase {
 		}
 	}
 
-	protected void addTextElement(Element element, String name, String label) {
-		Element dynamicElement = element.addElement("dynamic-element");
+	protected DDLRecordSet createRecordSet(long ddmStructureId, String name) {
+		DDLRecordSet recordSet = new DDLRecordSetImpl();
 
-		dynamicElement.addAttribute("dataType", "string");
-		dynamicElement.addAttribute("name", name);
-		dynamicElement.addAttribute("type", "text");
+		recordSet.setDDMStructureId(ddmStructureId);
+		recordSet.setName(name);
 
-		Element metadataElement = dynamicElement.addElement("meta-data");
-
-		metadataElement.addAttribute("locale", "en_US");
-
-		Element entryElement = metadataElement.addElement("entry");
-
-		entryElement.addAttribute("name", "label");
-		entryElement.setText(label);
+		return recordSet;
 	}
 
 }

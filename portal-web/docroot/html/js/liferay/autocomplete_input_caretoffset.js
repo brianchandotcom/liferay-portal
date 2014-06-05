@@ -63,16 +63,14 @@ AUI.add(
 
 				var inputNode = instance.get(STR_INPUT_NODE);
 
-				var styles = {};
+				var inputMirror = instance._inputMirror;
 
 				AArray.each(
 					MIRROR_STYLES,
 					function(item, index) {
-						styles[item] = inputNode.getStyle(item);
+						inputMirror.setStyle(item, inputNode.getStyle(item));
 					}
 				);
-
-				instance._inputMirror.setStyles(styles);
 			},
 
 			_createInputMirror: function() {

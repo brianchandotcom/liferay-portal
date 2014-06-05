@@ -30,7 +30,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	#wrapper {
-		padding: 0;
+		padding: 0 15px;
 	}
 
 	.container-fluid.panel-manage-frontpage {
@@ -497,6 +497,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.panel-page-menu {
+		padding-left: 0;
 		position: relative;
 
 		.minimize-panels a {

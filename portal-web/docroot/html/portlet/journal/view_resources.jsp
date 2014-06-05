@@ -80,6 +80,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 		</div>
 
+		<span id="<portlet:namespace />addButton">
+			<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
+		</span>
+
 		<span id="<portlet:namespace />sortButton">
 			<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
 		</span>

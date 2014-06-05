@@ -137,20 +137,6 @@ public class AssetVocabularySettingsHelper {
 		return _properties.toString();
 	}
 
-	protected boolean isClassNameIdSpecified(
-		long classNameId, long[] classNameIds) {
-
-		if (classNameIds.length == 0) {
-			return false;
-		}
-
-		if (classNameIds[0] == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
-			return true;
-		}
-
-		return ArrayUtil.contains(classNameIds, classNameId);
-	}
-
 	protected String getClassNameAndTypeId(long classNameId, long classTypeId) {
 		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
 			String.valueOf(classTypeId));
@@ -172,6 +158,20 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return classNameIds;
+	}
+
+	protected boolean isClassNameIdSpecified(
+		long classNameId, long[] classNameIds) {
+
+		if (classNameIds.length == 0) {
+			return false;
+		}
+
+		if (classNameIds[0] == AssetCategoryConstants.ALL_CLASS_NAMES_ID) {
+			return true;
+		}
+
+		return ArrayUtil.contains(classNameIds, classNameId);
 	}
 
 	private static final String _KEY_MULTI_VALUED = "multiValued";

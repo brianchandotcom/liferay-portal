@@ -240,28 +240,21 @@ public abstract class BaseRepositoryFactory<T> {
 	protected Map<Class<? extends Capability>, Capability>
 		getDefaultExternalCapabilities() {
 
-		return Collections.emptyMap();
+		return _DEFAULT_EXTERNAL_CAPABILITIES;
 	}
 
 	protected Set<Class<? extends Capability>> getDefaultExternalExports() {
-		return Collections.emptySet();
+		return _DEFAULT_EXTERNAL_EXPORTS;
+	}
+
+	protected Set<Class<? extends Capability>> getDefaultInternalExports() {
+		return _DEFAULT_INTERNAL_EXPORTS;
 	}
 
 	protected Map<Class<? extends Capability>, Capability>
 		getDefaultInternalCapabilities() {
 
-		Map<Class<? extends Capability>, Capability> defaultCapabilities =
-			new HashMap<Class<? extends Capability>, Capability>();
-
-		defaultCapabilities.put(
-			TrashCapability.class, new LiferayTrashCapability());
-
-		return defaultCapabilities;
-	}
-
-	protected Set<Class<? extends Capability>> getDefaultInternalExports() {
-		return Collections.<Class<? extends Capability>>singleton(
-			TrashCapability.class);
+		return _DEFAULT_INTERNAL_CAPABILITIES;
 	}
 
 	protected DLAppHelperLocalService getDlAppHelperLocalService() {
@@ -457,6 +450,28 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private static final Map<Class<? extends Capability>, Capability>
+		_DEFAULT_EXTERNAL_CAPABILITIES = Collections.emptyMap();
+
+	private static final Set<Class<? extends Capability>>
+		_DEFAULT_EXTERNAL_EXPORTS = Collections.emptySet();
+
+	private static final Map<Class<? extends Capability>, Capability>
+		_DEFAULT_INTERNAL_CAPABILITIES;
+
+	private static final Set<Class<? extends Capability>>
+		_DEFAULT_INTERNAL_EXPORTS =
+			Collections.<Class<? extends Capability>>singleton(
+				TrashCapability.class);
+
+	static {
+		_DEFAULT_INTERNAL_CAPABILITIES =
+			new HashMap<Class<? extends Capability>, Capability>();
+
+		_DEFAULT_INTERNAL_CAPABILITIES.put(
+			TrashCapability.class, new LiferayTrashCapability());
 	}
 
 	@BeanReference(type = AssetEntryLocalService.class)

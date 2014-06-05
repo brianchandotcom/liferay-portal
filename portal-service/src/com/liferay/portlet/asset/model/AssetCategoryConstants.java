@@ -14,12 +14,20 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Jorge Ferrer
  */
 public class AssetCategoryConstants {
 
-	public static final long ALL_CLASS_NAME_IDS = 0;
+	public static final String ALL_CLASS_NAMES_AND_TYPES_ID =
+		AssetCategoryConstants.ALL_CLASS_NAMES_IDS + StringPool.COLON +
+			AssetCategoryConstants.ALL_CLASS_TYPES_ID;
+
+	public static final long ALL_CLASS_NAMES_IDS = 0;
+
+	public static final long ALL_CLASS_TYPES_ID = -1;
 
 	public static final long DEFAULT_PARENT_CATEGORY_ID = 0;
 

@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,33 +81,41 @@ public class AssetVocabularySettingsHelper {
 		return GetterUtil.getBoolean(value, true);
 	}
 
-	public void setClassNameIds(long[] classNameIds, boolean[] requireds) {
-		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
-		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
+	public void setClassNameAndTypeIds(
+		long[] classNameIds, long[] classTypeIds, boolean[] requireds) {
+
+		Set<String> requiredClassNameIds = new LinkedHashSet<String>();
+		Set<String> selectedClassNameIds = new LinkedHashSet<String>();
 
 		for (int i = 0; i < classNameIds.length; ++i) {
 			long classNameId = classNameIds[i];
+			long classTypeId = classTypeIds[i];
 			boolean required = requireds[i];
 
-			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
+			String classNameAndTypeId = getClassNameAndTypeId(
+				classNameId, classTypeId);
+
+			if (classNameAndTypeId.equals(
+					AssetCategoryConstants.ALL_CLASS_NAMES_AND_TYPES_ID)) {
+
 				if (required) {
 					requiredClassNameIds.clear();
 
-					requiredClassNameIds.add(classNameId);
+					requiredClassNameIds.add(classNameAndTypeId);
 				}
 
 				selectedClassNameIds.clear();
 
-				selectedClassNameIds.add(classNameId);
+				selectedClassNameIds.add(classNameAndTypeId);
 
 				break;
 			}
 			else {
 				if (required) {
-					requiredClassNameIds.add(classNameId);
+					requiredClassNameIds.add(classNameAndTypeId);
 				}
 
-				selectedClassNameIds.add(classNameId);
+				selectedClassNameIds.add(classNameAndTypeId);
 			}
 		}
 
@@ -139,6 +148,11 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return ArrayUtil.contains(classNameIds, classNameId);
+	}
+
+	protected String getClassNameAndTypeId(long classNameId, long classTypeId) {
+		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
+			String.valueOf(classTypeId));
 	}
 
 	private static final String _KEY_MULTI_VALUED = "multiValued";

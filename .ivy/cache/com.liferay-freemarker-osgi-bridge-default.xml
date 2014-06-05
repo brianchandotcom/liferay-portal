@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="com.liferay"
+		module="freemarker-osgi-bridge"
+		revision="working@Miguels-MacBook-Pro-3.local"
+		conf="default"
+		confs="default"
+		date="20140605224153"/>
+	<dependencies>
+		<module organisation="org.osgi" name="org.osgi.core">
+			<revision name="4.3.1" status="release" pubdate="20121030024430" resolver="liferay-public" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="1">
+				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
+				<metadata-artifact status="no" details="" size="2674" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.core/ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.core/4.3.1/org.osgi.core-4.3.1.pom"/>
+				<caller organisation="com.liferay" name="freemarker-osgi-bridge" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@Miguels-MacBook-Pro-3.local"/>
+				<artifacts>
+					<artifact name="org.osgi.core" type="jar" ext="jar" status="no" details="" size="349985" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.core/jars/org.osgi.core-4.3.1.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.core/4.3.1/org.osgi.core-4.3.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.osgi" name="org.osgi.compendium">
+			<revision name="4.3.1" status="release" pubdate="20121030024539" resolver="liferay-public" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="0">
+				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
+				<metadata-artifact status="no" details="" size="2704" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.compendium/ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.compendium/4.3.1/org.osgi.compendium-4.3.1.pom"/>
+				<caller organisation="com.liferay" name="freemarker-osgi-bridge" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@Miguels-MacBook-Pro-3.local"/>
+				<artifacts>
+					<artifact name="org.osgi.compendium" type="jar" ext="jar" status="no" details="" size="767142" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-4.3.1.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/osgi/org.osgi.compendium/4.3.1/org.osgi.compendium-4.3.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

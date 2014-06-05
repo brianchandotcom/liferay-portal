@@ -244,7 +244,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testAddNullFileEntry() throws Exception {
+	public void testAddFileEntryWithNullBytes() throws Exception {
 		long folderId = parentFolder.getFolderId();
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
@@ -277,6 +277,16 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				"Unable to pass null byte[] " +
 					StackTraceUtil.getStackTrace(e));
 		}
+	}
+
+	@Test
+	public void testAddFileEntryWithNullFile() throws Exception {
+		long folderId = parentFolder.getFolderId();
+		String description = StringPool.BLANK;
+		String changeLog = StringPool.BLANK;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		try {
 			String name = "File-null.txt";
@@ -308,6 +318,16 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			Assert.fail(
 				"Unable to pass null File " + StackTraceUtil.getStackTrace(e));
 		}
+	}
+
+	@Test
+	public void testAddFileEntryWithNullInputStream() throws Exception {
+		long folderId = parentFolder.getFolderId();
+		String description = StringPool.BLANK;
+		String changeLog = StringPool.BLANK;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		try {
 			String name = "IS-null.txt";

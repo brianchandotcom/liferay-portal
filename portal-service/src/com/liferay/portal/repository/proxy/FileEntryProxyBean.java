@@ -183,6 +183,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return _fileEntry.getIconCssClass();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 

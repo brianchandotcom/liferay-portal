@@ -136,10 +136,6 @@
 		color: #999;
 	}
 
-	.lfr-asset-date {
-		background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
-	}
-
 	.lfr-asset-tags {
 		color: #7D7D7D;
 

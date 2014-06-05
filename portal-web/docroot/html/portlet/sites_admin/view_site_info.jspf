@@ -49,6 +49,8 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 	%>
 
 	<div class="organizations-msg-info portlet-msg">
+		<i class="icon-group"></i>
+
 		<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(pageContext, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>

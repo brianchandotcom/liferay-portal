@@ -708,6 +708,11 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getFileIconCssClass(String extension) {
+		return "icon-file-alt";
+	}
+
+	@Override
 	public String getGenericName(String extension) {
 		String genericName = _genericNames.get(extension);
 

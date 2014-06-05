@@ -25,7 +25,7 @@ ArchivedSettings archivedSettings = (ArchivedSettings)objects[0];
 portletResource = (String)objects[1];
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:actionURL var="restoreURL">
 		<portlet:param name="struts_action" value="/portlet_configuration/edit_archived_setups" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
@@ -35,7 +35,7 @@ portletResource = (String)objects[1];
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		image="undo"
+		iconCssClass="icon-undo"
 		message="restore"
 		url="<%= restoreURL %>"
 	/>

@@ -134,6 +134,8 @@ public interface DL {
 
 	public String getFileIcon(String extension);
 
+	public String getFileIconCssClass(String extension);
+
 	public String getGenericName(String extension);
 
 	public String getImagePreviewURL(

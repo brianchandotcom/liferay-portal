@@ -53,7 +53,7 @@
 			<liferay-ui:icon-menu
 				cssClass="lfr-translation-manager-icon-menu"
 				direction="down"
-				icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
+				icon="../aui/plus"
 				message='<%= LanguageUtil.get(pageContext, "add-translation") %>'
 				showArrow="<%= true %>"
 				showWhenSingleIcon="<%= true %>"

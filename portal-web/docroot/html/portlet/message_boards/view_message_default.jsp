@@ -28,7 +28,7 @@ MBThread thread = messageDisplay.getThread();
 
 <div id="<portlet:namespace />addAnswerFlagDiv" style="display: none;">
 	<liferay-ui:icon
-		image="checked"
+		iconCssClass="icon-check"
 		label="<%= true %>"
 		message="answer"
 	/>
@@ -50,7 +50,7 @@ MBThread thread = messageDisplay.getThread();
 	%>
 
 	<liferay-ui:icon
-		image="checked"
+		iconCssClass="icon-check"
 		label="<%= true %>"
 		message="mark-as-an-answer"
 		url="<%= taglibMarkAsAnAnswerURL %>"

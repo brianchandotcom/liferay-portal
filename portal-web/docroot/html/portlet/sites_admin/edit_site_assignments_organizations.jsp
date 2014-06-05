@@ -142,7 +142,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					%>
 
 					<liferay-ui:icon
-						image="../aui/globe"
+						iconCssClass="icon-globe"
 						label="<%= true %>"
 						message="assign-organizations"
 						url="<%= viewOrganizationsURL.toString() %>"

@@ -27,7 +27,7 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 %>
 
 <c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-	<liferay-ui:icon-menu>
+	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/expando/view_attributes" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -35,7 +35,8 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</liferay-ui:icon-menu>

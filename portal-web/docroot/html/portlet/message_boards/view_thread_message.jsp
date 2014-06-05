@@ -99,7 +99,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									</portlet:actionURL>
 
 									<liferay-ui:icon
-										image="../message_boards/unban_user"
+										iconCssClass="icon-ok-sign"
 										label="<%= true %>"
 										message="unban-this-user"
 										url="<%= unbanUserURL.toString() %>"
@@ -114,7 +114,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									</portlet:actionURL>
 
 									<liferay-ui:icon
-										image="../message_boards/ban_user"
+										iconCssClass="icon-ban-circle"
 										label="<%= true %>"
 										message="ban-this-user"
 										url="<%= banUserURL.toString() %>"
@@ -154,7 +154,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 					<div class="answer <%= !message.isRoot() && message.isAnswer() ? "" : "hide" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
 						<liferay-ui:icon
-							image="checked"
+							iconCssClass="icon-check"
 							label="<%= true %>"
 							message="answer"
 						/>
@@ -218,7 +218,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								%>
 
 								<liferay-ui:icon
-									image="checked"
+									iconCssClass="icon-check"
 									label="<%= true %>"
 									message="mark-as-an-answer"
 									url="<%= taglibMarkAsAnswerURL %>"

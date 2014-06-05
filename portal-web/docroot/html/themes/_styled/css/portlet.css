@@ -154,7 +154,7 @@ body.portlet {
 
 		.lfr-icon-action {
 			a {
-				background: url() no-repeat 0 50%;
+				color: #FFF;
 				display: inline-block;
 				margin-left: 5px;
 				vertical-align: top;
@@ -166,31 +166,11 @@ body.portlet {
 						text-decoration: underline;
 					}
 				}
-
-				img {
-					visibility: hidden;
-				}
 			}
 
 			&.lfr-icon-menu .btn.dropdown-toggle {
 				text-align: left;
 			}
-		}
-
-		.lfr-icon-action-add a {
-			background-image: url(../images/common/add_white.png);
-		}
-
-		.lfr-icon-action-edit a {
-			background-image: url(../images/common/edit_white.png);
-		}
-
-		.lfr-icon-action-edit-template a {
-			background-image: url(../images/common/edit_template_white.png);
-		}
-
-		.lfr-icon-action-configuration a {
-			background-image: url(../images/common/configuration_white.png);
 		}
 	}
 }
@@ -840,7 +820,7 @@ body.portlet {
 }
 
 .ie8 {
-	.dockbar, .lfr-icon-action, .logo {
+	.dockbar, .logo {
 		img {
 			max-width: none;
 		}

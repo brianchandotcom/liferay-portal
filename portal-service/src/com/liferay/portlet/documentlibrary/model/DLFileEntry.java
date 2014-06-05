@@ -78,6 +78,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 
 	public java.lang.String getIcon();
 
+	public java.lang.String getIconCssClass();
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -64,26 +64,19 @@ for (int j = 0; j < folderColumns.length; j++) {
 				href="<%= repositoryAccess ? rowURL : null %>"
 				name="<%= folderColumn %>"
 			>
-
-				<%
-				String folderIcon = "/common/folder_empty.png";
-
-				if (curFolder.isMountPoint()) {
-					folderIcon = repositoryAccess ? "/common/drive.png" : "/common/drive_error.png";
-				}
-				else {
-					if ((curFoldersCount + curFileEntriesCount) > 0) {
-						folderIcon = "/common/folder_full_document.png";
-					}
-				}
-				%>
-
 				<c:if test="<%= repositoryAccess %>">
 					<a href="<%= rowURL %>">
 				</c:if>
 
 				<span class="entry-thumbnail">
-					<img align="left" alt="<%= LanguageUtil.get(locale, "thumbnail") %>" src="<%= HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()) + folderIcon %>" />
+
+					<%
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+					%>
+
+					<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 				</span>
 
 				<div class="entry-metadata">

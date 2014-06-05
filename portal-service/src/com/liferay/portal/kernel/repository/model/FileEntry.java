@@ -119,6 +119,8 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public String getIcon();
 
+	public String getIconCssClass();
+
 	/**
 	 * Returns the latest file version. In a Liferay repository, the latest
 	 * version is returned, regardless of workflow state. In third-party

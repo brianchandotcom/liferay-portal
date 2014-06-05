@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
@@ -32,7 +32,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="post"
+		iconCssClass="icon-plus"
 		message='<%= LanguageUtil.format(pageContext, "add-new-x", "file") %>'
 		url="<%= editURL %>"
 	/>
@@ -44,7 +44,8 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= taglibOnClick %>"
 		/>
 	</c:if>
@@ -59,7 +60,8 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			image="activate"
+			iconCssClass="icon-ok-sign"
+			message="activate"
 			url="<%= restoreWorkflowDefinitionURL %>"
 		/>
 	</c:if>

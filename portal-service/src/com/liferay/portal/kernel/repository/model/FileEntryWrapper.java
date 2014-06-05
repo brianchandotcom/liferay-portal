@@ -162,6 +162,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return _fileEntry.getIconCssClass();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 

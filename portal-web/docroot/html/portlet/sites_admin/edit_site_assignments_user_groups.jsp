@@ -132,7 +132,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 					%>
 
 					<liferay-ui:icon
-						image="../aui/globe"
+						iconCssClass="icon-globe"
 						label="<%= true %>"
 						message="assign-user-groups"
 						url="<%= viewUserGroupsURL.toString() %>"

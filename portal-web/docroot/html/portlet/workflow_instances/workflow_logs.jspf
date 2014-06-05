@@ -30,8 +30,22 @@ for (WorkflowLog workflowLog : workflowLogs) {
 	}
 %>
 
-	<div class="task-activity task-type-<%= workflowLog.getType() %>">
+	<div class="task-activity">
 		<div class="task-activity-date">
+			<c:choose>
+				<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
+					<i class="icon-file-alt"></i>
+				</c:when>
+				<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_UPDATE %>">
+					<i class="icon-time"></i>
+				</c:when>
+				<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
+				</c:when>
+				<c:otherwise>
+					<i class="icon-signin"></i>
+				</c:otherwise>
+			</c:choose>
+
 			<%= dateFormatDateTime.format(workflowLog.getCreateDate()) %>
 		</div>
 

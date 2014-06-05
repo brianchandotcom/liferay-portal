@@ -83,7 +83,7 @@
 
 			<liferay-ui:icon
 				cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-				image="../aui/plus-sign"
+				iconCssClass="icon-plus-sign"
 				label="<%= true %>"
 				message="add-to-any-website"
 				url="<%= widgetHREF %>"
@@ -92,7 +92,7 @@
 
 		<c:if test="<%= facebookShowAddAppLink %>">
 			<liferay-ui:icon
-				image="../aui/facebook"
+				iconCssClass="icon-facebook"
 				label="<%= true %>"
 				message="add-to-facebook"
 				method="get"
@@ -108,7 +108,7 @@
 
 			<liferay-ui:icon
 				cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-				image="../aui/plus-sign"
+				iconCssClass="icon-plus-sign"
 				label="<%= true %>"
 				message="add-to-igoogle"
 				url="<%= googleGadgetHREF %>"
@@ -122,7 +122,7 @@
 			%>
 
 			<liferay-ui:icon
-				image="../aui/plus-sign"
+				iconCssClass="icon-plus-sign"
 				label="<%= true %>"
 				message="add-to-netvibes"
 				method="get"
@@ -132,7 +132,7 @@
 
 		<c:if test="<%= appShowShareWithFriendsLink %>">
 			<liferay-ui:icon
-				image="../aui/share"
+				iconCssClass="icon-share"
 				label="<%= true %>"
 				message="share-this-application-with-friends"
 				method="get"

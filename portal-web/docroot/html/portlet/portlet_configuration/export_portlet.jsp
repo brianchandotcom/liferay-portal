@@ -249,7 +249,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 									</liferay-util:buffer>
 
 									<liferay-ui:icon
-										image="calendar"
+										iconCssClass="icon-calendar"
 										label="<%= true %>"
 										message='<%= LanguageUtil.get(locale, "date-range") + selectedLabelsHTML %>'
 									/>

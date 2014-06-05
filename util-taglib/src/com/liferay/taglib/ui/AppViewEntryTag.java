@@ -97,6 +97,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_groupId = groupId;
 	}
 
+	public void setIconCssClass(String iconCssClass) {
+		_iconCssClass = iconCssClass;
+	}
+
 	public void setLatestApprovedVersion(String latestApprovedVersion) {
 		_latestApprovedVersion = latestApprovedVersion;
 	}
@@ -185,6 +189,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_expirationDate = null;
 		_folder = false;
 		_groupId = 0;
+		_iconCssClass = null;
 		_latestApprovedVersion = null;
 		_latestApprovedVersionAuthor = null;
 		_locked = false;
@@ -245,6 +250,8 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute("liferay-ui:app-view-entry:folder", _folder);
 		request.setAttribute("liferay-ui:app-view-entry:groupId", _groupId);
 		request.setAttribute(
+			"liferay-ui:app-view-entry:iconCssClass", _iconCssClass);
+		request.setAttribute(
 			"liferay-ui:app-view-entry:latestApprovedVersion",
 			_latestApprovedVersion);
 		request.setAttribute(
@@ -297,6 +304,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private Date _expirationDate;
 	private boolean _folder;
 	private long _groupId;
+	private String _iconCssClass;
 	private String _latestApprovedVersion;
 	private String _latestApprovedVersionAuthor;
 	private boolean _locked;

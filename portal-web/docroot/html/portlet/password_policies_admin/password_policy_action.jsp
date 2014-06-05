@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
@@ -35,7 +35,8 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
+			iconCssClass="icon-edit"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -50,7 +51,8 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
+			iconCssClass="icon-lock"
+			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -65,7 +67,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="assign"
+			iconCssClass="icon-signin"
 			message="assign-members"
 			url="<%= assignMembersURL %>"
 		/>

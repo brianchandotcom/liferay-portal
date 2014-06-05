@@ -105,7 +105,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 			<div class="site-membership-type">
 				<liferay-ui:icon
-					image="assign"
+					iconCssClass="icon-signin"
 					label="<%= true %>"
 					message='<%= LanguageUtil.get(pageContext, "membership-type") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, GroupConstants.getTypeLabel(group.getType())) %>'
 				/>
@@ -128,7 +128,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							image="manage_task"
+							iconCssClass="icon-tasks"
 							label="<%= true %>"
 							message='<%= LanguageUtil.format(pageContext, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
 							url="<%= viewMembershipRequestsURL %>"

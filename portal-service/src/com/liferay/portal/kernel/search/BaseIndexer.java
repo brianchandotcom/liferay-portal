@@ -71,14 +71,12 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -109,6 +107,10 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
+	}
+
+	@Override
+	public void contributeToFullQuery(SearchContext searchContext) {
 	}
 
 	@Override
@@ -208,25 +210,21 @@ public abstract class BaseIndexer implements Indexer {
 		try {
 			searchContext.setSearchEngineId(getSearchEngineId());
 
-			String[] entryClassNames = getClassNames();
+			searchContext.clearEntryClassNamesForFullQuery();
 
-			if (searchContext.isIncludeAttachments()) {
-				entryClassNames = ArrayUtil.append(
-					entryClassNames, DLFileEntry.class.getName());
+			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+				indexer.contributeToFullQuery(searchContext);
 			}
 
-			if (searchContext.isIncludeDiscussions()) {
-				entryClassNames = ArrayUtil.append(
-					entryClassNames, MBMessage.class.getName());
+			String[] entryClassNamesForFullQuery =
+				searchContext.getEntryClassNamesForFullQuery();
 
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-			}
+			String[] entryClassNames = ArrayUtil.append(
+				getClassNames(), entryClassNamesForFullQuery);
 
 			searchContext.setEntryClassNames(entryClassNames);
 
-			if (searchContext.isIncludeAttachments() ||
-				searchContext.isIncludeDiscussions()) {
-
+			if (ArrayUtil.isNotEmpty(entryClassNamesForFullQuery)) {
 				searchContext.setAttribute(
 					"relatedEntryClassNames", getClassNames());
 			}

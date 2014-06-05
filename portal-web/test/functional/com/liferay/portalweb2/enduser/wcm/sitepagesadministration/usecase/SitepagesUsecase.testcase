@@ -6,8 +6,6 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
-
 		<execute macro="Site#tearDownCP" />
 
 		<execute macro="WebContent#tearDownCP" />
@@ -64,6 +62,149 @@
 		<var name="key_pageName" value="${sitePage3Name}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePage3Name}" />
+	</command>
+
+	<command name="CannotDeleteLastPrivatePage" priority="3">
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Private" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#deleteAllPrivatepagesCP" />
+	</command>
+
+	<command name="CannotDeleteLastPublicPage" priority="3">
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#deleteAllPublicpagesCP">
+			<var name="lastPublicSitepage" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#deleteAllPublicpagesCP" />
+	</command>
+
+	<command name="ChangePageTypeToLinkToPageHideChildPages" priority="3">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page1 Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page2 Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="childPageName" value="true" />
+			<var name="siteChildPageName" value="Child Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page2 Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="SitePage#addSitePageTypeLinkToAPageOfThisSiteCP">
+			<var name="indexNumber" value="4" />
+			<var name="pageType" value="Link to a Page of This Site" />
+			<var name="sitePageName" value="- - Child Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page1 Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_TO_PAGE" />
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_2" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
+	</command>
+
+	<command name="LoadMoreResultsLinkAreMissingAtAllLevelsInTreeView" priority="3">
+		<property name="custom.properties" value="layout.manage.pages.initial.children=3" />
+		<var name="childPageNameList" value="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" />
+		<var name="pageNameList" value="Page1 Name,Page2 Name,Page3 Name,Page4 Name" />
+
+		<for list="${pageNameList}" param="pageName">
+			<execute macro="Page#addPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#viewLoadMoreResultsPages">
+			<var name="pageName" value="Public Pages" />
+			<var name="siteChildPages" value="false" />
+		</execute>
+
+		<for list="${childPageNameList}" param="siteChildPageName">
+			<execute macro="SitePage#addChildCP">
+				<var name="siteChildPageName" value="${siteChildPageName}" />
+				<var name="sitePagePrivacy" value="Public" />
+				<var name="siteScopeSelected" value="true" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#viewLoadMoreResultsPages">
+			<var name="pageName" value="Welcome" />
+			<var name="siteChildPages" value="true" />
+		</execute>
 	</command>
 
 	<command name="SitesPanelLayout" priority="4">

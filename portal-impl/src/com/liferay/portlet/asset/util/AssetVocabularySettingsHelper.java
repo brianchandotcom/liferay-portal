@@ -31,8 +31,8 @@ import java.util.Set;
  */
 public class AssetVocabularySettingsHelper {
 
-	public static final long[] DEFAULT_SELECTED_CLASSNAME_IDS =
-		{AssetCategoryConstants.ALL_CLASS_NAME_IDS};
+	public static final String[] DEFAULT_SELECTED_CLASSNAME_AND_TYPE_ID =
+		{AssetCategoryConstants.ALL_CLASS_NAMES_AND_TYPES_ID};
 
 	public AssetVocabularySettingsHelper() {
 		super();
@@ -47,25 +47,15 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	public long[] getClassNameIds() {
-		String propertyValue = _properties.getProperty(
-			_KEY_SELECTED_CLASS_NAME_AND_TYPE_IDS);
+		String[] classNameAndTypeIds = getClassNameAndTypeIds();
 
-		if (Validator.isNull(propertyValue)) {
-			return DEFAULT_SELECTED_CLASSNAME_IDS;
-		}
-
-		return getClassNameIds(StringUtil.split(propertyValue));
+		return getClassNameIds(classNameAndTypeIds);
 	}
 
 	public long[] getRequiredClassNameIds() {
-		String propertyValue = _properties.getProperty(
-			_KEY_REQUIRED_CLASS_NAME_AND_TYPE_IDS);
+		String[] classNameAndTypeIds = getRequiredClassNameAndTypeIds();
 
-		if (Validator.isNull(propertyValue)) {
-			return new long[0];
-		}
-
-		return getClassNameIds(StringUtil.split(propertyValue));
+		return getClassNameIds(classNameAndTypeIds);
 	}
 
 	public boolean hasClassNameId(long classNameId) {
@@ -142,6 +132,17 @@ public class AssetVocabularySettingsHelper {
 			String.valueOf(classTypeId));
 	}
 
+	protected String[] getClassNameAndTypeIds() {
+		String propertyValue = _properties.getProperty(
+			_KEY_SELECTED_CLASS_NAME_AND_TYPE_IDS);
+
+		if (Validator.isNull(propertyValue)) {
+			return DEFAULT_SELECTED_CLASSNAME_AND_TYPE_ID;
+		}
+
+		return StringUtil.split(propertyValue);
+	}
+
 	protected long getClassNameId(String classNameAndTypeId) {
 		String[] parts = StringUtil.split(classNameAndTypeId, CharPool.COLON);
 
@@ -158,6 +159,17 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		return classNameIds;
+	}
+
+	protected String[] getRequiredClassNameAndTypeIds() {
+		String propertyValue = _properties.getProperty(
+			_KEY_REQUIRED_CLASS_NAME_AND_TYPE_IDS);
+
+		if (Validator.isNull(propertyValue)) {
+			return new String[0];
+		}
+
+		return StringUtil.split(propertyValue);
 	}
 
 	protected boolean isClassNameIdSpecified(

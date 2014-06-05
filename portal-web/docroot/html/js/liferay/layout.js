@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Util = Liferay.Util;
 
+		var touch = A.UA.touch;
+
 		var CSS_DRAGGABLE = 'portlet-draggable';
 
 		var layoutModule = 'liferay-layout-column';
@@ -13,6 +15,8 @@ AUI.add(
 
 		var LAYOUT_CONFIG = Liferay.Data.layoutConfig;
 
+		var CSS_TOUCH_DRAG_HANDLE = Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || 'portlet-touch-drag-handle';
+
 		var Layout = {
 			EMPTY_COLUMNS: {},
 
@@ -22,6 +26,8 @@ AUI.add(
 
 			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy sortable-layout-proxy"></div>'),
 
+			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
+
 			PROXY_NODE_ITEM: A.Node.create(
 				'<div class="lfr-portlet-proxy sortable-layout-proxy">' +
 					'<div class="portlet-topper">' +
@@ -29,8 +35,6 @@ AUI.add(
 					'</div>' +
 				'</div>'
 			),
-
-			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
 
 			options: LAYOUT_CONFIG,
 
@@ -49,28 +53,6 @@ AUI.add(
 						Liferay.Portlet.close(portlet, true);
 					}
 				);
-			},
-
-			getActiveDropContainer: function() {
-				var options = Layout.options;
-
-				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
-			},
-
-			getActiveDropNodes: function() {
-				var options = Layout.options;
-
-				var dropNodes = [];
-
-				A.all(options.dropContainer).each(
-					function(dropContainer) {
-						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
-							dropNodes.push(dropContainer.get('parentNode'));
-						}
-					}
-				);
-
-				return A.all(dropNodes);
 			},
 
 			findIndex: function(node) {
@@ -118,6 +100,28 @@ AUI.add(
 				if (layoutHandler) {
 					return layoutHandler.fire.apply(layoutHandler, arguments);
 				}
+			},
+
+			getActiveDropContainer: function() {
+				var options = Layout.options;
+
+				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
+			},
+
+			getActiveDropNodes: function() {
+				var options = Layout.options;
+
+				var dropNodes = [];
+
+				A.all(options.dropContainer).each(
+					function(dropContainer) {
+						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
+							dropNodes.push(dropContainer.get('parentNode'));
+						}
+					}
+				);
+
+				return A.all(dropNodes);
 			},
 
 			getLayoutHandler: function() {
@@ -283,6 +287,34 @@ AUI.add(
 				);
 			},
 
+			updatePortletTouchDragHandles: function(event) {
+				var layoutHandler = Layout.getLayoutHandler();
+				var options = Layout.options;
+
+				var drag = layoutHandler.delegate.dd;
+				var dragNodeTitles = A.all(options.dragNodes + ' .portlet-title');
+
+				var touchHandles = ['.' + CSS_TOUCH_DRAG_HANDLE, '.portlet-borderless-bar .portlet-title-default'];
+
+				dragNodeTitles.append('<div class="' + CSS_TOUCH_DRAG_HANDLE + '"></div>');
+
+				A.Array.each(
+					options.handles,
+					function(handle) {
+						drag.removeHandle(handle);
+					}
+				);
+
+				A.Array.each(
+					touchHandles,
+					function(handle) {
+						drag.addHandle(handle);
+					}
+				);
+
+				Layout.options.handles = touchHandles;
+			},
+
 			_afterPortletClose: function(event) {
 				var column = event.column;
 
@@ -394,6 +426,10 @@ AUI.add(
 
 				Layout.updateEmptyColumnsInfo();
 
+				if (touch) {
+					Layout.updatePortletTouchDragHandles();
+				}
+
 				Liferay.after('closePortlet', Layout._afterPortletClose);
 				Liferay.on('closePortlet', Layout._onPortletClose);
 
@@ -457,7 +493,7 @@ AUI.add(
 			);
 
 			if (layoutContainer) {
-				if (!A.UA.touch) {
+				if (!touch) {
 					layoutContainer.once(
 						'mousemove',
 						function() {

@@ -1,7 +1,11 @@
 ;(function(A, Liferay) {
 	var Util = Liferay.Util;
 
+	var touch = A.UA.touch;
+
 	var arrayIndexOf = A.Array.indexOf;
+
+	var CSS_TOUCH_DRAG_HANDLE = Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || 'portlet-touch-drag-handle';
 
 	var STR_HEAD = 'head';
 
@@ -9,6 +13,12 @@
 
 	var Portlet = {
 		list: [],
+
+		addTouchHandle: function(portletBoundary) {
+			var portletTitle = portletBoundary.one('.portlet-title');
+
+			portletTitle.append('<div class="' + CSS_TOUCH_DRAG_HANDLE + '"></div>');
+		},
 
 		isStatic: function(portletId) {
 			var instance = this;
@@ -303,6 +313,10 @@
 
 					Layout.syncDraggableClassUI();
 					Layout.updatePortletDropZones(portletBoundary);
+
+					if (touch) {
+						Portlet.addTouchHandle(portletBoundary);
+					}
 				}
 
 				if (onComplete) {
@@ -500,7 +514,7 @@
 				if (canEditTitle) {
 					var events = ['focus', 'gesturemovestart'];
 
-					if (!A.UA.touch) {
+					if (!touch) {
 						events.push('mousemove');
 					}
 

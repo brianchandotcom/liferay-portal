@@ -50,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
@@ -65,6 +66,32 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule =
 		new TransactionalTestRule();
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		// Need to delete LayoutSetPrototype first
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				fetchLayoutSetPrototypeByUuidAndCompanyId(
+					_layoutSetPrototype.getUuid(),
+					_layoutSetPrototype.getCompanyId());
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			_layoutSetPrototype);
+
+		_layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.
+				fetchLayoutPrototypeByUuidAndCompanyId(
+					_layoutPrototype.getUuid(),
+					_layoutPrototype.getCompanyId());
+
+			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+				_layoutPrototype);
+	}
 
 	protected void addLayout(Class<?> clazz, Layout layout) throws Exception {
 		List<Layout> layouts = _layouts.get(clazz.getSimpleName());
@@ -110,14 +137,14 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+		_layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			RandomTestUtil.randomString());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, LayoutPrototype.class, layoutPrototype);
+			dependentStagedModelsMap, LayoutPrototype.class, _layoutPrototype);
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layoutPrototype.getGroupId(), true,
+			_layoutPrototype.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertEquals(1, layouts.size());
@@ -140,7 +167,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		addLayoutFriendlyURLs(LayoutPrototype.class, layout.getPlid());
 
-		return layoutPrototype;
+		return _layoutPrototype;
 	}
 
 	@Override
@@ -149,11 +176,11 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+		_layoutSetPrototype = LayoutTestUtil.addLayoutSetPrototype(
+			RandomTestUtil.randomString());
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layoutSetPrototype.getGroupId(), true,
+			_layoutSetPrototype.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertEquals(1, layouts.size());
@@ -167,14 +194,14 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			dependentStagedModelsMap);
 
 		Layout prototypedLayout = LayoutTestUtil.addLayout(
-			layoutSetPrototype.getGroupId(), RandomTestUtil.randomString(),
+			_layoutSetPrototype.getGroupId(), RandomTestUtil.randomString(),
 			true, layoutPrototype, true);
 
 		addLayout(LayoutSetPrototype.class, prototypedLayout);
 		addLayoutFriendlyURLs(
 			LayoutSetPrototype.class, prototypedLayout.getPlid());
 
-		return layoutSetPrototype;
+		return _layoutSetPrototype;
 	}
 
 	@Override
@@ -381,7 +408,9 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 	private Map<String, List<LayoutFriendlyURL>> _layoutFriendlyURLs =
 		new HashMap<String, List<LayoutFriendlyURL>>();
+	private LayoutPrototype _layoutPrototype;
 	private Map<String, List<Layout>> _layouts =
 		new HashMap<String, List<Layout>>();
+	private LayoutSetPrototype _layoutSetPrototype;
 
 }

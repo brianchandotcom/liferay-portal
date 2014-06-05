@@ -84,7 +84,7 @@ if (vocabulary != null) {
 					for (AssetRendererFactory assetRendererFactory : assetFactoriesWithClassTypes) {
 					%>
 
-						<aui:select wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>' inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>'>
+						<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-" + rowClassNameId %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>
 							<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_IDS %>" />
 
 							<%
@@ -102,7 +102,6 @@ if (vocabulary != null) {
 							<%
 							}
 							%>
-
 
 						</aui:select>
 

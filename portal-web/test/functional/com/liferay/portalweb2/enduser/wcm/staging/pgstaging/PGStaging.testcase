@@ -461,7 +461,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertExportApplications" priority="5">
+	<command known-issues="LPS-47429" name="AssertExportApplications" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />

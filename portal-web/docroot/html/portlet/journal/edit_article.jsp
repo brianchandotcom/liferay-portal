@@ -364,13 +364,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	</c:if>
 </liferay-portlet:renderURL>
 
-<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-	modelResource="<%= JournalArticle.class.getName() %>"
-	modelResourceDescription="<%= article.getTitle(locale) %>"
-	resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
-	var="permissionsURL"
-/>
-
 <portlet:renderURL var="editArticleURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="struts_action" value="/journal/edit_article" />

@@ -72,22 +72,22 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_DROPDOWN_HEADER</td>
-	<td>//div[@class='control-group' and contains(.,'${key_formDropdownTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[@class='control-group input-select-wrapper' and contains(.,'${key_formDropdownTitle}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_DROPDOWN_SELECT</td>
-	<td>//div[@class='control-group' and contains(.,'${key_formDropdownTitle}')]/select</td>
+	<td>//div[@class='control-group input-select-wrapper' and contains(.,'${key_formDropdownTitle}')]/select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXTBOX_HEADER</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextboxTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[contains(@class,'control-group input-text-wrapper') and contains(.,'${key_formTextboxTitle}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXTBOX_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextboxTitle}')]/textarea</td>
+	<td>//div[contains(@class,'control-group input-text-wrapper') and contains(.,'${key_formTextboxTitle}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

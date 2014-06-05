@@ -57,32 +57,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.control-panel-bar-secondary {
 		padding: 15px 10px;
-
-		.nav-pills {
-			li {
-				margin-right: 20px;
-
-				a {
-					font-size: 15px;
-					font-weight: normal;
-					margin: 0;
-					padding: 5px 15px;
-
-					&:focus, &:hover {
-						background: #E5F5FC;
-					}
-				}
-			}
-
-			> .active > a {
-				background: #009AE5;
-				color: #FFF;
-
-				&:focus, &:hover {
-					background: #009AE5;
-				}
-			}
-		}
 	}
 
 	/* ---------- Control panel home ---------- */
@@ -555,6 +529,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			border-right: 1px solid #D3D3D3;
 			padding: 15px 0 0;
 
+			.panel-body {
+				padding: 5px 0;
+			}
+
 			.panel-group {
 				border-right-width: 0;
 				margin-bottom: 0;
@@ -586,6 +564,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 						}
 					}
+				}
+
+				.panel:first-of-type .toggler-header {
+					border-top-width: 1px;
+				}
+
+				.toggler-content-expanded {
+					border: solid #D3D3D3;
+					border-width: 0 0 1px;
+				}
+
+				.toggler-header {
+					border: solid #D3D3D3;
+					border-width: 0 0 1px;
 				}
 			}
 		}
@@ -723,7 +715,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 						.toggler-header {
 							border-width: 0 0 0 1px;
-							padding: 12px 10px;
+							padding: 14px;
 
 							@include respond-to(desktop) {
 								border-width: 1px 0 0 0;

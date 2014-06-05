@@ -502,7 +502,35 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Nav#Navigation ---------- */
+	/* ---------- General Navigation ---------- */
+
+	.lfr-nav.nav-pills {
+		li {
+			margin: 10px 5px;
+
+			a {
+				font-size: 15px;
+				font-weight: normal;
+				margin: 0;
+				padding: 5px 15px;
+
+				&:focus, &:hover {
+					background: #E5F5FC;
+				}
+			}
+		}
+
+		> .active > a {
+			background: #009AE5;
+			color: #FFF;
+
+			&:focus, &:hover {
+				background: #009AE5;
+			}
+		}
+	}
+
+	/* ---------- Site Navigation ---------- */
 
 	.modify-pages .delete-tab {
 		background: #555;
@@ -686,16 +714,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		width: 11px;
 	}
 
-	.panel-group .panel.panel-default {
-		.panel-heading .accordion-toggle {
-			padding-left: 15px;
-		}
-
-		.toggler-content-expanded {
-			border-width: 1px 0 0 0;
-		}
-	}
-
 	%toggler-header-icon-base {
 		content: $chevron-sign-right;
 
@@ -747,14 +765,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			&.toggler-header-expanded .accordion-toggle:before {
 				@extend %toggler-header-icon-expanded;
-			}
-		}
-
-		.toggler-content-expanded {
-			border: 1px solid $borderColor;
-
-			.panel-body {
-				border-width: 0;
 			}
 		}
 
@@ -835,71 +845,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Side accordion navigations ---------- */
 
-	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
-		.panel-group {
-			background: #FFF;
-			border: 1px solid #D3D3D3;
-			border-left-width: 0;
-			border-top-width: 0;
-
-			.panel.panel-default {
-				border-width: 0;
-				margin-bottom: 0;
-				margin-top: 0;
-
-				.panel-heading {
-					cursor: pointer;
-
-					.accordion-toggle {
-						font-size: 16px;
-						font-weight: 300;
-						max-height: 20px;
-						padding: 0;
-					}
-				}
-
-				.panel-body {
-					background: #FCFCFC;
-					border-width: 0;
-					padding: 6px 0 15px;
-				}
-
-				.toggler-header {
-					background: #F2F2F2;
-					border: solid #D3D3D3;
-					border-width: 1px 0;
-					padding: 6px 10px;
-
-					@include user-select(none);
-
-					.accordion-toggle {
-						background: #F2F2F2 url(../images/arrows/13_right.png) no-repeat 100% -20px;
-					}
-				}
-
-				.toggler-header-collapsed {
-					border-bottom-width: 0;
-
-					.accordion-toggle {
-						background-position: 100% 0;
-
-						&:before {
-							display: none;
-						}
-					}
-				}
-
-				.toggler-header-expanded .accordion-toggle:before {
-					display: none;
-				}
-			}
-
-			.toggler-content-expanded {
-				border-width: 0;
-			}
-		}
-	}
-
 	.lfr-add-panel {
 		.add-content-menu {
 			.lfr-content-item {
@@ -939,6 +884,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 		}
+
+		.panel-group .lfr-add-content .toggler-header {
+			border: solid #D3D3D3;
+			border-width: 0 1px 1px 1px;
+		}
+
+		.panel-group .lfr-add-content:first-of-type .toggler-header {
+			border-top-width: 1px;
+		}
 	}
 
 	.lfr-add-panel, .lfr-device-preview-panel, .lfr-edit-layout-panel {
@@ -947,6 +901,74 @@ $dockbarOpenGradientStart: #0EA6F9;
 			font-size: 26px;
 			font-weight: normal;
 			line-height: 26px;
+		}
+	}
+
+	.lfr-add-panel, .lfr-edit-layout-panel {
+		.panel.panel-default {
+			.toggler-content-expanded {
+				border: solid #D3D3D3;
+				border-width: 0 1px 1px;
+			}
+		}
+	}
+
+	.lfr-add-panel, .lfr-edit-layout-panel, .portal-add-content {
+		.panel {
+			@include border-radius(0);
+		}
+
+		.panel.panel-default {
+			border-width: 0;
+			margin-bottom: 0;
+			margin-top: 0;
+
+			.accordion-toggle {
+				font-size: 16px;
+				font-weight: 300;
+				max-height: 20px;
+				padding: 0;
+			}
+
+			.panel-body {
+				background: #FCFCFC;
+			}
+
+			.toggler-header {
+				background: #F2F2F2;
+				padding: 6px 10px;
+
+				@include user-select(none);
+
+				.accordion-toggle {
+					background: transparent url(../images/arrows/13_right.png) no-repeat 100% -20px;
+				}
+			}
+
+			.toggler-header-collapsed {
+				.accordion-toggle {
+					background-position: 100% 0;
+
+					&:before {
+						display: none;
+					}
+				}
+			}
+
+			.toggler-header-expanded .accordion-toggle:before {
+				display: none;
+			}
+		}
+	}
+
+	.lfr-edit-layout-panel {
+		.panel-group .toggler-header {
+			border: solid #D3D3D3;
+			border-width: 0 1px 1px 1px;
+		}
+
+		.panel-group .panel:first-of-type .toggler-header {
+			border-top-width: 1px;
 		}
 	}
 

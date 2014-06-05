@@ -32,7 +32,7 @@ refererURL.setParameter("updateLayout", "true");
 		<span class="alert-success message"><liferay-ui:icon iconCssClass="icon-ok-sign" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" /></span>
 	</span>
 
-	<div class="row" id="<portlet:namespace />applicationList">
+	<div id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="btn-toolbar search-panel">
 				<aui:input cssClass="search-query col-md-12" label="" name="searchApplication" type="text" />

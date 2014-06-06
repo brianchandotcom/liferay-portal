@@ -1372,6 +1372,30 @@
 		<reference package-path="com.liferay.portal" entity="UserGroup" />
 		<reference package-path="com.liferay.portal" entity="UserGroupRole" />
 	</entity>
+	<entity name="NotificationEvent" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="notificationEventId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="payload" type="String" />
+		<column name="timestamp" type="long" />
+		<column name="type" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="timestamp" />
+		</order>
+	</entity>
 	<entity name="Organization" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -2987,19 +3011,11 @@
 
 		<!-- Other fields -->
 
-		<column name="type" type="String" />
-		<column name="timestamp" type="long" />
+		<column name="notificationEventId" type="long" />
 		<column name="deliveryType" type="int" />
 		<column name="deliverBy" type="long" />
 		<column name="delivered" type="boolean" />
-		<column name="payload" type="String" />
 		<column name="archived" type="boolean" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="timestamp" />
-		</order>
 
 		<!-- Finder methods -->
 
@@ -3014,9 +3030,20 @@
 			<finder-column name="userId" />
 			<finder-column name="archived" />
 		</finder>
+		<finder name="U_D_D" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="deliveryType" />
+			<finder-column name="delivered" />
+		</finder>
+		<finder name="U_D_A" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="deliveryType" />
+			<finder-column name="archived" />
+		</finder>
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="NotificationEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="UserTracker" local-service="true" remote-service="false">

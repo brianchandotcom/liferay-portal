@@ -557,6 +557,18 @@
 		<field name="replierUserId" type="long" />
 		<field name="statusId" type="int" />
 	</model>
+	<model name="com.liferay.portal.model.NotificationEvent">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationEventId" type="long" />
+		<field name="userId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="payload" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="timestamp" type="long" />
+		<field name="type" type="String" />
+	</model>
 	<model name="com.liferay.portal.model.Organization">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -1095,14 +1107,10 @@
 		<field name="userNotificationEventId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
-		<field name="type" type="String" />
-		<field name="timestamp" type="long" />
+		<field name="notificationEventId" type="long" />
 		<field name="deliveryType" type="int" />
 		<field name="deliverBy" type="long" />
 		<field name="delivered" type="boolean" />
-		<field name="payload" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="archived" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserTracker">

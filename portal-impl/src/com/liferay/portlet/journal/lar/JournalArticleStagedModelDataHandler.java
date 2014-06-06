@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -130,12 +132,15 @@ public class JournalArticleStagedModelDataHandler
 
 		Map<String, String> referenceAttributes = new HashMap<String, String>();
 
-		String articleResourceUuid = StringPool.BLANK;
+		String articleResourceUuid = null;
 
 		try {
 			articleResourceUuid = article.getArticleResourceUuid();
 		}
 		catch (Exception e) {
+			throw new IllegalStateException(
+				"Unable to find article resource for article: " +
+					article.getArticleId());
 		}
 
 		referenceAttributes.put("article-resource-uuid", articleResourceUuid);
@@ -193,7 +198,7 @@ public class JournalArticleStagedModelDataHandler
 				articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
 				preloaded);
 		}
-		catch (SystemException se) {
+		catch (Exception se) {
 			throw new PortletDataException(se);
 		}
 
@@ -250,7 +255,10 @@ public class JournalArticleStagedModelDataHandler
 
 			return true;
 		}
-		catch (SystemException se) {
+		catch (Exception se) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to validate reference", se);
+			}
 			return false;
 		}
 	}
@@ -792,7 +800,7 @@ public class JournalArticleStagedModelDataHandler
 	protected JournalArticle fetchExistingArticle(
 			String articleResourceUuid, long groupId, String articleId,
 			String newArticleId, double version, boolean preloaded)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		JournalArticleResource existingArticleResource = null;
 
@@ -823,7 +831,24 @@ public class JournalArticleStagedModelDataHandler
 				groupId, newArticleId, version);
 		}
 
+		if ((existingArticle == null) && Validator.isNull(newArticleId)) {
+			existingArticle = JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, articleId, version);
+
+			if (existingArticle != null) {
+				throw new PortletDataException(
+					"Article " + articleId + " with version " + version +
+						" already exists with different resource. " +
+						"Resource uuid in LAR: " + articleResourceUuid +
+						" resource uuid in database: " +
+						existingArticle.getArticleResourceUuid());
+			}
+		}
+
 		return existingArticle;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		JournalArticleStagedModelDataHandler.class);
 
 }

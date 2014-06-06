@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -37,7 +36,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MBMessageDisplay mbMessageDisplay =
 			_mbMessageLocalService.getDiscussionMessageDisplay(
@@ -61,7 +60,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	public void addInitialDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_mbMessageLocalService.addDiscussionMessage(
 			userId, userName, groupId, className, classPK,
@@ -69,15 +68,13 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void deleteComment(long commentId)
-		throws PortalException, SystemException {
-
+	public void deleteComment(long commentId) throws PortalException {
 		_mbMessageLocalService.deleteDiscussionMessage(commentId);
 	}
 
 	@Override
 	public void deleteDiscussion(String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
 	}

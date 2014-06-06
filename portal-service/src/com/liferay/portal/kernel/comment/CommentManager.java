@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 
@@ -28,17 +27,16 @@ public interface CommentManager {
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addInitialDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void deleteComment(long commentId)
-		throws PortalException, SystemException;
+	public void deleteComment(long commentId) throws PortalException;
 
 	public void deleteDiscussion(String className, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

@@ -1,7 +1,5 @@
-.lfr-search-container {
-	.entry-action {
-		width: 1px;
-	}
+.lfr-search-container .entry-action {
+	width: 1px;
 }
 
 .user-info {

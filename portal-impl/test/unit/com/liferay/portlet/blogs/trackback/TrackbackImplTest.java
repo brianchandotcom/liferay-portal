@@ -26,6 +26,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -44,7 +44,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({UserLocalServiceUtil.class})
+@PrepareForTest({BlogsUtil.class, UserLocalServiceUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TrackbackImplTest extends PowerMockito {
 
@@ -52,9 +52,14 @@ public class TrackbackImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpBlogsUtil();
 		setUpPortal();
 		setUpThemeDisplay();
 		setUpUserLocalService();
+
+		_trackbackImpl = new TrackbackImpl();
+
+		_trackbackImpl.setCommentManager(_commentManager);
 	}
 
 	@Test
@@ -114,12 +119,10 @@ public class TrackbackImplTest extends PowerMockito {
 			commentId
 		);
 
-		Trackback trackback = new TrackbackImpl();
+		_trackbackImpl.setCommentManager(_commentManager);
+		_trackbackImpl.setLinkbackConsumer(_linkbackConsumer);
 
-		trackback.setCommentManager(_commentManager);
-		trackback.setLinkbackConsumer(_linkbackConsumer);
-
-		trackback.addTrackback(
+		_trackbackImpl.addTrackback(
 			_blogsEntry, _themeDisplay, "__excerpt__", "__url__",
 			"__blogName__", "__title__", _serviceContextFunction
 		);
@@ -140,6 +143,10 @@ public class TrackbackImplTest extends PowerMockito {
 		).addNewTrackback(
 			commentId, "__url__", "__LayoutFullURL__/-/blogs/__UrlTitle__"
 		);
+	}
+
+	protected void setUpBlogsUtil() {
+		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
 	protected void setUpLinkbackConsumer() throws Exception {
@@ -163,7 +170,7 @@ public class TrackbackImplTest extends PowerMockito {
 	}
 
 	protected void setUpUserLocalService() {
-		mockStatic(UserLocalServiceUtil.class, new CallsRealMethods());
+		mockStatic(UserLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(
 			method(UserLocalServiceUtil.class, "getService")
@@ -188,6 +195,7 @@ public class TrackbackImplTest extends PowerMockito {
 	private Function<String, ServiceContext> _serviceContextFunction;
 
 	private ThemeDisplay _themeDisplay;
+	private TrackbackImpl _trackbackImpl;
 
 	@Mock
 	private UserLocalService _userLocalService;

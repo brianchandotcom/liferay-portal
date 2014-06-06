@@ -293,7 +293,7 @@
 	#set ($the_title = $page_group.getDescriptiveName())
 #end
 
-#if (($tilesTitle == "") && !$pageTitle)
+#if ($tilesTitle == "")
 	#set ($the_title = $htmlUtil.escape($the_title))
 #end
 

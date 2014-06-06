@@ -14,11 +14,10 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +42,7 @@ public class BlogsEntryLocalServiceImplTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		_blogsEntryLocalServiceImpl.setMBMessageLocalService(
-			_mbMessageLocalService);
+		_blogsEntryLocalServiceImpl.commentManager = _commentManager;
 	}
 
 	@Test
@@ -70,10 +68,10 @@ public class BlogsEntryLocalServiceImplTest {
 			_blogsEntry, userId, groupId);
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).addDiscussionMessage(
-			userId, "__UserName__", groupId, BlogsEntry.class.getName(),
-			entryId, WorkflowConstants.ACTION_PUBLISH);
+			_commentManager
+		).addInitialDiscussion(
+			userId, groupId, BlogsEntry.class.getName(), entryId,
+			"__UserName__");
 	}
 
 	@Test
@@ -95,7 +93,7 @@ public class BlogsEntryLocalServiceImplTest {
 				PropsValues.class, "BLOGS_ENTRY_COMMENTS_ENABLED", previous);
 		}
 
-		Mockito.verifyZeroInteractions(_mbMessageLocalService);
+		Mockito.verifyZeroInteractions(_commentManager);
 	}
 
 	@Test
@@ -111,8 +109,8 @@ public class BlogsEntryLocalServiceImplTest {
 		_blogsEntryLocalServiceImpl.deleteDiscussion(_blogsEntry);
 
 		Mockito.verify(
-			_mbMessageLocalService
-		).deleteDiscussionMessages(
+			_commentManager
+		).deleteDiscussion(
 			BlogsEntry.class.getName(), entryId
 		);
 	}
@@ -124,6 +122,6 @@ public class BlogsEntryLocalServiceImplTest {
 		new BlogsEntryLocalServiceImpl();
 
 	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
+	private CommentManager _commentManager;
 
 }

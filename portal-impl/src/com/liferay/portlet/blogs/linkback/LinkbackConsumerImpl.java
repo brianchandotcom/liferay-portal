@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,19 +31,9 @@ import java.util.List;
  */
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
-	public LinkbackConsumerImpl() {
-		_commentManager = (CommentManager)PortalBeanLocatorUtil.locate(
-			CommentManager.class.getName());
-	}
-
 	@Override
 	public void addNewTrackback(long commentId, String url, String entryURL) {
 		_trackbacks.add(new Tuple(commentId, url, entryURL));
-	}
-
-	@Override
-	public void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
 	}
 
 	@Override
@@ -83,9 +73,13 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 	}
 
+	protected void setCommentManager(CommentManager commentManager) {
+		_commentManager = commentManager;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);
 
-	private CommentManager _commentManager;
+	private CommentManager _commentManager = BlogsUtil.getCommentManager();
 	private List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 

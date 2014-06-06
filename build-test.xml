@@ -3151,11 +3151,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
-		<forget>
-			<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
-				<arg line="${app.server.start.executable.arg.line}" />
-			</exec>
-		</forget>
+		<parallel>
+			<daemons>
+				<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+					<arg line="${app.server.start.executable.arg.line}" />
+				</exec>
+			</daemons>
+		</parallel>
 
 		<if>
 			<equals arg1="${app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />

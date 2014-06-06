@@ -1095,6 +1095,10 @@ public interface PropsKeys {
 
 	public static final String INTRABAND_MAILBOX_STORAGE_LIFE = "intraband.mailbox.storage.life";
 
+	public static final String INTRABAND_PROXY_DUMP_CLASSES_ENABLED = "intraband.proxy.dump.classes.enabled";
+
+	public static final String INTRABAND_PROXY_DUMP_CLASSES_FOLDER = "intraband.proxy.dump.classes.folder";
+
 	public static final String INTRABAND_TIMEOUT_DEFAULT = "intraband.timeout.default";
 
 	public static final String INTRABAND_WELDER_IMPL = "intraband.welder.impl";

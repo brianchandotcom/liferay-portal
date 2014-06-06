@@ -12,24 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.nio.intraband.proxy;
+
+import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
  */
-public enum SystemDataType {
+public interface TargetLocator extends Serializable {
 
-	MAILBOX((byte)3), MESSAGE((byte)2), PORTAL_CACHE((byte)1), PROXY((byte)4),
-	RPC((byte)0);
-
-	public byte getValue() {
-		return _value;
-	}
-
-	private SystemDataType(byte value) {
-		_value = value;
-	}
-
-	private byte _value;
+	public Object getTarget(String id);
 
 }

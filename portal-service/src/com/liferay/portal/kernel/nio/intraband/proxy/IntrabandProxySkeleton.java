@@ -12,24 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.nio.intraband.proxy;
+
+import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 
 /**
  * @author Shuyang Zhou
  */
-public enum SystemDataType {
+public interface IntrabandProxySkeleton {
 
-	MAILBOX((byte)3), MESSAGE((byte)2), PORTAL_CACHE((byte)1), PROXY((byte)4),
-	RPC((byte)0);
-
-	public byte getValue() {
-		return _value;
-	}
-
-	private SystemDataType(byte value) {
-		_value = value;
-	}
-
-	private byte _value;
+	public void dispatch(
+		RegistrationReference registrationReference, Datagram datagram,
+		Deserializer deserializer);
 
 }

@@ -12,24 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.nio.intraband;
+package com.liferay.portal.kernel.nio.intraband.proxy.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Shuyang Zhou
  */
-public enum SystemDataType {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Proxy {
 
-	MAILBOX((byte)3), MESSAGE((byte)2), PORTAL_CACHE((byte)1), PROXY((byte)4),
-	RPC((byte)0);
-
-	public byte getValue() {
-		return _value;
-	}
-
-	private SystemDataType(byte value) {
-		_value = value;
-	}
-
-	private byte _value;
+	public String name() default "";
 
 }

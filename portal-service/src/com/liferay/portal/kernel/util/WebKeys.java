@@ -177,6 +177,8 @@ public interface WebKeys {
 
 	public static final String SERVLET_PATH = "SERVLET_PATH";
 
+	public static final String SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID = "SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID";
+
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_ACTION_RESULT = "SPI_AGENT_ACTION_RESULT";
 

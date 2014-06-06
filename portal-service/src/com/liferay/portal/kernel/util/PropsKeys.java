@@ -1143,6 +1143,8 @@ public interface PropsKeys {
 
 	public static final String JAVASCRIPT_LOG_ENABLED = "javascript.log.enabled";
 
+	public static final String JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED = "javascript.single.page.application.enabled";
+
 	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
 
 	public static final String JCR_JACKRABBIT_CONFIG_FILE_PATH = "jcr.jackrabbit.config.file.path";

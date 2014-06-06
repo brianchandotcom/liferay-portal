@@ -412,7 +412,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-					setInterval(
+					var contentChangeHandle = setInterval(
 						function() {
 							try {
 								window['<%= name %>'].onChangeCallback();
@@ -422,12 +422,46 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 						},
 						300
 					);
+
+					var clearContentChangeHandle = function(event) {
+						if (event.portletId === '<%= portletId %>') {
+							clearInterval(contentChangeHandle);
+
+							Liferay.detach('destroyPortlet', clearContentChangeHandle);
+						}
+					};
+
+					Liferay.on('destroyPortlet', clearContentChangeHandle);
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
 					CKEDITOR.instances['<%= name %>'].on('focus', window['<%= name %>'].onFocusCallback);
 				</c:if>
 
+				var destroyInstance = function(event) {
+					if (event.portletId === '<%= portletId %>') {
+						try {
+		 					var ckeditorInstances = window.CKEDITOR.instances;
+
+			 				A.Object.each(
+			 					ckeditorInstances,
+			 					function(value, key) {
+			 						var inst = ckeditorInstances[key];
+
+			 						delete ckeditorInstances[key];
+
+			 						inst.destroy();
+			 					}
+			 				);
+		 				}
+		 				catch(error) {
+		 				}
+
+		 				Liferay.detach('destroyPortlet', destroyInstance);
+		 			}
+				};
+
+				Liferay.on('destroyPortlet', destroyInstance);
 			}
 		);
 
@@ -510,6 +544,22 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 	<c:if test='<%= (inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit %>'>;
 		createEditor();
 	</c:if>
+
+	CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+		scripts = A.Array.filter(
+			scripts,
+			function(item) {
+				return !A.one('script[src=' + item + ']');
+			}
+		);
+
+		if (scripts.length) {
+			CKEDITOR.scriptLoader.load(scripts, success, failure);
+		}
+		else {
+			success();
+		}
+	};
 
 </aui:script>
 

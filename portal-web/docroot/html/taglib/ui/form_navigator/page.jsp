@@ -58,6 +58,8 @@ String historyKey = ParamUtil.getString(request, "historyKey");
 if (Validator.isNotNull(historyKey)) {
 	curSection = historyKey;
 }
+
+String portletId = portletDisplay.getRootPortletId();
 %>
 
 <div class="taglib-form-navigator" id="<portlet:namespace />tabsBoundingBox">
@@ -411,35 +413,44 @@ if (Validator.isNotNull(historyKey)) {
 
 					formNode.on('autofields:update', updateSectionError);
 
-					Liferay.after(
-						'form:registered',
-						function(event) {
-							var form = event.form;
+					var updateSectionOnError = function(event) {
+						var form = event.form;
 
-							if (form.formNode.compareTo(formNode)) {
-								var validator = form.formValidator;
+						if (form.formNode.compareTo(formNode)) {
+							var validator = form.formValidator;
 
-								validator.on(
-									'submitError',
-									function() {
-										var errorClass = validator.get('errorClass');
+							validator.on(
+								'submitError',
+								function() {
+									var errorClass = validator.get('errorClass');
 
-										var errorField = formNode.one('.' + errorClass);
+									var errorField = formNode.one('.' + errorClass);
 
-										if (errorField) {
-											var errorSection = errorField.ancestor('.form-section');
+									if (errorField) {
+										var errorSection = errorField.ancestor('.form-section');
 
-											var errorSectionId = errorSection.attr('id');
+										var errorSectionId = errorSection.attr('id');
 
-											selectTabBySectionId(errorSectionId);
+										selectTabBySectionId(errorSectionId);
 
-											updateSectionError();
-										}
+										updateSectionError();
 									}
-								);
-							}
+								}
+							);
 						}
-					);
+					};
+
+					var detachUpdateSection = function(event) {
+						if (event.portletId === '<%= portletId %>') {
+							Liferay.detach('form:registered', updateSectionOnError);
+
+							Liferay.detach('destroyPortlet', detachUpdateSection);
+						}
+					};
+
+					Liferay.after('form:registered', updateSectionOnError);
+
+					Liferay.on('destroyPortlet', detachUpdateSection);
 				}
 			</aui:script>
 		</c:otherwise>

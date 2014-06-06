@@ -252,6 +252,15 @@ AUI.add(
 						);
 
 						instance.publish('warned');
+
+						A.on(
+							'io:complete',
+							function(transactionId, response, args) {
+								if (!args || (args && (args.sessionExtend || !Lang.isBoolean(args.sessionExtend)))) {
+									instance.resetInterval();
+								}
+							}
+						);
 					},
 
 					_onSessionStateChange: function(event) {

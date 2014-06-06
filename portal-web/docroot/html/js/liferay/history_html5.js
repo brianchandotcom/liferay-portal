@@ -19,7 +19,7 @@ AUI.add(
 		A.mix(
 			History.prototype,
 			{
-				PROTECTED_HASH_KEYS: [ /^tab$/, /^_\d+_tab$/ ],
+				PROTECTED_HASH_KEYS: [ /^liferay$/, /^tab$/, /^_\d+_tab$/ ],
 
 				add: function(state, options) {
 					var instance = this;
@@ -27,6 +27,8 @@ AUI.add(
 					options = options || {};
 
 					options.url = options.url || instance._updateURI(state);
+
+					state.liferay = true;
 
 					return History.superclass.add.call(instance, state, options);
 				},

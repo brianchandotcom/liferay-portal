@@ -32,7 +32,7 @@ preferences-unique-per-layout?, preferences-owned-by-group?,
 use-default-template?, show-portlet-access-denied?, show-portlet-inactive?,
 action-url-redirect?, restore-current-view?, maximize-edit?, maximize-help?,
 pop-up-print?, layout-cacheable?, instanceable?, remoteable?, scopeable?,
-user-principal-strategy?, private-request-attributes?,
+single-page-application?, user-principal-strategy?, private-request-attributes?,
 private-session-attributes?, autopropagated-parameters?,
 requires-namespaced-parameters?, action-timeout?,
 render-timeout?, render-weight?, ajaxable?, header-portal-css*,
@@ -625,6 +625,12 @@ the proper scope group id according to the configuration and scope their data
 accordingly. The default is false.
 -->
 <!ELEMENT scopeable (#PCDATA)>
+
+<!--
+If the single-page-application is set to true, portlet navigation uses Single
+Page Application. The default is true.
+-->
+<!ELEMENT single-page-application (#PCDATA)>
 
 <!--
 Set the user-principal-strategy value to either "userId" or "screenName".

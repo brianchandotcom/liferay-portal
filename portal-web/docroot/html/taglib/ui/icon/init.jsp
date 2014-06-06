@@ -81,7 +81,14 @@ if (useDialog && Validator.isNull(data.get("title"))) {
 }
 
 if (Validator.isNull(method)) {
-	method = "post";
+	int pos = url.indexOf("p_p_lifecycle=0");
+
+	if (pos != -1) {
+		method = "get";
+	}
+	else {
+		method = "post";
+	}
 }
 
 boolean auiImage = (image != null) && image.startsWith(_AUI_PATH);

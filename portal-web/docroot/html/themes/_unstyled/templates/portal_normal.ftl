@@ -51,8 +51,6 @@ ${theme.include(body_top_include)}
 		<h1 class="hide-accessible">${the_title}</h1>
 
 		<nav id="breadcrumbs">
-			<h1 class="hide-accessible"><@liferay.language key="breadcrumbs" /></h1>
-
 			<@liferay.breadcrumbs />
 		</nav>
 

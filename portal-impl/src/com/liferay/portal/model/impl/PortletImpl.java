@@ -173,9 +173,9 @@ public class PortletImpl extends PortletBaseImpl {
 		boolean showPortletInactive, boolean actionURLRedirect,
 		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
 		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
-		boolean remoteable, boolean scopeable, String userPrincipalStrategy,
-		boolean privateRequestAttributes, boolean privateSessionAttributes,
-		Set<String> autopropagatedParameters,
+		boolean remoteable, boolean scopeable, boolean singlePageApplication,
+		String userPrincipalStrategy, boolean privateRequestAttributes,
+		boolean privateSessionAttributes, Set<String> autopropagatedParameters,
 		boolean requiresNamespacedParameters, int actionTimeout,
 		int renderTimeout, int renderWeight, boolean ajaxable,
 		List<String> headerPortalCss, List<String> headerPortletCss,
@@ -257,6 +257,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_instanceable = instanceable;
 		_remoteable = remoteable;
 		_scopeable = scopeable;
+		_singlePageApplication = singlePageApplication;
 		_userPrincipalStrategy = userPrincipalStrategy;
 		_privateRequestAttributes = privateRequestAttributes;
 		_privateSessionAttributes = privateSessionAttributes;
@@ -276,7 +277,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_footerPortletJavaScript = footerPortletJavaScript;
 		_cssClassWrapper = cssClassWrapper;
 		_facebookIntegration = facebookIntegration;
-		_scopeable = scopeable;
 		_addDefaultResource = addDefaultResource;
 		setRoles(roles);
 		_unlinkedRoles = unlinkedRoles;
@@ -389,11 +389,12 @@ public class PortletImpl extends PortletBaseImpl {
 			isShowPortletInactive(), isActionURLRedirect(),
 			isRestoreCurrentView(), isMaximizeEdit(), isMaximizeHelp(),
 			isPopUpPrint(), isLayoutCacheable(), isInstanceable(),
-			isRemoteable(), isScopeable(), getUserPrincipalStrategy(),
-			isPrivateRequestAttributes(), isPrivateSessionAttributes(),
-			getAutopropagatedParameters(), isRequiresNamespacedParameters(),
-			getActionTimeout(), getRenderTimeout(), getRenderWeight(),
-			isAjaxable(), getHeaderPortalCss(), getHeaderPortletCss(),
+			isRemoteable(), isScopeable(), isSinglePageApplication(),
+			getUserPrincipalStrategy(), isPrivateRequestAttributes(),
+			isPrivateSessionAttributes(), getAutopropagatedParameters(),
+			isRequiresNamespacedParameters(), getActionTimeout(),
+			getRenderTimeout(), getRenderWeight(), isAjaxable(),
+			getHeaderPortalCss(), getHeaderPortletCss(),
 			getHeaderPortalJavaScript(), getHeaderPortletJavaScript(),
 			getFooterPortalCss(), getFooterPortletCss(),
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
@@ -1692,6 +1693,16 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Returns <code>true</code> if the portlet uses Single Page Application.
+	 *
+	 * @return <code>true</code> if the portlet uses Single Page Application
+	 */
+	@Override
+	public boolean getSinglePageApplication() {
+		return _singlePageApplication;
+	}
+
+	/**
 	 * Returns the names of the classes that represent social activity
 	 * interpreters associated with the portlet.
 	 *
@@ -2620,6 +2631,16 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public boolean isShowPortletInactive() {
 		return _showPortletInactive;
+	}
+
+	/**
+	 * Returns <code>true</code> if the portlet uses Single Page Application.
+	 *
+	 * @return <code>true</code> if the portlet uses Single Page Application
+	 */
+	@Override
+	public boolean isSinglePageApplication() {
+		return _singlePageApplication;
 	}
 
 	/**
@@ -3644,6 +3665,17 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Set to <code>true</code> if the portlet uses Single Page Application.
+	 *
+	 * @param singlePageApplication boolean value for whether or not the the
+	 *        portlet uses Single Page Application
+	 */
+	@Override
+	public void setSinglePageApplication(boolean singlePageApplication) {
+		_singlePageApplication = singlePageApplication;
+	}
+
+	/**
 	 * Sets the names of the classes that represent social activity interpreters
 	 * associated with the portlet.
 	 *
@@ -4373,6 +4405,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	private boolean _showPortletInactive =
 		PropsValues.LAYOUT_SHOW_PORTLET_INACTIVE;
+
+	/**
+	 * <code>True</code> if the portlet uses Single Page Application.
+	 */
+	private boolean _singlePageApplication = true;
 
 	/**
 	 * The names of the classes that represents social activity interpreters

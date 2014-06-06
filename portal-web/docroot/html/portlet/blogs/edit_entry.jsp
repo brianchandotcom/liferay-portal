@@ -33,6 +33,8 @@ boolean smallImage = BeanParamUtil.getBoolean(entry, request, "smallImage");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
+String portletId = portletDisplay.getRootPortletId();
 %>
 
 <c:if test="<%= showHeader %>">
@@ -455,6 +457,16 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		},
 		['aui-io']
 	);
+
+	var clearSaveDraftHandle = function(event) {
+		if (event.portletId === '<%= portletId %>') {
+			<portlet:namespace />clearSaveDraftIntervalId();
+
+			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>
 
 <aui:script use="aui-base">

@@ -338,6 +338,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	from {
 		background-position: 40px 0;
 	}
+
 	to {
 		background-position: 0 0;
 	}
@@ -364,6 +365,33 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 .highlight-animation {
 	@include experimental(animation, highlight-animation 0.7s);
+}
+
+.lfr-surface-loading .lfr-surface-loading-bar {
+	@include experimental(animation, shift-rightwards 1s ease-in-out infinite);
+	@include experimental(animation-delay, 0.4s);
+}
+
+.lfr-surface-loading-bar {
+	@include translateX(100%);
+}
+
+@include keyframes(shift-rightwards) {
+	0% {
+		@include translateX(-100%);
+	}
+
+	40% {
+		@include translateX(0%);
+	}
+
+	60% {
+		@include translateX(0%);
+	}
+
+	100% {
+		@include translateX(100%);
+	}
 }
 
 body:first-of-type {
@@ -465,16 +493,19 @@ body:first-of-type {
 		background-color: #EBEBEB;
 		border-color: #DDD;
 	}
+
 	50% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
 
 		@include scale(1.1);
 	}
+
 	75% {
 		background-color: #DDEDDE;
 		border-color: #7D7;
 	}
+
 	100% {
 		background-color: #EBEBEB;
 		border-color: #DDD;

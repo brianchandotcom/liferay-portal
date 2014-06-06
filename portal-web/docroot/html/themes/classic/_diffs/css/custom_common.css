@@ -161,6 +161,14 @@
 		}
 	}
 
+	.lfr-surface-loading-bar {
+		background: rgba(255, 255, 255, 0.5);
+	}
+
+	.dockbar-split .lfr-surface-loading-bar {
+		background: #2AAAE6;
+	}
+
 	.lfr-tree .tree-node .tree-node-selected .tree-label {
 		background: #E4F5FC;
 	}

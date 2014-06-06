@@ -50,9 +50,7 @@ public class RepositoryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Repository repository =
-			RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
-				uuid, groupId);
+		Repository repository = fetchExistingStagedModel(uuid, groupId);
 
 		if (repository != null) {
 			RepositoryLocalServiceUtil.deleteRepository(
@@ -104,6 +102,12 @@ public class RepositoryStagedModelDataHandler
 	}
 
 	@Override
+	protected Repository doFetchExistingStagedModel(String uuid, long groupId) {
+		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Repository repository)
 		throws Exception {
@@ -123,10 +127,8 @@ public class RepositoryStagedModelDataHandler
 				repositoryElement.attributeValue("hidden"));
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				Repository existingRepository =
-					RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
-						repository.getUuid(),
-						portletDataContext.getScopeGroupId());
+				Repository existingRepository = fetchExistingStagedModel(
+					repository.getUuid(), portletDataContext.getScopeGroupId());
 
 				if (existingRepository == null) {
 					existingRepository =

@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -49,9 +48,7 @@ public class DDMStructureStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-				uuid, groupId);
+		DDMStructure ddmStructure = fetchExistingStagedModel(uuid, groupId);
 
 		if (ddmStructure != null) {
 			DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
@@ -129,7 +126,7 @@ public class DDMStructureStagedModelDataHandler
 			existingStructure = fetchExistingStructure(
 				uuid, liveGroupId, classNameId, structureKey, preloaded);
 		}
-		catch (SystemException se) {
+		catch (PortalException se) {
 			throw new PortletDataException(se);
 		}
 
@@ -186,7 +183,7 @@ public class DDMStructureStagedModelDataHandler
 
 			return true;
 		}
-		catch (SystemException se) {
+		catch (PortalException pe) {
 			return false;
 		}
 	}
@@ -221,6 +218,14 @@ public class DDMStructureStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			structureElement, ExportImportPathUtil.getModelPath(structure),
 			structure);
+	}
+
+	@Override
+	protected DDMStructure doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -302,15 +307,14 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	protected DDMStructure fetchExistingStructure(
-		String uuid, long groupId, long classNameId, String structureKey,
-		boolean preloaded) {
+			String uuid, long groupId, long classNameId, String structureKey,
+			boolean preloaded)
+		throws PortalException {
 
 		DDMStructure existingStructure = null;
 
 		if (!preloaded) {
-			existingStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-					uuid, groupId);
+			existingStructure = fetchExistingStagedModel(uuid, groupId);
 		}
 		else {
 			existingStructure = DDMStructureLocalServiceUtil.fetchStructure(

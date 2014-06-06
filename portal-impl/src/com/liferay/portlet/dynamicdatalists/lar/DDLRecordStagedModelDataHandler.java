@@ -47,9 +47,7 @@ public class DDLRecordStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDLRecord record =
-			DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
-				uuid, groupId);
+		DDLRecord record = fetchExistingStagedModel(uuid, groupId);
 
 		if (record != null) {
 			DDLRecordLocalServiceUtil.deleteRecord(record);
@@ -94,6 +92,12 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	@Override
+	protected DDLRecord doFetchExistingStagedModel(String uuid, long groupId) {
+		return DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, DDLRecord record)
 		throws Exception {
@@ -122,9 +126,8 @@ public class DDLRecordStagedModelDataHandler
 		DDLRecord importedRecord = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			DDLRecord existingRecord =
-				DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
-					record.getUuid(), portletDataContext.getScopeGroupId());
+			DDLRecord existingRecord = fetchExistingStagedModel(
+				record.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingRecord == null) {
 				serviceContext.setUuid(record.getUuid());

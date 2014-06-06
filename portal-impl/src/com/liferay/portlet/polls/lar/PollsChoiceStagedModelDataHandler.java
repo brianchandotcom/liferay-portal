@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -39,9 +40,14 @@ public class PollsChoiceStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		PollsChoice pollsChoice = fetchExistingStagedModel(uuid, groupId);
+
+		if (pollsChoice != null) {
+			PollsChoiceLocalServiceUtil.deletePollsChoice(pollsChoice);
+		}
 	}
 
 	@Override
@@ -73,14 +79,20 @@ public class PollsChoiceStagedModelDataHandler
 	}
 
 	@Override
+	protected PollsChoice doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long choiceId)
 		throws Exception {
 
-		PollsChoice existingChoice =
-			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
-				uuid, groupId);
+		PollsChoice existingChoice = fetchExistingStagedModel(uuid, groupId);
 
 		Map<Long, Long> choiceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -113,9 +125,8 @@ public class PollsChoiceStagedModelDataHandler
 			choice);
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsChoice existingChoice =
-				PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
-					choice.getUuid(), portletDataContext.getScopeGroupId());
+			PollsChoice existingChoice = fetchExistingStagedModel(
+				choice.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingChoice == null) {
 				serviceContext.setUuid(choice.getUuid());
@@ -144,9 +155,7 @@ public class PollsChoiceStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		PollsChoice choice =
-			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
-				uuid, groupId);
+		PollsChoice choice = fetchExistingStagedModel(uuid, groupId);
 
 		if (choice == null) {
 			return false;

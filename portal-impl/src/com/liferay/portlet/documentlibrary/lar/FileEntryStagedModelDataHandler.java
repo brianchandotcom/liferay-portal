@@ -52,7 +52,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
@@ -85,7 +84,7 @@ public class FileEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		FileEntry fileEntry = FileEntryUtil.fetchByUUID_R(uuid, groupId);
+		FileEntry fileEntry = fetchExistingStagedModel(uuid, groupId);
 
 		if (fileEntry != null) {
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
@@ -220,13 +219,17 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
+	protected FileEntry doFetchExistingStagedModel(String uuid, long groupId) {
+		return FileEntryUtil.fetchByUUID_R(uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long fileEntryId)
 		throws Exception {
 
-		FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
-			uuid, groupId);
+		FileEntry existingFileEntry = fetchExistingStagedModel(uuid, groupId);
 
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -318,7 +321,7 @@ public class FileEntryStagedModelDataHandler
 		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
+			FileEntry existingFileEntry = fetchExistingStagedModel(
 				fileEntry.getUuid(), portletDataContext.getScopeGroupId());
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
@@ -506,7 +509,7 @@ public class FileEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
-		FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
+		FileEntry existingFileEntry = fetchExistingStagedModel(
 			fileEntry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFileEntry == null) || !existingFileEntry.isInTrash()) {
@@ -707,11 +710,9 @@ public class FileEntryStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		DLFileEntry dlFileEntry =
-			DLFileEntryLocalServiceUtil.fetchDLFileEntryByUuidAndGroupId(
-				uuid, groupId);
+		FileEntry fileEntry = fetchExistingStagedModel(uuid, groupId);
 
-		if (dlFileEntry == null) {
+		if (fileEntry == null) {
 			return false;
 		}
 

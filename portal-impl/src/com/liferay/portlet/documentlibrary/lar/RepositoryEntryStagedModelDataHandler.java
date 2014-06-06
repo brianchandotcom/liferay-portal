@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -37,9 +38,16 @@ public class RepositoryEntryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		RepositoryEntry repositoryEntry = fetchExistingStagedModel(
+			uuid, groupId);
+
+		if (repositoryEntry != null) {
+			RepositoryEntryLocalServiceUtil.deleteRepositoryEntry(
+				repositoryEntry.getRepositoryId());
+		}
 	}
 
 	@Override
@@ -60,6 +68,14 @@ public class RepositoryEntryStagedModelDataHandler
 			repositoryEntryElement,
 			ExportImportPathUtil.getModelPath(repositoryEntry),
 			repositoryEntry);
+	}
+
+	@Override
+	protected RepositoryEntry doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return RepositoryEntryLocalServiceUtil.
+			fetchRepositoryEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -85,11 +101,9 @@ public class RepositoryEntryStagedModelDataHandler
 		RepositoryEntry importedRepositoryEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			RepositoryEntry existingRepositoryEntry =
-				RepositoryEntryLocalServiceUtil.
-					fetchRepositoryEntryByUuidAndGroupId(
-						repositoryEntry.getUuid(),
-						portletDataContext.getScopeGroupId());
+			RepositoryEntry existingRepositoryEntry = fetchExistingStagedModel(
+				repositoryEntry.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 			if (existingRepositoryEntry == null) {
 				serviceContext.setUuid(repositoryEntry.getUuid());

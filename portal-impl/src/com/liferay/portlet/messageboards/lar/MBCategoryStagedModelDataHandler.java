@@ -42,9 +42,7 @@ public class MBCategoryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		MBCategory category =
-			MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
-				uuid, groupId);
+		MBCategory category = fetchExistingStagedModel(uuid, groupId);
 
 		if (category != null) {
 			MBCategoryLocalServiceUtil.deleteCategory(category);
@@ -86,6 +84,12 @@ public class MBCategoryStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			categoryElement, ExportImportPathUtil.getModelPath(category),
 			category);
+	}
+
+	@Override
+	protected MBCategory doFetchExistingStagedModel(String uuid, long groupId) {
+		return MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -139,9 +143,8 @@ public class MBCategoryStagedModelDataHandler
 		MBCategory importedCategory = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			MBCategory existingCategory =
-				MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
-					category.getUuid(), portletDataContext.getScopeGroupId());
+			MBCategory existingCategory = fetchExistingStagedModel(
+				category.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingCategory == null) {
 				serviceContext.setUuid(category.getUuid());
@@ -187,9 +190,8 @@ public class MBCategoryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(category.getUserUuid());
 
-		MBCategory existingCategory =
-			MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
-				category.getUuid(), portletDataContext.getScopeGroupId());
+		MBCategory existingCategory = fetchExistingStagedModel(
+			category.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingCategory == null) || !existingCategory.isInTrash()) {
 			return;

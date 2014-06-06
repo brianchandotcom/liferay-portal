@@ -44,9 +44,7 @@ public class BookmarksEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BookmarksEntry entry =
-			BookmarksEntryLocalServiceUtil.fetchBookmarksEntryByUuidAndGroupId(
-				uuid, groupId);
+		BookmarksEntry entry = fetchExistingStagedModel(uuid, groupId);
 
 		if (entry != null) {
 			BookmarksEntryLocalServiceUtil.deleteEntry(entry);
@@ -83,6 +81,14 @@ public class BookmarksEntryStagedModelDataHandler
 	}
 
 	@Override
+	protected BookmarksEntry doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return BookmarksEntryLocalServiceUtil.
+			fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, BookmarksEntry entry)
 		throws Exception {
@@ -110,10 +116,8 @@ public class BookmarksEntryStagedModelDataHandler
 		BookmarksEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksEntry existingEntry =
-				BookmarksEntryLocalServiceUtil.
-					fetchBookmarksEntryByUuidAndGroupId(
-						entry.getUuid(), portletDataContext.getScopeGroupId());
+			BookmarksEntry existingEntry = fetchExistingStagedModel(
+				entry.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingEntry == null) {
 				serviceContext.setUuid(entry.getUuid());
@@ -148,9 +152,8 @@ public class BookmarksEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
-		BookmarksEntry existingEntry =
-			BookmarksEntryLocalServiceUtil.fetchBookmarksEntryByUuidAndGroupId(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksEntry existingEntry = fetchExistingStagedModel(
+			entry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingEntry == null) || !existingEntry.isInTrash()) {
 			return;

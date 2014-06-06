@@ -51,11 +51,10 @@ public class AssetCategoryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		AssetCategory category =
-			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
-				uuid, groupId);
+		AssetCategory category = fetchExistingStagedModel(uuid, groupId);
 
 		if (category != null) {
 			AssetCategoryLocalServiceUtil.deleteAssetCategory(category);
@@ -141,14 +140,21 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
+	protected AssetCategory doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long categoryId)
 		throws Exception {
 
-		AssetCategory existingCategory =
-			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
-				uuid, groupId);
+		AssetCategory existingCategory = fetchExistingStagedModel(
+			uuid, groupId);
 
 		Map<Long, Long> categoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -216,11 +222,11 @@ public class AssetCategoryStagedModelDataHandler
 
 		AssetCategory importedCategory = null;
 
-		AssetCategory existingCategory = AssetCategoryUtil.fetchByUUID_G(
+		AssetCategory existingCategory = fetchExistingStagedModel(
 			category.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingCategory == null) {
-			existingCategory = AssetCategoryUtil.fetchByUUID_G(
+			existingCategory = fetchExistingStagedModel(
 				category.getUuid(), portletDataContext.getCompanyGroupId());
 		}
 
@@ -306,9 +312,7 @@ public class AssetCategoryStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		AssetCategory category =
-			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
-				uuid, groupId);
+		AssetCategory category = fetchExistingStagedModel(uuid, groupId);
 
 		if (category == null) {
 			return false;

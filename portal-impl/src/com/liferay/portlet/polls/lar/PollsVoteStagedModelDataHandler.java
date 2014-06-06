@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -40,9 +41,14 @@ public class PollsVoteStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		PollsVote vote = fetchExistingStagedModel(uuid, groupId);
+
+		if (vote != null) {
+			PollsVoteLocalServiceUtil.deletePollsVote(vote);
+		}
 	}
 
 	@Override
@@ -63,6 +69,12 @@ public class PollsVoteStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			voteElement, ExportImportPathUtil.getModelPath(vote), vote);
+	}
+
+	@Override
+	protected PollsVote doFetchExistingStagedModel(String uuid, long groupId) {
+		return PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -132,9 +144,7 @@ public class PollsVoteStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		PollsVote vote =
-			PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
-				uuid, groupId);
+		PollsVote vote = fetchExistingStagedModel(uuid, groupId);
 
 		if (vote == null) {
 			return false;

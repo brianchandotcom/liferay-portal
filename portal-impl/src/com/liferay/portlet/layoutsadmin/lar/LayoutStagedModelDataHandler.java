@@ -18,7 +18,6 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
@@ -57,6 +56,7 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -100,13 +100,39 @@ public class LayoutStagedModelDataHandler
 
 		boolean privateLayout = extraDataJSONObject.getBoolean("privateLayout");
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			uuid, groupId, privateLayout);
+		Layout layout = fetchStagedModel(uuid, groupId, privateLayout);
 
 		if (layout != null) {
 			LayoutLocalServiceUtil.deleteLayout(
 				layout, true, new ServiceContext());
 		}
+	}
+
+	public Layout fetchStagedModel(
+			String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			uuid, groupId, privateLayout);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		// Try to fetch it from the parent sites
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		while ((group = group.getParentGroup()) != null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				uuid, group.getGroupId(), privateLayout);
+
+			if (layout != null) {
+				break;
+			}
+		}
+
+		return layout;
 	}
 
 	@Override
@@ -157,11 +183,10 @@ public class LayoutStagedModelDataHandler
 		Layout existingLayout = null;
 
 		try {
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				uuid, liveGroupId, privateLayout);
+			existingLayout = fetchStagedModel(uuid, liveGroupId, privateLayout);
 		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
+		catch (PortalException pe) {
+			throw new PortletDataException(pe);
 		}
 
 		Map<Long, Layout> layouts =
@@ -208,9 +233,8 @@ public class LayoutStagedModelDataHandler
 			referenceElement.attributeValue("private-layout"));
 
 		try {
-			Layout existingLayout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					uuid, liveGroupId, privateLayout);
+			Layout existingLayout = fetchStagedModel(
+				uuid, liveGroupId, privateLayout);
 
 			if (existingLayout == null) {
 				return false;
@@ -218,7 +242,7 @@ public class LayoutStagedModelDataHandler
 
 			return true;
 		}
-		catch (SystemException se) {
+		catch (PortalException pe) {
 			return false;
 		}
 	}
@@ -327,9 +351,8 @@ public class LayoutStagedModelDataHandler
 		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (action.equals(Constants.DELETE)) {
-			Layout deletingLayout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layoutUuid, groupId, privateLayout);
+			Layout deletingLayout = fetchStagedModel(
+				layoutUuid, groupId, privateLayout);
 
 			LayoutLocalServiceUtil.deleteLayout(
 				deletingLayout, false,
@@ -389,7 +412,7 @@ public class LayoutStagedModelDataHandler
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			existingLayout = fetchStagedModel(
 				layout.getUuid(), groupId, privateLayout);
 
 			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
@@ -418,7 +441,7 @@ public class LayoutStagedModelDataHandler
 			// The default behaviour of import mode is
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			existingLayout = fetchStagedModel(
 				layout.getUuid(), groupId, privateLayout);
 
 			if (existingLayout == null) {

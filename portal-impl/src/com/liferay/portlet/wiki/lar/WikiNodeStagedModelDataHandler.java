@@ -41,9 +41,7 @@ public class WikiNodeStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		WikiNode wikiNode =
-			WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
-				uuid, groupId);
+		WikiNode wikiNode = fetchExistingStagedModel(uuid, groupId);
 
 		if (wikiNode != null) {
 			WikiNodeLocalServiceUtil.deleteNode(wikiNode);
@@ -67,13 +65,18 @@ public class WikiNodeStagedModelDataHandler
 	}
 
 	@Override
+	protected WikiNode doFetchExistingStagedModel(String uuid, long groupId) {
+		return WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long nodeId)
 		throws Exception {
 
-		WikiNode existingNode =
-			WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(uuid, groupId);
+		WikiNode existingNode = fetchExistingStagedModel(uuid, groupId);
 
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -95,9 +98,8 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode importedNode = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			WikiNode existingNode =
-				WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
-					node.getUuid(), portletDataContext.getScopeGroupId());
+			WikiNode existingNode = fetchExistingStagedModel(
+				node.getUuid(), portletDataContext.getScopeGroupId());
 
 			String initialNodeName = PropsValues.WIKI_INITIAL_NODE_NAME;
 
@@ -154,9 +156,8 @@ public class WikiNodeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(node.getUserUuid());
 
-		WikiNode existingNode =
-			WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
-				node.getUuid(), portletDataContext.getScopeGroupId());
+		WikiNode existingNode = fetchExistingStagedModel(
+			node.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingNode == null) || !existingNode.isInTrash()) {
 			return;
@@ -194,8 +195,7 @@ public class WikiNodeStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		WikiNode node = WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
-			uuid, groupId);
+		WikiNode node = fetchExistingStagedModel(uuid, groupId);
 
 		if (node == null) {
 			return false;

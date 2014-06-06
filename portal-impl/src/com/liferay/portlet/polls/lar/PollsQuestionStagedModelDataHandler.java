@@ -42,9 +42,7 @@ public class PollsQuestionStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		PollsQuestion question =
-			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
-				uuid, groupId);
+		PollsQuestion question = fetchExistingStagedModel(uuid, groupId);
 
 		if (question != null) {
 			PollsQuestionLocalServiceUtil.deleteQuestion(question);
@@ -75,14 +73,21 @@ public class PollsQuestionStagedModelDataHandler
 	}
 
 	@Override
+	protected PollsQuestion doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long questionId)
 		throws Exception {
 
-		PollsQuestion existingQuestion =
-			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
-				uuid, groupId);
+		PollsQuestion existingQuestion = fetchExistingStagedModel(
+			uuid, groupId);
 
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -130,11 +135,8 @@ public class PollsQuestionStagedModelDataHandler
 		PollsQuestion importedQuestion = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsQuestion existingQuestion =
-				PollsQuestionLocalServiceUtil.
-					fetchPollsQuestionByUuidAndGroupId(
-						question.getUuid(),
-						portletDataContext.getScopeGroupId());
+			PollsQuestion existingQuestion = fetchExistingStagedModel(
+				question.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingQuestion == null) {
 				serviceContext.setUuid(question.getUuid());
@@ -169,9 +171,7 @@ public class PollsQuestionStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		PollsQuestion question =
-			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
-				uuid, groupId);
+		PollsQuestion question = fetchExistingStagedModel(uuid, groupId);
 
 		if (question == null) {
 			return false;

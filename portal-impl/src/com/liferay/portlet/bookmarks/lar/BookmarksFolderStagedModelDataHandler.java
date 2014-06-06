@@ -44,9 +44,7 @@ public class BookmarksFolderStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BookmarksFolder folder =
-			BookmarksFolderLocalServiceUtil.
-				fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
+		BookmarksFolder folder = fetchExistingStagedModel(uuid, groupId);
 
 		if (folder != null) {
 			BookmarksFolderLocalServiceUtil.deleteFolder(folder);
@@ -83,6 +81,14 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
+	protected BookmarksFolder doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return BookmarksFolderLocalServiceUtil.
+			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, BookmarksFolder folder)
 		throws Exception {
@@ -110,10 +116,8 @@ public class BookmarksFolderStagedModelDataHandler
 		BookmarksFolder importedFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksFolder existingFolder =
-				BookmarksFolderLocalServiceUtil.
-					fetchBookmarksFolderByUuidAndGroupId(
-						folder.getUuid(), portletDataContext.getScopeGroupId());
+			BookmarksFolder existingFolder = fetchExistingStagedModel(
+				folder.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingFolder == null) {
 				serviceContext.setUuid(folder.getUuid());
@@ -145,10 +149,8 @@ public class BookmarksFolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 
-		BookmarksFolder existingFolder =
-			BookmarksFolderLocalServiceUtil.
-				fetchBookmarksFolderByUuidAndGroupId(
-					folder.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksFolder existingFolder = fetchExistingStagedModel(
+			folder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) || !existingFolder.isInTrash()) {
 			return;
@@ -167,9 +169,7 @@ public class BookmarksFolderStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		BookmarksFolder folder =
-			BookmarksFolderLocalServiceUtil.
-				fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
+		BookmarksFolder folder = fetchExistingStagedModel(uuid, groupId);
 
 		if (folder == null) {
 			return false;

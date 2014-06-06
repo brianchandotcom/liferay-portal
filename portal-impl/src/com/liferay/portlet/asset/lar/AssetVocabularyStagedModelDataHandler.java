@@ -45,11 +45,10 @@ public class AssetVocabularyStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+		AssetVocabulary vocabulary = fetchExistingStagedModel(uuid, groupId);
 
 		if (vocabulary != null) {
 			AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(vocabulary);
@@ -101,14 +100,21 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	@Override
+	protected AssetVocabulary doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return AssetVocabularyLocalServiceUtil.
+			fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long vocabularyId)
 		throws Exception {
 
-		AssetVocabulary existingVocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+		AssetVocabulary existingVocabulary = fetchExistingStagedModel(
+			uuid, groupId);
 
 		Map<Long, Long> vocabularyIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -129,12 +135,11 @@ public class AssetVocabularyStagedModelDataHandler
 
 		AssetVocabulary importedVocabulary = null;
 
-		AssetVocabulary existingVocabulary =
-			AssetVocabularyUtil.fetchByUUID_G(
-				vocabulary.getUuid(), portletDataContext.getScopeGroupId());
+		AssetVocabulary existingVocabulary = fetchExistingStagedModel(
+			vocabulary.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingVocabulary == null) {
-			existingVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+			existingVocabulary = fetchExistingStagedModel(
 				vocabulary.getUuid(), portletDataContext.getCompanyGroupId());
 		}
 
@@ -219,9 +224,7 @@ public class AssetVocabularyStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+		AssetVocabulary vocabulary = fetchExistingStagedModel(uuid, groupId);
 
 		if (vocabulary == null) {
 			return false;

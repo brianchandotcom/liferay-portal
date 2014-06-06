@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -58,9 +57,7 @@ public class DDMTemplateStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDMTemplate ddmTemplate =
-			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-				uuid, groupId);
+		DDMTemplate ddmTemplate = fetchExistingStagedModel(uuid, groupId);
 
 		if (ddmTemplate != null) {
 			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
@@ -138,8 +135,8 @@ public class DDMTemplateStagedModelDataHandler
 			existingTemplate = fetchExistingTemplate(
 				uuid, liveGroupId, classNameId, templateKey, preloaded);
 		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
+		catch (PortalException pe) {
+			throw new PortletDataException(pe);
 		}
 
 		Map<Long, Long> templateIds =
@@ -195,7 +192,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			return true;
 		}
-		catch (SystemException se) {
+		catch (PortalException pe) {
 			return false;
 		}
 	}
@@ -262,6 +259,14 @@ public class DDMTemplateStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			templateElement, ExportImportPathUtil.getModelPath(template),
 			template);
+	}
+
+	@Override
+	protected DDMTemplate doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -394,15 +399,14 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	protected DDMTemplate fetchExistingTemplate(
-		String uuid, long groupId, long classNameId, String templateKey,
-		boolean preloaded) {
+			String uuid, long groupId, long classNameId, String templateKey,
+			boolean preloaded)
+		throws PortalException {
 
 		DDMTemplate existingTemplate = null;
 
 		if (!preloaded) {
-			existingTemplate =
-				DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-					uuid, groupId);
+			existingTemplate = fetchExistingStagedModel(uuid, groupId);
 		}
 		else {
 			existingTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(

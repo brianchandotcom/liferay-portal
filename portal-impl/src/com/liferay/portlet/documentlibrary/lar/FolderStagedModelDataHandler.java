@@ -66,7 +66,7 @@ public class FolderStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Folder folder = FolderUtil.fetchByUUID_R(uuid, groupId);
+		Folder folder = fetchExistingStagedModel(uuid, groupId);
 
 		if (folder != null) {
 			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
@@ -126,12 +126,17 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	protected Folder doFetchExistingStagedModel(String uuid, long groupId) {
+		return FolderUtil.fetchByUUID_R(uuid, groupId);
+	}
+
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long folderId)
 		throws Exception {
 
-		Folder existingFolder = FolderUtil.fetchByUUID_R(uuid, groupId);
+		Folder existingFolder = fetchExistingStagedModel(uuid, groupId);
 
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -190,7 +195,7 @@ public class FolderStagedModelDataHandler
 		Folder importedFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			Folder existingFolder = FolderUtil.fetchByUUID_R(
+			Folder existingFolder = fetchExistingStagedModel(
 				folder.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingFolder == null) {
@@ -246,7 +251,7 @@ public class FolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 
-		Folder existingFolder = FolderUtil.fetchByUUID_R(
+		Folder existingFolder = fetchExistingStagedModel(
 			folder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) ||
@@ -471,11 +476,9 @@ public class FolderStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		DLFolder dlFolder =
-			DLFolderLocalServiceUtil.fetchDLFolderByUuidAndGroupId(
-				uuid, groupId);
+		Folder folder = fetchExistingStagedModel(uuid, groupId);
 
-		if (dlFolder == null) {
+		if (folder == null) {
 			return false;
 		}
 

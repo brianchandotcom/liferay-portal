@@ -41,9 +41,8 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		LayoutFriendlyURL layoutFriendlyURL =
-			LayoutFriendlyURLLocalServiceUtil.
-				getLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
+		LayoutFriendlyURL layoutFriendlyURL = fetchExistingStagedModel(
+			uuid, groupId);
 
 		LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
 			layoutFriendlyURL);
@@ -67,6 +66,14 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			layoutFriendlyURLElement,
 			ExportImportPathUtil.getModelPath(layoutFriendlyURL),
 			layoutFriendlyURL);
+	}
+
+	@Override
+	protected LayoutFriendlyURL doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return LayoutFriendlyURLLocalServiceUtil.
+			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -138,14 +145,12 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	}
 
 	protected LayoutFriendlyURL fetchExistingLayoutFriendlyURL(
-		PortletDataContext portletDataContext,
-		LayoutFriendlyURL layoutFriendlyURL, long plid) {
+			PortletDataContext portletDataContext,
+			LayoutFriendlyURL layoutFriendlyURL, long plid)
+		throws PortalException {
 
-		LayoutFriendlyURL existingLayoutFriendlyURL =
-			LayoutFriendlyURLLocalServiceUtil.
-				fetchLayoutFriendlyURLByUuidAndGroupId(
-					layoutFriendlyURL.getUuid(),
-					portletDataContext.getScopeGroupId());
+		LayoutFriendlyURL existingLayoutFriendlyURL = fetchExistingStagedModel(
+			layoutFriendlyURL.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingLayoutFriendlyURL == null) {
 			existingLayoutFriendlyURL =

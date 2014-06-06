@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -54,9 +53,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.
-				fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+		DLFileEntryType dlFileEntryType = fetchExistingStagedModel(
+			uuid, groupId);
 
 		if (dlFileEntryType != null) {
 			DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(
@@ -130,8 +128,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 			existingFileEntryType = fetchExistingFileEntryType(
 				uuid, liveGroupId, fileEntryTypeKey, preloaded);
 		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
+		catch (PortalException pe) {
+			throw new PortletDataException(pe);
 		}
 
 		Map<Long, Long> fileEntryTypeIds =
@@ -181,7 +179,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 			return true;
 		}
-		catch (SystemException se) {
+		catch (PortalException e) {
 			return false;
 		}
 	}
@@ -218,6 +216,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			fileEntryTypeElement,
 			ExportImportPathUtil.getModelPath(fileEntryType), fileEntryType);
+	}
+
+	@Override
+	protected DLFileEntryType doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return DLFileEntryTypeLocalServiceUtil.
+			fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -339,14 +345,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	protected DLFileEntryType fetchExistingFileEntryType(
-		String uuid, long groupId, String fileEntryTypeKey, boolean preloaded) {
+			String uuid, long groupId, String fileEntryTypeKey,
+			boolean preloaded)
+		throws PortalException {
 
 		DLFileEntryType existingDLFileEntryType = null;
 
 		if (!preloaded) {
-			existingDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.
-					fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+			existingDLFileEntryType = fetchExistingStagedModel(uuid, groupId);
 		}
 		else {
 			existingDLFileEntryType =

@@ -1,0 +1,9 @@
+#
+# See http://elasticsearch.org/guide/en/elasticsearch/reference/current/setup-configuration.html
+# for more information.
+#
+
+client.transport.sniff: true
+
+path.logs: ${liferay.home}/logs
+path.work: ${java.io.tmpdir}

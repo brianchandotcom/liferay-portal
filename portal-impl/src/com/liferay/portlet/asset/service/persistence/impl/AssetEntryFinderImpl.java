@@ -223,7 +223,9 @@ public class AssetEntryFinderImpl
 				"SELECT COUNT(DISTINCT AssetEntry.entryId) AS COUNT_VALUE ");
 		}
 		else {
-			sb.append("SELECT DISTINCT {AssetEntry.*} ");
+			sb.append("SELECT {AssetEntry.*} ");
+
+			boolean isRequiredRatings = false;
 
 			String orderByCol1 = entryQuery.getOrderByCol1();
 			String orderByCol2 = entryQuery.getOrderByCol2();
@@ -231,6 +233,14 @@ public class AssetEntryFinderImpl
 			if (orderByCol1.equals("ratings") ||
 				orderByCol2.equals("ratings")) {
 
+				isRequiredRatings = true;
+
+				sb.append(", tempTable.averageScore ");
+			}
+
+			sb.append("FROM (SELECT DISTINCT AssetEntry.entryId ");
+
+			if (isRequiredRatings) {
 				sb.append(", RatingsStats.averageScore ");
 			}
 		}
@@ -357,10 +367,15 @@ public class AssetEntryFinderImpl
 		sb.append(getClassNameIds(entryQuery.getClassNameIds()));
 
 		if (!count) {
+			sb.append(") tempTable ");
+			sb.append("INNER JOIN ");
+			sb.append("AssetEntry AssetEntry ON ");
+			sb.append("tempTable.entryId = AssetEntry.entryId");
+
 			sb.append(" ORDER BY ");
 
 			if (entryQuery.getOrderByCol1().equals("ratings")) {
-				sb.append("RatingsStats.averageScore");
+				sb.append("tempTable.averageScore");
 			}
 			else {
 				sb.append("AssetEntry.");
@@ -375,7 +390,7 @@ public class AssetEntryFinderImpl
 					entryQuery.getOrderByCol2())) {
 
 				if (entryQuery.getOrderByCol2().equals("ratings")) {
-					sb.append(", RatingsStats.averageScore");
+					sb.append(", tempTable.averageScore");
 				}
 				else {
 					sb.append(", AssetEntry.");

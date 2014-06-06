@@ -30,22 +30,27 @@
 </tr>
 <tr>
 	<td>EDIT_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-edit')]/a</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a | //div[contains(@class,'lfr-icon-action-add')]/a </td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a | //div[contains(@class,'lfr-icon-action-add')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALERT_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]/a</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]</td>
 	<td></td>
 </tr>
 <tr>

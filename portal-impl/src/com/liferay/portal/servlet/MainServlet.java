@@ -1192,6 +1192,8 @@ public class MainServlet extends ActionServlet {
 
 				Group group = layout.getGroup();
 
+				redirect = HttpUtil.addParameter(redirect, "refererPlid", plid);
+
 				plid = group.getDefaultPublicPlid();
 
 				if ((plid == LayoutConstants.DEFAULT_PLID) ||

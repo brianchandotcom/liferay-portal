@@ -295,28 +295,6 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId());
 		}
-
-		// Trash
-
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			if (dlFileEntry.isInTrashExplicitly()) {
-				trashEntryLocalService.deleteEntry(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
-			}
-			else {
-				List<DLFileVersion> dlFileVersions =
-					dlFileEntry.getFileVersions(WorkflowConstants.STATUS_ANY);
-
-				for (DLFileVersion dlFileVersion : dlFileVersions) {
-					trashVersionLocalService.deleteTrashVersion(
-						DLFileVersion.class.getName(),
-						dlFileVersion.getFileVersionId());
-				}
-			}
-		}
 	}
 
 	@Override
@@ -333,21 +311,6 @@ public class DLAppHelperLocalServiceImpl
 
 		assetEntryLocalService.deleteEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
-
-		// Trash
-
-		if (folder.getModel() instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)folder.getModel();
-
-			if (dlFolder.isInTrashExplicitly()) {
-				trashEntryLocalService.deleteEntry(
-					DLFolderConstants.getClassName(), dlFolder.getFolderId());
-			}
-			else {
-				trashVersionLocalService.deleteTrashVersion(
-					DLFolderConstants.getClassName(), dlFolder.getFolderId());
-			}
-		}
 	}
 
 	@Override

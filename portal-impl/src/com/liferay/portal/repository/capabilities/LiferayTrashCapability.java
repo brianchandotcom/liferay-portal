@@ -18,7 +18,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -27,12 +38,37 @@ public class LiferayTrashCapability implements TrashCapability {
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("Not Implemented");
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		if (dlFileEntry.isInTrashExplicitly()) {
+			TrashEntryLocalServiceUtil.deleteEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+		}
+		else {
+			List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
+				WorkflowConstants.STATUS_ANY);
+
+			for (DLFileVersion dlFileVersion : dlFileVersions) {
+				TrashVersionLocalServiceUtil.deleteTrashVersion(
+					DLFileVersion.class.getName(),
+					dlFileVersion.getFileVersionId());
+			}
+		}
 	}
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("Not Implemented");
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		if (dlFolder.isInTrashExplicitly()) {
+			TrashEntryLocalServiceUtil.deleteEntry(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		}
+		else {
+			TrashVersionLocalServiceUtil.deleteTrashVersion(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		}
 	}
 
 	@Override
@@ -41,14 +77,16 @@ public class LiferayTrashCapability implements TrashCapability {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not Implemented");
+		return DLAppHelperLocalServiceUtil.moveFileEntryFromTrash(
+			userId, fileEntry, destinationFolder.getFolderId(), serviceContext);
 	}
 
 	@Override
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		return DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
+			userId, fileEntry);
 	}
 
 	@Override
@@ -57,28 +95,30 @@ public class LiferayTrashCapability implements TrashCapability {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		return DLAppHelperLocalServiceUtil.moveFolderFromTrash(
+			userId, folder, destinationFolder.getFolderId(), serviceContext);
 	}
 
 	@Override
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		return DLAppHelperLocalServiceUtil.moveFolderToTrash(userId, folder);
 	}
 
 	@Override
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		DLAppHelperLocalServiceUtil.restoreFileEntryFromTrash(
+			userId, fileEntry);
 	}
 
 	@Override
 	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(userId, folder);
 	}
 
 }

@@ -148,6 +148,7 @@ if (filterManageableOrganizations) {
 
 				<liferay-ui:search-container-column-jsp
 					align="right"
+					cssClass="entry-action"
 					path="/html/portlet/users_admin/organization_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

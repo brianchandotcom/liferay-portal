@@ -193,6 +193,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/my_sites/site_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

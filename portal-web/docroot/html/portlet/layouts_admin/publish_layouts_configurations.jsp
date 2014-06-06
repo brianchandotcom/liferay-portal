@@ -102,6 +102,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		/>
 
 		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action"
 			path="/html/portlet/layouts_admin/publish_configuration_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>

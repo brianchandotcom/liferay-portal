@@ -99,6 +99,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
+			cssClass="entry-action"
 			path="/html/portlet/user_groups_admin/user_group_action.jsp"
 		/>
 	</liferay-ui:search-container-row>

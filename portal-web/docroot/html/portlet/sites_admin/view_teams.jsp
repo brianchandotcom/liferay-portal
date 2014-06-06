@@ -104,7 +104,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/sites_admin/team_action.jsp");
+		row.addJSP("/html/portlet/sites_admin/team_action.jsp", "entry-action");
 
 		// Add result row
 

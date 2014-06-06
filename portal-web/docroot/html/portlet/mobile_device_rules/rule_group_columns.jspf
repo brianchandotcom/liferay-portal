@@ -59,5 +59,6 @@ if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys
 
 <liferay-ui:search-container-column-jsp
 	align="right"
+	cssClass="entry-action"
 	path="/html/portlet/mobile_device_rules/rule_group_actions.jsp"
 />

@@ -98,7 +98,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			// Action
 
-			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/shopping/category_action.jsp");
+			row.addJSP("/html/portlet/shopping/category_action.jsp", "entry-action");
 
 			// Add result row
 
@@ -308,7 +308,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			// Action
 
-			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/shopping/item_action.jsp");
+			row.addJSP("/html/portlet/shopping/item_action.jsp", "entry-action");
 
 			// Add result row
 

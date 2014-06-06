@@ -156,6 +156,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 
 					<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
 						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
 							path="/html/portlet/bookmarks/entry_action.jsp"
 						/>
 					</c:if>
@@ -209,6 +210,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 
 					<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
 						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
 							path="/html/portlet/bookmarks/folder_action.jsp"
 						/>
 					</c:if>

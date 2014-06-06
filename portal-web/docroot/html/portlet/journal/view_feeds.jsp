@@ -121,7 +121,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/feed_action.jsp");
+		row.addJSP("/html/portlet/journal/feed_action.jsp", "entry-action");
 
 		// Add result row
 

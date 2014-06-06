@@ -98,7 +98,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/shopping/order_action.jsp");
+		row.addJSP("/html/portlet/shopping/order_action.jsp", "entry-action");
 
 		// Add result row
 

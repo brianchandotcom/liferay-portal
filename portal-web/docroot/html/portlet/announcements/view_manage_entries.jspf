@@ -118,7 +118,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 			// Action
 
-			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/announcements/view_manage_entries_entry_action.jsp");
+			row.addJSP("/html/portlet/announcements/view_manage_entries_entry_action.jsp", "entry-action");
 
 			// Add result row
 

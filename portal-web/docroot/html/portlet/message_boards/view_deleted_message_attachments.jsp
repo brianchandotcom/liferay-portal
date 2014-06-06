@@ -108,6 +108,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
+			cssClass="entry-action"
 			path="/html/portlet/message_boards/deleted_message_attachment_action.jsp"
 		/>
 	</liferay-ui:search-container-row>

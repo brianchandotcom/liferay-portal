@@ -116,7 +116,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Actions
 
-	row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/admin/instance_actions.jsp");
+	row.addJSP("/html/portlet/admin/instance_actions.jsp", "entry-action");
 
 	// Add result row
 

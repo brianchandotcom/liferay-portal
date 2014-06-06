@@ -52,5 +52,5 @@ row.addText(ddmStructure.getName(locale));
 
 // Action
 
-row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/article_action.jsp");
+row.addJSP("/html/portlet/journal/article_action.jsp", "entry-action");
 %>

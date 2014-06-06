@@ -74,6 +74,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/blogs_admin/entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

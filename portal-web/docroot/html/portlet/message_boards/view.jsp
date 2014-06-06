@@ -439,6 +439,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-jsp
 					align="right"
+					cssClass="entry-action"
 					path="/html/portlet/message_boards/ban_user_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

@@ -186,6 +186,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 							<liferay-ui:search-container-column-jsp
 								align="right"
+								cssClass="entry-action"
 								path="/html/portlet/workflow_instances/workflow_task_action.jsp"
 							/>
 						</liferay-ui:search-container-row>

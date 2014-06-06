@@ -96,6 +96,7 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/layout_set_prototypes/layout_set_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

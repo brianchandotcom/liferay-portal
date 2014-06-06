@@ -179,6 +179,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
+				cssClass="entry-action"
 				path="/html/portlet/sites_admin/user_action.jsp"
 			/>
 		</c:if>

@@ -77,5 +77,6 @@
 
 <liferay-ui:search-container-column-jsp
 	align="right"
+	cssClass="entry-action"
 	path="/html/portlet/expando/expando_action.jsp"
 />

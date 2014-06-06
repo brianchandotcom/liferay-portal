@@ -316,6 +316,62 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+
+		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<then>
+					<echo file="${app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+				</then>
+			</if>
+
+			<parallel>
+				<daemons>
+					<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+						<arg line="${app.server.start.executable.arg.line}" />
+					</exec>
+				</daemons>
+			</parallel>
+
+			<if>
+				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+				<then>
+					<waitfor maxwait="5" maxwaitunit="minute">
+						<http url="http://localhost:8180/console" />
+					</waitfor>
+				</then>
+				<elseif>
+					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+					<then>
+						<waitfor maxwait="1" maxwaitunit="minute">
+							<http url="http://localhost:8080" />
+						</waitfor>
+					</then>
+				</elseif>
+				<else>
+					<waitfor maxwait="5" maxwaitunit="minute">
+						<and>
+							<available file="${liferay.home}/logs" />
+							<http url="http://localhost:8080/web/guest" />
+						</and>
+					</waitfor>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+
+		<sequential>
+			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+				<arg line="${app.server.stop.executable.arg.line}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<target name="build-sql-file">
 		<if>
 			<isset property="sql.legacy.url" />
@@ -2919,9 +2975,9 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
-				<antcall target="start-app-server" />
+				<start-app-server />
 
-				<antcall target="stop-app-server" />
+				<stop-app-server />
 			</then>
 		</if>
 
@@ -3022,16 +3078,12 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<equals arg1="${tcat.enabled}" arg2="true" />
 			<then>
-				<antcall target="start-app-server" inheritAll="false">
-					<param name="app.server.bin.dir" value="${app.server.tcat.admin.bin.dir}" />
-				</antcall>
+				<start-app-server app.server.bin.dir="${app.server.tcat.admin.bin.dir}" />
 
-				<antcall target="start-app-server" inheritAll="false">
-					<param name="app.server.bin.dir" value="${app.server.tcat.agent.bin.dir}" />
-				</antcall>
+				<start-app-server app.server.bin.dir="${app.server.tcat.agent.bin.dir}" />
 			</then>
 			<else>
-				<antcall target="start-app-server" />
+				<start-app-server />
 
 				<for param="log.file">
 					<path>
@@ -3111,16 +3163,12 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<equals arg1="${tcat.enabled}" arg2="true" />
 			<then>
-				<antcall target="stop-app-server" inheritAll="false">
-					<param name="app.server.bin.dir" value="${app.server.tcat.admin.bin.dir}" />
-				</antcall>
+				<stop-app-server app.server.bin.dir="${app.server.tcat.admin.bin.dir}" />
 
-				<antcall target="stop-app-server" inheritAll="false">
-					<param name="app.server.bin.dir" value="${app.server.tcat.agent.bin.dir}" />
-				</antcall>
+				<stop-app-server app.server.bin.dir="${app.server.tcat.agent.bin.dir}" />
 			</then>
 			<else>
-				<antcall target="stop-app-server" />
+				<stop-app-server />
 			</else>
 		</if>
 
@@ -3144,45 +3192,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="start-app-server">
-		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
-			<then>
-				<echo file="${app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
-			</then>
-		</if>
-
-		<parallel>
-			<daemons>
-				<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
-					<arg line="${app.server.start.executable.arg.line}" />
-				</exec>
-			</daemons>
-		</parallel>
-
-		<if>
-			<equals arg1="${app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-			<then>
-				<waitfor maxwait="5" maxwaitunit="minute">
-					<http url="http://localhost:8180/console" />
-				</waitfor>
-			</then>
-			<elseif>
-				<equals arg1="${app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-				<then>
-					<waitfor maxwait="1" maxwaitunit="minute">
-						<http url="http://localhost:8080" />
-					</waitfor>
-				</then>
-			</elseif>
-			<else>
-				<waitfor maxwait="5" maxwaitunit="minute">
-					<and>
-						<available file="${liferay.home}/logs" />
-						<http url="http://localhost:8080/web/guest" />
-					</and>
-				</waitfor>
-			</else>
-		</if>
+		<start-app-server />
 	</target>
 
 	<target name="start-chrome-driver">
@@ -3268,9 +3278,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="stop-app-server">
-		<exec dir="${app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-			<arg line="${app.server.stop.executable.arg.line}" />
-		</exec>
+		<stop-app-server />
 	</target>
 
 	<target name="stop-chrome-driver">

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -737,16 +737,21 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		if (!(localRepository instanceof LiferayLocalRepository)) {
+		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + localRepository.getRepositoryId() +
 					" does not support trash operations");
 		}
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryFromTrash(
-			userId, fileEntry, newFolderId, serviceContext);
+		Folder destinationFolder = localRepository.getFolder(newFolderId);
+
+		return trashCapability.moveFileEntryFromTrash(
+			userId, fileEntry, destinationFolder, serviceContext);
 	}
 
 	/**
@@ -764,9 +769,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
 	}
 
 	@Override
@@ -837,9 +845,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
+		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
 	/**

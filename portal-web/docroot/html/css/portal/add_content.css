@@ -2,7 +2,6 @@
 @import "mixins";
 
 .lfr-add-panel {
-	box-sizing: content-box;
 	width: 330px;
 
 	.add-content-menu .lfr-add-page-toolbar {
@@ -23,12 +22,6 @@
 
 .lfr-add-dialog, .lfr-add-panel {
 	.add-content-menu {
-		.input-container {
-			.row {
-				margin: 0;
-			}
-		}
-
 		.panel-group {
 			margin-bottom: 20px;
 
@@ -59,7 +52,10 @@
 
 		.display-style-buttons-container {
 			float: right;
-			margin: 4px 0;
+
+			@include respond-to(desktop) {
+				margin: 4px 0;
+			}
 
 			.lfr-icon-menu {
 				.lfr-icon-menu-arrow {

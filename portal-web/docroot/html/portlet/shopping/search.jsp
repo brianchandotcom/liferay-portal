@@ -174,7 +174,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/shopping/item_action.jsp");
+		row.addJSP("/html/portlet/shopping/item_action.jsp", "entry-action");
 
 		// Add result row
 

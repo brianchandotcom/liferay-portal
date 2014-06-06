@@ -146,7 +146,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Actions
 
-	row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/sites_admin/membership_request_action.jsp");
+	row.addJSP("/html/portlet/sites_admin/membership_request_action.jsp", "entry-action");
 
 	// Add result row
 

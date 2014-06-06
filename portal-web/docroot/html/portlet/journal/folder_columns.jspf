@@ -50,5 +50,5 @@ row.addText("--");
 
 // Action
 
-row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/folder_action.jsp");
+row.addJSP("/html/portlet/journal/folder_action.jsp", "entry-action");
 %>

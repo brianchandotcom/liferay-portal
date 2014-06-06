@@ -98,7 +98,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/portlet_configuration/archived_setup_action.jsp");
+		row.addJSP("/html/portlet/portlet_configuration/archived_setup_action.jsp", "entry-action");
 
 		// Add result row
 

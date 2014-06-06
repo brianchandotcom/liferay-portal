@@ -163,7 +163,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Action
 
-				row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/journal/article_version_action.jsp");
+				row.addJSP("/html/portlet/journal/article_version_action.jsp", "entry-action");
 
 				// Add result row
 

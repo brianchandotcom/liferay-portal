@@ -97,7 +97,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/dynamic_data_lists/record_version_action.jsp");
+		row.addJSP("/html/portlet/dynamic_data_lists/record_version_action.jsp", "entry-action");
 
 		// Add result row
 

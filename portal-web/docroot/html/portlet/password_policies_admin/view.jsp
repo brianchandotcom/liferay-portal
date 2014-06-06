@@ -114,7 +114,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 
 			// Action
 
-			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/password_policies_admin/password_policy_action.jsp");
+			row.addJSP("/html/portlet/password_policies_admin/password_policy_action.jsp", "entry-action");
 
 			// Add result row
 

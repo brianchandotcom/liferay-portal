@@ -457,7 +457,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/file_entry_action.jsp");
+							row.addJSP("/html/portlet/document_library/file_entry_action.jsp", "entry-action");
 						}
 
 						if (columnName.equals("create-date")) {
@@ -581,7 +581,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					for (String columnName : entryColumns) {
 						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/folder_action.jsp");
+							row.addJSP("/html/portlet/document_library/folder_action.jsp", "entry-action");
 						}
 
 						if (columnName.equals("create-date")) {

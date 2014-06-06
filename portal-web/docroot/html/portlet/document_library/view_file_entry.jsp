@@ -546,7 +546,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 
 									// Action
 
-									row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_history_action.jsp");
+									row.addJSP("/html/portlet/document_library/file_entry_history_action.jsp", "entry-action");
 
 									// Add result row
 

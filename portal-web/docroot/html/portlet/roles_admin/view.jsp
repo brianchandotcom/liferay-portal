@@ -138,7 +138,7 @@ String portletURLString = portletURL.toString();
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/roles_admin/role_action.jsp");
+		row.addJSP("/html/portlet/roles_admin/role_action.jsp", "entry-action");
 
 		// CSS
 

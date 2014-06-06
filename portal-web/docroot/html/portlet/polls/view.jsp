@@ -86,7 +86,7 @@
 
 		// Action
 
-		row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/polls/question_action.jsp");
+		row.addJSP("/html/portlet/polls/question_action.jsp", "entry-action");
 
 		// Add result row
 

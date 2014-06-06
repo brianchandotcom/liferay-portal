@@ -36,7 +36,6 @@ public class MissingReference implements Serializable {
 		_classPK = element.attributeValue("class-pk");
 		_displayName = GetterUtil.getString(
 			element.attributeValue("display-name"));
-		_groupId = element.attributeValue("group-id");
 		_referrerClassName = element.attributeValue("referrer-class-name");
 		_type = GetterUtil.getString(element.attributeValue("type"));
 
@@ -68,7 +67,7 @@ public class MissingReference implements Serializable {
 		return _displayName;
 	}
 
-	public String getGroupId() {
+	public long getGroupId() {
 		return _groupId;
 	}
 
@@ -88,10 +87,14 @@ public class MissingReference implements Serializable {
 		return _type;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private String _className;
 	private String _classPK;
 	private String _displayName;
-	private String _groupId;
+	private long _groupId;
 	private String _referrerClassName;
 	private Map<String, String> _referrers = new HashMap<String, String>();
 	private String _type;

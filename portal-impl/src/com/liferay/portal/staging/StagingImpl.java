@@ -592,10 +592,18 @@ public class StagingImpl implements Staging {
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
-			errorMessageJSONObject.put(
-				"site",
-				LanguageUtil.format(
-					locale, "in-site-x", missingReference.getGroupId(), false));
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				missingReference.getGroupId());
+
+			if (group != null) {
+				errorMessageJSONObject.put(
+					"site",
+					LanguageUtil.format(
+						locale, "in-site-x", missingReference.getGroupId(),
+						false));
+			}
+
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(

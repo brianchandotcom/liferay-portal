@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.jdbc;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -21,14 +22,16 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.upgrade.util.Table;
 
+import java.io.File;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -46,6 +49,20 @@ import net.sf.jsqlparser.util.TablesNamesFinder;
  */
 public class ResetDatabaseUtil {
 
+	public static synchronized boolean initialize() {
+		if (_initialized) {
+			reloadDatabase();
+
+			return false;
+		}
+
+		dumpDatabase();
+
+		_initialized = true;
+
+		return true;
+	}
+
 	public static void processSQL(Connection connection, String sql)
 		throws Exception {
 
@@ -60,7 +77,7 @@ public class ResetDatabaseUtil {
 		}
 
 		for (String tableName : tableNames) {
-			Table table = _buildTable(connection, tableName);
+			Table table = _cachedTables.get(tableName);
 
 			if (_modifiedTables.putIfAbsent(tableName, table) ==
 					null) {
@@ -71,6 +88,8 @@ public class ResetDatabaseUtil {
 	}
 
 	public static void resetModifiedTables() {
+		_recording = false;
+
 		Connection connection = null;
 
 		try {
@@ -97,8 +116,6 @@ public class ResetDatabaseUtil {
 			DataAccess.cleanUp(connection);
 
 			_modifiedTables.clear();
-
-			_recording = false;
 		}
 	}
 
@@ -106,45 +123,86 @@ public class ResetDatabaseUtil {
 		_recording = true;
 	}
 
-	private static Table _buildTable(Connection connection, String tableName) {
+	protected static void dumpDatabase() {
+		Connection connection = null;
+		ResultSet tableResultSet = null;
+
 		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			ResultSet tableResultSet = databaseMetaData.getTables(
-				null, null, tableName, null);
+			tableResultSet = databaseMetaData.getTables(null, null, null, null);
 
-			try {
-				if (!tableResultSet.next()) {
-					throw new IllegalStateException(
-						"Unable to access table " + tableName);
+			while (tableResultSet.next()) {
+				String tableName = tableResultSet.getString("TABLE_NAME");
+
+				ResultSet columnResultSet = databaseMetaData.getColumns(
+					null, null, tableName, null);
+
+				List<Object[]> columns = new ArrayList<Object[]>();
+
+				try {
+					while (columnResultSet.next()) {
+						columns.add(
+							new Object[] {
+								columnResultSet.getString("COLUMN_NAME"),
+								columnResultSet.getInt("DATA_TYPE")});
+					}
 				}
-			}
-			finally {
-				DataAccess.cleanUp(tableResultSet);
-			}
-
-			ResultSet columnResultSet = databaseMetaData.getColumns(
-				null, null, tableName, null);
-
-			List<Object[]> columns = new ArrayList<Object[]>();
-
-			try {
-				while (columnResultSet.next()) {
-					columns.add(
-						new Object[] {
-							columnResultSet.getString("COLUMN_NAME"),
-							columnResultSet.getInt("DATA_TYPE")});
+				finally {
+					DataAccess.cleanUp(columnResultSet);
 				}
-			}
-			finally {
-				DataAccess.cleanUp(columnResultSet);
-			}
 
-			return new Table(
-				tableName, columns.toArray(new Object[columns.size()][]));
+				Table table = new Table(
+					tableName, columns.toArray(new Object[columns.size()][]));
+
+				table.generateTempFile(connection);
+
+				String tempFileName = table.getTempFileName();
+
+				if (tempFileName != null) {
+					File tempFile = new File(tempFileName);
+
+					tempFile.deleteOnExit();
+				}
+
+				_tables.add(table);
+
+				_cachedTables.put(
+					tableName,
+					new Table(
+						tableName,
+						columns.toArray(new Object[columns.size()][])));
+			}
 		}
-		catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			DataAccess.cleanUp(connection, null, tableResultSet);
+		}
+	}
+
+	protected static void reloadDatabase() {
+		Connection connection = null;
+
+		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+
+			for (Table table : _tables) {
+				DB db = DBFactoryUtil.getDB();
+
+				db.runSQL(connection, table.getDeleteSQL());
+
+				table.populateTable();
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			DataAccess.cleanUp(connection);
 		}
 	}
 
@@ -197,9 +255,13 @@ public class ResetDatabaseUtil {
 		return null;
 	}
 
+	private static ConcurrentMap<String, Table> _cachedTables =
+		new ConcurrentHashMap<String, Table>();
+	private static boolean _initialized;
 	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
 	private static ConcurrentMap<String, Table> _modifiedTables =
 		new ConcurrentHashMap<String, Table>();
 	private static volatile boolean _recording;
+	private static Set<Table> _tables = new ConcurrentHashSet<Table>();
 
 }

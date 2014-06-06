@@ -193,6 +193,18 @@ public class CapabilityRepository implements Repository {
 	}
 
 	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		if (_exportedCapabilities.contains(capabilityClass)) {
+			return getInternalCapability(capabilityClass);
+		}
+
+		throw new IllegalArgumentException(
+			String.format(
+				"Capability %s not exported by repository %d",
+				capabilityClass.getName(), getRepositoryId()));
+	}
+
+	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -461,6 +473,13 @@ public class CapabilityRepository implements Repository {
 		return _repository.getSubfolderIds(folderId, recurse);
 	}
 
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _exportedCapabilities.contains(capabilityClass);
+	}
+
 	@Deprecated
 	@Override
 	public Lock lockFileEntry(long fileEntryId)
@@ -639,7 +658,7 @@ public class CapabilityRepository implements Repository {
 		return _repository.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	protected <T extends Capability<T>> T getCapability(
+	protected <T extends Capability> T getInternalCapability(
 		Class<T> capabilityClass) {
 
 		Capability<?> capability = _capabilityMap.get(capabilityClass);

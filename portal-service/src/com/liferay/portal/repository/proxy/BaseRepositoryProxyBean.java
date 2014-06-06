@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -197,6 +198,11 @@ public class BaseRepositoryProxyBean
 		throws PortalException, SystemException {
 
 		_baseRepository.deleteFolder(parentFolderId, title);
+	}
+
+	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		return _baseRepository.getCapability(capabilityClass);
 	}
 
 	@Override
@@ -534,6 +540,13 @@ public class BaseRepositoryProxyBean
 	@Override
 	public void initRepository() throws PortalException, SystemException {
 		_baseRepository.initRepository();
+	}
+
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _baseRepository.isCapabilityProvided(capabilityClass);
 	}
 
 	/**

@@ -16,6 +16,8 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +49,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public abstract class LiferayRepositoryBase {
+public abstract class LiferayRepositoryBase implements CapabilityProvider {
 
 	public LiferayRepositoryBase(
 		RepositoryLocalService repositoryLocalService,
@@ -79,8 +81,23 @@ public abstract class LiferayRepositoryBase {
 		_dlFolderId = dlFolderId;
 	}
 
+	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		throw new IllegalArgumentException(
+			String.format(
+				"Capability %s not supported by repository %d",
+				capabilityClass.getName(), getRepositoryId()));
+	}
+
 	public long getRepositoryId() {
 		return _repositoryId;
+	}
+
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return false;
 	}
 
 	protected void addFileEntryResources(

@@ -49,11 +49,7 @@ public class CommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		if (_serviceTracker.isEmpty()) {
-			return 0L;
-		}
-
-		CommentManager commentManager = _serviceTracker.getService();
+		CommentManager commentManager = _getCommentManager();
 
 		return commentManager.addComment(
 			userId, groupId, className, classPK, userName, subject, body,
@@ -66,11 +62,7 @@ public class CommentManagerImpl implements CommentManager {
 			String userName)
 		throws PortalException {
 
-		if (_serviceTracker.isEmpty()) {
-			return;
-		}
-
-		CommentManager commentManager = _serviceTracker.getService();
+		CommentManager commentManager = _getCommentManager();
 
 		commentManager.addInitialDiscussion(
 			userId, groupId, className, classPK, userName);
@@ -78,11 +70,7 @@ public class CommentManagerImpl implements CommentManager {
 
 	@Override
 	public void deleteComment(long commentId) throws PortalException {
-		if (_serviceTracker.isEmpty()) {
-			return;
-		}
-
-		CommentManager commentManager = _serviceTracker.getService();
+		CommentManager commentManager = _getCommentManager();
 
 		commentManager.deleteComment(commentId);
 	}
@@ -91,15 +79,25 @@ public class CommentManagerImpl implements CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 
-		if (_serviceTracker.isEmpty()) {
-			return;
-		}
-
-		CommentManager commentManager = _serviceTracker.getService();
+		CommentManager commentManager = _getCommentManager();
 
 		commentManager.deleteDiscussion(className, classPK);
 	}
 
+	protected void setDefaultCommentManager(CommentManager commentManager) {
+		_defaultCommentManager = commentManager;
+	}
+
+	private CommentManager _getCommentManager() {
+		if (_serviceTracker.isEmpty()) {
+			return _defaultCommentManager;
+		}
+
+		return _serviceTracker.getService();
+	}
+
+	private CommentManager _defaultCommentManager =
+		new NullCommentManagerImpl();
 	private ServiceTracker<CommentManager, CommentManager> _serviceTracker;
 
 }

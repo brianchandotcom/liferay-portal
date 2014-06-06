@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[@class='container']</td>
 	<td></td>
 </tr>
 <tr>

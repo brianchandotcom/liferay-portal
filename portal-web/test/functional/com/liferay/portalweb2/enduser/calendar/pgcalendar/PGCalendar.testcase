@@ -139,6 +139,36 @@
 		</execute>
 	</command>
 
+	<command name="AddCalendarEventAllDayWithRemindersEnabled" priority="5">
+		<var name="eventTitle" value="Calendar Event All Day Title" />
+		<var name="eventType" value="All Day" />
+		<var name="portletName" value="Calendar" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
 	<command name="AddCalendarEventAllDayWithTag" priority="5">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
@@ -353,6 +383,40 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventRegularWithRemindersEnabled" priority="5">
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventType" value="Regular" />
+		<var name="portletName" value="Calendar" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventWithRemindersPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -574,6 +638,40 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventRepeatingWithRemindersEnabled" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventType" value="Repeating" />
+		<var name="portletName" value="Calendar" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventWithRemindersPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
@@ -1080,6 +1178,79 @@
 		</execute>
 	</command>
 
+	<command name="EditCalendarEventAllDay" priority="5">
+		<var name="eventTitle" value="Calendar Event All Day Title" />
+		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
+		<var name="eventType" value="All Day" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventAllDayReminders" priority="5">
+		<var name="eventTitle" value="Calendar Event All Day Title" />
+		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
+		<var name="eventType" value="All Day" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="number1" value="2" />
+			<var name="number2" value="4" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventWithRemindersPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
 	<command name="EditCalendarEventRegular" priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
@@ -1104,6 +1275,124 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventRegularReminders" priority="5">
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="number1" value="2" />
+			<var name="number2" value="4" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventWithRemindersPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventRepeating" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventRepeatingReminders" priority="5">
+		<var name="eventTitle" value="Calendar Event Repeating Title" />
+		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
+		<var name="eventType" value="Repeating" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="number1" value="5" />
+			<var name="number2" value="10" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="duration1" value="Minutes" />
+			<var name="duration2" value="Minutes" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="number1" value="2" />
+			<var name="number2" value="4" />
+			<var name="optionSet" value="true" />
+			<var name="reminders" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventWithRemindersPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventNumber" value="${eventNumber}" />
 			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>

@@ -41,17 +41,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_MEMBERS</td>
-	<td>//div[@class='navbar ']//a[contains(.,'Add Members')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//a[contains(.,'Add Members')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_SITE_ROLES_TO</td>
-	<td>//div[@class='navbar ']//a[contains(.,'Add Site Roles to')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//a[contains(.,'Add Site Roles to')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_MEMBERSHIP_REQUESTS</td>
-	<td>//div[@class='navbar ']//a[contains(.,'View Members')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//a[contains(.,'View Members')]</td>
 	<td></td>
 </tr>
 <tr>

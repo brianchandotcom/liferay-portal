@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>TAGS_TAG_SPECIFIC</td>
-	<td>//div[@class='entry-tags']//span[@class='tag' and contains(.,'${key_tagText}')]</td>
+	<td>//div[@class='entry-tags']//span[contains(@class,'tag') and contains(.,'Tags: ${key_tagText}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EXPAND_BUTTON</td>
-	<td>//div[@class='navbar ']/div/div/a</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]/div/div/a</td>
 	<td></td>
 </tr>
 <tr>

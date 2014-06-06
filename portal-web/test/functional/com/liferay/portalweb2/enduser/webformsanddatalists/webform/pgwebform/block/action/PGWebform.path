@@ -62,12 +62,12 @@
 <!--FORM_FIELDS-->
 <tr>
 	<td>FORM_FIELDS_TEXT_HEADER</td>
-	<td>//div[contains(@class,'control-group') and contains(.,'${key_formTextTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextTitle}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXT_FIELD</td>
-	<td>//div[contains(@class,'control-group') and contains(.,'${key_formTextTitle}')]/input[@type='text']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextTitle}')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,12 +82,12 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXTBOX_HEADER</td>
-	<td>//div[contains(@class,'control-group') and contains(.,'${key_formTextboxTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextboxTitle}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_TEXTBOX_FIELD</td>
-	<td>//div[contains(@class,'control-group') and contains(.,'${key_formTextboxTitle}')]/textarea</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextboxTitle}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

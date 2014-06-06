@@ -46,12 +46,12 @@
 <!--COMMENT-->
 <tr>
 	<td>COMMENT_DROPDOWN</td>
-	<td>//div[contains(@class,'accordion-heading') and contains(@class,'toggler-header-expanded')]</td>
+	<td>//div[(contains(@class,'accordion-heading') or contains(@class,'panel-heading')) and contains(@class,'toggler-header-expanded')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_DROPDOWN_COLLAPSED</td>
-	<td>//div[contains(@class,'accordion-heading') and contains(@class,'toggler-header-collapsed')]</td>
+	<td>//div[(contains(@class,'accordion-heading') or contains(@class,'panel-heading')) and contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

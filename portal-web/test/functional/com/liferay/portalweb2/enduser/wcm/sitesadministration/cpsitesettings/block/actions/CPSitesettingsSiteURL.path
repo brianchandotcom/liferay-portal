@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'portlet-body')]/div[contains(@class,'alert-error')]</td>
+	<td>//div[contains(@class,'portlet-body')]/div[(contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_URL_ERROR_MESSAGE</td>
-	<td>//div[contains(@id,'siteUrl')]/div[contains(@class,'alert-error')]</td>
+	<td>//div[contains(@id,'siteUrl')]/div[(contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL</td>
-	<td>//div[contains(@class,'control-group')]/label[contains(@for,'publicVirtualHost')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL</td>
-	<td>//div[contains(@class,'control-group')]/label[contains(@for,'privateVirtualHost')]</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'privateVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>

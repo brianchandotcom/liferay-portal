@@ -42,12 +42,12 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'View All')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]/div/ul/li/a[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_FILE_UPLOAD</td>
-	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'File Upload')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]/div/ul/li/a[contains(.,'File Upload')]</td>
 	<td></td>
 </tr>
 <tr>

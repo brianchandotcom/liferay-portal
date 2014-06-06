@@ -51,22 +51,22 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'View All')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Add Form Template')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Form Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Add Display Template')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Display Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//div[@class='navbar ']//input[@name='_166_keywords']</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//input[@name='_166_keywords']</td>
 	<td></td>
 </tr>
 <tr>

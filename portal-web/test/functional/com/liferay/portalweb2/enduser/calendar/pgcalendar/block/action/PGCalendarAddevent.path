@@ -346,6 +346,56 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMINDERS_EMAIL_CHECKBOX_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[@type='checkbox'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_EMAIL_CHECKBOX_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[@type='checkbox'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_INACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value') and contains(@disabled,'disabled')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_INACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value') and contains(@disabled,'disabled')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_ACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_ACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_INACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration') and contains(@disabled,'disabled')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_INACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration') and contains(@disabled,'disabled')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_ACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_ACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

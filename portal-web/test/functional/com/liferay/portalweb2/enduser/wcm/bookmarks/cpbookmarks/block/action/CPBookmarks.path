@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[@class='container']</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,17 +78,17 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_HOME</td>
-	<td>//div[@class='navbar-inner']//li/a[contains(@href,'home')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'home')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_RECENT</td>
-	<td>//div[@class='navbar-inner']//li/a[contains(@href,'recent')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'recent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MINE</td>
-	<td>//div[@class='navbar-inner']//li/a[contains(@href,'mine')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'mine')]</td>
 	<td></td>
 </tr>
 <tr>

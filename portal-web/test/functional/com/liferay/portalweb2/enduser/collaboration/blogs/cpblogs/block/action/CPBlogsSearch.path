@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_ENTRY</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Add')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

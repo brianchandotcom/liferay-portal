@@ -85,16 +85,6 @@
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
-	<command name="assertTextClickAtClickSidebar">
-		<execute argument1="1000" selenium="pause" />
-
-		<execute argument1="//ul[@class='nav nav-add-controls']" selenium="clickAt" />
-
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-	</command>
-
 	<command name="assertTextClickAtNavigation">
 		<execute argument1="1000" selenium="pause" />
 

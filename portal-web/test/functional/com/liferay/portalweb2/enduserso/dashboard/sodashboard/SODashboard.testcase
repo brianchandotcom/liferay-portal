@@ -895,7 +895,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPGSetTime">
+		<execute macro="CalendarEvent#addSetTimePG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -1135,7 +1135,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPGSetTime">
+		<execute macro="CalendarEvent#addSetTimePG">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="setEndDateTime" value="${endDateTime}" />

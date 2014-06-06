@@ -484,6 +484,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER</td>
+	<td>//div[contains(@class,'scheduler-event-all-day scheduler-event-reminder') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER</td>
+	<td>//div[contains(@class,'scheduler-event-all-day scheduler-event-reminder') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_GENERIC</td>
 	<td>//div[contains(@class,'calendar-portlet-event')]</td>
 	<td></td>
@@ -521,6 +531,16 @@
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_REPEAT</td>
+	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_REMINDER_ICON</td>
+	<td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')]/..//span[contains(@class,'scheduler-event-icon-reminder')]</td>
 	<td></td>
 </tr>
 <tr>

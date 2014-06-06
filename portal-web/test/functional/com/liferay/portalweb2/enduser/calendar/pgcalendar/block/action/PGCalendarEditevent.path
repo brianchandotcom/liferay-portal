@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGCalendarAddevent</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_EVENT_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

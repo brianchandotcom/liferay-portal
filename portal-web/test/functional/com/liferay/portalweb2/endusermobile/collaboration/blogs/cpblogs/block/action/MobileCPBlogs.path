@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>REORDER_ICON</td>
-	<td>//div[@class='navbar-inner']//a[contains(@class,'btn-navbar') and contains(@id,'_161_')]</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//a[contains(@class,'btn-navbar') and contains(@id,'_161_')]</td>
 	<td></td>
 </tr>
 </tbody>

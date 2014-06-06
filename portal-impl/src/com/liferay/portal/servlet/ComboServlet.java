@@ -226,9 +226,6 @@ public class ComboServlet extends HttpServlet {
 			URL resourceURL, String resourcePath, String minifierType)
 		throws IOException {
 
-		ModulePathContainer modulePathContainer = new ModulePathContainer(
-			resourcePath);
-
 		int colonIndex = resourcePath.indexOf(CharPool.COLON);
 
 		if (colonIndex > 0) {
@@ -314,6 +311,9 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent);
 				}
 				else if (minifierType.equals("js")) {
+					ModulePathContainer modulePathContainer =
+						new ModulePathContainer(resourcePath);
+
 					stringFileContent = translateResponse(
 						request, modulePathContainer.getModuleContextPath(),
 						modulePathContainer.getResourcePath(),
@@ -382,22 +382,28 @@ public class ComboServlet extends HttpServlet {
 		String stringFileContent) {
 
 		String languageId = LanguageUtil.getLanguageId(request);
+
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
 			contextPath);
-		List<Portlet> portlets = Collections.emptyList();
+
+		Portlet portlet = null;
 
 		if ((portletApp != null) && portletApp.isWARFile()) {
-			portlets = portletApp.getPortlets();
+			List<Portlet> portlets = portletApp.getPortlets();
+
+			if (!portlets.isEmpty()) {
+				portlet = portlets.get(0);
+			}
 		}
 
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-				locale);
+			locale);
 
-		if (portlets.size() > 0) {
+		if (portlet != null) {
 			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-				portlets.get(0), getServletContext());
+				portlet, getServletContext());
 
 			if (portletConfig != null) {
 				resourceBundle = new AggregateResourceBundle(
@@ -405,10 +411,8 @@ public class ComboServlet extends HttpServlet {
 			}
 		}
 
-		stringFileContent = LanguageUtil.expandKeys(
+		return LanguageUtil.expandKeys(
 			resourceBundle, locale, stringFileContent);
-
-		return stringFileContent;
 	}
 
 	protected boolean validateModuleExtension(String moduleName)

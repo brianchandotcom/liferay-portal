@@ -22,107 +22,111 @@
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("struts_action", "/polls/view");
+	%>
 
-	List<String> headerNames = new ArrayList<String>();
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+		total="<%= PollsQuestionLocalServiceUtil.getQuestionsCount(scopeGroupId) %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
 
-	headerNames.add("title");
-	headerNames.add("num-of-votes");
-	headerNames.add("last-vote-date");
-	headerNames.add("expiration-date");
-	headerNames.add(StringPool.BLANK);
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.polls.model.PollsQuestion"
+			modelVar="question"
+		>
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-	int total = PollsQuestionLocalServiceUtil.getQuestionsCount(scopeGroupId);
+			rowURL.setParameter("struts_action", "/polls/view_question");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
+			%>
 
-	searchContainer.setTotal(total);
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="title"
+				value="<%= question.getTitle(locale) %>"
+			/>
 
-	List results = PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd());
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="num-of-votes"
+				value="<%= String.valueOf(PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId())) %>"
+			/>
 
-	searchContainer.setResults(results);
+			<c:choose>
+				<c:when test="<%= question.getLastVoteDate() != null %>">
+					<liferay-ui:search-container-column-date
+						href="<%= rowURL %>"
+						name="last-vote-date"
+						value="<%= question.getLastVoteDate() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="last-vote-date"
+						value='<%= LanguageUtil.get(pageContext, "never") %>'
+					/>
+				</c:otherwise>
+			</c:choose>
 
-	List resultRows = searchContainer.getResultRows();
+			<c:choose>
+				<c:when test="<%= question.getExpirationDate() != null %>">
+					<liferay-ui:search-container-column-date
+						href="<%= rowURL %>"
+						name="expiration-date"
+						value="<%= question.getExpirationDate() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="expiration-date"
+						value='<%= LanguageUtil.get(pageContext, "never") %>'
+					/>
+				</c:otherwise>
+			</c:choose>
 
-	for (int i = 0; i < results.size(); i++) {
-		PollsQuestion question = (PollsQuestion)results.get(i);
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/html/portlet/polls/question_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-		question = question.toEscapedModel();
+		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	</liferay-ui:search-container>
 
-		ResultRow row = new ResultRow(question, question.getQuestionId(), i);
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("struts_action", "/polls/view_question");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
-
-		// Title
-
-		row.addText(question.getTitle(locale), rowURL);
-
-		// Number of votes
-
-		int votesCount = PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId());
-
-		row.addText(String.valueOf(votesCount), rowURL);
-
-		// Last vote date
-
-		if (question.getLastVoteDate() == null) {
-			row.addText(LanguageUtil.get(pageContext, "never"), rowURL);
-		}
-		else {
-			row.addDate(question.getLastVoteDate(), rowURL);
-		}
-
-		// Expiration date
-
-		if (question.getExpirationDate() == null) {
-			row.addText(LanguageUtil.get(pageContext, "never"), rowURL);
-		}
-		else {
-			row.addDate(question.getExpirationDate(), rowURL);
-		}
-
-		// Action
-
-		row.addJSP("/html/portlet/polls/question_action.jsp", "entry-action");
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-
+	<%
 	boolean showAddPollButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
 	boolean showPermissionsButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	%>
 
-	<aui:fieldset>
-		<c:if test="<%= showAddPollButton || showPermissionsButton %>">
-			<aui:button-row>
-				<c:if test="<%= showAddPollButton %>">
-					<portlet:renderURL var="editQuestionURL">
-						<portlet:param name="struts_action" value="/polls/edit_question" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:renderURL>
+	<c:if test="<%= showAddPollButton || showPermissionsButton %>">
+		<aui:button-row>
+			<c:if test="<%= showAddPollButton %>">
+				<portlet:renderURL var="editQuestionURL">
+					<portlet:param name="struts_action" value="/polls/edit_question" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
 
-					<aui:button href="<%= editQuestionURL %>" value="add-poll" />
-				</c:if>
+				<aui:button href="<%= editQuestionURL %>" value="add-poll" />
+			</c:if>
 
-				<c:if test="<%= showPermissionsButton %>">
-					<liferay-security:permissionsURL
-						modelResource="com.liferay.portlet.polls"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
+			<c:if test="<%= showPermissionsButton %>">
+				<liferay-security:permissionsURL
+					modelResource="com.liferay.portlet.polls"
+					modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+					var="permissionsURL"
+					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				/>
 
-					<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
-				</c:if>
-			</aui:button-row>
-		</c:if>
-
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-	</aui:fieldset>
+				<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
+			</c:if>
+		</aui:button-row>
+	</c:if>
 </aui:form>

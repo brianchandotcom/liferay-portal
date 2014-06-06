@@ -757,16 +757,15 @@ public class StagingImpl implements Staging {
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
 						"the-live-environment.-please-publish-again-to-live-" +
-							"ensuring-the-following-elements-are-published." +
-								".-please-note-that-global-references-must-" +
-									"be-published-from-the-global-site");
+							"ensuring-the-following-elements-are-published-" +
+								"from-their-own-site");
 			}
 			else {
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
-						"the-current-site.-please-import-another-lar-file-" +
-							"containing-the-following-elements");
+						"the-current-site.-please-import-the-following-" +
+							"elements-first");
 			}
 
 			MissingReferences missingReferences = mre.getMissingReferences();

@@ -100,6 +100,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-component', 'aui-node', 'autocomplete-base', 'autocomplete-filters']
 	}
 );

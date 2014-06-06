@@ -39,7 +39,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			</aui:nav-item>
 		</aui:nav>
 
-		<aui:nav class="navbar-nav" id="toolbarContainer">
+		<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 				<%

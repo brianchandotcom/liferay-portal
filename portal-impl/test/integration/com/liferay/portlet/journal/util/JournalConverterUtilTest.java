@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -74,7 +74,7 @@ import org.junit.runner.RunWith;
  * @author Bruno Basto
  * @author Marcellus Tavares
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 

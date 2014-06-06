@@ -15,8 +15,8 @@
 package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.social.model.SocialActivityCounter;
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		EnvironmentExecutionTestListener.class,
+		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)

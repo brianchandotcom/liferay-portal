@@ -29,8 +29,8 @@ import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupFinderUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.GroupNameComparator;
@@ -57,7 +57,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  * @author László Csontos
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class GroupFinderTest {
 

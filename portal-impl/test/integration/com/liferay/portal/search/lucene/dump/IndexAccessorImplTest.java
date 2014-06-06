@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.IndexAccessorImpl;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayInputStream;
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  * @author Mate Thurzo
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class IndexAccessorImplTest {
 

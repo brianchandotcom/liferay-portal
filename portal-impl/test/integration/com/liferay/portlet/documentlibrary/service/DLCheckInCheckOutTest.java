@@ -33,8 +33,8 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Mika Koivisto
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLCheckInCheckOutTest {
 

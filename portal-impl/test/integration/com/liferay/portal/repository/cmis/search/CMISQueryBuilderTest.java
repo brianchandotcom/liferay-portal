@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
@@ -51,7 +51,7 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Mika Koivisto
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class CMISQueryBuilderTest extends PowerMockito {
 

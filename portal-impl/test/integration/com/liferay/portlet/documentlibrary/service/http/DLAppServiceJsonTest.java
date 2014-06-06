@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.BaseJsonClientTestCase;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 

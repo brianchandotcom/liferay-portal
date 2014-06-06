@@ -17,8 +17,8 @@ package com.liferay.portlet.expando.service;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Marcellus Tavares
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ExpandoValueLocalServiceTest {
 

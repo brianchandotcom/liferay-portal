@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -31,7 +31,7 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Roberto Díaz
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class SearchContainerTest {
 

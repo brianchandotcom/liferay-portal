@@ -16,8 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 
 import java.io.InputStream;
 
@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
  * @author Alexander Chow
  * @see    FileImplExtractTest
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MimeTypesImplTest {
 

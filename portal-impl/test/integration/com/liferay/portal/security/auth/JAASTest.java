@@ -31,7 +31,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.MainServlet;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PropsValues;
@@ -77,7 +76,7 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Raymond Augé
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JAASTest extends MainServletExecutionTestListener {
 

@@ -28,6 +28,39 @@
 		iteratorURL="<%= portletURL %>"
 		total="<%= PollsQuestionLocalServiceUtil.getQuestionsCount(scopeGroupId) %>"
 	>
+
+		<%
+		boolean showAddPollButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+		boolean showPermissionsButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+		%>
+
+		<c:if test="<%= showAddPollButton || showPermissionsButton %>">
+			<aui:nav-bar>
+				<aui:nav>
+					<c:if test="<%= showAddPollButton %>">
+						<portlet:renderURL var="editQuestionURL">
+							<portlet:param name="struts_action" value="/polls/edit_question" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:renderURL>
+
+						<aui:nav-item href="<%= editQuestionURL %>" iconCssClass="icon-plus" label="add-poll" />
+					</c:if>
+
+					<c:if test="<%= showPermissionsButton %>">
+						<liferay-security:permissionsURL
+							modelResource="com.liferay.portlet.polls"
+							modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+							var="permissionsURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						/>
+
+						<aui:nav-item href="<%= permissionsURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
+					</c:if>
+				</aui:nav>
+			</aui:nav-bar>
+		</c:if>
+
 		<liferay-ui:search-container-results
 			results="<%= PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
@@ -99,34 +132,4 @@
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
-
-	<%
-	boolean showAddPollButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
-	boolean showPermissionsButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-	%>
-
-	<c:if test="<%= showAddPollButton || showPermissionsButton %>">
-		<aui:button-row>
-			<c:if test="<%= showAddPollButton %>">
-				<portlet:renderURL var="editQuestionURL">
-					<portlet:param name="struts_action" value="/polls/edit_question" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:renderURL>
-
-				<aui:button href="<%= editQuestionURL %>" value="add-poll" />
-			</c:if>
-
-			<c:if test="<%= showPermissionsButton %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.polls"
-					modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
-			</c:if>
-		</aui:button-row>
-	</c:if>
 </aui:form>

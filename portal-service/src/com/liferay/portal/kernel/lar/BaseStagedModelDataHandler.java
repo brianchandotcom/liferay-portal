@@ -30,6 +30,7 @@ import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -104,6 +105,34 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			throw pde;
 		}
+	}
+
+	@Override
+	public T fetchExistingStagedModel(String uuid, long groupId)
+		throws PortalException {
+
+		// Try to fetch it from the actual group
+
+		T existingStagedModel = doFetchExistingStagedModel(uuid, groupId);
+
+		if (existingStagedModel != null) {
+			return existingStagedModel;
+		}
+
+		// Try to fetch it from the parent sites
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		while ((group = group.getParentGroup()) != null) {
+			existingStagedModel = doFetchExistingStagedModel(
+				uuid, group.getGroupId());
+
+			if (existingStagedModel != null) {
+				break;
+			}
+		}
+
+		return existingStagedModel;
 	}
 
 	@Override
@@ -298,6 +327,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doExportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected T doFetchExistingStagedModel(String uuid, long groupId) {
+		return null;
+	}
 
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,

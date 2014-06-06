@@ -1391,6 +1391,14 @@ this task.
 								<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
 								<replacevalue></replacevalue>
 							</replace>
+							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+								<replacetoken><![CDATA[<extension module="org.jboss.as.weld"/>]]></replacetoken>
+								<replacevalue></replacevalue>
+							</replace>
+							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+								<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:2.0"/>]]></replacetoken>
+								<replacevalue></replacevalue>
+							</replace>
 						</else>
 					</if>
 

@@ -38,6 +38,12 @@ import javax.portlet.ValidatorException;
  */
 public class WikiPortletInstanceSettings {
 
+	public static final String[] ALL_KEYS = {
+		"displayStyle", "displayStyleGroupId", "hiddenNodes", "rssDelta",
+		"rssDisplayStyle", "rssFeedType", "visibleNodes",
+		"enableCommentRatings", "enableComments", "enablePageRatings",
+		"enableRelatedAssets", "enableRss", "hiddenNodes", "visibleNodes"};
+
 	public static WikiPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {

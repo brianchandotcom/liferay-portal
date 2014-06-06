@@ -32,6 +32,12 @@ import java.util.Map;
  */
 public class WikiSettings {
 
+	public static String[] ALL_KEYS = {
+		"emailFromAddress", "emailFromName", "emailPageAddedBody",
+		"emailPageAddedSubject", "emailPageUpdatedBody",
+		"emailPageUpdatedSubject", "emailPageAddedEnabled",
+		"emailPageUpdatedEnabled"};
+
 	public static WikiSettings getInstance(long groupId)
 		throws PortalException {
 

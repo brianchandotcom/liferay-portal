@@ -40,6 +40,15 @@ import java.util.TreeSet;
  */
 public class ShoppingSettings {
 
+	public static final String[] ALL_KEYS = {
+		"alternativeShipping", "ccTypes", "currencyId", "emailFromAddress",
+		"emailFromName", "emailOrderConfirmationBody",
+		"emailOrderConfirmationSubject", "emailOrderShippingBody",
+		"emailOrderShippingSubject", "insurance", "insuranceFormula",
+		"minOrder", "paypalEmailAddress", "shipping", "shippingFormula",
+		"taxRate", "taxState", "emailOrderConfirmationEnabled",
+		"emailOrderShippingEnabled"};
+
 	public static final String CC_NONE = "none";
 
 	public static final String[] CC_TYPES =
@@ -323,7 +332,9 @@ public class ShoppingSettings {
 		return fallbackKeys;
 	}
 
-	private static final String[] _MULTI_VALUED_KEYS = {};
+	private static final String[] _MULTI_VALUED_KEYS = {
+		"ccTypes", "insurance", "shipping"
+	};
 
 	static {
 		SettingsFactory settingsFactory =

@@ -33,6 +33,14 @@ import java.util.Map;
  */
 public class BlogsPortletInstanceSettings {
 
+	public static final String[] ALL_KEYS = {
+		"displayStyle", "displayStyleGroupId", "pageDelta", "rssDelta",
+		"rssDisplayStyle", "rssFeedType", "socialBookmarksDisplayPosition",
+		"socialBookmarksDisplayStyle", "socialBookmarksTypes",
+		"enableCommentRatings", "enableComments", "enableFlags",
+		"enableRatings", "enableRelatedAssets", "enableRss",
+		"enableSocialBookmarks"};
+
 	public static BlogsPortletInstanceSettings getInstance(
 			Layout layout, String portletId)
 		throws PortalException {

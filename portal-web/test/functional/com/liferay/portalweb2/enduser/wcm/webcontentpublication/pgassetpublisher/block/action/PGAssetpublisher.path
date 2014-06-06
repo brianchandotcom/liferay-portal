@@ -467,7 +467,7 @@
 <!--METADATA-->
 <tr>
 	<td>METADATA_AUTHOR</td>
-	<td>//span[@class='metadata-entry metadata-author']</td>
+	<td>//div[@class='asset-author']/div/span[contains(.,'${key_author}')]</td>
 	<td></td>
 </tr>
 <tr>

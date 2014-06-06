@@ -32,17 +32,33 @@
 	</div>
 
 	<ul id="collapseToggle${lineFolds}" class="collapse">
-		<#assign testCaseVarElements = testCaseRootElement.elements("var")>
+		<#if testCaseRootElement.elements("property")??>
+			<#assign testCasePropertyElements = testCaseRootElement.elements("property")>
 
-		<#list testCaseVarElements as testCaseVarElement>
-			<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
+			<#list testCasePropertyElements as testCasePropertyElement>
+				<#assign lineNumber = testCasePropertyElement.attributeValue("line-number")>
 
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-				<#assign displayElement = testCaseVarElement>
+				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+					<#assign displayElement = testCasePropertyElement>
 
-				<#include "element_whole_html.ftl">
-			</li>
-		</#list>
+					<#include "element_whole_html.ftl">
+				</li>
+			</#list>
+		</#if>
+
+		<#if testCaseRootElement.elements("var")??>
+			<#assign testCaseVarElements = testCaseRootElement.elements("var")>
+
+			<#list testCaseVarElements as testCaseVarElement>
+				<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
+
+				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+					<#assign displayElement = testCaseVarElement>
+
+					<#include "element_whole_html.ftl">
+				</li>
+			</#list>
+		</#if>
 
 		<#if testCaseRootElement.element("set-up")??>
 			<#assign testCaseSetupElement = testCaseRootElement.element("set-up")>

@@ -49,12 +49,17 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		currentTestCaseName = "${testCaseName?uncap_first}TestCase";
 		testCaseName = "${testCaseName?uncap_first}TestCase";
 
-		<#if rootElement.element("var")??>
+		<#if rootElement.element("var")?? || rootElement.element("property")??>
+			<#assign propertyElements = rootElement.elements("property")>
 			<#assign varElements = rootElement.elements("var")>
 
 			definitionScopeVariables = new HashMap<String, String>();
 
 			<#assign void = variableContextStack.push("definitionScopeVariables")>
+
+			<#list propertyElements as propertyElement>
+				<#include "property_element.ftl">
+			</#list>
 
 			<#list varElements as varElement>
 				<#include "var_element.ftl">
@@ -71,6 +76,18 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		}
 
 		selenium.startLogger();
+
+		<#if rootElement.element("property")??>
+			<#assign propertyElements = rootElement.elements("property")>
+
+			<#list propertyElements as propertyElement>
+				<#assign lineNumber = propertyElement.attributeValue("line-number")>
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending");
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass");
+			</#list>
+		</#if>
 
 		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>

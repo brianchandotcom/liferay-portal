@@ -111,6 +111,18 @@ public class CapabilityLocalRepository implements LocalRepository {
 	}
 
 	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		if (_exportedCapabilities.contains(capabilityClass)) {
+			return getInternalCapability(capabilityClass);
+		}
+
+		throw new IllegalArgumentException(
+			String.format(
+				"Capability %s not exported by repository %d",
+				capabilityClass.getName(), getRepositoryId()));
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -164,6 +176,13 @@ public class CapabilityLocalRepository implements LocalRepository {
 	@Override
 	public long getRepositoryId() {
 		return _localRepository.getRepositoryId();
+	}
+
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+			Class<T> capabilityClass) {
+
+		return _exportedCapabilities.contains(capabilityClass);
 	}
 
 	@Override
@@ -233,7 +252,7 @@ public class CapabilityLocalRepository implements LocalRepository {
 			folderId, parentFolderId, title, description, serviceContext);
 	}
 
-	protected <T extends Capability<T>> T getCapability(
+	protected <T extends Capability> T getInternalCapability(
 		Class<T> capabilityClass) {
 
 		Capability<?> capability = _capabilityMap.get(capabilityClass);

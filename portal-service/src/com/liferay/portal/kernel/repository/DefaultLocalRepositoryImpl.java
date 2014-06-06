@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -94,6 +95,11 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+		return _repository.getCapability(capabilityClass);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -147,6 +153,13 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	@Override
 	public long getRepositoryId() {
 		return _repository.getRepositoryId();
+	}
+
+	@Override
+	public <T extends Capability> boolean isCapabilityProvided(
+		Class<T> capabilityClass) {
+
+		return _repository.isCapabilityProvided(capabilityClass);
 	}
 
 	@Override

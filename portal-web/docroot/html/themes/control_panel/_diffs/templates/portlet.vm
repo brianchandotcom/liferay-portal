@@ -1,7 +1,7 @@
 #set ($portlet_display = $portletDisplay)
 
 #set ($portlet_id = $htmlUtil.escapeAttribute($portlet_display.getId()))
-#set ($portlet_title = $portlet_display.getTitle())
+#set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
 #set ($portlet_title_icon_css_class = "")
 #set ($portlet_description = $portlet_display.getDescription())
 #set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")

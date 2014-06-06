@@ -23,11 +23,11 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Iván Zaera
  */
-public class UpgradeShoppingPreferences extends BaseUpgradePortletPreferences {
+public class UpgradeBookmarksPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.SHOPPING};
+		return new String[] {PortletKeys.BOOKMARKS};
 	}
 
 	@Override
@@ -40,9 +40,8 @@ public class UpgradeShoppingPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		upgradeMultiValuePreference(portletPreferences, "ccTypes");
-		upgradeMultiValuePreference(portletPreferences, "insurance");
-		upgradeMultiValuePreference(portletPreferences, "shipping");
+		upgradeMultiValuePreference(portletPreferences, "entryColumns");
+		upgradeMultiValuePreference(portletPreferences, "folderColumns");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

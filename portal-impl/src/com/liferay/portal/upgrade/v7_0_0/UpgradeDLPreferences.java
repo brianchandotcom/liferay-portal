@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -23,11 +24,14 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Iván Zaera
  */
-public class UpgradeShoppingPreferences extends BaseUpgradePortletPreferences {
+public class UpgradeDLPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.SHOPPING};
+		return new String[] {
+			PortletKeys.DOCUMENT_LIBRARY,
+			PortletKeys.DOCUMENT_LIBRARY_DISPLAY + StringPool.PERCENT,
+			PortletKeys.MEDIA_GALLERY_DISPLAY + StringPool.PERCENT};
 	}
 
 	@Override
@@ -40,9 +44,11 @@ public class UpgradeShoppingPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		upgradeMultiValuePreference(portletPreferences, "ccTypes");
-		upgradeMultiValuePreference(portletPreferences, "insurance");
-		upgradeMultiValuePreference(portletPreferences, "shipping");
+		upgradeMultiValuePreference(portletPreferences, "displayViews");
+		upgradeMultiValuePreference(portletPreferences, "entryColumns");
+		upgradeMultiValuePreference(portletPreferences, "folderColumns");
+		upgradeMultiValuePreference(portletPreferences, "fileEntryColumns");
+		upgradeMultiValuePreference(portletPreferences, "mimeTypes");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

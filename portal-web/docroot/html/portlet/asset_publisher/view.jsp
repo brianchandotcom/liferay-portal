@@ -38,7 +38,7 @@ if (assetPublisherDisplayContext.isMergeURLTags() || assetPublisherDisplayContex
 
 	String titleEntry = ArrayUtil.isNotEmpty(compilerTagNames) ? compilerTagNames[compilerTagNames.length - 1] : null;
 
-	String portletTitle = HtmlUtil.unescape(portletDisplay.getTitle());
+	String portletTitle = portletDisplay.getTitle();
 
 	portletTitle = AssetUtil.substituteTagPropertyVariables(scopeGroupId, titleEntry, portletTitle);
 

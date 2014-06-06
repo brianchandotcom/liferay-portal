@@ -901,7 +901,6 @@
 	</command>
 
 	<command name="expirePGViaWCD">
-		<var name="key_historyStatus" value="Expired" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
@@ -909,9 +908,10 @@
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="TOOLBAR_VIEW_HISTORY" value1="View History" />
 
+		<var name="key_historyStatus" value="Expired" />
+
 		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#click" locator-key1="VERSIONS_TABLE_ACTIONS" />
 		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#assertClick" locator-key1="ACTIONS_MENULIST_EXPIRE" value1="Expire" />
-
 		<execute action="PGWebcontentdisplayEditwebcontentViewhistory#assertTextEquals" locator-key1="VERSIONS_TABLE_STATUS" value1="Expired" />
 	</command>
 

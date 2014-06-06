@@ -2704,7 +2704,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
+	<command known-issues="LPS-47455" name="StagingPublishExpiredWebContentViaWCD" priority="4">
 		<var name="sitePageName" value="Staging Test Page" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />

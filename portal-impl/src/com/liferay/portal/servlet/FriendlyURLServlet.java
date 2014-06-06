@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -304,7 +305,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				Locale locale = PortalUtil.getLocale(request);
 
-				if (!layoutFriendlyURLCompositeFriendlyURL.equals(
+				if (!StringUtil.equalsIgnoreCase(
+						layoutFriendlyURLCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(

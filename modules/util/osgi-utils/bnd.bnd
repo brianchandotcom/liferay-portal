@@ -1,0 +1,2 @@
+Bundle-Name: Liferay OSGi Utils
+Export-Package: com.liferay.portal.osgi.util.service

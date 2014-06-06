@@ -18,12 +18,6 @@ AUI.add(
 
 		var MenuFilter = A.Component.create(
 			{
-				NAME: 'menufilter',
-
-				EXTENDS: A.Base,
-
-				AUGMENTS: A.AutoCompleteBase,
-
 				ATTRS: {
 					content: {
 						setter: A.one
@@ -42,6 +36,12 @@ AUI.add(
 					}
 				},
 
+				AUGMENTS: A.AutoCompleteBase,
+
+				EXTENDS: A.Base,
+
+				NAME: 'menufilter',
+
 				prototype: {
 					initializer: function() {
 						var instance = this;
@@ -57,6 +57,19 @@ AUI.add(
 						instance.get('inputNode').val(STR_EMPTY);
 
 						instance._menuItems.removeClass(CSS_HIDDEN);
+					},
+
+					_filterMenu: function(event) {
+						var instance = this;
+
+						instance._menuItems.addClass(CSS_HIDDEN);
+
+						AArray.each(
+							event.results,
+							function(result) {
+								result.raw.node.removeClass(CSS_HIDDEN);
+							}
+						);
 					},
 
 					_renderUI: function() {
@@ -78,19 +91,6 @@ AUI.add(
 						instance._menuItems = menuItems;
 
 						instance.on('results', instance._filterMenu, instance);
-					},
-
-					_filterMenu: function(event) {
-						var instance = this;
-
-						instance._menuItems.addClass(CSS_HIDDEN);
-
-						AArray.each(
-							event.results,
-							function(result) {
-								result.raw.node.removeClass(CSS_HIDDEN);
-							}
-						);
 					}
 				}
 			}

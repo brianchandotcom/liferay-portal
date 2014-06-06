@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.blogs.BlogsSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,6 +28,10 @@ import javax.portlet.PortletConfig;
  * @author Iván Zaera
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
+
+	public ConfigurationActionImpl() {
+		addMultiValuedKeys(BlogsSettings.MULTI_VALUED_KEYS);
+	}
 
 	@Override
 	public void processAction(

@@ -150,6 +150,12 @@ public class JournalContentPortletDataHandler
 		}
 
 		if (article == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Portlet " + portletId + " refers to an invalid article: " +
+						articleId);
+			}
+
 			portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 			return portletPreferences;

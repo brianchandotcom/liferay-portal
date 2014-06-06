@@ -996,7 +996,7 @@
 		<var name="siteName" value="Page Type Test Site Name" />
 		<var name="sitePage1Name" value="Blank Page" />
 		<var name="sitePage2Description" value="Google" />
-		<var name="sitePage2LinkToURLURL" value="http://www.google.com/" />
+		<var name="sitePage2LinkToURLURL" value="https://www.google.com/" />
 		<var name="sitePage2Name" value="Link to URL Page" />
 		<var name="sitePage2Type" value="Link to URL" />
 		<var name="sitePage3Description" value="Liferay" />

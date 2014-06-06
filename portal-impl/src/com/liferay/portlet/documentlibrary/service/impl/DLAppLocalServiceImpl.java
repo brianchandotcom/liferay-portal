@@ -1344,8 +1344,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		Folder folder = localRepository.updateFolder(
 			folderId, parentFolderId, name, description, serviceContext);
 
-		dlAppHelperLocalService.updateFolder(
-			serviceContext.getUserId(), folder, serviceContext);
+		if (folder != null) {
+			dlAppHelperLocalService.updateFolder(
+				serviceContext.getUserId(), folder, serviceContext);
+		}
 
 		return folder;
 	}

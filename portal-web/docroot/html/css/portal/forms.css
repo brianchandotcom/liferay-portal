@@ -38,6 +38,7 @@
 
 	@include respond-to(phone, tablet) {
 		&, input.search-query {
+			overflow: hidden;
 			width: 100%;
 		}
 

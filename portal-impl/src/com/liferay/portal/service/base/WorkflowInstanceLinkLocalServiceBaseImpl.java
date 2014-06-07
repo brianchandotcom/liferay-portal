@@ -256,6 +256,12 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteWorkflowInstanceLink((WorkflowInstanceLink)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return workflowInstanceLinkPersistence.findByPrimaryKey(primaryKeyObj);

@@ -257,6 +257,12 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteExportImportConfiguration((ExportImportConfiguration)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return exportImportConfigurationPersistence.findByPrimaryKey(primaryKeyObj);

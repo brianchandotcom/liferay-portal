@@ -245,6 +245,12 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteShoppingItemField((ShoppingItemField)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return shoppingItemFieldPersistence.findByPrimaryKey(primaryKeyObj);

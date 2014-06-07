@@ -316,6 +316,12 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteGroup((Group)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return groupPersistence.findByPrimaryKey(primaryKeyObj);

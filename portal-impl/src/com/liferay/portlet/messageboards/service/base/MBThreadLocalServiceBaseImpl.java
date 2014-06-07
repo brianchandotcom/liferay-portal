@@ -359,6 +359,12 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMBThread((MBThread)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mbThreadPersistence.findByPrimaryKey(primaryKeyObj);

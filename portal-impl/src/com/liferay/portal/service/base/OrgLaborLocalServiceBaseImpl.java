@@ -239,6 +239,12 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteOrgLabor((OrgLabor)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return orgLaborPersistence.findByPrimaryKey(primaryKeyObj);

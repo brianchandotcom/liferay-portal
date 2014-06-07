@@ -357,6 +357,12 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMDRRuleGroupInstance((MDRRuleGroupInstance)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mdrRuleGroupInstancePersistence.findByPrimaryKey(primaryKeyObj);

@@ -248,6 +248,12 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteContact((Contact)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return contactPersistence.findByPrimaryKey(primaryKeyObj);

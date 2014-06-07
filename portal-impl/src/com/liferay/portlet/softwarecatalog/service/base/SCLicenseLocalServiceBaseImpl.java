@@ -241,6 +241,12 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSCLicense((SCLicense)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return scLicensePersistence.findByPrimaryKey(primaryKeyObj);

@@ -167,6 +167,10 @@ public interface CounterLocalService extends BaseLocalService,
 	public com.liferay.counter.model.Counter getCounter(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(

@@ -244,6 +244,12 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deletePortalPreferences((PortalPreferences)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return portalPreferencesPersistence.findByPrimaryKey(primaryKeyObj);

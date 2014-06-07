@@ -252,6 +252,12 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteBackgroundTask((BackgroundTask)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return backgroundTaskPersistence.findByPrimaryKey(primaryKeyObj);

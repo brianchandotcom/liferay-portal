@@ -335,6 +335,12 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return layoutFriendlyURLPersistence.findByPrimaryKey(primaryKeyObj);

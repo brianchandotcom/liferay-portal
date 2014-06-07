@@ -345,6 +345,12 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDLFileEntryType((DLFileEntryType)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return dlFileEntryTypePersistence.findByPrimaryKey(primaryKeyObj);

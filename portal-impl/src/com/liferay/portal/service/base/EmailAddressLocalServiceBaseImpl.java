@@ -333,6 +333,12 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteEmailAddress((EmailAddress)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return emailAddressPersistence.findByPrimaryKey(primaryKeyObj);

@@ -243,6 +243,12 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteWebDAVProps((WebDAVProps)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return webDAVPropsPersistence.findByPrimaryKey(primaryKeyObj);

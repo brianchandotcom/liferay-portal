@@ -244,6 +244,12 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteVirtualHost((VirtualHost)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return virtualHostPersistence.findByPrimaryKey(primaryKeyObj);

@@ -256,6 +256,12 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSubscription((Subscription)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return subscriptionPersistence.findByPrimaryKey(primaryKeyObj);

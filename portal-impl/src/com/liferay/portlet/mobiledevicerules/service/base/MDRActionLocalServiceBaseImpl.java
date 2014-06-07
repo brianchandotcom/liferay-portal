@@ -342,6 +342,12 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMDRAction((MDRAction)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mdrActionPersistence.findByPrimaryKey(primaryKeyObj);

@@ -198,6 +198,10 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(

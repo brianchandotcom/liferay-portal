@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.util.Table;
 
 import java.io.File;
@@ -79,6 +80,8 @@ public class ResetDatabaseUtil {
 		}
 
 		for (String tableName : tableNames) {
+			tableName = StringUtil.toLowerCase(tableName);
+
 			Table table = _cachedTables.get(tableName);
 
 			if (table == null) {
@@ -180,7 +183,7 @@ public class ResetDatabaseUtil {
 				_tables.add(table);
 
 				_cachedTables.put(
-					tableName,
+					StringUtil.toLowerCase(tableName),
 					new Table(
 						tableName,
 						columns.toArray(new Object[columns.size()][])));

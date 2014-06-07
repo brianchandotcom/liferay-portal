@@ -2375,8 +2375,9 @@ public class StagingImpl implements Staging {
 			GroupServiceHttp.checkRemoteStagingGroup(
 				httpPrincipal, remoteGroupId);
 
-			// Ensure that the local group and the remote group are not both
-			// company groups and are not the same group
+			// Ensure that the local group and the remote group are not the same
+			// group and that they are either both company groups or both not
+			// company groups
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 

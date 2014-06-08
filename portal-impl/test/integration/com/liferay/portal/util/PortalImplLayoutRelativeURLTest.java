@@ -70,7 +70,22 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test
-	public void testPrivateLayoutURLFromPublicLayoutSetVirtualHost()
+	public void testPrivateLayoutFromCompanyVirtualHostRefererPlidInvalid()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "foo");
+
+		Assert.assertEquals(
+			privateLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test
+	public void
+			testPrivateLayoutURLFromPublicLayoutSetVirtualHostReferer()
 		throws Exception {
 
 		ThemeDisplay themeDisplay = initThemeDisplay(
@@ -82,9 +97,38 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test
+	public void
+			testPrivateLayoutURLFromPublicLayoutSetVirtualHostRefererPlidInvalid()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "foo");
+
+		Assert.assertEquals(
+			privateLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test
 	public void testPublicLayoutFromCompanyVirtualHost() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
 			company, group, publicLayout, LOCALHOST);
+
+		Assert.assertEquals(
+			publicLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay));
+	}
+
+	@Test
+	public void testPublicLayoutFromCompanyVirtualHostRefererPlidInvalid()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, LOCALHOST);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "foo");
 
 		Assert.assertEquals(
 			publicLayoutRelativeURL,

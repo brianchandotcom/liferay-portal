@@ -27,6 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Akos Thurzo
  */
@@ -103,6 +105,19 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		Assert.assertTrue(
 			publicLayoutFriendlyURL.equals(layoutRelativeURL) ||
 			publicLayoutRelativeURL.equals(layoutRelativeURL));
+	}
+
+	protected void addParameterToThemeDisplayRequest(
+		ThemeDisplay themeDisplay, String paramName, String paramValue) {
+
+		if (themeDisplay.getRequest() == null) {
+			themeDisplay.setRequest(new MockHttpServletRequest());
+		}
+
+		MockHttpServletRequest request =
+			(MockHttpServletRequest)themeDisplay.getRequest();
+
+		request.addParameter(paramName, paramValue);
 	}
 
 	protected String privateLayoutRelativeURL;

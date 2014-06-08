@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
@@ -59,6 +60,20 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 				group.getFriendlyURL() + publicLayout.getFriendlyURL();
 	}
 
+	@Test(expected = NoSuchLayoutException.class)
+	public void testPrivateLayoutFromCompanyVirtualHostRefererPlidNotExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
+
+		PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
+
+		Assert.fail("An exception should have been thrown");
+	}
+
 	@Test
 	public void testPrivateLayoutFromCompanyVirtualHost() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
@@ -81,6 +96,21 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		Assert.assertEquals(
 			privateLayoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test(expected = NoSuchLayoutException.class)
+	public void
+			testPrivateLayoutURLFromPublicLayoutSetVirtualHostRefererPlidNotExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
+
+		PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
+
+		Assert.fail("An exception should have been thrown");
 	}
 
 	@Test
@@ -109,6 +139,20 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		Assert.assertEquals(
 			privateLayoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test(expected = NoSuchLayoutException.class)
+	public void testPublicLayoutFromCompanyVirtualHostRefererPlidNotExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, LOCALHOST);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
+
+		PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay);
+
+		Assert.fail("An exception should have been thrown");
 	}
 
 	@Test

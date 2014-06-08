@@ -200,8 +200,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
 
-		if ((selectedFieldNames == null) || (selectedFieldNames.length == 0)) {
-			searchRequestBuilder.addFields(StringPool.STAR);
+		if (ArrayUtil.isEmpty(selectedFieldNames)) {
+			searchRequestBuilder.addField(StringPool.STAR);
 		}
 		else {
 			searchRequestBuilder.addFields(selectedFieldNames);

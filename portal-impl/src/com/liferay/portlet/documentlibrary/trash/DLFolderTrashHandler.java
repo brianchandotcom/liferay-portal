@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -79,6 +80,11 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
+		Repository repository = getRepository(classPK);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(classPK);
 
 		List<DLFileEntry> dlFileEntries =
@@ -87,11 +93,16 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 				QueryUtil.ALL_POS, null);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			DLAppHelperLocalServiceUtil.deleteFileEntry(
-				new LiferayFileEntry(dlFileEntry));
+			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+			DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
+			trashCapability.deleteFileEntry(fileEntry);
 		}
 
-		DLAppHelperLocalServiceUtil.deleteFolder(new LiferayFolder(dlFolder));
+		Folder folder = new LiferayFolder(dlFolder);
+
+		DLAppHelperLocalServiceUtil.deleteFolder(folder);
+		trashCapability.deleteFolder(folder);
 
 		DLFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}
@@ -249,9 +260,15 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		DLAppHelperLocalServiceUtil.moveFolderFromTrash(
-			userId, repository.getFolder(classPK), containerModelId,
-			serviceContext);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder folder = repository.getFolder(classPK);
+
+		Folder destinationFolder = repository.getFolder(containerModelId);
+
+		trashCapability.moveFolderFromTrash(
+			userId, folder, destinationFolder, serviceContext);
 	}
 
 	@Override
@@ -260,8 +277,12 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(
-			userId, repository.getFolder(classPK));
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder folder = repository.getFolder(classPK);
+
+		trashCapability.restoreFolderFromTrash(userId, folder);
 	}
 
 	@Override

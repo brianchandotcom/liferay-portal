@@ -78,6 +78,13 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
+		Repository repository = getRepository(classPK);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		trashCapability.deleteFileEntry(repository.getFileEntry(classPK));
+
 		DLAppLocalServiceUtil.deleteFileEntry(classPK);
 	}
 

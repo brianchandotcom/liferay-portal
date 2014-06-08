@@ -41,6 +41,7 @@ ivydata-*.properties
 /WEB-INF
 
 /.ivy/cache/resolved-*
+/.ivy/cache/*-default.xml
 
 /benchmarks/*.csv
 /benchmarks/*.sql

@@ -84,8 +84,6 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			TrashCapability.class);
 
 		trashCapability.deleteFileEntry(repository.getFileEntry(classPK));
-
-		DLAppLocalServiceUtil.deleteFileEntry(classPK);
 	}
 
 	@Override

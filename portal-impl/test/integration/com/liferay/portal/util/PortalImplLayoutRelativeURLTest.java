@@ -60,20 +60,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 				group.getFriendlyURL() + publicLayout.getFriendlyURL();
 	}
 
-	@Test(expected = NoSuchLayoutException.class)
-	public void testPrivateLayoutFromCompanyVHostRefererPlidNotExists()
-		throws Exception {
-
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, privateLayout, LOCALHOST);
-
-		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
-
-		PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
-
-		Assert.fail("An exception should have been thrown");
-	}
-
 	@Test
 	public void testPrivateLayoutFromCompanyVHost() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
@@ -99,12 +85,11 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test(expected = NoSuchLayoutException.class)
-	public void
-			testPrivateLayoutURLFromPublicLayoutSetVHostRefererPlidNotExists()
+	public void testPrivateLayoutFromCompanyVHostRefererPlidNotExists()
 		throws Exception {
 
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
+			company, group, privateLayout, LOCALHOST);
 
 		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
 
@@ -141,15 +126,16 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test(expected = NoSuchLayoutException.class)
-	public void testPublicLayoutFromCompanyVHostRefererPlidNotExists()
+	public void
+			testPrivateLayoutURLFromPublicLayoutSetVHostRefererPlidNotExists()
 		throws Exception {
 
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, LOCALHOST);
+			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
 
 		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
 
-		PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay);
+		PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
 
 		Assert.fail("An exception should have been thrown");
 	}
@@ -176,6 +162,20 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		Assert.assertEquals(
 			publicLayoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay));
+	}
+
+	@Test(expected = NoSuchLayoutException.class)
+	public void testPublicLayoutFromCompanyVHostRefererPlidNotExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, LOCALHOST);
+
+		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "1");
+
+		PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay);
+
+		Assert.fail("An exception should have been thrown");
 	}
 
 	@Test

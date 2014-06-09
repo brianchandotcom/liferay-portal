@@ -248,6 +248,9 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("columnId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

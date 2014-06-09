@@ -247,6 +247,9 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("contactId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

@@ -196,6 +196,9 @@ public class PortalPreferencesLocalServiceWrapper
 		return _portalPreferencesLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

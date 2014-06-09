@@ -188,6 +188,9 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 		return _shardLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

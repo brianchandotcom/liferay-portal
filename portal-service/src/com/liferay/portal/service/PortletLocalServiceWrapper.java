@@ -188,6 +188,9 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

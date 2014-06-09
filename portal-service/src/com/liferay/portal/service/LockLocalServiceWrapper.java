@@ -201,6 +201,9 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

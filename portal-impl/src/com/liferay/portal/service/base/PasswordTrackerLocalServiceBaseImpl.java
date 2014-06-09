@@ -246,6 +246,9 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("passwordTrackerId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

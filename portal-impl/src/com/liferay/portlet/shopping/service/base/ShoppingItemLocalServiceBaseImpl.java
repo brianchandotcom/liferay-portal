@@ -248,6 +248,9 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("itemId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

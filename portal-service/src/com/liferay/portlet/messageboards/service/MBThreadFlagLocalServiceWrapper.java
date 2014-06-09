@@ -230,6 +230,9 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

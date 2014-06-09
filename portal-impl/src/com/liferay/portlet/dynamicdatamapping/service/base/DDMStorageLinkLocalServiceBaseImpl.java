@@ -242,6 +242,9 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("storageLinkId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

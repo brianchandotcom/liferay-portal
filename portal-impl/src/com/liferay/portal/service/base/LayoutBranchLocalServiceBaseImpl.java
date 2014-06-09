@@ -246,6 +246,9 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("LayoutBranchId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

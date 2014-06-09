@@ -255,6 +255,9 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("productEntryId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

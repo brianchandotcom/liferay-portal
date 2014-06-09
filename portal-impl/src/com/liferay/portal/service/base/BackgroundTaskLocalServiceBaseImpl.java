@@ -251,6 +251,9 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("backgroundTaskId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

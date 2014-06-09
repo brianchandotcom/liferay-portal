@@ -247,6 +247,9 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("statsUserId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

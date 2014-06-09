@@ -196,6 +196,9 @@ public class LayoutSetBranchLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {

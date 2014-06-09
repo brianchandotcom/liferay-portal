@@ -263,6 +263,9 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 			"userNotificationEventId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

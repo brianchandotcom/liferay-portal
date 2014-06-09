@@ -187,6 +187,9 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 		return _counterLocalService.getCounter(name);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

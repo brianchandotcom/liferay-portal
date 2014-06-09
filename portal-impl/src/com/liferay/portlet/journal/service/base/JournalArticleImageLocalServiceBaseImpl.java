@@ -245,6 +245,9 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("articleImageId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

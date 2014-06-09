@@ -229,6 +229,9 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

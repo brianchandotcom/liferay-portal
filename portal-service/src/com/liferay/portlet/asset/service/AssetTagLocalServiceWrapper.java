@@ -191,6 +191,9 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

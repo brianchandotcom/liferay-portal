@@ -196,6 +196,9 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 		return _layoutBranchLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

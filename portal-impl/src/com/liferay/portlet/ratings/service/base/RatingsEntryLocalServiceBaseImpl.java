@@ -339,6 +339,9 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 		return exportActionableDynamicQuery;
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

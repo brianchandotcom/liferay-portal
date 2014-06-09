@@ -196,6 +196,9 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 		return _expandoTableLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

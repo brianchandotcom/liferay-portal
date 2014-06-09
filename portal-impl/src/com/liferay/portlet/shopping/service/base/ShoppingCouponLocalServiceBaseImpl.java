@@ -248,6 +248,9 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("couponId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

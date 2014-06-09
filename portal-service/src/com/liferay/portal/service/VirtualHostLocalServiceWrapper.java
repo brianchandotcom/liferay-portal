@@ -194,6 +194,9 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

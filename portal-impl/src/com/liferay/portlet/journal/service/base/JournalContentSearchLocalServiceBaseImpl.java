@@ -250,6 +250,9 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("contentSearchId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

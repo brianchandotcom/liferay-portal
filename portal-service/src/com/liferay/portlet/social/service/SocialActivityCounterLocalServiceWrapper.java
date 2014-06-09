@@ -198,6 +198,9 @@ public class SocialActivityCounterLocalServiceWrapper
 		return _socialActivityCounterLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

@@ -198,6 +198,9 @@ public class JournalArticleImageLocalServiceWrapper
 		return _journalArticleImageLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

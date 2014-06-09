@@ -249,6 +249,9 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("categoryPropertyId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

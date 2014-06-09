@@ -249,6 +249,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 			"resourceBlockPermissionId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

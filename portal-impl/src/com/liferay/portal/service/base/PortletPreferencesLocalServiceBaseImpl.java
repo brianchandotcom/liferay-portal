@@ -247,6 +247,9 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("portletPreferencesId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {

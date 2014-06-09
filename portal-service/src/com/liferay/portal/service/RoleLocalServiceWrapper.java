@@ -213,6 +213,9 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)

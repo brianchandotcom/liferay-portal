@@ -63,6 +63,16 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test
+	public void testPrivateLayoutFromCompanyVHost() throws Exception {
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST);
+
+		Assert.assertEquals(
+			privateLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test
 	public void testPrivateLayoutFromCompanyVHostRefererPlidExists()
 		throws Exception {
 
@@ -80,16 +90,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test
-	public void testPrivateLayoutFromCompanyVHost() throws Exception {
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, privateLayout, LOCALHOST);
-
-		Assert.assertEquals(
-			privateLayoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
-	}
-
-	@Test
 	public void testPrivateLayoutFromCompanyVHostRefererPlidInvalid()
 		throws Exception {
 
@@ -97,23 +97,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 			company, group, privateLayout, LOCALHOST);
 
 		addParameterToThemeDisplayRequest(themeDisplay, "refererPlid", "foo");
-
-		Assert.assertEquals(
-			privateLayoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
-	}
-
-	@Test
-	public void testPrivateLayoutURLFromPublicLayoutSetVHostRefererPlidExists()
-		throws Exception {
-
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
-		addParameterToThemeDisplayRequest(
-			themeDisplay, "refererPlid", String.valueOf(layout.getPlid()));
 
 		Assert.assertEquals(
 			privateLayoutRelativeURL,
@@ -147,6 +130,23 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	}
 
 	@Test
+	public void testPrivateLayoutURLFromPublicLayoutSetVHostRefererPlidExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME);
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		addParameterToThemeDisplayRequest(
+			themeDisplay, "refererPlid", String.valueOf(layout.getPlid()));
+
+		Assert.assertEquals(
+			privateLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
+	}
+
+	@Test
 	public void
 			testPrivateLayoutURLFromPublicLayoutSetVHostRefererPlidInvalid()
 		throws Exception {
@@ -159,23 +159,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		Assert.assertEquals(
 			privateLayoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay));
-	}
-
-	@Test
-	public void testPublicLayoutFromCompanyVHostRefererPlidExists()
-		throws Exception {
-
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, LOCALHOST);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
-		addParameterToThemeDisplayRequest(
-			themeDisplay, "refererPlid", String.valueOf(layout.getPlid()));
-
-		Assert.assertEquals(
-			publicLayoutRelativeURL,
-			PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay));
 	}
 
 	@Test(expected = NoSuchLayoutException.class)
@@ -197,6 +180,23 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	public void testPublicLayoutFromCompanyVHost() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
 			company, group, publicLayout, LOCALHOST);
+
+		Assert.assertEquals(
+			publicLayoutRelativeURL,
+			PortalUtil.getLayoutRelativeURL(publicLayout, themeDisplay));
+	}
+
+	@Test
+	public void testPublicLayoutFromCompanyVHostRefererPlidExists()
+		throws Exception {
+
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, publicLayout, LOCALHOST);
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		addParameterToThemeDisplayRequest(
+			themeDisplay, "refererPlid", String.valueOf(layout.getPlid()));
 
 		Assert.assertEquals(
 			publicLayoutRelativeURL,

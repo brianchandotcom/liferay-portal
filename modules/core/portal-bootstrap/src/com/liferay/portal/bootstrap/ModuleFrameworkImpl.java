@@ -721,11 +721,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Class<?> beanClass = bean.getClass();
 
+		interfaces.add(beanClass);
+
 		for (Class<?> interfaceClass : beanClass.getInterfaces()) {
 			interfaces.add(interfaceClass);
 		}
 
 		while ((beanClass = beanClass.getSuperclass()) != null) {
+			interfaces.add(beanClass);
+
 			for (Class<?> interfaceClass : beanClass.getInterfaces()) {
 				if (!interfaces.contains(interfaceClass)) {
 					interfaces.add(interfaceClass);

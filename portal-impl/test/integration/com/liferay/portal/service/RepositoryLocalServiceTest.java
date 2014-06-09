@@ -46,12 +46,13 @@ public class RepositoryLocalServiceTest {
 	public void testCreateLocalRepositoryFromExistingFileEntryId()
 		throws Exception {
 
-		DLFolder folder = DLTestUtil.addFolder(_group.getGroupId());
+		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFileEntry fileEntry = DLTestUtil.addFileEntry(folder);
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
+			dlFolder.getFolderId());
 
 		RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-			0, fileEntry.getFileEntryId(), 0);
+			0, dlFileEntry.getFileEntryId(), 0);
 	}
 
 	@Test
@@ -60,7 +61,8 @@ public class RepositoryLocalServiceTest {
 
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(dlFolder);
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
+			dlFolder.getFolderId());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
@@ -128,7 +130,8 @@ public class RepositoryLocalServiceTest {
 	public void testCreateRepositoryFromExistingFileEntryId() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(dlFolder);
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
+			dlFolder.getFolderId());
 
 		RepositoryLocalServiceUtil.getRepositoryImpl(
 			0, dlFileEntry.getFileEntryId(), 0);
@@ -140,7 +143,8 @@ public class RepositoryLocalServiceTest {
 
 		DLFolder dlFolder = DLTestUtil.addFolder(_group.getGroupId());
 
-		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(dlFolder);
+		DLFileEntry dlFileEntry = DLTestUtil.addFileEntry(
+			dlFolder.getFolderId());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 

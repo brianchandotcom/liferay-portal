@@ -15,7 +15,7 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.UserGroupTestUtil;
 
 import org.junit.After;
@@ -51,10 +51,6 @@ public abstract class BaseUserGroupMembershipPolicyTestCase
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
-
-		userGroup = null;
 
 		_forbiddenUserGroupIds = new long[2];
 		_requiredUserGroupIds = new long[2];
@@ -97,6 +93,7 @@ public abstract class BaseUserGroupMembershipPolicyTestCase
 		return _standardUserGroupIds;
 	}
 
+	@DeleteAfterTestRun
 	protected UserGroup userGroup;
 
 	private static long[] _forbiddenUserGroupIds = new long[2];

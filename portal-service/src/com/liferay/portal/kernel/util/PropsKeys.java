@@ -1793,6 +1793,18 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = "module.framework.system.packages.extra";
 
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_DEFAULT_SERVLET_PACKAGES = "module.framework.web.extender.default.servlet.packages";
+
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_EXCLUDED_PATHS = "module.framework.web.extender.excluded.paths";
+
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_GENERATED_WABS_STORE = "module.framework.web.extender.generated.wabs.store";
+
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_GENERATED_WABS_STORE_DIR = "module.framework.web.extender.generated.wabs.store.dir";
+
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_HEADERS = "module.framework.web.extender.headers.";
+
+	public static final String MODULE_FRAMEWORK_WEB_EXTENDER_JSP_COMPILER_DEPENDENCIES = "module.framework.web.extender.jsp.compiler.dependencies";
+
 	public static final String MONITORING_PORTAL_REQUEST = "monitoring.portal.request";
 
 	public static final String MONITORING_PORTLET_ACTION_REQUEST = "monitoring.portlet.action.request";

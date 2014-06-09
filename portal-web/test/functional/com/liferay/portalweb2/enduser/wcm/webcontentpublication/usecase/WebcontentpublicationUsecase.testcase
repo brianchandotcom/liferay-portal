@@ -1836,7 +1836,7 @@
 		</execute>
 	</command>
 	
-	<command name="ViewWebContentAuthorChangeViaAssetPublisher" priority="3">
+	<command name="ViewAuthorChangeViaAssetPublisher" priority="3">
 		<var name="author1" value="author1" />
 		<var name="author1EmailAddress" value="author1ea@liferay.com" />
 	  	<var name="author2" value="author2" />
@@ -1960,6 +1960,13 @@
 			<var name="author" value="${author2}" />
 			<var name="webContentContent" value="${webContentContentEdit}" />
 			<var name="webContentTitle" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 

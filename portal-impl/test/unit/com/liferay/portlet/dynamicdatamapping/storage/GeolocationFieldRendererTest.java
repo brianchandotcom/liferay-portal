@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,8 +35,6 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import org.testng.Assert;
 
 /**
  * @author Adolfo Pérez
@@ -57,8 +56,8 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
 
 		Assert.assertEquals(
-			fieldRenderer.render(createField(), LocaleUtil.SPAIN),
-			"Latitud: 9,876, Longitud: 1,234");
+			"Latitud: 9,876, Longitud: 1,234",
+			fieldRenderer.render(createField(), LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -66,8 +65,8 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
 
 		Assert.assertEquals(
-			fieldRenderer.render(createField(), LocaleUtil.US),
-			"Latitude: 9.876, Longitude: 1.234");
+			"Latitude: 9.876, Longitude: 1.234",
+			fieldRenderer.render(createField(), LocaleUtil.US));
 	}
 
 	protected Field createField() {

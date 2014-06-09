@@ -363,6 +363,16 @@ public class IntrabandProxyUtil {
 		classNode.access &= ~Opcodes.ACC_ABSTRACT;
 		classNode.access |= Opcodes.ACC_PUBLIC;
 
+		FieldNode proxyMethodsMappingFieldNode = ASMUtil.findFieldNode(
+			classNode.fields, "_proxyMethodsMapping");
+
+		proxyMethodsMappingFieldNode.access |= Opcodes.ACC_FINAL;
+
+		FieldNode targetLocatorFieldNode = ASMUtil.findFieldNode(
+			classNode.fields, "_targetLocator");
+
+		targetLocatorFieldNode.access |= Opcodes.ACC_FINAL;
+
 		MethodNode doDispatchMethodNode = ASMUtil.findMethodNode(
 			classNode.methods, "doDispatch", Type.VOID_TYPE,
 			_REGISTRATION_REFERENCE_TYPE, _DATAGRAM_TYPE, _DESERIALIZER_TYPE);
@@ -479,6 +489,16 @@ public class IntrabandProxyUtil {
 			templateFieldNodes, "_id");
 
 		idFieldNode.access |= Opcodes.ACC_FINAL;
+
+		FieldNode intrabandFieldNode = ASMUtil.findFieldNode(
+			templateFieldNodes, "_intraband");
+
+		intrabandFieldNode.access |= Opcodes.ACC_FINAL;
+
+		FieldNode registrationReferenceFieldNode = ASMUtil.findFieldNode(
+			templateFieldNodes, "_registrationReference");
+
+		registrationReferenceFieldNode.access |= Opcodes.ACC_FINAL;
 
 		ASMUtil.addFieldNodes(classNode.fields, templateFieldNodes);
 

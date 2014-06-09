@@ -14,24 +14,43 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.MainServletExecutionTestListener;
 
+import java.util.Locale;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.testng.Assert;
 
 /**
  * @author Adolfo Pérez
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class GeolocationFieldRendererTest {
+@PrepareForTest({LanguageUtil.class, JSONFactoryUtil.class})
+@RunWith(PowerMockRunner.class)
+public class GeolocationFieldRendererTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+
+		setUpJSONFactoryUtil();
+		setUpLanguageUtil();
+	}
 
 	@Test
 	public void testRenderedValuesFollowLocaleConventions() {
@@ -59,5 +78,40 @@ public class GeolocationFieldRendererTest {
 
 		return new Field("field", jsonObject.toString());
 	}
+
+	protected void setUpJSONFactoryUtil() {
+		spy(JSONFactoryUtil.class);
+
+		when(
+			JSONFactoryUtil.getJSONFactory()
+		).thenReturn(
+			new JSONFactoryImpl()
+		);
+	}
+
+	protected void setUpLanguageUtil() {
+		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
+		whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
+
+		whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
+		whenLanguageGet(LocaleUtil.US, "longitude", "Longitude");
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
+	}
+
+	protected void whenLanguageGet(
+		Locale locale, String key, String returnValue) {
+
+		when(
+			_language.get(Matchers.eq(locale), Matchers.eq(key))
+		).thenReturn(
+			returnValue
+		);
+	}
+
+	@Mock
+	private Language _language;
 
 }

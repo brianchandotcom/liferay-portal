@@ -485,6 +485,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG" />
+
 		<execute macro="WikiPage#addCommentPG">
 			<var name="commentBody" value="${commentBody}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -675,6 +677,8 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="WikiPage#gotoPG" />
 
 		<execute macro="WikiPage#addCommentPG">
 			<var name="commentBody" value="${commentBody}" />
@@ -1025,6 +1029,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG" />
+
 		<execute macro="WikiPage#addCommentPG">
 			<var name="commentBody" value="${commentBody}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -1255,6 +1261,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG" />
+
 		<execute macro="WikiPage#addCommentPG">
 			<var name="commentBody" value="${commentBody}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -1318,6 +1326,8 @@
 		<execute macro="WikiPage#rate4StarsPG">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
+
+		<execute macro="WikiPage#gotoPG" />
 
 		<execute macro="WikiPage#addCommentPG">
 			<var name="commentBody" value="${commentBody}" />

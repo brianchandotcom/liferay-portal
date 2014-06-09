@@ -111,12 +111,18 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testCopyTemplates() throws Exception {
+		int initialCount = DDMTemplateLocalServiceUtil.getTemplatesCount(
+			group.getGroupId(), _classNameId, 0);
+
 		DDMTemplate template = addDisplayTemplate(
 			_classNameId, 0, "Test Template");
 
-		List<DDMTemplate> templates = copyTemplate(template);
+		copyTemplate(template);
 
-		Assert.assertTrue(templates.size() >= 1);
+		int count = DDMTemplateLocalServiceUtil.getTemplatesCount(
+			group.getGroupId(), _classNameId, 0);
+
+		Assert.assertEquals(initialCount + 2, count);
 	}
 
 	@Test
@@ -239,12 +245,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(initialCount + 1, count);
 	}
 
-	protected List<DDMTemplate> copyTemplate(DDMTemplate template)
-		throws Exception {
-
-		return DDMTemplateLocalServiceUtil.copyTemplates(
-			template.getUserId(), template.getClassNameId(),
-			template.getClassPK(), -1, template.getType(),
+	protected DDMTemplate copyTemplate(DDMTemplate template) throws Exception {
+		return DDMTemplateLocalServiceUtil.copyTemplate(
+			template.getUserId(), template.getTemplateId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

@@ -82,8 +82,13 @@ public class CompareVersionsAction extends PortletAction {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
+		double sourceVersion = ParamUtil.getDouble(
+			resourceRequest, "filterSourceVersion");
+		double targetVersion = ParamUtil.getDouble(
+			resourceRequest, "filterTargetVersion");
+
 		String htmlDiffResult = getHtmlDiffResult(
-			resourceRequest, resourceResponse);
+			sourceVersion, targetVersion, resourceRequest, resourceResponse);
 
 		resourceRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 
@@ -108,7 +113,7 @@ public class CompareVersionsAction extends PortletAction {
 			renderRequest, "targetVersion");
 
 		String htmlDiffResult = getHtmlDiffResult(
-			renderRequest, renderResponse);
+			sourceVersion, targetVersion, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
@@ -118,6 +123,7 @@ public class CompareVersionsAction extends PortletAction {
 	}
 
 	protected String getHtmlDiffResult(
+			double sourceVersion, double targetVersion,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
@@ -126,10 +132,6 @@ public class CompareVersionsAction extends PortletAction {
 
 		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
 		String title = ParamUtil.getString(portletRequest, "title");
-		double sourceVersion = ParamUtil.getDouble(
-			portletRequest, "sourceVersion");
-		double targetVersion = ParamUtil.getDouble(
-			portletRequest, "targetVersion");
 
 		WikiPage sourcePage = WikiPageServiceUtil.getPage(
 			nodeId, title, sourceVersion);

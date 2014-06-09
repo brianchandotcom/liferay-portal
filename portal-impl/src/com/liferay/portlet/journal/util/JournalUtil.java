@@ -468,14 +468,21 @@ public class JournalUtil {
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		JournalArticle sourceArticle =
+			JournalArticleLocalServiceUtil.getArticle(
+				groupId, articleId, sourceVersion);
+		JournalArticle targetArticle =
+			JournalArticleLocalServiceUtil.getArticle(
+				groupId, articleId, targetVersion);
+
 		JournalArticleDisplay sourceArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, sourceVersion, null, Constants.VIEW,
-				languageId, 1, portletRequestModel, themeDisplay);
+				sourceArticle, null, Constants.VIEW, languageId, 1,
+				portletRequestModel, themeDisplay);
 		JournalArticleDisplay targetArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, targetVersion, null, Constants.VIEW,
-				languageId, 1, portletRequestModel, themeDisplay);
+				targetArticle, null, Constants.VIEW, languageId, 1,
+				portletRequestModel, themeDisplay);
 
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),

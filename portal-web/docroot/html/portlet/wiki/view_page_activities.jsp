@@ -265,16 +265,35 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 	A.getBody().delegate(
 		'click',
 		function(event) {
-			Liferay.Util.openWindow(
+			var currentTarget = event.currentTarget;
+
+			Liferay.Util.selectEntity(
 				{
 					dialog: {
 						constrain: true,
-						modal: true,
-						width: 1024
+						destroyOnHide: true,
+						modal: true
 					},
-					id: '<portlet:namespace />compareVersions' + event.currentTarget.attr('id'),
+					eventName: '<portlet:namespace />selectVersionFm',
+					id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
 					title: '<liferay-ui:message key="compare-versions" />',
-					uri: event.currentTarget.attr('data-uri')
+					uri: currentTarget.attr('data-uri')
+				},
+				function(event) {
+					<portlet:renderURL var="compareVersionURL">
+						<portlet:param name="struts_action" value="/wiki/compare_versions" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+						<portlet:param name="type" value="html" />
+					</portlet:renderURL>
+
+					var uri = '<%= compareVersionURL %>';
+
+					uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
+					uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
+
+					location.href = uri;
 				}
 			);
 		},

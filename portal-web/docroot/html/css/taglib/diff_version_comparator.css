@@ -1,6 +1,12 @@
 @import "compass";
 
 .diff-version-comparator {
+	.taglib-diff-html {
+		.diff-html-changed {
+			border-bottom: 2px dotted transparent;
+		}
+	}
+
 	.diff-version-head {
 		border-bottom: 1px solid transparent;
 		margin-bottom: 40px;
@@ -114,19 +120,10 @@
 
 		.diff-container {
 			border: 1px solid transparent;
+			border-bottom-width: 0;
 			min-height: 400px;
 			padding: 25px 20px;
 			position: relative;
-
-			.legend-info {
-				bottom: 0;
-				padding-bottom: 10px;
-				position: absolute;
-
-				.legend-item {
-					margin-right: 15px;
-				}
-			}
 		}
 
 		.diff-version-filter {
@@ -142,6 +139,20 @@
 				margin-right: 5px;
 			}
 		}
+
+		.legend-info {
+			border: 1px solid transparent;
+			border-top-width: 0;
+			padding: 20px;
+
+			.legend-item {
+				margin-right: 15px;
+
+				&.diff-html-changed {
+			 		border-bottom: 2px dotted transparent;
+				}
+			}
+		}
 	}
 
 	.diff-version-title {
@@ -153,6 +164,17 @@
 /* Skin */
 
 .diff-version-comparator {
+	.taglib-diff-html {
+		.diff-html-changed {
+			background-image: none;
+			border-bottom-color: #009AE5;
+
+			img {
+				border-color: #009AE5;
+			}
+		}
+	}
+
 	.diff-version-head {
 		border-bottom-color: #E5E5E5;
 
@@ -222,6 +244,8 @@
 			border-bottom-color: #E5E5E5;
 
 			&.selected {
+				background-color: #F0F0F0;
+
 				.version-title {
 					color: #555;
 				}
@@ -260,14 +284,23 @@
 		.diff-container {
 			background-color: #FFF;
 			border-color: #E5E5E5;
+		}
 
-			.legend-info {
-				.add.icon-stop {
-					color: #CFC;
-				}
+		.legend-info {
+			background-color: #FFF;
+			border-color: #E5E5E5;
 
-				.delete.icon-stop {
-					color: #FDC6C6;
+			.add.icon-stop {
+				color: #CFC;
+			}
+
+			.delete.icon-stop {
+				color: #FDC6C6;
+			}
+
+			.legend-item {
+				&.diff-html-changed {
+					border-bottom-color: #009AE5;
 				}
 			}
 		}

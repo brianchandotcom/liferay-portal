@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 
@@ -29,15 +30,21 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/journal/compare_versions" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:resourceURL varImpl="resourceURL">
 	<portlet:param name="struts_action" value="/journal/compare_versions" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:resourceURL>
+
+<liferay-ui:header
+	title="compare-versions"
+/>
 
 <liferay-ui:diff-version-comparator
 	availableLocales="<%= availableLocales %>"

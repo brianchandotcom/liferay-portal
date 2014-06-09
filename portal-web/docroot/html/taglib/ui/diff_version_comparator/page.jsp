@@ -140,7 +140,7 @@ if (Validator.isNotNull(languageId)) {
 					</div>
 				</c:if>
 
-				<c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">
+				<c:if test="<%= (availableLocales != null) && (availableLocales.size() > 1) %>">
 					<div class="language-selector">
 						<aui:select label="" name="languageId" title="language">
 
@@ -208,22 +208,26 @@ if (Validator.isNotNull(languageId)) {
 					<div id="<portlet:namespace />diffContainerHtmlResults">
 						<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
 					</div>
+				</div>
 
-					<div class="legend-info">
-						<liferay-ui:icon
-							cssClass="legend-item"
-							iconCssClass="delete icon-stop"
-							label="<%= true %>"
-							message="deleted"
-						/>
+				<div class="legend-info">
+					<liferay-ui:icon
+						cssClass="legend-item"
+						iconCssClass="delete icon-stop"
+						label="<%= true %>"
+						message="deleted"
+					/>
 
-						<liferay-ui:icon
-							cssClass="legend-item"
-							iconCssClass="add icon-stop"
-							label="<%= true %>"
-							message="added"
-						/>
-					</div>
+					<liferay-ui:icon
+						cssClass="legend-item"
+						iconCssClass="add icon-stop"
+						label="<%= true %>"
+						message="added"
+					/>
+
+					<span class="diff-html-changed legend-item">
+						<liferay-ui:message key="format-changes" />
+					</span>
 				</div>
 			</aui:col>
 		</aui:row>

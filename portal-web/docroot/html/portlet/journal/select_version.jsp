@@ -19,6 +19,7 @@
 <%
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
+String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectVersionFm");
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -70,16 +71,13 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 						curSourceVersion = tempVersion;
 					}
 
-					PortletURL compareVersionsURL = renderResponse.createRenderURL();
+					Map<String, Object> data = new HashMap<String, Object>();
 
-					compareVersionsURL.setParameter("struts_action", "/journal/compare_versions");
-					compareVersionsURL.setParameter("groupId", String.valueOf(article.getGroupId()));
-					compareVersionsURL.setParameter("articleId", article.getArticleId());
-					compareVersionsURL.setParameter("sourceVersion", String.valueOf(curSourceVersion));
-					compareVersionsURL.setParameter("targetVersion", String.valueOf(curTargetVersion));
+					data.put("sourceversion", curSourceVersion);
+					data.put("targetversion", curTargetVersion);
 					%>
 
-					<aui:button cssClass="selector-button" href="<%= compareVersionsURL.toString() %>" value="choose" />
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -87,3 +85,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectVersionFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+</aui:script>

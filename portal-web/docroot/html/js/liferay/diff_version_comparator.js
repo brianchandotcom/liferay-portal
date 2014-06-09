@@ -195,8 +195,8 @@ AUI.add(
 								},
 								data: instance.ns(
 									{
-										sourceVersion: sourceVersion,
-										targetVersion: targetVersion
+										filterSourceVersion: sourceVersion,
+										filterTargetVersion: targetVersion
 									}
 								)
 							}

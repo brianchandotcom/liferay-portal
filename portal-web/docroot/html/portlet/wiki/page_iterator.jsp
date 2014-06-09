@@ -417,8 +417,10 @@ for (int i = 0; i < results.size(); i++) {
 					function(event) {
 						event.preventDefault();
 
-						<portlet:renderURL var="compareVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:renderURL var="compareVersionURL">
 							<portlet:param name="struts_action" value="/wiki/compare_versions" />
+							<portlet:param name="backURL" value="<%= currentURL %>" />
+							<portlet:param name="tabs3" value="versions" />
 							<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 							<portlet:param name="type" value="html" />
@@ -440,16 +442,7 @@ for (int i = 0; i < results.size(); i++) {
 								uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.item(0).val(), uri);
 							}
 
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										width: 1024
-									},
-									id: '<portlet:namespace />compareVersions',
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "compare-versions") %>',
-									uri: uri
-								}
-							);
+							location.href = uri;
 						}
 					}
 				);

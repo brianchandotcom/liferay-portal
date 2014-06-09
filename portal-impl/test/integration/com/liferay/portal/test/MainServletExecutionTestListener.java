@@ -18,12 +18,31 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
+import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.io.File;
+
+import java.lang.reflect.Field;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 
@@ -47,6 +66,121 @@ public class MainServletExecutionTestListener
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	@Override
+	public void runAfterTest(TestContext testContext) {
+		Map<Class<?>, List<Field>> autoRemoveFields =
+			new HashMap<Class<?>, List<Field>>();
+
+		Class<?> testClass = testContext.getClazz();
+
+		while (testClass != null) {
+			for (Field field : testClass.getDeclaredFields()) {
+				AutoRemove autoRemove = field.getAnnotation(AutoRemove.class);
+
+				if (autoRemove == null) {
+					continue;
+				}
+
+				Class<?> fieldType = field.getType();
+
+				if (!PersistedModel.class.isAssignableFrom(fieldType)) {
+					throw new IllegalArgumentException(
+						AutoRemove.class + " can only be used to " +
+							PersistedModel.class +
+								" type field, found it on field " + field);
+				}
+
+				field.setAccessible(true);
+
+				List<Field> fields = autoRemoveFields.get(fieldType);
+
+				if (fields == null) {
+					fields = new ArrayList<Field>();
+
+					autoRemoveFields.put(fieldType, fields);
+				}
+
+				fields.add(field);
+			}
+
+			testClass = testClass.getSuperclass();
+		}
+
+		Object instance = testContext.getInstance();
+
+		Set<Map.Entry<Class<?>, List<Field>>> entrySet =
+			autoRemoveFields.entrySet();
+
+		Iterator<Map.Entry<Class<?>, List<Field>>> iterator =
+			entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<Class<?>, List<Field>> entry = iterator.next();
+
+			Class<?> clazz = entry.getKey();
+
+			if (_ORDERED_CLASSES.contains(clazz)) {
+				continue;
+			}
+
+			iterator.remove();
+
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(clazz.getName());
+
+			for (Field field : entry.getValue()) {
+				try {
+					PersistedModel persistedModel = (PersistedModel)field.get(
+						instance);
+
+					if (persistedModel == null) {
+						continue;
+					}
+
+					persistedModelLocalService.deletePersistedModel(
+						persistedModel);
+
+					field.set(instance, null);
+				}
+				catch (Exception e) {
+					_log.error("Unable to delete", e);
+				}
+			}
+		}
+
+		for (Class<?> clazz : _ORDERED_CLASSES) {
+			List<Field> fields = autoRemoveFields.remove(clazz);
+
+			if (fields == null) {
+				continue;
+			}
+
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(clazz.getName());
+
+			for (Field field : fields) {
+				try {
+					PersistedModel persistedModel = (PersistedModel)field.get(
+						instance);
+
+					if (persistedModel == null) {
+						continue;
+					}
+
+					persistedModelLocalService.deletePersistedModel(
+						persistedModel);
+
+					field.set(instance, null);
+				}
+				catch (Exception e) {
+					_log.error("Unable to delete", e);
+				}
+			}
 		}
 	}
 
@@ -103,5 +237,11 @@ public class MainServletExecutionTestListener
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MainServletExecutionTestListener.class);
+
+	private static Set<Class<?>> _ORDERED_CLASSES =
+		new LinkedHashSet<Class<?>>(
+			Arrays.asList(
+				User.class, Organization.class, Role.class, UserGroup.class,
+				Group.class));
 
 }

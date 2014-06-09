@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1448,12 +1449,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setClassName(entry.getModelClassName());
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttribute(
-			"[$BLOGS_ENTRY_CONTENT$]", entry.getContent(), false);
+			"[$BLOGS_ENTRY_CONTENT$]",
+			StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), 500),
+			false);
+
+		User user = userPersistence.findByPrimaryKey(entry.getUserId());
+
 		subscriptionSender.setContextAttributes(
+			"[$BLOGS_ENTRY_CREATE_DATE$]",
+			Time.getSimpleDate(entry.getCreateDate(), "yyyy/MM/dd"),
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
+			"[$BLOGS_ENTRY_SITE_NAME$]",
+			groupLocalService.getGroupDescriptiveName(
+				entry.getGroupId(), serviceContext.getLocale()),
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
-			entryURL);
+			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
+			user.getPortraitURL(serviceContext.getThemeDisplay()),
+			"[$BLOGS_ENTRY_USER_URL$]",
+			user.getDisplayURL(serviceContext.getThemeDisplay()));
+
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

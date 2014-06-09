@@ -34,6 +34,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Akos Thurzo
+ * @author Manuel de la Peña
  */
 @ExecutionTestListeners(
 	listeners = {

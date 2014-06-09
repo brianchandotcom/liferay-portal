@@ -120,6 +120,38 @@
 		</execute>
 	</command>
 
+	<command name="AddCustomTitleViaAP" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Look and Feel" />
+		</execute>
+
+		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Asset Publisher Custom" />
+		</execute>
+	</command>
+
 	<command name="AssertViewPermissionsViaCPAndPG" priority="4">
 		<var name="roleName1" value="Advertiser Admin Name" />
 		<var name="roleName2" value="Press Secretary Name" />
@@ -1150,6 +1182,206 @@
 
 		<execute macro="AssetPublisherPortlet#assertSiteScopeSearch">
 			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="OrderContentByModifiedDateViaAP" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Modified Date" />
+			<var name="sortOrder" value="Descending" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="webContentContent" value="WebContent Content 1" />
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="webContentContent" value="WebContent Content 2" />
+			<var name="webContentTitle" value="WebContent Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="webContentContent" value="WebContent Content 3" />
+			<var name="webContentTitle" value="WebContent Title 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleAssetOrderPGViaAP">
+			<var name="assetTitle1" value="WebContent Title 3" />
+			<var name="assetTitle2" value="WebContent Title 2" />
+			<var name="assetTitle3" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="WebContent#editPGViaAP">
+			<var name="assetTitle" value="WebContent Title 1" />
+			<var name="webContentContentEdit" value="WebContent Content 1 Edit" />
+			<var name="webContentTitleEdit" value="WebContent Title 1 Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleAssetOrderPGViaAP">
+			<var name="assetTitle1" value="WebContent Title 1 Edit" />
+			<var name="assetTitle2" value="WebContent Title 3" />
+			<var name="assetTitle3" value="WebContent Title 2" />
+		</execute>
+	</command>
+
+	<command name="OrderWCByModifiedDateViaAP" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Modified Date" />
+			<var name="sortOrder" value="Descending" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 1" />
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 2" />
+			<var name="webContentTitle" value="WebContent Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 3" />
+			<var name="webContentTitle" value="WebContent Title 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleAssetOrderPGViaAP">
+			<var name="assetTitle1" value="WebContent Title 3" />
+			<var name="assetTitle2" value="WebContent Title 2" />
+			<var name="assetTitle3" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="WebContent#editPGViaAP">
+			<var name="assetTitle" value="WebContent Title 1" />
+			<var name="webContentContentEdit" value="WebContent Content 1 Edit" />
+			<var name="webContentTitleEdit" value="WebContent Title 1 Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleAssetOrderPGViaAP">
+			<var name="assetTitle1" value="WebContent Title 1 Edit" />
+			<var name="assetTitle2" value="WebContent Title 3" />
+			<var name="assetTitle3" value="WebContent Title 2" />
+		</execute>
+	</command>
+
+	<command name="OrderWCByPublishDateViaAP" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Publish Date" />
+			<var name="sortOrder" value="Descending" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 1" />
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 2" />
+			<var name="webContentTitle" value="WebContent Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP" >
+			<var name="assetTypeConfigured" value="true" />
+			<var name="webContentContent" value="WebContent Content 3" />
+			<var name="webContentTitle" value="WebContent Title 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleAssetOrderPGViaAP">
+			<var name="assetTitle1" value="WebContent Title 3" />
+			<var name="assetTitle2" value="WebContent Title 2" />
+			<var name="assetTitle3" value="WebContent Title 1" />
 		</execute>
 	</command>
 

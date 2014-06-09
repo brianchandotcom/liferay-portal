@@ -63,95 +63,84 @@ portletURL.setParameter("struts_action", "/sites_admin/view_membership_requests"
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("date");
-headerNames.add("user");
-headerNames.add("user-comments");
-
-if (!tabs1.equals("pending")) {
-	headerNames.add("reply-date");
-	headerNames.add("replier");
-	headerNames.add("reply-comments");
-}
-
-headerNames.add(StringPool.BLANK);
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.get(pageContext, "no-requests-were-found"));
-
-searchContainer.setHeaderNames(headerNames);
-
-int total = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId);
-
-searchContainer.setTotal(total);
-
-List results = MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd());
-
-searchContainer.setResults(results);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	MembershipRequest membershipRequest = (MembershipRequest)results.get(i);
-
-	long userId = 0L;
-
-	User user2 = UserLocalServiceUtil.getUserById(membershipRequest.getUserId());
-
-	ResultRow row = new ResultRow(new Object[] {user2, group, membershipRequest}, userId, i);
-
-	// Date
-
-	row.addDate(membershipRequest.getCreateDate());
-
-	// User
-
-	StringBundler sb = new StringBundler(4);
-
-	sb.append(HtmlUtil.escape(user2.getFullName()));
-	sb.append(" (");
-	sb.append(user2.getEmailAddress());
-	sb.append(StringPool.CLOSE_PARENTHESIS);
-
-	row.addText(sb.toString());
-
-	// Comments
-
-	row.addText(HtmlUtil.escape(membershipRequest.getComments()));
-
-	if (!tabs1.equals("pending")) {
-
-		// Reply Date
-
-		row.addText(dateFormatDate.format(membershipRequest.getReplyDate()));
-
-		// Replier
-
-		User user3 = UserLocalServiceUtil.getUserById(membershipRequest.getReplierUserId());
-
-		if (user3.isDefaultUser()) {
-			Company user3Company = CompanyLocalServiceUtil.getCompanyById(user3.getCompanyId());
-
-			row.addText(HtmlUtil.escape(user3Company.getName()));
-		}
-		else {
-			row.addText(HtmlUtil.escape(user3.getFullName()));
-		}
-
-		// Reply comments
-
-		row.addText(HtmlUtil.escape(membershipRequest.getReplyComments()));
-	}
-
-	// Actions
-
-	row.addJSP("/html/portlet/sites_admin/membership_request_action.jsp", "entry-action");
-
-	// Add result row
-
-	resultRows.add(row);
-}
 %>
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-container
+	emptyResultsMessage="no-requests-were-found"
+	iteratorURL="<%= portletURL %>"
+	total="<%= MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId) %>"
+>
+
+	<liferay-ui:search-container-results
+		results="<%= MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.MembershipRequest"
+		modelVar="membershipRequest"
+	>
+
+		<%
+		User user2 = UserLocalServiceUtil.getUserById(membershipRequest.getUserId());
+
+		row.setObject(new Object[] {user2, group, membershipRequest});
+		%>
+
+		<liferay-ui:search-container-column-date
+			name="date"
+			value="<%= membershipRequest.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="user"
+		>
+			<%= HtmlUtil.escape(user2.getFullName()) %> (<%= user2.getEmailAddress() %>)
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			name="user-comments"
+			value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
+		/>
+
+		<c:if test='<%= !tabs1.equals("pending") %>'>
+			<liferay-ui:search-container-column-date
+				name="reply-date"
+				value="<%= membershipRequest.getReplyDate() %>"
+			/>
+
+			<%
+			User user3 = UserLocalServiceUtil.getUserById(membershipRequest.getReplierUserId());
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="replier"
+			>
+				<c:choose>
+					<c:when test="<%= user3.isDefaultUser() %>">
+
+						<%
+						Company user3Company = CompanyLocalServiceUtil.getCompanyById(user3.getCompanyId());
+						%>
+
+						<%= HtmlUtil.escape(user3Company.getName()) %>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(user3.getFullName()) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="reply-comments"
+				value="<%= HtmlUtil.escape(user3.getFullName()) %>"
+			/>
+		</c:if>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action"
+			path="/html/portlet/sites_admin/membership_request_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+</liferay-ui:search-container>

@@ -224,9 +224,6 @@ public class InputTag extends BaseInputTag {
 		if (Validator.equals(type,"assetTags")) {
 			forLabel = forLabel.concat("assetTagNames");
 		}
-		else if (Validator.equals(type, "checkbox")) {
-			forLabel = forLabel.concat("Checkbox");
-		}
 
 		String languageId = getLanguageId();
 
@@ -342,10 +339,6 @@ public class InputTag extends BaseInputTag {
 				_validators);
 
 			String inputName = _inputName;
-
-			if (Validator.equals(getType(), "checkbox")) {
-				inputName = inputName.concat("Checkbox");
-			}
 
 			String languageId = getLanguageId();
 

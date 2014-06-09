@@ -461,6 +461,10 @@ public class Validator {
 		return false;
 	}
 
+	public static boolean isBoolean(String value) {
+		return ArrayUtil.contains(_BOOLEANS, value);
+	}
+
 	/**
 	 * Returns <code>true</code> if the character is an upper or lower case
 	 * English letter.
@@ -1333,6 +1337,8 @@ public class Validator {
 			return false;
 		}
 	}
+
+	private static final String[] _BOOLEANS = {"false", "on", "off", "true"};
 
 	private static final int _CHAR_LOWER_CASE_BEGIN = 97;
 

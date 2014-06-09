@@ -62,8 +62,8 @@ if (hints != null) {
 
 			boolean value = BeanPropertiesUtil.getBooleanSilent(bean, field, defaultBoolean);
 
-			if (!ignoreRequestValue) {
-				value = ParamUtil.getBoolean(request, fieldParam, value);
+			if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "checkboxNames"))) {
+				value = Validator.isNotNull(ParamUtil.getString(request, fieldParam));
 			}
 			%>
 

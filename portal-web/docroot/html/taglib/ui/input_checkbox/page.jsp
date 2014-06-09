@@ -31,6 +31,4 @@ if (Validator.isNull(id)) {
 }
 %>
 
-<input id="<%= id %>" name="<%= namespace %><%= param %>" type="hidden" value="<%= value %>" />
-
-<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= id %>Checkbox" name="<%= namespace %><%= param %>Checkbox" type="checkbox" onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" />
+<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= id %>" name="<%= namespace %><%= param %>" onClick="<%= onClick %>" type="checkbox" />

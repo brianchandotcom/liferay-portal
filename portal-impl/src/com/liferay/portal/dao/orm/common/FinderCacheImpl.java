@@ -23,19 +23,21 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -94,7 +96,8 @@ public class FinderCacheImpl
 
 	@Override
 	public Object getResult(
-		FinderPath finderPath, Object[] args, SessionFactory sessionFactory) {
+		FinderPath finderPath, Object[] args,
+		BasePersistenceImpl basePersistenceImpl) {
 
 		if (!PropsValues.VALUE_OBJECT_FINDER_CACHE_ENABLED ||
 			!finderPath.isFinderCacheEnabled() ||
@@ -133,7 +136,8 @@ public class FinderCacheImpl
 		}
 
 		if (primaryKey != null) {
-			return _primaryKeyToResult(finderPath, sessionFactory, primaryKey);
+			return _primaryKeyToResult(
+				finderPath, basePersistenceImpl, primaryKey);
 		}
 
 		return null;
@@ -265,40 +269,38 @@ public class FinderCacheImpl
 	}
 
 	private Serializable _primaryKeyToResult(
-		FinderPath finderPath, SessionFactory sessionFactory,
+		FinderPath finderPath, BasePersistenceImpl basePersistenceImpl,
 		Serializable primaryKey) {
 
 		if (primaryKey instanceof List<?>) {
-			List<Serializable> cachedList = (List<Serializable>)primaryKey;
+			Set<Serializable> cachedSet = new HashSet<Serializable>(
+				(List<Serializable>)primaryKey);
 
-			if (cachedList.isEmpty()) {
+			if (cachedSet.isEmpty()) {
 				return (Serializable)Collections.emptyList();
 			}
 
-			List<Serializable> list = new ArrayList<Serializable>(
-				cachedList.size());
+			try {
+				Map<Serializable, Serializable> results =
+					basePersistenceImpl.fetchByPrimaryKeys(cachedSet);
 
-			for (Serializable curPrimaryKey : cachedList) {
-				Serializable result = _primaryKeyToResult(
-					finderPath, sessionFactory, curPrimaryKey);
-
-				if (result == null) {
+				if (results.size() < cachedSet.size()) {
 					return null;
 				}
 
-				list.add(result);
+				List<Serializable> list = new ArrayList<Serializable>(
+					results.values());
+				return (Serializable)Collections.unmodifiableList(list);
 			}
-
-			list = Collections.unmodifiableList(list);
-
-			return (Serializable)list;
+			catch (Exception e) {
+			}
 		}
 		else if (BaseModel.class.isAssignableFrom(
 					finderPath.getResultClass())) {
 
 			return EntityCacheUtil.loadResult(
 				finderPath.isEntityCacheEnabled(), finderPath.getResultClass(),
-				primaryKey, sessionFactory);
+				primaryKey, basePersistenceImpl);
 		}
 
 		return primaryKey;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -26,7 +28,8 @@ public interface FinderCache {
 	public void clearLocalCache();
 
 	public Object getResult(
-		FinderPath finderPath, Object[] args, SessionFactory sessionFactory);
+		FinderPath finderPath, Object[] args,
+		BasePersistenceImpl basePersistenceImpl);
 
 	public void invalidate();
 

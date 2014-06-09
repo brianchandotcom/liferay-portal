@@ -28,6 +28,8 @@ import com.liferay.portal.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -117,6 +119,18 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         system exception occurred
 	 */
 	public T fetchByPrimaryKey(Serializable primaryKey) throws SystemException;
+
+	/**
+	 * Returns a map of model instances with the primary keys provided
+	 *
+	 * @param  primaryKeys the set of keys for the model instances
+	 * @return a map of the model instances
+	 * @throws SystemException if the primary keys are <code>null</code>,
+	 *		   or if a system exception occurred
+	 */
+	public Map<Serializable, T> fetchByPrimaryKeys(
+			Set<Serializable> primaryKeys)
+		throws SystemException;
 
 	/**
 	 * Returns the model instance with the primary key or throws a {@link

@@ -140,7 +140,7 @@ public class IntrabandProxyUtil {
 
 					throw new IllegalArgumentException(
 						"Field " + field + " is expected to be of type " +
-							clazz + " and " + (!isStatic ? "not " : " ") +
+							clazz + " and " + (!isStatic ? "not " : "") +
 								"static");
 				}
 

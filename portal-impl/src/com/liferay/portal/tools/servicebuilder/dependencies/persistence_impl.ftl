@@ -85,6 +85,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 <#list referenceList as tempEntity>
 	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
@@ -842,6 +844,110 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return ${entity.varName};
 	}
 
+
+	/**
+	 * Returns a map of ${entity.humanNames} for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the ${entity.humanNames}
+	 * @return map of primaryKeys to ${entity.humanNames}.
+	 */
+	@Override
+	public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
+		Map<Serializable, ${entity.name}> results = new HashMap<Serializable, ${entity.name}>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		<#if entity.hasCompoundPK()>
+			for (Serializable primaryKey : primaryKeys) {
+				results.put(primaryKey, fetchByPrimaryKey(primaryKey));
+			}
+
+			return results;
+		<#else>
+			if (primaryKeys.size() == 1) {
+				Iterator<Serializable> iterator = primaryKeys.iterator();
+
+				Serializable singlePrimaryKey = iterator.next();
+				results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+				return results;
+			}
+
+			Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+			for (Serializable primaryKey : primaryKeys) {
+				${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+
+				if (${entity.varName} == null) {
+					cacheMissPks.add(primaryKey);
+				}
+				else {
+					results.put(primaryKey, ${entity.varName});
+				}
+			}
+
+			if (cacheMissPks.isEmpty()) {
+				return results;
+			}
+
+			<#if entity.PKClassName == "String">
+				StringBundler query = new StringBundler(cacheMissPks.size() * 2 + 1);
+			<#else>
+				StringBundler query = new StringBundler(cacheMissPks.size() * 4 + 1);
+			</#if>
+
+			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
+
+			for (Serializable primaryKey : cacheMissPks) {
+				<#if entity.PKClassName == "String">
+					query.append(StringPool.QUOTE);
+					query.append(String.valueOf(primaryKey));
+					query.append(StringPool.QUOTE);
+					query.append(StringPool.COMMA);
+				<#else>
+					query.append(String.valueOf(primaryKey));
+					query.append(StringPool.COMMA);
+				</#if>
+
+			}
+
+			query.setIndex(query.index() - 1);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				for (${entity.name} result : (List<${entity.name}>)q.list()) {
+					results.put(result.getPrimaryKeyObj(), result);
+
+					cacheResult(result);
+
+					cacheMissPks.remove(result.getPrimaryKeyObj());
+				}
+
+				for (Serializable primaryKey : cacheMissPks) {
+					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
+				}
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+
+			return results;
+		</#if>
+	}
+
 	/**
 	 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
 	 *
@@ -1576,6 +1682,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
+
+	private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ${entity.PKDBName} IN (";
 
 	<#if entity.getFinderList()?size != 0>
 		private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ";

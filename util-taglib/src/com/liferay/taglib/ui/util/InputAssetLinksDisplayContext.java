@@ -112,18 +112,20 @@ public class InputAssetLinksDisplayContext {
 			assetRendererFactories,
 			new PredicateFilter<AssetRendererFactory>() {
 
-			@Override
-			public boolean filter(AssetRendererFactory assetRendererFactory) {
-				if (assetRendererFactory.isLinkable() &&
-					assetRendererFactory.isSelectable()) {
+				@Override
+				public boolean filter(
+					AssetRendererFactory assetRendererFactory) {
 
-					return true;
+					if (assetRendererFactory.isLinkable() &&
+						assetRendererFactory.isSelectable()) {
+
+						return true;
+					}
+
+					return false;
 				}
 
-				return false;
-			}
-
-		});
+			});
 
 		return ListUtil.sort(
 			assetRendererFactories,

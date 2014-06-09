@@ -14,43 +14,114 @@
  */
 --%>
 
+<liferay-ui:search-container-column-text
+	name="id"
+	value="<%= curArticle.getArticleId() %>"
+/>
+
+<liferay-ui:search-container-column-text
+	name="title"
+>
+
+	<%
+	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(curArticle));
+
+	PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+	rowURL.setParameter("struts_action", "/journal/edit_article");
+	rowURL.setParameter("redirect", currentURL);
+	rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+	rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
+	rowURL.setParameter("articleId", curArticle.getArticleId());
+	rowURL.setParameter("status", String.valueOf(status));
+	%>
+
+	<liferay-ui:icon
+		cssClass="entry-display-style selectable"
+		iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+		label="<%= true %>"
+		message="<%= curArticle.getTitle(locale) %>"
+		method="get"
+		url="<%= rowURL.toString() %>"
+	/>
+
+	<c:if test="<%= curArticle.getGroupId() != scopeGroupId %>">
+		<small class="group-info">
+			<dl>
+
+				<%
+				Group group = GroupLocalServiceUtil.getGroup(curArticle.getGroupId());
+				%>
+
+				<c:if test="<%= !group.isLayout() || (group.getParentGroupId() != scopeGroupId) %>">
+					<dt>
+						<liferay-ui:message key="site" />:
+					</dt>
+
+					<dd>
+
+						<%
+						String groupDescriptiveName = null;
+
+						if (group.isLayout()) {
+							Group parentGroup = group.getParentGroup();
+
+							groupDescriptiveName = parentGroup.getDescriptiveName(locale);
+						}
+						else {
+							groupDescriptiveName = group.getDescriptiveName(locale);
+						}
+						%>
+
+						<%= HtmlUtil.escape(groupDescriptiveName) %>
+					</dd>
+				</c:if>
+
+				<c:if test="<%= group.isLayout() %>">
+					<dt>
+						<liferay-ui:message key="scope" />:
+					</dt>
+
+					<dd>
+						<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+					</dd>
+				</c:if>
+			</dl>
+		</small>
+	</c:if>
+</liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-status
+	name="status"
+/>
+
+<liferay-ui:search-container-column-date
+	name="modified-date"
+	value="<%= curArticle.getModifiedDate() %>"
+/>
+
+<liferay-ui:search-container-column-date
+	name="display-date"
+	value="<%= curArticle.getDisplayDate() %>"
+/>
+
+<liferay-ui:search-container-column-text
+	name="author"
+	value="<%= PortalUtil.getUserName(curArticle) %>"
+/>
+
 <%
-
-// Article id
-
-row.addText(curArticle.getArticleId());
-
-// Title
-
-TextSearchEntry articleTitleTextSearchEntry = new TextSearchEntry();
-
-articleTitleTextSearchEntry.setName(articleTitle);
-
-row.addSearchEntry(articleTitleTextSearchEntry);
-
-// Status
-
-row.addStatus(curArticle.getStatus(), curArticle.getStatusByUserId(), curArticle.getStatusDate());
-
-// Modified date
-
-row.addDate(curArticle.getModifiedDate());
-
-// Display date
-
-row.addDate(curArticle.getDisplayDate());
-
-// Author
-
-row.addText(PortalUtil.getUserName(curArticle));
-
-// Type
-
 DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), curArticle.getStructureId(), true);
-
-row.addText(ddmStructure.getName(locale));
-
-// Action
-
-row.addJSP("/html/portlet/journal/article_action.jsp", "entry-action");
 %>
+
+<liferay-ui:search-container-column-text
+	name="type"
+	value="<%= ddmStructure.getName(locale) %>"
+/>
+
+<liferay-ui:search-container-column-jsp
+	cssClass="entry-action"
+	path="/html/portlet/journal/article_action.jsp"
+/>

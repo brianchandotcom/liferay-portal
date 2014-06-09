@@ -23,8 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 %>
 
@@ -57,121 +55,83 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			<aui:input name="articleIds" type="hidden" />
 			<aui:input name="expireArticleIds" type="hidden" />
 
-			<%
-			ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
+			<liferay-ui:search-container
+				rowChecker="<%= new RowChecker(renderResponse) %>"
+				searchContainer="<%= new ArticleSearch(renderRequest, portletURL) %>"
+				total="<%= JournalArticleServiceUtil.getArticlesCountByArticleId(article.getGroupId(), article.getArticleId()) %>"
+			>
+				<liferay-ui:search-container-results
+					results="<%= JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				/>
 
-			List<String> headerNames = new ArrayList<String>();
+				<liferay-ui:search-container-row
+					className="com.liferay.portlet.journal.model.JournalArticle"
+					modelVar="articleVersion"
+				>
 
-			headerNames.add("id");
-			headerNames.add("title");
-			headerNames.add("version");
-			headerNames.add("status");
-			headerNames.add("modified-date");
+					<%
+					row.setPrimaryKey(articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion());
+					%>
 
-			if (article.getDisplayDate() != null) {
-				headerNames.add("display-date");
-			}
+					<liferay-ui:search-container-column-text
+						name="id"
+						property="articleId"
+					/>
 
-			headerNames.add("author");
-			headerNames.add(StringPool.BLANK);
+					<liferay-ui:search-container-column-text
+						name="title"
+						value="<%= articleVersion.getTitle(locale) %>"
+					/>
 
-			searchContainer.setHeaderNames(headerNames);
+					<liferay-ui:search-container-column-text
+						name="version"
+						orderable="<%= true %>"
 
-			Map<String, String> orderableHeaders = new HashMap<String, String>();
+					/>
 
-			orderableHeaders.put("modified-date", "modified-date");
+					<liferay-ui:search-container-column-status
+						name="status"
+					/>
 
-			if (article.getDisplayDate() != null) {
-				orderableHeaders.put("display-date", "display-date");
-			}
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						orderable="<%= true %>"
+						property="modifiedDate"
+					/>
 
-			orderableHeaders.put("version", "version");
-
-			searchContainer.setOrderableHeaders(orderableHeaders);
-
-			if (Validator.isNull(orderByCol)) {
-				searchContainer.setOrderByCol("version");
-			}
-
-			searchContainer.setRowChecker(new RowChecker(renderResponse));
-
-			ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
-
-			searchTerms.setAdvancedSearch(true);
-			searchTerms.setArticleId(article.getArticleId());
-
-			int total = JournalArticleServiceUtil.getArticlesCountByArticleId(searchTerms.getGroupId(), searchTerms.getArticleId());
-
-			searchContainer.setTotal(total);
-
-			List<JournalArticle> results = JournalArticleServiceUtil.getArticlesByArticleId(searchTerms.getGroupId(), searchTerms.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-			<c:if test="<%= !results.isEmpty() %>">
-				<aui:button-row>
-					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-						<aui:button disabled="<%= true %>" name="expire" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
+					<c:if test="<%= article.getDisplayDate() != null %>">
+						<liferay-ui:search-container-column-date
+							name="display-date"
+							orderable="<%= true %>"
+							property="displayDate"
+						/>
 					</c:if>
 
-					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-						<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
-					</c:if>
-				</aui:button-row>
-			</c:if>
+					<liferay-ui:search-container-column-text
+						name="author"
+						value="<%= PortalUtil.getUserName(articleVersion) %>"
+					/>
 
-			<%
-			List resultRows = searchContainer.getResultRows();
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action"
+						path="/html/portlet/journal/article_version_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
 
-			for (int i = 0; i < results.size(); i++) {
-				JournalArticle articleVersion = results.get(i);
+				<c:if test="<%= !results.isEmpty() %>">
+					<aui:button-row>
+						<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
+							<aui:button disabled="<%= true %>" name="expire" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
+						</c:if>
 
-				articleVersion = articleVersion.toEscapedModel();
+						<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
+							<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
+						</c:if>
+					</aui:button-row>
+				</c:if>
 
-				ResultRow row = new ResultRow(articleVersion, articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion(), i);
-
-				// Article id
-
-				row.addText(articleVersion.getArticleId());
-
-				// Title
-
-				row.addText(articleVersion.getTitle(locale));
-
-				// Version
-
-				row.addText(String.valueOf(articleVersion.getVersion()));
-
-				// Status
-
-				row.addStatus(articleVersion.getStatus(), articleVersion.getStatusByUserId(), articleVersion.getStatusDate());
-
-				// Modified date
-
-				row.addDate(articleVersion.getModifiedDate());
-
-				// Display date
-
-				if (articleVersion.getDisplayDate() != null) {
-					row.addDate(articleVersion.getDisplayDate());
-				}
-
-				// Author
-
-				row.addText(PortalUtil.getUserName(articleVersion));
-
-				// Action
-
-				row.addJSP("/html/portlet/journal/article_version_action.jsp", "entry-action");
-
-				// Add result row
-
-				resultRows.add(row);
-			}
-			%>
-
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+				<liferay-ui:search-iterator />
+			</liferay-ui:search-container>
 		</aui:form>
 
 		<aui:script use="aui-base">

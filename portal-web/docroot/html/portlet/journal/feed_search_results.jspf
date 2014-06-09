@@ -15,8 +15,7 @@
 --%>
 
 <%
-List results = null;
-int total = 0;
+FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
 
 if (searchTerms.isAdvancedSearch()) {
 	total = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());

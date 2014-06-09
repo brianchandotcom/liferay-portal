@@ -24,112 +24,102 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-
 	<aui:input name="groupId" type="hidden" />
 	<aui:input name="deleteFeedIds" type="hidden" />
 
-	<%
-	FeedSearch searchContainer = new FeedSearch(renderRequest, portletURL);
+	<liferay-ui:search-container
+		rowChecker="<%= new RowChecker(renderResponse) %>"
+		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
+	>
 
-	List headerNames = searchContainer.getHeaderNames();
+		<aui:nav-bar>
+			<aui:nav>
+				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
+					<portlet:renderURL var="editFeedURL">
+						<portlet:param name="struts_action" value="/journal/edit_feed" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:renderURL>
 
-	headerNames.add(StringPool.BLANK);
+					<aui:nav-item
+						href="<%= editFeedURL %>"
+						iconCssClass="icon-plus"
+						label="add-feed"
+					/>
+				</c:if>
 
-	searchContainer.setRowChecker(new RowChecker(renderResponse));
-	%>
+				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
+					<liferay-security:permissionsURL
+						modelResource="com.liferay.portlet.journal"
+						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+						var="permissionsURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+					/>
 
-	<aui:nav-bar>
-		<aui:nav>
-			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
-				<portlet:renderURL var="editFeedURL">
-					<portlet:param name="struts_action" value="/journal/edit_feed" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:renderURL>
+					<aui:nav-item
+						href="<%= permissionsURL %>"
+						iconCssClass="icon-lock"
+						label="permissions"
+					/>
+				</c:if>
+			</aui:nav>
 
-				<aui:nav-item
-					href="<%= editFeedURL %>"
-					iconCssClass="icon-plus"
-					label="add-feed"
-				/>
-			</c:if>
+			<aui:nav-bar-search
+				cssClass="pull-right"
+				file="/html/portlet/journal/feed_search.jsp"
+				searchContainer="<%= searchContainer %>"
+			/>
+		</aui:nav-bar>
 
-			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.journal"
-					modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
+		<div class="separator"><!-- --></div>
 
-				<aui:nav-item
-					href="<%= permissionsURL %>"
-					iconCssClass="icon-lock"
-					label="permissions"
-				/>
-			</c:if>
-		</aui:nav>
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
 
-		<aui:nav-bar-search
-			cssClass="pull-right"
-			file="/html/portlet/journal/feed_search.jsp"
-			searchContainer="<%= searchContainer %>"
-		/>
-	</aui:nav-bar>
+		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/journal/feed_search_results.jspf" %>
+		</liferay-ui:search-container-results>
 
-	<%
-	FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
-	%>
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.journal.model.JournalFeed"
+			modelVar="feed"
+		>
 
-	<%@ include file="/html/portlet/journal/feed_search_results.jspf" %>
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-	<div class="separator"><!-- --></div>
+			rowURL.setParameter("struts_action", "/journal/edit_feed");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
+			rowURL.setParameter("feedId", feed.getFeedId());
+			%>
 
-	<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="id"
+				property="feedId"
+			/>
 
-	<%
-	List resultRows = searchContainer.getResultRows();
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="description"
+			>
+				<%= feed.getName() %>
 
-	for (int i = 0; i < results.size(); i++) {
-		JournalFeed feed = (JournalFeed)results.get(i);
+				<c:if test="<%= Validator.isNotNull(feed.getDescription()) %>">
+					<br />
 
-		feed = feed.toEscapedModel();
+					<%= feed.getDescription() %>
+				</c:if>
+			</liferay-ui:search-container-column-text>
 
-		ResultRow row = new ResultRow(feed, feed.getFeedId(), i);
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/html/portlet/journal/feed_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("struts_action", "/journal/edit_feed");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
-		rowURL.setParameter("feedId", feed.getFeedId());
-
-		row.setParameter("rowHREF", rowURL.toString());
-
-		// Feed id
-
-		row.addText(feed.getFeedId(), rowURL);
-
-		// Name and description
-
-		if (Validator.isNotNull(feed.getDescription())) {
-			row.addText(feed.getName().concat("<br />").concat(feed.getDescription()), rowURL);
-		}
-		else {
-			row.addText(feed.getName(), rowURL);
-		}
-
-		// Action
-
-		row.addJSP("/html/portlet/journal/feed_action.jsp", "entry-action");
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>

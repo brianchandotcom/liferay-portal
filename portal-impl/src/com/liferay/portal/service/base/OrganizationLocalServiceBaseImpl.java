@@ -346,6 +346,12 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteOrganization((Organization)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return organizationPersistence.findByPrimaryKey(primaryKeyObj);

@@ -347,6 +347,12 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDLFileVersion((DLFileVersion)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return dlFileVersionPersistence.findByPrimaryKey(primaryKeyObj);

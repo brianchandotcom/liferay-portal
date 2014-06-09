@@ -256,6 +256,12 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteUserGroupRole((UserGroupRole)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return userGroupRolePersistence.findByPrimaryKey(primaryKeyObj);

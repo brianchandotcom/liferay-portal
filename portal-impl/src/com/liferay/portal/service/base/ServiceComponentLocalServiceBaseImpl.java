@@ -244,6 +244,12 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteServiceComponent((ServiceComponent)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return serviceComponentPersistence.findByPrimaryKey(primaryKeyObj);

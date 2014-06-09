@@ -242,6 +242,12 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteUserIdMapper((UserIdMapper)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return userIdMapperPersistence.findByPrimaryKey(primaryKeyObj);

@@ -242,6 +242,12 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteClusterGroup((ClusterGroup)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return clusterGroupPersistence.findByPrimaryKey(primaryKeyObj);

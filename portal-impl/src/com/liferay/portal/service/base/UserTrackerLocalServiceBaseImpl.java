@@ -246,6 +246,12 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteUserTracker((UserTracker)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return userTrackerPersistence.findByPrimaryKey(primaryKeyObj);

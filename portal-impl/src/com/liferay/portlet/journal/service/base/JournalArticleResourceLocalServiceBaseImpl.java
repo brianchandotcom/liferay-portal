@@ -260,6 +260,12 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteJournalArticleResource((JournalArticleResource)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return journalArticleResourcePersistence.findByPrimaryKey(primaryKeyObj);

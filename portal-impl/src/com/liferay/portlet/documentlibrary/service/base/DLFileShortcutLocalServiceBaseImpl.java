@@ -353,6 +353,12 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDLFileShortcut((DLFileShortcut)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return dlFileShortcutPersistence.findByPrimaryKey(primaryKeyObj);

@@ -245,6 +245,12 @@ public abstract class AssetTagStatsLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAssetTagStats((AssetTagStats)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return assetTagStatsPersistence.findByPrimaryKey(primaryKeyObj);

@@ -249,6 +249,12 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSocialActivityLimit((SocialActivityLimit)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return socialActivityLimitPersistence.findByPrimaryKey(primaryKeyObj);

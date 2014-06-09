@@ -249,6 +249,12 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteShoppingCategory((ShoppingCategory)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return shoppingCategoryPersistence.findByPrimaryKey(primaryKeyObj);

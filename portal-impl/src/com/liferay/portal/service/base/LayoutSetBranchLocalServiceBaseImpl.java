@@ -253,6 +253,12 @@ public abstract class LayoutSetBranchLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteLayoutSetBranch((LayoutSetBranch)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return layoutSetBranchPersistence.findByPrimaryKey(primaryKeyObj);

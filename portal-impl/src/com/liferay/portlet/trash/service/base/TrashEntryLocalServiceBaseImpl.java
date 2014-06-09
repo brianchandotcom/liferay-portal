@@ -248,6 +248,12 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteTrashEntry((TrashEntry)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return trashEntryPersistence.findByPrimaryKey(primaryKeyObj);

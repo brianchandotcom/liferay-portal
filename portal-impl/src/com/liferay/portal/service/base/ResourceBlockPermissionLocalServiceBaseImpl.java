@@ -250,6 +250,12 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteResourceBlockPermission((ResourceBlockPermission)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return resourceBlockPermissionPersistence.findByPrimaryKey(primaryKeyObj);

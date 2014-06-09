@@ -340,6 +340,12 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDDLRecordSet((DDLRecordSet)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return ddlRecordSetPersistence.findByPrimaryKey(primaryKeyObj);

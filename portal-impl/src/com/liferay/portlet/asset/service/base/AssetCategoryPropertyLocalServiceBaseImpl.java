@@ -250,6 +250,12 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAssetCategoryProperty((AssetCategoryProperty)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return assetCategoryPropertyPersistence.findByPrimaryKey(primaryKeyObj);

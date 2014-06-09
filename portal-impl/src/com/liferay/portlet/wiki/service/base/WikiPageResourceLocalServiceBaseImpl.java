@@ -245,6 +245,12 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteWikiPageResource((WikiPageResource)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return wikiPageResourcePersistence.findByPrimaryKey(primaryKeyObj);

@@ -248,6 +248,12 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteBlogsStatsUser((BlogsStatsUser)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return blogsStatsUserPersistence.findByPrimaryKey(primaryKeyObj);

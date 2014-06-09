@@ -251,6 +251,12 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMBStatsUser((MBStatsUser)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mbStatsUserPersistence.findByPrimaryKey(primaryKeyObj);

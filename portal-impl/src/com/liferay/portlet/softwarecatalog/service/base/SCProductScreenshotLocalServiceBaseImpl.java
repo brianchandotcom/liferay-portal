@@ -248,6 +248,12 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSCProductScreenshot((SCProductScreenshot)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return scProductScreenshotPersistence.findByPrimaryKey(primaryKeyObj);

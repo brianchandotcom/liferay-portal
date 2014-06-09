@@ -10,6 +10,7 @@
 .sass_cache_*.css
 _sass_cache_*.css
 cobertura.ser
+ivydata-*.properties
 
 **/.sonar
 
@@ -40,6 +41,7 @@ cobertura.ser
 /WEB-INF
 
 /.ivy/cache/resolved-*
+/.ivy/cache/*-default.xml
 
 /benchmarks/*.csv
 /benchmarks/*.sql

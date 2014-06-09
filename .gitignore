@@ -40,7 +40,7 @@ ivydata-*.properties
 /test.*.properties
 /WEB-INF
 
-/.ivy/cache/*-default.xml
+/.ivy/cache/com.liferay-*.xml
 /.ivy/cache/resolved-*
 
 /benchmarks/*.csv

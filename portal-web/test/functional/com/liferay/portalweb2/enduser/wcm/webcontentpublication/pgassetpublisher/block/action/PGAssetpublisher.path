@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_DROPDOWN</td>
-	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//ul/li/a</td>
+	<td>//div[contains(@class,'add-asset-selector lfr-meta-actions')]//ul/li/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +61,11 @@
 <tr>
 	<td>ADD_BLOGS_ENTRY_BUTTON</td>
 	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Blogs Entry']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT_BUTTON</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,12 +169,27 @@
 <!--ASSET_ABSTRACT-->
 <tr>
 	<td>ASSET_ABSTRACT_TITLE</td>
-	<td>//h3[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_1</td>
+	<td>//h4[@class='asset-title']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_2</td>
+	<td>xPath=(//h4[@class='asset-title']/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_3</td>
+	<td>xPath=(//h4[@class='asset-title']/a)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_EDIT</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
 	<td></td>
 </tr>
 <tr>

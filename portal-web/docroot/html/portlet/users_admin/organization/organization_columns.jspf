@@ -29,9 +29,14 @@
 	int organizationUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, userParams);
 	%>
 
-	<c:if test="<%= rowURL != null %>">
-		<a href="<%= rowURL %>"><strong><%= curOrganization.getName() %></strong></a>
-	</c:if>
+	<c:choose>
+		<c:when test="<%= rowURL != null %>">
+			<a href="<%= rowURL %>"><strong><%= curOrganization.getName() %></strong></a>
+		</c:when>
+		<c:otherwise>
+			<strong><%= curOrganization.getName() %></strong>
+		</c:otherwise>
+	</c:choose>
 
 	<c:if test="<%= (suborganizationsCount > 0) || (organizationUserCount > 0) %>">
 		<br />

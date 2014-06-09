@@ -1052,7 +1052,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						return StringPool.BLANK;
 					}
 
-					return LocalizationUtil.getDefaultLanguageId(xml);
+					<#if entity.isGroupedModel()>
+						Locale defaultLocale = LocaleUtil.getSiteDefault();
+					<#else>
+						Locale defaultLocale = LocaleUtil.getDefault();
+					</#if>
+
+					return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 					<#break>
 				</#if>
 			</#list>
@@ -1072,7 +1078,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			<#if entity.isGroupedModel()>
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
+			<#else>
+				Locale defaultLocale = LocaleUtil.getDefault();
+			</#if>
 
 			String modelDefaultLanguageId = getDefaultLanguageId();
 

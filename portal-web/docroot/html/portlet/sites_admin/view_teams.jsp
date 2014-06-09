@@ -50,79 +50,79 @@ pageContext.setAttribute("portletURL", portletURL);
 <aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<%
-	TeamSearch searchContainer = new TeamSearch(renderRequest, portletURL);
+	<liferay-ui:search-container
+		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
+	>
 
-	List headerNames = searchContainer.getHeaderNames();
+		<%
+		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
 
-	headerNames.add(StringPool.BLANK);
+		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 
-	TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
+		total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
-	int total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+		searchContainer.setTotal(total);
+		%>
 
-	searchContainer.setTotal(total);
+		<aui:nav-bar>
+			<aui:nav>
+				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
+					<portlet:renderURL var="addTeamURL">
+						<portlet:param name="struts_action" value="/sites_admin/edit_team" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					</portlet:renderURL>
 
-	List results = TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					<aui:nav-item href="<%= addTeamURL %>" iconCssClass="icon-plus" label="add-team" />
+				</c:if>
+			</aui:nav>
 
-	searchContainer.setResults(results);
+			<aui:nav-bar-search cssClass="pull-right">
+				<liferay-ui:input-search name="<%= searchTerms.NAME %>" />
+			</aui:nav-bar-search>
+		</aui:nav-bar>
 
-	portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
-	%>
+		<liferay-ui:search-container-results
+			results="<%= TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		/>
 
-	<liferay-ui:input-search name="<%= searchTerms.NAME %>" />
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.Team"
+			modelVar="team"
+		>
 
-	<div class="separator"><!-- --></div>
+			<%
+			PortletURL rowURL = null;
 
-	<%
-	List resultRows = searchContainer.getResultRows();
+			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
+				rowURL = renderResponse.createRenderURL();
 
-	for (int i = 0; i < results.size(); i++) {
-		Team team = (Team)results.get(i);
+				rowURL.setParameter("struts_action", "/sites_admin/edit_team");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
+			}
+			%>
 
-		team = team.toEscapedModel();
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="name"
+				property="name"
+			/>
 
-		ResultRow row = new ResultRow(team, team.getTeamId(), i);
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="description"
+				property="description"
+			/>
 
-		PortletURL rowURL = null;
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/html/portlet/sites_admin/team_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-		if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
-			rowURL = renderResponse.createRenderURL();
-
-			rowURL.setParameter("struts_action", "/sites_admin/edit_team");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
-		}
-
-		// Name
-
-		row.addText(team.getName(), rowURL);
-
-		// Description
-
-		row.addText(team.getDescription(), rowURL);
-
-		// Action
-
-		row.addJSP("/html/portlet/sites_admin/team_action.jsp", "entry-action");
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
-		<portlet:renderURL var="addTeamURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_team" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</portlet:renderURL>
-
-		<aui:button href="<%= addTeamURL %>" value="add-team" />
-	</c:if>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	</liferay-ui:search-container>
 </aui:form>
 
 <%

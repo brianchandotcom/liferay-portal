@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImplTest;
+import com.liferay.portlet.dynamicdatamapping.storage.GeolocationFieldRendererTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormXSDDeserializerTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXSDImplTest;
@@ -30,7 +31,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(
 	{
 		DDMFormXSDDeserializerTest.class, DDMFormXSDDeserializerTest.class,
-		DDMStructureImplTest.class, DDMXMLImplTest.class, DDMXSDImplTest.class
+		DDMStructureImplTest.class, DDMXMLImplTest.class, DDMXSDImplTest.class,
+		GeolocationFieldRendererTest.class
 	})
 public class DDMTestSuite {
 }

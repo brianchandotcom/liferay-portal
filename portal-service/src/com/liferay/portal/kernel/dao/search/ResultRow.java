@@ -194,6 +194,7 @@ public class ResultRow {
 
 		jspSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);
 		jspSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
+		jspSearchEntry.setCssClass(cssClass);
 		jspSearchEntry.setPath(path);
 		jspSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
 

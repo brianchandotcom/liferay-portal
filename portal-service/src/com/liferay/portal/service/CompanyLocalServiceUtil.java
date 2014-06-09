@@ -407,6 +407,12 @@ public class CompanyLocalServiceUtil {
 		return getService().getCompanies(system);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Company> getCompanies(
+		boolean system, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanies(system, start, end);
+	}
+
 	/**
 	* Returns the number of companies used by WSRP.
 	*

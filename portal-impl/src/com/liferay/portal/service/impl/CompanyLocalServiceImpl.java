@@ -558,6 +558,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return companyPersistence.findBySystem(system);
 	}
 
+	@Override
+	public List<Company> getCompanies(boolean system, int start, int end)
+		throws SystemException {
+
+		return companyPersistence.findBySystem(system, start, end);
+	}
+
 	/**
 	 * Returns the number of companies used by WSRP.
 	 *

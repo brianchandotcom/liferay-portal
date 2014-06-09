@@ -359,6 +359,11 @@ public interface CompanyLocalService extends BaseLocalService,
 		boolean system)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Company> getCompanies(
+		boolean system, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the number of companies used by WSRP.
 	*

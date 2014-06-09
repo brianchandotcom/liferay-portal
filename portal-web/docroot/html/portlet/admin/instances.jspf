@@ -29,99 +29,86 @@
 	<aui:button onClick="<%= taglibAdd %>" value="add" />
 </div>
 
-<%
-List<String> headerNames = new ArrayList<String>();
+<liferay-ui:search-container
+	iteratorURL="<%= portletURL %>"
+	total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
 
-headerNames.add("instance-id");
-headerNames.add("web-id");
-headerNames.add("virtual-host");
-headerNames.add("mail-domain");
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Company"
+		modelVar="curCompany"
+	>
 
-if (showShardSelector) {
-	headerNames.add("shard");
-}
+		<%
+		PortletURL rowURL = renderResponse.createRenderURL();
 
-headerNames.add("num-of-users");
-headerNames.add("max-num-of-users");
-headerNames.add("active");
-headerNames.add(StringPool.BLANK);
+		rowURL.setParameter("struts_action", "/admin/edit_instance");
+		rowURL.setParameter("redirect", currentURL);
+		rowURL.setParameter("companyId", String.valueOf(curCompany.getCompanyId()));
+		%>
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="instance-id"
+			property="companyId"
+		/>
 
-List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="web-id"
+			property="webId"
+		/>
 
-int total = companies.size();
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="virtual-host"
+			value="<%= curCompany.getVirtualHostname() %>"
+		/>
 
-searchContainer.setTotal(total);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="mail-domain"
+			property="mx"
+		/>
 
-List results = ListUtil.subList(companies, searchContainer.getStart(), searchContainer.getEnd());
+		<c:if test="<%= showShardSelector %>">
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="shard"
+				value="<%= LanguageUtil.get(pageContext, curCompany.getShardName()) %>"
+			/>
+		</c:if>
 
-searchContainer.setResults(results);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="num-of-users"
+			value="<%= String.valueOf(UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, null)) %>"
+		/>
 
-List resultRows = searchContainer.getResultRows();
+		<%
+		int maxUsers = curCompany.getMaxUsers();
+		%>
 
-for (int i = 0; i < results.size(); i++) {
-	Company curCompany = (Company)results.get(i);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="max-num-of-users"
+			value='<%= (maxUsers > 0) ? String.valueOf(maxUsers) : LanguageUtil.get(pageContext, "unlimited") %>'
+		/>
 
-	ResultRow row = new ResultRow(curCompany, curCompany.getCompanyId(), i);
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="active"
+			value='<%= LanguageUtil.get(pageContext, curCompany.isActive() ? "yes" : "no") %>'
+		/>
 
-	PortletURL rowURL = renderResponse.createRenderURL();
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action"
+			path="/html/portlet/admin/instance_actions.jsp"
+		/>
+	</liferay-ui:search-container-row>
 
-	rowURL.setParameter("struts_action", "/admin/edit_instance");
-	rowURL.setParameter("redirect", currentURL);
-	rowURL.setParameter("companyId", String.valueOf(curCompany.getCompanyId()));
-
-	// Company ID
-
-	row.addText(String.valueOf(curCompany.getCompanyId()), rowURL);
-
-	// Web ID
-
-	row.addText(HtmlUtil.escape(curCompany.getWebId()), rowURL);
-
-	// Virtual Host
-
-	row.addText(curCompany.getVirtualHostname(), rowURL);
-
-	// Mail Domain
-
-	row.addText(curCompany.getMx(), rowURL);
-
-	// Shard Name
-
-	if (showShardSelector) {
-		row.addText(LanguageUtil.get(pageContext, curCompany.getShardName()), rowURL);
-	}
-
-	// # of Users
-
-	int usersCount = UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, null);
-
-	row.addText(String.valueOf(usersCount), rowURL);
-
-	// Max # of Users
-
-	int maxUsers = curCompany.getMaxUsers();
-
-	if (maxUsers > 0) {
-		row.addText(String.valueOf(maxUsers), rowURL);
-	}
-	else {
-		row.addText(LanguageUtil.get(pageContext, "unlimited"), rowURL);
-	}
-
-	// Active
-
-	row.addText(LanguageUtil.get(pageContext, curCompany.isActive() ? "yes" : "no"), rowURL);
-
-	// Actions
-
-	row.addJSP("/html/portlet/admin/instance_actions.jsp", "entry-action");
-
-	// Add result row
-
-	resultRows.add(row);
-}
-%>
-
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+</liferay-ui:search-container>

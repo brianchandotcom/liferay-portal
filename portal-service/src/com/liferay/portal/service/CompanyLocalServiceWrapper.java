@@ -421,6 +421,13 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 		return _companyLocalService.getCompanies(system);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Company> getCompanies(
+		boolean system, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _companyLocalService.getCompanies(system, start, end);
+	}
+
 	/**
 	* Returns the number of companies used by WSRP.
 	*

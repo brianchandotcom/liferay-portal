@@ -44,7 +44,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the trash version service.
@@ -2025,6 +2030,93 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	}
 
 	/**
+	 * Returns a map of trash versions for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the trash versions
+	 * @return map of primaryKeys to trash versions.
+	 */
+	@Override
+	public Map<Serializable, TrashVersion> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, TrashVersion> results = new HashMap<Serializable, TrashVersion>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			TrashVersion trashVersion = (TrashVersion)EntityCacheUtil.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+					TrashVersionImpl.class, primaryKey);
+
+			if (trashVersion == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, trashVersion);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_TRASHVERSION_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (TrashVersion result : (List<TrashVersion>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+					TrashVersionImpl.class, primaryKey, _nullTrashVersion);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param versionId the primary key of the trash version
@@ -2235,6 +2327,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	}
 
 	private static final String _SQL_SELECT_TRASHVERSION = "SELECT trashVersion FROM TrashVersion trashVersion";
+	private static final String _SQL_SELECT_TRASHVERSION_WHERE_PKS_IN = "SELECT trashVersion FROM TrashVersion trashVersion WHERE versionId IN (";
 	private static final String _SQL_SELECT_TRASHVERSION_WHERE = "SELECT trashVersion FROM TrashVersion trashVersion WHERE ";
 	private static final String _SQL_COUNT_TRASHVERSION = "SELECT COUNT(trashVersion) FROM TrashVersion trashVersion";
 	private static final String _SQL_COUNT_TRASHVERSION_WHERE = "SELECT COUNT(trashVersion) FROM TrashVersion trashVersion WHERE ";

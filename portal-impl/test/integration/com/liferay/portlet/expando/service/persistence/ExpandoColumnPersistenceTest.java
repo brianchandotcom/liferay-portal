@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -240,6 +241,79 @@ public class ExpandoColumnPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ExpandoColumn", "columnId",
 			true, "companyId", true, "tableId", true, "name", true, "type",
 			true, "defaultData", true, "typeSettings", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingExpandoColumns.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ExpandoColumn newExpandoColumn = addExpandoColumn();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoColumn.getPrimaryKey());
+
+		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoColumns.size(), 1);
+		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingExpandoColumns.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ExpandoColumn newExpandoColumn = addExpandoColumn();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoColumn.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoColumns.size(), 1);
+		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
+		Assert.assertNull(missingExpandoColumns.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ExpandoColumn newExpandoColumn = addExpandoColumn();
+		ExpandoColumn newExpandoColumn2 = addExpandoColumn();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoColumn.getPrimaryKey());
+		missingPks.add(newExpandoColumn2.getPrimaryKey());
+
+		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
+		ExpandoColumn existingExpandoColumn2 = missingExpandoColumns.get(newExpandoColumn2.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoColumns.size(), 2);
+		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
+		Assert.assertEquals(newExpandoColumn2, existingExpandoColumn2);
 	}
 
 	@Test

@@ -2616,6 +2616,15 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
+	* Returns a map of d d m templates for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m templates
+	* @return map of primaryKeys to d d m templates.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param templateId the primary key of the d d m template

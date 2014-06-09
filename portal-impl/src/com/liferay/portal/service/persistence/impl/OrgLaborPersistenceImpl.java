@@ -43,7 +43,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the org labor service.
@@ -925,6 +930,93 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	/**
+	 * Returns a map of org labors for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the org labors
+	 * @return map of primaryKeys to org labors.
+	 */
+	@Override
+	public Map<Serializable, OrgLabor> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, OrgLabor> results = new HashMap<Serializable, OrgLabor>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			OrgLabor orgLabor = (OrgLabor)EntityCacheUtil.getResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+					OrgLaborImpl.class, primaryKey);
+
+			if (orgLabor == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, orgLabor);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_ORGLABOR_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (OrgLabor result : (List<OrgLabor>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+					OrgLaborImpl.class, primaryKey, _nullOrgLabor);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the org labor with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param orgLaborId the primary key of the org labor
@@ -1135,6 +1227,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	private static final String _SQL_SELECT_ORGLABOR = "SELECT orgLabor FROM OrgLabor orgLabor";
+	private static final String _SQL_SELECT_ORGLABOR_WHERE_PKS_IN = "SELECT orgLabor FROM OrgLabor orgLabor WHERE orgLaborId IN (";
 	private static final String _SQL_SELECT_ORGLABOR_WHERE = "SELECT orgLabor FROM OrgLabor orgLabor WHERE ";
 	private static final String _SQL_COUNT_ORGLABOR = "SELECT COUNT(orgLabor) FROM OrgLabor orgLabor";
 	private static final String _SQL_COUNT_ORGLABOR_WHERE = "SELECT COUNT(orgLabor) FROM OrgLabor orgLabor WHERE ";

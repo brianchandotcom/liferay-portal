@@ -49,7 +49,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -3018,6 +3022,93 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	}
 
 	/**
+	 * Returns a map of journal feeds for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal feeds
+	 * @return map of primaryKeys to journal feeds.
+	 */
+	@Override
+	public Map<Serializable, JournalFeed> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, JournalFeed> results = new HashMap<Serializable, JournalFeed>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+					JournalFeedImpl.class, primaryKey);
+
+			if (journalFeed == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, journalFeed);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_JOURNALFEED_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (JournalFeed result : (List<JournalFeed>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+					JournalFeedImpl.class, primaryKey, _nullJournalFeed);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param id the primary key of the journal feed
@@ -3233,6 +3324,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	}
 
 	private static final String _SQL_SELECT_JOURNALFEED = "SELECT journalFeed FROM JournalFeed journalFeed";
+	private static final String _SQL_SELECT_JOURNALFEED_WHERE_PKS_IN = "SELECT journalFeed FROM JournalFeed journalFeed WHERE id_ IN (";
 	private static final String _SQL_SELECT_JOURNALFEED_WHERE = "SELECT journalFeed FROM JournalFeed journalFeed WHERE ";
 	private static final String _SQL_COUNT_JOURNALFEED = "SELECT COUNT(journalFeed) FROM JournalFeed journalFeed";
 	private static final String _SQL_COUNT_JOURNALFEED_WHERE = "SELECT COUNT(journalFeed) FROM JournalFeed journalFeed WHERE ";

@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -284,6 +285,79 @@ public class RatingsEntryPersistenceTest {
 			true, "entryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "score", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, RatingsEntry> missingRatingsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRatingsEntries.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		RatingsEntry newRatingsEntry = addRatingsEntry();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRatingsEntry.getPrimaryKey());
+
+		Map<Serializable, RatingsEntry> missingRatingsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		RatingsEntry existingRatingsEntry = missingRatingsEntries.get(newRatingsEntry.getPrimaryKey());
+
+		Assert.assertEquals(missingRatingsEntries.size(), 1);
+		Assert.assertEquals(newRatingsEntry, existingRatingsEntry);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, RatingsEntry> missingRatingsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRatingsEntries.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		RatingsEntry newRatingsEntry = addRatingsEntry();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRatingsEntry.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, RatingsEntry> missingRatingsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		RatingsEntry existingRatingsEntry = missingRatingsEntries.get(newRatingsEntry.getPrimaryKey());
+
+		Assert.assertEquals(missingRatingsEntries.size(), 1);
+		Assert.assertEquals(newRatingsEntry, existingRatingsEntry);
+		Assert.assertNull(missingRatingsEntries.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		RatingsEntry newRatingsEntry = addRatingsEntry();
+		RatingsEntry newRatingsEntry2 = addRatingsEntry();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRatingsEntry.getPrimaryKey());
+		missingPks.add(newRatingsEntry2.getPrimaryKey());
+
+		Map<Serializable, RatingsEntry> missingRatingsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		RatingsEntry existingRatingsEntry = missingRatingsEntries.get(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry2 = missingRatingsEntries.get(newRatingsEntry2.getPrimaryKey());
+
+		Assert.assertEquals(missingRatingsEntries.size(), 2);
+		Assert.assertEquals(newRatingsEntry, existingRatingsEntry);
+		Assert.assertEquals(newRatingsEntry2, existingRatingsEntry2);
 	}
 
 	@Test

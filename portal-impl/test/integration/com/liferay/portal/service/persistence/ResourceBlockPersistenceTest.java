@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,6 +246,79 @@ public class ResourceBlockPersistenceTest {
 			"mvccVersion", true, "resourceBlockId", true, "companyId", true,
 			"groupId", true, "name", true, "permissionsHash", true,
 			"referenceCount", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ResourceBlock> missingResourceBlocks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceBlocks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ResourceBlock newResourceBlock = addResourceBlock();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlock.getPrimaryKey());
+
+		Map<Serializable, ResourceBlock> missingResourceBlocks = _persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlock existingResourceBlock = missingResourceBlocks.get(newResourceBlock.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlocks.size(), 1);
+		Assert.assertEquals(newResourceBlock, existingResourceBlock);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceBlock> missingResourceBlocks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceBlocks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ResourceBlock newResourceBlock = addResourceBlock();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlock.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceBlock> missingResourceBlocks = _persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlock existingResourceBlock = missingResourceBlocks.get(newResourceBlock.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlocks.size(), 1);
+		Assert.assertEquals(newResourceBlock, existingResourceBlock);
+		Assert.assertNull(missingResourceBlocks.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ResourceBlock newResourceBlock = addResourceBlock();
+		ResourceBlock newResourceBlock2 = addResourceBlock();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlock.getPrimaryKey());
+		missingPks.add(newResourceBlock2.getPrimaryKey());
+
+		Map<Serializable, ResourceBlock> missingResourceBlocks = _persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlock existingResourceBlock = missingResourceBlocks.get(newResourceBlock.getPrimaryKey());
+		ResourceBlock existingResourceBlock2 = missingResourceBlocks.get(newResourceBlock2.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlocks.size(), 2);
+		Assert.assertEquals(newResourceBlock, existingResourceBlock);
+		Assert.assertEquals(newResourceBlock2, existingResourceBlock2);
 	}
 
 	@Test

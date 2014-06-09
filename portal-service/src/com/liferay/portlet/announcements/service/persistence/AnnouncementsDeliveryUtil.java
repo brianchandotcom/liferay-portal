@@ -378,6 +378,17 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
+	* Returns a map of announcements deliveries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the announcements deliveries
+	* @return map of primaryKeys to announcements deliveries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsDelivery> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param deliveryId the primary key of the announcements delivery

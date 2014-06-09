@@ -1135,6 +1135,15 @@ public interface AddressPersistence extends BasePersistence<Address> {
 		throws com.liferay.portal.NoSuchAddressException;
 
 	/**
+	* Returns a map of addresses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the addresses
+	* @return map of primaryKeys to addresses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Address> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the address with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param addressId the primary key of the address

@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -241,6 +242,79 @@ public class RegionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Region", "mvccVersion",
 			true, "regionId", true, "countryId", true, "regionCode", true,
 			"name", true, "active", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRegions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Region newRegion = addRegion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRegion.getPrimaryKey());
+
+		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
+
+		Assert.assertEquals(missingRegions.size(), 1);
+		Assert.assertEquals(newRegion, existingRegion);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRegions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Region newRegion = addRegion();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRegion.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
+
+		Assert.assertEquals(missingRegions.size(), 1);
+		Assert.assertEquals(newRegion, existingRegion);
+		Assert.assertNull(missingRegions.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Region newRegion = addRegion();
+		Region newRegion2 = addRegion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRegion.getPrimaryKey());
+		missingPks.add(newRegion2.getPrimaryKey());
+
+		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
+		Region existingRegion2 = missingRegions.get(newRegion2.getPrimaryKey());
+
+		Assert.assertEquals(missingRegions.size(), 2);
+		Assert.assertEquals(newRegion, existingRegion);
+		Assert.assertEquals(newRegion2, existingRegion2);
 	}
 
 	@Test

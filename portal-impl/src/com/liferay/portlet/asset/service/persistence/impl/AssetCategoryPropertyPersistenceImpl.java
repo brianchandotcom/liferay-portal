@@ -46,7 +46,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -2350,6 +2354,94 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	/**
+	 * Returns a map of asset category properties for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the asset category properties
+	 * @return map of primaryKeys to asset category properties.
+	 */
+	@Override
+	public Map<Serializable, AssetCategoryProperty> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, AssetCategoryProperty> results = new HashMap<Serializable, AssetCategoryProperty>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
+					AssetCategoryPropertyImpl.class, primaryKey);
+
+			if (assetCategoryProperty == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, assetCategoryProperty);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AssetCategoryProperty result : (List<AssetCategoryProperty>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
+					AssetCategoryPropertyImpl.class, primaryKey,
+					_nullAssetCategoryProperty);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param categoryPropertyId the primary key of the asset category property
@@ -2565,6 +2657,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty";
+	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE_PKS_IN = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE categoryPropertyId IN (";
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY = "SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty";
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE = "SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty WHERE ";

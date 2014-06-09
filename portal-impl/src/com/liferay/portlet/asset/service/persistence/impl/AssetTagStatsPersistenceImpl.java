@@ -44,7 +44,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the asset tag stats service.
@@ -1693,6 +1698,93 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	}
 
 	/**
+	 * Returns a map of asset tag statses for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the asset tag statses
+	 * @return map of primaryKeys to asset tag statses.
+	 */
+	@Override
+	public Map<Serializable, AssetTagStats> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, AssetTagStats> results = new HashMap<Serializable, AssetTagStats>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			AssetTagStats assetTagStats = (AssetTagStats)EntityCacheUtil.getResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
+					AssetTagStatsImpl.class, primaryKey);
+
+			if (assetTagStats == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, assetTagStats);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_ASSETTAGSTATS_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AssetTagStats result : (List<AssetTagStats>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
+					AssetTagStatsImpl.class, primaryKey, _nullAssetTagStats);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param tagStatsId the primary key of the asset tag stats
@@ -1903,6 +1995,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	}
 
 	private static final String _SQL_SELECT_ASSETTAGSTATS = "SELECT assetTagStats FROM AssetTagStats assetTagStats";
+	private static final String _SQL_SELECT_ASSETTAGSTATS_WHERE_PKS_IN = "SELECT assetTagStats FROM AssetTagStats assetTagStats WHERE tagStatsId IN (";
 	private static final String _SQL_SELECT_ASSETTAGSTATS_WHERE = "SELECT assetTagStats FROM AssetTagStats assetTagStats WHERE ";
 	private static final String _SQL_COUNT_ASSETTAGSTATS = "SELECT COUNT(assetTagStats) FROM AssetTagStats assetTagStats";
 	private static final String _SQL_COUNT_ASSETTAGSTATS_WHERE = "SELECT COUNT(assetTagStats) FROM AssetTagStats assetTagStats WHERE ";

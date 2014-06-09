@@ -220,6 +220,17 @@ public class TicketUtil {
 	}
 
 	/**
+	* Returns a map of tickets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the tickets
+	* @return map of primaryKeys to tickets.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Ticket> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param ticketId the primary key of the ticket

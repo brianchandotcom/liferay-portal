@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -393,6 +394,79 @@ public class PasswordPolicyPersistenceTest {
 			"lockout", true, "maxFailure", true, "lockoutDuration", true,
 			"requireUnlock", true, "resetFailureCount", true,
 			"resetTicketMaxAge", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, PasswordPolicy> missingPasswordPolicies = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingPasswordPolicies.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newPasswordPolicy.getPrimaryKey());
+
+		Map<Serializable, PasswordPolicy> missingPasswordPolicies = _persistence.fetchByPrimaryKeys(missingPks);
+		PasswordPolicy existingPasswordPolicy = missingPasswordPolicies.get(newPasswordPolicy.getPrimaryKey());
+
+		Assert.assertEquals(missingPasswordPolicies.size(), 1);
+		Assert.assertEquals(newPasswordPolicy, existingPasswordPolicy);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, PasswordPolicy> missingPasswordPolicies = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingPasswordPolicies.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newPasswordPolicy.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, PasswordPolicy> missingPasswordPolicies = _persistence.fetchByPrimaryKeys(missingPks);
+		PasswordPolicy existingPasswordPolicy = missingPasswordPolicies.get(newPasswordPolicy.getPrimaryKey());
+
+		Assert.assertEquals(missingPasswordPolicies.size(), 1);
+		Assert.assertEquals(newPasswordPolicy, existingPasswordPolicy);
+		Assert.assertNull(missingPasswordPolicies.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
+		PasswordPolicy newPasswordPolicy2 = addPasswordPolicy();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newPasswordPolicy.getPrimaryKey());
+		missingPks.add(newPasswordPolicy2.getPrimaryKey());
+
+		Map<Serializable, PasswordPolicy> missingPasswordPolicies = _persistence.fetchByPrimaryKeys(missingPks);
+		PasswordPolicy existingPasswordPolicy = missingPasswordPolicies.get(newPasswordPolicy.getPrimaryKey());
+		PasswordPolicy existingPasswordPolicy2 = missingPasswordPolicies.get(newPasswordPolicy2.getPrimaryKey());
+
+		Assert.assertEquals(missingPasswordPolicies.size(), 2);
+		Assert.assertEquals(newPasswordPolicy, existingPasswordPolicy);
+		Assert.assertEquals(newPasswordPolicy2, existingPasswordPolicy2);
 	}
 
 	@Test

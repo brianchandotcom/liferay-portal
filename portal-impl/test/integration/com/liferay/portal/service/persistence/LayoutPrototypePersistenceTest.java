@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -276,6 +277,79 @@ public class LayoutPrototypePersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
 			"settings", true, "active", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, LayoutPrototype> missingLayoutPrototypes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLayoutPrototypes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		LayoutPrototype newLayoutPrototype = addLayoutPrototype();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutPrototype.getPrimaryKey());
+
+		Map<Serializable, LayoutPrototype> missingLayoutPrototypes = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutPrototype existingLayoutPrototype = missingLayoutPrototypes.get(newLayoutPrototype.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutPrototypes.size(), 1);
+		Assert.assertEquals(newLayoutPrototype, existingLayoutPrototype);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, LayoutPrototype> missingLayoutPrototypes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLayoutPrototypes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		LayoutPrototype newLayoutPrototype = addLayoutPrototype();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutPrototype.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, LayoutPrototype> missingLayoutPrototypes = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutPrototype existingLayoutPrototype = missingLayoutPrototypes.get(newLayoutPrototype.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutPrototypes.size(), 1);
+		Assert.assertEquals(newLayoutPrototype, existingLayoutPrototype);
+		Assert.assertNull(missingLayoutPrototypes.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		LayoutPrototype newLayoutPrototype = addLayoutPrototype();
+		LayoutPrototype newLayoutPrototype2 = addLayoutPrototype();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutPrototype.getPrimaryKey());
+		missingPks.add(newLayoutPrototype2.getPrimaryKey());
+
+		Map<Serializable, LayoutPrototype> missingLayoutPrototypes = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutPrototype existingLayoutPrototype = missingLayoutPrototypes.get(newLayoutPrototype.getPrimaryKey());
+		LayoutPrototype existingLayoutPrototype2 = missingLayoutPrototypes.get(newLayoutPrototype2.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutPrototypes.size(), 2);
+		Assert.assertEquals(newLayoutPrototype, existingLayoutPrototype);
+		Assert.assertEquals(newLayoutPrototype2, existingLayoutPrototype2);
 	}
 
 	@Test

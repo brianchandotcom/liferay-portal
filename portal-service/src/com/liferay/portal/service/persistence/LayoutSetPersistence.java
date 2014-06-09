@@ -375,6 +375,15 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 		throws com.liferay.portal.NoSuchLayoutSetException;
 
 	/**
+	* Returns a map of layout sets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout sets
+	* @return map of primaryKeys to layout sets.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSet> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the layout set with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutSetId the primary key of the layout set

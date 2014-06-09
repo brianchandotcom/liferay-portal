@@ -371,6 +371,17 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
+	* Returns a map of shopping coupons for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping coupons
+	* @return map of primaryKeys to shopping coupons.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCoupon> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param couponId the primary key of the shopping coupon

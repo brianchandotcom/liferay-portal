@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -236,6 +237,79 @@ public class UserIdMapperPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("UserIdMapper",
 			"mvccVersion", true, "userIdMapperId", true, "userId", true,
 			"type", true, "description", true, "externalUserId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, UserIdMapper> missingUserIdMappers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUserIdMappers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		UserIdMapper newUserIdMapper = addUserIdMapper();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserIdMapper.getPrimaryKey());
+
+		Map<Serializable, UserIdMapper> missingUserIdMappers = _persistence.fetchByPrimaryKeys(missingPks);
+		UserIdMapper existingUserIdMapper = missingUserIdMappers.get(newUserIdMapper.getPrimaryKey());
+
+		Assert.assertEquals(missingUserIdMappers.size(), 1);
+		Assert.assertEquals(newUserIdMapper, existingUserIdMapper);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, UserIdMapper> missingUserIdMappers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUserIdMappers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		UserIdMapper newUserIdMapper = addUserIdMapper();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserIdMapper.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, UserIdMapper> missingUserIdMappers = _persistence.fetchByPrimaryKeys(missingPks);
+		UserIdMapper existingUserIdMapper = missingUserIdMappers.get(newUserIdMapper.getPrimaryKey());
+
+		Assert.assertEquals(missingUserIdMappers.size(), 1);
+		Assert.assertEquals(newUserIdMapper, existingUserIdMapper);
+		Assert.assertNull(missingUserIdMappers.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		UserIdMapper newUserIdMapper = addUserIdMapper();
+		UserIdMapper newUserIdMapper2 = addUserIdMapper();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserIdMapper.getPrimaryKey());
+		missingPks.add(newUserIdMapper2.getPrimaryKey());
+
+		Map<Serializable, UserIdMapper> missingUserIdMappers = _persistence.fetchByPrimaryKeys(missingPks);
+		UserIdMapper existingUserIdMapper = missingUserIdMappers.get(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper2 = missingUserIdMappers.get(newUserIdMapper2.getPrimaryKey());
+
+		Assert.assertEquals(missingUserIdMappers.size(), 2);
+		Assert.assertEquals(newUserIdMapper, existingUserIdMapper);
+		Assert.assertEquals(newUserIdMapper2, existingUserIdMapper2);
 	}
 
 	@Test

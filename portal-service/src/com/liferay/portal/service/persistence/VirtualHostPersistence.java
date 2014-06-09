@@ -185,6 +185,15 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 		throws com.liferay.portal.NoSuchVirtualHostException;
 
 	/**
+	* Returns a map of virtual hosts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the virtual hosts
+	* @return map of primaryKeys to virtual hosts.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.VirtualHost> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param virtualHostId the primary key of the virtual host

@@ -513,6 +513,17 @@ public class ShoppingCartUtil {
 	}
 
 	/**
+	* Returns a map of shopping carts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping carts
+	* @return map of primaryKeys to shopping carts.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCart> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param cartId the primary key of the shopping cart

@@ -646,6 +646,15 @@ public interface SocialActivityCounterPersistence extends BasePersistence<Social
 		throws com.liferay.portlet.social.NoSuchActivityCounterException;
 
 	/**
+	* Returns a map of social activity counters for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity counters
+	* @return map of primaryKeys to social activity counters.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivityCounter> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activityCounterId the primary key of the social activity counter

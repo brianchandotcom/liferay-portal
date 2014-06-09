@@ -626,6 +626,15 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 
 	/**
+	* Returns a map of d d m contents for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m contents
+	* @return map of primaryKeys to d d m contents.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMContent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param contentId the primary key of the d d m content

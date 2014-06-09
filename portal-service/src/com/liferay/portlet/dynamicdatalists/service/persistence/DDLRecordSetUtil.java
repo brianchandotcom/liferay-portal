@@ -810,6 +810,17 @@ public class DDLRecordSetUtil {
 	}
 
 	/**
+	* Returns a map of d d l record sets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d l record sets
+	* @return map of primaryKeys to d d l record sets.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the d d l record set with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param recordSetId the primary key of the d d l record set

@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -262,6 +263,79 @@ public class CompanyPersistenceTest {
 			true, "companyId", true, "accountId", true, "webId", true, "key",
 			true, "mx", true, "homeURL", true, "logoId", true, "system", true,
 			"maxUsers", true, "active", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Company> missingCompanies = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCompanies.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Company newCompany = addCompany();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCompany.getPrimaryKey());
+
+		Map<Serializable, Company> missingCompanies = _persistence.fetchByPrimaryKeys(missingPks);
+		Company existingCompany = missingCompanies.get(newCompany.getPrimaryKey());
+
+		Assert.assertEquals(missingCompanies.size(), 1);
+		Assert.assertEquals(newCompany, existingCompany);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Company> missingCompanies = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCompanies.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Company newCompany = addCompany();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCompany.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Company> missingCompanies = _persistence.fetchByPrimaryKeys(missingPks);
+		Company existingCompany = missingCompanies.get(newCompany.getPrimaryKey());
+
+		Assert.assertEquals(missingCompanies.size(), 1);
+		Assert.assertEquals(newCompany, existingCompany);
+		Assert.assertNull(missingCompanies.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Company newCompany = addCompany();
+		Company newCompany2 = addCompany();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCompany.getPrimaryKey());
+		missingPks.add(newCompany2.getPrimaryKey());
+
+		Map<Serializable, Company> missingCompanies = _persistence.fetchByPrimaryKeys(missingPks);
+		Company existingCompany = missingCompanies.get(newCompany.getPrimaryKey());
+		Company existingCompany2 = missingCompanies.get(newCompany2.getPrimaryKey());
+
+		Assert.assertEquals(missingCompanies.size(), 2);
+		Assert.assertEquals(newCompany, existingCompany);
+		Assert.assertEquals(newCompany2, existingCompany2);
 	}
 
 	@Test

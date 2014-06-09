@@ -530,6 +530,17 @@ public class ResourceBlockPermissionUtil {
 	}
 
 	/**
+	* Returns a map of resource block permissions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource block permissions
+	* @return map of primaryKeys to resource block permissions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceBlockPermission> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourceBlockPermissionId the primary key of the resource block permission

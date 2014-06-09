@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,6 +230,79 @@ public class ReleasePersistenceTest {
 			true, "releaseId", true, "createDate", true, "modifiedDate", true,
 			"servletContextName", true, "buildNumber", true, "buildDate", true,
 			"verified", true, "state", true, "testString", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingReleases.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Release newRelease = addRelease();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRelease.getPrimaryKey());
+
+		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
+
+		Assert.assertEquals(missingReleases.size(), 1);
+		Assert.assertEquals(newRelease, existingRelease);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingReleases.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Release newRelease = addRelease();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRelease.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
+
+		Assert.assertEquals(missingReleases.size(), 1);
+		Assert.assertEquals(newRelease, existingRelease);
+		Assert.assertNull(missingReleases.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Release newRelease = addRelease();
+		Release newRelease2 = addRelease();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRelease.getPrimaryKey());
+		missingPks.add(newRelease2.getPrimaryKey());
+
+		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
+		Release existingRelease2 = missingReleases.get(newRelease2.getPrimaryKey());
+
+		Assert.assertEquals(missingReleases.size(), 2);
+		Assert.assertEquals(newRelease, existingRelease);
+		Assert.assertEquals(newRelease2, existingRelease2);
 	}
 
 	@Test

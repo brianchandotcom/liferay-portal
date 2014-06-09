@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -371,6 +372,79 @@ public class DLFileShortcutPersistenceTest {
 			"toFileEntryId", true, "treePath", true, "active", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, DLFileShortcut> missingDLFileShortcuts = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDLFileShortcuts.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFileShortcut.getPrimaryKey());
+
+		Map<Serializable, DLFileShortcut> missingDLFileShortcuts = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFileShortcut existingDLFileShortcut = missingDLFileShortcuts.get(newDLFileShortcut.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFileShortcuts.size(), 1);
+		Assert.assertEquals(newDLFileShortcut, existingDLFileShortcut);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, DLFileShortcut> missingDLFileShortcuts = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDLFileShortcuts.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFileShortcut.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, DLFileShortcut> missingDLFileShortcuts = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFileShortcut existingDLFileShortcut = missingDLFileShortcuts.get(newDLFileShortcut.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFileShortcuts.size(), 1);
+		Assert.assertEquals(newDLFileShortcut, existingDLFileShortcut);
+		Assert.assertNull(missingDLFileShortcuts.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
+		DLFileShortcut newDLFileShortcut2 = addDLFileShortcut();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFileShortcut.getPrimaryKey());
+		missingPks.add(newDLFileShortcut2.getPrimaryKey());
+
+		Map<Serializable, DLFileShortcut> missingDLFileShortcuts = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFileShortcut existingDLFileShortcut = missingDLFileShortcuts.get(newDLFileShortcut.getPrimaryKey());
+		DLFileShortcut existingDLFileShortcut2 = missingDLFileShortcuts.get(newDLFileShortcut2.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFileShortcuts.size(), 2);
+		Assert.assertEquals(newDLFileShortcut, existingDLFileShortcut);
+		Assert.assertEquals(newDLFileShortcut2, existingDLFileShortcut2);
 	}
 
 	@Test

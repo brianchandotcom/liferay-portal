@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -280,6 +281,79 @@ public class ShoppingCouponPersistenceTest {
 			"endDate", true, "active", true, "limitCategories", true,
 			"limitSkus", true, "minOrder", true, "discount", true,
 			"discountType", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ShoppingCoupon> missingShoppingCoupons = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingShoppingCoupons.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newShoppingCoupon.getPrimaryKey());
+
+		Map<Serializable, ShoppingCoupon> missingShoppingCoupons = _persistence.fetchByPrimaryKeys(missingPks);
+		ShoppingCoupon existingShoppingCoupon = missingShoppingCoupons.get(newShoppingCoupon.getPrimaryKey());
+
+		Assert.assertEquals(missingShoppingCoupons.size(), 1);
+		Assert.assertEquals(newShoppingCoupon, existingShoppingCoupon);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ShoppingCoupon> missingShoppingCoupons = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingShoppingCoupons.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newShoppingCoupon.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ShoppingCoupon> missingShoppingCoupons = _persistence.fetchByPrimaryKeys(missingPks);
+		ShoppingCoupon existingShoppingCoupon = missingShoppingCoupons.get(newShoppingCoupon.getPrimaryKey());
+
+		Assert.assertEquals(missingShoppingCoupons.size(), 1);
+		Assert.assertEquals(newShoppingCoupon, existingShoppingCoupon);
+		Assert.assertNull(missingShoppingCoupons.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
+		ShoppingCoupon newShoppingCoupon2 = addShoppingCoupon();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newShoppingCoupon.getPrimaryKey());
+		missingPks.add(newShoppingCoupon2.getPrimaryKey());
+
+		Map<Serializable, ShoppingCoupon> missingShoppingCoupons = _persistence.fetchByPrimaryKeys(missingPks);
+		ShoppingCoupon existingShoppingCoupon = missingShoppingCoupons.get(newShoppingCoupon.getPrimaryKey());
+		ShoppingCoupon existingShoppingCoupon2 = missingShoppingCoupons.get(newShoppingCoupon2.getPrimaryKey());
+
+		Assert.assertEquals(missingShoppingCoupons.size(), 2);
+		Assert.assertEquals(newShoppingCoupon, existingShoppingCoupon);
+		Assert.assertEquals(newShoppingCoupon2, existingShoppingCoupon2);
 	}
 
 	@Test

@@ -1437,6 +1437,17 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
+	* Returns a map of layout friendly u r ls for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout friendly u r ls
+	* @return map of primaryKeys to layout friendly u r ls.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutFriendlyURL> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the layout friendly u r l with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutFriendlyURLId the primary key of the layout friendly u r l

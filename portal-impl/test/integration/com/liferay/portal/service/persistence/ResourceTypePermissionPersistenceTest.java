@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,6 +246,88 @@ public class ResourceTypePermissionPersistenceTest {
 			"mvccVersion", true, "resourceTypePermissionId", true, "companyId",
 			true, "groupId", true, "name", true, "roleId", true, "actionIds",
 			true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceTypePermissions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceTypePermission.getPrimaryKey());
+
+		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceTypePermissions.size(), 1);
+		Assert.assertEquals(newResourceTypePermission,
+			existingResourceTypePermission);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceTypePermissions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceTypePermission.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceTypePermissions.size(), 1);
+		Assert.assertEquals(newResourceTypePermission,
+			existingResourceTypePermission);
+		Assert.assertNull(missingResourceTypePermissions.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
+		ResourceTypePermission newResourceTypePermission2 = addResourceTypePermission();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceTypePermission.getPrimaryKey());
+		missingPks.add(newResourceTypePermission2.getPrimaryKey());
+
+		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
+		ResourceTypePermission existingResourceTypePermission2 = missingResourceTypePermissions.get(newResourceTypePermission2.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceTypePermissions.size(), 2);
+		Assert.assertEquals(newResourceTypePermission,
+			existingResourceTypePermission);
+		Assert.assertEquals(newResourceTypePermission2,
+			existingResourceTypePermission2);
 	}
 
 	@Test

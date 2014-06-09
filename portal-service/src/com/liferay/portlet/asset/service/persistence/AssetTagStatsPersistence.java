@@ -378,6 +378,15 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 		throws com.liferay.portlet.asset.NoSuchTagStatsException;
 
 	/**
+	* Returns a map of asset tag statses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset tag statses
+	* @return map of primaryKeys to asset tag statses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetTagStats> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param tagStatsId the primary key of the asset tag stats

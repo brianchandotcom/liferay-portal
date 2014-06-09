@@ -375,6 +375,15 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
 
 	/**
+	* Returns a map of d d m storage links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m storage links
+	* @return map of primaryKeys to d d m storage links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param storageLinkId the primary key of the d d m storage link

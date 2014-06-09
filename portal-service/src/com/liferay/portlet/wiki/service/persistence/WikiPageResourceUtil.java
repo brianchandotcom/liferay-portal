@@ -375,6 +375,17 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
+	* Returns a map of wiki page resources for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the wiki page resources
+	* @return map of primaryKeys to wiki page resources.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.wiki.model.WikiPageResource> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource

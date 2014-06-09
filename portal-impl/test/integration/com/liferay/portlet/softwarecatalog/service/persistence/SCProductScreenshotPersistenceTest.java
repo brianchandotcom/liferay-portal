@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -249,6 +250,80 @@ public class SCProductScreenshotPersistenceTest {
 			"productScreenshotId", true, "companyId", true, "groupId", true,
 			"productEntryId", true, "thumbnailId", true, "fullImageId", true,
 			"priority", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, SCProductScreenshot> missingSCProductScreenshots = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSCProductScreenshots.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCProductScreenshot.getPrimaryKey());
+
+		Map<Serializable, SCProductScreenshot> missingSCProductScreenshots = _persistence.fetchByPrimaryKeys(missingPks);
+		SCProductScreenshot existingSCProductScreenshot = missingSCProductScreenshots.get(newSCProductScreenshot.getPrimaryKey());
+
+		Assert.assertEquals(missingSCProductScreenshots.size(), 1);
+		Assert.assertEquals(newSCProductScreenshot, existingSCProductScreenshot);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, SCProductScreenshot> missingSCProductScreenshots = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSCProductScreenshots.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCProductScreenshot.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, SCProductScreenshot> missingSCProductScreenshots = _persistence.fetchByPrimaryKeys(missingPks);
+		SCProductScreenshot existingSCProductScreenshot = missingSCProductScreenshots.get(newSCProductScreenshot.getPrimaryKey());
+
+		Assert.assertEquals(missingSCProductScreenshots.size(), 1);
+		Assert.assertEquals(newSCProductScreenshot, existingSCProductScreenshot);
+		Assert.assertNull(missingSCProductScreenshots.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
+		SCProductScreenshot newSCProductScreenshot2 = addSCProductScreenshot();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCProductScreenshot.getPrimaryKey());
+		missingPks.add(newSCProductScreenshot2.getPrimaryKey());
+
+		Map<Serializable, SCProductScreenshot> missingSCProductScreenshots = _persistence.fetchByPrimaryKeys(missingPks);
+		SCProductScreenshot existingSCProductScreenshot = missingSCProductScreenshots.get(newSCProductScreenshot.getPrimaryKey());
+		SCProductScreenshot existingSCProductScreenshot2 = missingSCProductScreenshots.get(newSCProductScreenshot2.getPrimaryKey());
+
+		Assert.assertEquals(missingSCProductScreenshots.size(), 2);
+		Assert.assertEquals(newSCProductScreenshot, existingSCProductScreenshot);
+		Assert.assertEquals(newSCProductScreenshot2,
+			existingSCProductScreenshot2);
 	}
 
 	@Test

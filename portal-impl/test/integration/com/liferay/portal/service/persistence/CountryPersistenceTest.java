@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -252,6 +253,79 @@ public class CountryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Country", "mvccVersion",
 			true, "countryId", true, "name", true, "a2", true, "a3", true,
 			"number", true, "idd", true, "zipRequired", true, "active", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCountries.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Country newCountry = addCountry();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCountry.getPrimaryKey());
+
+		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
+
+		Assert.assertEquals(missingCountries.size(), 1);
+		Assert.assertEquals(newCountry, existingCountry);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCountries.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Country newCountry = addCountry();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCountry.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
+
+		Assert.assertEquals(missingCountries.size(), 1);
+		Assert.assertEquals(newCountry, existingCountry);
+		Assert.assertNull(missingCountries.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Country newCountry = addCountry();
+		Country newCountry2 = addCountry();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCountry.getPrimaryKey());
+		missingPks.add(newCountry2.getPrimaryKey());
+
+		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
+		Country existingCountry2 = missingCountries.get(newCountry2.getPrimaryKey());
+
+		Assert.assertEquals(missingCountries.size(), 2);
+		Assert.assertEquals(newCountry, existingCountry);
+		Assert.assertEquals(newCountry2, existingCountry2);
 	}
 
 	@Test

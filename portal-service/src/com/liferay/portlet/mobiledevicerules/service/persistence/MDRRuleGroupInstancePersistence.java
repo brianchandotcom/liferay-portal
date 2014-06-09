@@ -1087,6 +1087,15 @@ public interface MDRRuleGroupInstancePersistence extends BasePersistence<MDRRule
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 
 	/**
+	* Returns a map of m d r rule group instances for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the m d r rule group instances
+	* @return map of primaryKeys to m d r rule group instances.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the m d r rule group instance with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param ruleGroupInstanceId the primary key of the m d r rule group instance

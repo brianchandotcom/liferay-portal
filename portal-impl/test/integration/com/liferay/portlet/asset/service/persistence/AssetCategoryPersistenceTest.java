@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -463,6 +464,79 @@ public class AssetCategoryPersistenceTest {
 			"modifiedDate", true, "parentCategoryId", true, "leftCategoryId",
 			true, "rightCategoryId", true, "name", true, "title", true,
 			"description", true, "vocabularyId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, AssetCategory> missingAssetCategories = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAssetCategories.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		AssetCategory newAssetCategory = addAssetCategory();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetCategory.getPrimaryKey());
+
+		Map<Serializable, AssetCategory> missingAssetCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetCategory existingAssetCategory = missingAssetCategories.get(newAssetCategory.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetCategories.size(), 1);
+		Assert.assertEquals(newAssetCategory, existingAssetCategory);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, AssetCategory> missingAssetCategories = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAssetCategories.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		AssetCategory newAssetCategory = addAssetCategory();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetCategory.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, AssetCategory> missingAssetCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetCategory existingAssetCategory = missingAssetCategories.get(newAssetCategory.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetCategories.size(), 1);
+		Assert.assertEquals(newAssetCategory, existingAssetCategory);
+		Assert.assertNull(missingAssetCategories.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		AssetCategory newAssetCategory = addAssetCategory();
+		AssetCategory newAssetCategory2 = addAssetCategory();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetCategory.getPrimaryKey());
+		missingPks.add(newAssetCategory2.getPrimaryKey());
+
+		Map<Serializable, AssetCategory> missingAssetCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetCategory existingAssetCategory = missingAssetCategories.get(newAssetCategory.getPrimaryKey());
+		AssetCategory existingAssetCategory2 = missingAssetCategories.get(newAssetCategory2.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetCategories.size(), 2);
+		Assert.assertEquals(newAssetCategory, existingAssetCategory);
+		Assert.assertEquals(newAssetCategory2, existingAssetCategory2);
 	}
 
 	@Test

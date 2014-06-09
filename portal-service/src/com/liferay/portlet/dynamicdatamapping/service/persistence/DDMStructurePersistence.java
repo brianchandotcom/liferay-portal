@@ -1937,6 +1937,15 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 
 	/**
+	* Returns a map of d d m structures for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m structures
+	* @return map of primaryKeys to d d m structures.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param structureId the primary key of the d d m structure

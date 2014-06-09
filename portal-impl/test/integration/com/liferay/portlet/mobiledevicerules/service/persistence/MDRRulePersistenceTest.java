@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -280,6 +281,79 @@ public class MDRRulePersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"ruleGroupId", true, "name", true, "description", true, "type",
 			true, "typeSettings", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MDRRule> missingMDRRules = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMDRRules.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MDRRule newMDRRule = addMDRRule();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRule.getPrimaryKey());
+
+		Map<Serializable, MDRRule> missingMDRRules = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRule existingMDRRule = missingMDRRules.get(newMDRRule.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRules.size(), 1);
+		Assert.assertEquals(newMDRRule, existingMDRRule);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MDRRule> missingMDRRules = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMDRRules.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MDRRule newMDRRule = addMDRRule();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRule.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MDRRule> missingMDRRules = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRule existingMDRRule = missingMDRRules.get(newMDRRule.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRules.size(), 1);
+		Assert.assertEquals(newMDRRule, existingMDRRule);
+		Assert.assertNull(missingMDRRules.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MDRRule newMDRRule = addMDRRule();
+		MDRRule newMDRRule2 = addMDRRule();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRule.getPrimaryKey());
+		missingPks.add(newMDRRule2.getPrimaryKey());
+
+		Map<Serializable, MDRRule> missingMDRRules = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRule existingMDRRule = missingMDRRules.get(newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule2 = missingMDRRules.get(newMDRRule2.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRules.size(), 2);
+		Assert.assertEquals(newMDRRule, existingMDRRule);
+		Assert.assertEquals(newMDRRule2, existingMDRRule2);
 	}
 
 	@Test

@@ -508,6 +508,15 @@ public interface MDRRulePersistence extends BasePersistence<MDRRule> {
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 
 	/**
+	* Returns a map of m d r rules for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the m d r rules
+	* @return map of primaryKeys to m d r rules.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRRule> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the m d r rule with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param ruleId the primary key of the m d r rule

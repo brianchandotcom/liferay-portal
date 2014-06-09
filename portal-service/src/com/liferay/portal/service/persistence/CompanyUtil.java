@@ -475,6 +475,17 @@ public class CompanyUtil {
 	}
 
 	/**
+	* Returns a map of companies for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the companies
+	* @return map of primaryKeys to companies.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Company> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the company with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param companyId the primary key of the company

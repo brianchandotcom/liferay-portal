@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -473,6 +474,79 @@ public class DLFolderPersistenceTest {
 			"lastPostDate", true, "defaultFileEntryTypeId", true, "hidden",
 			true, "overrideFileEntryTypes", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDLFolders.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		DLFolder newDLFolder = addDLFolder();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFolder.getPrimaryKey());
+
+		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFolders.size(), 1);
+		Assert.assertEquals(newDLFolder, existingDLFolder);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDLFolders.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		DLFolder newDLFolder = addDLFolder();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFolder.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFolders.size(), 1);
+		Assert.assertEquals(newDLFolder, existingDLFolder);
+		Assert.assertNull(missingDLFolders.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		DLFolder newDLFolder = addDLFolder();
+		DLFolder newDLFolder2 = addDLFolder();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDLFolder.getPrimaryKey());
+		missingPks.add(newDLFolder2.getPrimaryKey());
+
+		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
+		DLFolder existingDLFolder2 = missingDLFolders.get(newDLFolder2.getPrimaryKey());
+
+		Assert.assertEquals(missingDLFolders.size(), 2);
+		Assert.assertEquals(newDLFolder, existingDLFolder);
+		Assert.assertEquals(newDLFolder2, existingDLFolder2);
 	}
 
 	@Test

@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,6 +230,79 @@ public class ExpandoRowPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ExpandoRow", "rowId", true,
 			"companyId", true, "modifiedDate", true, "tableId", true,
 			"classPK", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ExpandoRow> missingExpandoRows = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingExpandoRows.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ExpandoRow newExpandoRow = addExpandoRow();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoRow.getPrimaryKey());
+
+		Map<Serializable, ExpandoRow> missingExpandoRows = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoRow existingExpandoRow = missingExpandoRows.get(newExpandoRow.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoRows.size(), 1);
+		Assert.assertEquals(newExpandoRow, existingExpandoRow);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ExpandoRow> missingExpandoRows = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingExpandoRows.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ExpandoRow newExpandoRow = addExpandoRow();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoRow.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ExpandoRow> missingExpandoRows = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoRow existingExpandoRow = missingExpandoRows.get(newExpandoRow.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoRows.size(), 1);
+		Assert.assertEquals(newExpandoRow, existingExpandoRow);
+		Assert.assertNull(missingExpandoRows.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ExpandoRow newExpandoRow = addExpandoRow();
+		ExpandoRow newExpandoRow2 = addExpandoRow();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newExpandoRow.getPrimaryKey());
+		missingPks.add(newExpandoRow2.getPrimaryKey());
+
+		Map<Serializable, ExpandoRow> missingExpandoRows = _persistence.fetchByPrimaryKeys(missingPks);
+		ExpandoRow existingExpandoRow = missingExpandoRows.get(newExpandoRow.getPrimaryKey());
+		ExpandoRow existingExpandoRow2 = missingExpandoRows.get(newExpandoRow2.getPrimaryKey());
+
+		Assert.assertEquals(missingExpandoRows.size(), 2);
+		Assert.assertEquals(newExpandoRow, existingExpandoRow);
+		Assert.assertEquals(newExpandoRow2, existingExpandoRow2);
 	}
 
 	@Test

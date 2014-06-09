@@ -1097,6 +1097,15 @@ public interface JournalContentSearchPersistence extends BasePersistence<Journal
 		throws com.liferay.portlet.journal.NoSuchContentSearchException;
 
 	/**
+	* Returns a map of journal content searchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal content searchs
+	* @return map of primaryKeys to journal content searchs.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalContentSearch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param contentSearchId the primary key of the journal content search

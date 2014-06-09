@@ -603,6 +603,15 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		throws com.liferay.portal.NoSuchSubscriptionException;
 
 	/**
+	* Returns a map of subscriptions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the subscriptions
+	* @return map of primaryKeys to subscriptions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Subscription> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param subscriptionId the primary key of the subscription

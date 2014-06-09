@@ -949,6 +949,15 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		throws com.liferay.portal.NoSuchResourcePermissionException;
 
 	/**
+	* Returns a map of resource permissions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource permissions
+	* @return map of primaryKeys to resource permissions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourcePermission> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourcePermissionId the primary key of the resource permission

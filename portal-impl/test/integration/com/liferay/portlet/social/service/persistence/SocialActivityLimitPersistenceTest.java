@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -264,6 +265,80 @@ public class SocialActivityLimitPersistenceTest {
 			"activityLimitId", true, "groupId", true, "companyId", true,
 			"userId", true, "classNameId", true, "classPK", true,
 			"activityType", true, "activityCounterName", true, "value", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, SocialActivityLimit> missingSocialActivityLimits = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialActivityLimits.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivityLimit.getPrimaryKey());
+
+		Map<Serializable, SocialActivityLimit> missingSocialActivityLimits = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivityLimit existingSocialActivityLimit = missingSocialActivityLimits.get(newSocialActivityLimit.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivityLimits.size(), 1);
+		Assert.assertEquals(newSocialActivityLimit, existingSocialActivityLimit);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialActivityLimit> missingSocialActivityLimits = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialActivityLimits.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivityLimit.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialActivityLimit> missingSocialActivityLimits = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivityLimit existingSocialActivityLimit = missingSocialActivityLimits.get(newSocialActivityLimit.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivityLimits.size(), 1);
+		Assert.assertEquals(newSocialActivityLimit, existingSocialActivityLimit);
+		Assert.assertNull(missingSocialActivityLimits.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
+		SocialActivityLimit newSocialActivityLimit2 = addSocialActivityLimit();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivityLimit.getPrimaryKey());
+		missingPks.add(newSocialActivityLimit2.getPrimaryKey());
+
+		Map<Serializable, SocialActivityLimit> missingSocialActivityLimits = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivityLimit existingSocialActivityLimit = missingSocialActivityLimits.get(newSocialActivityLimit.getPrimaryKey());
+		SocialActivityLimit existingSocialActivityLimit2 = missingSocialActivityLimits.get(newSocialActivityLimit2.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivityLimits.size(), 2);
+		Assert.assertEquals(newSocialActivityLimit, existingSocialActivityLimit);
+		Assert.assertEquals(newSocialActivityLimit2,
+			existingSocialActivityLimit2);
 	}
 
 	@Test

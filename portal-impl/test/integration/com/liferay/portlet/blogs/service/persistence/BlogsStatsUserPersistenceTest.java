@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -287,6 +288,79 @@ public class BlogsStatsUserPersistenceTest {
 			true, "entryCount", true, "lastPostDate", true,
 			"ratingsTotalEntries", true, "ratingsTotalScore", true,
 			"ratingsAverageScore", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, BlogsStatsUser> missingBlogsStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingBlogsStatsUsers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newBlogsStatsUser.getPrimaryKey());
+
+		Map<Serializable, BlogsStatsUser> missingBlogsStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		BlogsStatsUser existingBlogsStatsUser = missingBlogsStatsUsers.get(newBlogsStatsUser.getPrimaryKey());
+
+		Assert.assertEquals(missingBlogsStatsUsers.size(), 1);
+		Assert.assertEquals(newBlogsStatsUser, existingBlogsStatsUser);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, BlogsStatsUser> missingBlogsStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingBlogsStatsUsers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newBlogsStatsUser.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, BlogsStatsUser> missingBlogsStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		BlogsStatsUser existingBlogsStatsUser = missingBlogsStatsUsers.get(newBlogsStatsUser.getPrimaryKey());
+
+		Assert.assertEquals(missingBlogsStatsUsers.size(), 1);
+		Assert.assertEquals(newBlogsStatsUser, existingBlogsStatsUser);
+		Assert.assertNull(missingBlogsStatsUsers.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
+		BlogsStatsUser newBlogsStatsUser2 = addBlogsStatsUser();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newBlogsStatsUser.getPrimaryKey());
+		missingPks.add(newBlogsStatsUser2.getPrimaryKey());
+
+		Map<Serializable, BlogsStatsUser> missingBlogsStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		BlogsStatsUser existingBlogsStatsUser = missingBlogsStatsUsers.get(newBlogsStatsUser.getPrimaryKey());
+		BlogsStatsUser existingBlogsStatsUser2 = missingBlogsStatsUsers.get(newBlogsStatsUser2.getPrimaryKey());
+
+		Assert.assertEquals(missingBlogsStatsUsers.size(), 2);
+		Assert.assertEquals(newBlogsStatsUser, existingBlogsStatsUser);
+		Assert.assertEquals(newBlogsStatsUser2, existingBlogsStatsUser2);
 	}
 
 	@Test

@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -228,6 +229,88 @@ public class ResourceBlockPermissionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ResourceBlockPermission",
 			"mvccVersion", true, "resourceBlockPermissionId", true,
 			"resourceBlockId", true, "roleId", true, "actionIds", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ResourceBlockPermission> missingResourceBlockPermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceBlockPermissions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlockPermission.getPrimaryKey());
+
+		Map<Serializable, ResourceBlockPermission> missingResourceBlockPermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlockPermission existingResourceBlockPermission = missingResourceBlockPermissions.get(newResourceBlockPermission.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlockPermissions.size(), 1);
+		Assert.assertEquals(newResourceBlockPermission,
+			existingResourceBlockPermission);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceBlockPermission> missingResourceBlockPermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingResourceBlockPermissions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlockPermission.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ResourceBlockPermission> missingResourceBlockPermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlockPermission existingResourceBlockPermission = missingResourceBlockPermissions.get(newResourceBlockPermission.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlockPermissions.size(), 1);
+		Assert.assertEquals(newResourceBlockPermission,
+			existingResourceBlockPermission);
+		Assert.assertNull(missingResourceBlockPermissions.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
+		ResourceBlockPermission newResourceBlockPermission2 = addResourceBlockPermission();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newResourceBlockPermission.getPrimaryKey());
+		missingPks.add(newResourceBlockPermission2.getPrimaryKey());
+
+		Map<Serializable, ResourceBlockPermission> missingResourceBlockPermissions =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		ResourceBlockPermission existingResourceBlockPermission = missingResourceBlockPermissions.get(newResourceBlockPermission.getPrimaryKey());
+		ResourceBlockPermission existingResourceBlockPermission2 = missingResourceBlockPermissions.get(newResourceBlockPermission2.getPrimaryKey());
+
+		Assert.assertEquals(missingResourceBlockPermissions.size(), 2);
+		Assert.assertEquals(newResourceBlockPermission,
+			existingResourceBlockPermission);
+		Assert.assertEquals(newResourceBlockPermission2,
+			existingResourceBlockPermission2);
 	}
 
 	@Test

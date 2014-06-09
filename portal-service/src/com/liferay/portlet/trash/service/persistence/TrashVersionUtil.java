@@ -601,6 +601,17 @@ public class TrashVersionUtil {
 	}
 
 	/**
+	* Returns a map of trash versions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the trash versions
+	* @return map of primaryKeys to trash versions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.trash.model.TrashVersion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param versionId the primary key of the trash version

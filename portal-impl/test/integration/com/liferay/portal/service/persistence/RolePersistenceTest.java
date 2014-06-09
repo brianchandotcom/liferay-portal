@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -371,6 +372,79 @@ public class RolePersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "name", true, "title", true,
 			"description", true, "type", true, "subtype", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRoles.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Role newRole = addRole();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRole.getPrimaryKey());
+
+		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
+
+		Assert.assertEquals(missingRoles.size(), 1);
+		Assert.assertEquals(newRole, existingRole);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingRoles.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Role newRole = addRole();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRole.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
+
+		Assert.assertEquals(missingRoles.size(), 1);
+		Assert.assertEquals(newRole, existingRole);
+		Assert.assertNull(missingRoles.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Role newRole = addRole();
+		Role newRole2 = addRole();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newRole.getPrimaryKey());
+		missingPks.add(newRole2.getPrimaryKey());
+
+		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
+		Role existingRole2 = missingRoles.get(newRole2.getPrimaryKey());
+
+		Assert.assertEquals(missingRoles.size(), 2);
+		Assert.assertEquals(newRole, existingRole);
+		Assert.assertEquals(newRole2, existingRole2);
 	}
 
 	@Test

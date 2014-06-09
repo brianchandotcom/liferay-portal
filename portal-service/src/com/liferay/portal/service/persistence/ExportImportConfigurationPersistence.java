@@ -719,6 +719,15 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 		throws com.liferay.portal.NoSuchExportImportConfigurationException;
 
 	/**
+	* Returns a map of export import configurations for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the export import configurations
+	* @return map of primaryKeys to export import configurations.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ExportImportConfiguration> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param exportImportConfigurationId the primary key of the export import configuration

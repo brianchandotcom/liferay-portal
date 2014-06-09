@@ -2638,6 +2638,17 @@ public class DLFolderUtil {
 	}
 
 	/**
+	* Returns a map of document library folders for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library folders
+	* @return map of primaryKeys to document library folders.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFolder> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param folderId the primary key of the document library folder

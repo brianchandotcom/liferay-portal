@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -300,6 +301,79 @@ public class MBBanPersistenceTest {
 			"banId", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"banUserId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MBBan> missingMBBans = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBBans.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MBBan newMBBan = addMBBan();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBBan.getPrimaryKey());
+
+		Map<Serializable, MBBan> missingMBBans = _persistence.fetchByPrimaryKeys(missingPks);
+		MBBan existingMBBan = missingMBBans.get(newMBBan.getPrimaryKey());
+
+		Assert.assertEquals(missingMBBans.size(), 1);
+		Assert.assertEquals(newMBBan, existingMBBan);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MBBan> missingMBBans = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBBans.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MBBan newMBBan = addMBBan();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBBan.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MBBan> missingMBBans = _persistence.fetchByPrimaryKeys(missingPks);
+		MBBan existingMBBan = missingMBBans.get(newMBBan.getPrimaryKey());
+
+		Assert.assertEquals(missingMBBans.size(), 1);
+		Assert.assertEquals(newMBBan, existingMBBan);
+		Assert.assertNull(missingMBBans.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MBBan newMBBan = addMBBan();
+		MBBan newMBBan2 = addMBBan();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBBan.getPrimaryKey());
+		missingPks.add(newMBBan2.getPrimaryKey());
+
+		Map<Serializable, MBBan> missingMBBans = _persistence.fetchByPrimaryKeys(missingPks);
+		MBBan existingMBBan = missingMBBans.get(newMBBan.getPrimaryKey());
+		MBBan existingMBBan2 = missingMBBans.get(newMBBan2.getPrimaryKey());
+
+		Assert.assertEquals(missingMBBans.size(), 2);
+		Assert.assertEquals(newMBBan, existingMBBan);
+		Assert.assertEquals(newMBBan2, existingMBBan2);
 	}
 
 	@Test

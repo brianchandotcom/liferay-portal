@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -565,6 +566,79 @@ public class UserPersistenceTest {
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
 			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
 			true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUsers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		User newUser = addUser();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUser.getPrimaryKey());
+
+		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		User existingUser = missingUsers.get(newUser.getPrimaryKey());
+
+		Assert.assertEquals(missingUsers.size(), 1);
+		Assert.assertEquals(newUser, existingUser);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUsers.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		User newUser = addUser();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUser.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		User existingUser = missingUsers.get(newUser.getPrimaryKey());
+
+		Assert.assertEquals(missingUsers.size(), 1);
+		Assert.assertEquals(newUser, existingUser);
+		Assert.assertNull(missingUsers.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		User newUser = addUser();
+		User newUser2 = addUser();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUser.getPrimaryKey());
+		missingPks.add(newUser2.getPrimaryKey());
+
+		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		User existingUser = missingUsers.get(newUser.getPrimaryKey());
+		User existingUser2 = missingUsers.get(newUser2.getPrimaryKey());
+
+		Assert.assertEquals(missingUsers.size(), 2);
+		Assert.assertEquals(newUser, existingUser);
+		Assert.assertEquals(newUser2, existingUser2);
 	}
 
 	@Test

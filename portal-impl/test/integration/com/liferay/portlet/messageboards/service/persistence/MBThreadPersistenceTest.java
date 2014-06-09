@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -510,6 +511,79 @@ public class MBThreadPersistenceTest {
 			true, "lastPostDate", true, "priority", true, "question", true,
 			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBThreads.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MBThread newMBThread = addMBThread();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThread.getPrimaryKey());
+
+		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreads.size(), 1);
+		Assert.assertEquals(newMBThread, existingMBThread);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBThreads.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MBThread newMBThread = addMBThread();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThread.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreads.size(), 1);
+		Assert.assertEquals(newMBThread, existingMBThread);
+		Assert.assertNull(missingMBThreads.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MBThread newMBThread = addMBThread();
+		MBThread newMBThread2 = addMBThread();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThread.getPrimaryKey());
+		missingPks.add(newMBThread2.getPrimaryKey());
+
+		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
+		MBThread existingMBThread2 = missingMBThreads.get(newMBThread2.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreads.size(), 2);
+		Assert.assertEquals(newMBThread, existingMBThread);
+		Assert.assertEquals(newMBThread2, existingMBThread2);
 	}
 
 	@Test

@@ -165,6 +165,17 @@ public class AccountUtil {
 	}
 
 	/**
+	* Returns a map of accounts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the accounts
+	* @return map of primaryKeys to accounts.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Account> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the account with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param accountId the primary key of the account

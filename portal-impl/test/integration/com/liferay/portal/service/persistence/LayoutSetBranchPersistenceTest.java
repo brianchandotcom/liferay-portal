@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -332,6 +333,79 @@ public class LayoutSetBranchPersistenceTest {
 			"wapColorSchemeId", true, "css", true, "settings", true,
 			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
 			true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, LayoutSetBranch> missingLayoutSetBranchs = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLayoutSetBranchs.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutSetBranch.getPrimaryKey());
+
+		Map<Serializable, LayoutSetBranch> missingLayoutSetBranchs = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutSetBranch existingLayoutSetBranch = missingLayoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutSetBranchs.size(), 1);
+		Assert.assertEquals(newLayoutSetBranch, existingLayoutSetBranch);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, LayoutSetBranch> missingLayoutSetBranchs = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLayoutSetBranchs.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutSetBranch.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, LayoutSetBranch> missingLayoutSetBranchs = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutSetBranch existingLayoutSetBranch = missingLayoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutSetBranchs.size(), 1);
+		Assert.assertEquals(newLayoutSetBranch, existingLayoutSetBranch);
+		Assert.assertNull(missingLayoutSetBranchs.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
+		LayoutSetBranch newLayoutSetBranch2 = addLayoutSetBranch();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLayoutSetBranch.getPrimaryKey());
+		missingPks.add(newLayoutSetBranch2.getPrimaryKey());
+
+		Map<Serializable, LayoutSetBranch> missingLayoutSetBranchs = _persistence.fetchByPrimaryKeys(missingPks);
+		LayoutSetBranch existingLayoutSetBranch = missingLayoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch2 = missingLayoutSetBranchs.get(newLayoutSetBranch2.getPrimaryKey());
+
+		Assert.assertEquals(missingLayoutSetBranchs.size(), 2);
+		Assert.assertEquals(newLayoutSetBranch, existingLayoutSetBranch);
+		Assert.assertEquals(newLayoutSetBranch2, existingLayoutSetBranch2);
 	}
 
 	@Test

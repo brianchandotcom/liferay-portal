@@ -4987,6 +4987,15 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
+	* Returns a map of wiki pages for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the wiki pages
+	* @return map of primaryKeys to wiki pages.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.wiki.model.WikiPage> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param pageId the primary key of the wiki page

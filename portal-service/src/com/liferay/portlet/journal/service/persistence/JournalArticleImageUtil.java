@@ -739,6 +739,17 @@ public class JournalArticleImageUtil {
 	}
 
 	/**
+	* Returns a map of journal article images for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal article images
+	* @return map of primaryKeys to journal article images.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalArticleImage> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param articleImageId the primary key of the journal article image

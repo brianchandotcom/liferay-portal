@@ -534,6 +534,15 @@ public interface SocialActivityLimitPersistence extends BasePersistence<SocialAc
 		throws com.liferay.portlet.social.NoSuchActivityLimitException;
 
 	/**
+	* Returns a map of social activity limits for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity limits
+	* @return map of primaryKeys to social activity limits.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivityLimit> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the social activity limit with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activityLimitId the primary key of the social activity limit

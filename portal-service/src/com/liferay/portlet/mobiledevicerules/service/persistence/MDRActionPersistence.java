@@ -508,6 +508,15 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 
 	/**
+	* Returns a map of m d r actions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the m d r actions
+	* @return map of primaryKeys to m d r actions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRAction> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param actionId the primary key of the m d r action

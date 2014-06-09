@@ -850,6 +850,17 @@ public class DLFileRankUtil {
 	}
 
 	/**
+	* Returns a map of document library file ranks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library file ranks
+	* @return map of primaryKeys to document library file ranks.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileRank> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the document library file rank with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param fileRankId the primary key of the document library file rank

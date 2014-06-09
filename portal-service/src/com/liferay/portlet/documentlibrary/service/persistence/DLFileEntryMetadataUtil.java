@@ -819,6 +819,17 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
+	* Returns a map of document library file entry metadatas for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library file entry metadatas
+	* @return map of primaryKeys to document library file entry metadatas.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param fileEntryMetadataId the primary key of the document library file entry metadata

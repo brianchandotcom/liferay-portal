@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -237,6 +238,79 @@ public class AccountPersistenceTest {
 			"parentAccountId", true, "name", true, "legalName", true,
 			"legalId", true, "legalType", true, "sicCode", true,
 			"tickerSymbol", true, "industry", true, "type", true, "size", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAccounts.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Account newAccount = addAccount();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAccount.getPrimaryKey());
+
+		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
+
+		Assert.assertEquals(missingAccounts.size(), 1);
+		Assert.assertEquals(newAccount, existingAccount);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAccounts.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Account newAccount = addAccount();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAccount.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
+
+		Assert.assertEquals(missingAccounts.size(), 1);
+		Assert.assertEquals(newAccount, existingAccount);
+		Assert.assertNull(missingAccounts.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Account newAccount = addAccount();
+		Account newAccount2 = addAccount();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAccount.getPrimaryKey());
+		missingPks.add(newAccount2.getPrimaryKey());
+
+		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
+		Account existingAccount2 = missingAccounts.get(newAccount2.getPrimaryKey());
+
+		Assert.assertEquals(missingAccounts.size(), 2);
+		Assert.assertEquals(newAccount, existingAccount);
+		Assert.assertEquals(newAccount2, existingAccount2);
 	}
 
 	@Test

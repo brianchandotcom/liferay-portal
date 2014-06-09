@@ -498,6 +498,15 @@ public interface RegionPersistence extends BasePersistence<Region> {
 		throws com.liferay.portal.NoSuchRegionException;
 
 	/**
+	* Returns a map of regions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the regions
+	* @return map of primaryKeys to regions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Region> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the region with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param regionId the primary key of the region

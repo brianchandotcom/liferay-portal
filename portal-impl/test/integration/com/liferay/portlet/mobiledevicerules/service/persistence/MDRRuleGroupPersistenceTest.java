@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -283,6 +284,79 @@ public class MDRRuleGroupPersistenceTest {
 			true, "ruleGroupId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "description", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MDRRuleGroup> missingMDRRuleGroups = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMDRRuleGroups.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MDRRuleGroup newMDRRuleGroup = addMDRRuleGroup();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRuleGroup.getPrimaryKey());
+
+		Map<Serializable, MDRRuleGroup> missingMDRRuleGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRuleGroup existingMDRRuleGroup = missingMDRRuleGroups.get(newMDRRuleGroup.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRuleGroups.size(), 1);
+		Assert.assertEquals(newMDRRuleGroup, existingMDRRuleGroup);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MDRRuleGroup> missingMDRRuleGroups = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMDRRuleGroups.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MDRRuleGroup newMDRRuleGroup = addMDRRuleGroup();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRuleGroup.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MDRRuleGroup> missingMDRRuleGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRuleGroup existingMDRRuleGroup = missingMDRRuleGroups.get(newMDRRuleGroup.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRuleGroups.size(), 1);
+		Assert.assertEquals(newMDRRuleGroup, existingMDRRuleGroup);
+		Assert.assertNull(missingMDRRuleGroups.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MDRRuleGroup newMDRRuleGroup = addMDRRuleGroup();
+		MDRRuleGroup newMDRRuleGroup2 = addMDRRuleGroup();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMDRRuleGroup.getPrimaryKey());
+		missingPks.add(newMDRRuleGroup2.getPrimaryKey());
+
+		Map<Serializable, MDRRuleGroup> missingMDRRuleGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		MDRRuleGroup existingMDRRuleGroup = missingMDRRuleGroups.get(newMDRRuleGroup.getPrimaryKey());
+		MDRRuleGroup existingMDRRuleGroup2 = missingMDRRuleGroups.get(newMDRRuleGroup2.getPrimaryKey());
+
+		Assert.assertEquals(missingMDRRuleGroups.size(), 2);
+		Assert.assertEquals(newMDRRuleGroup, existingMDRRuleGroup);
+		Assert.assertEquals(newMDRRuleGroup2, existingMDRRuleGroup2);
 	}
 
 	@Test

@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -294,6 +295,79 @@ public class MBThreadFlagPersistenceTest {
 			true, "threadFlagId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "threadId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MBThreadFlag> missingMBThreadFlags = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBThreadFlags.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThreadFlag.getPrimaryKey());
+
+		Map<Serializable, MBThreadFlag> missingMBThreadFlags = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThreadFlag existingMBThreadFlag = missingMBThreadFlags.get(newMBThreadFlag.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreadFlags.size(), 1);
+		Assert.assertEquals(newMBThreadFlag, existingMBThreadFlag);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MBThreadFlag> missingMBThreadFlags = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBThreadFlags.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThreadFlag.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MBThreadFlag> missingMBThreadFlags = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThreadFlag existingMBThreadFlag = missingMBThreadFlags.get(newMBThreadFlag.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreadFlags.size(), 1);
+		Assert.assertEquals(newMBThreadFlag, existingMBThreadFlag);
+		Assert.assertNull(missingMBThreadFlags.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+		MBThreadFlag newMBThreadFlag2 = addMBThreadFlag();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBThreadFlag.getPrimaryKey());
+		missingPks.add(newMBThreadFlag2.getPrimaryKey());
+
+		Map<Serializable, MBThreadFlag> missingMBThreadFlags = _persistence.fetchByPrimaryKeys(missingPks);
+		MBThreadFlag existingMBThreadFlag = missingMBThreadFlags.get(newMBThreadFlag.getPrimaryKey());
+		MBThreadFlag existingMBThreadFlag2 = missingMBThreadFlags.get(newMBThreadFlag2.getPrimaryKey());
+
+		Assert.assertEquals(missingMBThreadFlags.size(), 2);
+		Assert.assertEquals(newMBThreadFlag, existingMBThreadFlag);
+		Assert.assertEquals(newMBThreadFlag2, existingMBThreadFlag2);
 	}
 
 	@Test

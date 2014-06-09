@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -270,6 +271,83 @@ public class SocialActivitySettingPersistenceTest {
 			"activitySettingId", true, "groupId", true, "companyId", true,
 			"classNameId", true, "activityType", true, "name", true, "value",
 			true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, SocialActivitySetting> missingSocialActivitySettings = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialActivitySettings.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivitySetting.getPrimaryKey());
+
+		Map<Serializable, SocialActivitySetting> missingSocialActivitySettings = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivitySetting existingSocialActivitySetting = missingSocialActivitySettings.get(newSocialActivitySetting.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivitySettings.size(), 1);
+		Assert.assertEquals(newSocialActivitySetting,
+			existingSocialActivitySetting);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialActivitySetting> missingSocialActivitySettings = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialActivitySettings.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivitySetting.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialActivitySetting> missingSocialActivitySettings = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivitySetting existingSocialActivitySetting = missingSocialActivitySettings.get(newSocialActivitySetting.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivitySettings.size(), 1);
+		Assert.assertEquals(newSocialActivitySetting,
+			existingSocialActivitySetting);
+		Assert.assertNull(missingSocialActivitySettings.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
+		SocialActivitySetting newSocialActivitySetting2 = addSocialActivitySetting();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialActivitySetting.getPrimaryKey());
+		missingPks.add(newSocialActivitySetting2.getPrimaryKey());
+
+		Map<Serializable, SocialActivitySetting> missingSocialActivitySettings = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialActivitySetting existingSocialActivitySetting = missingSocialActivitySettings.get(newSocialActivitySetting.getPrimaryKey());
+		SocialActivitySetting existingSocialActivitySetting2 = missingSocialActivitySettings.get(newSocialActivitySetting2.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialActivitySettings.size(), 2);
+		Assert.assertEquals(newSocialActivitySetting,
+			existingSocialActivitySetting);
+		Assert.assertEquals(newSocialActivitySetting2,
+			existingSocialActivitySetting2);
 	}
 
 	@Test

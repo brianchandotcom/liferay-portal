@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -356,6 +357,79 @@ public class MBMailingListPersistenceTest {
 			"outServerName", true, "outServerPort", true, "outUseSSL", true,
 			"outUserName", true, "outPassword", true, "allowAnonymous", true,
 			"active", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MBMailingList> missingMBMailingLists = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBMailingLists.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MBMailingList newMBMailingList = addMBMailingList();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBMailingList.getPrimaryKey());
+
+		Map<Serializable, MBMailingList> missingMBMailingLists = _persistence.fetchByPrimaryKeys(missingPks);
+		MBMailingList existingMBMailingList = missingMBMailingLists.get(newMBMailingList.getPrimaryKey());
+
+		Assert.assertEquals(missingMBMailingLists.size(), 1);
+		Assert.assertEquals(newMBMailingList, existingMBMailingList);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MBMailingList> missingMBMailingLists = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBMailingLists.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MBMailingList newMBMailingList = addMBMailingList();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBMailingList.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MBMailingList> missingMBMailingLists = _persistence.fetchByPrimaryKeys(missingPks);
+		MBMailingList existingMBMailingList = missingMBMailingLists.get(newMBMailingList.getPrimaryKey());
+
+		Assert.assertEquals(missingMBMailingLists.size(), 1);
+		Assert.assertEquals(newMBMailingList, existingMBMailingList);
+		Assert.assertNull(missingMBMailingLists.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MBMailingList newMBMailingList = addMBMailingList();
+		MBMailingList newMBMailingList2 = addMBMailingList();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBMailingList.getPrimaryKey());
+		missingPks.add(newMBMailingList2.getPrimaryKey());
+
+		Map<Serializable, MBMailingList> missingMBMailingLists = _persistence.fetchByPrimaryKeys(missingPks);
+		MBMailingList existingMBMailingList = missingMBMailingLists.get(newMBMailingList.getPrimaryKey());
+		MBMailingList existingMBMailingList2 = missingMBMailingLists.get(newMBMailingList2.getPrimaryKey());
+
+		Assert.assertEquals(missingMBMailingLists.size(), 2);
+		Assert.assertEquals(newMBMailingList, existingMBMailingList);
+		Assert.assertEquals(newMBMailingList2, existingMBMailingList2);
 	}
 
 	@Test

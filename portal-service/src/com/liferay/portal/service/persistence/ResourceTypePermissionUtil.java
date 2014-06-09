@@ -561,6 +561,17 @@ public class ResourceTypePermissionUtil {
 	}
 
 	/**
+	* Returns a map of resource type permissions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource type permissions
+	* @return map of primaryKeys to resource type permissions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceTypePermission> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourceTypePermissionId the primary key of the resource type permission

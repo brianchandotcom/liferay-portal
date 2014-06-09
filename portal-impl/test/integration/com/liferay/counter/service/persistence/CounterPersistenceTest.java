@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -171,6 +172,79 @@ public class CounterPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Counter", "name", true,
 			"currentId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Counter> missingCounters = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCounters.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Counter newCounter = addCounter();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCounter.getPrimaryKey());
+
+		Map<Serializable, Counter> missingCounters = _persistence.fetchByPrimaryKeys(missingPks);
+		Counter existingCounter = missingCounters.get(newCounter.getPrimaryKey());
+
+		Assert.assertEquals(missingCounters.size(), 1);
+		Assert.assertEquals(newCounter, existingCounter);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		String pk = RandomTestUtil.randomString();
+
+		String pk2 = RandomTestUtil.randomString();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Counter> missingCounters = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingCounters.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Counter newCounter = addCounter();
+		String pk2 = RandomTestUtil.randomString();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCounter.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Counter> missingCounters = _persistence.fetchByPrimaryKeys(missingPks);
+		Counter existingCounter = missingCounters.get(newCounter.getPrimaryKey());
+
+		Assert.assertEquals(missingCounters.size(), 1);
+		Assert.assertEquals(newCounter, existingCounter);
+		Assert.assertNull(missingCounters.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Counter newCounter = addCounter();
+		Counter newCounter2 = addCounter();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newCounter.getPrimaryKey());
+		missingPks.add(newCounter2.getPrimaryKey());
+
+		Map<Serializable, Counter> missingCounters = _persistence.fetchByPrimaryKeys(missingPks);
+		Counter existingCounter = missingCounters.get(newCounter.getPrimaryKey());
+		Counter existingCounter2 = missingCounters.get(newCounter2.getPrimaryKey());
+
+		Assert.assertEquals(missingCounters.size(), 2);
+		Assert.assertEquals(newCounter, existingCounter);
+		Assert.assertEquals(newCounter2, existingCounter2);
 	}
 
 	@Test

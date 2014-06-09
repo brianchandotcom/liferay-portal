@@ -259,6 +259,15 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 		throws com.liferay.portal.NoSuchResourceActionException;
 
 	/**
+	* Returns a map of resource actions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource actions
+	* @return map of primaryKeys to resource actions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceAction> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourceActionId the primary key of the resource action

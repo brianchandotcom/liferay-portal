@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -192,6 +193,79 @@ public class ListTypePersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ListType", "mvccVersion",
 			true, "listTypeId", true, "name", true, "type", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingListTypes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ListType newListType = addListType();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newListType.getPrimaryKey());
+
+		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
+
+		Assert.assertEquals(missingListTypes.size(), 1);
+		Assert.assertEquals(newListType, existingListType);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		int pk = RandomTestUtil.nextInt();
+
+		int pk2 = RandomTestUtil.nextInt();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingListTypes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ListType newListType = addListType();
+		int pk2 = RandomTestUtil.nextInt();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newListType.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
+
+		Assert.assertEquals(missingListTypes.size(), 1);
+		Assert.assertEquals(newListType, existingListType);
+		Assert.assertNull(missingListTypes.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ListType newListType = addListType();
+		ListType newListType2 = addListType();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newListType.getPrimaryKey());
+		missingPks.add(newListType2.getPrimaryKey());
+
+		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
+		ListType existingListType2 = missingListTypes.get(newListType2.getPrimaryKey());
+
+		Assert.assertEquals(missingListTypes.size(), 2);
+		Assert.assertEquals(newListType, existingListType);
+		Assert.assertEquals(newListType2, existingListType2);
 	}
 
 	@Test

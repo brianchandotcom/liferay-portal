@@ -44,7 +44,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the virtual host service.
@@ -966,6 +971,93 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	}
 
 	/**
+	 * Returns a map of virtual hosts for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the virtual hosts
+	 * @return map of primaryKeys to virtual hosts.
+	 */
+	@Override
+	public Map<Serializable, VirtualHost> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, VirtualHost> results = new HashMap<Serializable, VirtualHost>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			VirtualHost virtualHost = (VirtualHost)EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+					VirtualHostImpl.class, primaryKey);
+
+			if (virtualHost == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, virtualHost);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_VIRTUALHOST_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (VirtualHost result : (List<VirtualHost>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
+					VirtualHostImpl.class, primaryKey, _nullVirtualHost);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param virtualHostId the primary key of the virtual host
@@ -1176,6 +1268,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	}
 
 	private static final String _SQL_SELECT_VIRTUALHOST = "SELECT virtualHost FROM VirtualHost virtualHost";
+	private static final String _SQL_SELECT_VIRTUALHOST_WHERE_PKS_IN = "SELECT virtualHost FROM VirtualHost virtualHost WHERE virtualHostId IN (";
 	private static final String _SQL_SELECT_VIRTUALHOST_WHERE = "SELECT virtualHost FROM VirtualHost virtualHost WHERE ";
 	private static final String _SQL_COUNT_VIRTUALHOST = "SELECT COUNT(virtualHost) FROM VirtualHost virtualHost";
 	private static final String _SQL_COUNT_VIRTUALHOST_WHERE = "SELECT COUNT(virtualHost) FROM VirtualHost virtualHost WHERE ";

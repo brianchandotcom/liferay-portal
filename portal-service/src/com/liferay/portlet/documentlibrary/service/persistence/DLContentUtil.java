@@ -764,6 +764,17 @@ public class DLContentUtil {
 	}
 
 	/**
+	* Returns a map of document library contents for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library contents
+	* @return map of primaryKeys to document library contents.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLContent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param contentId the primary key of the document library content

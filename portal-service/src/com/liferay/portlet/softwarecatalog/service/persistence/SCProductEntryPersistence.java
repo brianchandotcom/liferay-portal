@@ -641,6 +641,15 @@ public interface SCProductEntryPersistence extends BasePersistence<SCProductEntr
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 
 	/**
+	* Returns a map of s c product entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the s c product entries
+	* @return map of primaryKeys to s c product entries.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCProductEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param productEntryId the primary key of the s c product entry

@@ -141,6 +141,15 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 		long statsId) throws com.liferay.portlet.ratings.NoSuchStatsException;
 
 	/**
+	* Returns a map of ratings statses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the ratings statses
+	* @return map of primaryKeys to ratings statses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.ratings.model.RatingsStats> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param statsId the primary key of the ratings stats

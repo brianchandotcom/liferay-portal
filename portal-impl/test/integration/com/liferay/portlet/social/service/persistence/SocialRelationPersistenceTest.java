@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -341,6 +342,79 @@ public class SocialRelationPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SocialRelation", "uuid",
 			true, "relationId", true, "companyId", true, "createDate", true,
 			"userId1", true, "userId2", true, "type", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, SocialRelation> missingSocialRelations = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialRelations.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		SocialRelation newSocialRelation = addSocialRelation();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialRelation.getPrimaryKey());
+
+		Map<Serializable, SocialRelation> missingSocialRelations = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialRelation existingSocialRelation = missingSocialRelations.get(newSocialRelation.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialRelations.size(), 1);
+		Assert.assertEquals(newSocialRelation, existingSocialRelation);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialRelation> missingSocialRelations = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSocialRelations.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		SocialRelation newSocialRelation = addSocialRelation();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialRelation.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, SocialRelation> missingSocialRelations = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialRelation existingSocialRelation = missingSocialRelations.get(newSocialRelation.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialRelations.size(), 1);
+		Assert.assertEquals(newSocialRelation, existingSocialRelation);
+		Assert.assertNull(missingSocialRelations.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		SocialRelation newSocialRelation = addSocialRelation();
+		SocialRelation newSocialRelation2 = addSocialRelation();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSocialRelation.getPrimaryKey());
+		missingPks.add(newSocialRelation2.getPrimaryKey());
+
+		Map<Serializable, SocialRelation> missingSocialRelations = _persistence.fetchByPrimaryKeys(missingPks);
+		SocialRelation existingSocialRelation = missingSocialRelations.get(newSocialRelation.getPrimaryKey());
+		SocialRelation existingSocialRelation2 = missingSocialRelations.get(newSocialRelation2.getPrimaryKey());
+
+		Assert.assertEquals(missingSocialRelations.size(), 2);
+		Assert.assertEquals(newSocialRelation, existingSocialRelation);
+		Assert.assertEquals(newSocialRelation2, existingSocialRelation2);
 	}
 
 	@Test

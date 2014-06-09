@@ -1923,6 +1923,17 @@ public class SocialActivityUtil {
 	}
 
 	/**
+	* Returns a map of social activities for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activities
+	* @return map of primaryKeys to social activities.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivity> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activityId the primary key of the social activity

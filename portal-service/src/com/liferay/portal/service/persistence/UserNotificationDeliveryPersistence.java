@@ -280,6 +280,15 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
+	* Returns a map of user notification deliveries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user notification deliveries
+	* @return map of primaryKeys to user notification deliveries.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserNotificationDelivery> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery

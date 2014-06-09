@@ -207,6 +207,15 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 		throws com.liferay.portal.NoSuchUserTrackerPathException;
 
 	/**
+	* Returns a map of user tracker paths for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user tracker paths
+	* @return map of primaryKeys to user tracker paths.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserTrackerPath> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the user tracker path with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param userTrackerPathId the primary key of the user tracker path

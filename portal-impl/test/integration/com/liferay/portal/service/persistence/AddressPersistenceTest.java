@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -358,6 +359,79 @@ public class AddressPersistenceTest {
 			"classNameId", true, "classPK", true, "street1", true, "street2",
 			true, "street3", true, "city", true, "zip", true, "regionId", true,
 			"countryId", true, "typeId", true, "mailing", true, "primary", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Address> missingAddresses = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAddresses.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Address newAddress = addAddress();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAddress.getPrimaryKey());
+
+		Map<Serializable, Address> missingAddresses = _persistence.fetchByPrimaryKeys(missingPks);
+		Address existingAddress = missingAddresses.get(newAddress.getPrimaryKey());
+
+		Assert.assertEquals(missingAddresses.size(), 1);
+		Assert.assertEquals(newAddress, existingAddress);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Address> missingAddresses = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAddresses.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Address newAddress = addAddress();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAddress.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Address> missingAddresses = _persistence.fetchByPrimaryKeys(missingPks);
+		Address existingAddress = missingAddresses.get(newAddress.getPrimaryKey());
+
+		Assert.assertEquals(missingAddresses.size(), 1);
+		Assert.assertEquals(newAddress, existingAddress);
+		Assert.assertNull(missingAddresses.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Address newAddress = addAddress();
+		Address newAddress2 = addAddress();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAddress.getPrimaryKey());
+		missingPks.add(newAddress2.getPrimaryKey());
+
+		Map<Serializable, Address> missingAddresses = _persistence.fetchByPrimaryKeys(missingPks);
+		Address existingAddress = missingAddresses.get(newAddress.getPrimaryKey());
+		Address existingAddress2 = missingAddresses.get(newAddress2.getPrimaryKey());
+
+		Assert.assertEquals(missingAddresses.size(), 2);
+		Assert.assertEquals(newAddress, existingAddress);
+		Assert.assertEquals(newAddress2, existingAddress2);
 	}
 
 	@Test

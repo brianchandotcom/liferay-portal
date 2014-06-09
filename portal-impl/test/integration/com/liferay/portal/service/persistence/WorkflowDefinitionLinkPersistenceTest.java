@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -271,6 +272,88 @@ public class WorkflowDefinitionLinkPersistenceTest {
 			"createDate", true, "modifiedDate", true, "classNameId", true,
 			"classPK", true, "typePK", true, "workflowDefinitionName", true,
 			"workflowDefinitionVersion", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, WorkflowDefinitionLink> missingWorkflowDefinitionLinks =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingWorkflowDefinitionLinks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		WorkflowDefinitionLink newWorkflowDefinitionLink = addWorkflowDefinitionLink();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWorkflowDefinitionLink.getPrimaryKey());
+
+		Map<Serializable, WorkflowDefinitionLink> missingWorkflowDefinitionLinks =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		WorkflowDefinitionLink existingWorkflowDefinitionLink = missingWorkflowDefinitionLinks.get(newWorkflowDefinitionLink.getPrimaryKey());
+
+		Assert.assertEquals(missingWorkflowDefinitionLinks.size(), 1);
+		Assert.assertEquals(newWorkflowDefinitionLink,
+			existingWorkflowDefinitionLink);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, WorkflowDefinitionLink> missingWorkflowDefinitionLinks =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingWorkflowDefinitionLinks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		WorkflowDefinitionLink newWorkflowDefinitionLink = addWorkflowDefinitionLink();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWorkflowDefinitionLink.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, WorkflowDefinitionLink> missingWorkflowDefinitionLinks =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		WorkflowDefinitionLink existingWorkflowDefinitionLink = missingWorkflowDefinitionLinks.get(newWorkflowDefinitionLink.getPrimaryKey());
+
+		Assert.assertEquals(missingWorkflowDefinitionLinks.size(), 1);
+		Assert.assertEquals(newWorkflowDefinitionLink,
+			existingWorkflowDefinitionLink);
+		Assert.assertNull(missingWorkflowDefinitionLinks.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		WorkflowDefinitionLink newWorkflowDefinitionLink = addWorkflowDefinitionLink();
+		WorkflowDefinitionLink newWorkflowDefinitionLink2 = addWorkflowDefinitionLink();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWorkflowDefinitionLink.getPrimaryKey());
+		missingPks.add(newWorkflowDefinitionLink2.getPrimaryKey());
+
+		Map<Serializable, WorkflowDefinitionLink> missingWorkflowDefinitionLinks =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		WorkflowDefinitionLink existingWorkflowDefinitionLink = missingWorkflowDefinitionLinks.get(newWorkflowDefinitionLink.getPrimaryKey());
+		WorkflowDefinitionLink existingWorkflowDefinitionLink2 = missingWorkflowDefinitionLinks.get(newWorkflowDefinitionLink2.getPrimaryKey());
+
+		Assert.assertEquals(missingWorkflowDefinitionLinks.size(), 2);
+		Assert.assertEquals(newWorkflowDefinitionLink,
+			existingWorkflowDefinitionLink);
+		Assert.assertEquals(newWorkflowDefinitionLink2,
+			existingWorkflowDefinitionLink2);
 	}
 
 	@Test

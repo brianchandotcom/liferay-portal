@@ -311,6 +311,15 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 		throws com.liferay.portal.NoSuchUserIdMapperException;
 
 	/**
+	* Returns a map of user ID mappers for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user ID mappers
+	* @return map of primaryKeys to user ID mappers.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserIdMapper> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param userIdMapperId the primary key of the user ID mapper

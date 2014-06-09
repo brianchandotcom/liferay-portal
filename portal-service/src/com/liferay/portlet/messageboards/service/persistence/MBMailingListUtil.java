@@ -735,6 +735,17 @@ public class MBMailingListUtil {
 	}
 
 	/**
+	* Returns a map of message boards mailing lists for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards mailing lists
+	* @return map of primaryKeys to message boards mailing lists.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMailingList> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param mailingListId the primary key of the message boards mailing list

@@ -5313,6 +5313,17 @@ public class MBMessageUtil {
 	}
 
 	/**
+	* Returns a map of message-boards messages for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message-boards messages
+	* @return map of primaryKeys to message-boards messages.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMessage> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param messageId the primary key of the message-boards message

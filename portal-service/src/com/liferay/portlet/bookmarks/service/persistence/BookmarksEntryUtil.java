@@ -3575,6 +3575,17 @@ public class BookmarksEntryUtil {
 	}
 
 	/**
+	* Returns a map of bookmarks entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the bookmarks entries
+	* @return map of primaryKeys to bookmarks entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.bookmarks.model.BookmarksEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the bookmarks entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param entryId the primary key of the bookmarks entry

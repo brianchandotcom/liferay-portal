@@ -373,6 +373,17 @@ public class PortletUtil {
 	}
 
 	/**
+	* Returns a map of portlets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the portlets
+	* @return map of primaryKeys to portlets.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Portlet> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the portlet with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param id the primary key of the portlet

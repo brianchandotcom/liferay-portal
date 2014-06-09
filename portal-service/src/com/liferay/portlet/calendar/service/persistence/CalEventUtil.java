@@ -2042,6 +2042,17 @@ public class CalEventUtil {
 	}
 
 	/**
+	* Returns a map of cal events for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the cal events
+	* @return map of primaryKeys to cal events.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.calendar.model.CalEvent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param eventId the primary key of the cal event

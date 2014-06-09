@@ -362,6 +362,17 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
+	* Returns a map of workflow instance links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the workflow instance links
+	* @return map of primaryKeys to workflow instance links.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.WorkflowInstanceLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param workflowInstanceLinkId the primary key of the workflow instance link

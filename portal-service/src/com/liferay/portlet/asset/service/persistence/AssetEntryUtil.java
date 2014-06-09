@@ -1021,6 +1021,17 @@ public class AssetEntryUtil {
 	}
 
 	/**
+	* Returns a map of asset entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset entries
+	* @return map of primaryKeys to asset entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the asset entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param entryId the primary key of the asset entry

@@ -876,6 +876,17 @@ public class PollsVoteUtil {
 	}
 
 	/**
+	* Returns a map of polls votes for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the polls votes
+	* @return map of primaryKeys to polls votes.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsVote> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param voteId the primary key of the polls vote

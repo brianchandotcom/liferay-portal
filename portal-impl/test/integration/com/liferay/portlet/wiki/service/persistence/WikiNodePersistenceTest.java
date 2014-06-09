@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -356,6 +357,79 @@ public class WikiNodePersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
 			true, "description", true, "lastPostDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, WikiNode> missingWikiNodes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingWikiNodes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		WikiNode newWikiNode = addWikiNode();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWikiNode.getPrimaryKey());
+
+		Map<Serializable, WikiNode> missingWikiNodes = _persistence.fetchByPrimaryKeys(missingPks);
+		WikiNode existingWikiNode = missingWikiNodes.get(newWikiNode.getPrimaryKey());
+
+		Assert.assertEquals(missingWikiNodes.size(), 1);
+		Assert.assertEquals(newWikiNode, existingWikiNode);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, WikiNode> missingWikiNodes = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingWikiNodes.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		WikiNode newWikiNode = addWikiNode();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWikiNode.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, WikiNode> missingWikiNodes = _persistence.fetchByPrimaryKeys(missingPks);
+		WikiNode existingWikiNode = missingWikiNodes.get(newWikiNode.getPrimaryKey());
+
+		Assert.assertEquals(missingWikiNodes.size(), 1);
+		Assert.assertEquals(newWikiNode, existingWikiNode);
+		Assert.assertNull(missingWikiNodes.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		WikiNode newWikiNode = addWikiNode();
+		WikiNode newWikiNode2 = addWikiNode();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newWikiNode.getPrimaryKey());
+		missingPks.add(newWikiNode2.getPrimaryKey());
+
+		Map<Serializable, WikiNode> missingWikiNodes = _persistence.fetchByPrimaryKeys(missingPks);
+		WikiNode existingWikiNode = missingWikiNodes.get(newWikiNode.getPrimaryKey());
+		WikiNode existingWikiNode2 = missingWikiNodes.get(newWikiNode2.getPrimaryKey());
+
+		Assert.assertEquals(missingWikiNodes.size(), 2);
+		Assert.assertEquals(newWikiNode, existingWikiNode);
+		Assert.assertEquals(newWikiNode2, existingWikiNode2);
 	}
 
 	@Test

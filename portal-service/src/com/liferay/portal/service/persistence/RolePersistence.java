@@ -1788,6 +1788,15 @@ public interface RolePersistence extends BasePersistence<Role> {
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
+	* Returns a map of roles for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the roles
+	* @return map of primaryKeys to roles.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Role> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the role with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param roleId the primary key of the role

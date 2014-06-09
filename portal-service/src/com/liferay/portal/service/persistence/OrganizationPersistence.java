@@ -1456,6 +1456,15 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		throws com.liferay.portal.NoSuchOrganizationException;
 
 	/**
+	* Returns a map of organizations for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the organizations
+	* @return map of primaryKeys to organizations.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Organization> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the organization with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param organizationId the primary key of the organization

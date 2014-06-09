@@ -1349,6 +1349,15 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 		throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 
 	/**
+	* Returns a map of document library file versions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library file versions
+	* @return map of primaryKeys to document library file versions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFileVersion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param fileVersionId the primary key of the document library file version

@@ -468,6 +468,15 @@ public interface ShoppingCategoryPersistence extends BasePersistence<ShoppingCat
 		throws com.liferay.portlet.shopping.NoSuchCategoryException;
 
 	/**
+	* Returns a map of shopping categories for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping categories
+	* @return map of primaryKeys to shopping categories.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCategory> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the shopping category with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param categoryId the primary key of the shopping category

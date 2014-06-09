@@ -559,6 +559,15 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
+	* Returns a map of repository entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the repository entries
+	* @return map of primaryKeys to repository entries.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.RepositoryEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param repositoryEntryId the primary key of the repository entry

@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -266,6 +267,79 @@ public class SCFrameworkVersionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "url", true, "active", true,
 			"priority", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, SCFrameworkVersion> missingSCFrameworkVersions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSCFrameworkVersions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCFrameworkVersion.getPrimaryKey());
+
+		Map<Serializable, SCFrameworkVersion> missingSCFrameworkVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		SCFrameworkVersion existingSCFrameworkVersion = missingSCFrameworkVersions.get(newSCFrameworkVersion.getPrimaryKey());
+
+		Assert.assertEquals(missingSCFrameworkVersions.size(), 1);
+		Assert.assertEquals(newSCFrameworkVersion, existingSCFrameworkVersion);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, SCFrameworkVersion> missingSCFrameworkVersions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingSCFrameworkVersions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCFrameworkVersion.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, SCFrameworkVersion> missingSCFrameworkVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		SCFrameworkVersion existingSCFrameworkVersion = missingSCFrameworkVersions.get(newSCFrameworkVersion.getPrimaryKey());
+
+		Assert.assertEquals(missingSCFrameworkVersions.size(), 1);
+		Assert.assertEquals(newSCFrameworkVersion, existingSCFrameworkVersion);
+		Assert.assertNull(missingSCFrameworkVersions.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		SCFrameworkVersion newSCFrameworkVersion = addSCFrameworkVersion();
+		SCFrameworkVersion newSCFrameworkVersion2 = addSCFrameworkVersion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newSCFrameworkVersion.getPrimaryKey());
+		missingPks.add(newSCFrameworkVersion2.getPrimaryKey());
+
+		Map<Serializable, SCFrameworkVersion> missingSCFrameworkVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		SCFrameworkVersion existingSCFrameworkVersion = missingSCFrameworkVersions.get(newSCFrameworkVersion.getPrimaryKey());
+		SCFrameworkVersion existingSCFrameworkVersion2 = missingSCFrameworkVersions.get(newSCFrameworkVersion2.getPrimaryKey());
+
+		Assert.assertEquals(missingSCFrameworkVersions.size(), 2);
+		Assert.assertEquals(newSCFrameworkVersion, existingSCFrameworkVersion);
+		Assert.assertEquals(newSCFrameworkVersion2, existingSCFrameworkVersion2);
 	}
 
 	@Test

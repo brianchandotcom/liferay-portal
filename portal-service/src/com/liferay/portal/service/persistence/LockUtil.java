@@ -674,6 +674,17 @@ public class LockUtil {
 	}
 
 	/**
+	* Returns a map of locks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the locks
+	* @return map of primaryKeys to locks.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Lock> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the lock with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param lockId the primary key of the lock

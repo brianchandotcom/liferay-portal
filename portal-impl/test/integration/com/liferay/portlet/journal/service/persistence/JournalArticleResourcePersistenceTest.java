@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,6 +246,88 @@ public class JournalArticleResourcePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("JournalArticleResource",
 			"uuid", true, "resourcePrimKey", true, "groupId", true,
 			"articleId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, JournalArticleResource> missingJournalArticleResources =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingJournalArticleResources.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newJournalArticleResource.getPrimaryKey());
+
+		Map<Serializable, JournalArticleResource> missingJournalArticleResources =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		JournalArticleResource existingJournalArticleResource = missingJournalArticleResources.get(newJournalArticleResource.getPrimaryKey());
+
+		Assert.assertEquals(missingJournalArticleResources.size(), 1);
+		Assert.assertEquals(newJournalArticleResource,
+			existingJournalArticleResource);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, JournalArticleResource> missingJournalArticleResources =
+			_persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingJournalArticleResources.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newJournalArticleResource.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, JournalArticleResource> missingJournalArticleResources =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		JournalArticleResource existingJournalArticleResource = missingJournalArticleResources.get(newJournalArticleResource.getPrimaryKey());
+
+		Assert.assertEquals(missingJournalArticleResources.size(), 1);
+		Assert.assertEquals(newJournalArticleResource,
+			existingJournalArticleResource);
+		Assert.assertNull(missingJournalArticleResources.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
+		JournalArticleResource newJournalArticleResource2 = addJournalArticleResource();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newJournalArticleResource.getPrimaryKey());
+		missingPks.add(newJournalArticleResource2.getPrimaryKey());
+
+		Map<Serializable, JournalArticleResource> missingJournalArticleResources =
+			_persistence.fetchByPrimaryKeys(missingPks);
+		JournalArticleResource existingJournalArticleResource = missingJournalArticleResources.get(newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource2 = missingJournalArticleResources.get(newJournalArticleResource2.getPrimaryKey());
+
+		Assert.assertEquals(missingJournalArticleResources.size(), 2);
+		Assert.assertEquals(newJournalArticleResource,
+			existingJournalArticleResource);
+		Assert.assertEquals(newJournalArticleResource2,
+			existingJournalArticleResource2);
 	}
 
 	@Test

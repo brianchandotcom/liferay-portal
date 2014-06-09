@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -196,6 +197,79 @@ public class ClassNamePersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ClassName_", "mvccVersion",
 			true, "classNameId", true, "value", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingClassNames.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ClassName newClassName = addClassName();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClassName.getPrimaryKey());
+
+		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
+
+		Assert.assertEquals(missingClassNames.size(), 1);
+		Assert.assertEquals(newClassName, existingClassName);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingClassNames.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ClassName newClassName = addClassName();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClassName.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
+
+		Assert.assertEquals(missingClassNames.size(), 1);
+		Assert.assertEquals(newClassName, existingClassName);
+		Assert.assertNull(missingClassNames.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ClassName newClassName = addClassName();
+		ClassName newClassName2 = addClassName();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClassName.getPrimaryKey());
+		missingPks.add(newClassName2.getPrimaryKey());
+
+		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
+		ClassName existingClassName2 = missingClassNames.get(newClassName2.getPrimaryKey());
+
+		Assert.assertEquals(missingClassNames.size(), 2);
+		Assert.assertEquals(newClassName, existingClassName);
+		Assert.assertEquals(newClassName2, existingClassName2);
 	}
 
 	@Test

@@ -52,8 +52,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -3072,6 +3075,93 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	/**
+	 * Returns a map of s c product entries for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c product entries
+	 * @return map of primaryKeys to s c product entries.
+	 */
+	@Override
+	public Map<Serializable, SCProductEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		Map<Serializable, SCProductEntry> results = new HashMap<Serializable, SCProductEntry>();
+
+		if (primaryKeys.isEmpty()) {
+			return results;
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable singlePrimaryKey = iterator.next();
+			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
+					SCProductEntryImpl.class, primaryKey);
+
+			if (scProductEntry == null) {
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, scProductEntry);
+			}
+		}
+
+		if (cacheMissPks.isEmpty()) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+
+		query.append(_SQL_SELECT_SCPRODUCTENTRY_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (SCProductEntry result : (List<SCProductEntry>)q.list()) {
+				results.put(result.getPrimaryKeyObj(), result);
+
+				cacheResult(result);
+
+				cacheMissPks.remove(result.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
+					SCProductEntryImpl.class, primaryKey, _nullSCProductEntry);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param productEntryId the primary key of the s c product entry
@@ -3569,6 +3659,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	protected SCLicensePersistence scLicensePersistence;
 	protected TableMapper<SCProductEntry, com.liferay.portlet.softwarecatalog.model.SCLicense> scProductEntryToSCLicenseTableMapper;
 	private static final String _SQL_SELECT_SCPRODUCTENTRY = "SELECT scProductEntry FROM SCProductEntry scProductEntry";
+	private static final String _SQL_SELECT_SCPRODUCTENTRY_WHERE_PKS_IN = "SELECT scProductEntry FROM SCProductEntry scProductEntry WHERE productEntryId IN (";
 	private static final String _SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT scProductEntry FROM SCProductEntry scProductEntry WHERE ";
 	private static final String _SQL_COUNT_SCPRODUCTENTRY = "SELECT COUNT(scProductEntry) FROM SCProductEntry scProductEntry";
 	private static final String _SQL_COUNT_SCPRODUCTENTRY_WHERE = "SELECT COUNT(scProductEntry) FROM SCProductEntry scProductEntry WHERE ";

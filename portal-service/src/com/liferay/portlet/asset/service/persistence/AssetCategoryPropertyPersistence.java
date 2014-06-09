@@ -508,6 +508,15 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
 
 	/**
+	* Returns a map of asset category properties for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset category properties
+	* @return map of primaryKeys to asset category properties.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetCategoryProperty> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param categoryPropertyId the primary key of the asset category property

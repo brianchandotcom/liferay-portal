@@ -1056,6 +1056,15 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
+	* Returns a map of announcements entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the announcements entries
+	* @return map of primaryKeys to announcements entries.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param entryId the primary key of the announcements entry

@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -270,6 +271,79 @@ public class LockPersistenceTest {
 			true, "userName", true, "createDate", true, "className", true,
 			"key", true, "owner", true, "inheritable", true, "expirationDate",
 			true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, Lock> missingLocks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLocks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		Lock newLock = addLock();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLock.getPrimaryKey());
+
+		Map<Serializable, Lock> missingLocks = _persistence.fetchByPrimaryKeys(missingPks);
+		Lock existingLock = missingLocks.get(newLock.getPrimaryKey());
+
+		Assert.assertEquals(missingLocks.size(), 1);
+		Assert.assertEquals(newLock, existingLock);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, Lock> missingLocks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingLocks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		Lock newLock = addLock();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLock.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, Lock> missingLocks = _persistence.fetchByPrimaryKeys(missingPks);
+		Lock existingLock = missingLocks.get(newLock.getPrimaryKey());
+
+		Assert.assertEquals(missingLocks.size(), 1);
+		Assert.assertEquals(newLock, existingLock);
+		Assert.assertNull(missingLocks.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		Lock newLock = addLock();
+		Lock newLock2 = addLock();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newLock.getPrimaryKey());
+		missingPks.add(newLock2.getPrimaryKey());
+
+		Map<Serializable, Lock> missingLocks = _persistence.fetchByPrimaryKeys(missingPks);
+		Lock existingLock = missingLocks.get(newLock.getPrimaryKey());
+		Lock existingLock2 = missingLocks.get(newLock2.getPrimaryKey());
+
+		Assert.assertEquals(missingLocks.size(), 2);
+		Assert.assertEquals(newLock, existingLock);
+		Assert.assertEquals(newLock2, existingLock2);
 	}
 
 	@Test

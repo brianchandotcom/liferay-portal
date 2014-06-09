@@ -46,6 +46,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -188,6 +189,79 @@ public class ClusterGroupPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ClusterGroup",
 			"mvccVersion", true, "clusterGroupId", true, "name", true,
 			"clusterNodeIds", true, "wholeCluster", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingClusterGroups.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		ClusterGroup newClusterGroup = addClusterGroup();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClusterGroup.getPrimaryKey());
+
+		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
+
+		Assert.assertEquals(missingClusterGroups.size(), 1);
+		Assert.assertEquals(newClusterGroup, existingClusterGroup);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingClusterGroups.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		ClusterGroup newClusterGroup = addClusterGroup();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClusterGroup.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
+
+		Assert.assertEquals(missingClusterGroups.size(), 1);
+		Assert.assertEquals(newClusterGroup, existingClusterGroup);
+		Assert.assertNull(missingClusterGroups.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		ClusterGroup newClusterGroup = addClusterGroup();
+		ClusterGroup newClusterGroup2 = addClusterGroup();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newClusterGroup.getPrimaryKey());
+		missingPks.add(newClusterGroup2.getPrimaryKey());
+
+		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
+		ClusterGroup existingClusterGroup2 = missingClusterGroups.get(newClusterGroup2.getPrimaryKey());
+
+		Assert.assertEquals(missingClusterGroups.size(), 2);
+		Assert.assertEquals(newClusterGroup, existingClusterGroup);
+		Assert.assertEquals(newClusterGroup2, existingClusterGroup2);
 	}
 
 	@Test

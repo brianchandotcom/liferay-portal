@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -223,6 +224,79 @@ public class AssetTagStatsPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("AssetTagStats",
 			"tagStatsId", true, "tagId", true, "classNameId", true,
 			"assetCount", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, AssetTagStats> missingAssetTagStatses = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAssetTagStatses.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		AssetTagStats newAssetTagStats = addAssetTagStats();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetTagStats.getPrimaryKey());
+
+		Map<Serializable, AssetTagStats> missingAssetTagStatses = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetTagStats existingAssetTagStats = missingAssetTagStatses.get(newAssetTagStats.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetTagStatses.size(), 1);
+		Assert.assertEquals(newAssetTagStats, existingAssetTagStats);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, AssetTagStats> missingAssetTagStatses = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingAssetTagStatses.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		AssetTagStats newAssetTagStats = addAssetTagStats();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetTagStats.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, AssetTagStats> missingAssetTagStatses = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetTagStats existingAssetTagStats = missingAssetTagStatses.get(newAssetTagStats.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetTagStatses.size(), 1);
+		Assert.assertEquals(newAssetTagStats, existingAssetTagStats);
+		Assert.assertNull(missingAssetTagStatses.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		AssetTagStats newAssetTagStats = addAssetTagStats();
+		AssetTagStats newAssetTagStats2 = addAssetTagStats();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newAssetTagStats.getPrimaryKey());
+		missingPks.add(newAssetTagStats2.getPrimaryKey());
+
+		Map<Serializable, AssetTagStats> missingAssetTagStatses = _persistence.fetchByPrimaryKeys(missingPks);
+		AssetTagStats existingAssetTagStats = missingAssetTagStatses.get(newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats2 = missingAssetTagStatses.get(newAssetTagStats2.getPrimaryKey());
+
+		Assert.assertEquals(missingAssetTagStatses.size(), 2);
+		Assert.assertEquals(newAssetTagStats, existingAssetTagStats);
+		Assert.assertEquals(newAssetTagStats2, existingAssetTagStats2);
 	}
 
 	@Test

@@ -40,6 +40,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -184,6 +185,81 @@ public class OrgGroupRolePersistenceTest {
 		}
 		catch (NoSuchOrgGroupRoleException nsee) {
 		}
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingOrgGroupRoles.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newOrgGroupRole.getPrimaryKey());
+
+		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
+
+		Assert.assertEquals(missingOrgGroupRoles.size(), 1);
+		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk2 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingOrgGroupRoles.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
+		OrgGroupRolePK pk2 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newOrgGroupRole.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
+
+		Assert.assertEquals(missingOrgGroupRoles.size(), 1);
+		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
+		Assert.assertNull(missingOrgGroupRoles.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
+		OrgGroupRole newOrgGroupRole2 = addOrgGroupRole();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newOrgGroupRole.getPrimaryKey());
+		missingPks.add(newOrgGroupRole2.getPrimaryKey());
+
+		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
+		OrgGroupRole existingOrgGroupRole2 = missingOrgGroupRoles.get(newOrgGroupRole2.getPrimaryKey());
+
+		Assert.assertEquals(missingOrgGroupRoles.size(), 2);
+		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
+		Assert.assertEquals(newOrgGroupRole2, existingOrgGroupRole2);
 	}
 
 	@Test

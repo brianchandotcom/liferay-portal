@@ -267,6 +267,15 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
+	* Returns a map of announcements flags for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the announcements flags
+	* @return map of primaryKeys to announcements flags.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsFlag> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param flagId the primary key of the announcements flag

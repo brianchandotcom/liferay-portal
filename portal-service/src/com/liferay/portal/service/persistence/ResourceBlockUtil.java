@@ -583,6 +583,17 @@ public class ResourceBlockUtil {
 	}
 
 	/**
+	* Returns a map of resource blocks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource blocks
+	* @return map of primaryKeys to resource blocks.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceBlock> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the resource block with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourceBlockId the primary key of the resource block

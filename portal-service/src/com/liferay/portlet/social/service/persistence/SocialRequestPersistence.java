@@ -1530,6 +1530,15 @@ public interface SocialRequestPersistence extends BasePersistence<SocialRequest>
 		throws com.liferay.portlet.social.NoSuchRequestException;
 
 	/**
+	* Returns a map of social requests for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social requests
+	* @return map of primaryKeys to social requests.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialRequest> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns the social request with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param requestId the primary key of the social request

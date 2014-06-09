@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -223,6 +224,79 @@ public class DDMStructureLinkPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMStructureLink",
 			"structureLinkId", true, "classNameId", true, "classPK", true,
 			"structureId", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, DDMStructureLink> missingDDMStructureLinks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDDMStructureLinks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMStructureLink.getPrimaryKey());
+
+		Map<Serializable, DDMStructureLink> missingDDMStructureLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMStructureLink existingDDMStructureLink = missingDDMStructureLinks.get(newDDMStructureLink.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMStructureLinks.size(), 1);
+		Assert.assertEquals(newDDMStructureLink, existingDDMStructureLink);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, DDMStructureLink> missingDDMStructureLinks = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDDMStructureLinks.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMStructureLink.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, DDMStructureLink> missingDDMStructureLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMStructureLink existingDDMStructureLink = missingDDMStructureLinks.get(newDDMStructureLink.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMStructureLinks.size(), 1);
+		Assert.assertEquals(newDDMStructureLink, existingDDMStructureLink);
+		Assert.assertNull(missingDDMStructureLinks.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
+		DDMStructureLink newDDMStructureLink2 = addDDMStructureLink();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMStructureLink.getPrimaryKey());
+		missingPks.add(newDDMStructureLink2.getPrimaryKey());
+
+		Map<Serializable, DDMStructureLink> missingDDMStructureLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMStructureLink existingDDMStructureLink = missingDDMStructureLinks.get(newDDMStructureLink.getPrimaryKey());
+		DDMStructureLink existingDDMStructureLink2 = missingDDMStructureLinks.get(newDDMStructureLink2.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMStructureLinks.size(), 2);
+		Assert.assertEquals(newDDMStructureLink, existingDDMStructureLink);
+		Assert.assertEquals(newDDMStructureLink2, existingDDMStructureLink2);
 	}
 
 	@Test

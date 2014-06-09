@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -287,6 +288,79 @@ public class DDMContentPersistenceTest {
 			"contentId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"name", true, "description", true, "xml", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, DDMContent> missingDDMContents = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDDMContents.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		DDMContent newDDMContent = addDDMContent();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMContent.getPrimaryKey());
+
+		Map<Serializable, DDMContent> missingDDMContents = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMContent existingDDMContent = missingDDMContents.get(newDDMContent.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMContents.size(), 1);
+		Assert.assertEquals(newDDMContent, existingDDMContent);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, DDMContent> missingDDMContents = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingDDMContents.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		DDMContent newDDMContent = addDDMContent();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMContent.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, DDMContent> missingDDMContents = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMContent existingDDMContent = missingDDMContents.get(newDDMContent.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMContents.size(), 1);
+		Assert.assertEquals(newDDMContent, existingDDMContent);
+		Assert.assertNull(missingDDMContents.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		DDMContent newDDMContent = addDDMContent();
+		DDMContent newDDMContent2 = addDDMContent();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newDDMContent.getPrimaryKey());
+		missingPks.add(newDDMContent2.getPrimaryKey());
+
+		Map<Serializable, DDMContent> missingDDMContents = _persistence.fetchByPrimaryKeys(missingPks);
+		DDMContent existingDDMContent = missingDDMContents.get(newDDMContent.getPrimaryKey());
+		DDMContent existingDDMContent2 = missingDDMContents.get(newDDMContent2.getPrimaryKey());
+
+		Assert.assertEquals(missingDDMContents.size(), 2);
+		Assert.assertEquals(newDDMContent, existingDDMContent);
+		Assert.assertEquals(newDDMContent2, existingDDMContent2);
 	}
 
 	@Test

@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -202,6 +203,79 @@ public class UserTrackerPathPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("UserTrackerPath",
 			"mvccVersion", true, "userTrackerPathId", true, "userTrackerId",
 			true, "path", true, "pathDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, UserTrackerPath> missingUserTrackerPaths = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUserTrackerPaths.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserTrackerPath.getPrimaryKey());
+
+		Map<Serializable, UserTrackerPath> missingUserTrackerPaths = _persistence.fetchByPrimaryKeys(missingPks);
+		UserTrackerPath existingUserTrackerPath = missingUserTrackerPaths.get(newUserTrackerPath.getPrimaryKey());
+
+		Assert.assertEquals(missingUserTrackerPaths.size(), 1);
+		Assert.assertEquals(newUserTrackerPath, existingUserTrackerPath);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, UserTrackerPath> missingUserTrackerPaths = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingUserTrackerPaths.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserTrackerPath.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, UserTrackerPath> missingUserTrackerPaths = _persistence.fetchByPrimaryKeys(missingPks);
+		UserTrackerPath existingUserTrackerPath = missingUserTrackerPaths.get(newUserTrackerPath.getPrimaryKey());
+
+		Assert.assertEquals(missingUserTrackerPaths.size(), 1);
+		Assert.assertEquals(newUserTrackerPath, existingUserTrackerPath);
+		Assert.assertNull(missingUserTrackerPaths.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
+		UserTrackerPath newUserTrackerPath2 = addUserTrackerPath();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newUserTrackerPath.getPrimaryKey());
+		missingPks.add(newUserTrackerPath2.getPrimaryKey());
+
+		Map<Serializable, UserTrackerPath> missingUserTrackerPaths = _persistence.fetchByPrimaryKeys(missingPks);
+		UserTrackerPath existingUserTrackerPath = missingUserTrackerPaths.get(newUserTrackerPath.getPrimaryKey());
+		UserTrackerPath existingUserTrackerPath2 = missingUserTrackerPaths.get(newUserTrackerPath2.getPrimaryKey());
+
+		Assert.assertEquals(missingUserTrackerPaths.size(), 2);
+		Assert.assertEquals(newUserTrackerPath, existingUserTrackerPath);
+		Assert.assertEquals(newUserTrackerPath2, existingUserTrackerPath2);
 	}
 
 	@Test

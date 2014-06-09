@@ -169,6 +169,17 @@ public class CounterUtil {
 	}
 
 	/**
+	* Returns a map of counters for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the counters
+	* @return map of primaryKeys to counters.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.counter.model.Counter> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the counter with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param name the primary key of the counter

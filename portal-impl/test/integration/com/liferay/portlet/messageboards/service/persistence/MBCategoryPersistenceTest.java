@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -465,6 +466,79 @@ public class MBCategoryPersistenceTest {
 			"displayStyle", true, "threadCount", true, "messageCount", true,
 			"lastPostDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, MBCategory> missingMBCategories = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBCategories.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		MBCategory newMBCategory = addMBCategory();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBCategory.getPrimaryKey());
+
+		Map<Serializable, MBCategory> missingMBCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		MBCategory existingMBCategory = missingMBCategories.get(newMBCategory.getPrimaryKey());
+
+		Assert.assertEquals(missingMBCategories.size(), 1);
+		Assert.assertEquals(newMBCategory, existingMBCategory);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, MBCategory> missingMBCategories = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingMBCategories.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		MBCategory newMBCategory = addMBCategory();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBCategory.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, MBCategory> missingMBCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		MBCategory existingMBCategory = missingMBCategories.get(newMBCategory.getPrimaryKey());
+
+		Assert.assertEquals(missingMBCategories.size(), 1);
+		Assert.assertEquals(newMBCategory, existingMBCategory);
+		Assert.assertNull(missingMBCategories.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		MBCategory newMBCategory = addMBCategory();
+		MBCategory newMBCategory2 = addMBCategory();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newMBCategory.getPrimaryKey());
+		missingPks.add(newMBCategory2.getPrimaryKey());
+
+		Map<Serializable, MBCategory> missingMBCategories = _persistence.fetchByPrimaryKeys(missingPks);
+		MBCategory existingMBCategory = missingMBCategories.get(newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory2 = missingMBCategories.get(newMBCategory2.getPrimaryKey());
+
+		Assert.assertEquals(missingMBCategories.size(), 2);
+		Assert.assertEquals(newMBCategory, existingMBCategory);
+		Assert.assertEquals(newMBCategory2, existingMBCategory2);
 	}
 
 	@Test

@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,6 +246,79 @@ public class TrashVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("TrashVersion", "versionId",
 			true, "entryId", true, "classNameId", true, "classPK", true,
 			"typeSettings", true, "status", true);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, TrashVersion> missingTrashVersions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingTrashVersions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		TrashVersion newTrashVersion = addTrashVersion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newTrashVersion.getPrimaryKey());
+
+		Map<Serializable, TrashVersion> missingTrashVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		TrashVersion existingTrashVersion = missingTrashVersions.get(newTrashVersion.getPrimaryKey());
+
+		Assert.assertEquals(missingTrashVersions.size(), 1);
+		Assert.assertEquals(newTrashVersion, existingTrashVersion);
+	}
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, TrashVersion> missingTrashVersions = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missingTrashVersions.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		TrashVersion newTrashVersion = addTrashVersion();
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newTrashVersion.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, TrashVersion> missingTrashVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		TrashVersion existingTrashVersion = missingTrashVersions.get(newTrashVersion.getPrimaryKey());
+
+		Assert.assertEquals(missingTrashVersions.size(), 1);
+		Assert.assertEquals(newTrashVersion, existingTrashVersion);
+		Assert.assertNull(missingTrashVersions.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		TrashVersion newTrashVersion = addTrashVersion();
+		TrashVersion newTrashVersion2 = addTrashVersion();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(newTrashVersion.getPrimaryKey());
+		missingPks.add(newTrashVersion2.getPrimaryKey());
+
+		Map<Serializable, TrashVersion> missingTrashVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		TrashVersion existingTrashVersion = missingTrashVersions.get(newTrashVersion.getPrimaryKey());
+		TrashVersion existingTrashVersion2 = missingTrashVersions.get(newTrashVersion2.getPrimaryKey());
+
+		Assert.assertEquals(missingTrashVersions.size(), 2);
+		Assert.assertEquals(newTrashVersion, existingTrashVersion);
+		Assert.assertEquals(newTrashVersion2, existingTrashVersion2);
 	}
 
 	@Test

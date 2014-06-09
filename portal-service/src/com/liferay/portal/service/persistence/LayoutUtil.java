@@ -2261,6 +2261,17 @@ public class LayoutUtil {
 	}
 
 	/**
+	* Returns a map of layouts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layouts
+	* @return map of primaryKeys to layouts.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Layout> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns the layout with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param plid the primary key of the layout

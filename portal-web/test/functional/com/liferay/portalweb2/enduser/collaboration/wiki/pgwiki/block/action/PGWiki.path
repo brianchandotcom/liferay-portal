@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_BODY</td>
 	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
 	<td></td>
@@ -234,6 +239,11 @@
 </tr>
 <!--COMMENTS-->
 <tr>
+	<td>COMMENTS_SUCCESS</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_DROP_DOWN</td>
 	<td>//div[@id='wikiCommentsPanelContainer']//div[@class='accordion-toggle']</td>
 	<td></td>
@@ -259,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_BODY</td>
 	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message']</td>
 	<td></td>
@@ -281,6 +296,31 @@
 <tr>
 	<td>COMMENTS_CANCEL_BUTTON</td>
 	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_DELETE</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_commentBody}')]//..//li/span/a/span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_commentBody}')]//..//li/span/a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_BODY_FIELD</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_commentBody}')]//..//..//..//textarea[contains(@id,'editReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_commentBody}')]//..//..//..//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_EDIT_CANCEL_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_commentBody}')]//..//..//..//button[contains(@class,'btn') and contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
 <tr>

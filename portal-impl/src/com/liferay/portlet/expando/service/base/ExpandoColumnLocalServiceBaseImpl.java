@@ -249,6 +249,12 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteExpandoColumn((ExpandoColumn)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return expandoColumnPersistence.findByPrimaryKey(primaryKeyObj);

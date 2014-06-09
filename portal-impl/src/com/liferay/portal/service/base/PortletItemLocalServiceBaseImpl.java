@@ -245,6 +245,12 @@ public abstract class PortletItemLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deletePortletItem((PortletItem)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return portletItemPersistence.findByPrimaryKey(primaryKeyObj);

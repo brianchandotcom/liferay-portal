@@ -359,6 +359,12 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMBCategory((MBCategory)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mbCategoryPersistence.findByPrimaryKey(primaryKeyObj);

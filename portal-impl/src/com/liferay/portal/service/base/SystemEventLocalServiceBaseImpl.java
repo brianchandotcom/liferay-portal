@@ -247,6 +247,12 @@ public abstract class SystemEventLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSystemEvent((SystemEvent)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return systemEventPersistence.findByPrimaryKey(primaryKeyObj);

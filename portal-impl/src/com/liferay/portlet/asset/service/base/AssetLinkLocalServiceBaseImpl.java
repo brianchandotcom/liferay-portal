@@ -244,6 +244,12 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAssetLink((AssetLink)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return assetLinkPersistence.findByPrimaryKey(primaryKeyObj);

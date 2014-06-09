@@ -249,6 +249,12 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteShoppingCoupon((ShoppingCoupon)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return shoppingCouponPersistence.findByPrimaryKey(primaryKeyObj);

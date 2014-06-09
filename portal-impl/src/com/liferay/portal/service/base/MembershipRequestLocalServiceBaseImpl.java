@@ -254,6 +254,12 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMembershipRequest((MembershipRequest)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return membershipRequestPersistence.findByPrimaryKey(primaryKeyObj);

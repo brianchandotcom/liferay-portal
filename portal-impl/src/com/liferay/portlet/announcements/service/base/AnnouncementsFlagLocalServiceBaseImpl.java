@@ -245,6 +245,12 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAnnouncementsFlag((AnnouncementsFlag)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return announcementsFlagPersistence.findByPrimaryKey(primaryKeyObj);

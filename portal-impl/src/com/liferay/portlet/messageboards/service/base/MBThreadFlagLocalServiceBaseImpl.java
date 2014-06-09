@@ -332,6 +332,12 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteMBThreadFlag((MBThreadFlag)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return mbThreadFlagPersistence.findByPrimaryKey(primaryKeyObj);

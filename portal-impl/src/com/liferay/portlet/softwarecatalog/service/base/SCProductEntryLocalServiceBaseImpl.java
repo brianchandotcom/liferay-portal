@@ -256,6 +256,12 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSCProductEntry((SCProductEntry)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return scProductEntryPersistence.findByPrimaryKey(primaryKeyObj);

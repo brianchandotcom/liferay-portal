@@ -324,6 +324,12 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deletePasswordPolicy((PasswordPolicy)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return passwordPolicyPersistence.findByPrimaryKey(primaryKeyObj);

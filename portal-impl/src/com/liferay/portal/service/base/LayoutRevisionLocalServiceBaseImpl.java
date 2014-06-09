@@ -257,6 +257,12 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteLayoutRevision((LayoutRevision)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return layoutRevisionPersistence.findByPrimaryKey(primaryKeyObj);

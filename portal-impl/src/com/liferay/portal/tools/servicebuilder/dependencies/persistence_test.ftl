@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.HashSet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -503,6 +504,168 @@ public class ${entity.name}PersistenceTest {
 				);
 		}
 	</#if>
+
+	@Test
+	public void FetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+
+		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missing${entity.names}.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSingleInput() throws Exception {
+		${entity.name} new${entity.name} = add${entity.name}();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(new${entity.name}.getPrimaryKey());
+
+		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
+
+		Assert.assertEquals(missing${entity.names}.size(), 1);
+		Assert.assertEquals(new${entity.name}, existing${entity.name});
+	}
+
+
+	@Test
+	public void FetchByPrimaryKeysNoneExist() throws Exception {
+		<#if entity.hasCompoundPK()>
+			${entity.PKClassName} pk = new ${entity.PKClassName}(
+
+			<#list entity.PKList as column>
+				<#if column.type == "int">
+					RandomTestUtil.nextInt()
+				<#elseif column.type == "long">
+					RandomTestUtil.nextLong()
+				<#elseif column.type == "String">
+					RandomTestUtil.randomString()
+				</#if>
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+			);
+			${entity.PKClassName} pk2 = new ${entity.PKClassName}(
+
+			<#list entity.PKList as column>
+				<#if column.type == "int">
+					RandomTestUtil.nextInt()
+				<#elseif column.type == "long">
+					RandomTestUtil.nextLong()
+				<#elseif column.type == "String">
+					RandomTestUtil.randomString()
+				</#if>
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+			);
+		<#else>
+			<#assign column = entity.PKList[0]>
+
+			${column.type} pk =
+
+			<#if column.type == "int">
+				RandomTestUtil.nextInt()
+			<#elseif column.type == "long">
+				RandomTestUtil.nextLong()
+			<#elseif column.type == "String">
+				RandomTestUtil.randomString()
+			</#if>
+
+			;
+			${column.type} pk2 =
+
+			<#if column.type == "int">
+				RandomTestUtil.nextInt()
+			<#elseif column.type == "long">
+				RandomTestUtil.nextLong()
+			<#elseif column.type == "String">
+				RandomTestUtil.randomString()
+			</#if>
+
+			;
+		</#if>
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(pk);
+		missingPks.add(pk2);
+
+		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+
+		Assert.assertTrue(missing${entity.names}.isEmpty());
+	}
+
+	@Test
+	public void FetchByPrimaryKeysSomeExist() throws Exception {
+		${entity.name} new${entity.name} = add${entity.name}();
+		<#if entity.hasCompoundPK()>
+			${entity.PKClassName} pk2 = new ${entity.PKClassName}(
+
+			<#list entity.PKList as column>
+				<#if column.type == "int">
+					RandomTestUtil.nextInt()
+				<#elseif column.type == "long">
+					RandomTestUtil.nextLong()
+				<#elseif column.type == "String">
+					RandomTestUtil.randomString()
+				</#if>
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+			);
+		<#else>
+			${column.type} pk2 =
+
+			<#if column.type == "int">
+				RandomTestUtil.nextInt()
+			<#elseif column.type == "long">
+				RandomTestUtil.nextLong()
+			<#elseif column.type == "String">
+				RandomTestUtil.randomString()
+			</#if>
+
+			;
+		</#if>
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(new${entity.name}.getPrimaryKey());
+		missingPks.add(pk2);
+
+		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
+
+		Assert.assertEquals(missing${entity.names}.size(), 1);
+		Assert.assertEquals(new${entity.name}, existing${entity.name});
+		Assert.assertNull(missing${entity.names}.get(pk2));
+	}
+
+	@Test
+	public void FetchByPrimaryKeysAllExist() throws Exception {
+		${entity.name} new${entity.name} = add${entity.name}();
+		${entity.name} new${entity.name}2 = add${entity.name}();
+
+		Set<Serializable> missingPks = new HashSet<Serializable>();
+		missingPks.add(new${entity.name}.getPrimaryKey());
+		missingPks.add(new${entity.name}2.getPrimaryKey());
+
+		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
+		${entity.name} existing${entity.name}2 = missing${entity.names}.get(new${entity.name}2.getPrimaryKey());
+
+		Assert.assertEquals(missing${entity.names}.size(), 2);
+		Assert.assertEquals(new${entity.name}, existing${entity.name});
+		Assert.assertEquals(new${entity.name}2, existing${entity.name}2);
+	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {

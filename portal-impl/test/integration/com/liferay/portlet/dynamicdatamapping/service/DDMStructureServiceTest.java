@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -42,7 +43,11 @@ import org.junit.runner.RunWith;
 /**
  * @author Eduardo Garcia
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		MainServletExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 

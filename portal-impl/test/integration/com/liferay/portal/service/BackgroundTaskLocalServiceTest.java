@@ -29,6 +29,7 @@ import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BackgroundTaskImpl;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -87,10 +88,6 @@ public class BackgroundTaskLocalServiceTest {
 
 		BackgroundTaskLocalServiceUtil.deleteGroupBackgroundTasks(
 			_group.getGroupId());
-
-		UserLocalServiceUtil.deleteUser(_user);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -332,7 +329,11 @@ public class BackgroundTaskLocalServiceTest {
 		PortletStagingBackgroundTaskExecutor.class;
 
 	private Destination _destination = new SynchronousDestination();
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

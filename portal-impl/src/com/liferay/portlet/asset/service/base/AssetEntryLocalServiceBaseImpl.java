@@ -271,6 +271,15 @@ public abstract class AssetEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAssetEntry((AssetEntry)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

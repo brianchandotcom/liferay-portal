@@ -247,6 +247,15 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("statsId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteRatingsStats((RatingsStats)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

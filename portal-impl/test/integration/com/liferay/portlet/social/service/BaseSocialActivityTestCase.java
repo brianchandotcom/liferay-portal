@@ -17,13 +17,11 @@ package com.liferay.portlet.social.service;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.portlet.social.util.test.SocialActivityTestUtil;
@@ -66,38 +64,22 @@ public class BaseSocialActivityTestCase {
 	@After
 	public void tearDown() throws Exception {
 		SocialActivityHierarchyEntryThreadLocal.clear();
-
-		if (_actorUser != null) {
-			UserLocalServiceUtil.deleteUser(_actorUser);
-
-			_actorUser = null;
-		}
-
-		if (_assetEntry != null) {
-			AssetEntryLocalServiceUtil.deleteEntry(_assetEntry);
-
-			_assetEntry = null;
-		}
-
-		if (_creatorUser != null) {
-			UserLocalServiceUtil.deleteUser(_creatorUser);
-
-			_creatorUser = null;
-		}
-
-		if (_group != null) {
-			GroupLocalServiceUtil.deleteGroup(_group);
-
-			_group = null;
-		}
 	}
 
 	protected static final String TEST_MODEL = "test-model";
 
+	@DeleteAfterTestRun
 	protected static User _actorUser;
+
+	@DeleteAfterTestRun
 	protected static AssetEntry _assetEntry;
+
+	@DeleteAfterTestRun
 	protected static User _creatorUser;
+
+	@DeleteAfterTestRun
 	protected static Group _group;
+
 	protected static long _userClassNameId;
 
 }

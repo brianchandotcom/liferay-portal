@@ -244,6 +244,15 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("structureLinkId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDDMStructureLink((DDMStructureLink)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

@@ -244,6 +244,15 @@ public abstract class ShoppingItemFieldLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("itemFieldId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteShoppingItemField((ShoppingItemField)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

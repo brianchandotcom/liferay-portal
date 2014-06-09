@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,13 +53,6 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		portletDataHandler = createPortletDataHandler();
 		portletId = getPortletId();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		deleteStagedModels();
-
-		GroupLocalServiceUtil.deleteGroup(stagingGroup);
 	}
 
 	@Test
@@ -145,9 +137,6 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	protected abstract PortletDataHandler createPortletDataHandler();
 
-	protected void deleteStagedModels() throws Exception {
-	}
-
 	protected Date getEndDate() {
 		return new Date();
 	}
@@ -187,7 +176,10 @@ public abstract class BasePortletDataHandlerTestCase {
 	protected PortletDataHandler portletDataHandler;
 	protected String portletId;
 	protected Element rootElement;
+
+	@DeleteAfterTestRun
 	protected Group stagingGroup;
+
 	protected ZipWriter zipWriter;
 
 }

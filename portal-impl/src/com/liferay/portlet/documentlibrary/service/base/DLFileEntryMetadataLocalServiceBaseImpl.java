@@ -250,6 +250,15 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("fileEntryMetadataId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDLFileEntryMetadata((DLFileEntryMetadata)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

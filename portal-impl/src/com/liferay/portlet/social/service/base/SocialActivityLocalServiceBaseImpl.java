@@ -258,6 +258,15 @@ public abstract class SocialActivityLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("activityId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSocialActivity((SocialActivity)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

@@ -246,6 +246,15 @@ public abstract class DLFileRankLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("fileRankId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteDLFileRank((DLFileRank)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

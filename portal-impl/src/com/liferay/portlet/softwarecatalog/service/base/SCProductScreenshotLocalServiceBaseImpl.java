@@ -247,6 +247,15 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("productScreenshotId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSCProductScreenshot((SCProductScreenshot)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

@@ -255,6 +255,15 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 		actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteUserGroupRole((UserGroupRole)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

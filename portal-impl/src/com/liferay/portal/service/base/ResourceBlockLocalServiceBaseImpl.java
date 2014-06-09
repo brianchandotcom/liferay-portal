@@ -251,6 +251,15 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("resourceBlockId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteResourceBlock((ResourceBlock)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

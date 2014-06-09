@@ -244,6 +244,15 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("resourcePrimKey");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteWikiPageResource((WikiPageResource)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

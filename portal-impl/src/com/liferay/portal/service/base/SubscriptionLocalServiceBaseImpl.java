@@ -255,6 +255,15 @@ public abstract class SubscriptionLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("subscriptionId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSubscription((Subscription)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

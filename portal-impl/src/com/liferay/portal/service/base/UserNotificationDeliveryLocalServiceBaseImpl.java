@@ -249,6 +249,15 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 			"userNotificationDeliveryId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteUserNotificationDelivery((UserNotificationDelivery)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

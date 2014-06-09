@@ -241,6 +241,15 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("clusterGroupId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteClusterGroup((ClusterGroup)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

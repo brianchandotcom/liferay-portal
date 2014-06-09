@@ -246,6 +246,15 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("deliveryId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteAnnouncementsDelivery((AnnouncementsDelivery)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

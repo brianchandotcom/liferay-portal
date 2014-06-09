@@ -249,6 +249,15 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("frameworkVersionId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteSCFrameworkVersion((SCFrameworkVersion)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

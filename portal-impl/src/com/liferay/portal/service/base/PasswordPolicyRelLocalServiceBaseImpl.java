@@ -244,6 +244,15 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("passwordPolicyRelId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deletePasswordPolicyRel((PasswordPolicyRel)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

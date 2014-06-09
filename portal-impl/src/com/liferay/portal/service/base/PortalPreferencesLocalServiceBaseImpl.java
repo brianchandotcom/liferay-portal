@@ -243,6 +243,15 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("portalPreferencesId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deletePortalPreferences((PortalPreferences)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

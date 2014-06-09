@@ -247,6 +247,15 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
 	}
 
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return deleteTrashEntry((TrashEntry)persistedModel);
+	}
+
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {

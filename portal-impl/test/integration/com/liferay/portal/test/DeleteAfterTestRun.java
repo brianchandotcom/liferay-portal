@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.PersistedModel;
-
-import java.io.Serializable;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public interface PersistedModelLocalService {
-
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException, SystemException;
-
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException;
-
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface DeleteAfterTestRun {
 }

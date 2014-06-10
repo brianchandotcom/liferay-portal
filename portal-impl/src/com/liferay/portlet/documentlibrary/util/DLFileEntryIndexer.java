@@ -139,6 +139,14 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public void contributeToFullQuery(SearchContext searchContext) {
+		if (searchContext.isIncludeAttachments()) {
+			searchContext.addEntryClassNameForFullQuery(
+				DLFileEntry.class.getName());
+		}
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

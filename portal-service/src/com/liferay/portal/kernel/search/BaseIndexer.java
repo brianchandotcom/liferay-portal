@@ -110,10 +110,6 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-	}
-
-	@Override
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(
@@ -578,6 +574,10 @@ public abstract class BaseIndexer implements Indexer {
 
 		_indexerPostProcessors = indexerPostProcessorsList.toArray(
 			new IndexerPostProcessor[indexerPostProcessorsList.size()]);
+	}
+
+	@Override
+	public void updateFullQuery(SearchContext searchContext) {
 	}
 
 	protected void addAssetFields(

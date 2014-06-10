@@ -40,11 +40,6 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-		_indexer.updateFullQuery(searchContext);
-	}
-
-	@Override
 	public void delete(long companyId, String uid) throws SearchException {
 		_indexer.delete(companyId, uid);
 	}
@@ -233,6 +228,11 @@ public class IndexerWrapper implements Indexer {
 		IndexerPostProcessor indexerPostProcessor) {
 
 		_indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+	}
+
+	@Override
+	public void updateFullQuery(SearchContext searchContext) {
+		_indexer.updateFullQuery(searchContext);
 	}
 
 	private Indexer _indexer;

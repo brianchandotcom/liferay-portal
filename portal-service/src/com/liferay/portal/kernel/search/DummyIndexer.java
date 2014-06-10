@@ -34,10 +34,6 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-	}
-
-	@Override
 	public void delete(long companyId, String uid) {
 	}
 
@@ -199,6 +195,10 @@ public class DummyIndexer implements Indexer {
 	@Override
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
+	}
+
+	@Override
+	public void updateFullQuery(SearchContext searchContext) {
 	}
 
 }

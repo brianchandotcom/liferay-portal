@@ -110,15 +110,6 @@ public class SearchContext implements Serializable {
 		return _entryClassNames;
 	}
 
-	public String[] getFullQueryEntryClassNames() {
-		if (_entryClassNamesForFullQuery == null) {
-			return new String[0];
-		}
-
-		return _entryClassNamesForFullQuery.toArray(
-			new String[_entryClassNamesForFullQuery.size()]);
-	}
-
 	public Facet getFacet(String fieldName) {
 		return _facets.get(fieldName);
 	}
@@ -129,6 +120,15 @@ public class SearchContext implements Serializable {
 
 	public long[] getFolderIds() {
 		return _folderIds;
+	}
+
+	public String[] getFullQueryEntryClassNames() {
+		if (_entryClassNamesForFullQuery == null) {
+			return new String[0];
+		}
+
+		return _entryClassNamesForFullQuery.toArray(
+			new String[_entryClassNamesForFullQuery.size()]);
 	}
 
 	public long[] getGroupIds() {

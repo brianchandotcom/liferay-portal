@@ -35,8 +35,6 @@ public interface Indexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception;
 
-	public void updateFullQuery(SearchContext searchContext);
-
 	public void delete(long companyId, String uid) throws SearchException;
 
 	public void delete(Object obj) throws SearchException;
@@ -123,5 +121,7 @@ public interface Indexer {
 
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
+
+	public void updateFullQuery(SearchContext searchContext);
 
 }

@@ -139,14 +139,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-		if (searchContext.isIncludeAttachments()) {
-			searchContext.addEntryClassNameForFullQuery(
-				DLFileEntry.class.getName());
-		}
-	}
-
-	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -287,6 +279,14 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
+		}
+	}
+
+	@Override
+	public void updateFullQuery(SearchContext searchContext) {
+		if (searchContext.isIncludeAttachments()) {
+			searchContext.addEntryClassNameForFullQuery(
+				DLFileEntry.class.getName());
 		}
 	}
 

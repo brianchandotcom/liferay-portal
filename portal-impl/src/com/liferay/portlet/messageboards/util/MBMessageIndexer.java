@@ -107,16 +107,6 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-		if (searchContext.isIncludeDiscussions()) {
-			searchContext.addEntryClassNameForFullQuery(
-				MBMessage.class.getName());
-
-			searchContext.setAttribute("discussion", Boolean.TRUE);
-		}
-	}
-
-	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -214,6 +204,16 @@ public class MBMessageIndexer extends BaseIndexer {
 			}
 
 			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
+		}
+	}
+
+	@Override
+	public void updateFullQuery(SearchContext searchContext) {
+		if (searchContext.isIncludeDiscussions()) {
+			searchContext.addEntryClassNameForFullQuery(
+				MBMessage.class.getName());
+
+			searchContext.setAttribute("discussion", Boolean.TRUE);
 		}
 	}
 

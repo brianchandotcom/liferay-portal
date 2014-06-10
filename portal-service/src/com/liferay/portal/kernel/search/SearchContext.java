@@ -38,12 +38,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SearchContext implements Serializable {
 
-	public void addEntryClassNameForFullQuery(String entryClassName) {
-		if (_entryClassNamesForFullQuery == null) {
-			_entryClassNamesForFullQuery = new HashSet<String>();
+	public void addFullQueryEntryClassName(String entryClassName) {
+		if (_fullQueryEntryClassNames == null) {
+			_fullQueryEntryClassNames = new HashSet<String>();
 		}
 
-		_entryClassNamesForFullQuery.add(entryClassName);
+		_fullQueryEntryClassNames.add(entryClassName);
 	}
 
 	public void addFacet(Facet facet) {
@@ -55,7 +55,7 @@ public class SearchContext implements Serializable {
 	}
 
 	public void clearFullQueryEntryClassNames() {
-		_entryClassNamesForFullQuery = null;
+		_fullQueryEntryClassNames = null;
 	}
 
 	public long[] getAssetCategoryIds() {
@@ -123,12 +123,12 @@ public class SearchContext implements Serializable {
 	}
 
 	public String[] getFullQueryEntryClassNames() {
-		if (_entryClassNamesForFullQuery == null) {
+		if (_fullQueryEntryClassNames == null) {
 			return new String[0];
 		}
 
-		return _entryClassNamesForFullQuery.toArray(
-			new String[_entryClassNamesForFullQuery.size()]);
+		return _fullQueryEntryClassNames.toArray(
+			new String[_fullQueryEntryClassNames.size()]);
 	}
 
 	public long[] getGroupIds() {
@@ -402,7 +402,7 @@ public class SearchContext implements Serializable {
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;
-	private Set<String> _entryClassNamesForFullQuery;
+	private Set<String> _fullQueryEntryClassNames;
 	private Map<String, Facet> _facets = new ConcurrentHashMap<String, Facet>();
 	private long[] _folderIds;
 	private long[] _groupIds;

@@ -285,7 +285,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	@Override
 	public void updateFullQuery(SearchContext searchContext) {
 		if (searchContext.isIncludeAttachments()) {
-			searchContext.addEntryClassNameForFullQuery(
+			searchContext.addFullQueryEntryClassName(
 				DLFileEntry.class.getName());
 		}
 	}

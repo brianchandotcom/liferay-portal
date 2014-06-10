@@ -491,6 +491,18 @@ public class JournalUtil {
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 	}
 
+	public static String doTransform(
+			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			String viewMode, String languageId, Document document,
+			PortletRequestModel portletRequestModel, String script,
+			String langType)
+		throws Exception {
+
+		return _transformer.doTransform(
+			themeDisplay, tokens, viewMode, languageId, document,
+			portletRequestModel, script, langType);
+	}
+
 	public static String formatVM(String vm) {
 		return vm;
 	}

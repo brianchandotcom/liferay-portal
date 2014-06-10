@@ -1795,6 +1795,18 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
+			JournalArticle article, String ddmTemplateKey, String viewMode,
+			String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getArticleDisplay(
+			article, ddmTemplateKey, viewMode, languageId, page,
+			portletRequestModel, themeDisplay, false);
+	}
+
+	@Override
+	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, double version,
 			String ddmTemplateKey, String viewMode, String languageId, int page,
 			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
@@ -2964,6 +2976,24 @@ public class JournalArticleLocalServiceImpl
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isRenderable(
+			JournalArticle article, PortletRequestModel portletRequestModel,
+			ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		try {
+			getArticleDisplay(
+				article, null, Constants.VIEW, article.getDefaultLanguageId(),
+				0, portletRequestModel, themeDisplay, true);
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -5841,7 +5871,8 @@ public class JournalArticleLocalServiceImpl
 	protected JournalArticleDisplay getArticleDisplay(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
 			String languageId, int page,
-			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay,
+			boolean propagateException)
 		throws PortalException, SystemException {
 
 		String content = null;
@@ -5995,9 +6026,16 @@ public class JournalArticleLocalServiceImpl
 			String langType = ddmTemplate.getLanguage();
 			cacheable = ddmTemplate.isCacheable();
 
-			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, document,
-				portletRequestModel, script, langType);
+			if (propagateException) {
+				content = JournalUtil.doTransform(
+					themeDisplay, tokens, viewMode, languageId, document,
+					portletRequestModel, script, langType);
+			}
+			else {
+				content = JournalUtil.transform(
+					themeDisplay, tokens, viewMode, languageId, document,
+					portletRequestModel, script, langType);
+			}
 
 			if (!pageFlow) {
 				String[] pieces = StringUtil.split(

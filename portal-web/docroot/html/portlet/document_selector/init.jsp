@@ -19,5 +19,10 @@
 <%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
+page import="com.liferay.portlet.documentselector.DocumentSelectorUtil" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
-page import="com.liferay.portlet.journal.search.FileEntrySearch" %>
+page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
+page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
+page import="com.liferay.portlet.wiki.model.WikiPageResource" %><%@
+page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %><%@
+page import="com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil" %>

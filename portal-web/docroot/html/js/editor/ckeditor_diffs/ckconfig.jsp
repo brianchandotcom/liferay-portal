@@ -103,11 +103,13 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.entities = false;
 
-	config.extraPlugins = 'media,scayt,wsc';
+	config.extraPlugins = 'lfrpopup,media,scayt,wsc';
 
 	<c:if test="<%= inlineEdit %>">
 		config.extraPlugins += ',ajaxsave,restore';
 	</c:if>
+
+	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(locale, "browse") %>';
 
 	config.height = 265;
 

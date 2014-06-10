@@ -259,7 +259,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_LAST_POST</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]/a</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]/div</td>
 	<td></td>
 </tr>
 <tr>

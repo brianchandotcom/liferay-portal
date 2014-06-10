@@ -371,14 +371,15 @@
 			%>
 
 			<c:choose>
+				<c:when test="<%= themeDisplay.isStatePopUp() %>">
+					Liferay.Portlet.list = ['<%= request.getParameter("p_p_id") %>'];
+				</c:when>
+				<c:when test="<%= layoutTypePortlet.hasStateMax() %>">
+					Liferay.Portlet.list = ['<%= layoutTypePortlet.getStateMaxPortletId() %>'];
+				</c:when>
 				<c:when test="<%= (sb.index() > 0) && !layoutTypePortlet.hasStateMax() %>">
 					Liferay.Portlet.list = ['<%= sb.toString() %>'];
 				</c:when>
-				<c:otherwise>
-					<c:if test="<%= layoutTypePortlet.hasStateMax() %>">
-						Liferay.Portlet.list = ['<%= layoutTypePortlet.getStateMaxPortletId() %>'];
-					</c:if>
-				</c:otherwise>
 			</c:choose>
 		</c:if>
 

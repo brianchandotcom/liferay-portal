@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.CompareVersionsException;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -95,10 +96,17 @@ public class CompareVersionsAction extends PortletAction {
 			resourceRequest, "filterTargetVersion");
 		String languageId = ParamUtil.getString(resourceRequest, "languageId");
 
-		String diffHtmlResults = JournalUtil.diffHtml(
-			groupId, articleId, sourceVersion, targetVersion, languageId,
-			new PortletRequestModel(resourceRequest, resourceResponse),
-			themeDisplay);
+		String diffHtmlResults = null;
+
+		try {
+			diffHtmlResults = JournalUtil.diffHtml(
+				groupId, articleId, sourceVersion, targetVersion, languageId,
+				new PortletRequestModel(resourceRequest, resourceResponse),
+				themeDisplay);
+		}
+		catch (CompareVersionsException cve) {
+			resourceRequest.setAttribute("version", cve.getVersion());
+		}
 
 		resourceRequest.setAttribute(
 			WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
@@ -182,10 +190,17 @@ public class CompareVersionsAction extends PortletAction {
 		String languageId = getLanguageId(
 			renderRequest, groupId, articleId, sourceVersion, targetVersion);
 
-		String diffHtmlResults = JournalUtil.diffHtml(
-			groupId, articleId, sourceVersion, targetVersion, languageId,
-			new PortletRequestModel(renderRequest, renderResponse),
-			themeDisplay);
+		String diffHtmlResults = null;
+
+		try {
+			diffHtmlResults = JournalUtil.diffHtml(
+				groupId, articleId, sourceVersion, targetVersion, languageId,
+				new PortletRequestModel(renderRequest, renderResponse),
+				themeDisplay);
+		}
+		catch (CompareVersionsException cve) {
+			renderRequest.setAttribute("version", cve.getVersion());
+		}
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);

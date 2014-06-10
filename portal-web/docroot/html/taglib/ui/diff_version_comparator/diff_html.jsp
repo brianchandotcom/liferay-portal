@@ -26,8 +26,20 @@ String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS)
 			<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
 		</c:when>
 		<c:otherwise>
+
+			<%
+			double version = GetterUtil.getDouble(request.getAttribute("version"));
+			%>
+
 			<div class="alert alert-info">
-				<liferay-ui:message key="those-versions-are-not-comparables" />
+				<c:choose>
+					<c:when test="<%= version > 0 %>">
+						<liferay-ui:message arguments="<%= new Object[] {version} %>" key="the-version-x-is-not-comparable" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="those-versions-are-not-comparables" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</c:otherwise>
 	</c:choose>

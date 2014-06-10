@@ -862,7 +862,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		File srcFile = autoDeploymentContext.getFile();
 
-		PluginPackage pluginPackage = readPluginPackage(srcFile);
+		PluginPackage pluginPackage = autoDeploymentContext.getPluginPackage();
+
+		if (pluginPackage == null) {
+			pluginPackage = readPluginPackage(srcFile);
+
+			autoDeploymentContext.setPluginPackage(pluginPackage);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deploying " + srcFile.getName());

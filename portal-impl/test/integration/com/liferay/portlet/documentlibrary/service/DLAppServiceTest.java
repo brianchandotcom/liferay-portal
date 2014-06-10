@@ -468,6 +468,15 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testUpdateDefaultParentFolder() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DLAppServiceUtil.updateFolder(
+			0L, "foo", StringPool.BLANK, serviceContext);
+	}
+
+	@Test
 	public void testVersionLabel() throws Exception {
 		String fileName = "TestVersion.txt";
 

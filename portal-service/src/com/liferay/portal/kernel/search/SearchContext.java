@@ -38,20 +38,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SearchContext implements Serializable {
 
-	public void addFullQueryEntryClassName(String entryClassName) {
-		if (_fullQueryEntryClassNames == null) {
-			_fullQueryEntryClassNames = new HashSet<String>();
-		}
-
-		_fullQueryEntryClassNames.add(entryClassName);
-	}
-
 	public void addFacet(Facet facet) {
 		if (facet == null) {
 			return;
 		}
 
 		_facets.put(facet.getFieldName(), facet);
+	}
+
+	public void addFullQueryEntryClassName(String entryClassName) {
+		if (_fullQueryEntryClassNames == null) {
+			_fullQueryEntryClassNames = new HashSet<String>();
+		}
+
+		_fullQueryEntryClassNames.add(entryClassName);
 	}
 
 	public void clearFullQueryEntryClassNames() {
@@ -402,9 +402,9 @@ public class SearchContext implements Serializable {
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;
-	private Set<String> _fullQueryEntryClassNames;
 	private Map<String, Facet> _facets = new ConcurrentHashMap<String, Facet>();
 	private long[] _folderIds;
+	private Set<String> _fullQueryEntryClassNames;
 	private long[] _groupIds;
 	private boolean _includeAttachments;
 	private boolean _includeDiscussions;

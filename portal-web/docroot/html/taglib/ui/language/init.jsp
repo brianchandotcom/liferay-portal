@@ -17,6 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+if (Validator.isNull(namespace)) {
+	namespace = StringPool.UNDERLINE + PortletKeys.LANGUAGE + StringPool.UNDERLINE;
+}
+
 String formName = (String)request.getAttribute("liferay-ui:language:formName");
 
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");

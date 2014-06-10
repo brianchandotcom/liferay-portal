@@ -844,6 +844,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return ${entity.varName};
 	}
 
+	/**
+	 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
+	 * @return the ${entity.humanName}, or <code>null</code> if a ${entity.humanName} with the primary key could not be found
+	 */
+	@Override
+	public ${entity.name} fetchByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) {
+		return fetchByPrimaryKey((Serializable)${entity.PKVarName});
+	}
 
 	/**
 	 * Returns a map of ${entity.humanNames} for the primary keys provided.
@@ -853,15 +863,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-		Map<Serializable, ${entity.name}> results = new HashMap<Serializable, ${entity.name}>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ${entity.name}> results = new HashMap<Serializable, ${entity.name}>();
 
 		<#if entity.hasCompoundPK()>
 			for (Serializable primaryKey : primaryKeys) {
-				results.put(primaryKey, fetchByPrimaryKey(primaryKey));
+				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
+
+				if (${entity.varName} != null) {
+					results.put(primaryKey, ${entity.varName});
+				}
 			}
 
 			return results;
@@ -869,17 +883,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (primaryKeys.size() == 1) {
 				Iterator<Serializable> iterator = primaryKeys.iterator();
 
-				Serializable singlePrimaryKey = iterator.next();
-				results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+				Serializable primaryKey = iterator.next();
+
+				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
+
+				if (${entity.varName} != null) {
+					results.put(primaryKey, ${entity.varName});
+				}
+
 				return results;
 			}
 
-			Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+			Set<Serializable> cacheMissPks = null;
 
 			for (Serializable primaryKey : primaryKeys) {
 				${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
 				if (${entity.varName} == null) {
+					if (cacheMissPks == null) {
+						cacheMissPks = new HashSet<Serializable>();
+					}
+
 					cacheMissPks.add(primaryKey);
 				}
 				else {
@@ -887,14 +911,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			}
 
-			if (cacheMissPks.isEmpty()) {
+			if (cacheMissPks == null) {
 				return results;
 			}
 
 			<#if entity.PKClassName == "String">
-				StringBundler query = new StringBundler(cacheMissPks.size() * 2 + 1);
-			<#else>
 				StringBundler query = new StringBundler(cacheMissPks.size() * 4 + 1);
+			<#else>
+				StringBundler query = new StringBundler(cacheMissPks.size() * 2 + 1);
 			</#if>
 
 			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
@@ -902,14 +926,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			for (Serializable primaryKey : cacheMissPks) {
 				<#if entity.PKClassName == "String">
 					query.append(StringPool.QUOTE);
-					query.append(String.valueOf(primaryKey));
+					query.append((String)primaryKey);
 					query.append(StringPool.QUOTE);
-					query.append(StringPool.COMMA);
 				<#else>
 					query.append(String.valueOf(primaryKey));
-					query.append(StringPool.COMMA);
 				</#if>
 
+				query.append(StringPool.COMMA);
 			}
 
 			query.setIndex(query.index() - 1);
@@ -925,12 +948,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				Query q = session.createQuery(sql);
 
-				for (${entity.name} result : (List<${entity.name}>)q.list()) {
-					results.put(result.getPrimaryKeyObj(), result);
+				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
+					results.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
 
-					cacheResult(result);
+					cacheResult(${entity.varName});
 
-					cacheMissPks.remove(result.getPrimaryKeyObj());
+					cacheMissPks.remove(${entity.varName}.getPrimaryKeyObj());
 				}
 
 				for (Serializable primaryKey : cacheMissPks) {
@@ -946,17 +969,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			return results;
 		</#if>
-	}
-
-	/**
-	 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
-	 * @return the ${entity.humanName}, or <code>null</code> if a ${entity.humanName} with the primary key could not be found
-	 */
-	@Override
-	public ${entity.name} fetchByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) {
-		return fetchByPrimaryKey((Serializable)${entity.PKVarName});
 	}
 
 	/**

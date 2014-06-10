@@ -11,7 +11,7 @@
 <#assign companyPortletPreferences = prefsPropsUtil.getPreferences(companyId) />
 
 <#if mapsAPIProvider = "">
-	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "openStreetMap") />
+	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "googleMaps") />
 </#if>
 
 <#assign jsonArray = jsonFactoryUtil.createJSONArray() />

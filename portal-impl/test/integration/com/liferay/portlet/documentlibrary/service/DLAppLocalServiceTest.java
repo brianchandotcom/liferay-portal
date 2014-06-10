@@ -155,10 +155,12 @@ public class DLAppLocalServiceTest {
 	@Test(expected = NoSuchFolderException.class)
 	public void testUpdateDefaultParentFolder() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLAppLocalServiceUtil.updateFolder(
-			0L, 0L, "foo", StringPool.BLANK, serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "foo", StringPool.BLANK,
+			serviceContext);
 	}
 
 	protected FileEntry addFileEntry(ServiceContext serviceContext)

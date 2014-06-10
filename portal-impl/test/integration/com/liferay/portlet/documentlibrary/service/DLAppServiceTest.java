@@ -470,10 +470,11 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@Test
 	public void testUpdateDefaultParentFolder() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		DLAppServiceUtil.updateFolder(
-			0L, "foo", StringPool.BLANK, serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "foo", StringPool.BLANK,
+			serviceContext);
 	}
 
 	@Test

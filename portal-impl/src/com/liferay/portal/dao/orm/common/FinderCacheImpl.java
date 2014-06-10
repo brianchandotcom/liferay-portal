@@ -273,27 +273,31 @@ public class FinderCacheImpl
 		Serializable primaryKey) {
 
 		if (primaryKey instanceof List<?>) {
-			Set<Serializable> cachedSet = new HashSet<Serializable>(
-				(List<Serializable>)primaryKey);
+			List<Serializable> cachedPrimaryKeyList =
+				(List<Serializable>)primaryKey;
 
-			if (cachedSet.isEmpty()) {
+			if (cachedPrimaryKeyList.isEmpty()) {
 				return (Serializable)Collections.emptyList();
 			}
 
-			try {
-				Map<Serializable, Serializable> results =
-					basePersistenceImpl.fetchByPrimaryKeys(cachedSet);
+			Set<Serializable> cachedPrimaryKeySet = new HashSet<Serializable>(
+				cachedPrimaryKeyList);
 
-				if (results.size() < cachedSet.size()) {
-					return null;
-				}
+			Map<Serializable, Serializable> resultMap =
+				basePersistenceImpl.fetchByPrimaryKeys(cachedPrimaryKeySet);
 
-				List<Serializable> list = new ArrayList<Serializable>(
-					results.values());
-				return (Serializable)Collections.unmodifiableList(list);
+			if (resultMap.size() < cachedPrimaryKeySet.size()) {
+				return null;
 			}
-			catch (Exception e) {
+
+			List<Serializable> resultList = new ArrayList<Serializable>(
+				cachedPrimaryKeyList.size());
+
+			for (Serializable cachedPrimaryKey : cachedPrimaryKeyList) {
+				resultList.add(resultMap.get(cachedPrimaryKey));
 			}
+
+			return (Serializable)Collections.unmodifiableList(resultList);
 		}
 		else if (BaseModel.class.isAssignableFrom(
 					finderPath.getResultClass())) {

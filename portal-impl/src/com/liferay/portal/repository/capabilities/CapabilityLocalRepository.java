@@ -40,10 +40,12 @@ public class CapabilityLocalRepository
 
 	public CapabilityLocalRepository(
 		LocalRepository localRepository,
-		Map<Class<? extends Capability>, Capability> capabilityMap,
-		Set<Class<? extends Capability>> exportedCapabilities) {
+		Map<Class<? extends Capability>, Capability> supportedCapabilitiesMap,
+		Set<Class<? extends Capability>> exportedCapabilityClasses) {
 
-		super(localRepository, capabilityMap, exportedCapabilities);
+		super(
+			localRepository, supportedCapabilitiesMap,
+			exportedCapabilityClasses);
 	}
 
 	@Override

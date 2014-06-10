@@ -506,31 +506,31 @@ public class ${entity.name}PersistenceTest {
 	</#if>
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ${entity.name}> ${entity.varNames} = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missing${entity.names}.isEmpty());
+		Assert.assertTrue(${entity.varNames}.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(new${entity.name}.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
-		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
+		primaryKeys.add(new${entity.name}.getPrimaryKey());
 
-		Assert.assertEquals(missing${entity.names}.size(), 1);
-		Assert.assertEquals(new${entity.name}, existing${entity.name});
+		Map<Serializable, ${entity.name}> ${entity.varNames} = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ${entity.varNames}.size());
+		Assert.assertEquals(new${entity.name}, ${entity.varNames}.get(new${entity.name}.getPrimaryKey()));
 	}
 
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
 
@@ -549,6 +549,7 @@ public class ${entity.name}PersistenceTest {
 			</#list>
 
 			);
+
 			${entity.PKClassName} pk2 = new ${entity.PKClassName}(
 
 			<#list entity.PKList as column>
@@ -580,6 +581,7 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 
 			;
+
 			${column.type} pk2 =
 
 			<#if column.type == "int">
@@ -593,18 +595,20 @@ public class ${entity.name}PersistenceTest {
 			;
 		</#if>
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missing${entity.names}.isEmpty());
+		Map<Serializable, ${entity.name}> ${entity.varNames} = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(${entity.varNames}.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
+
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk2 = new ${entity.PKClassName}(
 
@@ -637,34 +641,32 @@ public class ${entity.name}PersistenceTest {
 			;
 		</#if>
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(new${entity.name}.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
-		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
+		primaryKeys.add(new${entity.name}.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missing${entity.names}.size(), 1);
-		Assert.assertEquals(new${entity.name}, existing${entity.name});
-		Assert.assertNull(missing${entity.names}.get(pk2));
+		Map<Serializable, ${entity.name}> ${entity.varNames} = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ${entity.varNames}.size());
+		Assert.assertEquals(new${entity.name}, ${entity.varNames}.get(new${entity.name}.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 		${entity.name} new${entity.name}2 = add${entity.name}();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(new${entity.name}.getPrimaryKey());
-		missingPks.add(new${entity.name}2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ${entity.name}> missing${entity.names} = _persistence.fetchByPrimaryKeys(missingPks);
-		${entity.name} existing${entity.name} = missing${entity.names}.get(new${entity.name}.getPrimaryKey());
-		${entity.name} existing${entity.name}2 = missing${entity.names}.get(new${entity.name}2.getPrimaryKey());
+		primaryKeys.add(new${entity.name}.getPrimaryKey());
+		primaryKeys.add(new${entity.name}2.getPrimaryKey());
 
-		Assert.assertEquals(missing${entity.names}.size(), 2);
-		Assert.assertEquals(new${entity.name}, existing${entity.name});
-		Assert.assertEquals(new${entity.name}2, existing${entity.name}2);
+		Map<Serializable, ${entity.name}> ${entity.varNames} = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ${entity.varNames}.size());
+		Assert.assertEquals(new${entity.name}, ${entity.varNames}.get(new${entity.name}.getPrimaryKey()));
+		Assert.assertEquals(new${entity.name}2, ${entity.varNames}.get(new${entity.name}2.getPrimaryKey()));
 	}
 
 	@Test

@@ -1080,6 +1080,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Parameters parameters = OSGiHeader.parseHeader(exportPackage);
 
 		for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
+			Attrs entryValue = entry.getValue();
+
+			if (entryValue.isEmpty()) {
+				continue;
+			}
+
 			String key = entry.getKey();
 
 			List<URL> urls = _extraPackageMap.get(key);

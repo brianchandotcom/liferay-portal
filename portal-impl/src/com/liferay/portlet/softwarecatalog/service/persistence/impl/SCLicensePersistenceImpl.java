@@ -2176,6 +2176,17 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	}
 
 	/**
+	 * Returns the s c license with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param licenseId the primary key of the s c license
+	 * @return the s c license, or <code>null</code> if a s c license with the primary key could not be found
+	 */
+	@Override
+	public SCLicense fetchByPrimaryKey(long licenseId) {
+		return fetchByPrimaryKey((Serializable)licenseId);
+	}
+
+	/**
 	 * Returns a map of s c licenses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c licenses
@@ -2184,28 +2195,37 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public Map<Serializable, SCLicense> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SCLicense> results = new HashMap<Serializable, SCLicense>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SCLicense> results = new HashMap<Serializable, SCLicense>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SCLicense scLicense = fetchByPrimaryKey(primaryKey);
+
+			if (scLicense != null) {
+				results.put(primaryKey, scLicense);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SCLicense scLicense = (SCLicense)EntityCacheUtil.getResult(SCLicenseModelImpl.ENTITY_CACHE_ENABLED,
 					SCLicenseImpl.class, primaryKey);
 
 			if (scLicense == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2213,16 +2233,17 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SCLICENSE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2239,12 +2260,12 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 			Query q = session.createQuery(sql);
 
-			for (SCLicense result : (List<SCLicense>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SCLicense scLicense : (List<SCLicense>)q.list()) {
+				results.put(scLicense.getPrimaryKeyObj(), scLicense);
 
-				cacheResult(result);
+				cacheResult(scLicense);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(scLicense.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2260,17 +2281,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the s c license with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param licenseId the primary key of the s c license
-	 * @return the s c license, or <code>null</code> if a s c license with the primary key could not be found
-	 */
-	@Override
-	public SCLicense fetchByPrimaryKey(long licenseId) {
-		return fetchByPrimaryKey((Serializable)licenseId);
 	}
 
 	/**

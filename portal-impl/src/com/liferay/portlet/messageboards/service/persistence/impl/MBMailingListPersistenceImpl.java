@@ -2650,6 +2650,17 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	/**
+	 * Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param mailingListId the primary key of the message boards mailing list
+	 * @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
+	 */
+	@Override
+	public MBMailingList fetchByPrimaryKey(long mailingListId) {
+		return fetchByPrimaryKey((Serializable)mailingListId);
+	}
+
+	/**
 	 * Returns a map of message boards mailing lists for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards mailing lists
@@ -2658,28 +2669,37 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	@Override
 	public Map<Serializable, MBMailingList> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBMailingList> results = new HashMap<Serializable, MBMailingList>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBMailingList> results = new HashMap<Serializable, MBMailingList>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBMailingList mbMailingList = fetchByPrimaryKey(primaryKey);
+
+			if (mbMailingList != null) {
+				results.put(primaryKey, mbMailingList);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBMailingList mbMailingList = (MBMailingList)EntityCacheUtil.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 					MBMailingListImpl.class, primaryKey);
 
 			if (mbMailingList == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2687,16 +2707,17 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2713,12 +2734,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 			Query q = session.createQuery(sql);
 
-			for (MBMailingList result : (List<MBMailingList>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBMailingList mbMailingList : (List<MBMailingList>)q.list()) {
+				results.put(mbMailingList.getPrimaryKeyObj(), mbMailingList);
 
-				cacheResult(result);
+				cacheResult(mbMailingList);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbMailingList.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2734,17 +2755,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param mailingListId the primary key of the message boards mailing list
-	 * @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
-	 */
-	@Override
-	public MBMailingList fetchByPrimaryKey(long mailingListId) {
-		return fetchByPrimaryKey((Serializable)mailingListId);
 	}
 
 	/**

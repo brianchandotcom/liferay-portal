@@ -704,15 +704,6 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
-	* Returns a map of user group roles for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the user group roles
-	* @return map of primaryKeys to user group roles.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserGroupRole> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the user group role with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param userGroupRolePK the primary key of the user group role
@@ -720,6 +711,15 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByPrimaryKey(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK);
+
+	/**
+	* Returns a map of user group roles for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user group roles
+	* @return map of primaryKeys to user group roles.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserGroupRole> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the user group roles.

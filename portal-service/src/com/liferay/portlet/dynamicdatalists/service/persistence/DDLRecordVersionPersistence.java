@@ -390,15 +390,6 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 
 	/**
-	* Returns a map of d d l record versions for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the d d l record versions
-	* @return map of primaryKeys to d d l record versions.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the d d l record version with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param recordVersionId the primary key of the d d l record version
@@ -406,6 +397,15 @@ public interface DDLRecordVersionPersistence extends BasePersistence<DDLRecordVe
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByPrimaryKey(
 		long recordVersionId);
+
+	/**
+	* Returns a map of d d l record versions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d l record versions
+	* @return map of primaryKeys to d d l record versions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the d d l record versions.

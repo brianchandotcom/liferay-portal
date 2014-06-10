@@ -922,6 +922,17 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	}
 
 	/**
+	 * Returns the password tracker with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param passwordTrackerId the primary key of the password tracker
+	 * @return the password tracker, or <code>null</code> if a password tracker with the primary key could not be found
+	 */
+	@Override
+	public PasswordTracker fetchByPrimaryKey(long passwordTrackerId) {
+		return fetchByPrimaryKey((Serializable)passwordTrackerId);
+	}
+
+	/**
 	 * Returns a map of password trackers for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the password trackers
@@ -930,28 +941,37 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	@Override
 	public Map<Serializable, PasswordTracker> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PasswordTracker> results = new HashMap<Serializable, PasswordTracker>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PasswordTracker> results = new HashMap<Serializable, PasswordTracker>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PasswordTracker passwordTracker = fetchByPrimaryKey(primaryKey);
+
+			if (passwordTracker != null) {
+				results.put(primaryKey, passwordTracker);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PasswordTracker passwordTracker = (PasswordTracker)EntityCacheUtil.getResult(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED,
 					PasswordTrackerImpl.class, primaryKey);
 
 			if (passwordTracker == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -959,16 +979,17 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PASSWORDTRACKER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -985,12 +1006,12 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 			Query q = session.createQuery(sql);
 
-			for (PasswordTracker result : (List<PasswordTracker>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PasswordTracker passwordTracker : (List<PasswordTracker>)q.list()) {
+				results.put(passwordTracker.getPrimaryKeyObj(), passwordTracker);
 
-				cacheResult(result);
+				cacheResult(passwordTracker);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(passwordTracker.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1006,17 +1027,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the password tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param passwordTrackerId the primary key of the password tracker
-	 * @return the password tracker, or <code>null</code> if a password tracker with the primary key could not be found
-	 */
-	@Override
-	public PasswordTracker fetchByPrimaryKey(long passwordTrackerId) {
-		return fetchByPrimaryKey((Serializable)passwordTrackerId);
 	}
 
 	/**

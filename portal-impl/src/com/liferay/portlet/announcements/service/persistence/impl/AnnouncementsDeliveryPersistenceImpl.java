@@ -1253,6 +1253,17 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	}
 
 	/**
+	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param deliveryId the primary key of the announcements delivery
+	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId) {
+		return fetchByPrimaryKey((Serializable)deliveryId);
+	}
+
+	/**
 	 * Returns a map of announcements deliveries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the announcements deliveries
@@ -1261,28 +1272,37 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public Map<Serializable, AnnouncementsDelivery> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AnnouncementsDelivery> results = new HashMap<Serializable, AnnouncementsDelivery>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AnnouncementsDelivery> results = new HashMap<Serializable, AnnouncementsDelivery>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(primaryKey);
+
+			if (announcementsDelivery != null) {
+				results.put(primaryKey, announcementsDelivery);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)EntityCacheUtil.getResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 					AnnouncementsDeliveryImpl.class, primaryKey);
 
 			if (announcementsDelivery == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1290,16 +1310,17 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1316,12 +1337,13 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 			Query q = session.createQuery(sql);
 
-			for (AnnouncementsDelivery result : (List<AnnouncementsDelivery>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AnnouncementsDelivery announcementsDelivery : (List<AnnouncementsDelivery>)q.list()) {
+				results.put(announcementsDelivery.getPrimaryKeyObj(),
+					announcementsDelivery);
 
-				cacheResult(result);
+				cacheResult(announcementsDelivery);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(announcementsDelivery.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1338,17 +1360,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param deliveryId the primary key of the announcements delivery
-	 * @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId) {
-		return fetchByPrimaryKey((Serializable)deliveryId);
 	}
 
 	/**

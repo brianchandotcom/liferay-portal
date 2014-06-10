@@ -229,78 +229,83 @@ public class UserGroupGroupRolePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupGroupRole> missingUserGroupGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, UserGroupGroupRole> userGroupGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingUserGroupGroupRoles.isEmpty());
+		Assert.assertTrue(userGroupGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		UserGroupGroupRole newUserGroupGroupRole = addUserGroupGroupRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroupGroupRole.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupGroupRole> missingUserGroupGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroupGroupRole existingUserGroupGroupRole = missingUserGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey());
+		primaryKeys.add(newUserGroupGroupRole.getPrimaryKey());
 
-		Assert.assertEquals(missingUserGroupGroupRoles.size(), 1);
-		Assert.assertEquals(newUserGroupGroupRole, existingUserGroupGroupRole);
+		Map<Serializable, UserGroupGroupRole> userGroupGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, userGroupGroupRoles.size());
+		Assert.assertEquals(newUserGroupGroupRole,
+			userGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		UserGroupGroupRolePK pk = new UserGroupGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
 		UserGroupGroupRolePK pk2 = new UserGroupGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupGroupRole> missingUserGroupGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingUserGroupGroupRoles.isEmpty());
+		Map<Serializable, UserGroupGroupRole> userGroupGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(userGroupGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		UserGroupGroupRole newUserGroupGroupRole = addUserGroupGroupRole();
+
 		UserGroupGroupRolePK pk2 = new UserGroupGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroupGroupRole.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupGroupRole> missingUserGroupGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroupGroupRole existingUserGroupGroupRole = missingUserGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey());
+		primaryKeys.add(newUserGroupGroupRole.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingUserGroupGroupRoles.size(), 1);
-		Assert.assertEquals(newUserGroupGroupRole, existingUserGroupGroupRole);
-		Assert.assertNull(missingUserGroupGroupRoles.get(pk2));
+		Map<Serializable, UserGroupGroupRole> userGroupGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, userGroupGroupRoles.size());
+		Assert.assertEquals(newUserGroupGroupRole,
+			userGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		UserGroupGroupRole newUserGroupGroupRole = addUserGroupGroupRole();
 		UserGroupGroupRole newUserGroupGroupRole2 = addUserGroupGroupRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroupGroupRole.getPrimaryKey());
-		missingPks.add(newUserGroupGroupRole2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupGroupRole> missingUserGroupGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroupGroupRole existingUserGroupGroupRole = missingUserGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey());
-		UserGroupGroupRole existingUserGroupGroupRole2 = missingUserGroupGroupRoles.get(newUserGroupGroupRole2.getPrimaryKey());
+		primaryKeys.add(newUserGroupGroupRole.getPrimaryKey());
+		primaryKeys.add(newUserGroupGroupRole2.getPrimaryKey());
 
-		Assert.assertEquals(missingUserGroupGroupRoles.size(), 2);
-		Assert.assertEquals(newUserGroupGroupRole, existingUserGroupGroupRole);
-		Assert.assertEquals(newUserGroupGroupRole2, existingUserGroupGroupRole2);
+		Map<Serializable, UserGroupGroupRole> userGroupGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, userGroupGroupRoles.size());
+		Assert.assertEquals(newUserGroupGroupRole,
+			userGroupGroupRoles.get(newUserGroupGroupRole.getPrimaryKey()));
+		Assert.assertEquals(newUserGroupGroupRole2,
+			userGroupGroupRoles.get(newUserGroupGroupRole2.getPrimaryKey()));
 	}
 
 	@Test

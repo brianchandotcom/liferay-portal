@@ -866,6 +866,17 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	/**
+	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param imageId the primary key of the image
+	 * @return the image, or <code>null</code> if a image with the primary key could not be found
+	 */
+	@Override
+	public Image fetchByPrimaryKey(long imageId) {
+		return fetchByPrimaryKey((Serializable)imageId);
+	}
+
+	/**
 	 * Returns a map of images for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the images
@@ -874,28 +885,37 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	@Override
 	public Map<Serializable, Image> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Image> results = new HashMap<Serializable, Image>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Image> results = new HashMap<Serializable, Image>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Image image = fetchByPrimaryKey(primaryKey);
+
+			if (image != null) {
+				results.put(primaryKey, image);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Image image = (Image)EntityCacheUtil.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 					ImageImpl.class, primaryKey);
 
 			if (image == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -903,16 +923,17 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_IMAGE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -929,12 +950,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 			Query q = session.createQuery(sql);
 
-			for (Image result : (List<Image>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Image image : (List<Image>)q.list()) {
+				results.put(image.getPrimaryKeyObj(), image);
 
-				cacheResult(result);
+				cacheResult(image);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(image.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -950,17 +971,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param imageId the primary key of the image
-	 * @return the image, or <code>null</code> if a image with the primary key could not be found
-	 */
-	@Override
-	public Image fetchByPrimaryKey(long imageId) {
-		return fetchByPrimaryKey((Serializable)imageId);
 	}
 
 	/**

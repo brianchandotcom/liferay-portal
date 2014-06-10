@@ -703,6 +703,17 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	}
 
 	/**
+	 * Returns the web d a v props with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param webDavPropsId the primary key of the web d a v props
+	 * @return the web d a v props, or <code>null</code> if a web d a v props with the primary key could not be found
+	 */
+	@Override
+	public WebDAVProps fetchByPrimaryKey(long webDavPropsId) {
+		return fetchByPrimaryKey((Serializable)webDavPropsId);
+	}
+
+	/**
 	 * Returns a map of web d a v propses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the web d a v propses
@@ -711,28 +722,37 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	@Override
 	public Map<Serializable, WebDAVProps> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, WebDAVProps> results = new HashMap<Serializable, WebDAVProps>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, WebDAVProps> results = new HashMap<Serializable, WebDAVProps>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			WebDAVProps webDAVProps = fetchByPrimaryKey(primaryKey);
+
+			if (webDAVProps != null) {
+				results.put(primaryKey, webDAVProps);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			WebDAVProps webDAVProps = (WebDAVProps)EntityCacheUtil.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
 					WebDAVPropsImpl.class, primaryKey);
 
 			if (webDAVProps == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -740,16 +760,17 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WEBDAVPROPS_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -766,12 +787,12 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 			Query q = session.createQuery(sql);
 
-			for (WebDAVProps result : (List<WebDAVProps>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (WebDAVProps webDAVProps : (List<WebDAVProps>)q.list()) {
+				results.put(webDAVProps.getPrimaryKeyObj(), webDAVProps);
 
-				cacheResult(result);
+				cacheResult(webDAVProps);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(webDAVProps.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -787,17 +808,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the web d a v props with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param webDavPropsId the primary key of the web d a v props
-	 * @return the web d a v props, or <code>null</code> if a web d a v props with the primary key could not be found
-	 */
-	@Override
-	public WebDAVProps fetchByPrimaryKey(long webDavPropsId) {
-		return fetchByPrimaryKey((Serializable)webDavPropsId);
 	}
 
 	/**

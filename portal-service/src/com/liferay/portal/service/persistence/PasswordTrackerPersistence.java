@@ -207,15 +207,6 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 		throws com.liferay.portal.NoSuchPasswordTrackerException;
 
 	/**
-	* Returns a map of password trackers for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the password trackers
-	* @return map of primaryKeys to password trackers.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PasswordTracker> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the password tracker with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param passwordTrackerId the primary key of the password tracker
@@ -223,6 +214,15 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker fetchByPrimaryKey(
 		long passwordTrackerId);
+
+	/**
+	* Returns a map of password trackers for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the password trackers
+	* @return map of primaryKeys to password trackers.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PasswordTracker> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the password trackers.

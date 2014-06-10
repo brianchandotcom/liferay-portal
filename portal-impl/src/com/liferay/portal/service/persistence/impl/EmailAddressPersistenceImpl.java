@@ -4270,6 +4270,17 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	}
 
 	/**
+	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param emailAddressId the primary key of the email address
+	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
+	 */
+	@Override
+	public EmailAddress fetchByPrimaryKey(long emailAddressId) {
+		return fetchByPrimaryKey((Serializable)emailAddressId);
+	}
+
+	/**
 	 * Returns a map of email addresses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the email addresses
@@ -4278,28 +4289,37 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	@Override
 	public Map<Serializable, EmailAddress> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, EmailAddress> results = new HashMap<Serializable, EmailAddress>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, EmailAddress> results = new HashMap<Serializable, EmailAddress>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			EmailAddress emailAddress = fetchByPrimaryKey(primaryKey);
+
+			if (emailAddress != null) {
+				results.put(primaryKey, emailAddress);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			EmailAddress emailAddress = (EmailAddress)EntityCacheUtil.getResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
 					EmailAddressImpl.class, primaryKey);
 
 			if (emailAddress == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4307,16 +4327,17 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_EMAILADDRESS_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4333,12 +4354,12 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 			Query q = session.createQuery(sql);
 
-			for (EmailAddress result : (List<EmailAddress>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (EmailAddress emailAddress : (List<EmailAddress>)q.list()) {
+				results.put(emailAddress.getPrimaryKeyObj(), emailAddress);
 
-				cacheResult(result);
+				cacheResult(emailAddress);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(emailAddress.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4354,17 +4375,6 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the email address with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param emailAddressId the primary key of the email address
-	 * @return the email address, or <code>null</code> if a email address with the primary key could not be found
-	 */
-	@Override
-	public EmailAddress fetchByPrimaryKey(long emailAddressId) {
-		return fetchByPrimaryKey((Serializable)emailAddressId);
 	}
 
 	/**

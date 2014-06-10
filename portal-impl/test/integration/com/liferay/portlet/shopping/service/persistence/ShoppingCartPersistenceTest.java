@@ -260,76 +260,80 @@ public class ShoppingCartPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ShoppingCart> missingShoppingCarts = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ShoppingCart> shoppingCarts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingShoppingCarts.isEmpty());
+		Assert.assertTrue(shoppingCarts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShoppingCart.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ShoppingCart> missingShoppingCarts = _persistence.fetchByPrimaryKeys(missingPks);
-		ShoppingCart existingShoppingCart = missingShoppingCarts.get(newShoppingCart.getPrimaryKey());
+		primaryKeys.add(newShoppingCart.getPrimaryKey());
 
-		Assert.assertEquals(missingShoppingCarts.size(), 1);
-		Assert.assertEquals(newShoppingCart, existingShoppingCart);
+		Map<Serializable, ShoppingCart> shoppingCarts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shoppingCarts.size());
+		Assert.assertEquals(newShoppingCart,
+			shoppingCarts.get(newShoppingCart.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ShoppingCart> missingShoppingCarts = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingShoppingCarts.isEmpty());
+		Map<Serializable, ShoppingCart> shoppingCarts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(shoppingCarts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShoppingCart.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ShoppingCart> missingShoppingCarts = _persistence.fetchByPrimaryKeys(missingPks);
-		ShoppingCart existingShoppingCart = missingShoppingCarts.get(newShoppingCart.getPrimaryKey());
+		primaryKeys.add(newShoppingCart.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingShoppingCarts.size(), 1);
-		Assert.assertEquals(newShoppingCart, existingShoppingCart);
-		Assert.assertNull(missingShoppingCarts.get(pk2));
+		Map<Serializable, ShoppingCart> shoppingCarts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shoppingCarts.size());
+		Assert.assertEquals(newShoppingCart,
+			shoppingCarts.get(newShoppingCart.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ShoppingCart newShoppingCart = addShoppingCart();
 		ShoppingCart newShoppingCart2 = addShoppingCart();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShoppingCart.getPrimaryKey());
-		missingPks.add(newShoppingCart2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ShoppingCart> missingShoppingCarts = _persistence.fetchByPrimaryKeys(missingPks);
-		ShoppingCart existingShoppingCart = missingShoppingCarts.get(newShoppingCart.getPrimaryKey());
-		ShoppingCart existingShoppingCart2 = missingShoppingCarts.get(newShoppingCart2.getPrimaryKey());
+		primaryKeys.add(newShoppingCart.getPrimaryKey());
+		primaryKeys.add(newShoppingCart2.getPrimaryKey());
 
-		Assert.assertEquals(missingShoppingCarts.size(), 2);
-		Assert.assertEquals(newShoppingCart, existingShoppingCart);
-		Assert.assertEquals(newShoppingCart2, existingShoppingCart2);
+		Map<Serializable, ShoppingCart> shoppingCarts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, shoppingCarts.size());
+		Assert.assertEquals(newShoppingCart,
+			shoppingCarts.get(newShoppingCart.getPrimaryKey()));
+		Assert.assertEquals(newShoppingCart2,
+			shoppingCarts.get(newShoppingCart2.getPrimaryKey()));
 	}
 
 	@Test

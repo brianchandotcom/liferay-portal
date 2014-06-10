@@ -4852,6 +4852,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	/**
+	 * Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portletPreferencesId the primary key of the portlet preferences
+	 * @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
+	 */
+	@Override
+	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId) {
+		return fetchByPrimaryKey((Serializable)portletPreferencesId);
+	}
+
+	/**
 	 * Returns a map of portlet preferenceses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the portlet preferenceses
@@ -4860,28 +4871,37 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PortletPreferences> results = new HashMap<Serializable, PortletPreferences>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PortletPreferences> results = new HashMap<Serializable, PortletPreferences>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PortletPreferences portletPreferences = fetchByPrimaryKey(primaryKey);
+
+			if (portletPreferences != null) {
+				results.put(primaryKey, portletPreferences);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 					PortletPreferencesImpl.class, primaryKey);
 
 			if (portletPreferences == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4889,16 +4909,17 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4915,12 +4936,13 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			Query q = session.createQuery(sql);
 
-			for (PortletPreferences result : (List<PortletPreferences>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PortletPreferences portletPreferences : (List<PortletPreferences>)q.list()) {
+				results.put(portletPreferences.getPrimaryKeyObj(),
+					portletPreferences);
 
-				cacheResult(result);
+				cacheResult(portletPreferences);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(portletPreferences.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4937,17 +4959,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portletPreferencesId the primary key of the portlet preferences
-	 * @return the portlet preferences, or <code>null</code> if a portlet preferences with the primary key could not be found
-	 */
-	@Override
-	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId) {
-		return fetchByPrimaryKey((Serializable)portletPreferencesId);
 	}
 
 	/**

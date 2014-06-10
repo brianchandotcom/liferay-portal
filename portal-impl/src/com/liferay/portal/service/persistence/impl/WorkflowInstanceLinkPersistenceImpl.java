@@ -1060,6 +1060,17 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	}
 
 	/**
+	 * Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param workflowInstanceLinkId the primary key of the workflow instance link
+	 * @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
+	 */
+	@Override
+	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId) {
+		return fetchByPrimaryKey((Serializable)workflowInstanceLinkId);
+	}
+
+	/**
 	 * Returns a map of workflow instance links for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the workflow instance links
@@ -1068,28 +1079,37 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public Map<Serializable, WorkflowInstanceLink> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, WorkflowInstanceLink> results = new HashMap<Serializable, WorkflowInstanceLink>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, WorkflowInstanceLink> results = new HashMap<Serializable, WorkflowInstanceLink>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(primaryKey);
+
+			if (workflowInstanceLink != null) {
+				results.put(primaryKey, workflowInstanceLink);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)EntityCacheUtil.getResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 					WorkflowInstanceLinkImpl.class, primaryKey);
 
 			if (workflowInstanceLink == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1097,16 +1117,17 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1123,12 +1144,13 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 
 			Query q = session.createQuery(sql);
 
-			for (WorkflowInstanceLink result : (List<WorkflowInstanceLink>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (WorkflowInstanceLink workflowInstanceLink : (List<WorkflowInstanceLink>)q.list()) {
+				results.put(workflowInstanceLink.getPrimaryKeyObj(),
+					workflowInstanceLink);
 
-				cacheResult(result);
+				cacheResult(workflowInstanceLink);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(workflowInstanceLink.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1145,17 +1167,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param workflowInstanceLinkId the primary key of the workflow instance link
-	 * @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId) {
-		return fetchByPrimaryKey((Serializable)workflowInstanceLinkId);
 	}
 
 	/**

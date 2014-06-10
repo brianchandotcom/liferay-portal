@@ -501,6 +501,14 @@ public interface LockPersistence extends BasePersistence<Lock> {
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
+	* Returns the lock with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param lockId the primary key of the lock
+	* @return the lock, or <code>null</code> if a lock with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Lock fetchByPrimaryKey(long lockId);
+
+	/**
 	* Returns a map of locks for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the locks
@@ -508,14 +516,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Lock> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the lock with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param lockId the primary key of the lock
-	* @return the lock, or <code>null</code> if a lock with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Lock fetchByPrimaryKey(long lockId);
 
 	/**
 	* Returns all the locks.

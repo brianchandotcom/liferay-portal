@@ -2322,6 +2322,17 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	}
 
 	/**
+	 * Returns the asset tag property with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param tagPropertyId the primary key of the asset tag property
+	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
+	 */
+	@Override
+	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId) {
+		return fetchByPrimaryKey((Serializable)tagPropertyId);
+	}
+
+	/**
 	 * Returns a map of asset tag properties for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the asset tag properties
@@ -2330,28 +2341,37 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	@Override
 	public Map<Serializable, AssetTagProperty> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AssetTagProperty> results = new HashMap<Serializable, AssetTagProperty>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AssetTagProperty> results = new HashMap<Serializable, AssetTagProperty>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AssetTagProperty assetTagProperty = fetchByPrimaryKey(primaryKey);
+
+			if (assetTagProperty != null) {
+				results.put(primaryKey, assetTagProperty);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AssetTagProperty assetTagProperty = (AssetTagProperty)EntityCacheUtil.getResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetTagPropertyImpl.class, primaryKey);
 
 			if (assetTagProperty == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2359,16 +2379,17 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ASSETTAGPROPERTY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2385,12 +2406,13 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 			Query q = session.createQuery(sql);
 
-			for (AssetTagProperty result : (List<AssetTagProperty>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AssetTagProperty assetTagProperty : (List<AssetTagProperty>)q.list()) {
+				results.put(assetTagProperty.getPrimaryKeyObj(),
+					assetTagProperty);
 
-				cacheResult(result);
+				cacheResult(assetTagProperty);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(assetTagProperty.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2407,17 +2429,6 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the asset tag property with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param tagPropertyId the primary key of the asset tag property
-	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
-	 */
-	@Override
-	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId) {
-		return fetchByPrimaryKey((Serializable)tagPropertyId);
 	}
 
 	/**

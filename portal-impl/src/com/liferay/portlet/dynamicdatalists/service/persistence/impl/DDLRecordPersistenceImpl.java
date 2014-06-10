@@ -3391,6 +3391,17 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	/**
+	 * Returns the d d l record with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param recordId the primary key of the d d l record
+	 * @return the d d l record, or <code>null</code> if a d d l record with the primary key could not be found
+	 */
+	@Override
+	public DDLRecord fetchByPrimaryKey(long recordId) {
+		return fetchByPrimaryKey((Serializable)recordId);
+	}
+
+	/**
 	 * Returns a map of d d l records for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d l records
@@ -3399,28 +3410,37 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	@Override
 	public Map<Serializable, DDLRecord> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDLRecord> results = new HashMap<Serializable, DDLRecord>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDLRecord> results = new HashMap<Serializable, DDLRecord>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDLRecord ddlRecord = fetchByPrimaryKey(primaryKey);
+
+			if (ddlRecord != null) {
+				results.put(primaryKey, ddlRecord);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDLRecord ddlRecord = (DDLRecord)EntityCacheUtil.getResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordImpl.class, primaryKey);
 
 			if (ddlRecord == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3428,16 +3448,17 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDLRECORD_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3454,12 +3475,12 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 			Query q = session.createQuery(sql);
 
-			for (DDLRecord result : (List<DDLRecord>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDLRecord ddlRecord : (List<DDLRecord>)q.list()) {
+				results.put(ddlRecord.getPrimaryKeyObj(), ddlRecord);
 
-				cacheResult(result);
+				cacheResult(ddlRecord);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddlRecord.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3475,17 +3496,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d l record with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param recordId the primary key of the d d l record
-	 * @return the d d l record, or <code>null</code> if a d d l record with the primary key could not be found
-	 */
-	@Override
-	public DDLRecord fetchByPrimaryKey(long recordId) {
-		return fetchByPrimaryKey((Serializable)recordId);
 	}
 
 	/**

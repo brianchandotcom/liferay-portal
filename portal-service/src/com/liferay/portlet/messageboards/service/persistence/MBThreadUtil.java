@@ -3565,17 +3565,6 @@ public class MBThreadUtil {
 	}
 
 	/**
-	* Returns a map of message boards threads for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the message boards threads
-	* @return map of primaryKeys to message boards threads.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBThread> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the message boards thread with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param threadId the primary key of the message boards thread
@@ -3584,6 +3573,17 @@ public class MBThreadUtil {
 	public static com.liferay.portlet.messageboards.model.MBThread fetchByPrimaryKey(
 		long threadId) {
 		return getPersistence().fetchByPrimaryKey(threadId);
+	}
+
+	/**
+	* Returns a map of message boards threads for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards threads
+	* @return map of primaryKeys to message boards threads.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBThread> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

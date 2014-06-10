@@ -2030,6 +2030,17 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	}
 
 	/**
+	 * Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param versionId the primary key of the trash version
+	 * @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
+	 */
+	@Override
+	public TrashVersion fetchByPrimaryKey(long versionId) {
+		return fetchByPrimaryKey((Serializable)versionId);
+	}
+
+	/**
 	 * Returns a map of trash versions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the trash versions
@@ -2038,28 +2049,37 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	@Override
 	public Map<Serializable, TrashVersion> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, TrashVersion> results = new HashMap<Serializable, TrashVersion>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, TrashVersion> results = new HashMap<Serializable, TrashVersion>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			TrashVersion trashVersion = fetchByPrimaryKey(primaryKey);
+
+			if (trashVersion != null) {
+				results.put(primaryKey, trashVersion);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			TrashVersion trashVersion = (TrashVersion)EntityCacheUtil.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
 					TrashVersionImpl.class, primaryKey);
 
 			if (trashVersion == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2067,16 +2087,17 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_TRASHVERSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2093,12 +2114,12 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 			Query q = session.createQuery(sql);
 
-			for (TrashVersion result : (List<TrashVersion>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (TrashVersion trashVersion : (List<TrashVersion>)q.list()) {
+				results.put(trashVersion.getPrimaryKeyObj(), trashVersion);
 
-				cacheResult(result);
+				cacheResult(trashVersion);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(trashVersion.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2114,17 +2135,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the trash version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param versionId the primary key of the trash version
-	 * @return the trash version, or <code>null</code> if a trash version with the primary key could not be found
-	 */
-	@Override
-	public TrashVersion fetchByPrimaryKey(long versionId) {
-		return fetchByPrimaryKey((Serializable)versionId);
 	}
 
 	/**

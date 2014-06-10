@@ -702,6 +702,17 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	}
 
 	/**
+	 * Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param statsId the primary key of the ratings stats
+	 * @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
+	 */
+	@Override
+	public RatingsStats fetchByPrimaryKey(long statsId) {
+		return fetchByPrimaryKey((Serializable)statsId);
+	}
+
+	/**
 	 * Returns a map of ratings statses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the ratings statses
@@ -710,28 +721,37 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	@Override
 	public Map<Serializable, RatingsStats> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, RatingsStats> results = new HashMap<Serializable, RatingsStats>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, RatingsStats> results = new HashMap<Serializable, RatingsStats>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			RatingsStats ratingsStats = fetchByPrimaryKey(primaryKey);
+
+			if (ratingsStats != null) {
+				results.put(primaryKey, ratingsStats);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			RatingsStats ratingsStats = (RatingsStats)EntityCacheUtil.getResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
 					RatingsStatsImpl.class, primaryKey);
 
 			if (ratingsStats == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -739,16 +759,17 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_RATINGSSTATS_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -765,12 +786,12 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 			Query q = session.createQuery(sql);
 
-			for (RatingsStats result : (List<RatingsStats>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (RatingsStats ratingsStats : (List<RatingsStats>)q.list()) {
+				results.put(ratingsStats.getPrimaryKeyObj(), ratingsStats);
 
-				cacheResult(result);
+				cacheResult(ratingsStats);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ratingsStats.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -786,17 +807,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param statsId the primary key of the ratings stats
-	 * @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
-	 */
-	@Override
-	public RatingsStats fetchByPrimaryKey(long statsId) {
-		return fetchByPrimaryKey((Serializable)statsId);
 	}
 
 	/**

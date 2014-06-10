@@ -349,76 +349,77 @@ public class ContactPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> missingContacts = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingContacts.isEmpty());
+		Assert.assertTrue(contacts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Contact newContact = addContact();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newContact.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> missingContacts = _persistence.fetchByPrimaryKeys(missingPks);
-		Contact existingContact = missingContacts.get(newContact.getPrimaryKey());
+		primaryKeys.add(newContact.getPrimaryKey());
 
-		Assert.assertEquals(missingContacts.size(), 1);
-		Assert.assertEquals(newContact, existingContact);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, contacts.size());
+		Assert.assertEquals(newContact, contacts.get(newContact.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> missingContacts = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingContacts.isEmpty());
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(contacts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Contact newContact = addContact();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newContact.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> missingContacts = _persistence.fetchByPrimaryKeys(missingPks);
-		Contact existingContact = missingContacts.get(newContact.getPrimaryKey());
+		primaryKeys.add(newContact.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingContacts.size(), 1);
-		Assert.assertEquals(newContact, existingContact);
-		Assert.assertNull(missingContacts.get(pk2));
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, contacts.size());
+		Assert.assertEquals(newContact, contacts.get(newContact.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Contact newContact = addContact();
 		Contact newContact2 = addContact();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newContact.getPrimaryKey());
-		missingPks.add(newContact2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> missingContacts = _persistence.fetchByPrimaryKeys(missingPks);
-		Contact existingContact = missingContacts.get(newContact.getPrimaryKey());
-		Contact existingContact2 = missingContacts.get(newContact2.getPrimaryKey());
+		primaryKeys.add(newContact.getPrimaryKey());
+		primaryKeys.add(newContact2.getPrimaryKey());
 
-		Assert.assertEquals(missingContacts.size(), 2);
-		Assert.assertEquals(newContact, existingContact);
-		Assert.assertEquals(newContact2, existingContact2);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, contacts.size());
+		Assert.assertEquals(newContact, contacts.get(newContact.getPrimaryKey()));
+		Assert.assertEquals(newContact2,
+			contacts.get(newContact2.getPrimaryKey()));
 	}
 
 	@Test

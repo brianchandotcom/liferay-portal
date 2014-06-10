@@ -246,76 +246,80 @@ public class MBStatsUserPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> missingMBStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingMBStatsUsers.isEmpty());
+		Assert.assertTrue(mbStatsUsers.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBStatsUser.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> missingMBStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		MBStatsUser existingMBStatsUser = missingMBStatsUsers.get(newMBStatsUser.getPrimaryKey());
+		primaryKeys.add(newMBStatsUser.getPrimaryKey());
 
-		Assert.assertEquals(missingMBStatsUsers.size(), 1);
-		Assert.assertEquals(newMBStatsUser, existingMBStatsUser);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbStatsUsers.size());
+		Assert.assertEquals(newMBStatsUser,
+			mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> missingMBStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingMBStatsUsers.isEmpty());
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbStatsUsers.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBStatsUser.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> missingMBStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		MBStatsUser existingMBStatsUser = missingMBStatsUsers.get(newMBStatsUser.getPrimaryKey());
+		primaryKeys.add(newMBStatsUser.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingMBStatsUsers.size(), 1);
-		Assert.assertEquals(newMBStatsUser, existingMBStatsUser);
-		Assert.assertNull(missingMBStatsUsers.get(pk2));
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbStatsUsers.size());
+		Assert.assertEquals(newMBStatsUser,
+			mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 		MBStatsUser newMBStatsUser2 = addMBStatsUser();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBStatsUser.getPrimaryKey());
-		missingPks.add(newMBStatsUser2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBStatsUser> missingMBStatsUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		MBStatsUser existingMBStatsUser = missingMBStatsUsers.get(newMBStatsUser.getPrimaryKey());
-		MBStatsUser existingMBStatsUser2 = missingMBStatsUsers.get(newMBStatsUser2.getPrimaryKey());
+		primaryKeys.add(newMBStatsUser.getPrimaryKey());
+		primaryKeys.add(newMBStatsUser2.getPrimaryKey());
 
-		Assert.assertEquals(missingMBStatsUsers.size(), 2);
-		Assert.assertEquals(newMBStatsUser, existingMBStatsUser);
-		Assert.assertEquals(newMBStatsUser2, existingMBStatsUser2);
+		Map<Serializable, MBStatsUser> mbStatsUsers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mbStatsUsers.size());
+		Assert.assertEquals(newMBStatsUser,
+			mbStatsUsers.get(newMBStatsUser.getPrimaryKey()));
+		Assert.assertEquals(newMBStatsUser2,
+			mbStatsUsers.get(newMBStatsUser2.getPrimaryKey()));
 	}
 
 	@Test

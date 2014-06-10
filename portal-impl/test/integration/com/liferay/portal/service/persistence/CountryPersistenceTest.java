@@ -256,76 +256,80 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Country> countries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingCountries.isEmpty());
+		Assert.assertTrue(countries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Country newCountry = addCountry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCountry.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
-		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
+		primaryKeys.add(newCountry.getPrimaryKey());
 
-		Assert.assertEquals(missingCountries.size(), 1);
-		Assert.assertEquals(newCountry, existingCountry);
+		Map<Serializable, Country> countries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, countries.size());
+		Assert.assertEquals(newCountry,
+			countries.get(newCountry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingCountries.isEmpty());
+		Map<Serializable, Country> countries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(countries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Country newCountry = addCountry();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCountry.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
-		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
+		primaryKeys.add(newCountry.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingCountries.size(), 1);
-		Assert.assertEquals(newCountry, existingCountry);
-		Assert.assertNull(missingCountries.get(pk2));
+		Map<Serializable, Country> countries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, countries.size());
+		Assert.assertEquals(newCountry,
+			countries.get(newCountry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Country newCountry = addCountry();
 		Country newCountry2 = addCountry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCountry.getPrimaryKey());
-		missingPks.add(newCountry2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Country> missingCountries = _persistence.fetchByPrimaryKeys(missingPks);
-		Country existingCountry = missingCountries.get(newCountry.getPrimaryKey());
-		Country existingCountry2 = missingCountries.get(newCountry2.getPrimaryKey());
+		primaryKeys.add(newCountry.getPrimaryKey());
+		primaryKeys.add(newCountry2.getPrimaryKey());
 
-		Assert.assertEquals(missingCountries.size(), 2);
-		Assert.assertEquals(newCountry, existingCountry);
-		Assert.assertEquals(newCountry2, existingCountry2);
+		Map<Serializable, Country> countries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, countries.size());
+		Assert.assertEquals(newCountry,
+			countries.get(newCountry.getPrimaryKey()));
+		Assert.assertEquals(newCountry2,
+			countries.get(newCountry2.getPrimaryKey()));
 	}
 
 	@Test

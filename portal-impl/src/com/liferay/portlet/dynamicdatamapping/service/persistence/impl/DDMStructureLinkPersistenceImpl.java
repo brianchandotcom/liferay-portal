@@ -1686,6 +1686,17 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	}
 
 	/**
+	 * Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param structureLinkId the primary key of the d d m structure link
+	 * @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
+	 */
+	@Override
+	public DDMStructureLink fetchByPrimaryKey(long structureLinkId) {
+		return fetchByPrimaryKey((Serializable)structureLinkId);
+	}
+
+	/**
 	 * Returns a map of d d m structure links for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d m structure links
@@ -1694,28 +1705,37 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	@Override
 	public Map<Serializable, DDMStructureLink> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDMStructureLink> results = new HashMap<Serializable, DDMStructureLink>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDMStructureLink> results = new HashMap<Serializable, DDMStructureLink>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDMStructureLink ddmStructureLink = fetchByPrimaryKey(primaryKey);
+
+			if (ddmStructureLink != null) {
+				results.put(primaryKey, ddmStructureLink);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDMStructureLink ddmStructureLink = (DDMStructureLink)EntityCacheUtil.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureLinkImpl.class, primaryKey);
 
 			if (ddmStructureLink == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1723,16 +1743,17 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDMSTRUCTURELINK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1749,12 +1770,13 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 			Query q = session.createQuery(sql);
 
-			for (DDMStructureLink result : (List<DDMStructureLink>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDMStructureLink ddmStructureLink : (List<DDMStructureLink>)q.list()) {
+				results.put(ddmStructureLink.getPrimaryKeyObj(),
+					ddmStructureLink);
 
-				cacheResult(result);
+				cacheResult(ddmStructureLink);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddmStructureLink.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1771,17 +1793,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param structureLinkId the primary key of the d d m structure link
-	 * @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
-	 */
-	@Override
-	public DDMStructureLink fetchByPrimaryKey(long structureLinkId) {
-		return fetchByPrimaryKey((Serializable)structureLinkId);
 	}
 
 	/**

@@ -2369,6 +2369,17 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	/**
+	 * Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param actionId the primary key of the m d r action
+	 * @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
+	 */
+	@Override
+	public MDRAction fetchByPrimaryKey(long actionId) {
+		return fetchByPrimaryKey((Serializable)actionId);
+	}
+
+	/**
 	 * Returns a map of m d r actions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the m d r actions
@@ -2377,28 +2388,37 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	@Override
 	public Map<Serializable, MDRAction> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MDRAction> results = new HashMap<Serializable, MDRAction>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MDRAction> results = new HashMap<Serializable, MDRAction>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MDRAction mdrAction = fetchByPrimaryKey(primaryKey);
+
+			if (mdrAction != null) {
+				results.put(primaryKey, mdrAction);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MDRAction mdrAction = (MDRAction)EntityCacheUtil.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 					MDRActionImpl.class, primaryKey);
 
 			if (mdrAction == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2406,16 +2426,17 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MDRACTION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2432,12 +2453,12 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 			Query q = session.createQuery(sql);
 
-			for (MDRAction result : (List<MDRAction>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MDRAction mdrAction : (List<MDRAction>)q.list()) {
+				results.put(mdrAction.getPrimaryKeyObj(), mdrAction);
 
-				cacheResult(result);
+				cacheResult(mdrAction);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mdrAction.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2453,17 +2474,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param actionId the primary key of the m d r action
-	 * @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
-	 */
-	@Override
-	public MDRAction fetchByPrimaryKey(long actionId) {
-		return fetchByPrimaryKey((Serializable)actionId);
 	}
 
 	/**

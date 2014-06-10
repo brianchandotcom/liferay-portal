@@ -209,15 +209,6 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
-	* Returns a map of shopping item fields for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the shopping item fields
-	* @return map of primaryKeys to shopping item fields.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingItemField> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param itemFieldId the primary key of the shopping item field
@@ -225,6 +216,15 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByPrimaryKey(
 		long itemFieldId);
+
+	/**
+	* Returns a map of shopping item fields for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping item fields
+	* @return map of primaryKeys to shopping item fields.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingItemField> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the shopping item fields.

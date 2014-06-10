@@ -5312,6 +5312,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
+	 * Returns the layout friendly u r l with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
+	 * @return the layout friendly u r l, or <code>null</code> if a layout friendly u r l with the primary key could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL fetchByPrimaryKey(long layoutFriendlyURLId) {
+		return fetchByPrimaryKey((Serializable)layoutFriendlyURLId);
+	}
+
+	/**
 	 * Returns a map of layout friendly u r ls for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the layout friendly u r ls
@@ -5320,28 +5331,37 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	@Override
 	public Map<Serializable, LayoutFriendlyURL> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, LayoutFriendlyURL> results = new HashMap<Serializable, LayoutFriendlyURL>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, LayoutFriendlyURL> results = new HashMap<Serializable, LayoutFriendlyURL>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			LayoutFriendlyURL layoutFriendlyURL = fetchByPrimaryKey(primaryKey);
+
+			if (layoutFriendlyURL != null) {
+				results.put(primaryKey, layoutFriendlyURL);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)EntityCacheUtil.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutFriendlyURLImpl.class, primaryKey);
 
 			if (layoutFriendlyURL == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -5349,16 +5369,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -5375,12 +5396,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			Query q = session.createQuery(sql);
 
-			for (LayoutFriendlyURL result : (List<LayoutFriendlyURL>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (LayoutFriendlyURL layoutFriendlyURL : (List<LayoutFriendlyURL>)q.list()) {
+				results.put(layoutFriendlyURL.getPrimaryKeyObj(),
+					layoutFriendlyURL);
 
-				cacheResult(result);
+				cacheResult(layoutFriendlyURL);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(layoutFriendlyURL.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5397,17 +5419,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the layout friendly u r l with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l, or <code>null</code> if a layout friendly u r l with the primary key could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByPrimaryKey(long layoutFriendlyURLId) {
-		return fetchByPrimaryKey((Serializable)layoutFriendlyURLId);
 	}
 
 	/**

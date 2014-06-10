@@ -3550,6 +3550,18 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
+	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityAchievementId the primary key of the social activity achievement
+	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
+	 */
+	@Override
+	public SocialActivityAchievement fetchByPrimaryKey(
+		long activityAchievementId) {
+		return fetchByPrimaryKey((Serializable)activityAchievementId);
+	}
+
+	/**
 	 * Returns a map of social activity achievements for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social activity achievements
@@ -3558,28 +3570,37 @@ public class SocialActivityAchievementPersistenceImpl
 	@Override
 	public Map<Serializable, SocialActivityAchievement> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialActivityAchievement> results = new HashMap<Serializable, SocialActivityAchievement>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialActivityAchievement> results = new HashMap<Serializable, SocialActivityAchievement>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(primaryKey);
+
+			if (socialActivityAchievement != null) {
+				results.put(primaryKey, socialActivityAchievement);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)EntityCacheUtil.getResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityAchievementImpl.class, primaryKey);
 
 			if (socialActivityAchievement == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3587,16 +3608,17 @@ public class SocialActivityAchievementPersistenceImpl
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3613,12 +3635,13 @@ public class SocialActivityAchievementPersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			for (SocialActivityAchievement result : (List<SocialActivityAchievement>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialActivityAchievement socialActivityAchievement : (List<SocialActivityAchievement>)q.list()) {
+				results.put(socialActivityAchievement.getPrimaryKeyObj(),
+					socialActivityAchievement);
 
-				cacheResult(result);
+				cacheResult(socialActivityAchievement);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialActivityAchievement.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3635,18 +3658,6 @@ public class SocialActivityAchievementPersistenceImpl
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social activity achievement with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityAchievementId the primary key of the social activity achievement
-	 * @return the social activity achievement, or <code>null</code> if a social activity achievement with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityAchievement fetchByPrimaryKey(
-		long activityAchievementId) {
-		return fetchByPrimaryKey((Serializable)activityAchievementId);
 	}
 
 	/**

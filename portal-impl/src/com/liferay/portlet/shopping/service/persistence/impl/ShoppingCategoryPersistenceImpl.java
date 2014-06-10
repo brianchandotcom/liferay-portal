@@ -2203,6 +2203,17 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	/**
+	 * Returns the shopping category with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryId the primary key of the shopping category
+	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
+	 */
+	@Override
+	public ShoppingCategory fetchByPrimaryKey(long categoryId) {
+		return fetchByPrimaryKey((Serializable)categoryId);
+	}
+
+	/**
 	 * Returns a map of shopping categories for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shopping categories
@@ -2211,28 +2222,37 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	@Override
 	public Map<Serializable, ShoppingCategory> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ShoppingCategory> results = new HashMap<Serializable, ShoppingCategory>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ShoppingCategory> results = new HashMap<Serializable, ShoppingCategory>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ShoppingCategory shoppingCategory = fetchByPrimaryKey(primaryKey);
+
+			if (shoppingCategory != null) {
+				results.put(primaryKey, shoppingCategory);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCategoryImpl.class, primaryKey);
 
 			if (shoppingCategory == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2240,16 +2260,17 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHOPPINGCATEGORY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2266,12 +2287,13 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 			Query q = session.createQuery(sql);
 
-			for (ShoppingCategory result : (List<ShoppingCategory>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ShoppingCategory shoppingCategory : (List<ShoppingCategory>)q.list()) {
+				results.put(shoppingCategory.getPrimaryKeyObj(),
+					shoppingCategory);
 
-				cacheResult(result);
+				cacheResult(shoppingCategory);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shoppingCategory.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2288,17 +2310,6 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shopping category with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryId the primary key of the shopping category
-	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
-	 */
-	@Override
-	public ShoppingCategory fetchByPrimaryKey(long categoryId) {
-		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**

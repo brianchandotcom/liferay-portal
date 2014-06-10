@@ -3316,6 +3316,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	}
 
 	/**
+	 * Returns the asset link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param linkId the primary key of the asset link
+	 * @return the asset link, or <code>null</code> if a asset link with the primary key could not be found
+	 */
+	@Override
+	public AssetLink fetchByPrimaryKey(long linkId) {
+		return fetchByPrimaryKey((Serializable)linkId);
+	}
+
+	/**
 	 * Returns a map of asset links for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the asset links
@@ -3324,28 +3335,37 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	@Override
 	public Map<Serializable, AssetLink> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AssetLink> results = new HashMap<Serializable, AssetLink>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AssetLink> results = new HashMap<Serializable, AssetLink>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AssetLink assetLink = fetchByPrimaryKey(primaryKey);
+
+			if (assetLink != null) {
+				results.put(primaryKey, assetLink);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AssetLink assetLink = (AssetLink)EntityCacheUtil.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 					AssetLinkImpl.class, primaryKey);
 
 			if (assetLink == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3353,16 +3373,17 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ASSETLINK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3379,12 +3400,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 			Query q = session.createQuery(sql);
 
-			for (AssetLink result : (List<AssetLink>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AssetLink assetLink : (List<AssetLink>)q.list()) {
+				results.put(assetLink.getPrimaryKeyObj(), assetLink);
 
-				cacheResult(result);
+				cacheResult(assetLink);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(assetLink.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3400,17 +3421,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the asset link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param linkId the primary key of the asset link
-	 * @return the asset link, or <code>null</code> if a asset link with the primary key could not be found
-	 */
-	@Override
-	public AssetLink fetchByPrimaryKey(long linkId) {
-		return fetchByPrimaryKey((Serializable)linkId);
 	}
 
 	/**

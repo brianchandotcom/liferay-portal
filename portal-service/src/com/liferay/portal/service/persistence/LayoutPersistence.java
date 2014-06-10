@@ -1780,6 +1780,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws com.liferay.portal.NoSuchLayoutException;
 
 	/**
+	* Returns the layout with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param plid the primary key of the layout
+	* @return the layout, or <code>null</code> if a layout with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Layout fetchByPrimaryKey(long plid);
+
+	/**
 	* Returns a map of layouts for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the layouts
@@ -1787,14 +1795,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Layout> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the layout with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param plid the primary key of the layout
-	* @return the layout, or <code>null</code> if a layout with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Layout fetchByPrimaryKey(long plid);
 
 	/**
 	* Returns all the layouts.

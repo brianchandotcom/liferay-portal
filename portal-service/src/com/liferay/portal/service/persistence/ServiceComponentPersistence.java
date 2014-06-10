@@ -261,15 +261,6 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 		throws com.liferay.portal.NoSuchServiceComponentException;
 
 	/**
-	* Returns a map of service components for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the service components
-	* @return map of primaryKeys to service components.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ServiceComponent> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the service component with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param serviceComponentId the primary key of the service component
@@ -277,6 +268,15 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent fetchByPrimaryKey(
 		long serviceComponentId);
+
+	/**
+	* Returns a map of service components for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the service components
+	* @return map of primaryKeys to service components.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ServiceComponent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the service components.

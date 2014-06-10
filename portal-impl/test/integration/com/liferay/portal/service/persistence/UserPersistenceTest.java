@@ -569,76 +569,76 @@ public class UserPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, User> users = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingUsers.isEmpty());
+		Assert.assertTrue(users.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		User newUser = addUser();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUser.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		User existingUser = missingUsers.get(newUser.getPrimaryKey());
+		primaryKeys.add(newUser.getPrimaryKey());
 
-		Assert.assertEquals(missingUsers.size(), 1);
-		Assert.assertEquals(newUser, existingUser);
+		Map<Serializable, User> users = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(newUser, users.get(newUser.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingUsers.isEmpty());
+		Map<Serializable, User> users = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(users.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		User newUser = addUser();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUser.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		User existingUser = missingUsers.get(newUser.getPrimaryKey());
+		primaryKeys.add(newUser.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingUsers.size(), 1);
-		Assert.assertEquals(newUser, existingUser);
-		Assert.assertNull(missingUsers.get(pk2));
+		Map<Serializable, User> users = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(newUser, users.get(newUser.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		User newUser = addUser();
 		User newUser2 = addUser();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUser.getPrimaryKey());
-		missingPks.add(newUser2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, User> missingUsers = _persistence.fetchByPrimaryKeys(missingPks);
-		User existingUser = missingUsers.get(newUser.getPrimaryKey());
-		User existingUser2 = missingUsers.get(newUser2.getPrimaryKey());
+		primaryKeys.add(newUser.getPrimaryKey());
+		primaryKeys.add(newUser2.getPrimaryKey());
 
-		Assert.assertEquals(missingUsers.size(), 2);
-		Assert.assertEquals(newUser, existingUser);
-		Assert.assertEquals(newUser2, existingUser2);
+		Map<Serializable, User> users = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, users.size());
+		Assert.assertEquals(newUser, users.get(newUser.getPrimaryKey()));
+		Assert.assertEquals(newUser2, users.get(newUser2.getPrimaryKey()));
 	}
 
 	@Test

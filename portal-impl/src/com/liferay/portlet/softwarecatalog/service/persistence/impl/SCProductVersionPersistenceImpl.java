@@ -1260,6 +1260,17 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	}
 
 	/**
+	 * Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productVersionId the primary key of the s c product version
+	 * @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
+	 */
+	@Override
+	public SCProductVersion fetchByPrimaryKey(long productVersionId) {
+		return fetchByPrimaryKey((Serializable)productVersionId);
+	}
+
+	/**
 	 * Returns a map of s c product versions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c product versions
@@ -1268,28 +1279,37 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	@Override
 	public Map<Serializable, SCProductVersion> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SCProductVersion> results = new HashMap<Serializable, SCProductVersion>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SCProductVersion> results = new HashMap<Serializable, SCProductVersion>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SCProductVersion scProductVersion = fetchByPrimaryKey(primaryKey);
+
+			if (scProductVersion != null) {
+				results.put(primaryKey, scProductVersion);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SCProductVersion scProductVersion = (SCProductVersion)EntityCacheUtil.getResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
 					SCProductVersionImpl.class, primaryKey);
 
 			if (scProductVersion == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1297,16 +1317,17 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SCPRODUCTVERSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1323,12 +1344,13 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 			Query q = session.createQuery(sql);
 
-			for (SCProductVersion result : (List<SCProductVersion>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SCProductVersion scProductVersion : (List<SCProductVersion>)q.list()) {
+				results.put(scProductVersion.getPrimaryKeyObj(),
+					scProductVersion);
 
-				cacheResult(result);
+				cacheResult(scProductVersion);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(scProductVersion.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1345,17 +1367,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the s c product version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productVersionId the primary key of the s c product version
-	 * @return the s c product version, or <code>null</code> if a s c product version with the primary key could not be found
-	 */
-	@Override
-	public SCProductVersion fetchByPrimaryKey(long productVersionId) {
-		return fetchByPrimaryKey((Serializable)productVersionId);
 	}
 
 	/**

@@ -2719,6 +2719,17 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	}
 
 	/**
+	 * Returns the s c framework version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param frameworkVersionId the primary key of the s c framework version
+	 * @return the s c framework version, or <code>null</code> if a s c framework version with the primary key could not be found
+	 */
+	@Override
+	public SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId) {
+		return fetchByPrimaryKey((Serializable)frameworkVersionId);
+	}
+
+	/**
 	 * Returns a map of s c framework versions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c framework versions
@@ -2727,28 +2738,37 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	@Override
 	public Map<Serializable, SCFrameworkVersion> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SCFrameworkVersion> results = new HashMap<Serializable, SCFrameworkVersion>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SCFrameworkVersion> results = new HashMap<Serializable, SCFrameworkVersion>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SCFrameworkVersion scFrameworkVersion = fetchByPrimaryKey(primaryKey);
+
+			if (scFrameworkVersion != null) {
+				results.put(primaryKey, scFrameworkVersion);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)EntityCacheUtil.getResult(SCFrameworkVersionModelImpl.ENTITY_CACHE_ENABLED,
 					SCFrameworkVersionImpl.class, primaryKey);
 
 			if (scFrameworkVersion == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2756,16 +2776,17 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SCFRAMEWORKVERSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2782,12 +2803,13 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 			Query q = session.createQuery(sql);
 
-			for (SCFrameworkVersion result : (List<SCFrameworkVersion>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SCFrameworkVersion scFrameworkVersion : (List<SCFrameworkVersion>)q.list()) {
+				results.put(scFrameworkVersion.getPrimaryKeyObj(),
+					scFrameworkVersion);
 
-				cacheResult(result);
+				cacheResult(scFrameworkVersion);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(scFrameworkVersion.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2804,17 +2826,6 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the s c framework version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param frameworkVersionId the primary key of the s c framework version
-	 * @return the s c framework version, or <code>null</code> if a s c framework version with the primary key could not be found
-	 */
-	@Override
-	public SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId) {
-		return fetchByPrimaryKey((Serializable)frameworkVersionId);
 	}
 
 	/**

@@ -245,76 +245,76 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingRegions.isEmpty());
+		Assert.assertTrue(regions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Region newRegion = addRegion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRegion.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
-		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
+		primaryKeys.add(newRegion.getPrimaryKey());
 
-		Assert.assertEquals(missingRegions.size(), 1);
-		Assert.assertEquals(newRegion, existingRegion);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, regions.size());
+		Assert.assertEquals(newRegion, regions.get(newRegion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingRegions.isEmpty());
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(regions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Region newRegion = addRegion();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRegion.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
-		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
+		primaryKeys.add(newRegion.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingRegions.size(), 1);
-		Assert.assertEquals(newRegion, existingRegion);
-		Assert.assertNull(missingRegions.get(pk2));
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, regions.size());
+		Assert.assertEquals(newRegion, regions.get(newRegion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Region newRegion = addRegion();
 		Region newRegion2 = addRegion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRegion.getPrimaryKey());
-		missingPks.add(newRegion2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> missingRegions = _persistence.fetchByPrimaryKeys(missingPks);
-		Region existingRegion = missingRegions.get(newRegion.getPrimaryKey());
-		Region existingRegion2 = missingRegions.get(newRegion2.getPrimaryKey());
+		primaryKeys.add(newRegion.getPrimaryKey());
+		primaryKeys.add(newRegion2.getPrimaryKey());
 
-		Assert.assertEquals(missingRegions.size(), 2);
-		Assert.assertEquals(newRegion, existingRegion);
-		Assert.assertEquals(newRegion2, existingRegion2);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, regions.size());
+		Assert.assertEquals(newRegion, regions.get(newRegion.getPrimaryKey()));
+		Assert.assertEquals(newRegion2, regions.get(newRegion2.getPrimaryKey()));
 	}
 
 	@Test

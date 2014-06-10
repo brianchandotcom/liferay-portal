@@ -1310,6 +1310,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	/**
+	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceActionId the primary key of the resource action
+	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
+	 */
+	@Override
+	public ResourceAction fetchByPrimaryKey(long resourceActionId) {
+		return fetchByPrimaryKey((Serializable)resourceActionId);
+	}
+
+	/**
 	 * Returns a map of resource actions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the resource actions
@@ -1318,28 +1329,37 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	@Override
 	public Map<Serializable, ResourceAction> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ResourceAction> results = new HashMap<Serializable, ResourceAction>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ResourceAction> results = new HashMap<Serializable, ResourceAction>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ResourceAction resourceAction = fetchByPrimaryKey(primaryKey);
+
+			if (resourceAction != null) {
+				results.put(primaryKey, resourceAction);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ResourceAction resourceAction = (ResourceAction)EntityCacheUtil.getResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceActionImpl.class, primaryKey);
 
 			if (resourceAction == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1347,16 +1367,17 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_RESOURCEACTION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1373,12 +1394,12 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			Query q = session.createQuery(sql);
 
-			for (ResourceAction result : (List<ResourceAction>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ResourceAction resourceAction : (List<ResourceAction>)q.list()) {
+				results.put(resourceAction.getPrimaryKeyObj(), resourceAction);
 
-				cacheResult(result);
+				cacheResult(resourceAction);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(resourceAction.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1394,17 +1415,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the resource action with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourceActionId the primary key of the resource action
-	 * @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
-	 */
-	@Override
-	public ResourceAction fetchByPrimaryKey(long resourceActionId) {
-		return fetchByPrimaryKey((Serializable)resourceActionId);
 	}
 
 	/**

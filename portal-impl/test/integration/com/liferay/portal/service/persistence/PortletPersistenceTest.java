@@ -222,76 +222,77 @@ public class PortletPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Portlet> missingPortlets = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingPortlets.isEmpty());
+		Assert.assertTrue(portlets.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Portlet newPortlet = addPortlet();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPortlet.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Portlet> missingPortlets = _persistence.fetchByPrimaryKeys(missingPks);
-		Portlet existingPortlet = missingPortlets.get(newPortlet.getPrimaryKey());
+		primaryKeys.add(newPortlet.getPrimaryKey());
 
-		Assert.assertEquals(missingPortlets.size(), 1);
-		Assert.assertEquals(newPortlet, existingPortlet);
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Portlet> missingPortlets = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingPortlets.isEmpty());
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(portlets.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Portlet newPortlet = addPortlet();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPortlet.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Portlet> missingPortlets = _persistence.fetchByPrimaryKeys(missingPks);
-		Portlet existingPortlet = missingPortlets.get(newPortlet.getPrimaryKey());
+		primaryKeys.add(newPortlet.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingPortlets.size(), 1);
-		Assert.assertEquals(newPortlet, existingPortlet);
-		Assert.assertNull(missingPortlets.get(pk2));
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Portlet newPortlet = addPortlet();
 		Portlet newPortlet2 = addPortlet();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPortlet.getPrimaryKey());
-		missingPks.add(newPortlet2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Portlet> missingPortlets = _persistence.fetchByPrimaryKeys(missingPks);
-		Portlet existingPortlet = missingPortlets.get(newPortlet.getPrimaryKey());
-		Portlet existingPortlet2 = missingPortlets.get(newPortlet2.getPrimaryKey());
+		primaryKeys.add(newPortlet.getPrimaryKey());
+		primaryKeys.add(newPortlet2.getPrimaryKey());
 
-		Assert.assertEquals(missingPortlets.size(), 2);
-		Assert.assertEquals(newPortlet, existingPortlet);
-		Assert.assertEquals(newPortlet2, existingPortlet2);
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
+		Assert.assertEquals(newPortlet2,
+			portlets.get(newPortlet2.getPrimaryKey()));
 	}
 
 	@Test

@@ -8823,6 +8823,17 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	/**
+	 * Returns the role with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param roleId the primary key of the role
+	 * @return the role, or <code>null</code> if a role with the primary key could not be found
+	 */
+	@Override
+	public Role fetchByPrimaryKey(long roleId) {
+		return fetchByPrimaryKey((Serializable)roleId);
+	}
+
+	/**
 	 * Returns a map of roles for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the roles
@@ -8831,28 +8842,37 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Map<Serializable, Role> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Role> results = new HashMap<Serializable, Role>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Role> results = new HashMap<Serializable, Role>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Role role = fetchByPrimaryKey(primaryKey);
+
+			if (role != null) {
+				results.put(primaryKey, role);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Role role = (Role)EntityCacheUtil.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 					RoleImpl.class, primaryKey);
 
 			if (role == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -8860,16 +8880,17 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ROLE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -8886,12 +8907,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			Query q = session.createQuery(sql);
 
-			for (Role result : (List<Role>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Role role : (List<Role>)q.list()) {
+				results.put(role.getPrimaryKeyObj(), role);
 
-				cacheResult(result);
+				cacheResult(role);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(role.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -8907,17 +8928,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the role with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param roleId the primary key of the role
-	 * @return the role, or <code>null</code> if a role with the primary key could not be found
-	 */
-	@Override
-	public Role fetchByPrimaryKey(long roleId) {
-		return fetchByPrimaryKey((Serializable)roleId);
 	}
 
 	/**

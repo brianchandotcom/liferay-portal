@@ -1360,6 +1360,18 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
+	 * Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userNotificationDeliveryId the primary key of the user notification delivery
+	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
+	 */
+	@Override
+	public UserNotificationDelivery fetchByPrimaryKey(
+		long userNotificationDeliveryId) {
+		return fetchByPrimaryKey((Serializable)userNotificationDeliveryId);
+	}
+
+	/**
 	 * Returns a map of user notification deliveries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user notification deliveries
@@ -1368,28 +1380,37 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public Map<Serializable, UserNotificationDelivery> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserNotificationDelivery> results = new HashMap<Serializable, UserNotificationDelivery>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserNotificationDelivery> results = new HashMap<Serializable, UserNotificationDelivery>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserNotificationDelivery userNotificationDelivery = fetchByPrimaryKey(primaryKey);
+
+			if (userNotificationDelivery != null) {
+				results.put(primaryKey, userNotificationDelivery);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationDeliveryImpl.class, primaryKey);
 
 			if (userNotificationDelivery == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1397,16 +1418,17 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1423,12 +1445,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			for (UserNotificationDelivery result : (List<UserNotificationDelivery>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserNotificationDelivery userNotificationDelivery : (List<UserNotificationDelivery>)q.list()) {
+				results.put(userNotificationDelivery.getPrimaryKeyObj(),
+					userNotificationDelivery);
 
-				cacheResult(result);
+				cacheResult(userNotificationDelivery);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userNotificationDelivery.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1445,18 +1468,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userNotificationDeliveryId the primary key of the user notification delivery
-	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationDelivery fetchByPrimaryKey(
-		long userNotificationDeliveryId) {
-		return fetchByPrimaryKey((Serializable)userNotificationDeliveryId);
 	}
 
 	/**

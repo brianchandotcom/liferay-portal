@@ -737,17 +737,6 @@ public class RepositoryUtil {
 	}
 
 	/**
-	* Returns a map of repositories for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the repositories
-	* @return map of primaryKeys to repositories.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Repository> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the repository with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param repositoryId the primary key of the repository
@@ -756,6 +745,17 @@ public class RepositoryUtil {
 	public static com.liferay.portal.model.Repository fetchByPrimaryKey(
 		long repositoryId) {
 		return getPersistence().fetchByPrimaryKey(repositoryId);
+	}
+
+	/**
+	* Returns a map of repositories for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the repositories
+	* @return map of primaryKeys to repositories.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Repository> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

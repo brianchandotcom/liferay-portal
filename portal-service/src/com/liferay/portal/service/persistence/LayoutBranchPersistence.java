@@ -530,15 +530,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
 	/**
-	* Returns a map of layout branchs for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the layout branchs
-	* @return map of primaryKeys to layout branchs.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutBranch> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the layout branch with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param LayoutBranchId the primary key of the layout branch
@@ -546,6 +537,15 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	*/
 	public com.liferay.portal.model.LayoutBranch fetchByPrimaryKey(
 		long LayoutBranchId);
+
+	/**
+	* Returns a map of layout branchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout branchs
+	* @return map of primaryKeys to layout branchs.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutBranch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout branchs.

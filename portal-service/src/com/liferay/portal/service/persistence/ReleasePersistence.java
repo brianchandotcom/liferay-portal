@@ -133,6 +133,14 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 		throws com.liferay.portal.NoSuchReleaseException;
 
 	/**
+	* Returns the release with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param releaseId the primary key of the release
+	* @return the release, or <code>null</code> if a release with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Release fetchByPrimaryKey(long releaseId);
+
+	/**
 	* Returns a map of releases for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the releases
@@ -140,14 +148,6 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Release> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the release with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param releaseId the primary key of the release
-	* @return the release, or <code>null</code> if a release with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Release fetchByPrimaryKey(long releaseId);
 
 	/**
 	* Returns all the releases.

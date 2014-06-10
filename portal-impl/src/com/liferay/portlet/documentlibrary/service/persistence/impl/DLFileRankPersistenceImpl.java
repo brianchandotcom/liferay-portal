@@ -2836,6 +2836,17 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	}
 
 	/**
+	 * Returns the document library file rank with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileRankId the primary key of the document library file rank
+	 * @return the document library file rank, or <code>null</code> if a document library file rank with the primary key could not be found
+	 */
+	@Override
+	public DLFileRank fetchByPrimaryKey(long fileRankId) {
+		return fetchByPrimaryKey((Serializable)fileRankId);
+	}
+
+	/**
 	 * Returns a map of document library file ranks for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library file ranks
@@ -2844,28 +2855,37 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	@Override
 	public Map<Serializable, DLFileRank> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLFileRank> results = new HashMap<Serializable, DLFileRank>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLFileRank> results = new HashMap<Serializable, DLFileRank>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLFileRank dlFileRank = fetchByPrimaryKey(primaryKey);
+
+			if (dlFileRank != null) {
+				results.put(primaryKey, dlFileRank);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLFileRank dlFileRank = (DLFileRank)EntityCacheUtil.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileRankImpl.class, primaryKey);
 
 			if (dlFileRank == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2873,16 +2893,17 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLFILERANK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2899,12 +2920,12 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 			Query q = session.createQuery(sql);
 
-			for (DLFileRank result : (List<DLFileRank>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLFileRank dlFileRank : (List<DLFileRank>)q.list()) {
+				results.put(dlFileRank.getPrimaryKeyObj(), dlFileRank);
 
-				cacheResult(result);
+				cacheResult(dlFileRank);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlFileRank.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2920,17 +2941,6 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library file rank with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileRankId the primary key of the document library file rank
-	 * @return the document library file rank, or <code>null</code> if a document library file rank with the primary key could not be found
-	 */
-	@Override
-	public DLFileRank fetchByPrimaryKey(long fileRankId) {
-		return fetchByPrimaryKey((Serializable)fileRankId);
 	}
 
 	/**

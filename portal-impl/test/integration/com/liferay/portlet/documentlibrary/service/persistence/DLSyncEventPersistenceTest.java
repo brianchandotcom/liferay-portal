@@ -218,76 +218,80 @@ public class DLSyncEventPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLSyncEvent> missingDLSyncEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDLSyncEvents.isEmpty());
+		Assert.assertTrue(dlSyncEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLSyncEvent.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLSyncEvent> missingDLSyncEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		DLSyncEvent existingDLSyncEvent = missingDLSyncEvents.get(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
 
-		Assert.assertEquals(missingDLSyncEvents.size(), 1);
-		Assert.assertEquals(newDLSyncEvent, existingDLSyncEvent);
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLSyncEvent> missingDLSyncEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDLSyncEvents.isEmpty());
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlSyncEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLSyncEvent.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLSyncEvent> missingDLSyncEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		DLSyncEvent existingDLSyncEvent = missingDLSyncEvents.get(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDLSyncEvents.size(), 1);
-		Assert.assertEquals(newDLSyncEvent, existingDLSyncEvent);
-		Assert.assertNull(missingDLSyncEvents.get(pk2));
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
 		DLSyncEvent newDLSyncEvent2 = addDLSyncEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLSyncEvent.getPrimaryKey());
-		missingPks.add(newDLSyncEvent2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLSyncEvent> missingDLSyncEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		DLSyncEvent existingDLSyncEvent = missingDLSyncEvents.get(newDLSyncEvent.getPrimaryKey());
-		DLSyncEvent existingDLSyncEvent2 = missingDLSyncEvents.get(newDLSyncEvent2.getPrimaryKey());
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(newDLSyncEvent2.getPrimaryKey());
 
-		Assert.assertEquals(missingDLSyncEvents.size(), 2);
-		Assert.assertEquals(newDLSyncEvent, existingDLSyncEvent);
-		Assert.assertEquals(newDLSyncEvent2, existingDLSyncEvent2);
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
+		Assert.assertEquals(newDLSyncEvent2,
+			dlSyncEvents.get(newDLSyncEvent2.getPrimaryKey()));
 	}
 
 	@Test

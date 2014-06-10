@@ -3000,28 +3000,6 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	}
 
 	/**
-	 * Returns a map of user group group roles for the primary keys provided.
-	 *
-	 * @param  primaryKeys the set of primaryKeys for which to fetch the user group group roles
-	 * @return map of primaryKeys to user group group roles.
-	 */
-	@Override
-	public Map<Serializable, UserGroupGroupRole> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserGroupGroupRole> results = new HashMap<Serializable, UserGroupGroupRole>();
-
-		if (primaryKeys.isEmpty()) {
-			return results;
-		}
-
-		for (Serializable primaryKey : primaryKeys) {
-			results.put(primaryKey, fetchByPrimaryKey(primaryKey));
-		}
-
-		return results;
-	}
-
-	/**
 	 * Returns the user group group role with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param userGroupGroupRolePK the primary key of the user group group role
@@ -3031,6 +3009,32 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	public UserGroupGroupRole fetchByPrimaryKey(
 		UserGroupGroupRolePK userGroupGroupRolePK) {
 		return fetchByPrimaryKey((Serializable)userGroupGroupRolePK);
+	}
+
+	/**
+	 * Returns a map of user group group roles for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the user group group roles
+	 * @return map of primaryKeys to user group group roles.
+	 */
+	@Override
+	public Map<Serializable, UserGroupGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, UserGroupGroupRole> results = new HashMap<Serializable, UserGroupGroupRole>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			UserGroupGroupRole userGroupGroupRole = fetchByPrimaryKey(primaryKey);
+
+			if (userGroupGroupRole != null) {
+				results.put(primaryKey, userGroupGroupRole);
+			}
+		}
+
+		return results;
 	}
 
 	/**

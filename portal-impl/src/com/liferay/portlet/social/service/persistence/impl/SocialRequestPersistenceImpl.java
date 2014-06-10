@@ -6656,6 +6656,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
+	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param requestId the primary key of the social request
+	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
+	 */
+	@Override
+	public SocialRequest fetchByPrimaryKey(long requestId) {
+		return fetchByPrimaryKey((Serializable)requestId);
+	}
+
+	/**
 	 * Returns a map of social requests for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social requests
@@ -6664,28 +6675,37 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public Map<Serializable, SocialRequest> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialRequest> results = new HashMap<Serializable, SocialRequest>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialRequest> results = new HashMap<Serializable, SocialRequest>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
+
+			if (socialRequest != null) {
+				results.put(primaryKey, socialRequest);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialRequest socialRequest = (SocialRequest)EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 					SocialRequestImpl.class, primaryKey);
 
 			if (socialRequest == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -6693,16 +6713,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALREQUEST_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -6719,12 +6740,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			Query q = session.createQuery(sql);
 
-			for (SocialRequest result : (List<SocialRequest>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialRequest socialRequest : (List<SocialRequest>)q.list()) {
+				results.put(socialRequest.getPrimaryKeyObj(), socialRequest);
 
-				cacheResult(result);
+				cacheResult(socialRequest);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialRequest.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -6740,17 +6761,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social request with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param requestId the primary key of the social request
-	 * @return the social request, or <code>null</code> if a social request with the primary key could not be found
-	 */
-	@Override
-	public SocialRequest fetchByPrimaryKey(long requestId) {
-		return fetchByPrimaryKey((Serializable)requestId);
 	}
 
 	/**

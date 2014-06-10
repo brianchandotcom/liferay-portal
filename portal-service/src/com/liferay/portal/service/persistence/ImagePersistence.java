@@ -198,6 +198,14 @@ public interface ImagePersistence extends BasePersistence<Image> {
 		throws com.liferay.portal.NoSuchImageException;
 
 	/**
+	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param imageId the primary key of the image
+	* @return the image, or <code>null</code> if a image with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId);
+
+	/**
 	* Returns a map of images for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the images
@@ -205,14 +213,6 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Image> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param imageId the primary key of the image
-	* @return the image, or <code>null</code> if a image with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId);
 
 	/**
 	* Returns all the images.

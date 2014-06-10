@@ -1679,6 +1679,17 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	}
 
 	/**
+	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param rowId the primary key of the expando row
+	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
+	 */
+	@Override
+	public ExpandoRow fetchByPrimaryKey(long rowId) {
+		return fetchByPrimaryKey((Serializable)rowId);
+	}
+
+	/**
 	 * Returns a map of expando rows for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the expando rows
@@ -1687,28 +1698,37 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	@Override
 	public Map<Serializable, ExpandoRow> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ExpandoRow> results = new HashMap<Serializable, ExpandoRow>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ExpandoRow> results = new HashMap<Serializable, ExpandoRow>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ExpandoRow expandoRow = fetchByPrimaryKey(primaryKey);
+
+			if (expandoRow != null) {
+				results.put(primaryKey, expandoRow);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ExpandoRow expandoRow = (ExpandoRow)EntityCacheUtil.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 					ExpandoRowImpl.class, primaryKey);
 
 			if (expandoRow == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1716,16 +1736,17 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_EXPANDOROW_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1742,12 +1763,12 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 			Query q = session.createQuery(sql);
 
-			for (ExpandoRow result : (List<ExpandoRow>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ExpandoRow expandoRow : (List<ExpandoRow>)q.list()) {
+				results.put(expandoRow.getPrimaryKeyObj(), expandoRow);
 
-				cacheResult(result);
+				cacheResult(expandoRow);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(expandoRow.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1763,17 +1784,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param rowId the primary key of the expando row
-	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
-	 */
-	@Override
-	public ExpandoRow fetchByPrimaryKey(long rowId) {
-		return fetchByPrimaryKey((Serializable)rowId);
 	}
 
 	/**

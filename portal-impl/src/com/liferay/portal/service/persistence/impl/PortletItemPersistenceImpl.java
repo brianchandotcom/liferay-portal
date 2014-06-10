@@ -1991,6 +1991,17 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	}
 
 	/**
+	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portletItemId the primary key of the portlet item
+	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
+	 */
+	@Override
+	public PortletItem fetchByPrimaryKey(long portletItemId) {
+		return fetchByPrimaryKey((Serializable)portletItemId);
+	}
+
+	/**
 	 * Returns a map of portlet items for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the portlet items
@@ -1999,28 +2010,37 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public Map<Serializable, PortletItem> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PortletItem> results = new HashMap<Serializable, PortletItem>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PortletItem> results = new HashMap<Serializable, PortletItem>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PortletItem portletItem = fetchByPrimaryKey(primaryKey);
+
+			if (portletItem != null) {
+				results.put(primaryKey, portletItem);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PortletItem portletItem = (PortletItem)EntityCacheUtil.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 					PortletItemImpl.class, primaryKey);
 
 			if (portletItem == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2028,16 +2048,17 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PORTLETITEM_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2054,12 +2075,12 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			Query q = session.createQuery(sql);
 
-			for (PortletItem result : (List<PortletItem>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PortletItem portletItem : (List<PortletItem>)q.list()) {
+				results.put(portletItem.getPrimaryKeyObj(), portletItem);
 
-				cacheResult(result);
+				cacheResult(portletItem);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(portletItem.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2075,17 +2096,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portletItemId the primary key of the portlet item
-	 * @return the portlet item, or <code>null</code> if a portlet item with the primary key could not be found
-	 */
-	@Override
-	public PortletItem fetchByPrimaryKey(long portletItemId) {
-		return fetchByPrimaryKey((Serializable)portletItemId);
 	}
 
 	/**

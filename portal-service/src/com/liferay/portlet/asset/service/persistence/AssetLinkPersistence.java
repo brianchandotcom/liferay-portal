@@ -765,15 +765,6 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 		long linkId) throws com.liferay.portlet.asset.NoSuchLinkException;
 
 	/**
-	* Returns a map of asset links for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the asset links
-	* @return map of primaryKeys to asset links.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the asset link with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param linkId the primary key of the asset link
@@ -781,6 +772,15 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	*/
 	public com.liferay.portlet.asset.model.AssetLink fetchByPrimaryKey(
 		long linkId);
+
+	/**
+	* Returns a map of asset links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset links
+	* @return map of primaryKeys to asset links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset links.

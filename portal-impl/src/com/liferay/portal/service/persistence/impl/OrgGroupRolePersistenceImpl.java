@@ -1399,28 +1399,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	}
 
 	/**
-	 * Returns a map of org group roles for the primary keys provided.
-	 *
-	 * @param  primaryKeys the set of primaryKeys for which to fetch the org group roles
-	 * @return map of primaryKeys to org group roles.
-	 */
-	@Override
-	public Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		Map<Serializable, OrgGroupRole> results = new HashMap<Serializable, OrgGroupRole>();
-
-		if (primaryKeys.isEmpty()) {
-			return results;
-		}
-
-		for (Serializable primaryKey : primaryKeys) {
-			results.put(primaryKey, fetchByPrimaryKey(primaryKey));
-		}
-
-		return results;
-	}
-
-	/**
 	 * Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
 	 *
 	 * @param orgGroupRolePK the primary key of the org group role
@@ -1429,6 +1407,32 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	public OrgGroupRole fetchByPrimaryKey(OrgGroupRolePK orgGroupRolePK) {
 		return fetchByPrimaryKey((Serializable)orgGroupRolePK);
+	}
+
+	/**
+	 * Returns a map of org group roles for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the org group roles
+	 * @return map of primaryKeys to org group roles.
+	 */
+	@Override
+	public Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, OrgGroupRole> results = new HashMap<Serializable, OrgGroupRole>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			OrgGroupRole orgGroupRole = fetchByPrimaryKey(primaryKey);
+
+			if (orgGroupRole != null) {
+				results.put(primaryKey, orgGroupRole);
+			}
+		}
+
+		return results;
 	}
 
 	/**

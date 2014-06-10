@@ -703,6 +703,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	/**
+	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ticketId the primary key of the ticket
+	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
+	 */
+	@Override
+	public Ticket fetchByPrimaryKey(long ticketId) {
+		return fetchByPrimaryKey((Serializable)ticketId);
+	}
+
+	/**
 	 * Returns a map of tickets for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the tickets
@@ -711,28 +722,37 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public Map<Serializable, Ticket> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Ticket> results = new HashMap<Serializable, Ticket>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Ticket> results = new HashMap<Serializable, Ticket>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Ticket ticket = fetchByPrimaryKey(primaryKey);
+
+			if (ticket != null) {
+				results.put(primaryKey, ticket);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Ticket ticket = (Ticket)EntityCacheUtil.getResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 					TicketImpl.class, primaryKey);
 
 			if (ticket == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -740,16 +760,17 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_TICKET_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -766,12 +787,12 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 			Query q = session.createQuery(sql);
 
-			for (Ticket result : (List<Ticket>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Ticket ticket : (List<Ticket>)q.list()) {
+				results.put(ticket.getPrimaryKeyObj(), ticket);
 
-				cacheResult(result);
+				cacheResult(ticket);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ticket.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -787,17 +808,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the ticket with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ticketId the primary key of the ticket
-	 * @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
-	 */
-	@Override
-	public Ticket fetchByPrimaryKey(long ticketId) {
-		return fetchByPrimaryKey((Serializable)ticketId);
 	}
 
 	/**

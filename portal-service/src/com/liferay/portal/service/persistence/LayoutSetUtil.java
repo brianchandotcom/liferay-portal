@@ -528,17 +528,6 @@ public class LayoutSetUtil {
 	}
 
 	/**
-	* Returns a map of layout sets for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the layout sets
-	* @return map of primaryKeys to layout sets.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSet> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the layout set with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutSetId the primary key of the layout set
@@ -547,6 +536,17 @@ public class LayoutSetUtil {
 	public static com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
 		long layoutSetId) {
 		return getPersistence().fetchByPrimaryKey(layoutSetId);
+	}
+
+	/**
+	* Returns a map of layout sets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout sets
+	* @return map of primaryKeys to layout sets.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSet> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

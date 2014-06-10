@@ -375,76 +375,76 @@ public class RolePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Role> roles = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingRoles.isEmpty());
+		Assert.assertTrue(roles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Role newRole = addRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRole.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
+		primaryKeys.add(newRole.getPrimaryKey());
 
-		Assert.assertEquals(missingRoles.size(), 1);
-		Assert.assertEquals(newRole, existingRole);
+		Map<Serializable, Role> roles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, roles.size());
+		Assert.assertEquals(newRole, roles.get(newRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingRoles.isEmpty());
+		Map<Serializable, Role> roles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(roles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Role newRole = addRole();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRole.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
+		primaryKeys.add(newRole.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingRoles.size(), 1);
-		Assert.assertEquals(newRole, existingRole);
-		Assert.assertNull(missingRoles.get(pk2));
+		Map<Serializable, Role> roles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, roles.size());
+		Assert.assertEquals(newRole, roles.get(newRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Role newRole = addRole();
 		Role newRole2 = addRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRole.getPrimaryKey());
-		missingPks.add(newRole2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Role> missingRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		Role existingRole = missingRoles.get(newRole.getPrimaryKey());
-		Role existingRole2 = missingRoles.get(newRole2.getPrimaryKey());
+		primaryKeys.add(newRole.getPrimaryKey());
+		primaryKeys.add(newRole2.getPrimaryKey());
 
-		Assert.assertEquals(missingRoles.size(), 2);
-		Assert.assertEquals(newRole, existingRole);
-		Assert.assertEquals(newRole2, existingRole2);
+		Map<Serializable, Role> roles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, roles.size());
+		Assert.assertEquals(newRole, roles.get(newRole.getPrimaryKey()));
+		Assert.assertEquals(newRole2, roles.get(newRole2.getPrimaryKey()));
 	}
 
 	@Test

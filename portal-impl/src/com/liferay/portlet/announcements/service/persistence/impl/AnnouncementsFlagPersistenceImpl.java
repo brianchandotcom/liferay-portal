@@ -1243,6 +1243,17 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	}
 
 	/**
+	 * Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param flagId the primary key of the announcements flag
+	 * @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsFlag fetchByPrimaryKey(long flagId) {
+		return fetchByPrimaryKey((Serializable)flagId);
+	}
+
+	/**
 	 * Returns a map of announcements flags for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the announcements flags
@@ -1251,28 +1262,37 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public Map<Serializable, AnnouncementsFlag> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AnnouncementsFlag> results = new HashMap<Serializable, AnnouncementsFlag>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AnnouncementsFlag> results = new HashMap<Serializable, AnnouncementsFlag>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AnnouncementsFlag announcementsFlag = fetchByPrimaryKey(primaryKey);
+
+			if (announcementsFlag != null) {
+				results.put(primaryKey, announcementsFlag);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)EntityCacheUtil.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 					AnnouncementsFlagImpl.class, primaryKey);
 
 			if (announcementsFlag == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1280,16 +1300,17 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1306,12 +1327,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 			Query q = session.createQuery(sql);
 
-			for (AnnouncementsFlag result : (List<AnnouncementsFlag>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AnnouncementsFlag announcementsFlag : (List<AnnouncementsFlag>)q.list()) {
+				results.put(announcementsFlag.getPrimaryKeyObj(),
+					announcementsFlag);
 
-				cacheResult(result);
+				cacheResult(announcementsFlag);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(announcementsFlag.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1328,17 +1350,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param flagId the primary key of the announcements flag
-	 * @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsFlag fetchByPrimaryKey(long flagId) {
-		return fetchByPrimaryKey((Serializable)flagId);
 	}
 
 	/**

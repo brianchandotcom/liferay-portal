@@ -514,76 +514,80 @@ public class MBThreadPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingMBThreads.isEmpty());
+		Assert.assertTrue(mbThreads.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		MBThread newMBThread = addMBThread();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBThread.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
-		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
+		primaryKeys.add(newMBThread.getPrimaryKey());
 
-		Assert.assertEquals(missingMBThreads.size(), 1);
-		Assert.assertEquals(newMBThread, existingMBThread);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbThreads.size());
+		Assert.assertEquals(newMBThread,
+			mbThreads.get(newMBThread.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingMBThreads.isEmpty());
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbThreads.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		MBThread newMBThread = addMBThread();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBThread.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
-		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
+		primaryKeys.add(newMBThread.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingMBThreads.size(), 1);
-		Assert.assertEquals(newMBThread, existingMBThread);
-		Assert.assertNull(missingMBThreads.get(pk2));
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbThreads.size());
+		Assert.assertEquals(newMBThread,
+			mbThreads.get(newMBThread.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		MBThread newMBThread = addMBThread();
 		MBThread newMBThread2 = addMBThread();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBThread.getPrimaryKey());
-		missingPks.add(newMBThread2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBThread> missingMBThreads = _persistence.fetchByPrimaryKeys(missingPks);
-		MBThread existingMBThread = missingMBThreads.get(newMBThread.getPrimaryKey());
-		MBThread existingMBThread2 = missingMBThreads.get(newMBThread2.getPrimaryKey());
+		primaryKeys.add(newMBThread.getPrimaryKey());
+		primaryKeys.add(newMBThread2.getPrimaryKey());
 
-		Assert.assertEquals(missingMBThreads.size(), 2);
-		Assert.assertEquals(newMBThread, existingMBThread);
-		Assert.assertEquals(newMBThread2, existingMBThread2);
+		Map<Serializable, MBThread> mbThreads = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mbThreads.size());
+		Assert.assertEquals(newMBThread,
+			mbThreads.get(newMBThread.getPrimaryKey()));
+		Assert.assertEquals(newMBThread2,
+			mbThreads.get(newMBThread2.getPrimaryKey()));
 	}
 
 	@Test

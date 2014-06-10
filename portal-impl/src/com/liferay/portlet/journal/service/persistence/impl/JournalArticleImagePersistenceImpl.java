@@ -2596,6 +2596,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	}
 
 	/**
+	 * Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param articleImageId the primary key of the journal article image
+	 * @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
+	 */
+	@Override
+	public JournalArticleImage fetchByPrimaryKey(long articleImageId) {
+		return fetchByPrimaryKey((Serializable)articleImageId);
+	}
+
+	/**
 	 * Returns a map of journal article images for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal article images
@@ -2604,28 +2615,37 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	@Override
 	public Map<Serializable, JournalArticleImage> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalArticleImage> results = new HashMap<Serializable, JournalArticleImage>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalArticleImage> results = new HashMap<Serializable, JournalArticleImage>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalArticleImage journalArticleImage = fetchByPrimaryKey(primaryKey);
+
+			if (journalArticleImage != null) {
+				results.put(primaryKey, journalArticleImage);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalArticleImage journalArticleImage = (JournalArticleImage)EntityCacheUtil.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleImageImpl.class, primaryKey);
 
 			if (journalArticleImage == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2633,16 +2653,17 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALARTICLEIMAGE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2659,12 +2680,13 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			Query q = session.createQuery(sql);
 
-			for (JournalArticleImage result : (List<JournalArticleImage>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalArticleImage journalArticleImage : (List<JournalArticleImage>)q.list()) {
+				results.put(journalArticleImage.getPrimaryKeyObj(),
+					journalArticleImage);
 
-				cacheResult(result);
+				cacheResult(journalArticleImage);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalArticleImage.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2681,17 +2703,6 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal article image with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param articleImageId the primary key of the journal article image
-	 * @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
-	 */
-	@Override
-	public JournalArticleImage fetchByPrimaryKey(long articleImageId) {
-		return fetchByPrimaryKey((Serializable)articleImageId);
 	}
 
 	/**

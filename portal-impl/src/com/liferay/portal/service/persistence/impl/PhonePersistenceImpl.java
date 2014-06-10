@@ -4238,6 +4238,17 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	/**
+	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param phoneId the primary key of the phone
+	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
+	 */
+	@Override
+	public Phone fetchByPrimaryKey(long phoneId) {
+		return fetchByPrimaryKey((Serializable)phoneId);
+	}
+
+	/**
 	 * Returns a map of phones for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the phones
@@ -4246,28 +4257,37 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	@Override
 	public Map<Serializable, Phone> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Phone> results = new HashMap<Serializable, Phone>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Phone> results = new HashMap<Serializable, Phone>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Phone phone = fetchByPrimaryKey(primaryKey);
+
+			if (phone != null) {
+				results.put(primaryKey, phone);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Phone phone = (Phone)EntityCacheUtil.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 					PhoneImpl.class, primaryKey);
 
 			if (phone == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4275,16 +4295,17 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PHONE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4301,12 +4322,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			Query q = session.createQuery(sql);
 
-			for (Phone result : (List<Phone>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Phone phone : (List<Phone>)q.list()) {
+				results.put(phone.getPrimaryKeyObj(), phone);
 
-				cacheResult(result);
+				cacheResult(phone);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(phone.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4322,17 +4343,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the phone with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param phoneId the primary key of the phone
-	 * @return the phone, or <code>null</code> if a phone with the primary key could not be found
-	 */
-	@Override
-	public Phone fetchByPrimaryKey(long phoneId) {
-		return fetchByPrimaryKey((Serializable)phoneId);
 	}
 
 	/**

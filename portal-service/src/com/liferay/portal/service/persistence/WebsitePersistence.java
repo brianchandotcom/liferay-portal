@@ -982,6 +982,14 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
+	* Returns the website with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param websiteId the primary key of the website
+	* @return the website, or <code>null</code> if a website with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Website fetchByPrimaryKey(long websiteId);
+
+	/**
 	* Returns a map of websites for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the websites
@@ -989,14 +997,6 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Website> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the website with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param websiteId the primary key of the website
-	* @return the website, or <code>null</code> if a website with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Website fetchByPrimaryKey(long websiteId);
 
 	/**
 	* Returns all the websites.

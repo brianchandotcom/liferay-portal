@@ -1136,6 +1136,17 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	}
 
 	/**
+	 * Returns the d l sync event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param syncEventId the primary key of the d l sync event
+	 * @return the d l sync event, or <code>null</code> if a d l sync event with the primary key could not be found
+	 */
+	@Override
+	public DLSyncEvent fetchByPrimaryKey(long syncEventId) {
+		return fetchByPrimaryKey((Serializable)syncEventId);
+	}
+
+	/**
 	 * Returns a map of d l sync events for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d l sync events
@@ -1144,28 +1155,37 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	@Override
 	public Map<Serializable, DLSyncEvent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLSyncEvent> results = new HashMap<Serializable, DLSyncEvent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLSyncEvent> results = new HashMap<Serializable, DLSyncEvent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLSyncEvent dlSyncEvent = fetchByPrimaryKey(primaryKey);
+
+			if (dlSyncEvent != null) {
+				results.put(primaryKey, dlSyncEvent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLSyncEvent dlSyncEvent = (DLSyncEvent)EntityCacheUtil.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
 					DLSyncEventImpl.class, primaryKey);
 
 			if (dlSyncEvent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1173,16 +1193,17 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLSYNCEVENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1199,12 +1220,12 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 
 			Query q = session.createQuery(sql);
 
-			for (DLSyncEvent result : (List<DLSyncEvent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLSyncEvent dlSyncEvent : (List<DLSyncEvent>)q.list()) {
+				results.put(dlSyncEvent.getPrimaryKeyObj(), dlSyncEvent);
 
-				cacheResult(result);
+				cacheResult(dlSyncEvent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlSyncEvent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1220,17 +1241,6 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d l sync event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param syncEventId the primary key of the d l sync event
-	 * @return the d l sync event, or <code>null</code> if a d l sync event with the primary key could not be found
-	 */
-	@Override
-	public DLSyncEvent fetchByPrimaryKey(long syncEventId) {
-		return fetchByPrimaryKey((Serializable)syncEventId);
 	}
 
 	/**

@@ -2418,6 +2418,17 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	}
 
 	/**
+	 * Returns the social activity limit with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityLimitId the primary key of the social activity limit
+	 * @return the social activity limit, or <code>null</code> if a social activity limit with the primary key could not be found
+	 */
+	@Override
+	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId) {
+		return fetchByPrimaryKey((Serializable)activityLimitId);
+	}
+
+	/**
 	 * Returns a map of social activity limits for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social activity limits
@@ -2426,28 +2437,37 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	public Map<Serializable, SocialActivityLimit> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialActivityLimit> results = new HashMap<Serializable, SocialActivityLimit>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialActivityLimit> results = new HashMap<Serializable, SocialActivityLimit>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialActivityLimit socialActivityLimit = fetchByPrimaryKey(primaryKey);
+
+			if (socialActivityLimit != null) {
+				results.put(primaryKey, socialActivityLimit);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialActivityLimit socialActivityLimit = (SocialActivityLimit)EntityCacheUtil.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityLimitImpl.class, primaryKey);
 
 			if (socialActivityLimit == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2455,16 +2475,17 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2481,12 +2502,13 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			Query q = session.createQuery(sql);
 
-			for (SocialActivityLimit result : (List<SocialActivityLimit>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialActivityLimit socialActivityLimit : (List<SocialActivityLimit>)q.list()) {
+				results.put(socialActivityLimit.getPrimaryKeyObj(),
+					socialActivityLimit);
 
-				cacheResult(result);
+				cacheResult(socialActivityLimit);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialActivityLimit.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2503,17 +2525,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social activity limit with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityLimitId the primary key of the social activity limit
-	 * @return the social activity limit, or <code>null</code> if a social activity limit with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId) {
-		return fetchByPrimaryKey((Serializable)activityLimitId);
 	}
 
 	/**

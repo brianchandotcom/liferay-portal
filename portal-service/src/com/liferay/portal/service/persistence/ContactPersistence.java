@@ -449,6 +449,14 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
+	* Returns the contact with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact, or <code>null</code> if a contact with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Contact fetchByPrimaryKey(long contactId);
+
+	/**
 	* Returns a map of contacts for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the contacts
@@ -456,14 +464,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Contact> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the contact with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param contactId the primary key of the contact
-	* @return the contact, or <code>null</code> if a contact with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Contact fetchByPrimaryKey(long contactId);
 
 	/**
 	* Returns all the contacts.

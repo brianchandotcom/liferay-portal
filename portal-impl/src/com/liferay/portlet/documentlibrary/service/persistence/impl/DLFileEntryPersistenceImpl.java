@@ -10749,6 +10749,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	}
 
 	/**
+	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileEntryId the primary key of the document library file entry
+	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByPrimaryKey(long fileEntryId) {
+		return fetchByPrimaryKey((Serializable)fileEntryId);
+	}
+
+	/**
 	 * Returns a map of document library file entries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library file entries
@@ -10757,28 +10768,37 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public Map<Serializable, DLFileEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLFileEntry> results = new HashMap<Serializable, DLFileEntry>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLFileEntry> results = new HashMap<Serializable, DLFileEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLFileEntry dlFileEntry = fetchByPrimaryKey(primaryKey);
+
+			if (dlFileEntry != null) {
+				results.put(primaryKey, dlFileEntry);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLFileEntry dlFileEntry = (DLFileEntry)EntityCacheUtil.getResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileEntryImpl.class, primaryKey);
 
 			if (dlFileEntry == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -10786,16 +10806,17 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLFILEENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -10812,12 +10833,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			Query q = session.createQuery(sql);
 
-			for (DLFileEntry result : (List<DLFileEntry>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLFileEntry dlFileEntry : (List<DLFileEntry>)q.list()) {
+				results.put(dlFileEntry.getPrimaryKeyObj(), dlFileEntry);
 
-				cacheResult(result);
+				cacheResult(dlFileEntry);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlFileEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -10833,17 +10854,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileEntryId the primary key of the document library file entry
-	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntry fetchByPrimaryKey(long fileEntryId) {
-		return fetchByPrimaryKey((Serializable)fileEntryId);
 	}
 
 	/**

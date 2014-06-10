@@ -4250,6 +4250,17 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	/**
+	 * Returns the website with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param websiteId the primary key of the website
+	 * @return the website, or <code>null</code> if a website with the primary key could not be found
+	 */
+	@Override
+	public Website fetchByPrimaryKey(long websiteId) {
+		return fetchByPrimaryKey((Serializable)websiteId);
+	}
+
+	/**
 	 * Returns a map of websites for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the websites
@@ -4258,28 +4269,37 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	@Override
 	public Map<Serializable, Website> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Website> results = new HashMap<Serializable, Website>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Website> results = new HashMap<Serializable, Website>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Website website = fetchByPrimaryKey(primaryKey);
+
+			if (website != null) {
+				results.put(primaryKey, website);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Website website = (Website)EntityCacheUtil.getResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 					WebsiteImpl.class, primaryKey);
 
 			if (website == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4287,16 +4307,17 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WEBSITE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4313,12 +4334,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 			Query q = session.createQuery(sql);
 
-			for (Website result : (List<Website>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Website website : (List<Website>)q.list()) {
+				results.put(website.getPrimaryKeyObj(), website);
 
-				cacheResult(result);
+				cacheResult(website);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(website.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4334,17 +4355,6 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the website with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param websiteId the primary key of the website
-	 * @return the website, or <code>null</code> if a website with the primary key could not be found
-	 */
-	@Override
-	public Website fetchByPrimaryKey(long websiteId) {
-		return fetchByPrimaryKey((Serializable)websiteId);
 	}
 
 	/**

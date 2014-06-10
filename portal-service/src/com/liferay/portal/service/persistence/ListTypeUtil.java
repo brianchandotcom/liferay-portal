@@ -305,17 +305,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	* Returns a map of list types for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the list types
-	* @return map of primaryKeys to list types.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ListType> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the list type with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param listTypeId the primary key of the list type
@@ -324,6 +313,17 @@ public class ListTypeUtil {
 	public static com.liferay.portal.model.ListType fetchByPrimaryKey(
 		int listTypeId) {
 		return getPersistence().fetchByPrimaryKey(listTypeId);
+	}
+
+	/**
+	* Returns a map of list types for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the list types
+	* @return map of primaryKeys to list types.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ListType> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

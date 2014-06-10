@@ -413,6 +413,17 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	}
 
 	/**
+	 * Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param clusterGroupId the primary key of the cluster group
+	 * @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
+	 */
+	@Override
+	public ClusterGroup fetchByPrimaryKey(long clusterGroupId) {
+		return fetchByPrimaryKey((Serializable)clusterGroupId);
+	}
+
+	/**
 	 * Returns a map of cluster groups for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the cluster groups
@@ -421,28 +432,37 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	@Override
 	public Map<Serializable, ClusterGroup> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ClusterGroup> results = new HashMap<Serializable, ClusterGroup>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ClusterGroup> results = new HashMap<Serializable, ClusterGroup>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ClusterGroup clusterGroup = fetchByPrimaryKey(primaryKey);
+
+			if (clusterGroup != null) {
+				results.put(primaryKey, clusterGroup);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ClusterGroup clusterGroup = (ClusterGroup)EntityCacheUtil.getResult(ClusterGroupModelImpl.ENTITY_CACHE_ENABLED,
 					ClusterGroupImpl.class, primaryKey);
 
 			if (clusterGroup == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -450,16 +470,17 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_CLUSTERGROUP_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -476,12 +497,12 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 			Query q = session.createQuery(sql);
 
-			for (ClusterGroup result : (List<ClusterGroup>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ClusterGroup clusterGroup : (List<ClusterGroup>)q.list()) {
+				results.put(clusterGroup.getPrimaryKeyObj(), clusterGroup);
 
-				cacheResult(result);
+				cacheResult(clusterGroup);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(clusterGroup.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -497,17 +518,6 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param clusterGroupId the primary key of the cluster group
-	 * @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
-	 */
-	@Override
-	public ClusterGroup fetchByPrimaryKey(long clusterGroupId) {
-		return fetchByPrimaryKey((Serializable)clusterGroupId);
 	}
 
 	/**

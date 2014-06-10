@@ -405,6 +405,17 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	/**
+	 * Returns the counter with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param name the primary key of the counter
+	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
+	 */
+	@Override
+	public Counter fetchByPrimaryKey(String name) {
+		return fetchByPrimaryKey((Serializable)name);
+	}
+
+	/**
 	 * Returns a map of counters for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the counters
@@ -413,28 +424,37 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	@Override
 	public Map<Serializable, Counter> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Counter> results = new HashMap<Serializable, Counter>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Counter> results = new HashMap<Serializable, Counter>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Counter counter = fetchByPrimaryKey(primaryKey);
+
+			if (counter != null) {
+				results.put(primaryKey, counter);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 					CounterImpl.class, primaryKey);
 
 			if (counter == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -442,18 +462,19 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
 
 		query.append(_SQL_SELECT_COUNTER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(StringPool.QUOTE);
-			query.append(String.valueOf(primaryKey));
+			query.append((String)primaryKey);
 			query.append(StringPool.QUOTE);
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -470,12 +491,12 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 			Query q = session.createQuery(sql);
 
-			for (Counter result : (List<Counter>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Counter counter : (List<Counter>)q.list()) {
+				results.put(counter.getPrimaryKeyObj(), counter);
 
-				cacheResult(result);
+				cacheResult(counter);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(counter.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -491,17 +512,6 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the counter with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param name the primary key of the counter
-	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	 */
-	@Override
-	public Counter fetchByPrimaryKey(String name) {
-		return fetchByPrimaryKey((Serializable)name);
 	}
 
 	/**

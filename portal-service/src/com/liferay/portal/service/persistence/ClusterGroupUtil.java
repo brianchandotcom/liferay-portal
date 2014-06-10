@@ -171,17 +171,6 @@ public class ClusterGroupUtil {
 	}
 
 	/**
-	* Returns a map of cluster groups for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the cluster groups
-	* @return map of primaryKeys to cluster groups.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ClusterGroup> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param clusterGroupId the primary key of the cluster group
@@ -190,6 +179,17 @@ public class ClusterGroupUtil {
 	public static com.liferay.portal.model.ClusterGroup fetchByPrimaryKey(
 		long clusterGroupId) {
 		return getPersistence().fetchByPrimaryKey(clusterGroupId);
+	}
+
+	/**
+	* Returns a map of cluster groups for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the cluster groups
+	* @return map of primaryKeys to cluster groups.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ClusterGroup> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

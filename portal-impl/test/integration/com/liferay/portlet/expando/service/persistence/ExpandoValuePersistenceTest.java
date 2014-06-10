@@ -336,76 +336,80 @@ public class ExpandoValuePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoValue> missingExpandoValues = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingExpandoValues.isEmpty());
+		Assert.assertTrue(expandoValues.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoValue.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoValue> missingExpandoValues = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoValue existingExpandoValue = missingExpandoValues.get(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
 
-		Assert.assertEquals(missingExpandoValues.size(), 1);
-		Assert.assertEquals(newExpandoValue, existingExpandoValue);
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoValue> missingExpandoValues = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingExpandoValues.isEmpty());
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(expandoValues.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoValue.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoValue> missingExpandoValues = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoValue existingExpandoValue = missingExpandoValues.get(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingExpandoValues.size(), 1);
-		Assert.assertEquals(newExpandoValue, existingExpandoValue);
-		Assert.assertNull(missingExpandoValues.get(pk2));
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ExpandoValue newExpandoValue = addExpandoValue();
 		ExpandoValue newExpandoValue2 = addExpandoValue();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoValue.getPrimaryKey());
-		missingPks.add(newExpandoValue2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoValue> missingExpandoValues = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoValue existingExpandoValue = missingExpandoValues.get(newExpandoValue.getPrimaryKey());
-		ExpandoValue existingExpandoValue2 = missingExpandoValues.get(newExpandoValue2.getPrimaryKey());
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(newExpandoValue2.getPrimaryKey());
 
-		Assert.assertEquals(missingExpandoValues.size(), 2);
-		Assert.assertEquals(newExpandoValue, existingExpandoValue);
-		Assert.assertEquals(newExpandoValue2, existingExpandoValue2);
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
+		Assert.assertEquals(newExpandoValue2,
+			expandoValues.get(newExpandoValue2.getPrimaryKey()));
 	}
 
 	@Test

@@ -285,76 +285,80 @@ public class TrashEntryPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, TrashEntry> missingTrashEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingTrashEntries.isEmpty());
+		Assert.assertTrue(trashEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		TrashEntry newTrashEntry = addTrashEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTrashEntry.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, TrashEntry> missingTrashEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		TrashEntry existingTrashEntry = missingTrashEntries.get(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
 
-		Assert.assertEquals(missingTrashEntries.size(), 1);
-		Assert.assertEquals(newTrashEntry, existingTrashEntry);
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, TrashEntry> missingTrashEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingTrashEntries.isEmpty());
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(trashEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		TrashEntry newTrashEntry = addTrashEntry();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTrashEntry.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, TrashEntry> missingTrashEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		TrashEntry existingTrashEntry = missingTrashEntries.get(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingTrashEntries.size(), 1);
-		Assert.assertEquals(newTrashEntry, existingTrashEntry);
-		Assert.assertNull(missingTrashEntries.get(pk2));
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		TrashEntry newTrashEntry = addTrashEntry();
 		TrashEntry newTrashEntry2 = addTrashEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTrashEntry.getPrimaryKey());
-		missingPks.add(newTrashEntry2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, TrashEntry> missingTrashEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		TrashEntry existingTrashEntry = missingTrashEntries.get(newTrashEntry.getPrimaryKey());
-		TrashEntry existingTrashEntry2 = missingTrashEntries.get(newTrashEntry2.getPrimaryKey());
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(newTrashEntry2.getPrimaryKey());
 
-		Assert.assertEquals(missingTrashEntries.size(), 2);
-		Assert.assertEquals(newTrashEntry, existingTrashEntry);
-		Assert.assertEquals(newTrashEntry2, existingTrashEntry2);
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
+		Assert.assertEquals(newTrashEntry2,
+			trashEntries.get(newTrashEntry2.getPrimaryKey()));
 	}
 
 	@Test

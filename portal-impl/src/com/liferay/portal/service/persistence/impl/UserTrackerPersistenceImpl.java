@@ -1952,6 +1952,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	}
 
 	/**
+	 * Returns the user tracker with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userTrackerId the primary key of the user tracker
+	 * @return the user tracker, or <code>null</code> if a user tracker with the primary key could not be found
+	 */
+	@Override
+	public UserTracker fetchByPrimaryKey(long userTrackerId) {
+		return fetchByPrimaryKey((Serializable)userTrackerId);
+	}
+
+	/**
 	 * Returns a map of user trackers for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user trackers
@@ -1960,28 +1971,37 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	@Override
 	public Map<Serializable, UserTracker> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserTracker> results = new HashMap<Serializable, UserTracker>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserTracker> results = new HashMap<Serializable, UserTracker>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserTracker userTracker = fetchByPrimaryKey(primaryKey);
+
+			if (userTracker != null) {
+				results.put(primaryKey, userTracker);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserTracker userTracker = (UserTracker)EntityCacheUtil.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerImpl.class, primaryKey);
 
 			if (userTracker == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1989,16 +2009,17 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERTRACKER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2015,12 +2036,12 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			Query q = session.createQuery(sql);
 
-			for (UserTracker result : (List<UserTracker>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserTracker userTracker : (List<UserTracker>)q.list()) {
+				results.put(userTracker.getPrimaryKeyObj(), userTracker);
 
-				cacheResult(result);
+				cacheResult(userTracker);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userTracker.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2036,17 +2057,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userTrackerId the primary key of the user tracker
-	 * @return the user tracker, or <code>null</code> if a user tracker with the primary key could not be found
-	 */
-	@Override
-	public UserTracker fetchByPrimaryKey(long userTrackerId) {
-		return fetchByPrimaryKey((Serializable)userTrackerId);
 	}
 
 	/**

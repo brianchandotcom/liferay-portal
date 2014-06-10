@@ -424,15 +424,6 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
-	* Returns a map of resource blocks for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the resource blocks
-	* @return map of primaryKeys to resource blocks.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceBlock> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the resource block with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param resourceBlockId the primary key of the resource block
@@ -440,6 +431,15 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock fetchByPrimaryKey(
 		long resourceBlockId);
+
+	/**
+	* Returns a map of resource blocks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource blocks
+	* @return map of primaryKeys to resource blocks.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceBlock> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the resource blocks.

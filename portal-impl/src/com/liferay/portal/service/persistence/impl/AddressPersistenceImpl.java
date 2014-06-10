@@ -4874,6 +4874,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	/**
+	 * Returns the address with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param addressId the primary key of the address
+	 * @return the address, or <code>null</code> if a address with the primary key could not be found
+	 */
+	@Override
+	public Address fetchByPrimaryKey(long addressId) {
+		return fetchByPrimaryKey((Serializable)addressId);
+	}
+
+	/**
 	 * Returns a map of addresses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the addresses
@@ -4882,28 +4893,37 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public Map<Serializable, Address> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Address> results = new HashMap<Serializable, Address>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Address> results = new HashMap<Serializable, Address>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Address address = fetchByPrimaryKey(primaryKey);
+
+			if (address != null) {
+				results.put(primaryKey, address);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Address address = (Address)EntityCacheUtil.getResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
 					AddressImpl.class, primaryKey);
 
 			if (address == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4911,16 +4931,17 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ADDRESS_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4937,12 +4958,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			Query q = session.createQuery(sql);
 
-			for (Address result : (List<Address>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Address address : (List<Address>)q.list()) {
+				results.put(address.getPrimaryKeyObj(), address);
 
-				cacheResult(result);
+				cacheResult(address);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(address.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4958,17 +4979,6 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the address with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param addressId the primary key of the address
-	 * @return the address, or <code>null</code> if a address with the primary key could not be found
-	 */
-	@Override
-	public Address fetchByPrimaryKey(long addressId) {
-		return fetchByPrimaryKey((Serializable)addressId);
 	}
 
 	/**

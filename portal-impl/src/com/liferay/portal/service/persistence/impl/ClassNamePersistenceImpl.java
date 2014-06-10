@@ -695,6 +695,17 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	/**
+	 * Returns the class name with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param classNameId the primary key of the class name
+	 * @return the class name, or <code>null</code> if a class name with the primary key could not be found
+	 */
+	@Override
+	public ClassName fetchByPrimaryKey(long classNameId) {
+		return fetchByPrimaryKey((Serializable)classNameId);
+	}
+
+	/**
 	 * Returns a map of class names for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the class names
@@ -703,28 +714,37 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	@Override
 	public Map<Serializable, ClassName> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ClassName> results = new HashMap<Serializable, ClassName>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ClassName> results = new HashMap<Serializable, ClassName>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ClassName className = fetchByPrimaryKey(primaryKey);
+
+			if (className != null) {
+				results.put(primaryKey, className);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ClassName className = (ClassName)EntityCacheUtil.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 					ClassNameImpl.class, primaryKey);
 
 			if (className == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -732,16 +752,17 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_CLASSNAME_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -758,12 +779,12 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 			Query q = session.createQuery(sql);
 
-			for (ClassName result : (List<ClassName>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ClassName className : (List<ClassName>)q.list()) {
+				results.put(className.getPrimaryKeyObj(), className);
 
-				cacheResult(result);
+				cacheResult(className);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(className.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -779,17 +800,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the class name with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param classNameId the primary key of the class name
-	 * @return the class name, or <code>null</code> if a class name with the primary key could not be found
-	 */
-	@Override
-	public ClassName fetchByPrimaryKey(long classNameId) {
-		return fetchByPrimaryKey((Serializable)classNameId);
 	}
 
 	/**

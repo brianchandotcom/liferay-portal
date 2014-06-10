@@ -12170,6 +12170,17 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	/**
+	 * Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param templateId the primary key of the d d m template
+	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
+	 */
+	@Override
+	public DDMTemplate fetchByPrimaryKey(long templateId) {
+		return fetchByPrimaryKey((Serializable)templateId);
+	}
+
+	/**
 	 * Returns a map of d d m templates for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d m templates
@@ -12178,28 +12189,37 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	@Override
 	public Map<Serializable, DDMTemplate> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDMTemplate> results = new HashMap<Serializable, DDMTemplate>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDMTemplate> results = new HashMap<Serializable, DDMTemplate>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDMTemplate ddmTemplate = fetchByPrimaryKey(primaryKey);
+
+			if (ddmTemplate != null) {
+				results.put(primaryKey, ddmTemplate);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDMTemplate ddmTemplate = (DDMTemplate)EntityCacheUtil.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 					DDMTemplateImpl.class, primaryKey);
 
 			if (ddmTemplate == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -12207,16 +12227,17 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDMTEMPLATE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -12233,12 +12254,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			Query q = session.createQuery(sql);
 
-			for (DDMTemplate result : (List<DDMTemplate>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDMTemplate ddmTemplate : (List<DDMTemplate>)q.list()) {
+				results.put(ddmTemplate.getPrimaryKeyObj(), ddmTemplate);
 
-				cacheResult(result);
+				cacheResult(ddmTemplate);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddmTemplate.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -12254,17 +12275,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d m template with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param templateId the primary key of the d d m template
-	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplate fetchByPrimaryKey(long templateId) {
-		return fetchByPrimaryKey((Serializable)templateId);
 	}
 
 	/**

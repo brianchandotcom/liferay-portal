@@ -267,76 +267,80 @@ public class DLFileRankPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> missingDLFileRanks = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDLFileRanks.isEmpty());
+		Assert.assertTrue(dlFileRanks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileRank.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> missingDLFileRanks = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileRank existingDLFileRank = missingDLFileRanks.get(newDLFileRank.getPrimaryKey());
+		primaryKeys.add(newDLFileRank.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileRanks.size(), 1);
-		Assert.assertEquals(newDLFileRank, existingDLFileRank);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileRanks.size());
+		Assert.assertEquals(newDLFileRank,
+			dlFileRanks.get(newDLFileRank.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> missingDLFileRanks = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDLFileRanks.isEmpty());
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlFileRanks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileRank.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> missingDLFileRanks = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileRank existingDLFileRank = missingDLFileRanks.get(newDLFileRank.getPrimaryKey());
+		primaryKeys.add(newDLFileRank.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDLFileRanks.size(), 1);
-		Assert.assertEquals(newDLFileRank, existingDLFileRank);
-		Assert.assertNull(missingDLFileRanks.get(pk2));
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileRanks.size());
+		Assert.assertEquals(newDLFileRank,
+			dlFileRanks.get(newDLFileRank.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DLFileRank newDLFileRank = addDLFileRank();
 		DLFileRank newDLFileRank2 = addDLFileRank();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileRank.getPrimaryKey());
-		missingPks.add(newDLFileRank2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileRank> missingDLFileRanks = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileRank existingDLFileRank = missingDLFileRanks.get(newDLFileRank.getPrimaryKey());
-		DLFileRank existingDLFileRank2 = missingDLFileRanks.get(newDLFileRank2.getPrimaryKey());
+		primaryKeys.add(newDLFileRank.getPrimaryKey());
+		primaryKeys.add(newDLFileRank2.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileRanks.size(), 2);
-		Assert.assertEquals(newDLFileRank, existingDLFileRank);
-		Assert.assertEquals(newDLFileRank2, existingDLFileRank2);
+		Map<Serializable, DLFileRank> dlFileRanks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlFileRanks.size());
+		Assert.assertEquals(newDLFileRank,
+			dlFileRanks.get(newDLFileRank.getPrimaryKey()));
+		Assert.assertEquals(newDLFileRank2,
+			dlFileRanks.get(newDLFileRank2.getPrimaryKey()));
 	}
 
 	@Test

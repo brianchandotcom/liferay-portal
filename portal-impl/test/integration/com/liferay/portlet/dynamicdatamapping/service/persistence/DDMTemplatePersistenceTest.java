@@ -524,76 +524,80 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplate> missingDDMTemplates = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDDMTemplates.isEmpty());
+		Assert.assertTrue(ddmTemplates.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMTemplate.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplate> missingDDMTemplates = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMTemplate existingDDMTemplate = missingDDMTemplates.get(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertEquals(missingDDMTemplates.size(), 1);
-		Assert.assertEquals(newDDMTemplate, existingDDMTemplate);
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplate> missingDDMTemplates = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDDMTemplates.isEmpty());
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmTemplates.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMTemplate.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplate> missingDDMTemplates = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMTemplate existingDDMTemplate = missingDDMTemplates.get(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDDMTemplates.size(), 1);
-		Assert.assertEquals(newDDMTemplate, existingDDMTemplate);
-		Assert.assertNull(missingDDMTemplates.get(pk2));
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 		DDMTemplate newDDMTemplate2 = addDDMTemplate();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMTemplate.getPrimaryKey());
-		missingPks.add(newDDMTemplate2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMTemplate> missingDDMTemplates = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMTemplate existingDDMTemplate = missingDDMTemplates.get(newDDMTemplate.getPrimaryKey());
-		DDMTemplate existingDDMTemplate2 = missingDDMTemplates.get(newDDMTemplate2.getPrimaryKey());
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(newDDMTemplate2.getPrimaryKey());
 
-		Assert.assertEquals(missingDDMTemplates.size(), 2);
-		Assert.assertEquals(newDDMTemplate, existingDDMTemplate);
-		Assert.assertEquals(newDDMTemplate2, existingDDMTemplate2);
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
+		Assert.assertEquals(newDDMTemplate2,
+			ddmTemplates.get(newDDMTemplate2.getPrimaryKey()));
 	}
 
 	@Test

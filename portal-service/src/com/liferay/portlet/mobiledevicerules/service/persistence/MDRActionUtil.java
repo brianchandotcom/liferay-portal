@@ -680,17 +680,6 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns a map of m d r actions for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the m d r actions
-	* @return map of primaryKeys to m d r actions.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRAction> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param actionId the primary key of the m d r action
@@ -699,6 +688,17 @@ public class MDRActionUtil {
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByPrimaryKey(
 		long actionId) {
 		return getPersistence().fetchByPrimaryKey(actionId);
+	}
+
+	/**
+	* Returns a map of m d r actions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the m d r actions
+	* @return map of primaryKeys to m d r actions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRAction> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

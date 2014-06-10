@@ -219,76 +219,76 @@ public class ShardPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Shard> missingShards = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Shard> shards = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingShards.isEmpty());
+		Assert.assertTrue(shards.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Shard newShard = addShard();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShard.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Shard> missingShards = _persistence.fetchByPrimaryKeys(missingPks);
-		Shard existingShard = missingShards.get(newShard.getPrimaryKey());
+		primaryKeys.add(newShard.getPrimaryKey());
 
-		Assert.assertEquals(missingShards.size(), 1);
-		Assert.assertEquals(newShard, existingShard);
+		Map<Serializable, Shard> shards = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shards.size());
+		Assert.assertEquals(newShard, shards.get(newShard.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Shard> missingShards = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingShards.isEmpty());
+		Map<Serializable, Shard> shards = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(shards.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Shard newShard = addShard();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShard.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Shard> missingShards = _persistence.fetchByPrimaryKeys(missingPks);
-		Shard existingShard = missingShards.get(newShard.getPrimaryKey());
+		primaryKeys.add(newShard.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingShards.size(), 1);
-		Assert.assertEquals(newShard, existingShard);
-		Assert.assertNull(missingShards.get(pk2));
+		Map<Serializable, Shard> shards = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shards.size());
+		Assert.assertEquals(newShard, shards.get(newShard.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Shard newShard = addShard();
 		Shard newShard2 = addShard();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newShard.getPrimaryKey());
-		missingPks.add(newShard2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Shard> missingShards = _persistence.fetchByPrimaryKeys(missingPks);
-		Shard existingShard = missingShards.get(newShard.getPrimaryKey());
-		Shard existingShard2 = missingShards.get(newShard2.getPrimaryKey());
+		primaryKeys.add(newShard.getPrimaryKey());
+		primaryKeys.add(newShard2.getPrimaryKey());
 
-		Assert.assertEquals(missingShards.size(), 2);
-		Assert.assertEquals(newShard, existingShard);
-		Assert.assertEquals(newShard2, existingShard2);
+		Map<Serializable, Shard> shards = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, shards.size());
+		Assert.assertEquals(newShard, shards.get(newShard.getPrimaryKey()));
+		Assert.assertEquals(newShard2, shards.get(newShard2.getPrimaryKey()));
 	}
 
 	@Test

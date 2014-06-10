@@ -2714,6 +2714,17 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	}
 
 	/**
+	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param subscriptionId the primary key of the subscription
+	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
+	 */
+	@Override
+	public Subscription fetchByPrimaryKey(long subscriptionId) {
+		return fetchByPrimaryKey((Serializable)subscriptionId);
+	}
+
+	/**
 	 * Returns a map of subscriptions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the subscriptions
@@ -2722,28 +2733,37 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	@Override
 	public Map<Serializable, Subscription> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Subscription> results = new HashMap<Serializable, Subscription>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Subscription> results = new HashMap<Serializable, Subscription>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Subscription subscription = fetchByPrimaryKey(primaryKey);
+
+			if (subscription != null) {
+				results.put(primaryKey, subscription);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Subscription subscription = (Subscription)EntityCacheUtil.getResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
 					SubscriptionImpl.class, primaryKey);
 
 			if (subscription == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2751,16 +2771,17 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SUBSCRIPTION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2777,12 +2798,12 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 			Query q = session.createQuery(sql);
 
-			for (Subscription result : (List<Subscription>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Subscription subscription : (List<Subscription>)q.list()) {
+				results.put(subscription.getPrimaryKeyObj(), subscription);
 
-				cacheResult(result);
+				cacheResult(subscription);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(subscription.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2798,17 +2819,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the subscription with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param subscriptionId the primary key of the subscription
-	 * @return the subscription, or <code>null</code> if a subscription with the primary key could not be found
-	 */
-	@Override
-	public Subscription fetchByPrimaryKey(long subscriptionId) {
-		return fetchByPrimaryKey((Serializable)subscriptionId);
 	}
 
 	/**

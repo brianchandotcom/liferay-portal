@@ -224,76 +224,80 @@ public class ResourceActionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> missingResourceActions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingResourceActions.isEmpty());
+		Assert.assertTrue(resourceActions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceAction.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> missingResourceActions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourceAction existingResourceAction = missingResourceActions.get(newResourceAction.getPrimaryKey());
+		primaryKeys.add(newResourceAction.getPrimaryKey());
 
-		Assert.assertEquals(missingResourceActions.size(), 1);
-		Assert.assertEquals(newResourceAction, existingResourceAction);
+		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourceActions.size());
+		Assert.assertEquals(newResourceAction,
+			resourceActions.get(newResourceAction.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> missingResourceActions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingResourceActions.isEmpty());
+		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(resourceActions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceAction.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> missingResourceActions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourceAction existingResourceAction = missingResourceActions.get(newResourceAction.getPrimaryKey());
+		primaryKeys.add(newResourceAction.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingResourceActions.size(), 1);
-		Assert.assertEquals(newResourceAction, existingResourceAction);
-		Assert.assertNull(missingResourceActions.get(pk2));
+		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourceActions.size());
+		Assert.assertEquals(newResourceAction,
+			resourceActions.get(newResourceAction.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 		ResourceAction newResourceAction2 = addResourceAction();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceAction.getPrimaryKey());
-		missingPks.add(newResourceAction2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> missingResourceActions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourceAction existingResourceAction = missingResourceActions.get(newResourceAction.getPrimaryKey());
-		ResourceAction existingResourceAction2 = missingResourceActions.get(newResourceAction2.getPrimaryKey());
+		primaryKeys.add(newResourceAction.getPrimaryKey());
+		primaryKeys.add(newResourceAction2.getPrimaryKey());
 
-		Assert.assertEquals(missingResourceActions.size(), 2);
-		Assert.assertEquals(newResourceAction, existingResourceAction);
-		Assert.assertEquals(newResourceAction2, existingResourceAction2);
+		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, resourceActions.size());
+		Assert.assertEquals(newResourceAction,
+			resourceActions.get(newResourceAction.getPrimaryKey()));
+		Assert.assertEquals(newResourceAction2,
+			resourceActions.get(newResourceAction2.getPrimaryKey()));
 	}
 
 	@Test

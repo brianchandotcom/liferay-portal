@@ -6526,6 +6526,17 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	}
 
 	/**
+	 * Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityId the primary key of the social activity
+	 * @return the social activity, or <code>null</code> if a social activity with the primary key could not be found
+	 */
+	@Override
+	public SocialActivity fetchByPrimaryKey(long activityId) {
+		return fetchByPrimaryKey((Serializable)activityId);
+	}
+
+	/**
 	 * Returns a map of social activities for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social activities
@@ -6534,28 +6545,37 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	@Override
 	public Map<Serializable, SocialActivity> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialActivity> results = new HashMap<Serializable, SocialActivity>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialActivity> results = new HashMap<Serializable, SocialActivity>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialActivity socialActivity = fetchByPrimaryKey(primaryKey);
+
+			if (socialActivity != null) {
+				results.put(primaryKey, socialActivity);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialActivity socialActivity = (SocialActivity)EntityCacheUtil.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityImpl.class, primaryKey);
 
 			if (socialActivity == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -6563,16 +6583,17 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALACTIVITY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -6589,12 +6610,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 			Query q = session.createQuery(sql);
 
-			for (SocialActivity result : (List<SocialActivity>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialActivity socialActivity : (List<SocialActivity>)q.list()) {
+				results.put(socialActivity.getPrimaryKeyObj(), socialActivity);
 
-				cacheResult(result);
+				cacheResult(socialActivity);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialActivity.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -6610,17 +6631,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityId the primary key of the social activity
-	 * @return the social activity, or <code>null</code> if a social activity with the primary key could not be found
-	 */
-	@Override
-	public SocialActivity fetchByPrimaryKey(long activityId) {
-		return fetchByPrimaryKey((Serializable)activityId);
 	}
 
 	/**

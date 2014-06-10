@@ -188,78 +188,83 @@ public class OrgGroupRolePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingOrgGroupRoles.isEmpty());
+		Assert.assertTrue(orgGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newOrgGroupRole.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
+		primaryKeys.add(newOrgGroupRole.getPrimaryKey());
 
-		Assert.assertEquals(missingOrgGroupRoles.size(), 1);
-		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
+		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, orgGroupRoles.size());
+		Assert.assertEquals(newOrgGroupRole,
+			orgGroupRoles.get(newOrgGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
 		OrgGroupRolePK pk2 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingOrgGroupRoles.isEmpty());
+		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(orgGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
+
 		OrgGroupRolePK pk2 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newOrgGroupRole.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
+		primaryKeys.add(newOrgGroupRole.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingOrgGroupRoles.size(), 1);
-		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
-		Assert.assertNull(missingOrgGroupRoles.get(pk2));
+		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, orgGroupRoles.size());
+		Assert.assertEquals(newOrgGroupRole,
+			orgGroupRoles.get(newOrgGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 		OrgGroupRole newOrgGroupRole2 = addOrgGroupRole();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newOrgGroupRole.getPrimaryKey());
-		missingPks.add(newOrgGroupRole2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> missingOrgGroupRoles = _persistence.fetchByPrimaryKeys(missingPks);
-		OrgGroupRole existingOrgGroupRole = missingOrgGroupRoles.get(newOrgGroupRole.getPrimaryKey());
-		OrgGroupRole existingOrgGroupRole2 = missingOrgGroupRoles.get(newOrgGroupRole2.getPrimaryKey());
+		primaryKeys.add(newOrgGroupRole.getPrimaryKey());
+		primaryKeys.add(newOrgGroupRole2.getPrimaryKey());
 
-		Assert.assertEquals(missingOrgGroupRoles.size(), 2);
-		Assert.assertEquals(newOrgGroupRole, existingOrgGroupRole);
-		Assert.assertEquals(newOrgGroupRole2, existingOrgGroupRole2);
+		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, orgGroupRoles.size());
+		Assert.assertEquals(newOrgGroupRole,
+			orgGroupRoles.get(newOrgGroupRole.getPrimaryKey()));
+		Assert.assertEquals(newOrgGroupRole2,
+			orgGroupRoles.get(newOrgGroupRole2.getPrimaryKey()));
 	}
 
 	@Test

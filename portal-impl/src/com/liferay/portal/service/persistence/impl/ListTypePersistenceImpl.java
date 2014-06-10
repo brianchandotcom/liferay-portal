@@ -946,6 +946,17 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	}
 
 	/**
+	 * Returns the list type with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param listTypeId the primary key of the list type
+	 * @return the list type, or <code>null</code> if a list type with the primary key could not be found
+	 */
+	@Override
+	public ListType fetchByPrimaryKey(int listTypeId) {
+		return fetchByPrimaryKey((Serializable)listTypeId);
+	}
+
+	/**
 	 * Returns a map of list types for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the list types
@@ -954,28 +965,37 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	@Override
 	public Map<Serializable, ListType> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ListType> results = new HashMap<Serializable, ListType>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ListType> results = new HashMap<Serializable, ListType>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ListType listType = fetchByPrimaryKey(primaryKey);
+
+			if (listType != null) {
+				results.put(primaryKey, listType);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ListType listType = (ListType)EntityCacheUtil.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 					ListTypeImpl.class, primaryKey);
 
 			if (listType == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -983,16 +1003,17 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LISTTYPE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1009,12 +1030,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 			Query q = session.createQuery(sql);
 
-			for (ListType result : (List<ListType>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ListType listType : (List<ListType>)q.list()) {
+				results.put(listType.getPrimaryKeyObj(), listType);
 
-				cacheResult(result);
+				cacheResult(listType);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(listType.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1030,17 +1051,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the list type with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param listTypeId the primary key of the list type
-	 * @return the list type, or <code>null</code> if a list type with the primary key could not be found
-	 */
-	@Override
-	public ListType fetchByPrimaryKey(int listTypeId) {
-		return fetchByPrimaryKey((Serializable)listTypeId);
 	}
 
 	/**

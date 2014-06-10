@@ -1443,15 +1443,6 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 		throws com.liferay.portal.NoSuchLayoutRevisionException;
 
 	/**
-	* Returns a map of layout revisions for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the layout revisions
-	* @return map of primaryKeys to layout revisions.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutRevision> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutRevisionId the primary key of the layout revision
@@ -1459,6 +1450,15 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public com.liferay.portal.model.LayoutRevision fetchByPrimaryKey(
 		long layoutRevisionId);
+
+	/**
+	* Returns a map of layout revisions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout revisions
+	* @return map of primaryKeys to layout revisions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutRevision> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the layout revisions.

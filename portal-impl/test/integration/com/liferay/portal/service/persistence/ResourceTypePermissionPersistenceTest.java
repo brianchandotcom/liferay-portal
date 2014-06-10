@@ -249,85 +249,84 @@ public class ResourceTypePermissionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
-			_persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ResourceTypePermission> resourceTypePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingResourceTypePermissions.isEmpty());
+		Assert.assertTrue(resourceTypePermissions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceTypePermission.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
-			_persistence.fetchByPrimaryKeys(missingPks);
-		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
+		primaryKeys.add(newResourceTypePermission.getPrimaryKey());
 
-		Assert.assertEquals(missingResourceTypePermissions.size(), 1);
+		Map<Serializable, ResourceTypePermission> resourceTypePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourceTypePermissions.size());
 		Assert.assertEquals(newResourceTypePermission,
-			existingResourceTypePermission);
+			resourceTypePermissions.get(
+				newResourceTypePermission.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
-			_persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingResourceTypePermissions.isEmpty());
+		Map<Serializable, ResourceTypePermission> resourceTypePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(resourceTypePermissions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceTypePermission.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
-			_persistence.fetchByPrimaryKeys(missingPks);
-		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
+		primaryKeys.add(newResourceTypePermission.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingResourceTypePermissions.size(), 1);
+		Map<Serializable, ResourceTypePermission> resourceTypePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourceTypePermissions.size());
 		Assert.assertEquals(newResourceTypePermission,
-			existingResourceTypePermission);
-		Assert.assertNull(missingResourceTypePermissions.get(pk2));
+			resourceTypePermissions.get(
+				newResourceTypePermission.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ResourceTypePermission newResourceTypePermission = addResourceTypePermission();
 		ResourceTypePermission newResourceTypePermission2 = addResourceTypePermission();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourceTypePermission.getPrimaryKey());
-		missingPks.add(newResourceTypePermission2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceTypePermission> missingResourceTypePermissions =
-			_persistence.fetchByPrimaryKeys(missingPks);
-		ResourceTypePermission existingResourceTypePermission = missingResourceTypePermissions.get(newResourceTypePermission.getPrimaryKey());
-		ResourceTypePermission existingResourceTypePermission2 = missingResourceTypePermissions.get(newResourceTypePermission2.getPrimaryKey());
+		primaryKeys.add(newResourceTypePermission.getPrimaryKey());
+		primaryKeys.add(newResourceTypePermission2.getPrimaryKey());
 
-		Assert.assertEquals(missingResourceTypePermissions.size(), 2);
+		Map<Serializable, ResourceTypePermission> resourceTypePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, resourceTypePermissions.size());
 		Assert.assertEquals(newResourceTypePermission,
-			existingResourceTypePermission);
+			resourceTypePermissions.get(
+				newResourceTypePermission.getPrimaryKey()));
 		Assert.assertEquals(newResourceTypePermission2,
-			existingResourceTypePermission2);
+			resourceTypePermissions.get(
+				newResourceTypePermission2.getPrimaryKey()));
 	}
 
 	@Test

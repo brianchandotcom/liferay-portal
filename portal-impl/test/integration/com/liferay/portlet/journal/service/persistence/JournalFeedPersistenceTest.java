@@ -357,76 +357,80 @@ public class JournalFeedPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalFeed> missingJournalFeeds = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingJournalFeeds.isEmpty());
+		Assert.assertTrue(journalFeeds.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalFeed.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalFeed> missingJournalFeeds = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalFeed existingJournalFeed = missingJournalFeeds.get(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
 
-		Assert.assertEquals(missingJournalFeeds.size(), 1);
-		Assert.assertEquals(newJournalFeed, existingJournalFeed);
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalFeed> missingJournalFeeds = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingJournalFeeds.isEmpty());
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalFeeds.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalFeed.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalFeed> missingJournalFeeds = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalFeed existingJournalFeed = missingJournalFeeds.get(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingJournalFeeds.size(), 1);
-		Assert.assertEquals(newJournalFeed, existingJournalFeed);
-		Assert.assertNull(missingJournalFeeds.get(pk2));
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		JournalFeed newJournalFeed = addJournalFeed();
 		JournalFeed newJournalFeed2 = addJournalFeed();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalFeed.getPrimaryKey());
-		missingPks.add(newJournalFeed2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalFeed> missingJournalFeeds = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalFeed existingJournalFeed = missingJournalFeeds.get(newJournalFeed.getPrimaryKey());
-		JournalFeed existingJournalFeed2 = missingJournalFeeds.get(newJournalFeed2.getPrimaryKey());
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(newJournalFeed2.getPrimaryKey());
 
-		Assert.assertEquals(missingJournalFeeds.size(), 2);
-		Assert.assertEquals(newJournalFeed, existingJournalFeed);
-		Assert.assertEquals(newJournalFeed2, existingJournalFeed2);
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
+		Assert.assertEquals(newJournalFeed2,
+			journalFeeds.get(newJournalFeed2.getPrimaryKey()));
 	}
 
 	@Test

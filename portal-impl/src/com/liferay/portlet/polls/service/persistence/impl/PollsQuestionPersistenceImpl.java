@@ -2728,6 +2728,17 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	/**
+	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param questionId the primary key of the polls question
+	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
+	 */
+	@Override
+	public PollsQuestion fetchByPrimaryKey(long questionId) {
+		return fetchByPrimaryKey((Serializable)questionId);
+	}
+
+	/**
 	 * Returns a map of polls questions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the polls questions
@@ -2736,28 +2747,37 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	@Override
 	public Map<Serializable, PollsQuestion> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PollsQuestion> results = new HashMap<Serializable, PollsQuestion>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PollsQuestion> results = new HashMap<Serializable, PollsQuestion>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PollsQuestion pollsQuestion = fetchByPrimaryKey(primaryKey);
+
+			if (pollsQuestion != null) {
+				results.put(primaryKey, pollsQuestion);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PollsQuestion pollsQuestion = (PollsQuestion)EntityCacheUtil.getResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
 					PollsQuestionImpl.class, primaryKey);
 
 			if (pollsQuestion == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2765,16 +2785,17 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_POLLSQUESTION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2791,12 +2812,12 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 			Query q = session.createQuery(sql);
 
-			for (PollsQuestion result : (List<PollsQuestion>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PollsQuestion pollsQuestion : (List<PollsQuestion>)q.list()) {
+				results.put(pollsQuestion.getPrimaryKeyObj(), pollsQuestion);
 
-				cacheResult(result);
+				cacheResult(pollsQuestion);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(pollsQuestion.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2812,17 +2833,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the polls question with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param questionId the primary key of the polls question
-	 * @return the polls question, or <code>null</code> if a polls question with the primary key could not be found
-	 */
-	@Override
-	public PollsQuestion fetchByPrimaryKey(long questionId) {
-		return fetchByPrimaryKey((Serializable)questionId);
 	}
 
 	/**

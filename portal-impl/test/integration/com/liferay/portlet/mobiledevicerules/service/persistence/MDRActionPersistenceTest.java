@@ -295,76 +295,80 @@ public class MDRActionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRAction> missingMDRActions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, MDRAction> mdrActions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingMDRActions.isEmpty());
+		Assert.assertTrue(mdrActions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMDRAction.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRAction> missingMDRActions = _persistence.fetchByPrimaryKeys(missingPks);
-		MDRAction existingMDRAction = missingMDRActions.get(newMDRAction.getPrimaryKey());
+		primaryKeys.add(newMDRAction.getPrimaryKey());
 
-		Assert.assertEquals(missingMDRActions.size(), 1);
-		Assert.assertEquals(newMDRAction, existingMDRAction);
+		Map<Serializable, MDRAction> mdrActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mdrActions.size());
+		Assert.assertEquals(newMDRAction,
+			mdrActions.get(newMDRAction.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRAction> missingMDRActions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingMDRActions.isEmpty());
+		Map<Serializable, MDRAction> mdrActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mdrActions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMDRAction.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRAction> missingMDRActions = _persistence.fetchByPrimaryKeys(missingPks);
-		MDRAction existingMDRAction = missingMDRActions.get(newMDRAction.getPrimaryKey());
+		primaryKeys.add(newMDRAction.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingMDRActions.size(), 1);
-		Assert.assertEquals(newMDRAction, existingMDRAction);
-		Assert.assertNull(missingMDRActions.get(pk2));
+		Map<Serializable, MDRAction> mdrActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mdrActions.size());
+		Assert.assertEquals(newMDRAction,
+			mdrActions.get(newMDRAction.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		MDRAction newMDRAction = addMDRAction();
 		MDRAction newMDRAction2 = addMDRAction();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMDRAction.getPrimaryKey());
-		missingPks.add(newMDRAction2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MDRAction> missingMDRActions = _persistence.fetchByPrimaryKeys(missingPks);
-		MDRAction existingMDRAction = missingMDRActions.get(newMDRAction.getPrimaryKey());
-		MDRAction existingMDRAction2 = missingMDRActions.get(newMDRAction2.getPrimaryKey());
+		primaryKeys.add(newMDRAction.getPrimaryKey());
+		primaryKeys.add(newMDRAction2.getPrimaryKey());
 
-		Assert.assertEquals(missingMDRActions.size(), 2);
-		Assert.assertEquals(newMDRAction, existingMDRAction);
-		Assert.assertEquals(newMDRAction2, existingMDRAction2);
+		Map<Serializable, MDRAction> mdrActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mdrActions.size());
+		Assert.assertEquals(newMDRAction,
+			mdrActions.get(newMDRAction.getPrimaryKey()));
+		Assert.assertEquals(newMDRAction2,
+			mdrActions.get(newMDRAction2.getPrimaryKey()));
 	}
 
 	@Test

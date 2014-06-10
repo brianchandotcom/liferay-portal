@@ -9019,6 +9019,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
+	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param structureId the primary key of the d d m structure
+	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
+	 */
+	@Override
+	public DDMStructure fetchByPrimaryKey(long structureId) {
+		return fetchByPrimaryKey((Serializable)structureId);
+	}
+
+	/**
 	 * Returns a map of d d m structures for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d m structures
@@ -9027,28 +9038,37 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public Map<Serializable, DDMStructure> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDMStructure> results = new HashMap<Serializable, DDMStructure>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDMStructure> results = new HashMap<Serializable, DDMStructure>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDMStructure ddmStructure = fetchByPrimaryKey(primaryKey);
+
+			if (ddmStructure != null) {
+				results.put(primaryKey, ddmStructure);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDMStructure ddmStructure = (DDMStructure)EntityCacheUtil.getResult(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureImpl.class, primaryKey);
 
 			if (ddmStructure == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -9056,16 +9076,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDMSTRUCTURE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -9082,12 +9103,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			Query q = session.createQuery(sql);
 
-			for (DDMStructure result : (List<DDMStructure>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDMStructure ddmStructure : (List<DDMStructure>)q.list()) {
+				results.put(ddmStructure.getPrimaryKeyObj(), ddmStructure);
 
-				cacheResult(result);
+				cacheResult(ddmStructure);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddmStructure.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -9103,17 +9124,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
-	 */
-	@Override
-	public DDMStructure fetchByPrimaryKey(long structureId) {
-		return fetchByPrimaryKey((Serializable)structureId);
 	}
 
 	/**

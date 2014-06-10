@@ -1988,6 +1988,18 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	/**
+	 * Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
+	 * @return the workflow definition link, or <code>null</code> if a workflow definition link with the primary key could not be found
+	 */
+	@Override
+	public WorkflowDefinitionLink fetchByPrimaryKey(
+		long workflowDefinitionLinkId) {
+		return fetchByPrimaryKey((Serializable)workflowDefinitionLinkId);
+	}
+
+	/**
 	 * Returns a map of workflow definition links for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the workflow definition links
@@ -1996,28 +2008,37 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public Map<Serializable, WorkflowDefinitionLink> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, WorkflowDefinitionLink> results = new HashMap<Serializable, WorkflowDefinitionLink>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, WorkflowDefinitionLink> results = new HashMap<Serializable, WorkflowDefinitionLink>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			WorkflowDefinitionLink workflowDefinitionLink = fetchByPrimaryKey(primaryKey);
+
+			if (workflowDefinitionLink != null) {
+				results.put(primaryKey, workflowDefinitionLink);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)EntityCacheUtil.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 					WorkflowDefinitionLinkImpl.class, primaryKey);
 
 			if (workflowDefinitionLink == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2025,16 +2046,17 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2051,12 +2073,13 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			Query q = session.createQuery(sql);
 
-			for (WorkflowDefinitionLink result : (List<WorkflowDefinitionLink>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (WorkflowDefinitionLink workflowDefinitionLink : (List<WorkflowDefinitionLink>)q.list()) {
+				results.put(workflowDefinitionLink.getPrimaryKeyObj(),
+					workflowDefinitionLink);
 
-				cacheResult(result);
+				cacheResult(workflowDefinitionLink);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(workflowDefinitionLink.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2073,18 +2096,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
-	 * @return the workflow definition link, or <code>null</code> if a workflow definition link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowDefinitionLink fetchByPrimaryKey(
-		long workflowDefinitionLinkId) {
-		return fetchByPrimaryKey((Serializable)workflowDefinitionLinkId);
 	}
 
 	/**

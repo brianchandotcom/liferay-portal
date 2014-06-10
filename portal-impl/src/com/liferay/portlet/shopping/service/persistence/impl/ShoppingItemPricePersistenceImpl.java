@@ -925,6 +925,17 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	}
 
 	/**
+	 * Returns the shopping item price with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param itemPriceId the primary key of the shopping item price
+	 * @return the shopping item price, or <code>null</code> if a shopping item price with the primary key could not be found
+	 */
+	@Override
+	public ShoppingItemPrice fetchByPrimaryKey(long itemPriceId) {
+		return fetchByPrimaryKey((Serializable)itemPriceId);
+	}
+
+	/**
 	 * Returns a map of shopping item prices for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shopping item prices
@@ -933,28 +944,37 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	@Override
 	public Map<Serializable, ShoppingItemPrice> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ShoppingItemPrice> results = new HashMap<Serializable, ShoppingItemPrice>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ShoppingItemPrice> results = new HashMap<Serializable, ShoppingItemPrice>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ShoppingItemPrice shoppingItemPrice = fetchByPrimaryKey(primaryKey);
+
+			if (shoppingItemPrice != null) {
+				results.put(primaryKey, shoppingItemPrice);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ShoppingItemPrice shoppingItemPrice = (ShoppingItemPrice)EntityCacheUtil.getResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingItemPriceImpl.class, primaryKey);
 
 			if (shoppingItemPrice == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -962,16 +982,17 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHOPPINGITEMPRICE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -988,12 +1009,13 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 			Query q = session.createQuery(sql);
 
-			for (ShoppingItemPrice result : (List<ShoppingItemPrice>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ShoppingItemPrice shoppingItemPrice : (List<ShoppingItemPrice>)q.list()) {
+				results.put(shoppingItemPrice.getPrimaryKeyObj(),
+					shoppingItemPrice);
 
-				cacheResult(result);
+				cacheResult(shoppingItemPrice);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shoppingItemPrice.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1010,17 +1032,6 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shopping item price with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param itemPriceId the primary key of the shopping item price
-	 * @return the shopping item price, or <code>null</code> if a shopping item price with the primary key could not be found
-	 */
-	@Override
-	public ShoppingItemPrice fetchByPrimaryKey(long itemPriceId) {
-		return fetchByPrimaryKey((Serializable)itemPriceId);
 	}
 
 	/**

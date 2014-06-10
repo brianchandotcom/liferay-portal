@@ -225,17 +225,6 @@ public class ClassNameUtil {
 	}
 
 	/**
-	* Returns a map of class names for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the class names
-	* @return map of primaryKeys to class names.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ClassName> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the class name with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param classNameId the primary key of the class name
@@ -244,6 +233,17 @@ public class ClassNameUtil {
 	public static com.liferay.portal.model.ClassName fetchByPrimaryKey(
 		long classNameId) {
 		return getPersistence().fetchByPrimaryKey(classNameId);
+	}
+
+	/**
+	* Returns a map of class names for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the class names
+	* @return map of primaryKeys to class names.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ClassName> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

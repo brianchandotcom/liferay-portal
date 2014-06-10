@@ -249,76 +249,76 @@ public class TeamPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> missingTeams = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingTeams.isEmpty());
+		Assert.assertTrue(teams.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Team newTeam = addTeam();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTeam.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> missingTeams = _persistence.fetchByPrimaryKeys(missingPks);
-		Team existingTeam = missingTeams.get(newTeam.getPrimaryKey());
+		primaryKeys.add(newTeam.getPrimaryKey());
 
-		Assert.assertEquals(missingTeams.size(), 1);
-		Assert.assertEquals(newTeam, existingTeam);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> missingTeams = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingTeams.isEmpty());
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(teams.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Team newTeam = addTeam();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTeam.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> missingTeams = _persistence.fetchByPrimaryKeys(missingPks);
-		Team existingTeam = missingTeams.get(newTeam.getPrimaryKey());
+		primaryKeys.add(newTeam.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingTeams.size(), 1);
-		Assert.assertEquals(newTeam, existingTeam);
-		Assert.assertNull(missingTeams.get(pk2));
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Team newTeam = addTeam();
 		Team newTeam2 = addTeam();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newTeam.getPrimaryKey());
-		missingPks.add(newTeam2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> missingTeams = _persistence.fetchByPrimaryKeys(missingPks);
-		Team existingTeam = missingTeams.get(newTeam.getPrimaryKey());
-		Team existingTeam2 = missingTeams.get(newTeam2.getPrimaryKey());
+		primaryKeys.add(newTeam.getPrimaryKey());
+		primaryKeys.add(newTeam2.getPrimaryKey());
 
-		Assert.assertEquals(missingTeams.size(), 2);
-		Assert.assertEquals(newTeam, existingTeam);
-		Assert.assertEquals(newTeam2, existingTeam2);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
+		Assert.assertEquals(newTeam2, teams.get(newTeam2.getPrimaryKey()));
 	}
 
 	@Test

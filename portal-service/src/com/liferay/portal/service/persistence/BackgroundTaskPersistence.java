@@ -1674,15 +1674,6 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		throws com.liferay.portal.NoSuchBackgroundTaskException;
 
 	/**
-	* Returns a map of background tasks for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the background tasks
-	* @return map of primaryKeys to background tasks.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.BackgroundTask> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the background task with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param backgroundTaskId the primary key of the background task
@@ -1690,6 +1681,15 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public com.liferay.portal.model.BackgroundTask fetchByPrimaryKey(
 		long backgroundTaskId);
+
+	/**
+	* Returns a map of background tasks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the background tasks
+	* @return map of primaryKeys to background tasks.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.BackgroundTask> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the background tasks.

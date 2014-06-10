@@ -4165,6 +4165,17 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	}
 
 	/**
+	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutPrototypeId the primary key of the layout prototype
+	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
+	 */
+	@Override
+	public LayoutPrototype fetchByPrimaryKey(long layoutPrototypeId) {
+		return fetchByPrimaryKey((Serializable)layoutPrototypeId);
+	}
+
+	/**
 	 * Returns a map of layout prototypes for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the layout prototypes
@@ -4173,28 +4184,37 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	@Override
 	public Map<Serializable, LayoutPrototype> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, LayoutPrototype> results = new HashMap<Serializable, LayoutPrototype>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, LayoutPrototype> results = new HashMap<Serializable, LayoutPrototype>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			LayoutPrototype layoutPrototype = fetchByPrimaryKey(primaryKey);
+
+			if (layoutPrototype != null) {
+				results.put(primaryKey, layoutPrototype);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			LayoutPrototype layoutPrototype = (LayoutPrototype)EntityCacheUtil.getResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutPrototypeImpl.class, primaryKey);
 
 			if (layoutPrototype == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4202,16 +4222,17 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LAYOUTPROTOTYPE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4228,12 +4249,12 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 			Query q = session.createQuery(sql);
 
-			for (LayoutPrototype result : (List<LayoutPrototype>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (LayoutPrototype layoutPrototype : (List<LayoutPrototype>)q.list()) {
+				results.put(layoutPrototype.getPrimaryKeyObj(), layoutPrototype);
 
-				cacheResult(result);
+				cacheResult(layoutPrototype);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(layoutPrototype.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4249,17 +4270,6 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutPrototypeId the primary key of the layout prototype
-	 * @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
-	 */
-	@Override
-	public LayoutPrototype fetchByPrimaryKey(long layoutPrototypeId) {
-		return fetchByPrimaryKey((Serializable)layoutPrototypeId);
 	}
 
 	/**

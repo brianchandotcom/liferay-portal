@@ -319,76 +319,77 @@ public class WebsitePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Website> missingWebsites = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingWebsites.isEmpty());
+		Assert.assertTrue(websites.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Website newWebsite = addWebsite();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWebsite.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Website> missingWebsites = _persistence.fetchByPrimaryKeys(missingPks);
-		Website existingWebsite = missingWebsites.get(newWebsite.getPrimaryKey());
+		primaryKeys.add(newWebsite.getPrimaryKey());
 
-		Assert.assertEquals(missingWebsites.size(), 1);
-		Assert.assertEquals(newWebsite, existingWebsite);
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Website> missingWebsites = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingWebsites.isEmpty());
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(websites.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Website newWebsite = addWebsite();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWebsite.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Website> missingWebsites = _persistence.fetchByPrimaryKeys(missingPks);
-		Website existingWebsite = missingWebsites.get(newWebsite.getPrimaryKey());
+		primaryKeys.add(newWebsite.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingWebsites.size(), 1);
-		Assert.assertEquals(newWebsite, existingWebsite);
-		Assert.assertNull(missingWebsites.get(pk2));
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Website newWebsite = addWebsite();
 		Website newWebsite2 = addWebsite();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWebsite.getPrimaryKey());
-		missingPks.add(newWebsite2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Website> missingWebsites = _persistence.fetchByPrimaryKeys(missingPks);
-		Website existingWebsite = missingWebsites.get(newWebsite.getPrimaryKey());
-		Website existingWebsite2 = missingWebsites.get(newWebsite2.getPrimaryKey());
+		primaryKeys.add(newWebsite.getPrimaryKey());
+		primaryKeys.add(newWebsite2.getPrimaryKey());
 
-		Assert.assertEquals(missingWebsites.size(), 2);
-		Assert.assertEquals(newWebsite, existingWebsite);
-		Assert.assertEquals(newWebsite2, existingWebsite2);
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
+		Assert.assertEquals(newWebsite2,
+			websites.get(newWebsite2.getPrimaryKey()));
 	}
 
 	@Test

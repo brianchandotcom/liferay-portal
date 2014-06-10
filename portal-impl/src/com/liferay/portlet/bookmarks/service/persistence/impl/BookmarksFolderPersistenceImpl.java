@@ -7258,6 +7258,17 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	}
 
 	/**
+	 * Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the bookmarks folder
+	 * @return the bookmarks folder, or <code>null</code> if a bookmarks folder with the primary key could not be found
+	 */
+	@Override
+	public BookmarksFolder fetchByPrimaryKey(long folderId) {
+		return fetchByPrimaryKey((Serializable)folderId);
+	}
+
+	/**
 	 * Returns a map of bookmarks folders for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the bookmarks folders
@@ -7266,28 +7277,37 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	@Override
 	public Map<Serializable, BookmarksFolder> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, BookmarksFolder> results = new HashMap<Serializable, BookmarksFolder>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, BookmarksFolder> results = new HashMap<Serializable, BookmarksFolder>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			BookmarksFolder bookmarksFolder = fetchByPrimaryKey(primaryKey);
+
+			if (bookmarksFolder != null) {
+				results.put(primaryKey, bookmarksFolder);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			BookmarksFolder bookmarksFolder = (BookmarksFolder)EntityCacheUtil.getResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 					BookmarksFolderImpl.class, primaryKey);
 
 			if (bookmarksFolder == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -7295,16 +7315,17 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_BOOKMARKSFOLDER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -7321,12 +7342,12 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 			Query q = session.createQuery(sql);
 
-			for (BookmarksFolder result : (List<BookmarksFolder>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (BookmarksFolder bookmarksFolder : (List<BookmarksFolder>)q.list()) {
+				results.put(bookmarksFolder.getPrimaryKeyObj(), bookmarksFolder);
 
-				cacheResult(result);
+				cacheResult(bookmarksFolder);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(bookmarksFolder.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -7342,17 +7363,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the bookmarks folder
-	 * @return the bookmarks folder, or <code>null</code> if a bookmarks folder with the primary key could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByPrimaryKey(long folderId) {
-		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

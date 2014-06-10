@@ -244,76 +244,80 @@ public class ExpandoColumnPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ExpandoColumn> expandoColumns = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingExpandoColumns.isEmpty());
+		Assert.assertTrue(expandoColumns.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoColumn.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
+		primaryKeys.add(newExpandoColumn.getPrimaryKey());
 
-		Assert.assertEquals(missingExpandoColumns.size(), 1);
-		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
+		Map<Serializable, ExpandoColumn> expandoColumns = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoColumns.size());
+		Assert.assertEquals(newExpandoColumn,
+			expandoColumns.get(newExpandoColumn.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingExpandoColumns.isEmpty());
+		Map<Serializable, ExpandoColumn> expandoColumns = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(expandoColumns.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoColumn.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
+		primaryKeys.add(newExpandoColumn.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingExpandoColumns.size(), 1);
-		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
-		Assert.assertNull(missingExpandoColumns.get(pk2));
+		Map<Serializable, ExpandoColumn> expandoColumns = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoColumns.size());
+		Assert.assertEquals(newExpandoColumn,
+			expandoColumns.get(newExpandoColumn.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ExpandoColumn newExpandoColumn = addExpandoColumn();
 		ExpandoColumn newExpandoColumn2 = addExpandoColumn();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newExpandoColumn.getPrimaryKey());
-		missingPks.add(newExpandoColumn2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExpandoColumn> missingExpandoColumns = _persistence.fetchByPrimaryKeys(missingPks);
-		ExpandoColumn existingExpandoColumn = missingExpandoColumns.get(newExpandoColumn.getPrimaryKey());
-		ExpandoColumn existingExpandoColumn2 = missingExpandoColumns.get(newExpandoColumn2.getPrimaryKey());
+		primaryKeys.add(newExpandoColumn.getPrimaryKey());
+		primaryKeys.add(newExpandoColumn2.getPrimaryKey());
 
-		Assert.assertEquals(missingExpandoColumns.size(), 2);
-		Assert.assertEquals(newExpandoColumn, existingExpandoColumn);
-		Assert.assertEquals(newExpandoColumn2, existingExpandoColumn2);
+		Map<Serializable, ExpandoColumn> expandoColumns = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, expandoColumns.size());
+		Assert.assertEquals(newExpandoColumn,
+			expandoColumns.get(newExpandoColumn.getPrimaryKey()));
+		Assert.assertEquals(newExpandoColumn2,
+			expandoColumns.get(newExpandoColumn2.getPrimaryKey()));
 	}
 
 	@Test

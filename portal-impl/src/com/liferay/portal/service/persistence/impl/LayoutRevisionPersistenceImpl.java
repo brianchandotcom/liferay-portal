@@ -6188,6 +6188,17 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	}
 
 	/**
+	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutRevisionId the primary key of the layout revision
+	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
+	 */
+	@Override
+	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId) {
+		return fetchByPrimaryKey((Serializable)layoutRevisionId);
+	}
+
+	/**
 	 * Returns a map of layout revisions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the layout revisions
@@ -6196,28 +6207,37 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	@Override
 	public Map<Serializable, LayoutRevision> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, LayoutRevision> results = new HashMap<Serializable, LayoutRevision>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, LayoutRevision> results = new HashMap<Serializable, LayoutRevision>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			LayoutRevision layoutRevision = fetchByPrimaryKey(primaryKey);
+
+			if (layoutRevision != null) {
+				results.put(primaryKey, layoutRevision);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			LayoutRevision layoutRevision = (LayoutRevision)EntityCacheUtil.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutRevisionImpl.class, primaryKey);
 
 			if (layoutRevision == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -6225,16 +6245,17 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LAYOUTREVISION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -6251,12 +6272,12 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			Query q = session.createQuery(sql);
 
-			for (LayoutRevision result : (List<LayoutRevision>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (LayoutRevision layoutRevision : (List<LayoutRevision>)q.list()) {
+				results.put(layoutRevision.getPrimaryKeyObj(), layoutRevision);
 
-				cacheResult(result);
+				cacheResult(layoutRevision);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(layoutRevision.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -6272,17 +6293,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutRevisionId the primary key of the layout revision
-	 * @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
-	 */
-	@Override
-	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId) {
-		return fetchByPrimaryKey((Serializable)layoutRevisionId);
 	}
 
 	/**

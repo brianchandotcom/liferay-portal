@@ -1627,6 +1627,14 @@ public interface UserPersistence extends BasePersistence<User> {
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
+	* Returns the user with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param userId the primary key of the user
+	* @return the user, or <code>null</code> if a user with the primary key could not be found
+	*/
+	public com.liferay.portal.model.User fetchByPrimaryKey(long userId);
+
+	/**
 	* Returns a map of users for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the users
@@ -1634,14 +1642,6 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.User> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the user with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param userId the primary key of the user
-	* @return the user, or <code>null</code> if a user with the primary key could not be found
-	*/
-	public com.liferay.portal.model.User fetchByPrimaryKey(long userId);
 
 	/**
 	* Returns all the users.

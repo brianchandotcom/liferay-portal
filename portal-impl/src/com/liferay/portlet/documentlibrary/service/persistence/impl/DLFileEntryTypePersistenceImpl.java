@@ -3485,6 +3485,17 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	/**
+	 * Returns the document library file entry type with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileEntryTypeId the primary key of the document library file entry type
+	 * @return the document library file entry type, or <code>null</code> if a document library file entry type with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId) {
+		return fetchByPrimaryKey((Serializable)fileEntryTypeId);
+	}
+
+	/**
 	 * Returns a map of document library file entry types for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library file entry types
@@ -3493,28 +3504,37 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public Map<Serializable, DLFileEntryType> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLFileEntryType> results = new HashMap<Serializable, DLFileEntryType>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLFileEntryType> results = new HashMap<Serializable, DLFileEntryType>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLFileEntryType dlFileEntryType = fetchByPrimaryKey(primaryKey);
+
+			if (dlFileEntryType != null) {
+				results.put(primaryKey, dlFileEntryType);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLFileEntryType dlFileEntryType = (DLFileEntryType)EntityCacheUtil.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileEntryTypeImpl.class, primaryKey);
 
 			if (dlFileEntryType == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3522,16 +3542,17 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLFILEENTRYTYPE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3548,12 +3569,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 			Query q = session.createQuery(sql);
 
-			for (DLFileEntryType result : (List<DLFileEntryType>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLFileEntryType dlFileEntryType : (List<DLFileEntryType>)q.list()) {
+				results.put(dlFileEntryType.getPrimaryKeyObj(), dlFileEntryType);
 
-				cacheResult(result);
+				cacheResult(dlFileEntryType);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlFileEntryType.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3569,17 +3590,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library file entry type with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileEntryTypeId the primary key of the document library file entry type
-	 * @return the document library file entry type, or <code>null</code> if a document library file entry type with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntryType fetchByPrimaryKey(long fileEntryTypeId) {
-		return fetchByPrimaryKey((Serializable)fileEntryTypeId);
 	}
 
 	/**

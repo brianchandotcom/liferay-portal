@@ -289,76 +289,80 @@ public class SystemEventPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> missingSystemEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingSystemEvents.isEmpty());
+		Assert.assertTrue(systemEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSystemEvent.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> missingSystemEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		SystemEvent existingSystemEvent = missingSystemEvents.get(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
 
-		Assert.assertEquals(missingSystemEvents.size(), 1);
-		Assert.assertEquals(newSystemEvent, existingSystemEvent);
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> missingSystemEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingSystemEvents.isEmpty());
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(systemEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSystemEvent.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> missingSystemEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		SystemEvent existingSystemEvent = missingSystemEvents.get(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingSystemEvents.size(), 1);
-		Assert.assertEquals(newSystemEvent, existingSystemEvent);
-		Assert.assertNull(missingSystemEvents.get(pk2));
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 		SystemEvent newSystemEvent2 = addSystemEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSystemEvent.getPrimaryKey());
-		missingPks.add(newSystemEvent2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> missingSystemEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		SystemEvent existingSystemEvent = missingSystemEvents.get(newSystemEvent.getPrimaryKey());
-		SystemEvent existingSystemEvent2 = missingSystemEvents.get(newSystemEvent2.getPrimaryKey());
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(newSystemEvent2.getPrimaryKey());
 
-		Assert.assertEquals(missingSystemEvents.size(), 2);
-		Assert.assertEquals(newSystemEvent, existingSystemEvent);
-		Assert.assertEquals(newSystemEvent2, existingSystemEvent2);
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
+		Assert.assertEquals(newSystemEvent2,
+			systemEvents.get(newSystemEvent2.getPrimaryKey()));
 	}
 
 	@Test

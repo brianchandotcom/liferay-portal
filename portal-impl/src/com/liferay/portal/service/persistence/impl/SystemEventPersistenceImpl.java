@@ -2644,6 +2644,17 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	/**
+	 * Returns the system event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param systemEventId the primary key of the system event
+	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
+	 */
+	@Override
+	public SystemEvent fetchByPrimaryKey(long systemEventId) {
+		return fetchByPrimaryKey((Serializable)systemEventId);
+	}
+
+	/**
 	 * Returns a map of system events for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the system events
@@ -2652,28 +2663,37 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public Map<Serializable, SystemEvent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SystemEvent> results = new HashMap<Serializable, SystemEvent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SystemEvent> results = new HashMap<Serializable, SystemEvent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SystemEvent systemEvent = fetchByPrimaryKey(primaryKey);
+
+			if (systemEvent != null) {
+				results.put(primaryKey, systemEvent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SystemEvent systemEvent = (SystemEvent)EntityCacheUtil.getResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
 					SystemEventImpl.class, primaryKey);
 
 			if (systemEvent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2681,16 +2701,17 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SYSTEMEVENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2707,12 +2728,12 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 			Query q = session.createQuery(sql);
 
-			for (SystemEvent result : (List<SystemEvent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SystemEvent systemEvent : (List<SystemEvent>)q.list()) {
+				results.put(systemEvent.getPrimaryKeyObj(), systemEvent);
 
-				cacheResult(result);
+				cacheResult(systemEvent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(systemEvent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2728,17 +2749,6 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the system event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param systemEventId the primary key of the system event
-	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
-	 */
-	@Override
-	public SystemEvent fetchByPrimaryKey(long systemEventId) {
-		return fetchByPrimaryKey((Serializable)systemEventId);
 	}
 
 	/**

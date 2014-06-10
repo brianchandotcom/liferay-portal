@@ -2766,6 +2766,17 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	}
 
 	/**
+	 * Returns the trash entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the trash entry
+	 * @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
+	 */
+	@Override
+	public TrashEntry fetchByPrimaryKey(long entryId) {
+		return fetchByPrimaryKey((Serializable)entryId);
+	}
+
+	/**
 	 * Returns a map of trash entries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the trash entries
@@ -2774,28 +2785,37 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	@Override
 	public Map<Serializable, TrashEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, TrashEntry> results = new HashMap<Serializable, TrashEntry>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, TrashEntry> results = new HashMap<Serializable, TrashEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			TrashEntry trashEntry = fetchByPrimaryKey(primaryKey);
+
+			if (trashEntry != null) {
+				results.put(primaryKey, trashEntry);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			TrashEntry trashEntry = (TrashEntry)EntityCacheUtil.getResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
 					TrashEntryImpl.class, primaryKey);
 
 			if (trashEntry == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2803,16 +2823,17 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_TRASHENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2829,12 +2850,12 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 			Query q = session.createQuery(sql);
 
-			for (TrashEntry result : (List<TrashEntry>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (TrashEntry trashEntry : (List<TrashEntry>)q.list()) {
+				results.put(trashEntry.getPrimaryKeyObj(), trashEntry);
 
-				cacheResult(result);
+				cacheResult(trashEntry);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(trashEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2850,17 +2871,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the trash entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the trash entry
-	 * @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
-	 */
-	@Override
-	public TrashEntry fetchByPrimaryKey(long entryId) {
-		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

@@ -438,76 +438,80 @@ public class CalEventPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalEvent> missingCalEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, CalEvent> calEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingCalEvents.isEmpty());
+		Assert.assertTrue(calEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCalEvent.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalEvent> missingCalEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		CalEvent existingCalEvent = missingCalEvents.get(newCalEvent.getPrimaryKey());
+		primaryKeys.add(newCalEvent.getPrimaryKey());
 
-		Assert.assertEquals(missingCalEvents.size(), 1);
-		Assert.assertEquals(newCalEvent, existingCalEvent);
+		Map<Serializable, CalEvent> calEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, calEvents.size());
+		Assert.assertEquals(newCalEvent,
+			calEvents.get(newCalEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalEvent> missingCalEvents = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingCalEvents.isEmpty());
+		Map<Serializable, CalEvent> calEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(calEvents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCalEvent.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalEvent> missingCalEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		CalEvent existingCalEvent = missingCalEvents.get(newCalEvent.getPrimaryKey());
+		primaryKeys.add(newCalEvent.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingCalEvents.size(), 1);
-		Assert.assertEquals(newCalEvent, existingCalEvent);
-		Assert.assertNull(missingCalEvents.get(pk2));
+		Map<Serializable, CalEvent> calEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, calEvents.size());
+		Assert.assertEquals(newCalEvent,
+			calEvents.get(newCalEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		CalEvent newCalEvent = addCalEvent();
 		CalEvent newCalEvent2 = addCalEvent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newCalEvent.getPrimaryKey());
-		missingPks.add(newCalEvent2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CalEvent> missingCalEvents = _persistence.fetchByPrimaryKeys(missingPks);
-		CalEvent existingCalEvent = missingCalEvents.get(newCalEvent.getPrimaryKey());
-		CalEvent existingCalEvent2 = missingCalEvents.get(newCalEvent2.getPrimaryKey());
+		primaryKeys.add(newCalEvent.getPrimaryKey());
+		primaryKeys.add(newCalEvent2.getPrimaryKey());
 
-		Assert.assertEquals(missingCalEvents.size(), 2);
-		Assert.assertEquals(newCalEvent, existingCalEvent);
-		Assert.assertEquals(newCalEvent2, existingCalEvent2);
+		Map<Serializable, CalEvent> calEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, calEvents.size());
+		Assert.assertEquals(newCalEvent,
+			calEvents.get(newCalEvent.getPrimaryKey()));
+		Assert.assertEquals(newCalEvent2,
+			calEvents.get(newCalEvent2.getPrimaryKey()));
 	}
 
 	@Test

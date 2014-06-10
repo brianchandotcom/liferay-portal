@@ -712,6 +712,17 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	/**
+	 * Returns the release with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param releaseId the primary key of the release
+	 * @return the release, or <code>null</code> if a release with the primary key could not be found
+	 */
+	@Override
+	public Release fetchByPrimaryKey(long releaseId) {
+		return fetchByPrimaryKey((Serializable)releaseId);
+	}
+
+	/**
 	 * Returns a map of releases for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the releases
@@ -720,28 +731,37 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	@Override
 	public Map<Serializable, Release> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Release> results = new HashMap<Serializable, Release>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Release> results = new HashMap<Serializable, Release>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Release release = fetchByPrimaryKey(primaryKey);
+
+			if (release != null) {
+				results.put(primaryKey, release);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Release release = (Release)EntityCacheUtil.getResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 					ReleaseImpl.class, primaryKey);
 
 			if (release == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -749,16 +769,17 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_RELEASE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -775,12 +796,12 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 			Query q = session.createQuery(sql);
 
-			for (Release result : (List<Release>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Release release : (List<Release>)q.list()) {
+				results.put(release.getPrimaryKeyObj(), release);
 
-				cacheResult(result);
+				cacheResult(release);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(release.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -796,17 +817,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the release with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param releaseId the primary key of the release
-	 * @return the release, or <code>null</code> if a release with the primary key could not be found
-	 */
-	@Override
-	public Release fetchByPrimaryKey(long releaseId) {
-		return fetchByPrimaryKey((Serializable)releaseId);
 	}
 
 	/**

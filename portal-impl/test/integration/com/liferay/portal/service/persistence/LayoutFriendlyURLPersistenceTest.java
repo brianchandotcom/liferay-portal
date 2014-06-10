@@ -376,76 +376,80 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutFriendlyURL> missingLayoutFriendlyURLs = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, LayoutFriendlyURL> layoutFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingLayoutFriendlyURLs.isEmpty());
+		Assert.assertTrue(layoutFriendlyURLs.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		LayoutFriendlyURL newLayoutFriendlyURL = addLayoutFriendlyURL();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newLayoutFriendlyURL.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutFriendlyURL> missingLayoutFriendlyURLs = _persistence.fetchByPrimaryKeys(missingPks);
-		LayoutFriendlyURL existingLayoutFriendlyURL = missingLayoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey());
+		primaryKeys.add(newLayoutFriendlyURL.getPrimaryKey());
 
-		Assert.assertEquals(missingLayoutFriendlyURLs.size(), 1);
-		Assert.assertEquals(newLayoutFriendlyURL, existingLayoutFriendlyURL);
+		Map<Serializable, LayoutFriendlyURL> layoutFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, layoutFriendlyURLs.size());
+		Assert.assertEquals(newLayoutFriendlyURL,
+			layoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutFriendlyURL> missingLayoutFriendlyURLs = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingLayoutFriendlyURLs.isEmpty());
+		Map<Serializable, LayoutFriendlyURL> layoutFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(layoutFriendlyURLs.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		LayoutFriendlyURL newLayoutFriendlyURL = addLayoutFriendlyURL();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newLayoutFriendlyURL.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutFriendlyURL> missingLayoutFriendlyURLs = _persistence.fetchByPrimaryKeys(missingPks);
-		LayoutFriendlyURL existingLayoutFriendlyURL = missingLayoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey());
+		primaryKeys.add(newLayoutFriendlyURL.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingLayoutFriendlyURLs.size(), 1);
-		Assert.assertEquals(newLayoutFriendlyURL, existingLayoutFriendlyURL);
-		Assert.assertNull(missingLayoutFriendlyURLs.get(pk2));
+		Map<Serializable, LayoutFriendlyURL> layoutFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, layoutFriendlyURLs.size());
+		Assert.assertEquals(newLayoutFriendlyURL,
+			layoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		LayoutFriendlyURL newLayoutFriendlyURL = addLayoutFriendlyURL();
 		LayoutFriendlyURL newLayoutFriendlyURL2 = addLayoutFriendlyURL();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newLayoutFriendlyURL.getPrimaryKey());
-		missingPks.add(newLayoutFriendlyURL2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutFriendlyURL> missingLayoutFriendlyURLs = _persistence.fetchByPrimaryKeys(missingPks);
-		LayoutFriendlyURL existingLayoutFriendlyURL = missingLayoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey());
-		LayoutFriendlyURL existingLayoutFriendlyURL2 = missingLayoutFriendlyURLs.get(newLayoutFriendlyURL2.getPrimaryKey());
+		primaryKeys.add(newLayoutFriendlyURL.getPrimaryKey());
+		primaryKeys.add(newLayoutFriendlyURL2.getPrimaryKey());
 
-		Assert.assertEquals(missingLayoutFriendlyURLs.size(), 2);
-		Assert.assertEquals(newLayoutFriendlyURL, existingLayoutFriendlyURL);
-		Assert.assertEquals(newLayoutFriendlyURL2, existingLayoutFriendlyURL2);
+		Map<Serializable, LayoutFriendlyURL> layoutFriendlyURLs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, layoutFriendlyURLs.size());
+		Assert.assertEquals(newLayoutFriendlyURL,
+			layoutFriendlyURLs.get(newLayoutFriendlyURL.getPrimaryKey()));
+		Assert.assertEquals(newLayoutFriendlyURL2,
+			layoutFriendlyURLs.get(newLayoutFriendlyURL2.getPrimaryKey()));
 	}
 
 	@Test

@@ -283,76 +283,80 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Subscription> missingSubscriptions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Subscription> subscriptions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingSubscriptions.isEmpty());
+		Assert.assertTrue(subscriptions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Subscription newSubscription = addSubscription();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSubscription.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Subscription> missingSubscriptions = _persistence.fetchByPrimaryKeys(missingPks);
-		Subscription existingSubscription = missingSubscriptions.get(newSubscription.getPrimaryKey());
+		primaryKeys.add(newSubscription.getPrimaryKey());
 
-		Assert.assertEquals(missingSubscriptions.size(), 1);
-		Assert.assertEquals(newSubscription, existingSubscription);
+		Map<Serializable, Subscription> subscriptions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, subscriptions.size());
+		Assert.assertEquals(newSubscription,
+			subscriptions.get(newSubscription.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Subscription> missingSubscriptions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingSubscriptions.isEmpty());
+		Map<Serializable, Subscription> subscriptions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(subscriptions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Subscription newSubscription = addSubscription();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSubscription.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Subscription> missingSubscriptions = _persistence.fetchByPrimaryKeys(missingPks);
-		Subscription existingSubscription = missingSubscriptions.get(newSubscription.getPrimaryKey());
+		primaryKeys.add(newSubscription.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingSubscriptions.size(), 1);
-		Assert.assertEquals(newSubscription, existingSubscription);
-		Assert.assertNull(missingSubscriptions.get(pk2));
+		Map<Serializable, Subscription> subscriptions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, subscriptions.size());
+		Assert.assertEquals(newSubscription,
+			subscriptions.get(newSubscription.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Subscription newSubscription = addSubscription();
 		Subscription newSubscription2 = addSubscription();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSubscription.getPrimaryKey());
-		missingPks.add(newSubscription2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Subscription> missingSubscriptions = _persistence.fetchByPrimaryKeys(missingPks);
-		Subscription existingSubscription = missingSubscriptions.get(newSubscription.getPrimaryKey());
-		Subscription existingSubscription2 = missingSubscriptions.get(newSubscription2.getPrimaryKey());
+		primaryKeys.add(newSubscription.getPrimaryKey());
+		primaryKeys.add(newSubscription2.getPrimaryKey());
 
-		Assert.assertEquals(missingSubscriptions.size(), 2);
-		Assert.assertEquals(newSubscription, existingSubscription);
-		Assert.assertEquals(newSubscription2, existingSubscription2);
+		Map<Serializable, Subscription> subscriptions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, subscriptions.size());
+		Assert.assertEquals(newSubscription,
+			subscriptions.get(newSubscription.getPrimaryKey()));
+		Assert.assertEquals(newSubscription2,
+			subscriptions.get(newSubscription2.getPrimaryKey()));
 	}
 
 	@Test

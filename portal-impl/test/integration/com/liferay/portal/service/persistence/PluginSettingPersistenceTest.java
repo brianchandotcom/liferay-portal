@@ -231,76 +231,80 @@ public class PluginSettingPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> missingPluginSettings = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingPluginSettings.isEmpty());
+		Assert.assertTrue(pluginSettings.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPluginSetting.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> missingPluginSettings = _persistence.fetchByPrimaryKeys(missingPks);
-		PluginSetting existingPluginSetting = missingPluginSettings.get(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
 
-		Assert.assertEquals(missingPluginSettings.size(), 1);
-		Assert.assertEquals(newPluginSetting, existingPluginSetting);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> missingPluginSettings = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingPluginSettings.isEmpty());
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(pluginSettings.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPluginSetting.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> missingPluginSettings = _persistence.fetchByPrimaryKeys(missingPks);
-		PluginSetting existingPluginSetting = missingPluginSettings.get(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingPluginSettings.size(), 1);
-		Assert.assertEquals(newPluginSetting, existingPluginSetting);
-		Assert.assertNull(missingPluginSettings.get(pk2));
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		PluginSetting newPluginSetting = addPluginSetting();
 		PluginSetting newPluginSetting2 = addPluginSetting();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPluginSetting.getPrimaryKey());
-		missingPks.add(newPluginSetting2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PluginSetting> missingPluginSettings = _persistence.fetchByPrimaryKeys(missingPks);
-		PluginSetting existingPluginSetting = missingPluginSettings.get(newPluginSetting.getPrimaryKey());
-		PluginSetting existingPluginSetting2 = missingPluginSettings.get(newPluginSetting2.getPrimaryKey());
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(newPluginSetting2.getPrimaryKey());
 
-		Assert.assertEquals(missingPluginSettings.size(), 2);
-		Assert.assertEquals(newPluginSetting, existingPluginSetting);
-		Assert.assertEquals(newPluginSetting2, existingPluginSetting2);
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
+		Assert.assertEquals(newPluginSetting2,
+			pluginSettings.get(newPluginSetting2.getPrimaryKey()));
 	}
 
 	@Test

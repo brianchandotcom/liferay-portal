@@ -441,76 +441,80 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> missingDLFileVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDLFileVersions.isEmpty());
+		Assert.assertTrue(dlFileVersions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileVersion.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> missingDLFileVersions = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileVersion existingDLFileVersion = missingDLFileVersions.get(newDLFileVersion.getPrimaryKey());
+		primaryKeys.add(newDLFileVersion.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileVersions.size(), 1);
-		Assert.assertEquals(newDLFileVersion, existingDLFileVersion);
+		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileVersions.size());
+		Assert.assertEquals(newDLFileVersion,
+			dlFileVersions.get(newDLFileVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> missingDLFileVersions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDLFileVersions.isEmpty());
+		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlFileVersions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileVersion.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> missingDLFileVersions = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileVersion existingDLFileVersion = missingDLFileVersions.get(newDLFileVersion.getPrimaryKey());
+		primaryKeys.add(newDLFileVersion.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDLFileVersions.size(), 1);
-		Assert.assertEquals(newDLFileVersion, existingDLFileVersion);
-		Assert.assertNull(missingDLFileVersions.get(pk2));
+		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileVersions.size());
+		Assert.assertEquals(newDLFileVersion,
+			dlFileVersions.get(newDLFileVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 		DLFileVersion newDLFileVersion2 = addDLFileVersion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileVersion.getPrimaryKey());
-		missingPks.add(newDLFileVersion2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> missingDLFileVersions = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileVersion existingDLFileVersion = missingDLFileVersions.get(newDLFileVersion.getPrimaryKey());
-		DLFileVersion existingDLFileVersion2 = missingDLFileVersions.get(newDLFileVersion2.getPrimaryKey());
+		primaryKeys.add(newDLFileVersion.getPrimaryKey());
+		primaryKeys.add(newDLFileVersion2.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileVersions.size(), 2);
-		Assert.assertEquals(newDLFileVersion, existingDLFileVersion);
-		Assert.assertEquals(newDLFileVersion2, existingDLFileVersion2);
+		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlFileVersions.size());
+		Assert.assertEquals(newDLFileVersion,
+			dlFileVersions.get(newDLFileVersion.getPrimaryKey()));
+		Assert.assertEquals(newDLFileVersion2,
+			dlFileVersions.get(newDLFileVersion2.getPrimaryKey()));
 	}
 
 	@Test

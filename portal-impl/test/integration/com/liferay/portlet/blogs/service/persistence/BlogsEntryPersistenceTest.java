@@ -621,76 +621,80 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BlogsEntry> missingBlogsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, BlogsEntry> blogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingBlogsEntries.isEmpty());
+		Assert.assertTrue(blogsEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newBlogsEntry.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BlogsEntry> missingBlogsEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		BlogsEntry existingBlogsEntry = missingBlogsEntries.get(newBlogsEntry.getPrimaryKey());
+		primaryKeys.add(newBlogsEntry.getPrimaryKey());
 
-		Assert.assertEquals(missingBlogsEntries.size(), 1);
-		Assert.assertEquals(newBlogsEntry, existingBlogsEntry);
+		Map<Serializable, BlogsEntry> blogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, blogsEntries.size());
+		Assert.assertEquals(newBlogsEntry,
+			blogsEntries.get(newBlogsEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BlogsEntry> missingBlogsEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingBlogsEntries.isEmpty());
+		Map<Serializable, BlogsEntry> blogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(blogsEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newBlogsEntry.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BlogsEntry> missingBlogsEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		BlogsEntry existingBlogsEntry = missingBlogsEntries.get(newBlogsEntry.getPrimaryKey());
+		primaryKeys.add(newBlogsEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingBlogsEntries.size(), 1);
-		Assert.assertEquals(newBlogsEntry, existingBlogsEntry);
-		Assert.assertNull(missingBlogsEntries.get(pk2));
+		Map<Serializable, BlogsEntry> blogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, blogsEntries.size());
+		Assert.assertEquals(newBlogsEntry,
+			blogsEntries.get(newBlogsEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 		BlogsEntry newBlogsEntry2 = addBlogsEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newBlogsEntry.getPrimaryKey());
-		missingPks.add(newBlogsEntry2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BlogsEntry> missingBlogsEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		BlogsEntry existingBlogsEntry = missingBlogsEntries.get(newBlogsEntry.getPrimaryKey());
-		BlogsEntry existingBlogsEntry2 = missingBlogsEntries.get(newBlogsEntry2.getPrimaryKey());
+		primaryKeys.add(newBlogsEntry.getPrimaryKey());
+		primaryKeys.add(newBlogsEntry2.getPrimaryKey());
 
-		Assert.assertEquals(missingBlogsEntries.size(), 2);
-		Assert.assertEquals(newBlogsEntry, existingBlogsEntry);
-		Assert.assertEquals(newBlogsEntry2, existingBlogsEntry2);
+		Map<Serializable, BlogsEntry> blogsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, blogsEntries.size());
+		Assert.assertEquals(newBlogsEntry,
+			blogsEntries.get(newBlogsEntry.getPrimaryKey()));
+		Assert.assertEquals(newBlogsEntry2,
+			blogsEntries.get(newBlogsEntry2.getPrimaryKey()));
 	}
 
 	@Test

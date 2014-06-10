@@ -3277,6 +3277,17 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	}
 
 	/**
+	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param statsUserId the primary key of the blogs stats user
+	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
+	 */
+	@Override
+	public BlogsStatsUser fetchByPrimaryKey(long statsUserId) {
+		return fetchByPrimaryKey((Serializable)statsUserId);
+	}
+
+	/**
 	 * Returns a map of blogs stats users for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the blogs stats users
@@ -3285,28 +3296,37 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	@Override
 	public Map<Serializable, BlogsStatsUser> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, BlogsStatsUser> results = new HashMap<Serializable, BlogsStatsUser>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, BlogsStatsUser> results = new HashMap<Serializable, BlogsStatsUser>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			BlogsStatsUser blogsStatsUser = fetchByPrimaryKey(primaryKey);
+
+			if (blogsStatsUser != null) {
+				results.put(primaryKey, blogsStatsUser);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			BlogsStatsUser blogsStatsUser = (BlogsStatsUser)EntityCacheUtil.getResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 					BlogsStatsUserImpl.class, primaryKey);
 
 			if (blogsStatsUser == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3314,16 +3334,17 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3340,12 +3361,12 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 			Query q = session.createQuery(sql);
 
-			for (BlogsStatsUser result : (List<BlogsStatsUser>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (BlogsStatsUser blogsStatsUser : (List<BlogsStatsUser>)q.list()) {
+				results.put(blogsStatsUser.getPrimaryKeyObj(), blogsStatsUser);
 
-				cacheResult(result);
+				cacheResult(blogsStatsUser);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(blogsStatsUser.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3361,17 +3382,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the blogs stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param statsUserId the primary key of the blogs stats user
-	 * @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
-	 */
-	@Override
-	public BlogsStatsUser fetchByPrimaryKey(long statsUserId) {
-		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**

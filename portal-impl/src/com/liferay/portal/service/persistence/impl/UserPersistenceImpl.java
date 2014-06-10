@@ -7668,6 +7668,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	/**
+	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userId the primary key of the user
+	 * @return the user, or <code>null</code> if a user with the primary key could not be found
+	 */
+	@Override
+	public User fetchByPrimaryKey(long userId) {
+		return fetchByPrimaryKey((Serializable)userId);
+	}
+
+	/**
 	 * Returns a map of users for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the users
@@ -7676,28 +7687,37 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public Map<Serializable, User> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, User> results = new HashMap<Serializable, User>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, User> results = new HashMap<Serializable, User>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			User user = fetchByPrimaryKey(primaryKey);
+
+			if (user != null) {
+				results.put(primaryKey, user);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			User user = (User)EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 					UserImpl.class, primaryKey);
 
 			if (user == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -7705,16 +7725,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -7731,12 +7752,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			Query q = session.createQuery(sql);
 
-			for (User result : (List<User>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (User user : (List<User>)q.list()) {
+				results.put(user.getPrimaryKeyObj(), user);
 
-				cacheResult(result);
+				cacheResult(user);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(user.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -7752,17 +7773,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userId the primary key of the user
-	 * @return the user, or <code>null</code> if a user with the primary key could not be found
-	 */
-	@Override
-	public User fetchByPrimaryKey(long userId) {
-		return fetchByPrimaryKey((Serializable)userId);
 	}
 
 	/**

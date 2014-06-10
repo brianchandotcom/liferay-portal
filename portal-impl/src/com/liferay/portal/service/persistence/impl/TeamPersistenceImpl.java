@@ -1571,6 +1571,17 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	/**
+	 * Returns the team with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param teamId the primary key of the team
+	 * @return the team, or <code>null</code> if a team with the primary key could not be found
+	 */
+	@Override
+	public Team fetchByPrimaryKey(long teamId) {
+		return fetchByPrimaryKey((Serializable)teamId);
+	}
+
+	/**
 	 * Returns a map of teams for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the teams
@@ -1579,28 +1590,37 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Map<Serializable, Team> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Team> results = new HashMap<Serializable, Team>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Team> results = new HashMap<Serializable, Team>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Team team = fetchByPrimaryKey(primaryKey);
+
+			if (team != null) {
+				results.put(primaryKey, team);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Team team = (Team)EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 					TeamImpl.class, primaryKey);
 
 			if (team == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1608,16 +1628,17 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_TEAM_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1634,12 +1655,12 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 			Query q = session.createQuery(sql);
 
-			for (Team result : (List<Team>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Team team : (List<Team>)q.list()) {
+				results.put(team.getPrimaryKeyObj(), team);
 
-				cacheResult(result);
+				cacheResult(team);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(team.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1655,17 +1676,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the team with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param teamId the primary key of the team
-	 * @return the team, or <code>null</code> if a team with the primary key could not be found
-	 */
-	@Override
-	public Team fetchByPrimaryKey(long teamId) {
-		return fetchByPrimaryKey((Serializable)teamId);
 	}
 
 	/**

@@ -1717,6 +1717,17 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	/**
+	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param countryId the primary key of the country
+	 * @return the country, or <code>null</code> if a country with the primary key could not be found
+	 */
+	@Override
+	public Country fetchByPrimaryKey(long countryId) {
+		return fetchByPrimaryKey((Serializable)countryId);
+	}
+
+	/**
 	 * Returns a map of countries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the countries
@@ -1725,28 +1736,37 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	@Override
 	public Map<Serializable, Country> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Country> results = new HashMap<Serializable, Country>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Country> results = new HashMap<Serializable, Country>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Country country = fetchByPrimaryKey(primaryKey);
+
+			if (country != null) {
+				results.put(primaryKey, country);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Country country = (Country)EntityCacheUtil.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 					CountryImpl.class, primaryKey);
 
 			if (country == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1754,16 +1774,17 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_COUNTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1780,12 +1801,12 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 			Query q = session.createQuery(sql);
 
-			for (Country result : (List<Country>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Country country : (List<Country>)q.list()) {
+				results.put(country.getPrimaryKeyObj(), country);
 
-				cacheResult(result);
+				cacheResult(country);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(country.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1801,17 +1822,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the country with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param countryId the primary key of the country
-	 * @return the country, or <code>null</code> if a country with the primary key could not be found
-	 */
-	@Override
-	public Country fetchByPrimaryKey(long countryId) {
-		return fetchByPrimaryKey((Serializable)countryId);
 	}
 
 	/**

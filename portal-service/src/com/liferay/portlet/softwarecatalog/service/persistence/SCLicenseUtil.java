@@ -626,17 +626,6 @@ public class SCLicenseUtil {
 	}
 
 	/**
-	* Returns a map of s c licenses for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the s c licenses
-	* @return map of primaryKeys to s c licenses.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCLicense> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the s c license with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param licenseId the primary key of the s c license
@@ -645,6 +634,17 @@ public class SCLicenseUtil {
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense fetchByPrimaryKey(
 		long licenseId) {
 		return getPersistence().fetchByPrimaryKey(licenseId);
+	}
+
+	/**
+	* Returns a map of s c licenses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the s c licenses
+	* @return map of primaryKeys to s c licenses.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCLicense> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

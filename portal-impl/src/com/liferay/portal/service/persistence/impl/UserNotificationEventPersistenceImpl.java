@@ -3153,6 +3153,17 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	}
 
 	/**
+	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userNotificationEventId the primary key of the user notification event
+	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
+	 */
+	@Override
+	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId) {
+		return fetchByPrimaryKey((Serializable)userNotificationEventId);
+	}
+
+	/**
 	 * Returns a map of user notification events for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user notification events
@@ -3161,28 +3172,37 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	@Override
 	public Map<Serializable, UserNotificationEvent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserNotificationEvent> results = new HashMap<Serializable, UserNotificationEvent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserNotificationEvent> results = new HashMap<Serializable, UserNotificationEvent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(primaryKey);
+
+			if (userNotificationEvent != null) {
+				results.put(primaryKey, userNotificationEvent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserNotificationEvent userNotificationEvent = (UserNotificationEvent)EntityCacheUtil.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationEventImpl.class, primaryKey);
 
 			if (userNotificationEvent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3190,16 +3210,17 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3216,12 +3237,13 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			Query q = session.createQuery(sql);
 
-			for (UserNotificationEvent result : (List<UserNotificationEvent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserNotificationEvent userNotificationEvent : (List<UserNotificationEvent>)q.list()) {
+				results.put(userNotificationEvent.getPrimaryKeyObj(),
+					userNotificationEvent);
 
-				cacheResult(result);
+				cacheResult(userNotificationEvent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userNotificationEvent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3238,17 +3260,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userNotificationEventId the primary key of the user notification event
-	 * @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationEvent fetchByPrimaryKey(long userNotificationEventId) {
-		return fetchByPrimaryKey((Serializable)userNotificationEventId);
 	}
 
 	/**

@@ -1562,6 +1562,17 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	/**
+	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userIdMapperId the primary key of the user ID mapper
+	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
+	 */
+	@Override
+	public UserIdMapper fetchByPrimaryKey(long userIdMapperId) {
+		return fetchByPrimaryKey((Serializable)userIdMapperId);
+	}
+
+	/**
 	 * Returns a map of user ID mappers for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user ID mappers
@@ -1570,28 +1581,37 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	@Override
 	public Map<Serializable, UserIdMapper> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserIdMapper> results = new HashMap<Serializable, UserIdMapper>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserIdMapper> results = new HashMap<Serializable, UserIdMapper>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserIdMapper userIdMapper = fetchByPrimaryKey(primaryKey);
+
+			if (userIdMapper != null) {
+				results.put(primaryKey, userIdMapper);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 					UserIdMapperImpl.class, primaryKey);
 
 			if (userIdMapper == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1599,16 +1619,17 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERIDMAPPER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1625,12 +1646,12 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 
 			Query q = session.createQuery(sql);
 
-			for (UserIdMapper result : (List<UserIdMapper>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserIdMapper userIdMapper : (List<UserIdMapper>)q.list()) {
+				results.put(userIdMapper.getPrimaryKeyObj(), userIdMapper);
 
-				cacheResult(result);
+				cacheResult(userIdMapper);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userIdMapper.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1646,17 +1667,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userIdMapperId the primary key of the user ID mapper
-	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
-	 */
-	@Override
-	public UserIdMapper fetchByPrimaryKey(long userIdMapperId) {
-		return fetchByPrimaryKey((Serializable)userIdMapperId);
 	}
 
 	/**

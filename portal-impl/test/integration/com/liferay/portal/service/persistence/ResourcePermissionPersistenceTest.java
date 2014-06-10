@@ -322,76 +322,80 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourcePermission> missingResourcePermissions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingResourcePermissions.isEmpty());
+		Assert.assertTrue(resourcePermissions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ResourcePermission newResourcePermission = addResourcePermission();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourcePermission.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourcePermission> missingResourcePermissions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourcePermission existingResourcePermission = missingResourcePermissions.get(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
 
-		Assert.assertEquals(missingResourcePermissions.size(), 1);
-		Assert.assertEquals(newResourcePermission, existingResourcePermission);
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourcePermission> missingResourcePermissions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingResourcePermissions.isEmpty());
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(resourcePermissions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ResourcePermission newResourcePermission = addResourcePermission();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourcePermission.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourcePermission> missingResourcePermissions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourcePermission existingResourcePermission = missingResourcePermissions.get(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingResourcePermissions.size(), 1);
-		Assert.assertEquals(newResourcePermission, existingResourcePermission);
-		Assert.assertNull(missingResourcePermissions.get(pk2));
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ResourcePermission newResourcePermission = addResourcePermission();
 		ResourcePermission newResourcePermission2 = addResourcePermission();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newResourcePermission.getPrimaryKey());
-		missingPks.add(newResourcePermission2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourcePermission> missingResourcePermissions = _persistence.fetchByPrimaryKeys(missingPks);
-		ResourcePermission existingResourcePermission = missingResourcePermissions.get(newResourcePermission.getPrimaryKey());
-		ResourcePermission existingResourcePermission2 = missingResourcePermissions.get(newResourcePermission2.getPrimaryKey());
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(newResourcePermission2.getPrimaryKey());
 
-		Assert.assertEquals(missingResourcePermissions.size(), 2);
-		Assert.assertEquals(newResourcePermission, existingResourcePermission);
-		Assert.assertEquals(newResourcePermission2, existingResourcePermission2);
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
+		Assert.assertEquals(newResourcePermission2,
+			resourcePermissions.get(newResourcePermission2.getPrimaryKey()));
 	}
 
 	@Test

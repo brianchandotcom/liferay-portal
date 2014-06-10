@@ -1943,6 +1943,18 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	}
 
 	/**
+	 * Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
+	 */
+	@Override
+	public ResourceTypePermission fetchByPrimaryKey(
+		long resourceTypePermissionId) {
+		return fetchByPrimaryKey((Serializable)resourceTypePermissionId);
+	}
+
+	/**
 	 * Returns a map of resource type permissions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the resource type permissions
@@ -1951,28 +1963,37 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public Map<Serializable, ResourceTypePermission> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ResourceTypePermission> results = new HashMap<Serializable, ResourceTypePermission>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ResourceTypePermission> results = new HashMap<Serializable, ResourceTypePermission>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ResourceTypePermission resourceTypePermission = fetchByPrimaryKey(primaryKey);
+
+			if (resourceTypePermission != null) {
+				results.put(primaryKey, resourceTypePermission);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ResourceTypePermission resourceTypePermission = (ResourceTypePermission)EntityCacheUtil.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceTypePermissionImpl.class, primaryKey);
 
 			if (resourceTypePermission == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1980,16 +2001,17 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_RESOURCETYPEPERMISSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2006,12 +2028,13 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 			Query q = session.createQuery(sql);
 
-			for (ResourceTypePermission result : (List<ResourceTypePermission>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ResourceTypePermission resourceTypePermission : (List<ResourceTypePermission>)q.list()) {
+				results.put(resourceTypePermission.getPrimaryKeyObj(),
+					resourceTypePermission);
 
-				cacheResult(result);
+				cacheResult(resourceTypePermission);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(resourceTypePermission.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2028,18 +2051,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourceTypePermissionId the primary key of the resource type permission
-	 * @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
-	 */
-	@Override
-	public ResourceTypePermission fetchByPrimaryKey(
-		long resourceTypePermissionId) {
-		return fetchByPrimaryKey((Serializable)resourceTypePermissionId);
 	}
 
 	/**

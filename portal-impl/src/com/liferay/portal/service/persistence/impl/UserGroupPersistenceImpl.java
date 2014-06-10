@@ -4446,6 +4446,17 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
+	 * Returns the user group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
+	 */
+	@Override
+	public UserGroup fetchByPrimaryKey(long userGroupId) {
+		return fetchByPrimaryKey((Serializable)userGroupId);
+	}
+
+	/**
 	 * Returns a map of user groups for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user groups
@@ -4454,28 +4465,37 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public Map<Serializable, UserGroup> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserGroup> results = new HashMap<Serializable, UserGroup>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserGroup> results = new HashMap<Serializable, UserGroup>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserGroup userGroup = fetchByPrimaryKey(primaryKey);
+
+			if (userGroup != null) {
+				results.put(primaryKey, userGroup);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 					UserGroupImpl.class, primaryKey);
 
 			if (userGroup == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4483,16 +4503,17 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERGROUP_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4509,12 +4530,12 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 			Query q = session.createQuery(sql);
 
-			for (UserGroup result : (List<UserGroup>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserGroup userGroup : (List<UserGroup>)q.list()) {
+				results.put(userGroup.getPrimaryKeyObj(), userGroup);
 
-				cacheResult(result);
+				cacheResult(userGroup);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userGroup.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4530,17 +4551,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
-	 */
-	@Override
-	public UserGroup fetchByPrimaryKey(long userGroupId) {
-		return fetchByPrimaryKey((Serializable)userGroupId);
 	}
 
 	/**

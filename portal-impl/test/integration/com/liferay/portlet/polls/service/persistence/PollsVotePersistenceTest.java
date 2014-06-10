@@ -305,76 +305,80 @@ public class PollsVotePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsVote> missingPollsVotes = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, PollsVote> pollsVotes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingPollsVotes.isEmpty());
+		Assert.assertTrue(pollsVotes.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPollsVote.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsVote> missingPollsVotes = _persistence.fetchByPrimaryKeys(missingPks);
-		PollsVote existingPollsVote = missingPollsVotes.get(newPollsVote.getPrimaryKey());
+		primaryKeys.add(newPollsVote.getPrimaryKey());
 
-		Assert.assertEquals(missingPollsVotes.size(), 1);
-		Assert.assertEquals(newPollsVote, existingPollsVote);
+		Map<Serializable, PollsVote> pollsVotes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pollsVotes.size());
+		Assert.assertEquals(newPollsVote,
+			pollsVotes.get(newPollsVote.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsVote> missingPollsVotes = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingPollsVotes.isEmpty());
+		Map<Serializable, PollsVote> pollsVotes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(pollsVotes.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPollsVote.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsVote> missingPollsVotes = _persistence.fetchByPrimaryKeys(missingPks);
-		PollsVote existingPollsVote = missingPollsVotes.get(newPollsVote.getPrimaryKey());
+		primaryKeys.add(newPollsVote.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingPollsVotes.size(), 1);
-		Assert.assertEquals(newPollsVote, existingPollsVote);
-		Assert.assertNull(missingPollsVotes.get(pk2));
+		Map<Serializable, PollsVote> pollsVotes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pollsVotes.size());
+		Assert.assertEquals(newPollsVote,
+			pollsVotes.get(newPollsVote.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		PollsVote newPollsVote = addPollsVote();
 		PollsVote newPollsVote2 = addPollsVote();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPollsVote.getPrimaryKey());
-		missingPks.add(newPollsVote2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PollsVote> missingPollsVotes = _persistence.fetchByPrimaryKeys(missingPks);
-		PollsVote existingPollsVote = missingPollsVotes.get(newPollsVote.getPrimaryKey());
-		PollsVote existingPollsVote2 = missingPollsVotes.get(newPollsVote2.getPrimaryKey());
+		primaryKeys.add(newPollsVote.getPrimaryKey());
+		primaryKeys.add(newPollsVote2.getPrimaryKey());
 
-		Assert.assertEquals(missingPollsVotes.size(), 2);
-		Assert.assertEquals(newPollsVote, existingPollsVote);
-		Assert.assertEquals(newPollsVote2, existingPollsVote2);
+		Map<Serializable, PollsVote> pollsVotes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, pollsVotes.size());
+		Assert.assertEquals(newPollsVote,
+			pollsVotes.get(newPollsVote.getPrimaryKey()));
+		Assert.assertEquals(newPollsVote2,
+			pollsVotes.get(newPollsVote2.getPrimaryKey()));
 	}
 
 	@Test

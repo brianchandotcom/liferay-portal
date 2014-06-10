@@ -2716,6 +2716,17 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	}
 
 	/**
+	 * Returns the m d r rule group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleGroupId the primary key of the m d r rule group
+	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
+	 */
+	@Override
+	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId) {
+		return fetchByPrimaryKey((Serializable)ruleGroupId);
+	}
+
+	/**
 	 * Returns a map of m d r rule groups for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the m d r rule groups
@@ -2724,28 +2735,37 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	public Map<Serializable, MDRRuleGroup> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MDRRuleGroup> results = new HashMap<Serializable, MDRRuleGroup>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MDRRuleGroup> results = new HashMap<Serializable, MDRRuleGroup>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MDRRuleGroup mdrRuleGroup = fetchByPrimaryKey(primaryKey);
+
+			if (mdrRuleGroup != null) {
+				results.put(primaryKey, mdrRuleGroup);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)EntityCacheUtil.getResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleGroupImpl.class, primaryKey);
 
 			if (mdrRuleGroup == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2753,16 +2773,17 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MDRRULEGROUP_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2779,12 +2800,12 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 			Query q = session.createQuery(sql);
 
-			for (MDRRuleGroup result : (List<MDRRuleGroup>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MDRRuleGroup mdrRuleGroup : (List<MDRRuleGroup>)q.list()) {
+				results.put(mdrRuleGroup.getPrimaryKeyObj(), mdrRuleGroup);
 
-				cacheResult(result);
+				cacheResult(mdrRuleGroup);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mdrRuleGroup.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2800,17 +2821,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the m d r rule group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleGroupId the primary key of the m d r rule group
-	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
-	 */
-	@Override
-	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId) {
-		return fetchByPrimaryKey((Serializable)ruleGroupId);
 	}
 
 	/**

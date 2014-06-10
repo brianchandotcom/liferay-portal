@@ -717,6 +717,17 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	}
 
 	/**
+	 * Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param portalPreferencesId the primary key of the portal preferences
+	 * @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
+	 */
+	@Override
+	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId) {
+		return fetchByPrimaryKey((Serializable)portalPreferencesId);
+	}
+
+	/**
 	 * Returns a map of portal preferenceses for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the portal preferenceses
@@ -725,28 +736,37 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	@Override
 	public Map<Serializable, PortalPreferences> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PortalPreferences> results = new HashMap<Serializable, PortalPreferences>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PortalPreferences> results = new HashMap<Serializable, PortalPreferences>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PortalPreferences portalPreferences = fetchByPrimaryKey(primaryKey);
+
+			if (portalPreferences != null) {
+				results.put(primaryKey, portalPreferences);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PortalPreferences portalPreferences = (PortalPreferences)EntityCacheUtil.getResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 					PortalPreferencesImpl.class, primaryKey);
 
 			if (portalPreferences == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -754,16 +774,17 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PORTALPREFERENCES_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -780,12 +801,13 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 			Query q = session.createQuery(sql);
 
-			for (PortalPreferences result : (List<PortalPreferences>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PortalPreferences portalPreferences : (List<PortalPreferences>)q.list()) {
+				results.put(portalPreferences.getPrimaryKeyObj(),
+					portalPreferences);
 
-				cacheResult(result);
+				cacheResult(portalPreferences);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(portalPreferences.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -802,17 +824,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param portalPreferencesId the primary key of the portal preferences
-	 * @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId) {
-		return fetchByPrimaryKey((Serializable)portalPreferencesId);
 	}
 
 	/**

@@ -2354,6 +2354,17 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	/**
+	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryPropertyId the primary key of the asset category property
+	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
+	 */
+	@Override
+	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId) {
+		return fetchByPrimaryKey((Serializable)categoryPropertyId);
+	}
+
+	/**
 	 * Returns a map of asset category properties for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the asset category properties
@@ -2362,28 +2373,37 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public Map<Serializable, AssetCategoryProperty> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AssetCategoryProperty> results = new HashMap<Serializable, AssetCategoryProperty>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AssetCategoryProperty> results = new HashMap<Serializable, AssetCategoryProperty>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AssetCategoryProperty assetCategoryProperty = fetchByPrimaryKey(primaryKey);
+
+			if (assetCategoryProperty != null) {
+				results.put(primaryKey, assetCategoryProperty);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)EntityCacheUtil.getResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetCategoryPropertyImpl.class, primaryKey);
 
 			if (assetCategoryProperty == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2391,16 +2411,17 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2417,12 +2438,13 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 			Query q = session.createQuery(sql);
 
-			for (AssetCategoryProperty result : (List<AssetCategoryProperty>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AssetCategoryProperty assetCategoryProperty : (List<AssetCategoryProperty>)q.list()) {
+				results.put(assetCategoryProperty.getPrimaryKeyObj(),
+					assetCategoryProperty);
 
-				cacheResult(result);
+				cacheResult(assetCategoryProperty);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(assetCategoryProperty.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2439,17 +2461,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryPropertyId the primary key of the asset category property
-	 * @return the asset category property, or <code>null</code> if a asset category property with the primary key could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId) {
-		return fetchByPrimaryKey((Serializable)categoryPropertyId);
 	}
 
 	/**

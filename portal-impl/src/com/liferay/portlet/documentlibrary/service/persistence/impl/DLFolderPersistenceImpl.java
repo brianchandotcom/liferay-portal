@@ -9371,6 +9371,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	/**
+	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
+	 */
+	@Override
+	public DLFolder fetchByPrimaryKey(long folderId) {
+		return fetchByPrimaryKey((Serializable)folderId);
+	}
+
+	/**
 	 * Returns a map of document library folders for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library folders
@@ -9379,28 +9390,37 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@Override
 	public Map<Serializable, DLFolder> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLFolder> results = new HashMap<Serializable, DLFolder>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLFolder> results = new HashMap<Serializable, DLFolder>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLFolder dlFolder = fetchByPrimaryKey(primaryKey);
+
+			if (dlFolder != null) {
+				results.put(primaryKey, dlFolder);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLFolder dlFolder = (DLFolder)EntityCacheUtil.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 					DLFolderImpl.class, primaryKey);
 
 			if (dlFolder == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -9408,16 +9428,17 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLFOLDER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -9434,12 +9455,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 			Query q = session.createQuery(sql);
 
-			for (DLFolder result : (List<DLFolder>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLFolder dlFolder : (List<DLFolder>)q.list()) {
+				results.put(dlFolder.getPrimaryKeyObj(), dlFolder);
 
-				cacheResult(result);
+				cacheResult(dlFolder);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlFolder.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -9455,17 +9476,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the document library folder
-	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
-	 */
-	@Override
-	public DLFolder fetchByPrimaryKey(long folderId) {
-		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

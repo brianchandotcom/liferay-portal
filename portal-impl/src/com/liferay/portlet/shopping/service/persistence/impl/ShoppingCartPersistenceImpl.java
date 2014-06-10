@@ -1691,6 +1691,17 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	}
 
 	/**
+	 * Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param cartId the primary key of the shopping cart
+	 * @return the shopping cart, or <code>null</code> if a shopping cart with the primary key could not be found
+	 */
+	@Override
+	public ShoppingCart fetchByPrimaryKey(long cartId) {
+		return fetchByPrimaryKey((Serializable)cartId);
+	}
+
+	/**
 	 * Returns a map of shopping carts for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shopping carts
@@ -1699,28 +1710,37 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	@Override
 	public Map<Serializable, ShoppingCart> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ShoppingCart> results = new HashMap<Serializable, ShoppingCart>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ShoppingCart> results = new HashMap<Serializable, ShoppingCart>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ShoppingCart shoppingCart = fetchByPrimaryKey(primaryKey);
+
+			if (shoppingCart != null) {
+				results.put(primaryKey, shoppingCart);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ShoppingCart shoppingCart = (ShoppingCart)EntityCacheUtil.getResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCartImpl.class, primaryKey);
 
 			if (shoppingCart == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1728,16 +1748,17 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHOPPINGCART_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1754,12 +1775,12 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 			Query q = session.createQuery(sql);
 
-			for (ShoppingCart result : (List<ShoppingCart>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ShoppingCart shoppingCart : (List<ShoppingCart>)q.list()) {
+				results.put(shoppingCart.getPrimaryKeyObj(), shoppingCart);
 
-				cacheResult(result);
+				cacheResult(shoppingCart);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shoppingCart.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1775,17 +1796,6 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param cartId the primary key of the shopping cart
-	 * @return the shopping cart, or <code>null</code> if a shopping cart with the primary key could not be found
-	 */
-	@Override
-	public ShoppingCart fetchByPrimaryKey(long cartId) {
-		return fetchByPrimaryKey((Serializable)cartId);
 	}
 
 	/**

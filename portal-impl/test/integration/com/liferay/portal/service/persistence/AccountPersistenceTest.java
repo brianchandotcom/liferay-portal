@@ -241,76 +241,77 @@ public class AccountPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Account> accounts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingAccounts.isEmpty());
+		Assert.assertTrue(accounts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Account newAccount = addAccount();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAccount.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
-		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
+		primaryKeys.add(newAccount.getPrimaryKey());
 
-		Assert.assertEquals(missingAccounts.size(), 1);
-		Assert.assertEquals(newAccount, existingAccount);
+		Map<Serializable, Account> accounts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, accounts.size());
+		Assert.assertEquals(newAccount, accounts.get(newAccount.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingAccounts.isEmpty());
+		Map<Serializable, Account> accounts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(accounts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Account newAccount = addAccount();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAccount.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
-		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
+		primaryKeys.add(newAccount.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingAccounts.size(), 1);
-		Assert.assertEquals(newAccount, existingAccount);
-		Assert.assertNull(missingAccounts.get(pk2));
+		Map<Serializable, Account> accounts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, accounts.size());
+		Assert.assertEquals(newAccount, accounts.get(newAccount.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Account newAccount = addAccount();
 		Account newAccount2 = addAccount();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAccount.getPrimaryKey());
-		missingPks.add(newAccount2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Account> missingAccounts = _persistence.fetchByPrimaryKeys(missingPks);
-		Account existingAccount = missingAccounts.get(newAccount.getPrimaryKey());
-		Account existingAccount2 = missingAccounts.get(newAccount2.getPrimaryKey());
+		primaryKeys.add(newAccount.getPrimaryKey());
+		primaryKeys.add(newAccount2.getPrimaryKey());
 
-		Assert.assertEquals(missingAccounts.size(), 2);
-		Assert.assertEquals(newAccount, existingAccount);
-		Assert.assertEquals(newAccount2, existingAccount2);
+		Map<Serializable, Account> accounts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, accounts.size());
+		Assert.assertEquals(newAccount, accounts.get(newAccount.getPrimaryKey()));
+		Assert.assertEquals(newAccount2,
+			accounts.get(newAccount2.getPrimaryKey()));
 	}
 
 	@Test

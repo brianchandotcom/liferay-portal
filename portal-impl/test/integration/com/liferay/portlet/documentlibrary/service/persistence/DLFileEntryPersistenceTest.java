@@ -534,76 +534,80 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntry> missingDLFileEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DLFileEntry> dlFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDLFileEntries.isEmpty());
+		Assert.assertTrue(dlFileEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileEntry.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntry> missingDLFileEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileEntry existingDLFileEntry = missingDLFileEntries.get(newDLFileEntry.getPrimaryKey());
+		primaryKeys.add(newDLFileEntry.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileEntries.size(), 1);
-		Assert.assertEquals(newDLFileEntry, existingDLFileEntry);
+		Map<Serializable, DLFileEntry> dlFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileEntries.size());
+		Assert.assertEquals(newDLFileEntry,
+			dlFileEntries.get(newDLFileEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntry> missingDLFileEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDLFileEntries.isEmpty());
+		Map<Serializable, DLFileEntry> dlFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlFileEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileEntry.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntry> missingDLFileEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileEntry existingDLFileEntry = missingDLFileEntries.get(newDLFileEntry.getPrimaryKey());
+		primaryKeys.add(newDLFileEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDLFileEntries.size(), 1);
-		Assert.assertEquals(newDLFileEntry, existingDLFileEntry);
-		Assert.assertNull(missingDLFileEntries.get(pk2));
+		Map<Serializable, DLFileEntry> dlFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFileEntries.size());
+		Assert.assertEquals(newDLFileEntry,
+			dlFileEntries.get(newDLFileEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 		DLFileEntry newDLFileEntry2 = addDLFileEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFileEntry.getPrimaryKey());
-		missingPks.add(newDLFileEntry2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntry> missingDLFileEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFileEntry existingDLFileEntry = missingDLFileEntries.get(newDLFileEntry.getPrimaryKey());
-		DLFileEntry existingDLFileEntry2 = missingDLFileEntries.get(newDLFileEntry2.getPrimaryKey());
+		primaryKeys.add(newDLFileEntry.getPrimaryKey());
+		primaryKeys.add(newDLFileEntry2.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFileEntries.size(), 2);
-		Assert.assertEquals(newDLFileEntry, existingDLFileEntry);
-		Assert.assertEquals(newDLFileEntry2, existingDLFileEntry2);
+		Map<Serializable, DLFileEntry> dlFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlFileEntries.size());
+		Assert.assertEquals(newDLFileEntry,
+			dlFileEntries.get(newDLFileEntry.getPrimaryKey()));
+		Assert.assertEquals(newDLFileEntry2,
+			dlFileEntries.get(newDLFileEntry2.getPrimaryKey()));
 	}
 
 	@Test

@@ -2953,6 +2953,17 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	}
 
 	/**
+	 * Returns the shopping order with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param orderId the primary key of the shopping order
+	 * @return the shopping order, or <code>null</code> if a shopping order with the primary key could not be found
+	 */
+	@Override
+	public ShoppingOrder fetchByPrimaryKey(long orderId) {
+		return fetchByPrimaryKey((Serializable)orderId);
+	}
+
+	/**
 	 * Returns a map of shopping orders for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shopping orders
@@ -2961,28 +2972,37 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	@Override
 	public Map<Serializable, ShoppingOrder> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ShoppingOrder> results = new HashMap<Serializable, ShoppingOrder>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ShoppingOrder> results = new HashMap<Serializable, ShoppingOrder>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ShoppingOrder shoppingOrder = fetchByPrimaryKey(primaryKey);
+
+			if (shoppingOrder != null) {
+				results.put(primaryKey, shoppingOrder);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ShoppingOrder shoppingOrder = (ShoppingOrder)EntityCacheUtil.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingOrderImpl.class, primaryKey);
 
 			if (shoppingOrder == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2990,16 +3010,17 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHOPPINGORDER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3016,12 +3037,12 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 			Query q = session.createQuery(sql);
 
-			for (ShoppingOrder result : (List<ShoppingOrder>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ShoppingOrder shoppingOrder : (List<ShoppingOrder>)q.list()) {
+				results.put(shoppingOrder.getPrimaryKeyObj(), shoppingOrder);
 
-				cacheResult(result);
+				cacheResult(shoppingOrder);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shoppingOrder.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3037,17 +3058,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shopping order with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param orderId the primary key of the shopping order
-	 * @return the shopping order, or <code>null</code> if a shopping order with the primary key could not be found
-	 */
-	@Override
-	public ShoppingOrder fetchByPrimaryKey(long orderId) {
-		return fetchByPrimaryKey((Serializable)orderId);
 	}
 
 	/**

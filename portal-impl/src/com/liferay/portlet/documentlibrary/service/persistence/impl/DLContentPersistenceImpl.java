@@ -2574,6 +2574,17 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	}
 
 	/**
+	 * Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentId the primary key of the document library content
+	 * @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
+	 */
+	@Override
+	public DLContent fetchByPrimaryKey(long contentId) {
+		return fetchByPrimaryKey((Serializable)contentId);
+	}
+
+	/**
 	 * Returns a map of document library contents for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library contents
@@ -2582,28 +2593,37 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	@Override
 	public Map<Serializable, DLContent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLContent> results = new HashMap<Serializable, DLContent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLContent> results = new HashMap<Serializable, DLContent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLContent dlContent = fetchByPrimaryKey(primaryKey);
+
+			if (dlContent != null) {
+				results.put(primaryKey, dlContent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLContent dlContent = (DLContent)EntityCacheUtil.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 					DLContentImpl.class, primaryKey);
 
 			if (dlContent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2611,16 +2631,17 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLCONTENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2637,12 +2658,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 			Query q = session.createQuery(sql);
 
-			for (DLContent result : (List<DLContent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLContent dlContent : (List<DLContent>)q.list()) {
+				results.put(dlContent.getPrimaryKeyObj(), dlContent);
 
-				cacheResult(result);
+				cacheResult(dlContent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlContent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2658,17 +2679,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentId the primary key of the document library content
-	 * @return the document library content, or <code>null</code> if a document library content with the primary key could not be found
-	 */
-	@Override
-	public DLContent fetchByPrimaryKey(long contentId) {
-		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
 	/**

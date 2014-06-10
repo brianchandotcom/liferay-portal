@@ -455,17 +455,6 @@ public class OrgGroupRoleUtil {
 	}
 
 	/**
-	* Returns a map of org group roles for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the org group roles
-	* @return map of primaryKeys to org group roles.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.OrgGroupRole> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the org group role with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param orgGroupRolePK the primary key of the org group role
@@ -474,6 +463,17 @@ public class OrgGroupRoleUtil {
 	public static com.liferay.portal.model.OrgGroupRole fetchByPrimaryKey(
 		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK) {
 		return getPersistence().fetchByPrimaryKey(orgGroupRolePK);
+	}
+
+	/**
+	* Returns a map of org group roles for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the org group roles
+	* @return map of primaryKeys to org group roles.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.OrgGroupRole> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

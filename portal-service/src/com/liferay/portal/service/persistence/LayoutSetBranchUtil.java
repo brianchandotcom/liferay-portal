@@ -965,17 +965,6 @@ public class LayoutSetBranchUtil {
 	}
 
 	/**
-	* Returns a map of layout set branchs for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the layout set branchs
-	* @return map of primaryKeys to layout set branchs.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSetBranch> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the layout set branch with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutSetBranchId the primary key of the layout set branch
@@ -984,6 +973,17 @@ public class LayoutSetBranchUtil {
 	public static com.liferay.portal.model.LayoutSetBranch fetchByPrimaryKey(
 		long layoutSetBranchId) {
 		return getPersistence().fetchByPrimaryKey(layoutSetBranchId);
+	}
+
+	/**
+	* Returns a map of layout set branchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout set branchs
+	* @return map of primaryKeys to layout set branchs.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSetBranch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

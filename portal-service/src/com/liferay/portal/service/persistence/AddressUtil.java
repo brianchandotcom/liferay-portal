@@ -1454,17 +1454,6 @@ public class AddressUtil {
 	}
 
 	/**
-	* Returns a map of addresses for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the addresses
-	* @return map of primaryKeys to addresses.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Address> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the address with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param addressId the primary key of the address
@@ -1473,6 +1462,17 @@ public class AddressUtil {
 	public static com.liferay.portal.model.Address fetchByPrimaryKey(
 		long addressId) {
 		return getPersistence().fetchByPrimaryKey(addressId);
+	}
+
+	/**
+	* Returns a map of addresses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the addresses
+	* @return map of primaryKeys to addresses.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Address> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

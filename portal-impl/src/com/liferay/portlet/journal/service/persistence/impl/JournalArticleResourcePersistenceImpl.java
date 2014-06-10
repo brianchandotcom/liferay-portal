@@ -2117,6 +2117,17 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	/**
+	 * Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourcePrimKey the primary key of the journal article resource
+	 * @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
+	 */
+	@Override
+	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey) {
+		return fetchByPrimaryKey((Serializable)resourcePrimKey);
+	}
+
+	/**
 	 * Returns a map of journal article resources for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal article resources
@@ -2125,28 +2136,37 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public Map<Serializable, JournalArticleResource> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalArticleResource> results = new HashMap<Serializable, JournalArticleResource>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalArticleResource> results = new HashMap<Serializable, JournalArticleResource>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalArticleResource journalArticleResource = fetchByPrimaryKey(primaryKey);
+
+			if (journalArticleResource != null) {
+				results.put(primaryKey, journalArticleResource);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalArticleResource journalArticleResource = (JournalArticleResource)EntityCacheUtil.getResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleResourceImpl.class, primaryKey);
 
 			if (journalArticleResource == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2154,16 +2174,17 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2180,12 +2201,13 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 			Query q = session.createQuery(sql);
 
-			for (JournalArticleResource result : (List<JournalArticleResource>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalArticleResource journalArticleResource : (List<JournalArticleResource>)q.list()) {
+				results.put(journalArticleResource.getPrimaryKeyObj(),
+					journalArticleResource);
 
-				cacheResult(result);
+				cacheResult(journalArticleResource);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalArticleResource.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2202,17 +2224,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourcePrimKey the primary key of the journal article resource
-	 * @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
-	 */
-	@Override
-	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey) {
-		return fetchByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
 	/**

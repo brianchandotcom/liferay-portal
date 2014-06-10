@@ -233,76 +233,77 @@ public class ReleasePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingReleases.isEmpty());
+		Assert.assertTrue(releases.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Release newRelease = addRelease();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRelease.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
-		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
+		primaryKeys.add(newRelease.getPrimaryKey());
 
-		Assert.assertEquals(missingReleases.size(), 1);
-		Assert.assertEquals(newRelease, existingRelease);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingReleases.isEmpty());
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(releases.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Release newRelease = addRelease();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRelease.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
-		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
+		primaryKeys.add(newRelease.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingReleases.size(), 1);
-		Assert.assertEquals(newRelease, existingRelease);
-		Assert.assertNull(missingReleases.get(pk2));
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Release newRelease = addRelease();
 		Release newRelease2 = addRelease();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newRelease.getPrimaryKey());
-		missingPks.add(newRelease2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> missingReleases = _persistence.fetchByPrimaryKeys(missingPks);
-		Release existingRelease = missingReleases.get(newRelease.getPrimaryKey());
-		Release existingRelease2 = missingReleases.get(newRelease2.getPrimaryKey());
+		primaryKeys.add(newRelease.getPrimaryKey());
+		primaryKeys.add(newRelease2.getPrimaryKey());
 
-		Assert.assertEquals(missingReleases.size(), 2);
-		Assert.assertEquals(newRelease, existingRelease);
-		Assert.assertEquals(newRelease2, existingRelease2);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+		Assert.assertEquals(newRelease2,
+			releases.get(newRelease2.getPrimaryKey()));
 	}
 
 	@Test

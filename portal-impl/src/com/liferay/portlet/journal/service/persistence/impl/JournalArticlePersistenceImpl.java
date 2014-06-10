@@ -28937,6 +28937,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	}
 
 	/**
+	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal article
+	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
+	 */
+	@Override
+	public JournalArticle fetchByPrimaryKey(long id) {
+		return fetchByPrimaryKey((Serializable)id);
+	}
+
+	/**
 	 * Returns a map of journal articles for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal articles
@@ -28945,28 +28956,37 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public Map<Serializable, JournalArticle> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalArticle> results = new HashMap<Serializable, JournalArticle>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalArticle> results = new HashMap<Serializable, JournalArticle>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
+
+			if (journalArticle != null) {
+				results.put(primaryKey, journalArticle);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalArticle journalArticle = (JournalArticle)EntityCacheUtil.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleImpl.class, primaryKey);
 
 			if (journalArticle == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -28974,16 +28994,17 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALARTICLE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -29000,12 +29021,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			Query q = session.createQuery(sql);
 
-			for (JournalArticle result : (List<JournalArticle>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalArticle journalArticle : (List<JournalArticle>)q.list()) {
+				results.put(journalArticle.getPrimaryKeyObj(), journalArticle);
 
-				cacheResult(result);
+				cacheResult(journalArticle);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalArticle.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -29021,17 +29042,6 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal article
-	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
-	 */
-	@Override
-	public JournalArticle fetchByPrimaryKey(long id) {
-		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

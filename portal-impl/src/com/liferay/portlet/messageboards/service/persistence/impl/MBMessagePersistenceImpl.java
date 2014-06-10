@@ -19030,6 +19030,17 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
+	 * Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param messageId the primary key of the message-boards message
+	 * @return the message-boards message, or <code>null</code> if a message-boards message with the primary key could not be found
+	 */
+	@Override
+	public MBMessage fetchByPrimaryKey(long messageId) {
+		return fetchByPrimaryKey((Serializable)messageId);
+	}
+
+	/**
 	 * Returns a map of message-boards messages for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message-boards messages
@@ -19038,28 +19049,37 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public Map<Serializable, MBMessage> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBMessage> results = new HashMap<Serializable, MBMessage>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBMessage> results = new HashMap<Serializable, MBMessage>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBMessage mbMessage = fetchByPrimaryKey(primaryKey);
+
+			if (mbMessage != null) {
+				results.put(primaryKey, mbMessage);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBMessage mbMessage = (MBMessage)EntityCacheUtil.getResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 					MBMessageImpl.class, primaryKey);
 
 			if (mbMessage == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -19067,16 +19087,17 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBMESSAGE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -19093,12 +19114,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			Query q = session.createQuery(sql);
 
-			for (MBMessage result : (List<MBMessage>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBMessage mbMessage : (List<MBMessage>)q.list()) {
+				results.put(mbMessage.getPrimaryKeyObj(), mbMessage);
 
-				cacheResult(result);
+				cacheResult(mbMessage);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbMessage.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -19114,17 +19135,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param messageId the primary key of the message-boards message
-	 * @return the message-boards message, or <code>null</code> if a message-boards message with the primary key could not be found
-	 */
-	@Override
-	public MBMessage fetchByPrimaryKey(long messageId) {
-		return fetchByPrimaryKey((Serializable)messageId);
 	}
 
 	/**

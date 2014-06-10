@@ -382,76 +382,80 @@ public class AssetEntryPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntry> missingAssetEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, AssetEntry> assetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingAssetEntries.isEmpty());
+		Assert.assertTrue(assetEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		AssetEntry newAssetEntry = addAssetEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetEntry.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntry> missingAssetEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetEntry existingAssetEntry = missingAssetEntries.get(newAssetEntry.getPrimaryKey());
+		primaryKeys.add(newAssetEntry.getPrimaryKey());
 
-		Assert.assertEquals(missingAssetEntries.size(), 1);
-		Assert.assertEquals(newAssetEntry, existingAssetEntry);
+		Map<Serializable, AssetEntry> assetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetEntries.size());
+		Assert.assertEquals(newAssetEntry,
+			assetEntries.get(newAssetEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntry> missingAssetEntries = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingAssetEntries.isEmpty());
+		Map<Serializable, AssetEntry> assetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(assetEntries.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		AssetEntry newAssetEntry = addAssetEntry();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetEntry.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntry> missingAssetEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetEntry existingAssetEntry = missingAssetEntries.get(newAssetEntry.getPrimaryKey());
+		primaryKeys.add(newAssetEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingAssetEntries.size(), 1);
-		Assert.assertEquals(newAssetEntry, existingAssetEntry);
-		Assert.assertNull(missingAssetEntries.get(pk2));
+		Map<Serializable, AssetEntry> assetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetEntries.size());
+		Assert.assertEquals(newAssetEntry,
+			assetEntries.get(newAssetEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		AssetEntry newAssetEntry = addAssetEntry();
 		AssetEntry newAssetEntry2 = addAssetEntry();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetEntry.getPrimaryKey());
-		missingPks.add(newAssetEntry2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetEntry> missingAssetEntries = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetEntry existingAssetEntry = missingAssetEntries.get(newAssetEntry.getPrimaryKey());
-		AssetEntry existingAssetEntry2 = missingAssetEntries.get(newAssetEntry2.getPrimaryKey());
+		primaryKeys.add(newAssetEntry.getPrimaryKey());
+		primaryKeys.add(newAssetEntry2.getPrimaryKey());
 
-		Assert.assertEquals(missingAssetEntries.size(), 2);
-		Assert.assertEquals(newAssetEntry, existingAssetEntry);
-		Assert.assertEquals(newAssetEntry2, existingAssetEntry2);
+		Map<Serializable, AssetEntry> assetEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, assetEntries.size());
+		Assert.assertEquals(newAssetEntry,
+			assetEntries.get(newAssetEntry.getPrimaryKey()));
+		Assert.assertEquals(newAssetEntry2,
+			assetEntries.get(newAssetEntry2.getPrimaryKey()));
 	}
 
 	@Test

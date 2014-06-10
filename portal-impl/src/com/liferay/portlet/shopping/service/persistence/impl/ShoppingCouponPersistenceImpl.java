@@ -1218,6 +1218,17 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	}
 
 	/**
+	 * Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param couponId the primary key of the shopping coupon
+	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
+	 */
+	@Override
+	public ShoppingCoupon fetchByPrimaryKey(long couponId) {
+		return fetchByPrimaryKey((Serializable)couponId);
+	}
+
+	/**
 	 * Returns a map of shopping coupons for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shopping coupons
@@ -1226,28 +1237,37 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	@Override
 	public Map<Serializable, ShoppingCoupon> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ShoppingCoupon> results = new HashMap<Serializable, ShoppingCoupon>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ShoppingCoupon> results = new HashMap<Serializable, ShoppingCoupon>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ShoppingCoupon shoppingCoupon = fetchByPrimaryKey(primaryKey);
+
+			if (shoppingCoupon != null) {
+				results.put(primaryKey, shoppingCoupon);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ShoppingCoupon shoppingCoupon = (ShoppingCoupon)EntityCacheUtil.getResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingCouponImpl.class, primaryKey);
 
 			if (shoppingCoupon == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1255,16 +1275,17 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHOPPINGCOUPON_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1281,12 +1302,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 			Query q = session.createQuery(sql);
 
-			for (ShoppingCoupon result : (List<ShoppingCoupon>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ShoppingCoupon shoppingCoupon : (List<ShoppingCoupon>)q.list()) {
+				results.put(shoppingCoupon.getPrimaryKeyObj(), shoppingCoupon);
 
-				cacheResult(result);
+				cacheResult(shoppingCoupon);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shoppingCoupon.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1302,17 +1323,6 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param couponId the primary key of the shopping coupon
-	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
-	 */
-	@Override
-	public ShoppingCoupon fetchByPrimaryKey(long couponId) {
-		return fetchByPrimaryKey((Serializable)couponId);
 	}
 
 	/**

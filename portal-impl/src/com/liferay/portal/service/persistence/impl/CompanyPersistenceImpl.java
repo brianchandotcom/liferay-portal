@@ -1703,6 +1703,17 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	/**
+	 * Returns the company with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the company, or <code>null</code> if a company with the primary key could not be found
+	 */
+	@Override
+	public Company fetchByPrimaryKey(long companyId) {
+		return fetchByPrimaryKey((Serializable)companyId);
+	}
+
+	/**
 	 * Returns a map of companies for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the companies
@@ -1711,28 +1722,37 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	@Override
 	public Map<Serializable, Company> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Company> results = new HashMap<Serializable, Company>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Company> results = new HashMap<Serializable, Company>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Company company = fetchByPrimaryKey(primaryKey);
+
+			if (company != null) {
+				results.put(primaryKey, company);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Company company = (Company)EntityCacheUtil.getResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
 					CompanyImpl.class, primaryKey);
 
 			if (company == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1740,16 +1760,17 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_COMPANY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1766,12 +1787,12 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 			Query q = session.createQuery(sql);
 
-			for (Company result : (List<Company>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Company company : (List<Company>)q.list()) {
+				results.put(company.getPrimaryKeyObj(), company);
 
-				cacheResult(result);
+				cacheResult(company);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(company.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1787,17 +1808,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the company with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param companyId the primary key of the company
-	 * @return the company, or <code>null</code> if a company with the primary key could not be found
-	 */
-	@Override
-	public Company fetchByPrimaryKey(long companyId) {
-		return fetchByPrimaryKey((Serializable)companyId);
 	}
 
 	/**

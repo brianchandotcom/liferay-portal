@@ -1513,17 +1513,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	* Returns a map of expando values for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the expando values
-	* @return map of primaryKeys to expando values.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoValue> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param valueId the primary key of the expando value
@@ -1532,6 +1521,17 @@ public class ExpandoValueUtil {
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByPrimaryKey(
 		long valueId) {
 		return getPersistence().fetchByPrimaryKey(valueId);
+	}
+
+	/**
+	* Returns a map of expando values for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando values
+	* @return map of primaryKeys to expando values.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoValue> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

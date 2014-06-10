@@ -220,76 +220,80 @@ public class SCLicensePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SCLicense> missingSCLicenses = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, SCLicense> scLicenses = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingSCLicenses.isEmpty());
+		Assert.assertTrue(scLicenses.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSCLicense.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SCLicense> missingSCLicenses = _persistence.fetchByPrimaryKeys(missingPks);
-		SCLicense existingSCLicense = missingSCLicenses.get(newSCLicense.getPrimaryKey());
+		primaryKeys.add(newSCLicense.getPrimaryKey());
 
-		Assert.assertEquals(missingSCLicenses.size(), 1);
-		Assert.assertEquals(newSCLicense, existingSCLicense);
+		Map<Serializable, SCLicense> scLicenses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scLicenses.size());
+		Assert.assertEquals(newSCLicense,
+			scLicenses.get(newSCLicense.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SCLicense> missingSCLicenses = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingSCLicenses.isEmpty());
+		Map<Serializable, SCLicense> scLicenses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(scLicenses.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSCLicense.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SCLicense> missingSCLicenses = _persistence.fetchByPrimaryKeys(missingPks);
-		SCLicense existingSCLicense = missingSCLicenses.get(newSCLicense.getPrimaryKey());
+		primaryKeys.add(newSCLicense.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingSCLicenses.size(), 1);
-		Assert.assertEquals(newSCLicense, existingSCLicense);
-		Assert.assertNull(missingSCLicenses.get(pk2));
+		Map<Serializable, SCLicense> scLicenses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scLicenses.size());
+		Assert.assertEquals(newSCLicense,
+			scLicenses.get(newSCLicense.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 		SCLicense newSCLicense2 = addSCLicense();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSCLicense.getPrimaryKey());
-		missingPks.add(newSCLicense2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SCLicense> missingSCLicenses = _persistence.fetchByPrimaryKeys(missingPks);
-		SCLicense existingSCLicense = missingSCLicenses.get(newSCLicense.getPrimaryKey());
-		SCLicense existingSCLicense2 = missingSCLicenses.get(newSCLicense2.getPrimaryKey());
+		primaryKeys.add(newSCLicense.getPrimaryKey());
+		primaryKeys.add(newSCLicense2.getPrimaryKey());
 
-		Assert.assertEquals(missingSCLicenses.size(), 2);
-		Assert.assertEquals(newSCLicense, existingSCLicense);
-		Assert.assertEquals(newSCLicense2, existingSCLicense2);
+		Map<Serializable, SCLicense> scLicenses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, scLicenses.size());
+		Assert.assertEquals(newSCLicense,
+			scLicenses.get(newSCLicense.getPrimaryKey()));
+		Assert.assertEquals(newSCLicense2,
+			scLicenses.get(newSCLicense2.getPrimaryKey()));
 	}
 
 	@Test

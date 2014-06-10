@@ -4174,6 +4174,17 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	}
 
 	/**
+	 * Returns the layout set prototype with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param layoutSetPrototypeId the primary key of the layout set prototype
+	 * @return the layout set prototype, or <code>null</code> if a layout set prototype with the primary key could not be found
+	 */
+	@Override
+	public LayoutSetPrototype fetchByPrimaryKey(long layoutSetPrototypeId) {
+		return fetchByPrimaryKey((Serializable)layoutSetPrototypeId);
+	}
+
+	/**
 	 * Returns a map of layout set prototypes for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the layout set prototypes
@@ -4182,28 +4193,37 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	@Override
 	public Map<Serializable, LayoutSetPrototype> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, LayoutSetPrototype> results = new HashMap<Serializable, LayoutSetPrototype>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, LayoutSetPrototype> results = new HashMap<Serializable, LayoutSetPrototype>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			LayoutSetPrototype layoutSetPrototype = fetchByPrimaryKey(primaryKey);
+
+			if (layoutSetPrototype != null) {
+				results.put(primaryKey, layoutSetPrototype);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)EntityCacheUtil.getResult(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutSetPrototypeImpl.class, primaryKey);
 
 			if (layoutSetPrototype == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4211,16 +4231,17 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4237,12 +4258,13 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 			Query q = session.createQuery(sql);
 
-			for (LayoutSetPrototype result : (List<LayoutSetPrototype>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (LayoutSetPrototype layoutSetPrototype : (List<LayoutSetPrototype>)q.list()) {
+				results.put(layoutSetPrototype.getPrimaryKeyObj(),
+					layoutSetPrototype);
 
-				cacheResult(result);
+				cacheResult(layoutSetPrototype);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(layoutSetPrototype.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4259,17 +4281,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the layout set prototype with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param layoutSetPrototypeId the primary key of the layout set prototype
-	 * @return the layout set prototype, or <code>null</code> if a layout set prototype with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetPrototype fetchByPrimaryKey(long layoutSetPrototypeId) {
-		return fetchByPrimaryKey((Serializable)layoutSetPrototypeId);
 	}
 
 	/**

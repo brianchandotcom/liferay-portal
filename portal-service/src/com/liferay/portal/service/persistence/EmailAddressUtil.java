@@ -1271,17 +1271,6 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	* Returns a map of email addresses for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the email addresses
-	* @return map of primaryKeys to email addresses.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.EmailAddress> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the email address with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param emailAddressId the primary key of the email address
@@ -1290,6 +1279,17 @@ public class EmailAddressUtil {
 	public static com.liferay.portal.model.EmailAddress fetchByPrimaryKey(
 		long emailAddressId) {
 		return getPersistence().fetchByPrimaryKey(emailAddressId);
+	}
+
+	/**
+	* Returns a map of email addresses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the email addresses
+	* @return map of primaryKeys to email addresses.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.EmailAddress> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

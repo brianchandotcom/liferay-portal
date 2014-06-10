@@ -223,76 +223,80 @@ public class VirtualHostPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> missingVirtualHosts = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingVirtualHosts.isEmpty());
+		Assert.assertTrue(virtualHosts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newVirtualHost.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> missingVirtualHosts = _persistence.fetchByPrimaryKeys(missingPks);
-		VirtualHost existingVirtualHost = missingVirtualHosts.get(newVirtualHost.getPrimaryKey());
+		primaryKeys.add(newVirtualHost.getPrimaryKey());
 
-		Assert.assertEquals(missingVirtualHosts.size(), 1);
-		Assert.assertEquals(newVirtualHost, existingVirtualHost);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, virtualHosts.size());
+		Assert.assertEquals(newVirtualHost,
+			virtualHosts.get(newVirtualHost.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> missingVirtualHosts = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingVirtualHosts.isEmpty());
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(virtualHosts.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newVirtualHost.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> missingVirtualHosts = _persistence.fetchByPrimaryKeys(missingPks);
-		VirtualHost existingVirtualHost = missingVirtualHosts.get(newVirtualHost.getPrimaryKey());
+		primaryKeys.add(newVirtualHost.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingVirtualHosts.size(), 1);
-		Assert.assertEquals(newVirtualHost, existingVirtualHost);
-		Assert.assertNull(missingVirtualHosts.get(pk2));
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, virtualHosts.size());
+		Assert.assertEquals(newVirtualHost,
+			virtualHosts.get(newVirtualHost.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 		VirtualHost newVirtualHost2 = addVirtualHost();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newVirtualHost.getPrimaryKey());
-		missingPks.add(newVirtualHost2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, VirtualHost> missingVirtualHosts = _persistence.fetchByPrimaryKeys(missingPks);
-		VirtualHost existingVirtualHost = missingVirtualHosts.get(newVirtualHost.getPrimaryKey());
-		VirtualHost existingVirtualHost2 = missingVirtualHosts.get(newVirtualHost2.getPrimaryKey());
+		primaryKeys.add(newVirtualHost.getPrimaryKey());
+		primaryKeys.add(newVirtualHost2.getPrimaryKey());
 
-		Assert.assertEquals(missingVirtualHosts.size(), 2);
-		Assert.assertEquals(newVirtualHost, existingVirtualHost);
-		Assert.assertEquals(newVirtualHost2, existingVirtualHost2);
+		Map<Serializable, VirtualHost> virtualHosts = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, virtualHosts.size());
+		Assert.assertEquals(newVirtualHost,
+			virtualHosts.get(newVirtualHost.getPrimaryKey()));
+		Assert.assertEquals(newVirtualHost2,
+			virtualHosts.get(newVirtualHost2.getPrimaryKey()));
 	}
 
 	@Test

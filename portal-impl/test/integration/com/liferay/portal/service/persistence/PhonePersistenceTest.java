@@ -319,76 +319,76 @@ public class PhonePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Phone> missingPhones = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingPhones.isEmpty());
+		Assert.assertTrue(phones.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		Phone newPhone = addPhone();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPhone.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Phone> missingPhones = _persistence.fetchByPrimaryKeys(missingPks);
-		Phone existingPhone = missingPhones.get(newPhone.getPrimaryKey());
+		primaryKeys.add(newPhone.getPrimaryKey());
 
-		Assert.assertEquals(missingPhones.size(), 1);
-		Assert.assertEquals(newPhone, existingPhone);
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Phone> missingPhones = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingPhones.isEmpty());
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(phones.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		Phone newPhone = addPhone();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPhone.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Phone> missingPhones = _persistence.fetchByPrimaryKeys(missingPks);
-		Phone existingPhone = missingPhones.get(newPhone.getPrimaryKey());
+		primaryKeys.add(newPhone.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingPhones.size(), 1);
-		Assert.assertEquals(newPhone, existingPhone);
-		Assert.assertNull(missingPhones.get(pk2));
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		Phone newPhone = addPhone();
 		Phone newPhone2 = addPhone();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPhone.getPrimaryKey());
-		missingPks.add(newPhone2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Phone> missingPhones = _persistence.fetchByPrimaryKeys(missingPks);
-		Phone existingPhone = missingPhones.get(newPhone.getPrimaryKey());
-		Phone existingPhone2 = missingPhones.get(newPhone2.getPrimaryKey());
+		primaryKeys.add(newPhone.getPrimaryKey());
+		primaryKeys.add(newPhone2.getPrimaryKey());
 
-		Assert.assertEquals(missingPhones.size(), 2);
-		Assert.assertEquals(newPhone, existingPhone);
-		Assert.assertEquals(newPhone2, existingPhone2);
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
+		Assert.assertEquals(newPhone2, phones.get(newPhone2.getPrimaryKey()));
 	}
 
 	@Test

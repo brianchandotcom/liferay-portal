@@ -3022,6 +3022,17 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	}
 
 	/**
+	 * Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param id the primary key of the journal feed
+	 * @return the journal feed, or <code>null</code> if a journal feed with the primary key could not be found
+	 */
+	@Override
+	public JournalFeed fetchByPrimaryKey(long id) {
+		return fetchByPrimaryKey((Serializable)id);
+	}
+
+	/**
 	 * Returns a map of journal feeds for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal feeds
@@ -3030,28 +3041,37 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	@Override
 	public Map<Serializable, JournalFeed> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalFeed> results = new HashMap<Serializable, JournalFeed>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalFeed> results = new HashMap<Serializable, JournalFeed>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalFeed journalFeed = fetchByPrimaryKey(primaryKey);
+
+			if (journalFeed != null) {
+				results.put(primaryKey, journalFeed);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFeedImpl.class, primaryKey);
 
 			if (journalFeed == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3059,16 +3079,17 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALFEED_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3085,12 +3106,12 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 			Query q = session.createQuery(sql);
 
-			for (JournalFeed result : (List<JournalFeed>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalFeed journalFeed : (List<JournalFeed>)q.list()) {
+				results.put(journalFeed.getPrimaryKeyObj(), journalFeed);
 
-				cacheResult(result);
+				cacheResult(journalFeed);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalFeed.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3106,17 +3127,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param id the primary key of the journal feed
-	 * @return the journal feed, or <code>null</code> if a journal feed with the primary key could not be found
-	 */
-	@Override
-	public JournalFeed fetchByPrimaryKey(long id) {
-		return fetchByPrimaryKey((Serializable)id);
 	}
 
 	/**

@@ -192,76 +192,80 @@ public class ClusterGroupPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingClusterGroups.isEmpty());
+		Assert.assertTrue(clusterGroups.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClusterGroup.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
+		primaryKeys.add(newClusterGroup.getPrimaryKey());
 
-		Assert.assertEquals(missingClusterGroups.size(), 1);
-		Assert.assertEquals(newClusterGroup, existingClusterGroup);
+		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, clusterGroups.size());
+		Assert.assertEquals(newClusterGroup,
+			clusterGroups.get(newClusterGroup.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingClusterGroups.isEmpty());
+		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(clusterGroups.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClusterGroup.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
+		primaryKeys.add(newClusterGroup.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingClusterGroups.size(), 1);
-		Assert.assertEquals(newClusterGroup, existingClusterGroup);
-		Assert.assertNull(missingClusterGroups.get(pk2));
+		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, clusterGroups.size());
+		Assert.assertEquals(newClusterGroup,
+			clusterGroups.get(newClusterGroup.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 		ClusterGroup newClusterGroup2 = addClusterGroup();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClusterGroup.getPrimaryKey());
-		missingPks.add(newClusterGroup2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> missingClusterGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		ClusterGroup existingClusterGroup = missingClusterGroups.get(newClusterGroup.getPrimaryKey());
-		ClusterGroup existingClusterGroup2 = missingClusterGroups.get(newClusterGroup2.getPrimaryKey());
+		primaryKeys.add(newClusterGroup.getPrimaryKey());
+		primaryKeys.add(newClusterGroup2.getPrimaryKey());
 
-		Assert.assertEquals(missingClusterGroups.size(), 2);
-		Assert.assertEquals(newClusterGroup, existingClusterGroup);
-		Assert.assertEquals(newClusterGroup2, existingClusterGroup2);
+		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, clusterGroups.size());
+		Assert.assertEquals(newClusterGroup,
+			clusterGroups.get(newClusterGroup.getPrimaryKey()));
+		Assert.assertEquals(newClusterGroup2,
+			clusterGroups.get(newClusterGroup2.getPrimaryKey()));
 	}
 
 	@Test

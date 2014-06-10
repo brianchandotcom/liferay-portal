@@ -1719,17 +1719,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	* Returns a map of social relations for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the social relations
-	* @return map of primaryKeys to social relations.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialRelation> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the social relation with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param relationId the primary key of the social relation
@@ -1738,6 +1727,17 @@ public class SocialRelationUtil {
 	public static com.liferay.portlet.social.model.SocialRelation fetchByPrimaryKey(
 		long relationId) {
 		return getPersistence().fetchByPrimaryKey(relationId);
+	}
+
+	/**
+	* Returns a map of social relations for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social relations
+	* @return map of primaryKeys to social relations.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialRelation> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

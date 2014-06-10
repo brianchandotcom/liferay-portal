@@ -2987,6 +2987,17 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	/**
+	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activitySettingId the primary key of the social activity setting
+	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
+	 */
+	@Override
+	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId) {
+		return fetchByPrimaryKey((Serializable)activitySettingId);
+	}
+
+	/**
 	 * Returns a map of social activity settings for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social activity settings
@@ -2995,28 +3006,37 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public Map<Serializable, SocialActivitySetting> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialActivitySetting> results = new HashMap<Serializable, SocialActivitySetting>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialActivitySetting> results = new HashMap<Serializable, SocialActivitySetting>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(primaryKey);
+
+			if (socialActivitySetting != null) {
+				results.put(primaryKey, socialActivitySetting);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialActivitySetting socialActivitySetting = (SocialActivitySetting)EntityCacheUtil.getResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivitySettingImpl.class, primaryKey);
 
 			if (socialActivitySetting == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3024,16 +3044,17 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3050,12 +3071,13 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 			Query q = session.createQuery(sql);
 
-			for (SocialActivitySetting result : (List<SocialActivitySetting>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialActivitySetting socialActivitySetting : (List<SocialActivitySetting>)q.list()) {
+				results.put(socialActivitySetting.getPrimaryKeyObj(),
+					socialActivitySetting);
 
-				cacheResult(result);
+				cacheResult(socialActivitySetting);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialActivitySetting.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3072,17 +3094,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activitySettingId the primary key of the social activity setting
-	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
-	 */
-	@Override
-	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId) {
-		return fetchByPrimaryKey((Serializable)activitySettingId);
 	}
 
 	/**

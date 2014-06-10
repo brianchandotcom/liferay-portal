@@ -1963,6 +1963,17 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	}
 
 	/**
+	 * Returns the contact with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contactId the primary key of the contact
+	 * @return the contact, or <code>null</code> if a contact with the primary key could not be found
+	 */
+	@Override
+	public Contact fetchByPrimaryKey(long contactId) {
+		return fetchByPrimaryKey((Serializable)contactId);
+	}
+
+	/**
 	 * Returns a map of contacts for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the contacts
@@ -1971,28 +1982,37 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	@Override
 	public Map<Serializable, Contact> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Contact> results = new HashMap<Serializable, Contact>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Contact> results = new HashMap<Serializable, Contact>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Contact contact = fetchByPrimaryKey(primaryKey);
+
+			if (contact != null) {
+				results.put(primaryKey, contact);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Contact contact = (Contact)EntityCacheUtil.getResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
 					ContactImpl.class, primaryKey);
 
 			if (contact == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2000,16 +2020,17 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_CONTACT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2026,12 +2047,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 			Query q = session.createQuery(sql);
 
-			for (Contact result : (List<Contact>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Contact contact : (List<Contact>)q.list()) {
+				results.put(contact.getPrimaryKeyObj(), contact);
 
-				cacheResult(result);
+				cacheResult(contact);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(contact.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2047,17 +2068,6 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the contact with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contactId the primary key of the contact
-	 * @return the contact, or <code>null</code> if a contact with the primary key could not be found
-	 */
-	@Override
-	public Contact fetchByPrimaryKey(long contactId) {
-		return fetchByPrimaryKey((Serializable)contactId);
 	}
 
 	/**

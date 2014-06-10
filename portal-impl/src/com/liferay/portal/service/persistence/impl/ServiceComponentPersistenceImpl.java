@@ -1311,6 +1311,17 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	}
 
 	/**
+	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param serviceComponentId the primary key of the service component
+	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
+	 */
+	@Override
+	public ServiceComponent fetchByPrimaryKey(long serviceComponentId) {
+		return fetchByPrimaryKey((Serializable)serviceComponentId);
+	}
+
+	/**
 	 * Returns a map of service components for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the service components
@@ -1319,28 +1330,37 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	@Override
 	public Map<Serializable, ServiceComponent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ServiceComponent> results = new HashMap<Serializable, ServiceComponent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ServiceComponent> results = new HashMap<Serializable, ServiceComponent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ServiceComponent serviceComponent = fetchByPrimaryKey(primaryKey);
+
+			if (serviceComponent != null) {
+				results.put(primaryKey, serviceComponent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ServiceComponent serviceComponent = (ServiceComponent)EntityCacheUtil.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 					ServiceComponentImpl.class, primaryKey);
 
 			if (serviceComponent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1348,16 +1368,17 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SERVICECOMPONENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1374,12 +1395,13 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 			Query q = session.createQuery(sql);
 
-			for (ServiceComponent result : (List<ServiceComponent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ServiceComponent serviceComponent : (List<ServiceComponent>)q.list()) {
+				results.put(serviceComponent.getPrimaryKeyObj(),
+					serviceComponent);
 
-				cacheResult(result);
+				cacheResult(serviceComponent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(serviceComponent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1396,17 +1418,6 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the service component with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param serviceComponentId the primary key of the service component
-	 * @return the service component, or <code>null</code> if a service component with the primary key could not be found
-	 */
-	@Override
-	public ServiceComponent fetchByPrimaryKey(long serviceComponentId) {
-		return fetchByPrimaryKey((Serializable)serviceComponentId);
 	}
 
 	/**

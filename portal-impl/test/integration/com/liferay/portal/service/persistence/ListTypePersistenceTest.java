@@ -196,76 +196,80 @@ public class ListTypePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ListType> listTypes = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingListTypes.isEmpty());
+		Assert.assertTrue(listTypes.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ListType newListType = addListType();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newListType.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
-		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
+		primaryKeys.add(newListType.getPrimaryKey());
 
-		Assert.assertEquals(missingListTypes.size(), 1);
-		Assert.assertEquals(newListType, existingListType);
+		Map<Serializable, ListType> listTypes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, listTypes.size());
+		Assert.assertEquals(newListType,
+			listTypes.get(newListType.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		int pk = RandomTestUtil.nextInt();
 
 		int pk2 = RandomTestUtil.nextInt();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingListTypes.isEmpty());
+		Map<Serializable, ListType> listTypes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(listTypes.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ListType newListType = addListType();
+
 		int pk2 = RandomTestUtil.nextInt();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newListType.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
-		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
+		primaryKeys.add(newListType.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingListTypes.size(), 1);
-		Assert.assertEquals(newListType, existingListType);
-		Assert.assertNull(missingListTypes.get(pk2));
+		Map<Serializable, ListType> listTypes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, listTypes.size());
+		Assert.assertEquals(newListType,
+			listTypes.get(newListType.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ListType newListType = addListType();
 		ListType newListType2 = addListType();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newListType.getPrimaryKey());
-		missingPks.add(newListType2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ListType> missingListTypes = _persistence.fetchByPrimaryKeys(missingPks);
-		ListType existingListType = missingListTypes.get(newListType.getPrimaryKey());
-		ListType existingListType2 = missingListTypes.get(newListType2.getPrimaryKey());
+		primaryKeys.add(newListType.getPrimaryKey());
+		primaryKeys.add(newListType2.getPrimaryKey());
 
-		Assert.assertEquals(missingListTypes.size(), 2);
-		Assert.assertEquals(newListType, existingListType);
-		Assert.assertEquals(newListType2, existingListType2);
+		Map<Serializable, ListType> listTypes = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, listTypes.size());
+		Assert.assertEquals(newListType,
+			listTypes.get(newListType.getPrimaryKey()));
+		Assert.assertEquals(newListType2,
+			listTypes.get(newListType2.getPrimaryKey()));
 	}
 
 	@Test

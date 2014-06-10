@@ -2547,6 +2547,17 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	}
 
 	/**
+	 * Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param membershipRequestId the primary key of the membership request
+	 * @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
+	 */
+	@Override
+	public MembershipRequest fetchByPrimaryKey(long membershipRequestId) {
+		return fetchByPrimaryKey((Serializable)membershipRequestId);
+	}
+
+	/**
 	 * Returns a map of membership requests for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the membership requests
@@ -2555,28 +2566,37 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	@Override
 	public Map<Serializable, MembershipRequest> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MembershipRequest> results = new HashMap<Serializable, MembershipRequest>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MembershipRequest> results = new HashMap<Serializable, MembershipRequest>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MembershipRequest membershipRequest = fetchByPrimaryKey(primaryKey);
+
+			if (membershipRequest != null) {
+				results.put(primaryKey, membershipRequest);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MembershipRequest membershipRequest = (MembershipRequest)EntityCacheUtil.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MembershipRequestImpl.class, primaryKey);
 
 			if (membershipRequest == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2584,16 +2604,17 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MEMBERSHIPREQUEST_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2610,12 +2631,13 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 			Query q = session.createQuery(sql);
 
-			for (MembershipRequest result : (List<MembershipRequest>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MembershipRequest membershipRequest : (List<MembershipRequest>)q.list()) {
+				results.put(membershipRequest.getPrimaryKeyObj(),
+					membershipRequest);
 
-				cacheResult(result);
+				cacheResult(membershipRequest);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(membershipRequest.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2632,17 +2654,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param membershipRequestId the primary key of the membership request
-	 * @return the membership request, or <code>null</code> if a membership request with the primary key could not be found
-	 */
-	@Override
-	public MembershipRequest fetchByPrimaryKey(long membershipRequestId) {
-		return fetchByPrimaryKey((Serializable)membershipRequestId);
 	}
 
 	/**

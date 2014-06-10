@@ -203,6 +203,14 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 		throws com.liferay.portal.NoSuchOrgLaborException;
 
 	/**
+	* Returns the org labor with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param orgLaborId the primary key of the org labor
+	* @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
+	*/
+	public com.liferay.portal.model.OrgLabor fetchByPrimaryKey(long orgLaborId);
+
+	/**
 	* Returns a map of org labors for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the org labors
@@ -210,14 +218,6 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.OrgLabor> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the org labor with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param orgLaborId the primary key of the org labor
-	* @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
-	*/
-	public com.liferay.portal.model.OrgLabor fetchByPrimaryKey(long orgLaborId);
 
 	/**
 	* Returns all the org labors.

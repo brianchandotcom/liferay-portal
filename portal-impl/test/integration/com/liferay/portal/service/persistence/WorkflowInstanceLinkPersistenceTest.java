@@ -236,80 +236,80 @@ public class WorkflowInstanceLinkPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowInstanceLink> missingWorkflowInstanceLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, WorkflowInstanceLink> workflowInstanceLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingWorkflowInstanceLinks.isEmpty());
+		Assert.assertTrue(workflowInstanceLinks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWorkflowInstanceLink.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowInstanceLink> missingWorkflowInstanceLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		WorkflowInstanceLink existingWorkflowInstanceLink = missingWorkflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey());
+		primaryKeys.add(newWorkflowInstanceLink.getPrimaryKey());
 
-		Assert.assertEquals(missingWorkflowInstanceLinks.size(), 1);
+		Map<Serializable, WorkflowInstanceLink> workflowInstanceLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, workflowInstanceLinks.size());
 		Assert.assertEquals(newWorkflowInstanceLink,
-			existingWorkflowInstanceLink);
+			workflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowInstanceLink> missingWorkflowInstanceLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingWorkflowInstanceLinks.isEmpty());
+		Map<Serializable, WorkflowInstanceLink> workflowInstanceLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(workflowInstanceLinks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWorkflowInstanceLink.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowInstanceLink> missingWorkflowInstanceLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		WorkflowInstanceLink existingWorkflowInstanceLink = missingWorkflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey());
+		primaryKeys.add(newWorkflowInstanceLink.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingWorkflowInstanceLinks.size(), 1);
+		Map<Serializable, WorkflowInstanceLink> workflowInstanceLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, workflowInstanceLinks.size());
 		Assert.assertEquals(newWorkflowInstanceLink,
-			existingWorkflowInstanceLink);
-		Assert.assertNull(missingWorkflowInstanceLinks.get(pk2));
+			workflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
 		WorkflowInstanceLink newWorkflowInstanceLink2 = addWorkflowInstanceLink();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newWorkflowInstanceLink.getPrimaryKey());
-		missingPks.add(newWorkflowInstanceLink2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowInstanceLink> missingWorkflowInstanceLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		WorkflowInstanceLink existingWorkflowInstanceLink = missingWorkflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey());
-		WorkflowInstanceLink existingWorkflowInstanceLink2 = missingWorkflowInstanceLinks.get(newWorkflowInstanceLink2.getPrimaryKey());
+		primaryKeys.add(newWorkflowInstanceLink.getPrimaryKey());
+		primaryKeys.add(newWorkflowInstanceLink2.getPrimaryKey());
 
-		Assert.assertEquals(missingWorkflowInstanceLinks.size(), 2);
+		Map<Serializable, WorkflowInstanceLink> workflowInstanceLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, workflowInstanceLinks.size());
 		Assert.assertEquals(newWorkflowInstanceLink,
-			existingWorkflowInstanceLink);
+			workflowInstanceLinks.get(newWorkflowInstanceLink.getPrimaryKey()));
 		Assert.assertEquals(newWorkflowInstanceLink2,
-			existingWorkflowInstanceLink2);
+			workflowInstanceLinks.get(newWorkflowInstanceLink2.getPrimaryKey()));
 	}
 
 	@Test

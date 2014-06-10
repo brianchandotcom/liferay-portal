@@ -1369,17 +1369,6 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	* Returns a map of portlet preferenceses for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the portlet preferenceses
-	* @return map of primaryKeys to portlet preferenceses.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletPreferences> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param portletPreferencesId the primary key of the portlet preferences
@@ -1388,6 +1377,17 @@ public class PortletPreferencesUtil {
 	public static com.liferay.portal.model.PortletPreferences fetchByPrimaryKey(
 		long portletPreferencesId) {
 		return getPersistence().fetchByPrimaryKey(portletPreferencesId);
+	}
+
+	/**
+	* Returns a map of portlet preferenceses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the portlet preferenceses
+	* @return map of primaryKeys to portlet preferenceses.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletPreferences> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

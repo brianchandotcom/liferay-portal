@@ -203,6 +203,14 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
+	* Returns the list type with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param listTypeId the primary key of the list type
+	* @return the list type, or <code>null</code> if a list type with the primary key could not be found
+	*/
+	public com.liferay.portal.model.ListType fetchByPrimaryKey(int listTypeId);
+
+	/**
 	* Returns a map of list types for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the list types
@@ -210,14 +218,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ListType> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the list type with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param listTypeId the primary key of the list type
-	* @return the list type, or <code>null</code> if a list type with the primary key could not be found
-	*/
-	public com.liferay.portal.model.ListType fetchByPrimaryKey(int listTypeId);
 
 	/**
 	* Returns all the list types.

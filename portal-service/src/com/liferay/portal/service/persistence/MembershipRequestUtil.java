@@ -779,17 +779,6 @@ public class MembershipRequestUtil {
 	}
 
 	/**
-	* Returns a map of membership requests for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the membership requests
-	* @return map of primaryKeys to membership requests.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.MembershipRequest> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the membership request with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param membershipRequestId the primary key of the membership request
@@ -798,6 +787,17 @@ public class MembershipRequestUtil {
 	public static com.liferay.portal.model.MembershipRequest fetchByPrimaryKey(
 		long membershipRequestId) {
 		return getPersistence().fetchByPrimaryKey(membershipRequestId);
+	}
+
+	/**
+	* Returns a map of membership requests for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the membership requests
+	* @return map of primaryKeys to membership requests.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.MembershipRequest> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

@@ -6881,6 +6881,17 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	/**
+	 * Returns the organization with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param organizationId the primary key of the organization
+	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
+	 */
+	@Override
+	public Organization fetchByPrimaryKey(long organizationId) {
+		return fetchByPrimaryKey((Serializable)organizationId);
+	}
+
+	/**
 	 * Returns a map of organizations for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the organizations
@@ -6889,28 +6900,37 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	public Map<Serializable, Organization> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Organization> results = new HashMap<Serializable, Organization>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Organization> results = new HashMap<Serializable, Organization>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Organization organization = fetchByPrimaryKey(primaryKey);
+
+			if (organization != null) {
+				results.put(primaryKey, organization);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 					OrganizationImpl.class, primaryKey);
 
 			if (organization == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -6918,16 +6938,17 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ORGANIZATION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -6944,12 +6965,12 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 			Query q = session.createQuery(sql);
 
-			for (Organization result : (List<Organization>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Organization organization : (List<Organization>)q.list()) {
+				results.put(organization.getPrimaryKeyObj(), organization);
 
-				cacheResult(result);
+				cacheResult(organization);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(organization.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -6965,17 +6986,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the organization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param organizationId the primary key of the organization
-	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
-	 */
-	@Override
-	public Organization fetchByPrimaryKey(long organizationId) {
-		return fetchByPrimaryKey((Serializable)organizationId);
 	}
 
 	/**

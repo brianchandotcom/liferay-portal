@@ -573,15 +573,6 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
 
 	/**
-	* Returns a map of document library contents for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the document library contents
-	* @return map of primaryKeys to document library contents.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLContent> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param contentId the primary key of the document library content
@@ -589,6 +580,15 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchByPrimaryKey(
 		long contentId);
+
+	/**
+	* Returns a map of document library contents for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library contents
+	* @return map of primaryKeys to document library contents.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLContent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the document library contents.

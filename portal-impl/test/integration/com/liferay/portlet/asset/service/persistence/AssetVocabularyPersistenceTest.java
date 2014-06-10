@@ -348,76 +348,80 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetVocabulary> missingAssetVocabularies = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, AssetVocabulary> assetVocabularies = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingAssetVocabularies.isEmpty());
+		Assert.assertTrue(assetVocabularies.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetVocabulary.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetVocabulary> missingAssetVocabularies = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetVocabulary existingAssetVocabulary = missingAssetVocabularies.get(newAssetVocabulary.getPrimaryKey());
+		primaryKeys.add(newAssetVocabulary.getPrimaryKey());
 
-		Assert.assertEquals(missingAssetVocabularies.size(), 1);
-		Assert.assertEquals(newAssetVocabulary, existingAssetVocabulary);
+		Map<Serializable, AssetVocabulary> assetVocabularies = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetVocabularies.size());
+		Assert.assertEquals(newAssetVocabulary,
+			assetVocabularies.get(newAssetVocabulary.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetVocabulary> missingAssetVocabularies = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingAssetVocabularies.isEmpty());
+		Map<Serializable, AssetVocabulary> assetVocabularies = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(assetVocabularies.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetVocabulary.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetVocabulary> missingAssetVocabularies = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetVocabulary existingAssetVocabulary = missingAssetVocabularies.get(newAssetVocabulary.getPrimaryKey());
+		primaryKeys.add(newAssetVocabulary.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingAssetVocabularies.size(), 1);
-		Assert.assertEquals(newAssetVocabulary, existingAssetVocabulary);
-		Assert.assertNull(missingAssetVocabularies.get(pk2));
+		Map<Serializable, AssetVocabulary> assetVocabularies = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetVocabularies.size());
+		Assert.assertEquals(newAssetVocabulary,
+			assetVocabularies.get(newAssetVocabulary.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 		AssetVocabulary newAssetVocabulary2 = addAssetVocabulary();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newAssetVocabulary.getPrimaryKey());
-		missingPks.add(newAssetVocabulary2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, AssetVocabulary> missingAssetVocabularies = _persistence.fetchByPrimaryKeys(missingPks);
-		AssetVocabulary existingAssetVocabulary = missingAssetVocabularies.get(newAssetVocabulary.getPrimaryKey());
-		AssetVocabulary existingAssetVocabulary2 = missingAssetVocabularies.get(newAssetVocabulary2.getPrimaryKey());
+		primaryKeys.add(newAssetVocabulary.getPrimaryKey());
+		primaryKeys.add(newAssetVocabulary2.getPrimaryKey());
 
-		Assert.assertEquals(missingAssetVocabularies.size(), 2);
-		Assert.assertEquals(newAssetVocabulary, existingAssetVocabulary);
-		Assert.assertEquals(newAssetVocabulary2, existingAssetVocabulary2);
+		Map<Serializable, AssetVocabulary> assetVocabularies = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, assetVocabularies.size());
+		Assert.assertEquals(newAssetVocabulary,
+			assetVocabularies.get(newAssetVocabulary.getPrimaryKey()));
+		Assert.assertEquals(newAssetVocabulary2,
+			assetVocabularies.get(newAssetVocabulary2.getPrimaryKey()));
 	}
 
 	@Test

@@ -2974,6 +2974,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	/**
+	 * Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param activityCounterId the primary key of the social activity counter
+	 * @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
+	 */
+	@Override
+	public SocialActivityCounter fetchByPrimaryKey(long activityCounterId) {
+		return fetchByPrimaryKey((Serializable)activityCounterId);
+	}
+
+	/**
 	 * Returns a map of social activity counters for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the social activity counters
@@ -2982,28 +2993,37 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public Map<Serializable, SocialActivityCounter> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SocialActivityCounter> results = new HashMap<Serializable, SocialActivityCounter>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SocialActivityCounter> results = new HashMap<Serializable, SocialActivityCounter>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SocialActivityCounter socialActivityCounter = fetchByPrimaryKey(primaryKey);
+
+			if (socialActivityCounter != null) {
+				results.put(primaryKey, socialActivityCounter);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SocialActivityCounter socialActivityCounter = (SocialActivityCounter)EntityCacheUtil.getResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityCounterImpl.class, primaryKey);
 
 			if (socialActivityCounter == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3011,16 +3031,17 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3037,12 +3058,13 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 			Query q = session.createQuery(sql);
 
-			for (SocialActivityCounter result : (List<SocialActivityCounter>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SocialActivityCounter socialActivityCounter : (List<SocialActivityCounter>)q.list()) {
+				results.put(socialActivityCounter.getPrimaryKeyObj(),
+					socialActivityCounter);
 
-				cacheResult(result);
+				cacheResult(socialActivityCounter);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(socialActivityCounter.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3059,17 +3081,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the social activity counter with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param activityCounterId the primary key of the social activity counter
-	 * @return the social activity counter, or <code>null</code> if a social activity counter with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByPrimaryKey(long activityCounterId) {
-		return fetchByPrimaryKey((Serializable)activityCounterId);
 	}
 
 	/**

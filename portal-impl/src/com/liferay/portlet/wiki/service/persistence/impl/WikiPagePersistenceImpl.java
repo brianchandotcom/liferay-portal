@@ -22090,6 +22090,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	/**
+	 * Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param pageId the primary key of the wiki page
+	 * @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
+	 */
+	@Override
+	public WikiPage fetchByPrimaryKey(long pageId) {
+		return fetchByPrimaryKey((Serializable)pageId);
+	}
+
+	/**
 	 * Returns a map of wiki pages for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the wiki pages
@@ -22098,28 +22109,37 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public Map<Serializable, WikiPage> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, WikiPage> results = new HashMap<Serializable, WikiPage>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, WikiPage> results = new HashMap<Serializable, WikiPage>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			WikiPage wikiPage = fetchByPrimaryKey(primaryKey);
+
+			if (wikiPage != null) {
+				results.put(primaryKey, wikiPage);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageImpl.class, primaryKey);
 
 			if (wikiPage == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -22127,16 +22147,17 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WIKIPAGE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -22153,12 +22174,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 			Query q = session.createQuery(sql);
 
-			for (WikiPage result : (List<WikiPage>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (WikiPage wikiPage : (List<WikiPage>)q.list()) {
+				results.put(wikiPage.getPrimaryKeyObj(), wikiPage);
 
-				cacheResult(result);
+				cacheResult(wikiPage);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(wikiPage.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -22174,17 +22195,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param pageId the primary key of the wiki page
-	 * @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
-	 */
-	@Override
-	public WikiPage fetchByPrimaryKey(long pageId) {
-		return fetchByPrimaryKey((Serializable)pageId);
 	}
 
 	/**

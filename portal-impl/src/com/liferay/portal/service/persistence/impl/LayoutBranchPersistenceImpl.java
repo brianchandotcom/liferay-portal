@@ -2387,6 +2387,17 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	}
 
 	/**
+	 * Returns the layout branch with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param LayoutBranchId the primary key of the layout branch
+	 * @return the layout branch, or <code>null</code> if a layout branch with the primary key could not be found
+	 */
+	@Override
+	public LayoutBranch fetchByPrimaryKey(long LayoutBranchId) {
+		return fetchByPrimaryKey((Serializable)LayoutBranchId);
+	}
+
+	/**
 	 * Returns a map of layout branchs for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the layout branchs
@@ -2395,28 +2406,37 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	@Override
 	public Map<Serializable, LayoutBranch> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, LayoutBranch> results = new HashMap<Serializable, LayoutBranch>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, LayoutBranch> results = new HashMap<Serializable, LayoutBranch>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			LayoutBranch layoutBranch = fetchByPrimaryKey(primaryKey);
+
+			if (layoutBranch != null) {
+				results.put(primaryKey, layoutBranch);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			LayoutBranch layoutBranch = (LayoutBranch)EntityCacheUtil.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutBranchImpl.class, primaryKey);
 
 			if (layoutBranch == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2424,16 +2444,17 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2450,12 +2471,12 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			Query q = session.createQuery(sql);
 
-			for (LayoutBranch result : (List<LayoutBranch>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (LayoutBranch layoutBranch : (List<LayoutBranch>)q.list()) {
+				results.put(layoutBranch.getPrimaryKeyObj(), layoutBranch);
 
-				cacheResult(result);
+				cacheResult(layoutBranch);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(layoutBranch.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2471,17 +2492,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the layout branch with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param LayoutBranchId the primary key of the layout branch
-	 * @return the layout branch, or <code>null</code> if a layout branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutBranch fetchByPrimaryKey(long LayoutBranchId) {
-		return fetchByPrimaryKey((Serializable)LayoutBranchId);
 	}
 
 	/**

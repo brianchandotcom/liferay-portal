@@ -7619,6 +7619,17 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	}
 
 	/**
+	 * Returns the journal folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param folderId the primary key of the journal folder
+	 * @return the journal folder, or <code>null</code> if a journal folder with the primary key could not be found
+	 */
+	@Override
+	public JournalFolder fetchByPrimaryKey(long folderId) {
+		return fetchByPrimaryKey((Serializable)folderId);
+	}
+
+	/**
 	 * Returns a map of journal folders for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal folders
@@ -7627,28 +7638,37 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	@Override
 	public Map<Serializable, JournalFolder> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalFolder> results = new HashMap<Serializable, JournalFolder>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalFolder> results = new HashMap<Serializable, JournalFolder>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalFolder journalFolder = fetchByPrimaryKey(primaryKey);
+
+			if (journalFolder != null) {
+				results.put(primaryKey, journalFolder);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalFolder journalFolder = (JournalFolder)EntityCacheUtil.getResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFolderImpl.class, primaryKey);
 
 			if (journalFolder == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -7656,16 +7676,17 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -7682,12 +7703,12 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 			Query q = session.createQuery(sql);
 
-			for (JournalFolder result : (List<JournalFolder>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalFolder journalFolder : (List<JournalFolder>)q.list()) {
+				results.put(journalFolder.getPrimaryKeyObj(), journalFolder);
 
-				cacheResult(result);
+				cacheResult(journalFolder);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalFolder.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -7703,17 +7724,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param folderId the primary key of the journal folder
-	 * @return the journal folder, or <code>null</code> if a journal folder with the primary key could not be found
-	 */
-	@Override
-	public JournalFolder fetchByPrimaryKey(long folderId) {
-		return fetchByPrimaryKey((Serializable)folderId);
 	}
 
 	/**

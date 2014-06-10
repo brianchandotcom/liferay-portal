@@ -6303,6 +6303,17 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	}
 
 	/**
+	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param fileShortcutId the primary key of the document library file shortcut
+	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
+	 */
+	@Override
+	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId) {
+		return fetchByPrimaryKey((Serializable)fileShortcutId);
+	}
+
+	/**
 	 * Returns a map of document library file shortcuts for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the document library file shortcuts
@@ -6311,28 +6322,37 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	@Override
 	public Map<Serializable, DLFileShortcut> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DLFileShortcut> results = new HashMap<Serializable, DLFileShortcut>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DLFileShortcut> results = new HashMap<Serializable, DLFileShortcut>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DLFileShortcut dlFileShortcut = fetchByPrimaryKey(primaryKey);
+
+			if (dlFileShortcut != null) {
+				results.put(primaryKey, dlFileShortcut);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DLFileShortcut dlFileShortcut = (DLFileShortcut)EntityCacheUtil.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileShortcutImpl.class, primaryKey);
 
 			if (dlFileShortcut == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -6340,16 +6360,17 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DLFILESHORTCUT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -6366,12 +6387,12 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 			Query q = session.createQuery(sql);
 
-			for (DLFileShortcut result : (List<DLFileShortcut>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DLFileShortcut dlFileShortcut : (List<DLFileShortcut>)q.list()) {
+				results.put(dlFileShortcut.getPrimaryKeyObj(), dlFileShortcut);
 
-				cacheResult(result);
+				cacheResult(dlFileShortcut);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(dlFileShortcut.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -6387,17 +6408,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the document library file shortcut with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param fileShortcutId the primary key of the document library file shortcut
-	 * @return the document library file shortcut, or <code>null</code> if a document library file shortcut with the primary key could not be found
-	 */
-	@Override
-	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId) {
-		return fetchByPrimaryKey((Serializable)fileShortcutId);
 	}
 
 	/**

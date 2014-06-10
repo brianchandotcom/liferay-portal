@@ -1727,6 +1727,17 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	}
 
 	/**
+	 * Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param storageLinkId the primary key of the d d m storage link
+	 * @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
+	 */
+	@Override
+	public DDMStorageLink fetchByPrimaryKey(long storageLinkId) {
+		return fetchByPrimaryKey((Serializable)storageLinkId);
+	}
+
+	/**
 	 * Returns a map of d d m storage links for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d m storage links
@@ -1735,28 +1746,37 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	@Override
 	public Map<Serializable, DDMStorageLink> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDMStorageLink> results = new HashMap<Serializable, DDMStorageLink>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDMStorageLink> results = new HashMap<Serializable, DDMStorageLink>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDMStorageLink ddmStorageLink = fetchByPrimaryKey(primaryKey);
+
+			if (ddmStorageLink != null) {
+				results.put(primaryKey, ddmStorageLink);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDMStorageLink ddmStorageLink = (DDMStorageLink)EntityCacheUtil.getResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStorageLinkImpl.class, primaryKey);
 
 			if (ddmStorageLink == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1764,16 +1784,17 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDMSTORAGELINK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1790,12 +1811,12 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 			Query q = session.createQuery(sql);
 
-			for (DDMStorageLink result : (List<DDMStorageLink>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDMStorageLink ddmStorageLink : (List<DDMStorageLink>)q.list()) {
+				results.put(ddmStorageLink.getPrimaryKeyObj(), ddmStorageLink);
 
-				cacheResult(result);
+				cacheResult(ddmStorageLink);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddmStorageLink.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1811,17 +1832,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d m storage link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param storageLinkId the primary key of the d d m storage link
-	 * @return the d d m storage link, or <code>null</code> if a d d m storage link with the primary key could not be found
-	 */
-	@Override
-	public DDMStorageLink fetchByPrimaryKey(long storageLinkId) {
-		return fetchByPrimaryKey((Serializable)storageLinkId);
 	}
 
 	/**

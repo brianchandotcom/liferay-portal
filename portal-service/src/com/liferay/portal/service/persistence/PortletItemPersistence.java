@@ -422,15 +422,6 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
-	* Returns a map of portlet items for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the portlet items
-	* @return map of primaryKeys to portlet items.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletItem> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param portletItemId the primary key of the portlet item
@@ -438,6 +429,15 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem fetchByPrimaryKey(
 		long portletItemId);
+
+	/**
+	* Returns a map of portlet items for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the portlet items
+	* @return map of primaryKeys to portlet items.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletItem> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the portlet items.

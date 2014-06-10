@@ -2240,6 +2240,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	/**
+	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param regionId the primary key of the region
+	 * @return the region, or <code>null</code> if a region with the primary key could not be found
+	 */
+	@Override
+	public Region fetchByPrimaryKey(long regionId) {
+		return fetchByPrimaryKey((Serializable)regionId);
+	}
+
+	/**
 	 * Returns a map of regions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the regions
@@ -2248,28 +2259,37 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	public Map<Serializable, Region> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Region> results = new HashMap<Serializable, Region>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Region> results = new HashMap<Serializable, Region>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Region region = fetchByPrimaryKey(primaryKey);
+
+			if (region != null) {
+				results.put(primaryKey, region);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Region region = (Region)EntityCacheUtil.getResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 					RegionImpl.class, primaryKey);
 
 			if (region == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2277,16 +2297,17 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_REGION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2303,12 +2324,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 			Query q = session.createQuery(sql);
 
-			for (Region result : (List<Region>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Region region : (List<Region>)q.list()) {
+				results.put(region.getPrimaryKeyObj(), region);
 
-				cacheResult(result);
+				cacheResult(region);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(region.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2324,17 +2345,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the region with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param regionId the primary key of the region
-	 * @return the region, or <code>null</code> if a region with the primary key could not be found
-	 */
-	@Override
-	public Region fetchByPrimaryKey(long regionId) {
-		return fetchByPrimaryKey((Serializable)regionId);
 	}
 
 	/**

@@ -5140,6 +5140,17 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	}
 
 	/**
+	 * Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param entryId the primary key of the announcements entry
+	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsEntry fetchByPrimaryKey(long entryId) {
+		return fetchByPrimaryKey((Serializable)entryId);
+	}
+
+	/**
 	 * Returns a map of announcements entries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the announcements entries
@@ -5148,28 +5159,37 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	@Override
 	public Map<Serializable, AnnouncementsEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, AnnouncementsEntry> results = new HashMap<Serializable, AnnouncementsEntry>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, AnnouncementsEntry> results = new HashMap<Serializable, AnnouncementsEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(primaryKey);
+
+			if (announcementsEntry != null) {
+				results.put(primaryKey, announcementsEntry);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)EntityCacheUtil.getResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					AnnouncementsEntryImpl.class, primaryKey);
 
 			if (announcementsEntry == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -5177,16 +5197,17 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -5203,12 +5224,13 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 			Query q = session.createQuery(sql);
 
-			for (AnnouncementsEntry result : (List<AnnouncementsEntry>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (AnnouncementsEntry announcementsEntry : (List<AnnouncementsEntry>)q.list()) {
+				results.put(announcementsEntry.getPrimaryKeyObj(),
+					announcementsEntry);
 
-				cacheResult(result);
+				cacheResult(announcementsEntry);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(announcementsEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5225,17 +5247,6 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param entryId the primary key of the announcements entry
-	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsEntry fetchByPrimaryKey(long entryId) {
-		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
 	/**

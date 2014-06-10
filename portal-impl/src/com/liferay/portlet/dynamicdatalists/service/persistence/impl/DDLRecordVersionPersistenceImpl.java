@@ -1792,6 +1792,17 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	/**
+	 * Returns the d d l record version with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param recordVersionId the primary key of the d d l record version
+	 * @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
+	 */
+	@Override
+	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId) {
+		return fetchByPrimaryKey((Serializable)recordVersionId);
+	}
+
+	/**
 	 * Returns a map of d d l record versions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d l record versions
@@ -1800,28 +1811,37 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	@Override
 	public Map<Serializable, DDLRecordVersion> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDLRecordVersion> results = new HashMap<Serializable, DDLRecordVersion>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDLRecordVersion> results = new HashMap<Serializable, DDLRecordVersion>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDLRecordVersion ddlRecordVersion = fetchByPrimaryKey(primaryKey);
+
+			if (ddlRecordVersion != null) {
+				results.put(primaryKey, ddlRecordVersion);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)EntityCacheUtil.getResult(DDLRecordVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordVersionImpl.class, primaryKey);
 
 			if (ddlRecordVersion == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1829,16 +1849,17 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDLRECORDVERSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1855,12 +1876,13 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 			Query q = session.createQuery(sql);
 
-			for (DDLRecordVersion result : (List<DDLRecordVersion>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDLRecordVersion ddlRecordVersion : (List<DDLRecordVersion>)q.list()) {
+				results.put(ddlRecordVersion.getPrimaryKeyObj(),
+					ddlRecordVersion);
 
-				cacheResult(result);
+				cacheResult(ddlRecordVersion);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddlRecordVersion.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1877,17 +1899,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d l record version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param recordVersionId the primary key of the d d l record version
-	 * @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
-	 */
-	@Override
-	public DDLRecordVersion fetchByPrimaryKey(long recordVersionId) {
-		return fetchByPrimaryKey((Serializable)recordVersionId);
 	}
 
 	/**

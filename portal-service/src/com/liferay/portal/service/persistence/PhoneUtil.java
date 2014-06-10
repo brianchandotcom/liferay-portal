@@ -1262,6 +1262,16 @@ public class PhoneUtil {
 	}
 
 	/**
+	* Returns the phone with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param phoneId the primary key of the phone
+	* @return the phone, or <code>null</code> if a phone with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.Phone fetchByPrimaryKey(long phoneId) {
+		return getPersistence().fetchByPrimaryKey(phoneId);
+	}
+
+	/**
 	* Returns a map of phones for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the phones
@@ -1270,16 +1280,6 @@ public class PhoneUtil {
 	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Phone> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
-	* Returns the phone with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param phoneId the primary key of the phone
-	* @return the phone, or <code>null</code> if a phone with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.Phone fetchByPrimaryKey(long phoneId) {
-		return getPersistence().fetchByPrimaryKey(phoneId);
 	}
 
 	/**

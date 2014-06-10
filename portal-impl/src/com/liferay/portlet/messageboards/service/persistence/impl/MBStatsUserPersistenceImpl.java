@@ -2225,6 +2225,17 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	}
 
 	/**
+	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param statsUserId the primary key of the message boards stats user
+	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
+	 */
+	@Override
+	public MBStatsUser fetchByPrimaryKey(long statsUserId) {
+		return fetchByPrimaryKey((Serializable)statsUserId);
+	}
+
+	/**
 	 * Returns a map of message boards stats users for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards stats users
@@ -2233,28 +2244,37 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	@Override
 	public Map<Serializable, MBStatsUser> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBStatsUser> results = new HashMap<Serializable, MBStatsUser>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBStatsUser> results = new HashMap<Serializable, MBStatsUser>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBStatsUser mbStatsUser = fetchByPrimaryKey(primaryKey);
+
+			if (mbStatsUser != null) {
+				results.put(primaryKey, mbStatsUser);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBStatsUser mbStatsUser = (MBStatsUser)EntityCacheUtil.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 					MBStatsUserImpl.class, primaryKey);
 
 			if (mbStatsUser == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2262,16 +2282,17 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBSTATSUSER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2288,12 +2309,12 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 			Query q = session.createQuery(sql);
 
-			for (MBStatsUser result : (List<MBStatsUser>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBStatsUser mbStatsUser : (List<MBStatsUser>)q.list()) {
+				results.put(mbStatsUser.getPrimaryKeyObj(), mbStatsUser);
 
-				cacheResult(result);
+				cacheResult(mbStatsUser);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbStatsUser.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2309,17 +2330,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message boards stats user with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param statsUserId the primary key of the message boards stats user
-	 * @return the message boards stats user, or <code>null</code> if a message boards stats user with the primary key could not be found
-	 */
-	@Override
-	public MBStatsUser fetchByPrimaryKey(long statsUserId) {
-		return fetchByPrimaryKey((Serializable)statsUserId);
 	}
 
 	/**

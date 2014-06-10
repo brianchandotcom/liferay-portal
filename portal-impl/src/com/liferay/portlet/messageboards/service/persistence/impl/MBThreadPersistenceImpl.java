@@ -13036,6 +13036,17 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Returns the message boards thread with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param threadId the primary key of the message boards thread
+	 * @return the message boards thread, or <code>null</code> if a message boards thread with the primary key could not be found
+	 */
+	@Override
+	public MBThread fetchByPrimaryKey(long threadId) {
+		return fetchByPrimaryKey((Serializable)threadId);
+	}
+
+	/**
 	 * Returns a map of message boards threads for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards threads
@@ -13044,28 +13055,37 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public Map<Serializable, MBThread> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBThread> results = new HashMap<Serializable, MBThread>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBThread> results = new HashMap<Serializable, MBThread>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBThread mbThread = fetchByPrimaryKey(primaryKey);
+
+			if (mbThread != null) {
+				results.put(primaryKey, mbThread);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBThread mbThread = (MBThread)EntityCacheUtil.getResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 					MBThreadImpl.class, primaryKey);
 
 			if (mbThread == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -13073,16 +13093,17 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBTHREAD_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -13099,12 +13120,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			Query q = session.createQuery(sql);
 
-			for (MBThread result : (List<MBThread>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBThread mbThread : (List<MBThread>)q.list()) {
+				results.put(mbThread.getPrimaryKeyObj(), mbThread);
 
-				cacheResult(result);
+				cacheResult(mbThread);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbThread.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -13120,17 +13141,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message boards thread with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param threadId the primary key of the message boards thread
-	 * @return the message boards thread, or <code>null</code> if a message boards thread with the primary key could not be found
-	 */
-	@Override
-	public MBThread fetchByPrimaryKey(long threadId) {
-		return fetchByPrimaryKey((Serializable)threadId);
 	}
 
 	/**

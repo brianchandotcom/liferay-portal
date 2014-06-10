@@ -558,15 +558,6 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 		long choiceId) throws com.liferay.portlet.polls.NoSuchChoiceException;
 
 	/**
-	* Returns a map of polls choices for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the polls choices
-	* @return map of primaryKeys to polls choices.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsChoice> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param choiceId the primary key of the polls choice
@@ -574,6 +565,15 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*/
 	public com.liferay.portlet.polls.model.PollsChoice fetchByPrimaryKey(
 		long choiceId);
+
+	/**
+	* Returns a map of polls choices for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the polls choices
+	* @return map of primaryKeys to polls choices.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsChoice> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the polls choices.

@@ -3075,6 +3075,17 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	}
 
 	/**
+	 * Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productEntryId the primary key of the s c product entry
+	 * @return the s c product entry, or <code>null</code> if a s c product entry with the primary key could not be found
+	 */
+	@Override
+	public SCProductEntry fetchByPrimaryKey(long productEntryId) {
+		return fetchByPrimaryKey((Serializable)productEntryId);
+	}
+
+	/**
 	 * Returns a map of s c product entries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c product entries
@@ -3083,28 +3094,37 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	@Override
 	public Map<Serializable, SCProductEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SCProductEntry> results = new HashMap<Serializable, SCProductEntry>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SCProductEntry> results = new HashMap<Serializable, SCProductEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SCProductEntry scProductEntry = fetchByPrimaryKey(primaryKey);
+
+			if (scProductEntry != null) {
+				results.put(primaryKey, scProductEntry);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SCProductEntry scProductEntry = (SCProductEntry)EntityCacheUtil.getResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 					SCProductEntryImpl.class, primaryKey);
 
 			if (scProductEntry == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3112,16 +3132,17 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SCPRODUCTENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3138,12 +3159,12 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 			Query q = session.createQuery(sql);
 
-			for (SCProductEntry result : (List<SCProductEntry>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SCProductEntry scProductEntry : (List<SCProductEntry>)q.list()) {
+				results.put(scProductEntry.getPrimaryKeyObj(), scProductEntry);
 
-				cacheResult(result);
+				cacheResult(scProductEntry);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(scProductEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3159,17 +3180,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the s c product entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productEntryId the primary key of the s c product entry
-	 * @return the s c product entry, or <code>null</code> if a s c product entry with the primary key could not be found
-	 */
-	@Override
-	public SCProductEntry fetchByPrimaryKey(long productEntryId) {
-		return fetchByPrimaryKey((Serializable)productEntryId);
 	}
 
 	/**

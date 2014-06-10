@@ -1310,6 +1310,17 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	}
 
 	/**
+	 * Returns the plugin setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param pluginSettingId the primary key of the plugin setting
+	 * @return the plugin setting, or <code>null</code> if a plugin setting with the primary key could not be found
+	 */
+	@Override
+	public PluginSetting fetchByPrimaryKey(long pluginSettingId) {
+		return fetchByPrimaryKey((Serializable)pluginSettingId);
+	}
+
+	/**
 	 * Returns a map of plugin settings for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the plugin settings
@@ -1318,28 +1329,37 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	@Override
 	public Map<Serializable, PluginSetting> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PluginSetting> results = new HashMap<Serializable, PluginSetting>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PluginSetting> results = new HashMap<Serializable, PluginSetting>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PluginSetting pluginSetting = fetchByPrimaryKey(primaryKey);
+
+			if (pluginSetting != null) {
+				results.put(primaryKey, pluginSetting);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PluginSetting pluginSetting = (PluginSetting)EntityCacheUtil.getResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 					PluginSettingImpl.class, primaryKey);
 
 			if (pluginSetting == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1347,16 +1367,17 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PLUGINSETTING_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1373,12 +1394,12 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 			Query q = session.createQuery(sql);
 
-			for (PluginSetting result : (List<PluginSetting>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PluginSetting pluginSetting : (List<PluginSetting>)q.list()) {
+				results.put(pluginSetting.getPrimaryKeyObj(), pluginSetting);
 
-				cacheResult(result);
+				cacheResult(pluginSetting);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(pluginSetting.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1394,17 +1415,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the plugin setting with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param pluginSettingId the primary key of the plugin setting
-	 * @return the plugin setting, or <code>null</code> if a plugin setting with the primary key could not be found
-	 */
-	@Override
-	public PluginSetting fetchByPrimaryKey(long pluginSettingId) {
-		return fetchByPrimaryKey((Serializable)pluginSettingId);
 	}
 
 	/**

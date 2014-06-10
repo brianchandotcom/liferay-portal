@@ -428,15 +428,6 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
-	* Returns a map of workflow definition links for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the workflow definition links
-	* @return map of primaryKeys to workflow definition links.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portal.model.WorkflowDefinitionLink> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param workflowDefinitionLinkId the primary key of the workflow definition link
@@ -444,6 +435,15 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByPrimaryKey(
 		long workflowDefinitionLinkId);
+
+	/**
+	* Returns a map of workflow definition links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the workflow definition links
+	* @return map of primaryKeys to workflow definition links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.WorkflowDefinitionLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the workflow definition links.

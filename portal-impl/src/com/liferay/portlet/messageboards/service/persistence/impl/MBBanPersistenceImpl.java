@@ -3564,6 +3564,17 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	/**
+	 * Returns the message boards ban with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param banId the primary key of the message boards ban
+	 * @return the message boards ban, or <code>null</code> if a message boards ban with the primary key could not be found
+	 */
+	@Override
+	public MBBan fetchByPrimaryKey(long banId) {
+		return fetchByPrimaryKey((Serializable)banId);
+	}
+
+	/**
 	 * Returns a map of message boards bans for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards bans
@@ -3572,28 +3583,37 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public Map<Serializable, MBBan> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBBan> results = new HashMap<Serializable, MBBan>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBBan> results = new HashMap<Serializable, MBBan>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBBan mbBan = fetchByPrimaryKey(primaryKey);
+
+			if (mbBan != null) {
+				results.put(primaryKey, mbBan);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBBan mbBan = (MBBan)EntityCacheUtil.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 					MBBanImpl.class, primaryKey);
 
 			if (mbBan == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3601,16 +3621,17 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBBAN_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3627,12 +3648,12 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 			Query q = session.createQuery(sql);
 
-			for (MBBan result : (List<MBBan>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBBan mbBan : (List<MBBan>)q.list()) {
+				results.put(mbBan.getPrimaryKeyObj(), mbBan);
 
-				cacheResult(result);
+				cacheResult(mbBan);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbBan.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3648,17 +3669,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message boards ban with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param banId the primary key of the message boards ban
-	 * @return the message boards ban, or <code>null</code> if a message boards ban with the primary key could not be found
-	 */
-	@Override
-	public MBBan fetchByPrimaryKey(long banId) {
-		return fetchByPrimaryKey((Serializable)banId);
 	}
 
 	/**

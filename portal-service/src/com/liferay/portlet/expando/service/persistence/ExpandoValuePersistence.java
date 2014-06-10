@@ -1203,15 +1203,6 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 		long valueId) throws com.liferay.portlet.expando.NoSuchValueException;
 
 	/**
-	* Returns a map of expando values for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the expando values
-	* @return map of primaryKeys to expando values.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoValue> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param valueId the primary key of the expando value
@@ -1219,6 +1210,15 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public com.liferay.portlet.expando.model.ExpandoValue fetchByPrimaryKey(
 		long valueId);
+
+	/**
+	* Returns a map of expando values for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando values
+	* @return map of primaryKeys to expando values.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoValue> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the expando values.

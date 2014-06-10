@@ -307,76 +307,80 @@ public class MBDiscussionPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBDiscussion> missingMBDiscussions = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, MBDiscussion> mbDiscussions = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingMBDiscussions.isEmpty());
+		Assert.assertTrue(mbDiscussions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBDiscussion.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBDiscussion> missingMBDiscussions = _persistence.fetchByPrimaryKeys(missingPks);
-		MBDiscussion existingMBDiscussion = missingMBDiscussions.get(newMBDiscussion.getPrimaryKey());
+		primaryKeys.add(newMBDiscussion.getPrimaryKey());
 
-		Assert.assertEquals(missingMBDiscussions.size(), 1);
-		Assert.assertEquals(newMBDiscussion, existingMBDiscussion);
+		Map<Serializable, MBDiscussion> mbDiscussions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbDiscussions.size());
+		Assert.assertEquals(newMBDiscussion,
+			mbDiscussions.get(newMBDiscussion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBDiscussion> missingMBDiscussions = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingMBDiscussions.isEmpty());
+		Map<Serializable, MBDiscussion> mbDiscussions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbDiscussions.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBDiscussion.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBDiscussion> missingMBDiscussions = _persistence.fetchByPrimaryKeys(missingPks);
-		MBDiscussion existingMBDiscussion = missingMBDiscussions.get(newMBDiscussion.getPrimaryKey());
+		primaryKeys.add(newMBDiscussion.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingMBDiscussions.size(), 1);
-		Assert.assertEquals(newMBDiscussion, existingMBDiscussion);
-		Assert.assertNull(missingMBDiscussions.get(pk2));
+		Map<Serializable, MBDiscussion> mbDiscussions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbDiscussions.size());
+		Assert.assertEquals(newMBDiscussion,
+			mbDiscussions.get(newMBDiscussion.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 		MBDiscussion newMBDiscussion2 = addMBDiscussion();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newMBDiscussion.getPrimaryKey());
-		missingPks.add(newMBDiscussion2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, MBDiscussion> missingMBDiscussions = _persistence.fetchByPrimaryKeys(missingPks);
-		MBDiscussion existingMBDiscussion = missingMBDiscussions.get(newMBDiscussion.getPrimaryKey());
-		MBDiscussion existingMBDiscussion2 = missingMBDiscussions.get(newMBDiscussion2.getPrimaryKey());
+		primaryKeys.add(newMBDiscussion.getPrimaryKey());
+		primaryKeys.add(newMBDiscussion2.getPrimaryKey());
 
-		Assert.assertEquals(missingMBDiscussions.size(), 2);
-		Assert.assertEquals(newMBDiscussion, existingMBDiscussion);
-		Assert.assertEquals(newMBDiscussion2, existingMBDiscussion2);
+		Map<Serializable, MBDiscussion> mbDiscussions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mbDiscussions.size());
+		Assert.assertEquals(newMBDiscussion,
+			mbDiscussions.get(newMBDiscussion.getPrimaryKey()));
+		Assert.assertEquals(newMBDiscussion2,
+			mbDiscussions.get(newMBDiscussion2.getPrimaryKey()));
 	}
 
 	@Test

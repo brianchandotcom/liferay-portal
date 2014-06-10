@@ -2346,6 +2346,17 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	}
 
 	/**
+	 * Returns the m d r rule with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleId the primary key of the m d r rule
+	 * @return the m d r rule, or <code>null</code> if a m d r rule with the primary key could not be found
+	 */
+	@Override
+	public MDRRule fetchByPrimaryKey(long ruleId) {
+		return fetchByPrimaryKey((Serializable)ruleId);
+	}
+
+	/**
 	 * Returns a map of m d r rules for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the m d r rules
@@ -2354,28 +2365,37 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	@Override
 	public Map<Serializable, MDRRule> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MDRRule> results = new HashMap<Serializable, MDRRule>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MDRRule> results = new HashMap<Serializable, MDRRule>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MDRRule mdrRule = fetchByPrimaryKey(primaryKey);
+
+			if (mdrRule != null) {
+				results.put(primaryKey, mdrRule);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MDRRule mdrRule = (MDRRule)EntityCacheUtil.getResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleImpl.class, primaryKey);
 
 			if (mdrRule == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2383,16 +2403,17 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MDRRULE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2409,12 +2430,12 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 			Query q = session.createQuery(sql);
 
-			for (MDRRule result : (List<MDRRule>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MDRRule mdrRule : (List<MDRRule>)q.list()) {
+				results.put(mdrRule.getPrimaryKeyObj(), mdrRule);
 
-				cacheResult(result);
+				cacheResult(mdrRule);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mdrRule.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2430,17 +2451,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the m d r rule with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleId the primary key of the m d r rule
-	 * @return the m d r rule, or <code>null</code> if a m d r rule with the primary key could not be found
-	 */
-	@Override
-	public MDRRule fetchByPrimaryKey(long ruleId) {
-		return fetchByPrimaryKey((Serializable)ruleId);
 	}
 
 	/**

@@ -206,76 +206,80 @@ public class PasswordTrackerPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> missingPasswordTrackers = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingPasswordTrackers.isEmpty());
+		Assert.assertTrue(passwordTrackers.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPasswordTracker.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> missingPasswordTrackers = _persistence.fetchByPrimaryKeys(missingPks);
-		PasswordTracker existingPasswordTracker = missingPasswordTrackers.get(newPasswordTracker.getPrimaryKey());
+		primaryKeys.add(newPasswordTracker.getPrimaryKey());
 
-		Assert.assertEquals(missingPasswordTrackers.size(), 1);
-		Assert.assertEquals(newPasswordTracker, existingPasswordTracker);
+		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, passwordTrackers.size());
+		Assert.assertEquals(newPasswordTracker,
+			passwordTrackers.get(newPasswordTracker.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> missingPasswordTrackers = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingPasswordTrackers.isEmpty());
+		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(passwordTrackers.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPasswordTracker.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> missingPasswordTrackers = _persistence.fetchByPrimaryKeys(missingPks);
-		PasswordTracker existingPasswordTracker = missingPasswordTrackers.get(newPasswordTracker.getPrimaryKey());
+		primaryKeys.add(newPasswordTracker.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingPasswordTrackers.size(), 1);
-		Assert.assertEquals(newPasswordTracker, existingPasswordTracker);
-		Assert.assertNull(missingPasswordTrackers.get(pk2));
+		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, passwordTrackers.size());
+		Assert.assertEquals(newPasswordTracker,
+			passwordTrackers.get(newPasswordTracker.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 		PasswordTracker newPasswordTracker2 = addPasswordTracker();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newPasswordTracker.getPrimaryKey());
-		missingPks.add(newPasswordTracker2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> missingPasswordTrackers = _persistence.fetchByPrimaryKeys(missingPks);
-		PasswordTracker existingPasswordTracker = missingPasswordTrackers.get(newPasswordTracker.getPrimaryKey());
-		PasswordTracker existingPasswordTracker2 = missingPasswordTrackers.get(newPasswordTracker2.getPrimaryKey());
+		primaryKeys.add(newPasswordTracker.getPrimaryKey());
+		primaryKeys.add(newPasswordTracker2.getPrimaryKey());
 
-		Assert.assertEquals(missingPasswordTrackers.size(), 2);
-		Assert.assertEquals(newPasswordTracker, existingPasswordTracker);
-		Assert.assertEquals(newPasswordTracker2, existingPasswordTracker2);
+		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, passwordTrackers.size());
+		Assert.assertEquals(newPasswordTracker,
+			passwordTrackers.get(newPasswordTracker.getPrimaryKey()));
+		Assert.assertEquals(newPasswordTracker2,
+			passwordTrackers.get(newPasswordTracker2.getPrimaryKey()));
 	}
 
 	@Test

@@ -2135,17 +2135,6 @@ public class BookmarksFolderUtil {
 	}
 
 	/**
-	* Returns a map of bookmarks folders for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the bookmarks folders
-	* @return map of primaryKeys to bookmarks folders.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.bookmarks.model.BookmarksFolder> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param folderId the primary key of the bookmarks folder
@@ -2154,6 +2143,17 @@ public class BookmarksFolderUtil {
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder fetchByPrimaryKey(
 		long folderId) {
 		return getPersistence().fetchByPrimaryKey(folderId);
+	}
+
+	/**
+	* Returns a map of bookmarks folders for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the bookmarks folders
+	* @return map of primaryKeys to bookmarks folders.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.bookmarks.model.BookmarksFolder> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

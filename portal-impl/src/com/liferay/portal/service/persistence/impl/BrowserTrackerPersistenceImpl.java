@@ -672,6 +672,17 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	}
 
 	/**
+	 * Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param browserTrackerId the primary key of the browser tracker
+	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
+	 */
+	@Override
+	public BrowserTracker fetchByPrimaryKey(long browserTrackerId) {
+		return fetchByPrimaryKey((Serializable)browserTrackerId);
+	}
+
+	/**
 	 * Returns a map of browser trackers for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the browser trackers
@@ -680,28 +691,37 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	@Override
 	public Map<Serializable, BrowserTracker> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, BrowserTracker> results = new HashMap<Serializable, BrowserTracker>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, BrowserTracker> results = new HashMap<Serializable, BrowserTracker>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			BrowserTracker browserTracker = fetchByPrimaryKey(primaryKey);
+
+			if (browserTracker != null) {
+				results.put(primaryKey, browserTracker);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			BrowserTracker browserTracker = (BrowserTracker)EntityCacheUtil.getResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 					BrowserTrackerImpl.class, primaryKey);
 
 			if (browserTracker == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -709,16 +729,17 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_BROWSERTRACKER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -735,12 +756,12 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 			Query q = session.createQuery(sql);
 
-			for (BrowserTracker result : (List<BrowserTracker>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (BrowserTracker browserTracker : (List<BrowserTracker>)q.list()) {
+				results.put(browserTracker.getPrimaryKeyObj(), browserTracker);
 
-				cacheResult(result);
+				cacheResult(browserTracker);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(browserTracker.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -756,17 +777,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param browserTrackerId the primary key of the browser tracker
-	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	 */
-	@Override
-	public BrowserTracker fetchByPrimaryKey(long browserTrackerId) {
-		return fetchByPrimaryKey((Serializable)browserTrackerId);
 	}
 
 	/**

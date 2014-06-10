@@ -297,76 +297,80 @@ public class SocialActivitySetPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivitySet> missingSocialActivitySets = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, SocialActivitySet> socialActivitySets = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingSocialActivitySets.isEmpty());
+		Assert.assertTrue(socialActivitySets.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		SocialActivitySet newSocialActivitySet = addSocialActivitySet();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSocialActivitySet.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivitySet> missingSocialActivitySets = _persistence.fetchByPrimaryKeys(missingPks);
-		SocialActivitySet existingSocialActivitySet = missingSocialActivitySets.get(newSocialActivitySet.getPrimaryKey());
+		primaryKeys.add(newSocialActivitySet.getPrimaryKey());
 
-		Assert.assertEquals(missingSocialActivitySets.size(), 1);
-		Assert.assertEquals(newSocialActivitySet, existingSocialActivitySet);
+		Map<Serializable, SocialActivitySet> socialActivitySets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, socialActivitySets.size());
+		Assert.assertEquals(newSocialActivitySet,
+			socialActivitySets.get(newSocialActivitySet.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivitySet> missingSocialActivitySets = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingSocialActivitySets.isEmpty());
+		Map<Serializable, SocialActivitySet> socialActivitySets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(socialActivitySets.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		SocialActivitySet newSocialActivitySet = addSocialActivitySet();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSocialActivitySet.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivitySet> missingSocialActivitySets = _persistence.fetchByPrimaryKeys(missingPks);
-		SocialActivitySet existingSocialActivitySet = missingSocialActivitySets.get(newSocialActivitySet.getPrimaryKey());
+		primaryKeys.add(newSocialActivitySet.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingSocialActivitySets.size(), 1);
-		Assert.assertEquals(newSocialActivitySet, existingSocialActivitySet);
-		Assert.assertNull(missingSocialActivitySets.get(pk2));
+		Map<Serializable, SocialActivitySet> socialActivitySets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, socialActivitySets.size());
+		Assert.assertEquals(newSocialActivitySet,
+			socialActivitySets.get(newSocialActivitySet.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		SocialActivitySet newSocialActivitySet = addSocialActivitySet();
 		SocialActivitySet newSocialActivitySet2 = addSocialActivitySet();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newSocialActivitySet.getPrimaryKey());
-		missingPks.add(newSocialActivitySet2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivitySet> missingSocialActivitySets = _persistence.fetchByPrimaryKeys(missingPks);
-		SocialActivitySet existingSocialActivitySet = missingSocialActivitySets.get(newSocialActivitySet.getPrimaryKey());
-		SocialActivitySet existingSocialActivitySet2 = missingSocialActivitySets.get(newSocialActivitySet2.getPrimaryKey());
+		primaryKeys.add(newSocialActivitySet.getPrimaryKey());
+		primaryKeys.add(newSocialActivitySet2.getPrimaryKey());
 
-		Assert.assertEquals(missingSocialActivitySets.size(), 2);
-		Assert.assertEquals(newSocialActivitySet, existingSocialActivitySet);
-		Assert.assertEquals(newSocialActivitySet2, existingSocialActivitySet2);
+		Map<Serializable, SocialActivitySet> socialActivitySets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, socialActivitySets.size());
+		Assert.assertEquals(newSocialActivitySet,
+			socialActivitySets.get(newSocialActivitySet.getPrimaryKey()));
+		Assert.assertEquals(newSocialActivitySet2,
+			socialActivitySets.get(newSocialActivitySet2.getPrimaryKey()));
 	}
 
 	@Test

@@ -561,15 +561,6 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
-	* Returns a map of message boards mailing lists for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the message boards mailing lists
-	* @return map of primaryKeys to message boards mailing lists.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMailingList> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the message boards mailing list with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param mailingListId the primary key of the message boards mailing list
@@ -577,6 +568,15 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*/
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchByPrimaryKey(
 		long mailingListId);
+
+	/**
+	* Returns a map of message boards mailing lists for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards mailing lists
+	* @return map of primaryKeys to message boards mailing lists.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMailingList> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the message boards mailing lists.

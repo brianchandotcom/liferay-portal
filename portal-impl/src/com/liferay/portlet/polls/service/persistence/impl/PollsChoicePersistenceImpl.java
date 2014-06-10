@@ -2664,6 +2664,17 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	/**
+	 * Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param choiceId the primary key of the polls choice
+	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
+	 */
+	@Override
+	public PollsChoice fetchByPrimaryKey(long choiceId) {
+		return fetchByPrimaryKey((Serializable)choiceId);
+	}
+
+	/**
 	 * Returns a map of polls choices for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the polls choices
@@ -2672,28 +2683,37 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	public Map<Serializable, PollsChoice> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PollsChoice> results = new HashMap<Serializable, PollsChoice>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PollsChoice> results = new HashMap<Serializable, PollsChoice>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PollsChoice pollsChoice = fetchByPrimaryKey(primaryKey);
+
+			if (pollsChoice != null) {
+				results.put(primaryKey, pollsChoice);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 					PollsChoiceImpl.class, primaryKey);
 
 			if (pollsChoice == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2701,16 +2721,17 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2727,12 +2748,12 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 			Query q = session.createQuery(sql);
 
-			for (PollsChoice result : (List<PollsChoice>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PollsChoice pollsChoice : (List<PollsChoice>)q.list()) {
+				results.put(pollsChoice.getPrimaryKeyObj(), pollsChoice);
 
-				cacheResult(result);
+				cacheResult(pollsChoice);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(pollsChoice.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2748,17 +2769,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param choiceId the primary key of the polls choice
-	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
-	 */
-	@Override
-	public PollsChoice fetchByPrimaryKey(long choiceId) {
-		return fetchByPrimaryKey((Serializable)choiceId);
 	}
 
 	/**

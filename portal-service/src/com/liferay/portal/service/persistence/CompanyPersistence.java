@@ -336,6 +336,14 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 		throws com.liferay.portal.NoSuchCompanyException;
 
 	/**
+	* Returns the company with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param companyId the primary key of the company
+	* @return the company, or <code>null</code> if a company with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Company fetchByPrimaryKey(long companyId);
+
+	/**
 	* Returns a map of companies for the primary keys provided.
 	*
 	* @param primaryKeys the set of primaryKeys for which to fetch the companies
@@ -343,14 +351,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Company> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
-	* Returns the company with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param companyId the primary key of the company
-	* @return the company, or <code>null</code> if a company with the primary key could not be found
-	*/
-	public com.liferay.portal.model.Company fetchByPrimaryKey(long companyId);
 
 	/**
 	* Returns all the companies.

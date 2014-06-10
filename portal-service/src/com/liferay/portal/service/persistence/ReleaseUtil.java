@@ -226,17 +226,6 @@ public class ReleaseUtil {
 	}
 
 	/**
-	* Returns a map of releases for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the releases
-	* @return map of primaryKeys to releases.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Release> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the release with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param releaseId the primary key of the release
@@ -245,6 +234,17 @@ public class ReleaseUtil {
 	public static com.liferay.portal.model.Release fetchByPrimaryKey(
 		long releaseId) {
 		return getPersistence().fetchByPrimaryKey(releaseId);
+	}
+
+	/**
+	* Returns a map of releases for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the releases
+	* @return map of primaryKeys to releases.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Release> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

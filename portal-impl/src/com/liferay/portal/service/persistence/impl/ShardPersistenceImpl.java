@@ -964,6 +964,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	/**
+	 * Returns the shard with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param shardId the primary key of the shard
+	 * @return the shard, or <code>null</code> if a shard with the primary key could not be found
+	 */
+	@Override
+	public Shard fetchByPrimaryKey(long shardId) {
+		return fetchByPrimaryKey((Serializable)shardId);
+	}
+
+	/**
 	 * Returns a map of shards for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the shards
@@ -972,28 +983,37 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	@Override
 	public Map<Serializable, Shard> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Shard> results = new HashMap<Serializable, Shard>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Shard> results = new HashMap<Serializable, Shard>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Shard shard = fetchByPrimaryKey(primaryKey);
+
+			if (shard != null) {
+				results.put(primaryKey, shard);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
 					ShardImpl.class, primaryKey);
 
 			if (shard == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1001,16 +1021,17 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SHARD_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1027,12 +1048,12 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 
 			Query q = session.createQuery(sql);
 
-			for (Shard result : (List<Shard>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Shard shard : (List<Shard>)q.list()) {
+				results.put(shard.getPrimaryKeyObj(), shard);
 
-				cacheResult(result);
+				cacheResult(shard);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(shard.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1048,17 +1069,6 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the shard with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param shardId the primary key of the shard
-	 * @return the shard, or <code>null</code> if a shard with the primary key could not be found
-	 */
-	@Override
-	public Shard fetchByPrimaryKey(long shardId) {
-		return fetchByPrimaryKey((Serializable)shardId);
 	}
 
 	/**

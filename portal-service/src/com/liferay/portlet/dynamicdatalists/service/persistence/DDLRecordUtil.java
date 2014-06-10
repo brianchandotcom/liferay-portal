@@ -974,17 +974,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	* Returns a map of d d l records for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the d d l records
-	* @return map of primaryKeys to d d l records.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecord> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the d d l record with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param recordId the primary key of the d d l record
@@ -993,6 +982,17 @@ public class DDLRecordUtil {
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchByPrimaryKey(
 		long recordId) {
 		return getPersistence().fetchByPrimaryKey(recordId);
+	}
+
+	/**
+	* Returns a map of d d l records for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d l records
+	* @return map of primaryKeys to d d l records.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecord> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

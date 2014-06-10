@@ -477,76 +477,80 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DLFolder> dlFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDLFolders.isEmpty());
+		Assert.assertTrue(dlFolders.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFolder.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
+		primaryKeys.add(newDLFolder.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFolders.size(), 1);
-		Assert.assertEquals(newDLFolder, existingDLFolder);
+		Map<Serializable, DLFolder> dlFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFolders.size());
+		Assert.assertEquals(newDLFolder,
+			dlFolders.get(newDLFolder.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDLFolders.isEmpty());
+		Map<Serializable, DLFolder> dlFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlFolders.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFolder.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
+		primaryKeys.add(newDLFolder.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDLFolders.size(), 1);
-		Assert.assertEquals(newDLFolder, existingDLFolder);
-		Assert.assertNull(missingDLFolders.get(pk2));
+		Map<Serializable, DLFolder> dlFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlFolders.size());
+		Assert.assertEquals(newDLFolder,
+			dlFolders.get(newDLFolder.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 		DLFolder newDLFolder2 = addDLFolder();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDLFolder.getPrimaryKey());
-		missingPks.add(newDLFolder2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFolder> missingDLFolders = _persistence.fetchByPrimaryKeys(missingPks);
-		DLFolder existingDLFolder = missingDLFolders.get(newDLFolder.getPrimaryKey());
-		DLFolder existingDLFolder2 = missingDLFolders.get(newDLFolder2.getPrimaryKey());
+		primaryKeys.add(newDLFolder.getPrimaryKey());
+		primaryKeys.add(newDLFolder2.getPrimaryKey());
 
-		Assert.assertEquals(missingDLFolders.size(), 2);
-		Assert.assertEquals(newDLFolder, existingDLFolder);
-		Assert.assertEquals(newDLFolder2, existingDLFolder2);
+		Map<Serializable, DLFolder> dlFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlFolders.size());
+		Assert.assertEquals(newDLFolder,
+			dlFolders.get(newDLFolder.getPrimaryKey()));
+		Assert.assertEquals(newDLFolder2,
+			dlFolders.get(newDLFolder2.getPrimaryKey()));
 	}
 
 	@Test

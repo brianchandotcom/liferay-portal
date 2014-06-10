@@ -4997,6 +4997,17 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	}
 
 	/**
+	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentSearchId the primary key of the journal content search
+	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
+	 */
+	@Override
+	public JournalContentSearch fetchByPrimaryKey(long contentSearchId) {
+		return fetchByPrimaryKey((Serializable)contentSearchId);
+	}
+
+	/**
 	 * Returns a map of journal content searchs for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal content searchs
@@ -5005,28 +5016,37 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	@Override
 	public Map<Serializable, JournalContentSearch> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, JournalContentSearch> results = new HashMap<Serializable, JournalContentSearch>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, JournalContentSearch> results = new HashMap<Serializable, JournalContentSearch>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			JournalContentSearch journalContentSearch = fetchByPrimaryKey(primaryKey);
+
+			if (journalContentSearch != null) {
+				results.put(primaryKey, journalContentSearch);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			JournalContentSearch journalContentSearch = (JournalContentSearch)EntityCacheUtil.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 					JournalContentSearchImpl.class, primaryKey);
 
 			if (journalContentSearch == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -5034,16 +5054,17 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -5060,12 +5081,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 			Query q = session.createQuery(sql);
 
-			for (JournalContentSearch result : (List<JournalContentSearch>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (JournalContentSearch journalContentSearch : (List<JournalContentSearch>)q.list()) {
+				results.put(journalContentSearch.getPrimaryKeyObj(),
+					journalContentSearch);
 
-				cacheResult(result);
+				cacheResult(journalContentSearch);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(journalContentSearch.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5082,17 +5104,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the journal content search with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentSearchId the primary key of the journal content search
-	 * @return the journal content search, or <code>null</code> if a journal content search with the primary key could not be found
-	 */
-	@Override
-	public JournalContentSearch fetchByPrimaryKey(long contentSearchId) {
-		return fetchByPrimaryKey((Serializable)contentSearchId);
 	}
 
 	/**

@@ -882,17 +882,6 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
-	* Returns a map of social activity settings for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the social activity settings
-	* @return map of primaryKeys to social activity settings.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivitySetting> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activitySettingId the primary key of the social activity setting
@@ -901,6 +890,17 @@ public class SocialActivitySettingUtil {
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByPrimaryKey(
 		long activitySettingId) {
 		return getPersistence().fetchByPrimaryKey(activitySettingId);
+	}
+
+	/**
+	* Returns a map of social activity settings for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity settings
+	* @return map of primaryKeys to social activity settings.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivitySetting> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

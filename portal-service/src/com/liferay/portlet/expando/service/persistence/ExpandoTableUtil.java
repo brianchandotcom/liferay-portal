@@ -397,17 +397,6 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	* Returns a map of expando tables for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the expando tables
-	* @return map of primaryKeys to expando tables.
-	*/
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoTable> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
-	}
-
-	/**
 	* Returns the expando table with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param tableId the primary key of the expando table
@@ -416,6 +405,17 @@ public class ExpandoTableUtil {
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByPrimaryKey(
 		long tableId) {
 		return getPersistence().fetchByPrimaryKey(tableId);
+	}
+
+	/**
+	* Returns a map of expando tables for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando tables
+	* @return map of primaryKeys to expando tables.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoTable> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

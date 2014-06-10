@@ -931,6 +931,17 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	}
 
 	/**
+	 * Returns the user tracker path with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param userTrackerPathId the primary key of the user tracker path
+	 * @return the user tracker path, or <code>null</code> if a user tracker path with the primary key could not be found
+	 */
+	@Override
+	public UserTrackerPath fetchByPrimaryKey(long userTrackerPathId) {
+		return fetchByPrimaryKey((Serializable)userTrackerPathId);
+	}
+
+	/**
 	 * Returns a map of user tracker paths for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the user tracker paths
@@ -939,28 +950,37 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public Map<Serializable, UserTrackerPath> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, UserTrackerPath> results = new HashMap<Serializable, UserTrackerPath>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, UserTrackerPath> results = new HashMap<Serializable, UserTrackerPath>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			UserTrackerPath userTrackerPath = fetchByPrimaryKey(primaryKey);
+
+			if (userTrackerPath != null) {
+				results.put(primaryKey, userTrackerPath);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			UserTrackerPath userTrackerPath = (UserTrackerPath)EntityCacheUtil.getResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerPathImpl.class, primaryKey);
 
 			if (userTrackerPath == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -968,16 +988,17 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_USERTRACKERPATH_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -994,12 +1015,12 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 			Query q = session.createQuery(sql);
 
-			for (UserTrackerPath result : (List<UserTrackerPath>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (UserTrackerPath userTrackerPath : (List<UserTrackerPath>)q.list()) {
+				results.put(userTrackerPath.getPrimaryKeyObj(), userTrackerPath);
 
-				cacheResult(result);
+				cacheResult(userTrackerPath);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(userTrackerPath.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1015,17 +1036,6 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the user tracker path with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param userTrackerPathId the primary key of the user tracker path
-	 * @return the user tracker path, or <code>null</code> if a user tracker path with the primary key could not be found
-	 */
-	@Override
-	public UserTrackerPath fetchByPrimaryKey(long userTrackerPathId) {
-		return fetchByPrimaryKey((Serializable)userTrackerPathId);
 	}
 
 	/**

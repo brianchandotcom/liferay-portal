@@ -9920,6 +9920,17 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	}
 
 	/**
+	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param categoryId the primary key of the message boards category
+	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
+	 */
+	@Override
+	public MBCategory fetchByPrimaryKey(long categoryId) {
+		return fetchByPrimaryKey((Serializable)categoryId);
+	}
+
+	/**
 	 * Returns a map of message boards categories for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards categories
@@ -9928,28 +9939,37 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public Map<Serializable, MBCategory> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MBCategory> results = new HashMap<Serializable, MBCategory>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MBCategory> results = new HashMap<Serializable, MBCategory>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MBCategory mbCategory = fetchByPrimaryKey(primaryKey);
+
+			if (mbCategory != null) {
+				results.put(primaryKey, mbCategory);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MBCategory mbCategory = (MBCategory)EntityCacheUtil.getResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					MBCategoryImpl.class, primaryKey);
 
 			if (mbCategory == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -9957,16 +9977,17 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MBCATEGORY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -9983,12 +10004,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			Query q = session.createQuery(sql);
 
-			for (MBCategory result : (List<MBCategory>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MBCategory mbCategory : (List<MBCategory>)q.list()) {
+				results.put(mbCategory.getPrimaryKeyObj(), mbCategory);
 
-				cacheResult(result);
+				cacheResult(mbCategory);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mbCategory.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -10004,17 +10025,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param categoryId the primary key of the message boards category
-	 * @return the message boards category, or <code>null</code> if a message boards category with the primary key could not be found
-	 */
-	@Override
-	public MBCategory fetchByPrimaryKey(long categoryId) {
-		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
 	/**

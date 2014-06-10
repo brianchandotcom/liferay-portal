@@ -229,76 +229,80 @@ public class ServiceComponentPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> missingServiceComponents = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingServiceComponents.isEmpty());
+		Assert.assertTrue(serviceComponents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newServiceComponent.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> missingServiceComponents = _persistence.fetchByPrimaryKeys(missingPks);
-		ServiceComponent existingServiceComponent = missingServiceComponents.get(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
 
-		Assert.assertEquals(missingServiceComponents.size(), 1);
-		Assert.assertEquals(newServiceComponent, existingServiceComponent);
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> missingServiceComponents = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingServiceComponents.isEmpty());
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(serviceComponents.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newServiceComponent.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> missingServiceComponents = _persistence.fetchByPrimaryKeys(missingPks);
-		ServiceComponent existingServiceComponent = missingServiceComponents.get(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingServiceComponents.size(), 1);
-		Assert.assertEquals(newServiceComponent, existingServiceComponent);
-		Assert.assertNull(missingServiceComponents.get(pk2));
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 		ServiceComponent newServiceComponent2 = addServiceComponent();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newServiceComponent.getPrimaryKey());
-		missingPks.add(newServiceComponent2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> missingServiceComponents = _persistence.fetchByPrimaryKeys(missingPks);
-		ServiceComponent existingServiceComponent = missingServiceComponents.get(newServiceComponent.getPrimaryKey());
-		ServiceComponent existingServiceComponent2 = missingServiceComponents.get(newServiceComponent2.getPrimaryKey());
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(newServiceComponent2.getPrimaryKey());
 
-		Assert.assertEquals(missingServiceComponents.size(), 2);
-		Assert.assertEquals(newServiceComponent, existingServiceComponent);
-		Assert.assertEquals(newServiceComponent2, existingServiceComponent2);
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
+		Assert.assertEquals(newServiceComponent2,
+			serviceComponents.get(newServiceComponent2.getPrimaryKey()));
 	}
 
 	@Test

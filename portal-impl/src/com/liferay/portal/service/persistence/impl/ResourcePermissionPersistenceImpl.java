@@ -4410,6 +4410,17 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	/**
+	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourcePermissionId the primary key of the resource permission
+	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
+	 */
+	@Override
+	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId) {
+		return fetchByPrimaryKey((Serializable)resourcePermissionId);
+	}
+
+	/**
 	 * Returns a map of resource permissions for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the resource permissions
@@ -4418,28 +4429,37 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ResourcePermission> results = new HashMap<Serializable, ResourcePermission>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ResourcePermission> results = new HashMap<Serializable, ResourcePermission>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ResourcePermission resourcePermission = fetchByPrimaryKey(primaryKey);
+
+			if (resourcePermission != null) {
+				results.put(primaryKey, resourcePermission);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ResourcePermission resourcePermission = (ResourcePermission)EntityCacheUtil.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourcePermissionImpl.class, primaryKey);
 
 			if (resourcePermission == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4447,16 +4467,17 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4473,12 +4494,13 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 			Query q = session.createQuery(sql);
 
-			for (ResourcePermission result : (List<ResourcePermission>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ResourcePermission resourcePermission : (List<ResourcePermission>)q.list()) {
+				results.put(resourcePermission.getPrimaryKeyObj(),
+					resourcePermission);
 
-				cacheResult(result);
+				cacheResult(resourcePermission);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(resourcePermission.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -4495,17 +4517,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param resourcePermissionId the primary key of the resource permission
-	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
-	 */
-	@Override
-	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId) {
-		return fetchByPrimaryKey((Serializable)resourcePermissionId);
 	}
 
 	/**

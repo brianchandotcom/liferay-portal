@@ -1517,15 +1517,6 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 		throws com.liferay.portlet.social.NoSuchActivityException;
 
 	/**
-	* Returns a map of social activities for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the social activities
-	* @return map of primaryKeys to social activities.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivity> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the social activity with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activityId the primary key of the social activity
@@ -1533,6 +1524,15 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*/
 	public com.liferay.portlet.social.model.SocialActivity fetchByPrimaryKey(
 		long activityId);
+
+	/**
+	* Returns a map of social activities for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activities
+	* @return map of primaryKeys to social activities.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivity> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activities.

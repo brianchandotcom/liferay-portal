@@ -971,6 +971,17 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	}
 
 	/**
+	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param virtualHostId the primary key of the virtual host
+	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
+	 */
+	@Override
+	public VirtualHost fetchByPrimaryKey(long virtualHostId) {
+		return fetchByPrimaryKey((Serializable)virtualHostId);
+	}
+
+	/**
 	 * Returns a map of virtual hosts for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the virtual hosts
@@ -979,28 +990,37 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	@Override
 	public Map<Serializable, VirtualHost> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, VirtualHost> results = new HashMap<Serializable, VirtualHost>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, VirtualHost> results = new HashMap<Serializable, VirtualHost>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			VirtualHost virtualHost = fetchByPrimaryKey(primaryKey);
+
+			if (virtualHost != null) {
+				results.put(primaryKey, virtualHost);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			VirtualHost virtualHost = (VirtualHost)EntityCacheUtil.getResult(VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 					VirtualHostImpl.class, primaryKey);
 
 			if (virtualHost == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1008,16 +1028,17 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_VIRTUALHOST_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1034,12 +1055,12 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 			Query q = session.createQuery(sql);
 
-			for (VirtualHost result : (List<VirtualHost>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (VirtualHost virtualHost : (List<VirtualHost>)q.list()) {
+				results.put(virtualHost.getPrimaryKeyObj(), virtualHost);
 
-				cacheResult(result);
+				cacheResult(virtualHost);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(virtualHost.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1055,17 +1076,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param virtualHostId the primary key of the virtual host
-	 * @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
-	 */
-	@Override
-	public VirtualHost fetchByPrimaryKey(long virtualHostId) {
-		return fetchByPrimaryKey((Serializable)virtualHostId);
 	}
 
 	/**

@@ -7805,6 +7805,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	}
 
 	/**
+	 * Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param eventId the primary key of the cal event
+	 * @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
+	 */
+	@Override
+	public CalEvent fetchByPrimaryKey(long eventId) {
+		return fetchByPrimaryKey((Serializable)eventId);
+	}
+
+	/**
 	 * Returns a map of cal events for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the cal events
@@ -7813,28 +7824,37 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public Map<Serializable, CalEvent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, CalEvent> results = new HashMap<Serializable, CalEvent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, CalEvent> results = new HashMap<Serializable, CalEvent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			CalEvent calEvent = fetchByPrimaryKey(primaryKey);
+
+			if (calEvent != null) {
+				results.put(primaryKey, calEvent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			CalEvent calEvent = (CalEvent)EntityCacheUtil.getResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 					CalEventImpl.class, primaryKey);
 
 			if (calEvent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -7842,16 +7862,17 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_CALEVENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -7868,12 +7889,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			Query q = session.createQuery(sql);
 
-			for (CalEvent result : (List<CalEvent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (CalEvent calEvent : (List<CalEvent>)q.list()) {
+				results.put(calEvent.getPrimaryKeyObj(), calEvent);
 
-				cacheResult(result);
+				cacheResult(calEvent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(calEvent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -7889,17 +7910,6 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the cal event with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param eventId the primary key of the cal event
-	 * @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
-	 */
-	@Override
-	public CalEvent fetchByPrimaryKey(long eventId) {
-		return fetchByPrimaryKey((Serializable)eventId);
 	}
 
 	/**

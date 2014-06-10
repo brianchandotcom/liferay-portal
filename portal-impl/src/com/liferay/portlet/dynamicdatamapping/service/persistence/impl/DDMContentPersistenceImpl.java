@@ -2849,6 +2849,17 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	}
 
 	/**
+	 * Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param contentId the primary key of the d d m content
+	 * @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
+	 */
+	@Override
+	public DDMContent fetchByPrimaryKey(long contentId) {
+		return fetchByPrimaryKey((Serializable)contentId);
+	}
+
+	/**
 	 * Returns a map of d d m contents for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the d d m contents
@@ -2857,28 +2868,37 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	@Override
 	public Map<Serializable, DDMContent> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, DDMContent> results = new HashMap<Serializable, DDMContent>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, DDMContent> results = new HashMap<Serializable, DDMContent>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			DDMContent ddmContent = fetchByPrimaryKey(primaryKey);
+
+			if (ddmContent != null) {
+				results.put(primaryKey, ddmContent);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			DDMContent ddmContent = (DDMContent)EntityCacheUtil.getResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 					DDMContentImpl.class, primaryKey);
 
 			if (ddmContent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2886,16 +2906,17 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_DDMCONTENT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2912,12 +2933,12 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 			Query q = session.createQuery(sql);
 
-			for (DDMContent result : (List<DDMContent>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (DDMContent ddmContent : (List<DDMContent>)q.list()) {
+				results.put(ddmContent.getPrimaryKeyObj(), ddmContent);
 
-				cacheResult(result);
+				cacheResult(ddmContent);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(ddmContent.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2933,17 +2954,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param contentId the primary key of the d d m content
-	 * @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
-	 */
-	@Override
-	public DDMContent fetchByPrimaryKey(long contentId) {
-		return fetchByPrimaryKey((Serializable)contentId);
 	}
 
 	/**

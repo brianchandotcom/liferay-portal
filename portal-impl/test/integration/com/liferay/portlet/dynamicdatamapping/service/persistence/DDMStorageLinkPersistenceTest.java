@@ -234,76 +234,80 @@ public class DDMStorageLinkPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStorageLink> missingDDMStorageLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, DDMStorageLink> ddmStorageLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingDDMStorageLinks.isEmpty());
+		Assert.assertTrue(ddmStorageLinks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMStorageLink.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStorageLink> missingDDMStorageLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMStorageLink existingDDMStorageLink = missingDDMStorageLinks.get(newDDMStorageLink.getPrimaryKey());
+		primaryKeys.add(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(missingDDMStorageLinks.size(), 1);
-		Assert.assertEquals(newDDMStorageLink, existingDDMStorageLink);
+		Map<Serializable, DDMStorageLink> ddmStorageLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmStorageLinks.size());
+		Assert.assertEquals(newDDMStorageLink,
+			ddmStorageLinks.get(newDDMStorageLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStorageLink> missingDDMStorageLinks = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingDDMStorageLinks.isEmpty());
+		Map<Serializable, DDMStorageLink> ddmStorageLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmStorageLinks.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMStorageLink.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStorageLink> missingDDMStorageLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMStorageLink existingDDMStorageLink = missingDDMStorageLinks.get(newDDMStorageLink.getPrimaryKey());
+		primaryKeys.add(newDDMStorageLink.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingDDMStorageLinks.size(), 1);
-		Assert.assertEquals(newDDMStorageLink, existingDDMStorageLink);
-		Assert.assertNull(missingDDMStorageLinks.get(pk2));
+		Map<Serializable, DDMStorageLink> ddmStorageLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmStorageLinks.size());
+		Assert.assertEquals(newDDMStorageLink,
+			ddmStorageLinks.get(newDDMStorageLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 		DDMStorageLink newDDMStorageLink2 = addDDMStorageLink();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newDDMStorageLink.getPrimaryKey());
-		missingPks.add(newDDMStorageLink2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DDMStorageLink> missingDDMStorageLinks = _persistence.fetchByPrimaryKeys(missingPks);
-		DDMStorageLink existingDDMStorageLink = missingDDMStorageLinks.get(newDDMStorageLink.getPrimaryKey());
-		DDMStorageLink existingDDMStorageLink2 = missingDDMStorageLinks.get(newDDMStorageLink2.getPrimaryKey());
+		primaryKeys.add(newDDMStorageLink.getPrimaryKey());
+		primaryKeys.add(newDDMStorageLink2.getPrimaryKey());
 
-		Assert.assertEquals(missingDDMStorageLinks.size(), 2);
-		Assert.assertEquals(newDDMStorageLink, existingDDMStorageLink);
-		Assert.assertEquals(newDDMStorageLink2, existingDDMStorageLink2);
+		Map<Serializable, DDMStorageLink> ddmStorageLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ddmStorageLinks.size());
+		Assert.assertEquals(newDDMStorageLink,
+			ddmStorageLinks.get(newDDMStorageLink.getPrimaryKey()));
+		Assert.assertEquals(newDDMStorageLink2,
+			ddmStorageLinks.get(newDDMStorageLink2.getPrimaryKey()));
 	}
 
 	@Test

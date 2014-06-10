@@ -1229,6 +1229,17 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	}
 
 	/**
+	 * Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param passwordPolicyRelId the primary key of the password policy rel
+	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
+	 */
+	@Override
+	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId) {
+		return fetchByPrimaryKey((Serializable)passwordPolicyRelId);
+	}
+
+	/**
 	 * Returns a map of password policy rels for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the password policy rels
@@ -1237,28 +1248,37 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	@Override
 	public Map<Serializable, PasswordPolicyRel> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, PasswordPolicyRel> results = new HashMap<Serializable, PasswordPolicyRel>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, PasswordPolicyRel> results = new HashMap<Serializable, PasswordPolicyRel>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(primaryKey);
+
+			if (passwordPolicyRel != null) {
+				results.put(primaryKey, passwordPolicyRel);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)EntityCacheUtil.getResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 					PasswordPolicyRelImpl.class, primaryKey);
 
 			if (passwordPolicyRel == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1266,16 +1286,17 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_PASSWORDPOLICYREL_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1292,12 +1313,13 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 			Query q = session.createQuery(sql);
 
-			for (PasswordPolicyRel result : (List<PasswordPolicyRel>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (PasswordPolicyRel passwordPolicyRel : (List<PasswordPolicyRel>)q.list()) {
+				results.put(passwordPolicyRel.getPrimaryKeyObj(),
+					passwordPolicyRel);
 
-				cacheResult(result);
+				cacheResult(passwordPolicyRel);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(passwordPolicyRel.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1314,17 +1336,6 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param passwordPolicyRelId the primary key of the password policy rel
-	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId) {
-		return fetchByPrimaryKey((Serializable)passwordPolicyRelId);
 	}
 
 	/**

@@ -2376,6 +2376,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	/**
+	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param lockId the primary key of the lock
+	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
+	 */
+	@Override
+	public Lock fetchByPrimaryKey(long lockId) {
+		return fetchByPrimaryKey((Serializable)lockId);
+	}
+
+	/**
 	 * Returns a map of locks for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the locks
@@ -2384,28 +2395,37 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	public Map<Serializable, Lock> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Lock> results = new HashMap<Serializable, Lock>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Lock> results = new HashMap<Serializable, Lock>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Lock lock = fetchByPrimaryKey(primaryKey);
+
+			if (lock != null) {
+				results.put(primaryKey, lock);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 					LockImpl.class, primaryKey);
 
 			if (lock == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2413,16 +2433,17 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_LOCK_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2439,12 +2460,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			Query q = session.createQuery(sql);
 
-			for (Lock result : (List<Lock>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Lock lock : (List<Lock>)q.list()) {
+				results.put(lock.getPrimaryKeyObj(), lock);
 
-				cacheResult(result);
+				cacheResult(lock);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(lock.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2460,17 +2481,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the lock with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param lockId the primary key of the lock
-	 * @return the lock, or <code>null</code> if a lock with the primary key could not be found
-	 */
-	@Override
-	public Lock fetchByPrimaryKey(long lockId) {
-		return fetchByPrimaryKey((Serializable)lockId);
 	}
 
 	/**

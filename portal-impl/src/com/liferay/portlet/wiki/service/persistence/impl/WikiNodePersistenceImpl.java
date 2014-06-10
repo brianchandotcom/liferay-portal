@@ -4931,6 +4931,17 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	/**
+	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param nodeId the primary key of the wiki node
+	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
+	 */
+	@Override
+	public WikiNode fetchByPrimaryKey(long nodeId) {
+		return fetchByPrimaryKey((Serializable)nodeId);
+	}
+
+	/**
 	 * Returns a map of wiki nodes for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the wiki nodes
@@ -4939,28 +4950,37 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@Override
 	public Map<Serializable, WikiNode> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, WikiNode> results = new HashMap<Serializable, WikiNode>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, WikiNode> results = new HashMap<Serializable, WikiNode>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			WikiNode wikiNode = fetchByPrimaryKey(primaryKey);
+
+			if (wikiNode != null) {
+				results.put(primaryKey, wikiNode);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			WikiNode wikiNode = (WikiNode)EntityCacheUtil.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 					WikiNodeImpl.class, primaryKey);
 
 			if (wikiNode == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -4968,16 +4988,17 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_WIKINODE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -4994,12 +5015,12 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			Query q = session.createQuery(sql);
 
-			for (WikiNode result : (List<WikiNode>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (WikiNode wikiNode : (List<WikiNode>)q.list()) {
+				results.put(wikiNode.getPrimaryKeyObj(), wikiNode);
 
-				cacheResult(result);
+				cacheResult(wikiNode);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(wikiNode.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5015,17 +5036,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the wiki node with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param nodeId the primary key of the wiki node
-	 * @return the wiki node, or <code>null</code> if a wiki node with the primary key could not be found
-	 */
-	@Override
-	public WikiNode fetchByPrimaryKey(long nodeId) {
-		return fetchByPrimaryKey((Serializable)nodeId);
 	}
 
 	/**

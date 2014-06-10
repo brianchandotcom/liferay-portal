@@ -669,15 +669,6 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 		throws com.liferay.portlet.social.NoSuchActivitySettingException;
 
 	/**
-	* Returns a map of social activity settings for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the social activity settings
-	* @return map of primaryKeys to social activity settings.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivitySetting> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param activitySettingId the primary key of the social activity setting
@@ -685,6 +676,15 @@ public interface SocialActivitySettingPersistence extends BasePersistence<Social
 	*/
 	public com.liferay.portlet.social.model.SocialActivitySetting fetchByPrimaryKey(
 		long activitySettingId);
+
+	/**
+	* Returns a map of social activity settings for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity settings
+	* @return map of primaryKeys to social activity settings.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivitySetting> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the social activity settings.

@@ -328,80 +328,80 @@ public class JournalContentSearchPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalContentSearch> missingJournalContentSearchs = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, JournalContentSearch> journalContentSearchs = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingJournalContentSearchs.isEmpty());
+		Assert.assertTrue(journalContentSearchs.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalContentSearch.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalContentSearch> missingJournalContentSearchs = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalContentSearch existingJournalContentSearch = missingJournalContentSearchs.get(newJournalContentSearch.getPrimaryKey());
+		primaryKeys.add(newJournalContentSearch.getPrimaryKey());
 
-		Assert.assertEquals(missingJournalContentSearchs.size(), 1);
+		Map<Serializable, JournalContentSearch> journalContentSearchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalContentSearchs.size());
 		Assert.assertEquals(newJournalContentSearch,
-			existingJournalContentSearch);
+			journalContentSearchs.get(newJournalContentSearch.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalContentSearch> missingJournalContentSearchs = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingJournalContentSearchs.isEmpty());
+		Map<Serializable, JournalContentSearch> journalContentSearchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalContentSearchs.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalContentSearch.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalContentSearch> missingJournalContentSearchs = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalContentSearch existingJournalContentSearch = missingJournalContentSearchs.get(newJournalContentSearch.getPrimaryKey());
+		primaryKeys.add(newJournalContentSearch.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingJournalContentSearchs.size(), 1);
+		Map<Serializable, JournalContentSearch> journalContentSearchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalContentSearchs.size());
 		Assert.assertEquals(newJournalContentSearch,
-			existingJournalContentSearch);
-		Assert.assertNull(missingJournalContentSearchs.get(pk2));
+			journalContentSearchs.get(newJournalContentSearch.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 		JournalContentSearch newJournalContentSearch2 = addJournalContentSearch();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newJournalContentSearch.getPrimaryKey());
-		missingPks.add(newJournalContentSearch2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, JournalContentSearch> missingJournalContentSearchs = _persistence.fetchByPrimaryKeys(missingPks);
-		JournalContentSearch existingJournalContentSearch = missingJournalContentSearchs.get(newJournalContentSearch.getPrimaryKey());
-		JournalContentSearch existingJournalContentSearch2 = missingJournalContentSearchs.get(newJournalContentSearch2.getPrimaryKey());
+		primaryKeys.add(newJournalContentSearch.getPrimaryKey());
+		primaryKeys.add(newJournalContentSearch2.getPrimaryKey());
 
-		Assert.assertEquals(missingJournalContentSearchs.size(), 2);
+		Map<Serializable, JournalContentSearch> journalContentSearchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, journalContentSearchs.size());
 		Assert.assertEquals(newJournalContentSearch,
-			existingJournalContentSearch);
+			journalContentSearchs.get(newJournalContentSearch.getPrimaryKey()));
 		Assert.assertEquals(newJournalContentSearch2,
-			existingJournalContentSearch2);
+			journalContentSearchs.get(newJournalContentSearch2.getPrimaryKey()));
 	}
 
 	@Test

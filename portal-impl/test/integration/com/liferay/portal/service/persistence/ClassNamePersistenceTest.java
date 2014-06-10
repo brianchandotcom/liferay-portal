@@ -200,76 +200,80 @@ public class ClassNamePersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingClassNames.isEmpty());
+		Assert.assertTrue(classNames.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		ClassName newClassName = addClassName();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClassName.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
-		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
+		primaryKeys.add(newClassName.getPrimaryKey());
 
-		Assert.assertEquals(missingClassNames.size(), 1);
-		Assert.assertEquals(newClassName, existingClassName);
+		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, classNames.size());
+		Assert.assertEquals(newClassName,
+			classNames.get(newClassName.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingClassNames.isEmpty());
+		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(classNames.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		ClassName newClassName = addClassName();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClassName.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
-		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
+		primaryKeys.add(newClassName.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingClassNames.size(), 1);
-		Assert.assertEquals(newClassName, existingClassName);
-		Assert.assertNull(missingClassNames.get(pk2));
+		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, classNames.size());
+		Assert.assertEquals(newClassName,
+			classNames.get(newClassName.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		ClassName newClassName = addClassName();
 		ClassName newClassName2 = addClassName();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newClassName.getPrimaryKey());
-		missingPks.add(newClassName2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> missingClassNames = _persistence.fetchByPrimaryKeys(missingPks);
-		ClassName existingClassName = missingClassNames.get(newClassName.getPrimaryKey());
-		ClassName existingClassName2 = missingClassNames.get(newClassName2.getPrimaryKey());
+		primaryKeys.add(newClassName.getPrimaryKey());
+		primaryKeys.add(newClassName2.getPrimaryKey());
 
-		Assert.assertEquals(missingClassNames.size(), 2);
-		Assert.assertEquals(newClassName, existingClassName);
-		Assert.assertEquals(newClassName2, existingClassName2);
+		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, classNames.size());
+		Assert.assertEquals(newClassName,
+			classNames.get(newClassName.getPrimaryKey()));
+		Assert.assertEquals(newClassName2,
+			classNames.get(newClassName2.getPrimaryKey()));
 	}
 
 	@Test

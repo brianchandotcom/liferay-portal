@@ -321,15 +321,6 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
-	* Returns a map of asset tags for the primary keys provided.
-	*
-	* @param primaryKeys the set of primaryKeys for which to fetch the asset tags
-	* @return map of primaryKeys to asset tags.
-	*/
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetTag> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
-	/**
 	* Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param tagId the primary key of the asset tag
@@ -337,6 +328,15 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByPrimaryKey(
 		long tagId);
+
+	/**
+	* Returns a map of asset tags for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset tags
+	* @return map of primaryKeys to asset tags.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetTag> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the asset tags.

@@ -5246,6 +5246,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	}
 
 	/**
+	 * Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param valueId the primary key of the expando value
+	 * @return the expando value, or <code>null</code> if a expando value with the primary key could not be found
+	 */
+	@Override
+	public ExpandoValue fetchByPrimaryKey(long valueId) {
+		return fetchByPrimaryKey((Serializable)valueId);
+	}
+
+	/**
 	 * Returns a map of expando values for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the expando values
@@ -5254,28 +5265,37 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	@Override
 	public Map<Serializable, ExpandoValue> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ExpandoValue> results = new HashMap<Serializable, ExpandoValue>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ExpandoValue> results = new HashMap<Serializable, ExpandoValue>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ExpandoValue expandoValue = fetchByPrimaryKey(primaryKey);
+
+			if (expandoValue != null) {
+				results.put(primaryKey, expandoValue);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ExpandoValue expandoValue = (ExpandoValue)EntityCacheUtil.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 					ExpandoValueImpl.class, primaryKey);
 
 			if (expandoValue == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -5283,16 +5303,17 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_EXPANDOVALUE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -5309,12 +5330,12 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			Query q = session.createQuery(sql);
 
-			for (ExpandoValue result : (List<ExpandoValue>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ExpandoValue expandoValue : (List<ExpandoValue>)q.list()) {
+				results.put(expandoValue.getPrimaryKeyObj(), expandoValue);
 
-				cacheResult(result);
+				cacheResult(expandoValue);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(expandoValue.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5330,17 +5351,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the expando value with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param valueId the primary key of the expando value
-	 * @return the expando value, or <code>null</code> if a expando value with the primary key could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByPrimaryKey(long valueId) {
-		return fetchByPrimaryKey((Serializable)valueId);
 	}
 
 	/**

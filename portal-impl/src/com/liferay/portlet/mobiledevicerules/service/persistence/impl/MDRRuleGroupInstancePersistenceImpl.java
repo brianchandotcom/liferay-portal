@@ -5082,6 +5082,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	}
 
 	/**
+	 * Returns the m d r rule group instance with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param ruleGroupInstanceId the primary key of the m d r rule group instance
+	 * @return the m d r rule group instance, or <code>null</code> if a m d r rule group instance with the primary key could not be found
+	 */
+	@Override
+	public MDRRuleGroupInstance fetchByPrimaryKey(long ruleGroupInstanceId) {
+		return fetchByPrimaryKey((Serializable)ruleGroupInstanceId);
+	}
+
+	/**
 	 * Returns a map of m d r rule group instances for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the m d r rule group instances
@@ -5090,28 +5101,37 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public Map<Serializable, MDRRuleGroupInstance> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, MDRRuleGroupInstance> results = new HashMap<Serializable, MDRRuleGroupInstance>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, MDRRuleGroupInstance> results = new HashMap<Serializable, MDRRuleGroupInstance>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			MDRRuleGroupInstance mdrRuleGroupInstance = fetchByPrimaryKey(primaryKey);
+
+			if (mdrRuleGroupInstance != null) {
+				results.put(primaryKey, mdrRuleGroupInstance);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)EntityCacheUtil.getResult(MDRRuleGroupInstanceModelImpl.ENTITY_CACHE_ENABLED,
 					MDRRuleGroupInstanceImpl.class, primaryKey);
 
 			if (mdrRuleGroupInstance == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -5119,16 +5139,17 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -5145,12 +5166,13 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 
 			Query q = session.createQuery(sql);
 
-			for (MDRRuleGroupInstance result : (List<MDRRuleGroupInstance>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (MDRRuleGroupInstance mdrRuleGroupInstance : (List<MDRRuleGroupInstance>)q.list()) {
+				results.put(mdrRuleGroupInstance.getPrimaryKeyObj(),
+					mdrRuleGroupInstance);
 
-				cacheResult(result);
+				cacheResult(mdrRuleGroupInstance);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(mdrRuleGroupInstance.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -5167,17 +5189,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the m d r rule group instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param ruleGroupInstanceId the primary key of the m d r rule group instance
-	 * @return the m d r rule group instance, or <code>null</code> if a m d r rule group instance with the primary key could not be found
-	 */
-	@Override
-	public MDRRuleGroupInstance fetchByPrimaryKey(long ruleGroupInstanceId) {
-		return fetchByPrimaryKey((Serializable)ruleGroupInstanceId);
 	}
 
 	/**

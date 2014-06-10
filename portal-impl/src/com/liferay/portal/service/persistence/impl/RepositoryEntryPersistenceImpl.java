@@ -2691,6 +2691,17 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	}
 
 	/**
+	 * Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param repositoryEntryId the primary key of the repository entry
+	 * @return the repository entry, or <code>null</code> if a repository entry with the primary key could not be found
+	 */
+	@Override
+	public RepositoryEntry fetchByPrimaryKey(long repositoryEntryId) {
+		return fetchByPrimaryKey((Serializable)repositoryEntryId);
+	}
+
+	/**
 	 * Returns a map of repository entries for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the repository entries
@@ -2699,28 +2710,37 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	@Override
 	public Map<Serializable, RepositoryEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, RepositoryEntry> results = new HashMap<Serializable, RepositoryEntry>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, RepositoryEntry> results = new HashMap<Serializable, RepositoryEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			RepositoryEntry repositoryEntry = fetchByPrimaryKey(primaryKey);
+
+			if (repositoryEntry != null) {
+				results.put(primaryKey, repositoryEntry);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			RepositoryEntry repositoryEntry = (RepositoryEntry)EntityCacheUtil.getResult(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 					RepositoryEntryImpl.class, primaryKey);
 
 			if (repositoryEntry == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -2728,16 +2748,17 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_REPOSITORYENTRY_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -2754,12 +2775,12 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 
 			Query q = session.createQuery(sql);
 
-			for (RepositoryEntry result : (List<RepositoryEntry>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (RepositoryEntry repositoryEntry : (List<RepositoryEntry>)q.list()) {
+				results.put(repositoryEntry.getPrimaryKeyObj(), repositoryEntry);
 
-				cacheResult(result);
+				cacheResult(repositoryEntry);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(repositoryEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -2775,17 +2796,6 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param repositoryEntryId the primary key of the repository entry
-	 * @return the repository entry, or <code>null</code> if a repository entry with the primary key could not be found
-	 */
-	@Override
-	public RepositoryEntry fetchByPrimaryKey(long repositoryEntryId) {
-		return fetchByPrimaryKey((Serializable)repositoryEntryId);
 	}
 
 	/**

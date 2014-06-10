@@ -1744,6 +1744,17 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	}
 
 	/**
+	 * Returns the s c product screenshot with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param productScreenshotId the primary key of the s c product screenshot
+	 * @return the s c product screenshot, or <code>null</code> if a s c product screenshot with the primary key could not be found
+	 */
+	@Override
+	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId) {
+		return fetchByPrimaryKey((Serializable)productScreenshotId);
+	}
+
+	/**
 	 * Returns a map of s c product screenshots for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the s c product screenshots
@@ -1752,28 +1763,37 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	@Override
 	public Map<Serializable, SCProductScreenshot> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, SCProductScreenshot> results = new HashMap<Serializable, SCProductScreenshot>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, SCProductScreenshot> results = new HashMap<Serializable, SCProductScreenshot>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			SCProductScreenshot scProductScreenshot = fetchByPrimaryKey(primaryKey);
+
+			if (scProductScreenshot != null) {
+				results.put(primaryKey, scProductScreenshot);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			SCProductScreenshot scProductScreenshot = (SCProductScreenshot)EntityCacheUtil.getResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 					SCProductScreenshotImpl.class, primaryKey);
 
 			if (scProductScreenshot == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -1781,16 +1801,17 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -1807,12 +1828,13 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 			Query q = session.createQuery(sql);
 
-			for (SCProductScreenshot result : (List<SCProductScreenshot>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (SCProductScreenshot scProductScreenshot : (List<SCProductScreenshot>)q.list()) {
+				results.put(scProductScreenshot.getPrimaryKeyObj(),
+					scProductScreenshot);
 
-				cacheResult(result);
+				cacheResult(scProductScreenshot);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(scProductScreenshot.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -1829,17 +1851,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the s c product screenshot with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param productScreenshotId the primary key of the s c product screenshot
-	 * @return the s c product screenshot, or <code>null</code> if a s c product screenshot with the primary key could not be found
-	 */
-	@Override
-	public SCProductScreenshot fetchByPrimaryKey(long productScreenshotId) {
-		return fetchByPrimaryKey((Serializable)productScreenshotId);
 	}
 
 	/**

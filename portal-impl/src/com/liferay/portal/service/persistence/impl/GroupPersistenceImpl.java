@@ -7822,6 +7822,17 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
+	 * Returns the group with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param groupId the primary key of the group
+	 * @return the group, or <code>null</code> if a group with the primary key could not be found
+	 */
+	@Override
+	public Group fetchByPrimaryKey(long groupId) {
+		return fetchByPrimaryKey((Serializable)groupId);
+	}
+
+	/**
 	 * Returns a map of groups for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the groups
@@ -7830,28 +7841,37 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	@Override
 	public Map<Serializable, Group> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, Group> results = new HashMap<Serializable, Group>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, Group> results = new HashMap<Serializable, Group>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			Group group = fetchByPrimaryKey(primaryKey);
+
+			if (group != null) {
+				results.put(primaryKey, group);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			Group group = (Group)EntityCacheUtil.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 					GroupImpl.class, primaryKey);
 
 			if (group == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -7859,16 +7879,17 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_GROUP__WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -7885,12 +7906,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			Query q = session.createQuery(sql);
 
-			for (Group result : (List<Group>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (Group group : (List<Group>)q.list()) {
+				results.put(group.getPrimaryKeyObj(), group);
 
-				cacheResult(result);
+				cacheResult(group);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(group.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -7906,17 +7927,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the group with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param groupId the primary key of the group
-	 * @return the group, or <code>null</code> if a group with the primary key could not be found
-	 */
-	@Override
-	public Group fetchByPrimaryKey(long groupId) {
-		return fetchByPrimaryKey((Serializable)groupId);
 	}
 
 	/**

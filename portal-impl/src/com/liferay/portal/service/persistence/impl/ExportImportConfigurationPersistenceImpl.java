@@ -3121,6 +3121,18 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	/**
+	 * Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param exportImportConfigurationId the primary key of the export import configuration
+	 * @return the export import configuration, or <code>null</code> if a export import configuration with the primary key could not be found
+	 */
+	@Override
+	public ExportImportConfiguration fetchByPrimaryKey(
+		long exportImportConfigurationId) {
+		return fetchByPrimaryKey((Serializable)exportImportConfigurationId);
+	}
+
+	/**
 	 * Returns a map of export import configurations for the primary keys provided.
 	 *
 	 * @param  primaryKeys the set of primaryKeys for which to fetch the export import configurations
@@ -3129,28 +3141,37 @@ public class ExportImportConfigurationPersistenceImpl
 	@Override
 	public Map<Serializable, ExportImportConfiguration> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
-		Map<Serializable, ExportImportConfiguration> results = new HashMap<Serializable, ExportImportConfiguration>();
-
 		if (primaryKeys.isEmpty()) {
-			return results;
+			return Collections.emptyMap();
 		}
+
+		Map<Serializable, ExportImportConfiguration> results = new HashMap<Serializable, ExportImportConfiguration>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
-			Serializable singlePrimaryKey = iterator.next();
-			results.put(singlePrimaryKey, fetchByPrimaryKey(singlePrimaryKey));
+			Serializable primaryKey = iterator.next();
+
+			ExportImportConfiguration exportImportConfiguration = fetchByPrimaryKey(primaryKey);
+
+			if (exportImportConfiguration != null) {
+				results.put(primaryKey, exportImportConfiguration);
+			}
 
 			return results;
 		}
 
-		Set<Serializable> cacheMissPks = new HashSet<Serializable>();
+		Set<Serializable> cacheMissPks = null;
 
 		for (Serializable primaryKey : primaryKeys) {
 			ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)EntityCacheUtil.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 					ExportImportConfigurationImpl.class, primaryKey);
 
 			if (exportImportConfiguration == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
 				cacheMissPks.add(primaryKey);
 			}
 			else {
@@ -3158,16 +3179,17 @@ public class ExportImportConfigurationPersistenceImpl
 			}
 		}
 
-		if (cacheMissPks.isEmpty()) {
+		if (cacheMissPks == null) {
 			return results;
 		}
 
-		StringBundler query = new StringBundler((cacheMissPks.size() * 4) + 1);
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
 
 		query.append(_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : cacheMissPks) {
 			query.append(String.valueOf(primaryKey));
+
 			query.append(StringPool.COMMA);
 		}
 
@@ -3184,12 +3206,13 @@ public class ExportImportConfigurationPersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			for (ExportImportConfiguration result : (List<ExportImportConfiguration>)q.list()) {
-				results.put(result.getPrimaryKeyObj(), result);
+			for (ExportImportConfiguration exportImportConfiguration : (List<ExportImportConfiguration>)q.list()) {
+				results.put(exportImportConfiguration.getPrimaryKeyObj(),
+					exportImportConfiguration);
 
-				cacheResult(result);
+				cacheResult(exportImportConfiguration);
 
-				cacheMissPks.remove(result.getPrimaryKeyObj());
+				cacheMissPks.remove(exportImportConfiguration.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : cacheMissPks) {
@@ -3206,18 +3229,6 @@ public class ExportImportConfigurationPersistenceImpl
 		}
 
 		return results;
-	}
-
-	/**
-	 * Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param exportImportConfigurationId the primary key of the export import configuration
-	 * @return the export import configuration, or <code>null</code> if a export import configuration with the primary key could not be found
-	 */
-	@Override
-	public ExportImportConfiguration fetchByPrimaryKey(
-		long exportImportConfigurationId) {
-		return fetchByPrimaryKey((Serializable)exportImportConfigurationId);
 	}
 
 	/**

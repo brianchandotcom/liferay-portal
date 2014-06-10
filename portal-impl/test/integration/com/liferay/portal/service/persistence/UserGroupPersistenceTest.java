@@ -294,76 +294,80 @@ public class UserGroupPersistenceTest {
 	}
 
 	@Test
-	public void FetchByPrimaryKeysEmptyInput() throws Exception {
-		Set<Serializable> missingPks = new HashSet<Serializable>();
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroup> missingUserGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		Map<Serializable, UserGroup> userGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(missingUserGroups.isEmpty());
+		Assert.assertTrue(userGroups.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSingleInput() throws Exception {
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroup.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroup> missingUserGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroup existingUserGroup = missingUserGroups.get(newUserGroup.getPrimaryKey());
+		primaryKeys.add(newUserGroup.getPrimaryKey());
 
-		Assert.assertEquals(missingUserGroups.size(), 1);
-		Assert.assertEquals(newUserGroup, existingUserGroup);
+		Map<Serializable, UserGroup> userGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, userGroups.size());
+		Assert.assertEquals(newUserGroup,
+			userGroups.get(newUserGroup.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysNoneExist() throws Exception {
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(pk);
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroup> missingUserGroups = _persistence.fetchByPrimaryKeys(missingPks);
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
 
-		Assert.assertTrue(missingUserGroups.isEmpty());
+		Map<Serializable, UserGroup> userGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(userGroups.isEmpty());
 	}
 
 	@Test
-	public void FetchByPrimaryKeysSomeExist() throws Exception {
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
+
 		long pk2 = RandomTestUtil.nextLong();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroup.getPrimaryKey());
-		missingPks.add(pk2);
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroup> missingUserGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroup existingUserGroup = missingUserGroups.get(newUserGroup.getPrimaryKey());
+		primaryKeys.add(newUserGroup.getPrimaryKey());
+		primaryKeys.add(pk2);
 
-		Assert.assertEquals(missingUserGroups.size(), 1);
-		Assert.assertEquals(newUserGroup, existingUserGroup);
-		Assert.assertNull(missingUserGroups.get(pk2));
+		Map<Serializable, UserGroup> userGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, userGroups.size());
+		Assert.assertEquals(newUserGroup,
+			userGroups.get(newUserGroup.getPrimaryKey()));
 	}
 
 	@Test
-	public void FetchByPrimaryKeysAllExist() throws Exception {
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
 		UserGroup newUserGroup = addUserGroup();
 		UserGroup newUserGroup2 = addUserGroup();
 
-		Set<Serializable> missingPks = new HashSet<Serializable>();
-		missingPks.add(newUserGroup.getPrimaryKey());
-		missingPks.add(newUserGroup2.getPrimaryKey());
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroup> missingUserGroups = _persistence.fetchByPrimaryKeys(missingPks);
-		UserGroup existingUserGroup = missingUserGroups.get(newUserGroup.getPrimaryKey());
-		UserGroup existingUserGroup2 = missingUserGroups.get(newUserGroup2.getPrimaryKey());
+		primaryKeys.add(newUserGroup.getPrimaryKey());
+		primaryKeys.add(newUserGroup2.getPrimaryKey());
 
-		Assert.assertEquals(missingUserGroups.size(), 2);
-		Assert.assertEquals(newUserGroup, existingUserGroup);
-		Assert.assertEquals(newUserGroup2, existingUserGroup2);
+		Map<Serializable, UserGroup> userGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, userGroups.size());
+		Assert.assertEquals(newUserGroup,
+			userGroups.get(newUserGroup.getPrimaryKey()));
+		Assert.assertEquals(newUserGroup2,
+			userGroups.get(newUserGroup2.getPrimaryKey()));
 	}
 
 	@Test

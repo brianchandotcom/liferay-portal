@@ -21,5 +21,14 @@ String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS)
 %>
 
 <div id="<portlet:namespace />diffContainerHtmlResults">
-	<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(diffHtmlResults) %>">
+			<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-info">
+				<liferay-ui:message key="those-versions-are-not-comparables" />
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>

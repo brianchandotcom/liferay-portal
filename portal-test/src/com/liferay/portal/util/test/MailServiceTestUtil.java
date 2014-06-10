@@ -15,10 +15,11 @@
 package com.liferay.portal.util.test;
 
 import com.dumbster.smtp.MailMessage;
-import com.dumbster.smtp.ServerOptions;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.SmtpServerFactory;
+import com.dumbster.smtp.mailstores.RollingMailStore;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -73,12 +74,43 @@ public class MailServiceTestUtil {
 			throw new IllegalStateException("Server is already running");
 		}
 
-		ServerOptions opts = new ServerOptions();
+		_smtpServer = new SmtpServer();
 
-		opts.port = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT));
+		_smtpServer.setPort(
+			GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT)));
+		_smtpServer.setThreaded(false);
+		_smtpServer.setMailStore(
+			new RollingMailStore() {
 
-		_smtpServer = SmtpServerFactory.startServer(opts);
+				@Override
+				public void addMessage(MailMessage message) {
+					try {
+						List<MailMessage> receivedMail =
+							(List<MailMessage>)ReflectionTestUtil.getFieldValue(
+								this, "receivedMail");
+
+						receivedMail.add(message);
+
+						if (getEmailCount() > 100) {
+							receivedMail.remove(0);
+						}
+					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+			});
+
+		try {
+			ReflectionTestUtil.invoke(
+				SmtpServerFactory.class, "startServerThread",
+				new Class<?>[]{SmtpServer.class}, _smtpServer);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void stop() {

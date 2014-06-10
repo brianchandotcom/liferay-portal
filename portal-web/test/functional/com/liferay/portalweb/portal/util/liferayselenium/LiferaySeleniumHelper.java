@@ -652,6 +652,12 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-41776
+
+		if (line.contains("SEC5054: Certificate has expired")) {
+			return true;
+		}
+
 		// LPS-41863
 
 		if (line.contains("Disabling contextual LOB") &&

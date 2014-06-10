@@ -978,8 +978,7 @@ public class ParamUtil {
 
 		if (hasDateParams) {
 			int year = MapUtil.getInteger(parameterMap, paramPrefix + "Year");
-			int month = MapUtil.getInteger(
-				parameterMap, paramPrefix + "Month");
+			int month = MapUtil.getInteger(parameterMap, paramPrefix + "Month");
 			int day = MapUtil.getInteger(parameterMap, paramPrefix + "Day");
 			int hour = MapUtil.getInteger(parameterMap, paramPrefix + "Hour");
 			int minute = MapUtil.getInteger(

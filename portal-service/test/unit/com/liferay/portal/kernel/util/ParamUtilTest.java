@@ -23,6 +23,7 @@ import java.util.TimeZone;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
@@ -33,7 +34,7 @@ public class ParamUtilTest {
 
 	@Before
 	public void setUp() {
-		setupCalendarFactory();
+		setupCalendarFactoryUtil();
 	}
 
 	@Test
@@ -197,7 +198,7 @@ public class ParamUtilTest {
 		Assert.assertEquals(_defaultDate, actualDate);
 	}
 
-	protected void setupCalendarFactory() {
+	protected void setupCalendarFactoryUtil() {
 		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
 
 		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());

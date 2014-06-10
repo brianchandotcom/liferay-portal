@@ -152,6 +152,17 @@ public class DLAppLocalServiceTest {
 		Assert.assertEquals("New Name", assetEntry.getTitle());
 	}
 
+	@Test(expected = NoSuchFolderException.class)
+	public void testUpdateDefaultParentFolder() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLAppLocalServiceUtil.updateFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "foo", StringPool.BLANK,
+			serviceContext);
+	}
+
 	protected FileEntry addFileEntry(ServiceContext serviceContext)
 		throws Exception {
 

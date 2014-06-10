@@ -28,28 +28,30 @@ public abstract class BaseCapabilityRepository<T>
 
 	public BaseCapabilityRepository(
 		T repository,
-		Map<Class<? extends Capability>, Capability> capabilityMap,
-		Set<Class<? extends Capability>> exportedCapabilities) {
+		Map<Class<? extends Capability>, Capability> supportedCapabilitiesMap,
+		Set<Class<? extends Capability>> exportedCapabilityClasses) {
 
 		Set<Class<? extends Capability>> supportedCapabilities =
-			capabilityMap.keySet();
+			supportedCapabilitiesMap.keySet();
 
-		if (!supportedCapabilities.containsAll(exportedCapabilities)) {
+		if (!supportedCapabilities.containsAll(exportedCapabilityClasses)) {
 			throw new IllegalArgumentException(
 				String.format(
 					"Exporting capabilities not explicitly supported is not " +
-					"allowed. Repository supports %s, but tried to export %s",
-					capabilityMap.keySet(), exportedCapabilities));
+						"allowed. Repository supports %s, but tried to " +
+							"export %s",
+					supportedCapabilitiesMap.keySet(),
+					exportedCapabilityClasses));
 		}
 
 		_repository = repository;
-		_capabilityMap = capabilityMap;
-		_exportedCapabilities = exportedCapabilities;
+		_supportedCapabilitiesMap = supportedCapabilitiesMap;
+		_exportedCapabilityClasses = exportedCapabilityClasses;
 	}
 
 	@Override
 	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
-		if (_exportedCapabilities.contains(capabilityClass)) {
+		if (_exportedCapabilityClasses.contains(capabilityClass)) {
 			return getInternalCapability(capabilityClass);
 		}
 
@@ -63,13 +65,13 @@ public abstract class BaseCapabilityRepository<T>
 	public <T extends Capability> boolean isCapabilityProvided(
 		Class<T> capabilityClass) {
 
-		return _exportedCapabilities.contains(capabilityClass);
+		return _exportedCapabilityClasses.contains(capabilityClass);
 	}
 
 	protected <T extends Capability> T getInternalCapability(
 		Class<T> capabilityClass) {
 
-		Capability capability = _capabilityMap.get(capabilityClass);
+		Capability capability = _supportedCapabilitiesMap.get(capabilityClass);
 
 		if (capability == null) {
 			throw new IllegalArgumentException(
@@ -87,9 +89,9 @@ public abstract class BaseCapabilityRepository<T>
 
 	protected abstract long getRepositoryId();
 
-	private final Map<Class<? extends Capability>, Capability>
-		_capabilityMap;
-	private final Set<Class<? extends Capability>> _exportedCapabilities;
+	private final Set<Class<? extends Capability>> _exportedCapabilityClasses;
 	private final T _repository;
+	private final Map<Class<? extends Capability>, Capability>
+		_supportedCapabilitiesMap;
 
 }

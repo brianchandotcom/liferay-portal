@@ -68,7 +68,7 @@ public abstract class BaseWebDriverImpl
 		WebDriver.Window window = options.window();
 
 		int x = 1065;
-		int y = 1250;
+		int y = 1040;
 
 		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
 			String[] screenResolution = StringUtil.split(

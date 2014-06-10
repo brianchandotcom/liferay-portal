@@ -52,8 +52,8 @@ public class Logger {
 
 		WebDriver.Window window = options.window();
 
-		window.setPosition(new Point(1000, 50));
-		window.setSize(new Dimension(850, 1250));
+		window.setPosition(new Point(1050, 45));
+		window.setSize(new Dimension(850, 950));
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 

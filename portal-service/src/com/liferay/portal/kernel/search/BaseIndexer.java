@@ -71,14 +71,12 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -208,28 +206,26 @@ public abstract class BaseIndexer implements Indexer {
 		try {
 			searchContext.setSearchEngineId(getSearchEngineId());
 
-			String[] entryClassNames = getClassNames();
+			Set<String> fullQueryEntryClassNamesSet = new HashSet<String>();
 
-			if (searchContext.isIncludeAttachments()) {
-				entryClassNames = ArrayUtil.append(
-					entryClassNames, DLFileEntry.class.getName());
+			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+				indexer.updateFullQuery(
+					searchContext, fullQueryEntryClassNamesSet);
 			}
 
-			if (searchContext.isIncludeDiscussions()) {
-				entryClassNames = ArrayUtil.append(
-					entryClassNames, MBMessage.class.getName());
+			String[] fullQueryEntryClassNames =
+				fullQueryEntryClassNamesSet.toArray(
+					new String[fullQueryEntryClassNamesSet.size()]);
 
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-			}
-
-			searchContext.setEntryClassNames(entryClassNames);
-
-			if (searchContext.isIncludeAttachments() ||
-				searchContext.isIncludeDiscussions()) {
-
+			if (ArrayUtil.isNotEmpty(fullQueryEntryClassNames)) {
 				searchContext.setAttribute(
 					"relatedEntryClassNames", getClassNames());
 			}
+
+			String[] entryClassNames = ArrayUtil.append(
+				getClassNames(), fullQueryEntryClassNames);
+
+			searchContext.setEntryClassNames(entryClassNames);
 
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
@@ -580,6 +576,11 @@ public abstract class BaseIndexer implements Indexer {
 
 		_indexerPostProcessors = indexerPostProcessorsList.toArray(
 			new IndexerPostProcessor[indexerPostProcessorsList.size()]);
+	}
+
+	@Override
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames) {
 	}
 
 	protected void addAssetFields(

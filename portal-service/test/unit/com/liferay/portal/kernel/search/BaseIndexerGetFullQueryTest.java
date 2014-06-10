@@ -21,13 +21,16 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -57,7 +60,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		setUpBooleanQueryFactoryUtil();
 		setUpJSONFactoryUtil();
 		setUpPropsUtil();
@@ -152,6 +155,19 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpIndexerRegistryUtil() throws Exception {
+		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		List<Indexer> indexers = Arrays.<Indexer>asList(
+			new DLFileEntryIndexer(), new MBMessageIndexer());
+
+		PowerMockito.when(
+			IndexerRegistryUtil.class, "getIndexers"
+		).thenReturn(
+			indexers
+		);
+	}
+
 	protected void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -172,7 +188,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		PropsUtil.setProps(props);
 	}
 
-	protected void setUpRegistryUtil() {
+	protected void setUpRegistryUtil() throws Exception {
 		Registry registry = mock(Registry.class);
 
 		when(
@@ -200,7 +216,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		RegistryUtil.setRegistry(registry);
 
-		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
+		setUpIndexerRegistryUtil();
 	}
 
 	protected void setUpSearchEngineUtil() {

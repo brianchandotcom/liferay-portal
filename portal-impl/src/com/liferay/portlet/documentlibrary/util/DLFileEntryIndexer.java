@@ -86,6 +86,7 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -279,6 +280,15 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
+		}
+	}
+
+	@Override
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames) {
+
+		if (searchContext.isIncludeAttachments()) {
+			fullQueryEntryClassNames.add(DLFileEntry.class.getName());
 		}
 	}
 

@@ -1520,9 +1520,9 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
 
-		DocumentHelper helper = new DocumentHelper(document);
+		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		helper.setEntryKey(className, classPK);
+		documentHelper.setEntryKey(className, classPK);
 
 		document.addKeyword(Field.PORTLET_ID, portletId);
 
@@ -1533,7 +1533,7 @@ public abstract class BaseIndexer implements Indexer {
 		if (baseModel instanceof AttachedModel) {
 			AttachedModel attachedModel = (AttachedModel)baseModel;
 
-			helper.setAttachmentOwnerKey(
+			documentHelper.setAttachmentOwnerKey(
 				attachedModel.getClassNameId(), attachedModel.getClassPK());
 		}
 

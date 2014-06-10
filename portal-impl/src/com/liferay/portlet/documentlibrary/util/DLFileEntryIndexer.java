@@ -445,9 +445,10 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				if (indexer != null) {
 					indexer.addRelatedEntryFields(document, obj);
 
-					DocumentHelper helper = new DocumentHelper(document);
+					DocumentHelper documentHelper = new DocumentHelper(
+						document);
 
-					helper.setAttachmentOwnerKey(
+					documentHelper.setAttachmentOwnerKey(
 						PortalUtil.getClassNameId(dlFileEntry.getClassName()),
 						dlFileEntry.getClassPK());
 

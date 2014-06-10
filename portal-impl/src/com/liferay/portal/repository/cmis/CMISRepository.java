@@ -1745,9 +1745,9 @@ public class CMISRepository extends BaseCmisRepository {
 				continue;
 			}
 
-			DocumentHelper helper = new DocumentHelper(document);
+			DocumentHelper documentHelper = new DocumentHelper(document);
 
-			helper.setEntryKey(
+			documentHelper.setEntryKey(
 				fileEntry.getModelClassName(), fileEntry.getFileEntryId());
 
 			document.addKeyword(Field.TITLE, fileEntry.getTitle());

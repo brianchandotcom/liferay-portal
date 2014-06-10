@@ -174,7 +174,14 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH %>">
 								<liferay-util:buffer var="pageTitleLink">
-									<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
+									<c:choose>
+										<c:when test="<%= socialActivityWikiPage != null %>">
+											<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
+										</c:when>
+										<c:otherwise>
+											<%= wikiPage.getTitle() %>
+										</c:otherwise>
+									</c:choose>
 								</liferay-util:buffer>
 
 								<liferay-ui:icon

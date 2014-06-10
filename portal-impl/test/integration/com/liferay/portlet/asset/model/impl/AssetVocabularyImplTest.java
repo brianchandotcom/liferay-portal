@@ -121,26 +121,26 @@ public class AssetVocabularyImplTest {
 		AssetTestUtil.addCategory(
 			_group.getGroupId(), vocabulary.getVocabularyId());
 
-		Assert.assertFalse(
-			vocabulary.isMissingRequiredCategory(1, new long[]{1}));
+		Assert.assertFalse(vocabulary.isMissingRequiredCategory(
+			1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, new long[]{1}));
 
 		vocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId(), 1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
 			true);
 
-		Assert.assertTrue(
-			vocabulary.isMissingRequiredCategory(1, new long[]{1}));
-		Assert.assertFalse(
-			vocabulary.isMissingRequiredCategory(2, new long[0]));
+		Assert.assertTrue(vocabulary.isMissingRequiredCategory(
+			1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, new long[]{1}));
+		Assert.assertFalse(vocabulary.isMissingRequiredCategory(
+			2, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, new long[0]));
 
 		AssetCategory category = AssetTestUtil.addCategory(
 			_group.getGroupId(), vocabulary.getVocabularyId());
 
-		Assert.assertTrue(
-			vocabulary.isMissingRequiredCategory(1, new long[]{1}));
-		Assert.assertFalse(
-			vocabulary.isMissingRequiredCategory(
-				1, new long[]{category.getCategoryId()}));
+		Assert.assertTrue(vocabulary.isMissingRequiredCategory(
+			1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS, new long[]{1}));
+		Assert.assertFalse(vocabulary.isMissingRequiredCategory(
+			1, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+			new long[]{category.getCategoryId()}));
 	}
 
 	@Test

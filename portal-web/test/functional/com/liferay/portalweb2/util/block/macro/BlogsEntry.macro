@@ -33,7 +33,7 @@
 	</command>
 
 	<command name="addAbstractSmallImagePG">
-		<execute action="PGBlogsAdd#pause" locator1="10000" />
+		<execute action="PGBlogsAdd#pause" locator1="5000" />
 		<execute action="PGBlogsAdd#check" locator-key1="ABSTRACT_USE_SMALL_IMAGE_CHECKBOX" />
 
 		<if>

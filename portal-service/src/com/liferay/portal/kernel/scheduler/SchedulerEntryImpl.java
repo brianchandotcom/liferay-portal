@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,11 +27,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	@Override
 	public String getDescription() {
 		return _description;
-	}
-
-	@Override
-	public MessageListener getEventListener() {
-		return _eventListener;
 	}
 
 	@Override
@@ -106,11 +100,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	@Override
-	public void setEventListener(MessageListener eventListener) {
-		_eventListener = eventListener;
-	}
-
-	@Override
 	public void setEventListenerClass(String eventListenerClass) {
 		_eventListenerClass = eventListenerClass;
 	}
@@ -147,12 +136,10 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append(", description=");
 		sb.append(_description);
-		sb.append(", eventListener=");
-		sb.append(_eventListener);
 		sb.append(", eventListenerClass=");
 		sb.append(_eventListenerClass);
 		sb.append(", propertyKey=");
@@ -171,7 +158,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	private String _description = StringPool.BLANK;
-	private transient MessageListener _eventListener;
 	private String _eventListenerClass = StringPool.BLANK;
 	private String _propertyKey = StringPool.BLANK;
 	private TimeUnit _timeUnit;

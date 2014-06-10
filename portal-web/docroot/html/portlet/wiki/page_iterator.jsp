@@ -381,13 +381,13 @@ for (int i = 0; i < results.size(); i++) {
 
 <c:if test='<%= type.equals("all_pages") && WikiNodePermission.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_PAGE) %>'>
 	<aui:button-row>
-		<liferay-portlet:actionURL allowEmptyParam="<%= true %>" var="addPageURL">
+		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPageURL">
 			<liferay-portlet:param name="struts_action" value="/wiki/edit_page" />
 			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
 			<liferay-portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 			<liferay-portlet:param name="title" value="<%= StringPool.BLANK %>" />
 			<liferay-portlet:param name="editTitle" value="1" />
-		</liferay-portlet:actionURL>
+		</liferay-portlet:renderURL>
 
 		<aui:button href="<%= addPageURL %>" name="addPageButton" value="add-page" />
 	</aui:button-row>

@@ -57,9 +57,9 @@ public class SearchTestUtil {
 
 		Document document = createDocument(entryClassName, entryClassPK);
 
-		DocumentHelper helper = new DocumentHelper(document);
+		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		helper.setAttachmentOwnerKey(
+		documentHelper.setAttachmentOwnerKey(
 			ATTACHMENT_OWNER_CLASS_NAME_ID, ATTACHMENT_OWNER_CLASS_PK);
 
 		return document;
@@ -74,9 +74,9 @@ public class SearchTestUtil {
 
 		Document document = new DocumentImpl();
 
-		DocumentHelper helper = new DocumentHelper(document);
+		DocumentHelper documentHelper = new DocumentHelper(document);
 
-		helper.setEntryKey(entryClassName, entryClassPk);
+		documentHelper.setEntryKey(entryClassName, entryClassPk);
 
 		return document;
 	}

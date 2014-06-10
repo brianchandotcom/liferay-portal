@@ -175,6 +175,17 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${width}" arg2="true" />
+			<then>
+				<for list="${structureFieldNames}" param="structureFieldName">
+					<execute macro="DynamicDataMapping#editFieldWidth">
+						<var name="fieldFieldLabel" value="${structureFieldName}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 
 		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

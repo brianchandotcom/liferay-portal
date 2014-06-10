@@ -722,6 +722,17 @@ public class SocialActivityLimitUtil {
 	}
 
 	/**
+	* Returns a map of social activity limits for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity limits
+	* @return map of primaryKeys to social activity limits.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivityLimit> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the social activity limits.
 	*
 	* @return the social activity limits

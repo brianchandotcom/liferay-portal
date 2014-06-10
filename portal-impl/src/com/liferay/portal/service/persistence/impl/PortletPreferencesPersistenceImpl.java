@@ -44,7 +44,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the portlet preferences service.
@@ -4858,6 +4863,105 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	/**
+	 * Returns a map of portlet preferenceses for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the portlet preferenceses
+	 * @return map of primaryKeys to portlet preferenceses.
+	 */
+	@Override
+	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, PortletPreferences> results = new HashMap<Serializable, PortletPreferences>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			PortletPreferences portletPreferences = fetchByPrimaryKey(primaryKey);
+
+			if (portletPreferences != null) {
+				results.put(primaryKey, portletPreferences);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			PortletPreferences portletPreferences = (PortletPreferences)EntityCacheUtil.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+					PortletPreferencesImpl.class, primaryKey);
+
+			if (portletPreferences == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, portletPreferences);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (PortletPreferences portletPreferences : (List<PortletPreferences>)q.list()) {
+				results.put(portletPreferences.getPrimaryKeyObj(),
+					portletPreferences);
+
+				cacheResult(portletPreferences);
+
+				cacheMissPks.remove(portletPreferences.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+					PortletPreferencesImpl.class, primaryKey,
+					_nullPortletPreferences);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the portlet preferenceses.
 	 *
 	 * @return the portlet preferenceses
@@ -5057,6 +5161,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	private static final String _SQL_SELECT_PORTLETPREFERENCES = "SELECT portletPreferences FROM PortletPreferences portletPreferences";
+	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE portletPreferencesId IN (";
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences";
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE = "SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";

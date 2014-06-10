@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -422,6 +423,83 @@ public class JournalFolderPersistenceTest {
 			"name", true, "description", true, "restrictionType", true,
 			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, JournalFolder> journalFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalFolders.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		JournalFolder newJournalFolder = addJournalFolder();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFolder.getPrimaryKey());
+
+		Map<Serializable, JournalFolder> journalFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFolders.size());
+		Assert.assertEquals(newJournalFolder,
+			journalFolders.get(newJournalFolder.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, JournalFolder> journalFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalFolders.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		JournalFolder newJournalFolder = addJournalFolder();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFolder.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, JournalFolder> journalFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFolders.size());
+		Assert.assertEquals(newJournalFolder,
+			journalFolders.get(newJournalFolder.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		JournalFolder newJournalFolder = addJournalFolder();
+		JournalFolder newJournalFolder2 = addJournalFolder();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFolder.getPrimaryKey());
+		primaryKeys.add(newJournalFolder2.getPrimaryKey());
+
+		Map<Serializable, JournalFolder> journalFolders = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, journalFolders.size());
+		Assert.assertEquals(newJournalFolder,
+			journalFolders.get(newJournalFolder.getPrimaryKey()));
+		Assert.assertEquals(newJournalFolder2,
+			journalFolders.get(newJournalFolder2.getPrimaryKey()));
 	}
 
 	@Test

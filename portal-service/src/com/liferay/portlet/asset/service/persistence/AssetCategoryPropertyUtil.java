@@ -692,6 +692,17 @@ public class AssetCategoryPropertyUtil {
 	}
 
 	/**
+	* Returns a map of asset category properties for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset category properties
+	* @return map of primaryKeys to asset category properties.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetCategoryProperty> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the asset category properties.
 	*
 	* @return the asset category properties

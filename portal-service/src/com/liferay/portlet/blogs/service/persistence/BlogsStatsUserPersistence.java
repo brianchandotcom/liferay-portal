@@ -773,6 +773,15 @@ public interface BlogsStatsUserPersistence extends BasePersistence<BlogsStatsUse
 		long statsUserId);
 
 	/**
+	* Returns a map of blogs stats users for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the blogs stats users
+	* @return map of primaryKeys to blogs stats users.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.blogs.model.BlogsStatsUser> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the blogs stats users.
 	*
 	* @return the blogs stats users

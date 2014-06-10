@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -245,6 +246,79 @@ public class TeamPersistenceTest {
 			"teamId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "groupId", true,
 			"name", true, "description", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(teams.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Team newTeam = addTeam();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTeam.getPrimaryKey());
+
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(teams.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Team newTeam = addTeam();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTeam.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Team newTeam = addTeam();
+		Team newTeam2 = addTeam();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTeam.getPrimaryKey());
+		primaryKeys.add(newTeam2.getPrimaryKey());
+
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, teams.size());
+		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
+		Assert.assertEquals(newTeam2, teams.get(newTeam2.getPrimaryKey()));
 	}
 
 	@Test

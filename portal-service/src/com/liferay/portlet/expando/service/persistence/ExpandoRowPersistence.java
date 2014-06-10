@@ -386,6 +386,15 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 		long rowId);
 
 	/**
+	* Returns a map of expando rows for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando rows
+	* @return map of primaryKeys to expando rows.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoRow> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the expando rows.
 	*
 	* @return the expando rows

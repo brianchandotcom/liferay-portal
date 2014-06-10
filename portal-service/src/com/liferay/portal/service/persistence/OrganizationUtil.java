@@ -1858,6 +1858,17 @@ public class OrganizationUtil {
 	}
 
 	/**
+	* Returns a map of organizations for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the organizations
+	* @return map of primaryKeys to organizations.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Organization> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the organizations.
 	*
 	* @return the organizations

@@ -47,7 +47,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -3122,6 +3126,103 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	}
 
 	/**
+	 * Returns a map of message boards thread flags for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the message boards thread flags
+	 * @return map of primaryKeys to message boards thread flags.
+	 */
+	@Override
+	public Map<Serializable, MBThreadFlag> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, MBThreadFlag> results = new HashMap<Serializable, MBThreadFlag>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			MBThreadFlag mbThreadFlag = fetchByPrimaryKey(primaryKey);
+
+			if (mbThreadFlag != null) {
+				results.put(primaryKey, mbThreadFlag);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			MBThreadFlag mbThreadFlag = (MBThreadFlag)EntityCacheUtil.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
+					MBThreadFlagImpl.class, primaryKey);
+
+			if (mbThreadFlag == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, mbThreadFlag);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (MBThreadFlag mbThreadFlag : (List<MBThreadFlag>)q.list()) {
+				results.put(mbThreadFlag.getPrimaryKeyObj(), mbThreadFlag);
+
+				cacheResult(mbThreadFlag);
+
+				cacheMissPks.remove(mbThreadFlag.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
+					MBThreadFlagImpl.class, primaryKey, _nullMBThreadFlag);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the message boards thread flags.
 	 *
 	 * @return the message boards thread flags
@@ -3326,6 +3427,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	}
 
 	private static final String _SQL_SELECT_MBTHREADFLAG = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag";
+	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE threadFlagId IN (";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE ";
 	private static final String _SQL_COUNT_MBTHREADFLAG = "SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag";
 	private static final String _SQL_COUNT_MBTHREADFLAG_WHERE = "SELECT COUNT(mbThreadFlag) FROM MBThreadFlag mbThreadFlag WHERE ";

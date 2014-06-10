@@ -47,7 +47,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -2671,6 +2675,103 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	/**
+	 * Returns a map of polls choices for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the polls choices
+	 * @return map of primaryKeys to polls choices.
+	 */
+	@Override
+	public Map<Serializable, PollsChoice> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, PollsChoice> results = new HashMap<Serializable, PollsChoice>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			PollsChoice pollsChoice = fetchByPrimaryKey(primaryKey);
+
+			if (pollsChoice != null) {
+				results.put(primaryKey, pollsChoice);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
+					PollsChoiceImpl.class, primaryKey);
+
+			if (pollsChoice == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, pollsChoice);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (PollsChoice pollsChoice : (List<PollsChoice>)q.list()) {
+				results.put(pollsChoice.getPrimaryKeyObj(), pollsChoice);
+
+				cacheResult(pollsChoice);
+
+				cacheMissPks.remove(pollsChoice.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
+					PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the polls choices.
 	 *
 	 * @return the polls choices
@@ -2875,6 +2976,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	private static final String _SQL_SELECT_POLLSCHOICE = "SELECT pollsChoice FROM PollsChoice pollsChoice";
+	private static final String _SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE choiceId IN (";
 	private static final String _SQL_SELECT_POLLSCHOICE_WHERE = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE ";
 	private static final String _SQL_COUNT_POLLSCHOICE = "SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice";
 	private static final String _SQL_COUNT_POLLSCHOICE_WHERE = "SELECT COUNT(pollsChoice) FROM PollsChoice pollsChoice WHERE ";

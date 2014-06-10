@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -227,6 +228,83 @@ public class PluginSettingPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("PluginSetting",
 			"mvccVersion", true, "pluginSettingId", true, "companyId", true,
 			"pluginId", true, "pluginType", true, "roles", true, "active", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(pluginSettings.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		PluginSetting newPluginSetting = addPluginSetting();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
+
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(pluginSettings.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		PluginSetting newPluginSetting = addPluginSetting();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		PluginSetting newPluginSetting = addPluginSetting();
+		PluginSetting newPluginSetting2 = addPluginSetting();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPluginSetting.getPrimaryKey());
+		primaryKeys.add(newPluginSetting2.getPrimaryKey());
+
+		Map<Serializable, PluginSetting> pluginSettings = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, pluginSettings.size());
+		Assert.assertEquals(newPluginSetting,
+			pluginSettings.get(newPluginSetting.getPrimaryKey()));
+		Assert.assertEquals(newPluginSetting2,
+			pluginSettings.get(newPluginSetting2.getPrimaryKey()));
 	}
 
 	@Test

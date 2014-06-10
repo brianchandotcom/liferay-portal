@@ -47,7 +47,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -6663,6 +6667,103 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	/**
+	 * Returns a map of social requests for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the social requests
+	 * @return map of primaryKeys to social requests.
+	 */
+	@Override
+	public Map<Serializable, SocialRequest> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, SocialRequest> results = new HashMap<Serializable, SocialRequest>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
+
+			if (socialRequest != null) {
+				results.put(primaryKey, socialRequest);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			SocialRequest socialRequest = (SocialRequest)EntityCacheUtil.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+					SocialRequestImpl.class, primaryKey);
+
+			if (socialRequest == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, socialRequest);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_SOCIALREQUEST_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (SocialRequest socialRequest : (List<SocialRequest>)q.list()) {
+				results.put(socialRequest.getPrimaryKeyObj(), socialRequest);
+
+				cacheResult(socialRequest);
+
+				cacheMissPks.remove(socialRequest.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+					SocialRequestImpl.class, primaryKey, _nullSocialRequest);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the social requests.
 	 *
 	 * @return the social requests
@@ -6867,6 +6968,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	}
 
 	private static final String _SQL_SELECT_SOCIALREQUEST = "SELECT socialRequest FROM SocialRequest socialRequest";
+	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE_PKS_IN = "SELECT socialRequest FROM SocialRequest socialRequest WHERE requestId IN (";
 	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE = "SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
 	private static final String _SQL_COUNT_SOCIALREQUEST = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
 	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";

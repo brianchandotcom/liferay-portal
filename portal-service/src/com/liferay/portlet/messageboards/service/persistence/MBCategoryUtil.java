@@ -2872,6 +2872,17 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	* Returns a map of message boards categories for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards categories
+	* @return map of primaryKeys to message boards categories.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBCategory> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the message boards categories.
 	*
 	* @return the message boards categories

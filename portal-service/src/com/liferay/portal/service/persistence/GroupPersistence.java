@@ -1751,6 +1751,15 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	public com.liferay.portal.model.Group fetchByPrimaryKey(long groupId);
 
 	/**
+	* Returns a map of groups for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the groups
+	* @return map of primaryKeys to groups.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Group> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the groups.
 	*
 	* @return the groups

@@ -146,6 +146,15 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 		long webDavPropsId);
 
 	/**
+	* Returns a map of web d a v propses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the web d a v propses
+	* @return map of primaryKeys to web d a v propses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.WebDAVProps> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the web d a v propses.
 	*
 	* @return the web d a v propses

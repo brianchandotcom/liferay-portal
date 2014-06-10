@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -318,6 +319,83 @@ public class ResourcePermissionPersistenceTest {
 			"mvccVersion", true, "resourcePermissionId", true, "companyId",
 			true, "name", true, "scope", true, "primKey", true, "roleId", true,
 			"ownerId", true, "actionIds", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(resourcePermissions.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		ResourcePermission newResourcePermission = addResourcePermission();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
+
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(resourcePermissions.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		ResourcePermission newResourcePermission = addResourcePermission();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		ResourcePermission newResourcePermission = addResourcePermission();
+		ResourcePermission newResourcePermission2 = addResourcePermission();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newResourcePermission.getPrimaryKey());
+		primaryKeys.add(newResourcePermission2.getPrimaryKey());
+
+		Map<Serializable, ResourcePermission> resourcePermissions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, resourcePermissions.size());
+		Assert.assertEquals(newResourcePermission,
+			resourcePermissions.get(newResourcePermission.getPrimaryKey()));
+		Assert.assertEquals(newResourcePermission2,
+			resourcePermissions.get(newResourcePermission2.getPrimaryKey()));
 	}
 
 	@Test

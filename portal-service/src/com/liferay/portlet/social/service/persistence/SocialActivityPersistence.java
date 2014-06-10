@@ -1526,6 +1526,15 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 		long activityId);
 
 	/**
+	* Returns a map of social activities for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activities
+	* @return map of primaryKeys to social activities.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivity> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the social activities.
 	*
 	* @return the social activities

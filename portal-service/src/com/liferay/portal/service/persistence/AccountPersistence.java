@@ -93,6 +93,15 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	public com.liferay.portal.model.Account fetchByPrimaryKey(long accountId);
 
 	/**
+	* Returns a map of accounts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the accounts
+	* @return map of primaryKeys to accounts.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Account> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the accounts.
 	*
 	* @return the accounts

@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -315,6 +316,80 @@ public class WebsitePersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "url", true, "typeId", true,
 			"primary", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(websites.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Website newWebsite = addWebsite();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebsite.getPrimaryKey());
+
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(websites.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Website newWebsite = addWebsite();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebsite.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Website newWebsite = addWebsite();
+		Website newWebsite2 = addWebsite();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebsite.getPrimaryKey());
+		primaryKeys.add(newWebsite2.getPrimaryKey());
+
+		Map<Serializable, Website> websites = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, websites.size());
+		Assert.assertEquals(newWebsite, websites.get(newWebsite.getPrimaryKey()));
+		Assert.assertEquals(newWebsite2,
+			websites.get(newWebsite2.getPrimaryKey()));
 	}
 
 	@Test

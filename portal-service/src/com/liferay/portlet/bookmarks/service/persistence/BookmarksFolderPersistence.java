@@ -1698,6 +1698,15 @@ public interface BookmarksFolderPersistence extends BasePersistence<BookmarksFol
 		long folderId);
 
 	/**
+	* Returns a map of bookmarks folders for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the bookmarks folders
+	* @return map of primaryKeys to bookmarks folders.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.bookmarks.model.BookmarksFolder> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the bookmarks folders.
 	*
 	* @return the bookmarks folders

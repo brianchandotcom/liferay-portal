@@ -454,6 +454,15 @@ public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
 		long versionId);
 
 	/**
+	* Returns a map of trash versions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the trash versions
+	* @return map of primaryKeys to trash versions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.trash.model.TrashVersion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the trash versions.
 	*
 	* @return the trash versions

@@ -142,6 +142,15 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 		long classNameId);
 
 	/**
+	* Returns a map of class names for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the class names
+	* @return map of primaryKeys to class names.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.ClassName> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the class names.
 	*
 	* @return the class names

@@ -984,6 +984,17 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
+	* Returns a map of password policies for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the password policies
+	* @return map of primaryKeys to password policies.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PasswordPolicy> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the password policies.
 	*
 	* @return the password policies

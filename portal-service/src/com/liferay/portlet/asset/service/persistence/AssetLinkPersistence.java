@@ -774,6 +774,15 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 		long linkId);
 
 	/**
+	* Returns a map of asset links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset links
+	* @return map of primaryKeys to asset links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the asset links.
 	*
 	* @return the asset links

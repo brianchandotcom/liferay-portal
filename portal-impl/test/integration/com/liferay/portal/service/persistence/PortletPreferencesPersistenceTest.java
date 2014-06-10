@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -314,6 +315,83 @@ public class PortletPreferencesPersistenceTest {
 			"mvccVersion", true, "portletPreferencesId", true, "ownerId", true,
 			"ownerType", true, "plid", true, "portletId", true, "preferences",
 			true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, PortletPreferences> portletPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(portletPreferenceses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		PortletPreferences newPortletPreferences = addPortletPreferences();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortletPreferences.getPrimaryKey());
+
+		Map<Serializable, PortletPreferences> portletPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portletPreferenceses.size());
+		Assert.assertEquals(newPortletPreferences,
+			portletPreferenceses.get(newPortletPreferences.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, PortletPreferences> portletPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(portletPreferenceses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		PortletPreferences newPortletPreferences = addPortletPreferences();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortletPreferences.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, PortletPreferences> portletPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portletPreferenceses.size());
+		Assert.assertEquals(newPortletPreferences,
+			portletPreferenceses.get(newPortletPreferences.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		PortletPreferences newPortletPreferences = addPortletPreferences();
+		PortletPreferences newPortletPreferences2 = addPortletPreferences();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortletPreferences.getPrimaryKey());
+		primaryKeys.add(newPortletPreferences2.getPrimaryKey());
+
+		Map<Serializable, PortletPreferences> portletPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, portletPreferenceses.size());
+		Assert.assertEquals(newPortletPreferences,
+			portletPreferenceses.get(newPortletPreferences.getPrimaryKey()));
+		Assert.assertEquals(newPortletPreferences2,
+			portletPreferenceses.get(newPortletPreferences2.getPrimaryKey()));
 	}
 
 	@Test

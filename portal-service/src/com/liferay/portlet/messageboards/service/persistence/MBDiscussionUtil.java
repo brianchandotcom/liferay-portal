@@ -807,6 +807,17 @@ public class MBDiscussionUtil {
 	}
 
 	/**
+	* Returns a map of message boards discussions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards discussions
+	* @return map of primaryKeys to message boards discussions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBDiscussion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the message boards discussions.
 	*
 	* @return the message boards discussions

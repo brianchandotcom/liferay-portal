@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -332,6 +333,83 @@ public class ExpandoValuePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ExpandoValue", "valueId",
 			true, "companyId", true, "tableId", true, "columnId", true,
 			"rowId", true, "classNameId", true, "classPK", true, "data", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(expandoValues.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		ExpandoValue newExpandoValue = addExpandoValue();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
+
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(expandoValues.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		ExpandoValue newExpandoValue = addExpandoValue();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		ExpandoValue newExpandoValue = addExpandoValue();
+		ExpandoValue newExpandoValue2 = addExpandoValue();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newExpandoValue.getPrimaryKey());
+		primaryKeys.add(newExpandoValue2.getPrimaryKey());
+
+		Map<Serializable, ExpandoValue> expandoValues = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, expandoValues.size());
+		Assert.assertEquals(newExpandoValue,
+			expandoValues.get(newExpandoValue.getPrimaryKey()));
+		Assert.assertEquals(newExpandoValue2,
+			expandoValues.get(newExpandoValue2.getPrimaryKey()));
 	}
 
 	@Test

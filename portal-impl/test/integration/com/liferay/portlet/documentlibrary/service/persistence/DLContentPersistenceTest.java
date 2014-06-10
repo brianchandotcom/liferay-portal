@@ -56,6 +56,7 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -275,6 +276,83 @@ public class DLContentPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DLContent", "contentId",
 			true, "groupId", true, "companyId", true, "repositoryId", true,
 			"path", true, "version", true, "size", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, DLContent> dlContents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlContents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		DLContent newDLContent = addDLContent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLContent.getPrimaryKey());
+
+		Map<Serializable, DLContent> dlContents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlContents.size());
+		Assert.assertEquals(newDLContent,
+			dlContents.get(newDLContent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DLContent> dlContents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlContents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		DLContent newDLContent = addDLContent();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLContent.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DLContent> dlContents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlContents.size());
+		Assert.assertEquals(newDLContent,
+			dlContents.get(newDLContent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		DLContent newDLContent = addDLContent();
+		DLContent newDLContent2 = addDLContent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLContent.getPrimaryKey());
+		primaryKeys.add(newDLContent2.getPrimaryKey());
+
+		Map<Serializable, DLContent> dlContents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlContents.size());
+		Assert.assertEquals(newDLContent,
+			dlContents.get(newDLContent.getPrimaryKey()));
+		Assert.assertEquals(newDLContent2,
+			dlContents.get(newDLContent2.getPrimaryKey()));
 	}
 
 	@Test

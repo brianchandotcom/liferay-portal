@@ -582,6 +582,15 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		long contentId);
 
 	/**
+	* Returns a map of document library contents for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library contents
+	* @return map of primaryKeys to document library contents.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLContent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the document library contents.
 	*
 	* @return the document library contents

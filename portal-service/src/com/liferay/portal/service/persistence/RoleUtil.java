@@ -2218,6 +2218,17 @@ public class RoleUtil {
 	}
 
 	/**
+	* Returns a map of roles for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the roles
+	* @return map of primaryKeys to roles.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Role> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the roles.
 	*
 	* @return the roles

@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,6 +230,80 @@ public class ReleasePersistenceTest {
 			true, "releaseId", true, "createDate", true, "modifiedDate", true,
 			"servletContextName", true, "buildNumber", true, "buildDate", true,
 			"verified", true, "state", true, "testString", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(releases.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Release newRelease = addRelease();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRelease.getPrimaryKey());
+
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(releases.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Release newRelease = addRelease();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRelease.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Release newRelease = addRelease();
+		Release newRelease2 = addRelease();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRelease.getPrimaryKey());
+		primaryKeys.add(newRelease2.getPrimaryKey());
+
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, releases.size());
+		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+		Assert.assertEquals(newRelease2,
+			releases.get(newRelease2.getPrimaryKey()));
 	}
 
 	@Test

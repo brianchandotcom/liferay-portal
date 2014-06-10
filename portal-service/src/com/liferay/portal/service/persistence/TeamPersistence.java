@@ -320,6 +320,15 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public com.liferay.portal.model.Team fetchByPrimaryKey(long teamId);
 
 	/**
+	* Returns a map of teams for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the teams
+	* @return map of primaryKeys to teams.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Team> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the teams.
 	*
 	* @return the teams

@@ -506,6 +506,15 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	public com.liferay.portal.model.Region fetchByPrimaryKey(long regionId);
 
 	/**
+	* Returns a map of regions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the regions
+	* @return map of primaryKeys to regions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Region> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the regions.
 	*
 	* @return the regions

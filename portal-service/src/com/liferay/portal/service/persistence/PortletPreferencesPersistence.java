@@ -1077,6 +1077,15 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 		long portletPreferencesId);
 
 	/**
+	* Returns a map of portlet preferenceses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the portlet preferenceses
+	* @return map of primaryKeys to portlet preferenceses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletPreferences> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the portlet preferenceses.
 	*
 	* @return the portlet preferenceses

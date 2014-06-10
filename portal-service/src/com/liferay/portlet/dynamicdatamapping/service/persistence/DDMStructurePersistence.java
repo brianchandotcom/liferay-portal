@@ -1946,6 +1946,15 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 		long structureId);
 
 	/**
+	* Returns a map of d d m structures for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m structures
+	* @return map of primaryKeys to d d m structures.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the d d m structures.
 	*
 	* @return the d d m structures

@@ -490,6 +490,15 @@ public interface ShoppingItemPersistence extends BasePersistence<ShoppingItem> {
 		long itemId);
 
 	/**
+	* Returns a map of shopping items for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping items
+	* @return map of primaryKeys to shopping items.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingItem> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the shopping items.
 	*
 	* @return the shopping items

@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -437,6 +438,83 @@ public class DDMStructurePersistenceTest {
 			"modifiedDate", true, "parentStructureId", true, "classNameId",
 			true, "structureKey", true, "name", true, "description", true,
 			"xsd", true, "storageType", true, "type", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, DDMStructure> ddmStructures = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmStructures.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		DDMStructure newDDMStructure = addDDMStructure();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMStructure.getPrimaryKey());
+
+		Map<Serializable, DDMStructure> ddmStructures = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmStructures.size());
+		Assert.assertEquals(newDDMStructure,
+			ddmStructures.get(newDDMStructure.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDMStructure> ddmStructures = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmStructures.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		DDMStructure newDDMStructure = addDDMStructure();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMStructure.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDMStructure> ddmStructures = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmStructures.size());
+		Assert.assertEquals(newDDMStructure,
+			ddmStructures.get(newDDMStructure.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		DDMStructure newDDMStructure = addDDMStructure();
+		DDMStructure newDDMStructure2 = addDDMStructure();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMStructure.getPrimaryKey());
+		primaryKeys.add(newDDMStructure2.getPrimaryKey());
+
+		Map<Serializable, DDMStructure> ddmStructures = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ddmStructures.size());
+		Assert.assertEquals(newDDMStructure,
+			ddmStructures.get(newDDMStructure.getPrimaryKey()));
+		Assert.assertEquals(newDDMStructure2,
+			ddmStructures.get(newDDMStructure2.getPrimaryKey()));
 	}
 
 	@Test

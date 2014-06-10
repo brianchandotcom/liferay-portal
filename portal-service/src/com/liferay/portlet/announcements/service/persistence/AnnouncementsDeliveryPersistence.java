@@ -271,6 +271,15 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 		long deliveryId);
 
 	/**
+	* Returns a map of announcements deliveries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the announcements deliveries
+	* @return map of primaryKeys to announcements deliveries.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsDelivery> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the announcements deliveries.
 	*
 	* @return the announcements deliveries

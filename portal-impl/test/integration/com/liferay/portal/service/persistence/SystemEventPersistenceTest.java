@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -285,6 +286,83 @@ public class SystemEventPersistenceTest {
 			true, "classNameId", true, "classPK", true, "classUuid", true,
 			"referrerClassNameId", true, "parentSystemEventId", true,
 			"systemEventSetKey", true, "type", true, "extraData", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(systemEvents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		SystemEvent newSystemEvent = addSystemEvent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
+
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(systemEvents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		SystemEvent newSystemEvent = addSystemEvent();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		SystemEvent newSystemEvent = addSystemEvent();
+		SystemEvent newSystemEvent2 = addSystemEvent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSystemEvent.getPrimaryKey());
+		primaryKeys.add(newSystemEvent2.getPrimaryKey());
+
+		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, systemEvents.size());
+		Assert.assertEquals(newSystemEvent,
+			systemEvents.get(newSystemEvent.getPrimaryKey()));
+		Assert.assertEquals(newSystemEvent2,
+			systemEvents.get(newSystemEvent2.getPrimaryKey()));
 	}
 
 	@Test

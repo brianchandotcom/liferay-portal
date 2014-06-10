@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -218,6 +219,80 @@ public class PortletPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Portlet", "mvccVersion",
 			true, "id", true, "companyId", true, "portletId", true, "roles",
 			true, "active", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(portlets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Portlet newPortlet = addPortlet();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortlet.getPrimaryKey());
+
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(portlets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Portlet newPortlet = addPortlet();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortlet.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Portlet newPortlet = addPortlet();
+		Portlet newPortlet2 = addPortlet();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPortlet.getPrimaryKey());
+		primaryKeys.add(newPortlet2.getPrimaryKey());
+
+		Map<Serializable, Portlet> portlets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, portlets.size());
+		Assert.assertEquals(newPortlet, portlets.get(newPortlet.getPrimaryKey()));
+		Assert.assertEquals(newPortlet2,
+			portlets.get(newPortlet2.getPrimaryKey()));
 	}
 
 	@Test

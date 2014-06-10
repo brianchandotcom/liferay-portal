@@ -513,6 +513,17 @@ public class SCProductScreenshotUtil {
 	}
 
 	/**
+	* Returns a map of s c product screenshots for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the s c product screenshots
+	* @return map of primaryKeys to s c product screenshots.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the s c product screenshots.
 	*
 	* @return the s c product screenshots

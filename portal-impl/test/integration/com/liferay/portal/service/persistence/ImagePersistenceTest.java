@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -204,6 +205,79 @@ public class ImagePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Image", "mvccVersion",
 			true, "imageId", true, "modifiedDate", true, "type", true,
 			"height", true, "width", true, "size", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(images.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Image newImage = addImage();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newImage.getPrimaryKey());
+
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, images.size());
+		Assert.assertEquals(newImage, images.get(newImage.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(images.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Image newImage = addImage();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newImage.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, images.size());
+		Assert.assertEquals(newImage, images.get(newImage.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Image newImage = addImage();
+		Image newImage2 = addImage();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newImage.getPrimaryKey());
+		primaryKeys.add(newImage2.getPrimaryKey());
+
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, images.size());
+		Assert.assertEquals(newImage, images.get(newImage.getPrimaryKey()));
+		Assert.assertEquals(newImage2, images.get(newImage2.getPrimaryKey()));
 	}
 
 	@Test

@@ -138,6 +138,15 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public com.liferay.portal.model.Ticket fetchByPrimaryKey(long ticketId);
 
 	/**
+	* Returns a map of tickets for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the tickets
+	* @return map of primaryKeys to tickets.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Ticket> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the tickets.
 	*
 	* @return the tickets

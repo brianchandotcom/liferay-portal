@@ -734,6 +734,17 @@ public class LayoutBranchUtil {
 	}
 
 	/**
+	* Returns a map of layout branchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout branchs
+	* @return map of primaryKeys to layout branchs.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutBranch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the layout branchs.
 	*
 	* @return the layout branchs

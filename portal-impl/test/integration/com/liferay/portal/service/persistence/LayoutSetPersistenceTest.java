@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -283,6 +284,83 @@ public class LayoutSetPersistenceTest {
 			"wapThemeId", true, "wapColorSchemeId", true, "css", true,
 			"pageCount", true, "settings", true, "layoutSetPrototypeUuid",
 			true, "layoutSetPrototypeLinkEnabled", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, LayoutSet> layoutSets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(layoutSets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		LayoutSet newLayoutSet = addLayoutSet();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newLayoutSet.getPrimaryKey());
+
+		Map<Serializable, LayoutSet> layoutSets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, layoutSets.size());
+		Assert.assertEquals(newLayoutSet,
+			layoutSets.get(newLayoutSet.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, LayoutSet> layoutSets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(layoutSets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		LayoutSet newLayoutSet = addLayoutSet();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newLayoutSet.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, LayoutSet> layoutSets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, layoutSets.size());
+		Assert.assertEquals(newLayoutSet,
+			layoutSets.get(newLayoutSet.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		LayoutSet newLayoutSet = addLayoutSet();
+		LayoutSet newLayoutSet2 = addLayoutSet();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newLayoutSet.getPrimaryKey());
+		primaryKeys.add(newLayoutSet2.getPrimaryKey());
+
+		Map<Serializable, LayoutSet> layoutSets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, layoutSets.size());
+		Assert.assertEquals(newLayoutSet,
+			layoutSets.get(newLayoutSet.getPrimaryKey()));
+		Assert.assertEquals(newLayoutSet2,
+			layoutSets.get(newLayoutSet2.getPrimaryKey()));
 	}
 
 	@Test

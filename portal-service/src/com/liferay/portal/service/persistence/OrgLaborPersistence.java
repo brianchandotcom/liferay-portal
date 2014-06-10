@@ -211,6 +211,15 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public com.liferay.portal.model.OrgLabor fetchByPrimaryKey(long orgLaborId);
 
 	/**
+	* Returns a map of org labors for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the org labors
+	* @return map of primaryKeys to org labors.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.OrgLabor> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the org labors.
 	*
 	* @return the org labors

@@ -477,6 +477,15 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 		long licenseId);
 
 	/**
+	* Returns a map of s c licenses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the s c licenses
+	* @return map of primaryKeys to s c licenses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCLicense> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the s c licenses.
 	*
 	* @return the s c licenses

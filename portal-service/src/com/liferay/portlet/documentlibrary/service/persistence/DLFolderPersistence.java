@@ -2119,6 +2119,15 @@ public interface DLFolderPersistence extends BasePersistence<DLFolder> {
 		long folderId);
 
 	/**
+	* Returns a map of document library folders for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the document library folders
+	* @return map of primaryKeys to document library folders.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLFolder> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the document library folders.
 	*
 	* @return the document library folders

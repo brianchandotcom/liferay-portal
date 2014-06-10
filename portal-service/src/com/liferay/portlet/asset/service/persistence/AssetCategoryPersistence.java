@@ -2369,6 +2369,15 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		long categoryId);
 
 	/**
+	* Returns a map of asset categories for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset categories
+	* @return map of primaryKeys to asset categories.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetCategory> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the asset categories.
 	*
 	* @return the asset categories

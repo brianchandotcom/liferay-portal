@@ -274,6 +274,15 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 		long pluginSettingId);
 
 	/**
+	* Returns a map of plugin settings for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the plugin settings
+	* @return map of primaryKeys to plugin settings.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PluginSetting> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the plugin settings.
 	*
 	* @return the plugin settings

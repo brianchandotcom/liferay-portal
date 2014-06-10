@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -670,6 +671,83 @@ public class MBMessagePersistenceTest {
 			"priority", true, "allowPingbacks", true, "answer", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbMessages.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		MBMessage newMBMessage = addMBMessage();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBMessage.getPrimaryKey());
+
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbMessages.size());
+		Assert.assertEquals(newMBMessage,
+			mbMessages.get(newMBMessage.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbMessages.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		MBMessage newMBMessage = addMBMessage();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBMessage.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbMessages.size());
+		Assert.assertEquals(newMBMessage,
+			mbMessages.get(newMBMessage.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		MBMessage newMBMessage = addMBMessage();
+		MBMessage newMBMessage2 = addMBMessage();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBMessage.getPrimaryKey());
+		primaryKeys.add(newMBMessage2.getPrimaryKey());
+
+		Map<Serializable, MBMessage> mbMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mbMessages.size());
+		Assert.assertEquals(newMBMessage,
+			mbMessages.get(newMBMessage.getPrimaryKey()));
+		Assert.assertEquals(newMBMessage2,
+			mbMessages.get(newMBMessage2.getPrimaryKey()));
 	}
 
 	@Test

@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -353,6 +354,83 @@ public class JournalFeedPersistenceTest {
 			true, "delta", true, "orderByCol", true, "orderByType", true,
 			"targetLayoutFriendlyUrl", true, "targetPortletId", true,
 			"contentField", true, "feedFormat", true, "feedVersion", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalFeeds.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		JournalFeed newJournalFeed = addJournalFeed();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
+
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(journalFeeds.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		JournalFeed newJournalFeed = addJournalFeed();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		JournalFeed newJournalFeed = addJournalFeed();
+		JournalFeed newJournalFeed2 = addJournalFeed();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newJournalFeed.getPrimaryKey());
+		primaryKeys.add(newJournalFeed2.getPrimaryKey());
+
+		Map<Serializable, JournalFeed> journalFeeds = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, journalFeeds.size());
+		Assert.assertEquals(newJournalFeed,
+			journalFeeds.get(newJournalFeed.getPrimaryKey()));
+		Assert.assertEquals(newJournalFeed2,
+			journalFeeds.get(newJournalFeed2.getPrimaryKey()));
 	}
 
 	@Test

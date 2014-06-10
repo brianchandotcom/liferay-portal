@@ -757,6 +757,17 @@ public class PollsQuestionUtil {
 	}
 
 	/**
+	* Returns a map of polls questions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the polls questions
+	* @return map of primaryKeys to polls questions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsQuestion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the polls questions.
 	*
 	* @return the polls questions

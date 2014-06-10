@@ -562,6 +562,15 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 		long articleImageId);
 
 	/**
+	* Returns a map of journal article images for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal article images
+	* @return map of primaryKeys to journal article images.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalArticleImage> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the journal article images.
 	*
 	* @return the journal article images

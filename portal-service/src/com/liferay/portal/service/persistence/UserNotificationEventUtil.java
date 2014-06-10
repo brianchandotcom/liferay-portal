@@ -930,6 +930,17 @@ public class UserNotificationEventUtil {
 	}
 
 	/**
+	* Returns a map of user notification events for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user notification events
+	* @return map of primaryKeys to user notification events.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.UserNotificationEvent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the user notification events.
 	*
 	* @return the user notification events

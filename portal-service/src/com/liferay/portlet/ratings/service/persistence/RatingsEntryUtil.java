@@ -872,6 +872,17 @@ public class RatingsEntryUtil {
 	}
 
 	/**
+	* Returns a map of ratings entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the ratings entries
+	* @return map of primaryKeys to ratings entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.ratings.model.RatingsEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the ratings entries.
 	*
 	* @return the ratings entries

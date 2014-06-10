@@ -1023,6 +1023,17 @@ public class MBBanUtil {
 	}
 
 	/**
+	* Returns a map of message boards bans for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards bans
+	* @return map of primaryKeys to message boards bans.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBBan> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the message boards bans.
 	*
 	* @return the message boards bans

@@ -543,6 +543,17 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
+	* Returns a map of d d l record versions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d l record versions
+	* @return map of primaryKeys to d d l record versions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the d d l record versions.
 	*
 	* @return the d d l record versions

@@ -448,6 +448,15 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 		long userTrackerId);
 
 	/**
+	* Returns a map of user trackers for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user trackers
+	* @return map of primaryKeys to user trackers.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserTracker> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the user trackers.
 	*
 	* @return the user trackers

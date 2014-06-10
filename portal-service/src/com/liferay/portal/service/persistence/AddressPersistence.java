@@ -1143,6 +1143,15 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public com.liferay.portal.model.Address fetchByPrimaryKey(long addressId);
 
 	/**
+	* Returns a map of addresses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the addresses
+	* @return map of primaryKeys to addresses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Address> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the addresses.
 	*
 	* @return the addresses

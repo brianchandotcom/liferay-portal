@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -253,6 +254,83 @@ public class SCProductVersionPersistenceTest {
 			"productEntryId", true, "version", true, "changeLog", true,
 			"downloadPageURL", true, "directDownloadURL", true,
 			"repoStoreArtifact", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, SCProductVersion> scProductVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(scProductVersions.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		SCProductVersion newSCProductVersion = addSCProductVersion();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductVersion.getPrimaryKey());
+
+		Map<Serializable, SCProductVersion> scProductVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scProductVersions.size());
+		Assert.assertEquals(newSCProductVersion,
+			scProductVersions.get(newSCProductVersion.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SCProductVersion> scProductVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(scProductVersions.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		SCProductVersion newSCProductVersion = addSCProductVersion();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductVersion.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SCProductVersion> scProductVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scProductVersions.size());
+		Assert.assertEquals(newSCProductVersion,
+			scProductVersions.get(newSCProductVersion.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		SCProductVersion newSCProductVersion = addSCProductVersion();
+		SCProductVersion newSCProductVersion2 = addSCProductVersion();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductVersion.getPrimaryKey());
+		primaryKeys.add(newSCProductVersion2.getPrimaryKey());
+
+		Map<Serializable, SCProductVersion> scProductVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, scProductVersions.size());
+		Assert.assertEquals(newSCProductVersion,
+			scProductVersions.get(newSCProductVersion.getPrimaryKey()));
+		Assert.assertEquals(newSCProductVersion2,
+			scProductVersions.get(newSCProductVersion2.getPrimaryKey()));
 	}
 
 	@Test

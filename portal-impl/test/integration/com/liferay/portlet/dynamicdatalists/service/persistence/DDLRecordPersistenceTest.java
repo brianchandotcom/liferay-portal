@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -313,6 +314,83 @@ public class DDLRecordPersistenceTest {
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "DDMStorageId",
 			true, "recordSetId", true, "version", true, "displayIndex", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, DDLRecord> ddlRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddlRecords.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		DDLRecord newDDLRecord = addDDLRecord();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDLRecord.getPrimaryKey());
+
+		Map<Serializable, DDLRecord> ddlRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddlRecords.size());
+		Assert.assertEquals(newDDLRecord,
+			ddlRecords.get(newDDLRecord.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDLRecord> ddlRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddlRecords.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		DDLRecord newDDLRecord = addDDLRecord();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDLRecord.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDLRecord> ddlRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddlRecords.size());
+		Assert.assertEquals(newDDLRecord,
+			ddlRecords.get(newDDLRecord.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		DDLRecord newDDLRecord = addDDLRecord();
+		DDLRecord newDDLRecord2 = addDDLRecord();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDLRecord.getPrimaryKey());
+		primaryKeys.add(newDDLRecord2.getPrimaryKey());
+
+		Map<Serializable, DDLRecord> ddlRecords = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ddlRecords.size());
+		Assert.assertEquals(newDDLRecord,
+			ddlRecords.get(newDDLRecord.getPrimaryKey()));
+		Assert.assertEquals(newDDLRecord2,
+			ddlRecords.get(newDDLRecord2.getPrimaryKey()));
 	}
 
 	@Test

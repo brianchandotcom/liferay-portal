@@ -85,6 +85,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 <#list referenceList as tempEntity>
 	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
@@ -854,6 +856,122 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	/**
+	 * Returns a map of ${entity.humanNames} for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the ${entity.humanNames}
+	 * @return map of primaryKeys to ${entity.humanNames}.
+	 */
+	@Override
+	public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, ${entity.name}> results = new HashMap<Serializable, ${entity.name}>();
+
+		<#if entity.hasCompoundPK()>
+			for (Serializable primaryKey : primaryKeys) {
+				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
+
+				if (${entity.varName} != null) {
+					results.put(primaryKey, ${entity.varName});
+				}
+			}
+
+			return results;
+		<#else>
+			if (primaryKeys.size() == 1) {
+				Iterator<Serializable> iterator = primaryKeys.iterator();
+
+				Serializable primaryKey = iterator.next();
+
+				${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
+
+				if (${entity.varName} != null) {
+					results.put(primaryKey, ${entity.varName});
+				}
+
+				return results;
+			}
+
+			Set<Serializable> cacheMissPks = null;
+
+			for (Serializable primaryKey : primaryKeys) {
+				${entity.name} ${entity.varName} = (${entity.name})EntityCacheUtil.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+
+				if (${entity.varName} == null) {
+					if (cacheMissPks == null) {
+						cacheMissPks = new HashSet<Serializable>();
+					}
+
+					cacheMissPks.add(primaryKey);
+				}
+				else {
+					results.put(primaryKey, ${entity.varName});
+				}
+			}
+
+			if (cacheMissPks == null) {
+				return results;
+			}
+
+			<#if entity.PKClassName == "String">
+				StringBundler query = new StringBundler(cacheMissPks.size() * 4 + 1);
+			<#else>
+				StringBundler query = new StringBundler(cacheMissPks.size() * 2 + 1);
+			</#if>
+
+			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
+
+			for (Serializable primaryKey : cacheMissPks) {
+				<#if entity.PKClassName == "String">
+					query.append(StringPool.QUOTE);
+					query.append((String)primaryKey);
+					query.append(StringPool.QUOTE);
+				<#else>
+					query.append(String.valueOf(primaryKey));
+				</#if>
+
+				query.append(StringPool.COMMA);
+			}
+
+			query.setIndex(query.index() - 1);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
+					results.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
+
+					cacheResult(${entity.varName});
+
+					cacheMissPks.remove(${entity.varName}.getPrimaryKeyObj());
+				}
+
+				for (Serializable primaryKey : cacheMissPks) {
+					EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, _null${entity.name});
+				}
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+
+			return results;
+		</#if>
+	}
+
+	/**
 	 * Returns all the ${entity.humanNames}.
 	 *
 	 * @return the ${entity.humanNames}
@@ -1576,6 +1694,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
+
+	private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ${entity.PKDBName} IN (";
 
 	<#if entity.getFinderList()?size != 0>
 		private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ";

@@ -384,6 +384,15 @@ public interface DDMStorageLinkPersistence extends BasePersistence<DDMStorageLin
 		long storageLinkId);
 
 	/**
+	* Returns a map of d d m storage links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m storage links
+	* @return map of primaryKeys to d d m storage links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the d d m storage links.
 	*
 	* @return the d d m storage links

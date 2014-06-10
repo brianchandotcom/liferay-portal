@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -305,6 +306,83 @@ public class SCProductEntryPersistenceTest {
 			"modifiedDate", true, "name", true, "type", true, "tags", true,
 			"shortDescription", true, "longDescription", true, "pageURL", true,
 			"author", true, "repoGroupId", true, "repoArtifactId", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, SCProductEntry> scProductEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(scProductEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		SCProductEntry newSCProductEntry = addSCProductEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductEntry.getPrimaryKey());
+
+		Map<Serializable, SCProductEntry> scProductEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scProductEntries.size());
+		Assert.assertEquals(newSCProductEntry,
+			scProductEntries.get(newSCProductEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SCProductEntry> scProductEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(scProductEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		SCProductEntry newSCProductEntry = addSCProductEntry();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, SCProductEntry> scProductEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, scProductEntries.size());
+		Assert.assertEquals(newSCProductEntry,
+			scProductEntries.get(newSCProductEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		SCProductEntry newSCProductEntry = addSCProductEntry();
+		SCProductEntry newSCProductEntry2 = addSCProductEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newSCProductEntry.getPrimaryKey());
+		primaryKeys.add(newSCProductEntry2.getPrimaryKey());
+
+		Map<Serializable, SCProductEntry> scProductEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, scProductEntries.size());
+		Assert.assertEquals(newSCProductEntry,
+			scProductEntries.get(newSCProductEntry.getPrimaryKey()));
+		Assert.assertEquals(newSCProductEntry2,
+			scProductEntries.get(newSCProductEntry2.getPrimaryKey()));
 	}
 
 	@Test

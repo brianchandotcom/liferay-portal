@@ -527,6 +527,15 @@ public interface MBStatsUserPersistence extends BasePersistence<MBStatsUser> {
 		long statsUserId);
 
 	/**
+	* Returns a map of message boards stats users for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards stats users
+	* @return map of primaryKeys to message boards stats users.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBStatsUser> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the message boards stats users.
 	*
 	* @return the message boards stats users

@@ -44,7 +44,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -2651,6 +2655,103 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	/**
+	 * Returns a map of system events for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the system events
+	 * @return map of primaryKeys to system events.
+	 */
+	@Override
+	public Map<Serializable, SystemEvent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, SystemEvent> results = new HashMap<Serializable, SystemEvent>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			SystemEvent systemEvent = fetchByPrimaryKey(primaryKey);
+
+			if (systemEvent != null) {
+				results.put(primaryKey, systemEvent);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			SystemEvent systemEvent = (SystemEvent)EntityCacheUtil.getResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
+					SystemEventImpl.class, primaryKey);
+
+			if (systemEvent == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, systemEvent);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_SYSTEMEVENT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (SystemEvent systemEvent : (List<SystemEvent>)q.list()) {
+				results.put(systemEvent.getPrimaryKeyObj(), systemEvent);
+
+				cacheResult(systemEvent);
+
+				cacheMissPks.remove(systemEvent.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
+					SystemEventImpl.class, primaryKey, _nullSystemEvent);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the system events.
 	 *
 	 * @return the system events
@@ -2855,6 +2956,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	private static final String _SQL_SELECT_SYSTEMEVENT = "SELECT systemEvent FROM SystemEvent systemEvent";
+	private static final String _SQL_SELECT_SYSTEMEVENT_WHERE_PKS_IN = "SELECT systemEvent FROM SystemEvent systemEvent WHERE systemEventId IN (";
 	private static final String _SQL_SELECT_SYSTEMEVENT_WHERE = "SELECT systemEvent FROM SystemEvent systemEvent WHERE ";
 	private static final String _SQL_COUNT_SYSTEMEVENT = "SELECT COUNT(systemEvent) FROM SystemEvent systemEvent";
 	private static final String _SQL_COUNT_SYSTEMEVENT_WHERE = "SELECT COUNT(systemEvent) FROM SystemEvent systemEvent WHERE ";

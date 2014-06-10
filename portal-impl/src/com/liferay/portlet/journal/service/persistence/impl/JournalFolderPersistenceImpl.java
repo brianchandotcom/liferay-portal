@@ -53,8 +53,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -7627,6 +7630,103 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	}
 
 	/**
+	 * Returns a map of journal folders for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the journal folders
+	 * @return map of primaryKeys to journal folders.
+	 */
+	@Override
+	public Map<Serializable, JournalFolder> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, JournalFolder> results = new HashMap<Serializable, JournalFolder>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			JournalFolder journalFolder = fetchByPrimaryKey(primaryKey);
+
+			if (journalFolder != null) {
+				results.put(primaryKey, journalFolder);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			JournalFolder journalFolder = (JournalFolder)EntityCacheUtil.getResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
+					JournalFolderImpl.class, primaryKey);
+
+			if (journalFolder == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, journalFolder);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (JournalFolder journalFolder : (List<JournalFolder>)q.list()) {
+				results.put(journalFolder.getPrimaryKeyObj(), journalFolder);
+
+				cacheResult(journalFolder);
+
+				cacheMissPks.remove(journalFolder.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
+					JournalFolderImpl.class, primaryKey, _nullJournalFolder);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the journal folders.
 	 *
 	 * @return the journal folders
@@ -8117,6 +8217,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	protected DDMStructurePersistence ddmStructurePersistence;
 	protected TableMapper<JournalFolder, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> journalFolderToDDMStructureTableMapper;
 	private static final String _SQL_SELECT_JOURNALFOLDER = "SELECT journalFolder FROM JournalFolder journalFolder";
+	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN = "SELECT journalFolder FROM JournalFolder journalFolder WHERE folderId IN (";
 	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE = "SELECT journalFolder FROM JournalFolder journalFolder WHERE ";
 	private static final String _SQL_COUNT_JOURNALFOLDER = "SELECT COUNT(journalFolder) FROM JournalFolder journalFolder";
 	private static final String _SQL_COUNT_JOURNALFOLDER_WHERE = "SELECT COUNT(journalFolder) FROM JournalFolder journalFolder WHERE ";

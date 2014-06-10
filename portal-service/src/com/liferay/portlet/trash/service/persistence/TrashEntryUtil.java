@@ -843,6 +843,17 @@ public class TrashEntryUtil {
 	}
 
 	/**
+	* Returns a map of trash entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the trash entries
+	* @return map of primaryKeys to trash entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.trash.model.TrashEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the trash entries.
 	*
 	* @return the trash entries

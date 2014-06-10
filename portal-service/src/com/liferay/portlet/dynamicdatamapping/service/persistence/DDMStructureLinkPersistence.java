@@ -384,6 +384,15 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 		long structureLinkId);
 
 	/**
+	* Returns a map of d d m structure links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m structure links
+	* @return map of primaryKeys to d d m structure links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the d d m structure links.
 	*
 	* @return the d d m structure links

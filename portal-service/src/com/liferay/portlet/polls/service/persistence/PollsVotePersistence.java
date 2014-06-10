@@ -684,6 +684,15 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 		long voteId);
 
 	/**
+	* Returns a map of polls votes for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the polls votes
+	* @return map of primaryKeys to polls votes.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsVote> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the polls votes.
 	*
 	* @return the polls votes

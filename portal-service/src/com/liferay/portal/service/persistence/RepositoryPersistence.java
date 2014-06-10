@@ -571,6 +571,15 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 		long repositoryId);
 
 	/**
+	* Returns a map of repositories for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the repositories
+	* @return map of primaryKeys to repositories.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Repository> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the repositories.
 	*
 	* @return the repositories

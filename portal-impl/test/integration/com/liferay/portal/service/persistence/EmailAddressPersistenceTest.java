@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -320,6 +321,83 @@ public class EmailAddressPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"address", true, "typeId", true, "primary", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, EmailAddress> emailAddresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(emailAddresses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		EmailAddress newEmailAddress = addEmailAddress();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newEmailAddress.getPrimaryKey());
+
+		Map<Serializable, EmailAddress> emailAddresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, emailAddresses.size());
+		Assert.assertEquals(newEmailAddress,
+			emailAddresses.get(newEmailAddress.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, EmailAddress> emailAddresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(emailAddresses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		EmailAddress newEmailAddress = addEmailAddress();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newEmailAddress.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, EmailAddress> emailAddresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, emailAddresses.size());
+		Assert.assertEquals(newEmailAddress,
+			emailAddresses.get(newEmailAddress.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		EmailAddress newEmailAddress = addEmailAddress();
+		EmailAddress newEmailAddress2 = addEmailAddress();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newEmailAddress.getPrimaryKey());
+		primaryKeys.add(newEmailAddress2.getPrimaryKey());
+
+		Map<Serializable, EmailAddress> emailAddresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, emailAddresses.size());
+		Assert.assertEquals(newEmailAddress,
+			emailAddresses.get(newEmailAddress.getPrimaryKey()));
+		Assert.assertEquals(newEmailAddress2,
+			emailAddresses.get(newEmailAddress2.getPrimaryKey()));
 	}
 
 	@Test

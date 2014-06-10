@@ -757,6 +757,17 @@ public class MDRRuleGroupUtil {
 	}
 
 	/**
+	* Returns a map of m d r rule groups for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the m d r rule groups
+	* @return map of primaryKeys to m d r rule groups.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the m d r rule groups.
 	*
 	* @return the m d r rule groups

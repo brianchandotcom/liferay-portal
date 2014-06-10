@@ -632,6 +632,15 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 		long systemEventId);
 
 	/**
+	* Returns a map of system events for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the system events
+	* @return map of primaryKeys to system events.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.SystemEvent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the system events.
 	*
 	* @return the system events

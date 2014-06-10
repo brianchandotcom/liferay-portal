@@ -990,6 +990,15 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public com.liferay.portal.model.Website fetchByPrimaryKey(long websiteId);
 
 	/**
+	* Returns a map of websites for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the websites
+	* @return map of primaryKeys to websites.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Website> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the websites.
 	*
 	* @return the websites

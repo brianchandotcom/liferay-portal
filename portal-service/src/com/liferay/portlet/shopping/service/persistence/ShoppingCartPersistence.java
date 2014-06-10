@@ -386,6 +386,15 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 		long cartId);
 
 	/**
+	* Returns a map of shopping carts for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping carts
+	* @return map of primaryKeys to shopping carts.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCart> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the shopping carts.
 	*
 	* @return the shopping carts

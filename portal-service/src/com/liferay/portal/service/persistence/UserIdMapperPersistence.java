@@ -320,6 +320,15 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 		long userIdMapperId);
 
 	/**
+	* Returns a map of user ID mappers for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user ID mappers
+	* @return map of primaryKeys to user ID mappers.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserIdMapper> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the user ID mappers.
 	*
 	* @return the user ID mappers

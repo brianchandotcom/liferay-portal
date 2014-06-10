@@ -2884,6 +2884,15 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 		long threadId);
 
 	/**
+	* Returns a map of message boards threads for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards threads
+	* @return map of primaryKeys to message boards threads.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBThread> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the message boards threads.
 	*
 	* @return the message boards threads

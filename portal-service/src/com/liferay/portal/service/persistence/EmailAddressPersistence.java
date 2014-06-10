@@ -996,6 +996,15 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 		long emailAddressId);
 
 	/**
+	* Returns a map of email addresses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the email addresses
+	* @return map of primaryKeys to email addresses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.EmailAddress> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the email addresses.
 	*
 	* @return the email addresses

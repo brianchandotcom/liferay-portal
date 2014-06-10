@@ -50,8 +50,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -1579,6 +1582,103 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	/**
+	 * Returns a map of teams for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the teams
+	 * @return map of primaryKeys to teams.
+	 */
+	@Override
+	public Map<Serializable, Team> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, Team> results = new HashMap<Serializable, Team>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			Team team = fetchByPrimaryKey(primaryKey);
+
+			if (team != null) {
+				results.put(primaryKey, team);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			Team team = (Team)EntityCacheUtil.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
+					TeamImpl.class, primaryKey);
+
+			if (team == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, team);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_TEAM_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (Team team : (List<Team>)q.list()) {
+				results.put(team.getPrimaryKeyObj(), team);
+
+				cacheResult(team);
+
+				cacheMissPks.remove(team.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
+					TeamImpl.class, primaryKey, _nullTeam);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the teams.
 	 *
 	 * @return the teams
@@ -2321,6 +2421,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected UserGroupPersistence userGroupPersistence;
 	protected TableMapper<Team, com.liferay.portal.model.UserGroup> teamToUserGroupTableMapper;
 	private static final String _SQL_SELECT_TEAM = "SELECT team FROM Team team";
+	private static final String _SQL_SELECT_TEAM_WHERE_PKS_IN = "SELECT team FROM Team team WHERE teamId IN (";
 	private static final String _SQL_SELECT_TEAM_WHERE = "SELECT team FROM Team team WHERE ";
 	private static final String _SQL_COUNT_TEAM = "SELECT COUNT(team) FROM Team team";
 	private static final String _SQL_COUNT_TEAM_WHERE = "SELECT COUNT(team) FROM Team team WHERE ";

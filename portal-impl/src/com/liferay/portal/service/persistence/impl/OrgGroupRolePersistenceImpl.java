@@ -44,7 +44,10 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the org group role service.
@@ -1407,6 +1410,32 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	}
 
 	/**
+	 * Returns a map of org group roles for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the org group roles
+	 * @return map of primaryKeys to org group roles.
+	 */
+	@Override
+	public Map<Serializable, OrgGroupRole> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, OrgGroupRole> results = new HashMap<Serializable, OrgGroupRole>();
+
+		for (Serializable primaryKey : primaryKeys) {
+			OrgGroupRole orgGroupRole = fetchByPrimaryKey(primaryKey);
+
+			if (orgGroupRole != null) {
+				results.put(primaryKey, orgGroupRole);
+			}
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the org group roles.
 	 *
 	 * @return the org group roles
@@ -1606,6 +1635,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	}
 
 	private static final String _SQL_SELECT_ORGGROUPROLE = "SELECT orgGroupRole FROM OrgGroupRole orgGroupRole";
+	private static final String _SQL_SELECT_ORGGROUPROLE_WHERE_PKS_IN = "SELECT orgGroupRole FROM OrgGroupRole orgGroupRole WHERE orgGroupRolePK IN (";
 	private static final String _SQL_SELECT_ORGGROUPROLE_WHERE = "SELECT orgGroupRole FROM OrgGroupRole orgGroupRole WHERE ";
 	private static final String _SQL_COUNT_ORGGROUPROLE = "SELECT COUNT(orgGroupRole) FROM OrgGroupRole orgGroupRole";
 	private static final String _SQL_COUNT_ORGGROUPROLE_WHERE = "SELECT COUNT(orgGroupRole) FROM OrgGroupRole orgGroupRole WHERE ";

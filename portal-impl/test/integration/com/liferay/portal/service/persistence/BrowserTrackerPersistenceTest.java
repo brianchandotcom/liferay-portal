@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -198,6 +199,83 @@ public class BrowserTrackerPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("BrowserTracker",
 			"mvccVersion", true, "browserTrackerId", true, "userId", true,
 			"browserKey", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(browserTrackers.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		BrowserTracker newBrowserTracker = addBrowserTracker();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBrowserTracker.getPrimaryKey());
+
+		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, browserTrackers.size());
+		Assert.assertEquals(newBrowserTracker,
+			browserTrackers.get(newBrowserTracker.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(browserTrackers.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		BrowserTracker newBrowserTracker = addBrowserTracker();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBrowserTracker.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, browserTrackers.size());
+		Assert.assertEquals(newBrowserTracker,
+			browserTrackers.get(newBrowserTracker.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		BrowserTracker newBrowserTracker = addBrowserTracker();
+		BrowserTracker newBrowserTracker2 = addBrowserTracker();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBrowserTracker.getPrimaryKey());
+		primaryKeys.add(newBrowserTracker2.getPrimaryKey());
+
+		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, browserTrackers.size());
+		Assert.assertEquals(newBrowserTracker,
+			browserTrackers.get(newBrowserTracker.getPrimaryKey()));
+		Assert.assertEquals(newBrowserTracker2,
+			browserTrackers.get(newBrowserTracker2.getPrimaryKey()));
 	}
 
 	@Test

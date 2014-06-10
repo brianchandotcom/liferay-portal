@@ -451,6 +451,17 @@ public class TeamUtil {
 	}
 
 	/**
+	* Returns a map of teams for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the teams
+	* @return map of primaryKeys to teams.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Team> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the teams.
 	*
 	* @return the teams

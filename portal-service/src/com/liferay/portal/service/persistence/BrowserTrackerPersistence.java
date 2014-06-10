@@ -141,6 +141,15 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 		long browserTrackerId);
 
 	/**
+	* Returns a map of browser trackers for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the browser trackers
+	* @return map of primaryKeys to browser trackers.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.BrowserTracker> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the browser trackers.
 	*
 	* @return the browser trackers

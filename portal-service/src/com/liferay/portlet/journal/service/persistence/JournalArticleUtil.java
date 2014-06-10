@@ -7619,6 +7619,17 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns a map of journal articles for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal articles
+	* @return map of primaryKeys to journal articles.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalArticle> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the journal articles.
 	*
 	* @return the journal articles

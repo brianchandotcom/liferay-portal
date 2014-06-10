@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -309,6 +310,83 @@ public class RepositoryPersistenceTest {
 			true, "modifiedDate", true, "classNameId", true, "name", true,
 			"description", true, "portletId", true, "typeSettings", true,
 			"dlFolderId", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Repository> repositories = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(repositories.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Repository newRepository = addRepository();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRepository.getPrimaryKey());
+
+		Map<Serializable, Repository> repositories = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, repositories.size());
+		Assert.assertEquals(newRepository,
+			repositories.get(newRepository.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Repository> repositories = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(repositories.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Repository newRepository = addRepository();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRepository.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Repository> repositories = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, repositories.size());
+		Assert.assertEquals(newRepository,
+			repositories.get(newRepository.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Repository newRepository = addRepository();
+		Repository newRepository2 = addRepository();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newRepository.getPrimaryKey());
+		primaryKeys.add(newRepository2.getPrimaryKey());
+
+		Map<Serializable, Repository> repositories = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, repositories.size());
+		Assert.assertEquals(newRepository,
+			repositories.get(newRepository.getPrimaryKey()));
+		Assert.assertEquals(newRepository2,
+			repositories.get(newRepository2.getPrimaryKey()));
 	}
 
 	@Test

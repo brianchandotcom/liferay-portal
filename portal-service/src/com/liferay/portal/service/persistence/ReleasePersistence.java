@@ -141,6 +141,15 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	public com.liferay.portal.model.Release fetchByPrimaryKey(long releaseId);
 
 	/**
+	* Returns a map of releases for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the releases
+	* @return map of primaryKeys to releases.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Release> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the releases.
 	*
 	* @return the releases

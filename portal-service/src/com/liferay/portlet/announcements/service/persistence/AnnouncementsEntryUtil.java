@@ -1351,6 +1351,17 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
+	* Returns a map of announcements entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the announcements entries
+	* @return map of primaryKeys to announcements entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the announcements entries.
 	*
 	* @return the announcements entries

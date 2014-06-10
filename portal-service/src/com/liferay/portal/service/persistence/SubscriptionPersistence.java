@@ -612,6 +612,15 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		long subscriptionId);
 
 	/**
+	* Returns a map of subscriptions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the subscriptions
+	* @return map of primaryKeys to subscriptions.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Subscription> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the subscriptions.
 	*
 	* @return the subscriptions

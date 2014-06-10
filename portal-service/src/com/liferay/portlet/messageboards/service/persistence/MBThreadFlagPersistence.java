@@ -688,6 +688,15 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 		long threadFlagId);
 
 	/**
+	* Returns a map of message boards thread flags for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards thread flags
+	* @return map of primaryKeys to message boards thread flags.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBThreadFlag> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the message boards thread flags.
 	*
 	* @return the message boards thread flags

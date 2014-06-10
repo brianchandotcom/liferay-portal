@@ -630,6 +630,15 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 		long id);
 
 	/**
+	* Returns a map of journal feeds for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal feeds
+	* @return map of primaryKeys to journal feeds.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalFeed> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the journal feeds.
 	*
 	* @return the journal feeds

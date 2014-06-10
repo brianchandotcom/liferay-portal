@@ -285,6 +285,15 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 		long tableId);
 
 	/**
+	* Returns a map of expando tables for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando tables
+	* @return map of primaryKeys to expando tables.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoTable> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the expando tables.
 	*
 	* @return the expando tables

@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -520,6 +521,83 @@ public class DDMTemplatePersistenceTest {
 			true, "description", true, "type", true, "mode", true, "language",
 			true, "script", true, "cacheable", true, "smallImage", true,
 			"smallImageId", true, "smallImageURL", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmTemplates.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		DDMTemplate newDDMTemplate = addDDMTemplate();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
+
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(ddmTemplates.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		DDMTemplate newDDMTemplate = addDDMTemplate();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		DDMTemplate newDDMTemplate = addDDMTemplate();
+		DDMTemplate newDDMTemplate2 = addDDMTemplate();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDDMTemplate.getPrimaryKey());
+		primaryKeys.add(newDDMTemplate2.getPrimaryKey());
+
+		Map<Serializable, DDMTemplate> ddmTemplates = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, ddmTemplates.size());
+		Assert.assertEquals(newDDMTemplate,
+			ddmTemplates.get(newDDMTemplate.getPrimaryKey()));
+		Assert.assertEquals(newDDMTemplate2,
+			ddmTemplates.get(newDDMTemplate2.getPrimaryKey()));
 	}
 
 	@Test

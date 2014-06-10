@@ -901,6 +901,15 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 		long userGroupId);
 
 	/**
+	* Returns a map of user groups for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user groups
+	* @return map of primaryKeys to user groups.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.UserGroup> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the user groups.
 	*
 	* @return the user groups

@@ -399,6 +399,17 @@ public class PluginSettingUtil {
 	}
 
 	/**
+	* Returns a map of plugin settings for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the plugin settings
+	* @return map of primaryKeys to plugin settings.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PluginSetting> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the plugin settings.
 	*
 	* @return the plugin settings

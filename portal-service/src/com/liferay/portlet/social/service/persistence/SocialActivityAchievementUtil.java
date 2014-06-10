@@ -1035,6 +1035,17 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
+	* Returns a map of social activity achievements for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the social activity achievements
+	* @return map of primaryKeys to social activity achievements.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.social.model.SocialActivityAchievement> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the social activity achievements.
 	*
 	* @return the social activity achievements

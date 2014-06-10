@@ -509,6 +509,15 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public com.liferay.portal.model.Lock fetchByPrimaryKey(long lockId);
 
 	/**
+	* Returns a map of locks for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the locks
+	* @return map of primaryKeys to locks.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Lock> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the locks.
 	*
 	* @return the locks

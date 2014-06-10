@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -312,6 +313,83 @@ public class AnnouncementsEntryPersistenceTest {
 			"classNameId", true, "classPK", true, "title", true, "content",
 			true, "url", true, "type", true, "displayDate", true,
 			"expirationDate", true, "priority", true, "alert", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, AnnouncementsEntry> announcementsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(announcementsEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAnnouncementsEntry.getPrimaryKey());
+
+		Map<Serializable, AnnouncementsEntry> announcementsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, announcementsEntries.size());
+		Assert.assertEquals(newAnnouncementsEntry,
+			announcementsEntries.get(newAnnouncementsEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, AnnouncementsEntry> announcementsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(announcementsEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAnnouncementsEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, AnnouncementsEntry> announcementsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, announcementsEntries.size());
+		Assert.assertEquals(newAnnouncementsEntry,
+			announcementsEntries.get(newAnnouncementsEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
+		AnnouncementsEntry newAnnouncementsEntry2 = addAnnouncementsEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAnnouncementsEntry.getPrimaryKey());
+		primaryKeys.add(newAnnouncementsEntry2.getPrimaryKey());
+
+		Map<Serializable, AnnouncementsEntry> announcementsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, announcementsEntries.size());
+		Assert.assertEquals(newAnnouncementsEntry,
+			announcementsEntries.get(newAnnouncementsEntry.getPrimaryKey()));
+		Assert.assertEquals(newAnnouncementsEntry2,
+			announcementsEntries.get(newAnnouncementsEntry2.getPrimaryKey()));
 	}
 
 	@Test

@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -219,6 +220,83 @@ public class WebDAVPropsPersistenceTest {
 			"mvccVersion", true, "webDavPropsId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
 			"classPK", true, "props", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, WebDAVProps> webDAVPropses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(webDAVPropses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		WebDAVProps newWebDAVProps = addWebDAVProps();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebDAVProps.getPrimaryKey());
+
+		Map<Serializable, WebDAVProps> webDAVPropses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, webDAVPropses.size());
+		Assert.assertEquals(newWebDAVProps,
+			webDAVPropses.get(newWebDAVProps.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, WebDAVProps> webDAVPropses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(webDAVPropses.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		WebDAVProps newWebDAVProps = addWebDAVProps();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebDAVProps.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, WebDAVProps> webDAVPropses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, webDAVPropses.size());
+		Assert.assertEquals(newWebDAVProps,
+			webDAVPropses.get(newWebDAVProps.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		WebDAVProps newWebDAVProps = addWebDAVProps();
+		WebDAVProps newWebDAVProps2 = addWebDAVProps();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWebDAVProps.getPrimaryKey());
+		primaryKeys.add(newWebDAVProps2.getPrimaryKey());
+
+		Map<Serializable, WebDAVProps> webDAVPropses = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, webDAVPropses.size());
+		Assert.assertEquals(newWebDAVProps,
+			webDAVPropses.get(newWebDAVProps.getPrimaryKey()));
+		Assert.assertEquals(newWebDAVProps2,
+			webDAVPropses.get(newWebDAVProps2.getPrimaryKey()));
 	}
 
 	@Test

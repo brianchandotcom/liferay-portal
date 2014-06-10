@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -216,6 +217,83 @@ public class WikiPageResourcePersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WikiPageResource", "uuid",
 			true, "resourcePrimKey", true, "nodeId", true, "title", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, WikiPageResource> wikiPageResources = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(wikiPageResources.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		WikiPageResource newWikiPageResource = addWikiPageResource();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWikiPageResource.getPrimaryKey());
+
+		Map<Serializable, WikiPageResource> wikiPageResources = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, wikiPageResources.size());
+		Assert.assertEquals(newWikiPageResource,
+			wikiPageResources.get(newWikiPageResource.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, WikiPageResource> wikiPageResources = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(wikiPageResources.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		WikiPageResource newWikiPageResource = addWikiPageResource();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWikiPageResource.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, WikiPageResource> wikiPageResources = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, wikiPageResources.size());
+		Assert.assertEquals(newWikiPageResource,
+			wikiPageResources.get(newWikiPageResource.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		WikiPageResource newWikiPageResource = addWikiPageResource();
+		WikiPageResource newWikiPageResource2 = addWikiPageResource();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newWikiPageResource.getPrimaryKey());
+		primaryKeys.add(newWikiPageResource2.getPrimaryKey());
+
+		Map<Serializable, WikiPageResource> wikiPageResources = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, wikiPageResources.size());
+		Assert.assertEquals(newWikiPageResource,
+			wikiPageResources.get(newWikiPageResource.getPrimaryKey()));
+		Assert.assertEquals(newWikiPageResource2,
+			wikiPageResources.get(newWikiPageResource2.getPrimaryKey()));
 	}
 
 	@Test

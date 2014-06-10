@@ -549,6 +549,17 @@ public class ExpandoColumnUtil {
 	}
 
 	/**
+	* Returns a map of expando columns for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the expando columns
+	* @return map of primaryKeys to expando columns.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.expando.model.ExpandoColumn> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the expando columns.
 	*
 	* @return the expando columns

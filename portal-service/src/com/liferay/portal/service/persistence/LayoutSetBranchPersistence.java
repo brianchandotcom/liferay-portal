@@ -751,6 +751,15 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 		long layoutSetBranchId);
 
 	/**
+	* Returns a map of layout set branchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout set branchs
+	* @return map of primaryKeys to layout set branchs.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSetBranch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the layout set branchs.
 	*
 	* @return the layout set branchs

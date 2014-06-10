@@ -44,7 +44,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the shard service.
@@ -970,6 +975,103 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	/**
+	 * Returns a map of shards for the primary keys provided.
+	 *
+	 * @param  primaryKeys the set of primaryKeys for which to fetch the shards
+	 * @return map of primaryKeys to shards.
+	 */
+	@Override
+	public Map<Serializable, Shard> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, Shard> results = new HashMap<Serializable, Shard>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			Shard shard = fetchByPrimaryKey(primaryKey);
+
+			if (shard != null) {
+				results.put(primaryKey, shard);
+			}
+
+			return results;
+		}
+
+		Set<Serializable> cacheMissPks = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			Shard shard = (Shard)EntityCacheUtil.getResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
+					ShardImpl.class, primaryKey);
+
+			if (shard == null) {
+				if (cacheMissPks == null) {
+					cacheMissPks = new HashSet<Serializable>();
+				}
+
+				cacheMissPks.add(primaryKey);
+			}
+			else {
+				results.put(primaryKey, shard);
+			}
+		}
+
+		if (cacheMissPks == null) {
+			return results;
+		}
+
+		StringBundler query = new StringBundler((cacheMissPks.size() * 2) + 1);
+
+		query.append(_SQL_SELECT_SHARD_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : cacheMissPks) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (Shard shard : (List<Shard>)q.list()) {
+				results.put(shard.getPrimaryKeyObj(), shard);
+
+				cacheResult(shard);
+
+				cacheMissPks.remove(shard.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : cacheMissPks) {
+				EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
+					ShardImpl.class, primaryKey, _nullShard);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return results;
+	}
+
+	/**
 	 * Returns all the shards.
 	 *
 	 * @return the shards
@@ -1169,6 +1271,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	private static final String _SQL_SELECT_SHARD = "SELECT shard FROM Shard shard";
+	private static final String _SQL_SELECT_SHARD_WHERE_PKS_IN = "SELECT shard FROM Shard shard WHERE shardId IN (";
 	private static final String _SQL_SELECT_SHARD_WHERE = "SELECT shard FROM Shard shard WHERE ";
 	private static final String _SQL_COUNT_SHARD = "SELECT COUNT(shard) FROM Shard shard";
 	private static final String _SQL_COUNT_SHARD_WHERE = "SELECT COUNT(shard) FROM Shard shard WHERE ";

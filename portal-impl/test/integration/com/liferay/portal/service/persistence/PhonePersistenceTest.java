@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -315,6 +316,79 @@ public class PhonePersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "number", true, "extension",
 			true, "typeId", true, "primary", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(phones.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Phone newPhone = addPhone();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPhone.getPrimaryKey());
+
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(phones.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Phone newPhone = addPhone();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPhone.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Phone newPhone = addPhone();
+		Phone newPhone2 = addPhone();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newPhone.getPrimaryKey());
+		primaryKeys.add(newPhone2.getPrimaryKey());
+
+		Map<Serializable, Phone> phones = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, phones.size());
+		Assert.assertEquals(newPhone, phones.get(newPhone.getPrimaryKey()));
+		Assert.assertEquals(newPhone2, phones.get(newPhone2.getPrimaryKey()));
 	}
 
 	@Test

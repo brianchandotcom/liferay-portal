@@ -46,6 +46,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -254,6 +255,83 @@ public class OrgLaborPersistenceTest {
 			true, "tueOpen", true, "tueClose", true, "wedOpen", true,
 			"wedClose", true, "thuOpen", true, "thuClose", true, "friOpen",
 			true, "friClose", true, "satOpen", true, "satClose", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(orgLabors.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		OrgLabor newOrgLabor = addOrgLabor();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newOrgLabor.getPrimaryKey());
+
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, orgLabors.size());
+		Assert.assertEquals(newOrgLabor,
+			orgLabors.get(newOrgLabor.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(orgLabors.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		OrgLabor newOrgLabor = addOrgLabor();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newOrgLabor.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, orgLabors.size());
+		Assert.assertEquals(newOrgLabor,
+			orgLabors.get(newOrgLabor.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		OrgLabor newOrgLabor = addOrgLabor();
+		OrgLabor newOrgLabor2 = addOrgLabor();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newOrgLabor.getPrimaryKey());
+		primaryKeys.add(newOrgLabor2.getPrimaryKey());
+
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, orgLabors.size());
+		Assert.assertEquals(newOrgLabor,
+			orgLabors.get(newOrgLabor.getPrimaryKey()));
+		Assert.assertEquals(newOrgLabor2,
+			orgLabors.get(newOrgLabor2.getPrimaryKey()));
 	}
 
 	@Test

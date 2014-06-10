@@ -5042,6 +5042,17 @@ public class BlogsEntryUtil {
 	}
 
 	/**
+	* Returns a map of blogs entries for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the blogs entries
+	* @return map of primaryKeys to blogs entries.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.blogs.model.BlogsEntry> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the blogs entries.
 	*
 	* @return the blogs entries

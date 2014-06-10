@@ -852,6 +852,15 @@ public interface LayoutSetPrototypePersistence extends BasePersistence<LayoutSet
 		long layoutSetPrototypeId);
 
 	/**
+	* Returns a map of layout set prototypes for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the layout set prototypes
+	* @return map of primaryKeys to layout set prototypes.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSetPrototype> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the layout set prototypes.
 	*
 	* @return the layout set prototypes

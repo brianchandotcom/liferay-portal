@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -226,6 +227,79 @@ public class TicketPersistenceTest {
 			true, "ticketId", true, "companyId", true, "createDate", true,
 			"classNameId", true, "classPK", true, "key", true, "type", true,
 			"extraInfo", true, "expirationDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(tickets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Ticket newTicket = addTicket();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTicket.getPrimaryKey());
+
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, tickets.size());
+		Assert.assertEquals(newTicket, tickets.get(newTicket.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(tickets.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Ticket newTicket = addTicket();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTicket.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, tickets.size());
+		Assert.assertEquals(newTicket, tickets.get(newTicket.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Ticket newTicket = addTicket();
+		Ticket newTicket2 = addTicket();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTicket.getPrimaryKey());
+		primaryKeys.add(newTicket2.getPrimaryKey());
+
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, tickets.size());
+		Assert.assertEquals(newTicket, tickets.get(newTicket.getPrimaryKey()));
+		Assert.assertEquals(newTicket2, tickets.get(newTicket2.getPrimaryKey()));
 	}
 
 	@Test

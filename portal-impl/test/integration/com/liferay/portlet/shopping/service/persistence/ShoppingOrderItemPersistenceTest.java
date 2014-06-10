@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -224,6 +225,83 @@ public class ShoppingOrderItemPersistenceTest {
 			"orderItemId", true, "orderId", true, "itemId", true, "sku", true,
 			"name", true, "description", true, "properties", true, "price",
 			true, "quantity", true, "shippedDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, ShoppingOrderItem> shoppingOrderItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(shoppingOrderItems.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newShoppingOrderItem.getPrimaryKey());
+
+		Map<Serializable, ShoppingOrderItem> shoppingOrderItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shoppingOrderItems.size());
+		Assert.assertEquals(newShoppingOrderItem,
+			shoppingOrderItems.get(newShoppingOrderItem.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ShoppingOrderItem> shoppingOrderItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(shoppingOrderItems.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newShoppingOrderItem.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ShoppingOrderItem> shoppingOrderItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, shoppingOrderItems.size());
+		Assert.assertEquals(newShoppingOrderItem,
+			shoppingOrderItems.get(newShoppingOrderItem.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
+		ShoppingOrderItem newShoppingOrderItem2 = addShoppingOrderItem();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newShoppingOrderItem.getPrimaryKey());
+		primaryKeys.add(newShoppingOrderItem2.getPrimaryKey());
+
+		Map<Serializable, ShoppingOrderItem> shoppingOrderItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, shoppingOrderItems.size());
+		Assert.assertEquals(newShoppingOrderItem,
+			shoppingOrderItems.get(newShoppingOrderItem.getPrimaryKey()));
+		Assert.assertEquals(newShoppingOrderItem2,
+			shoppingOrderItems.get(newShoppingOrderItem2.getPrimaryKey()));
 	}
 
 	@Test

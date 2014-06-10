@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -281,6 +282,83 @@ public class TrashEntryPersistenceTest {
 			"userName", true, "createDate", true, "classNameId", true,
 			"classPK", true, "systemEventSetKey", true, "typeSettings", true,
 			"status", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(trashEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		TrashEntry newTrashEntry = addTrashEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
+
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(trashEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		TrashEntry newTrashEntry = addTrashEntry();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		TrashEntry newTrashEntry = addTrashEntry();
+		TrashEntry newTrashEntry2 = addTrashEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newTrashEntry.getPrimaryKey());
+		primaryKeys.add(newTrashEntry2.getPrimaryKey());
+
+		Map<Serializable, TrashEntry> trashEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, trashEntries.size());
+		Assert.assertEquals(newTrashEntry,
+			trashEntries.get(newTrashEntry.getPrimaryKey()));
+		Assert.assertEquals(newTrashEntry2,
+			trashEntries.get(newTrashEntry2.getPrimaryKey()));
 	}
 
 	@Test

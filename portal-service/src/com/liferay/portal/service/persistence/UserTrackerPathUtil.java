@@ -328,6 +328,17 @@ public class UserTrackerPathUtil {
 	}
 
 	/**
+	* Returns a map of user tracker paths for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the user tracker paths
+	* @return map of primaryKeys to user tracker paths.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.UserTrackerPath> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the user tracker paths.
 	*
 	* @return the user tracker paths

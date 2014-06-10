@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -214,6 +215,83 @@ public class DLSyncEventPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DLSyncEvent",
 			"syncEventId", true, "modifiedTime", true, "event", true, "type",
 			true, "typePK", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlSyncEvents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
+
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(dlSyncEvents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
+		DLSyncEvent newDLSyncEvent2 = addDLSyncEvent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newDLSyncEvent.getPrimaryKey());
+		primaryKeys.add(newDLSyncEvent2.getPrimaryKey());
+
+		Map<Serializable, DLSyncEvent> dlSyncEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, dlSyncEvents.size());
+		Assert.assertEquals(newDLSyncEvent,
+			dlSyncEvents.get(newDLSyncEvent.getPrimaryKey()));
+		Assert.assertEquals(newDLSyncEvent2,
+			dlSyncEvents.get(newDLSyncEvent2.getPrimaryKey()));
 	}
 
 	@Test

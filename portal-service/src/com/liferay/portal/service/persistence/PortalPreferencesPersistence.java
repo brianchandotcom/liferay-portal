@@ -150,6 +150,15 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 		long portalPreferencesId);
 
 	/**
+	* Returns a map of portal preferenceses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the portal preferenceses
+	* @return map of primaryKeys to portal preferenceses.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.PortalPreferences> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the portal preferenceses.
 	*
 	* @return the portal preferenceses

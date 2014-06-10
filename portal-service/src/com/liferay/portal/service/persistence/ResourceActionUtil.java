@@ -387,6 +387,17 @@ public class ResourceActionUtil {
 	}
 
 	/**
+	* Returns a map of resource actions for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the resource actions
+	* @return map of primaryKeys to resource actions.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceAction> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the resource actions.
 	*
 	* @return the resource actions

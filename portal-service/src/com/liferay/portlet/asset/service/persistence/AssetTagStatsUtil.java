@@ -530,6 +530,17 @@ public class AssetTagStatsUtil {
 	}
 
 	/**
+	* Returns a map of asset tag statses for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset tag statses
+	* @return map of primaryKeys to asset tag statses.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetTagStats> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the asset tag statses.
 	*
 	* @return the asset tag statses

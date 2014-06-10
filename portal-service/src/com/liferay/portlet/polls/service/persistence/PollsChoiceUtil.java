@@ -746,6 +746,17 @@ public class PollsChoiceUtil {
 	}
 
 	/**
+	* Returns a map of polls choices for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the polls choices
+	* @return map of primaryKeys to polls choices.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.polls.model.PollsChoice> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the polls choices.
 	*
 	* @return the polls choices

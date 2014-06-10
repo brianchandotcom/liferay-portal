@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -479,6 +480,79 @@ public class GroupPersistenceTest {
 			true, "manualMembership", true, "membershipRestriction", true,
 			"friendlyURL", true, "site", true, "remoteStagingGroupCount", true,
 			"active", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, Group> groups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(groups.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		Group newGroup = addGroup();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newGroup.getPrimaryKey());
+
+		Map<Serializable, Group> groups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(newGroup, groups.get(newGroup.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Group> groups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(groups.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		Group newGroup = addGroup();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newGroup.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, Group> groups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(newGroup, groups.get(newGroup.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		Group newGroup = addGroup();
+		Group newGroup2 = addGroup();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newGroup.getPrimaryKey());
+		primaryKeys.add(newGroup2.getPrimaryKey());
+
+		Map<Serializable, Group> groups = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, groups.size());
+		Assert.assertEquals(newGroup, groups.get(newGroup.getPrimaryKey()));
+		Assert.assertEquals(newGroup2, groups.get(newGroup2.getPrimaryKey()));
 	}
 
 	@Test

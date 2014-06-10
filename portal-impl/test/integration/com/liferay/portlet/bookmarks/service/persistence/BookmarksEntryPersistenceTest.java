@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -494,6 +495,83 @@ public class BookmarksEntryPersistenceTest {
 			"treePath", true, "name", true, "url", true, "description", true,
 			"visits", true, "priority", true, "status", true, "statusByUserId",
 			true, "statusByUserName", true, "statusDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(bookmarksEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBookmarksEntry.getPrimaryKey());
+
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, bookmarksEntries.size());
+		Assert.assertEquals(newBookmarksEntry,
+			bookmarksEntries.get(newBookmarksEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(bookmarksEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBookmarksEntry.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, bookmarksEntries.size());
+		Assert.assertEquals(newBookmarksEntry,
+			bookmarksEntries.get(newBookmarksEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
+		BookmarksEntry newBookmarksEntry2 = addBookmarksEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newBookmarksEntry.getPrimaryKey());
+		primaryKeys.add(newBookmarksEntry2.getPrimaryKey());
+
+		Map<Serializable, BookmarksEntry> bookmarksEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, bookmarksEntries.size());
+		Assert.assertEquals(newBookmarksEntry,
+			bookmarksEntries.get(newBookmarksEntry.getPrimaryKey()));
+		Assert.assertEquals(newBookmarksEntry2,
+			bookmarksEntries.get(newBookmarksEntry2.getPrimaryKey()));
 	}
 
 	@Test

@@ -1071,6 +1071,15 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 		long nodeId);
 
 	/**
+	* Returns a map of wiki nodes for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the wiki nodes
+	* @return map of primaryKeys to wiki nodes.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.wiki.model.WikiNode> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the wiki nodes.
 	*
 	* @return the wiki nodes

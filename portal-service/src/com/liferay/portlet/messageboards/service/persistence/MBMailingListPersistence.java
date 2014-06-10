@@ -570,6 +570,15 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 		long mailingListId);
 
 	/**
+	* Returns a map of message boards mailing lists for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the message boards mailing lists
+	* @return map of primaryKeys to message boards mailing lists.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMailingList> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the message boards mailing lists.
 	*
 	* @return the message boards mailing lists

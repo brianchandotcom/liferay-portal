@@ -47,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -267,6 +268,83 @@ public class MembershipRequestPersistenceTest {
 			"companyId", true, "userId", true, "createDate", true, "comments",
 			true, "replyComments", true, "replyDate", true, "replierUserId",
 			true, "statusId", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(membershipRequests.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		MembershipRequest newMembershipRequest = addMembershipRequest();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMembershipRequest.getPrimaryKey());
+
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, membershipRequests.size());
+		Assert.assertEquals(newMembershipRequest,
+			membershipRequests.get(newMembershipRequest.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(membershipRequests.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		MembershipRequest newMembershipRequest = addMembershipRequest();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMembershipRequest.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, membershipRequests.size());
+		Assert.assertEquals(newMembershipRequest,
+			membershipRequests.get(newMembershipRequest.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		MembershipRequest newMembershipRequest = addMembershipRequest();
+		MembershipRequest newMembershipRequest2 = addMembershipRequest();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMembershipRequest.getPrimaryKey());
+		primaryKeys.add(newMembershipRequest2.getPrimaryKey());
+
+		Map<Serializable, MembershipRequest> membershipRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, membershipRequests.size());
+		Assert.assertEquals(newMembershipRequest,
+			membershipRequests.get(newMembershipRequest.getPrimaryKey()));
+		Assert.assertEquals(newMembershipRequest2,
+			membershipRequests.get(newMembershipRequest2.getPrimaryKey()));
 	}
 
 	@Test

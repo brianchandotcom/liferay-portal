@@ -989,6 +989,15 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public com.liferay.portal.model.Phone fetchByPrimaryKey(long phoneId);
 
 	/**
+	* Returns a map of phones for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the phones
+	* @return map of primaryKeys to phones.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.Phone> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the phones.
 	*
 	* @return the phones

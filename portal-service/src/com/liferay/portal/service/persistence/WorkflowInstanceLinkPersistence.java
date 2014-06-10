@@ -251,6 +251,15 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 		long workflowInstanceLinkId);
 
 	/**
+	* Returns a map of workflow instance links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the workflow instance links
+	* @return map of primaryKeys to workflow instance links.
+	*/
+	public java.util.Map<java.io.Serializable, com.liferay.portal.model.WorkflowInstanceLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	/**
 	* Returns all the workflow instance links.
 	*
 	* @return the workflow instance links

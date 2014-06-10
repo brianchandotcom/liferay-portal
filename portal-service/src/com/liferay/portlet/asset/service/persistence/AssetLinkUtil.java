@@ -992,6 +992,17 @@ public class AssetLinkUtil {
 	}
 
 	/**
+	* Returns a map of asset links for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset links
+	* @return map of primaryKeys to asset links.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetLink> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the asset links.
 	*
 	* @return the asset links

@@ -1424,6 +1424,17 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
+	* Returns a map of journal content searchs for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal content searchs
+	* @return map of primaryKeys to journal content searchs.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalContentSearch> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the journal content searchs.
 	*
 	* @return the journal content searchs

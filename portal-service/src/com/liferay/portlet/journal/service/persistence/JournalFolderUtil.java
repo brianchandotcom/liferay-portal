@@ -2128,6 +2128,17 @@ public class JournalFolderUtil {
 	}
 
 	/**
+	* Returns a map of journal folders for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the journal folders
+	* @return map of primaryKeys to journal folders.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalFolder> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the journal folders.
 	*
 	* @return the journal folders

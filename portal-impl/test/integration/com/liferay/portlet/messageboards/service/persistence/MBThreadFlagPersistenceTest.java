@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -294,6 +295,83 @@ public class MBThreadFlagPersistenceTest {
 			true, "threadFlagId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "threadId", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, MBThreadFlag> mbThreadFlags = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbThreadFlags.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBThreadFlag.getPrimaryKey());
+
+		Map<Serializable, MBThreadFlag> mbThreadFlags = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbThreadFlags.size());
+		Assert.assertEquals(newMBThreadFlag,
+			mbThreadFlags.get(newMBThreadFlag.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MBThreadFlag> mbThreadFlags = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(mbThreadFlags.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBThreadFlag.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, MBThreadFlag> mbThreadFlags = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, mbThreadFlags.size());
+		Assert.assertEquals(newMBThreadFlag,
+			mbThreadFlags.get(newMBThreadFlag.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
+		MBThreadFlag newMBThreadFlag2 = addMBThreadFlag();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newMBThreadFlag.getPrimaryKey());
+		primaryKeys.add(newMBThreadFlag2.getPrimaryKey());
+
+		Map<Serializable, MBThreadFlag> mbThreadFlags = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, mbThreadFlags.size());
+		Assert.assertEquals(newMBThreadFlag,
+			mbThreadFlags.get(newMBThreadFlag.getPrimaryKey()));
+		Assert.assertEquals(newMBThreadFlag2,
+			mbThreadFlags.get(newMBThreadFlag2.getPrimaryKey()));
 	}
 
 	@Test

@@ -387,6 +387,17 @@ public class DLSyncEventUtil {
 	}
 
 	/**
+	* Returns a map of d l sync events for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d l sync events
+	* @return map of primaryKeys to d l sync events.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLSyncEvent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the d l sync events.
 	*
 	* @return the d l sync events

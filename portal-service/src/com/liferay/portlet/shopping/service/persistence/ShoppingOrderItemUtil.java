@@ -324,6 +324,17 @@ public class ShoppingOrderItemUtil {
 	}
 
 	/**
+	* Returns a map of shopping order items for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the shopping order items
+	* @return map of primaryKeys to shopping order items.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingOrderItem> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the shopping order items.
 	*
 	* @return the shopping order items

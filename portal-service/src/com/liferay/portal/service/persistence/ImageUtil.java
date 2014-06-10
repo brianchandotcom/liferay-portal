@@ -309,6 +309,17 @@ public class ImageUtil {
 	}
 
 	/**
+	* Returns a map of images for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the images
+	* @return map of primaryKeys to images.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Image> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the images.
 	*
 	* @return the images

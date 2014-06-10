@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -225,6 +226,83 @@ public class ServiceComponentPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ServiceComponent",
 			"mvccVersion", true, "serviceComponentId", true, "buildNamespace",
 			true, "buildNumber", true, "buildDate", true, "data", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(serviceComponents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		ServiceComponent newServiceComponent = addServiceComponent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
+
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(serviceComponents.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		ServiceComponent newServiceComponent = addServiceComponent();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		ServiceComponent newServiceComponent = addServiceComponent();
+		ServiceComponent newServiceComponent2 = addServiceComponent();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newServiceComponent.getPrimaryKey());
+		primaryKeys.add(newServiceComponent2.getPrimaryKey());
+
+		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, serviceComponents.size());
+		Assert.assertEquals(newServiceComponent,
+			serviceComponents.get(newServiceComponent.getPrimaryKey()));
+		Assert.assertEquals(newServiceComponent2,
+			serviceComponents.get(newServiceComponent2.getPrimaryKey()));
 	}
 
 	@Test

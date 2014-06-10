@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -265,6 +266,83 @@ public class AssetTagPropertyPersistenceTest {
 			"tagPropertyId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"tagId", true, "key", true, "value", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysEmptyInput() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, AssetTagProperty> assetTagProperties = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(assetTagProperties.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSingleInput() throws Exception {
+		AssetTagProperty newAssetTagProperty = addAssetTagProperty();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAssetTagProperty.getPrimaryKey());
+
+		Map<Serializable, AssetTagProperty> assetTagProperties = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetTagProperties.size());
+		Assert.assertEquals(newAssetTagProperty,
+			assetTagProperties.get(newAssetTagProperty.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysNoneExist() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, AssetTagProperty> assetTagProperties = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(assetTagProperties.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysSomeExist() throws Exception {
+		AssetTagProperty newAssetTagProperty = addAssetTagProperty();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAssetTagProperty.getPrimaryKey());
+		primaryKeys.add(pk2);
+
+		Map<Serializable, AssetTagProperty> assetTagProperties = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, assetTagProperties.size());
+		Assert.assertEquals(newAssetTagProperty,
+			assetTagProperties.get(newAssetTagProperty.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysAllExist() throws Exception {
+		AssetTagProperty newAssetTagProperty = addAssetTagProperty();
+		AssetTagProperty newAssetTagProperty2 = addAssetTagProperty();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newAssetTagProperty.getPrimaryKey());
+		primaryKeys.add(newAssetTagProperty2.getPrimaryKey());
+
+		Map<Serializable, AssetTagProperty> assetTagProperties = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, assetTagProperties.size());
+		Assert.assertEquals(newAssetTagProperty,
+			assetTagProperties.get(newAssetTagProperty.getPrimaryKey()));
+		Assert.assertEquals(newAssetTagProperty2,
+			assetTagProperties.get(newAssetTagProperty2.getPrimaryKey()));
 	}
 
 	@Test

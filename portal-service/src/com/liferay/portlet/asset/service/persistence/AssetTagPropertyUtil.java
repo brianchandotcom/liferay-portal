@@ -685,6 +685,17 @@ public class AssetTagPropertyUtil {
 	}
 
 	/**
+	* Returns a map of asset tag properties for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the asset tag properties
+	* @return map of primaryKeys to asset tag properties.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetTagProperty> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the asset tag properties.
 	*
 	* @return the asset tag properties

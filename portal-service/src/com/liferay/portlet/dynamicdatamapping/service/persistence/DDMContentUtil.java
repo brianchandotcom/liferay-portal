@@ -826,6 +826,17 @@ public class DDMContentUtil {
 	}
 
 	/**
+	* Returns a map of d d m contents for the primary keys provided.
+	*
+	* @param primaryKeys the set of primaryKeys for which to fetch the d d m contents
+	* @return map of primaryKeys to d d m contents.
+	*/
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMContent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
 	* Returns all the d d m contents.
 	*
 	* @return the d d m contents

@@ -592,6 +592,18 @@ public class StagingImpl implements Staging {
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				missingReference.getGroupId());
+
+			if (group != null) {
+				errorMessageJSONObject.put(
+					"site",
+					LanguageUtil.format(
+						locale, "in-site-x", missingReference.getGroupId(),
+						false));
+			}
+
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(
@@ -745,14 +757,15 @@ public class StagingImpl implements Staging {
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
 						"the-live-environment.-please-publish-again-to-live-" +
-							"ensuring-the-following-elements-are-published");
+							"ensuring-the-following-elements-are-published-" +
+								"from-their-own-site");
 			}
 			else {
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
-						"the-current-site.-please-import-another-lar-file-" +
-							"containing-the-following-elements");
+						"the-current-site.-please-import-the-following-" +
+							"elements-first");
 			}
 
 			MissingReferences missingReferences = mre.getMissingReferences();

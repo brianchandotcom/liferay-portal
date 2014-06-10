@@ -2460,7 +2460,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		if (!stagedModelDataHandler.validateReference(
 				portletDataContext, element)) {
 
-			return new MissingReference(element);
+			MissingReference missingReference = new MissingReference(element);
+
+			Map<Long, Long> groupIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class);
+
+			long groupId = MapUtil.getLong(
+				groupIds,
+				GetterUtil.getLong(element.attributeValue("group-id")));
+
+			missingReference.setGroupId(groupId);
+
+			return missingReference;
 		}
 
 		return null;

@@ -472,6 +472,12 @@ public class JournalUtil {
 			JournalArticleLocalServiceUtil.getArticle(
 				groupId, articleId, sourceVersion);
 
+		if (!JournalArticleLocalServiceUtil.isRenderable(
+				sourceArticle, portletRequestModel, themeDisplay)) {
+
+			return null;
+		}
+
 		JournalArticleDisplay sourceArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				sourceArticle, null, Constants.VIEW, languageId, 1,
@@ -480,6 +486,12 @@ public class JournalUtil {
 		JournalArticle targetArticle =
 			JournalArticleLocalServiceUtil.getArticle(
 				groupId, articleId, targetVersion);
+
+		if (!JournalArticleLocalServiceUtil.isRenderable(
+				targetArticle, portletRequestModel, themeDisplay)) {
+
+			return null;
+		}
 
 		JournalArticleDisplay targetArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(

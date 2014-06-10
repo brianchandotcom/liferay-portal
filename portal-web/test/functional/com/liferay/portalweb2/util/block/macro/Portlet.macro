@@ -137,6 +137,13 @@
 		</if>
 	</command>
 
+	<command name="configureCustomTitleViaLookandfeelPG">
+		<execute action="BasePortlet#check" locator-key1="PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
+		<execute action="BasePortlet#type" locator-key1="PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
+		<execute action="BasePortlet#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
 	<command name="deletePG">
 		<var name="portletLocator" value="//h1[@class='portlet-title']/span[contains(.,'${portletName}')]/../../menu//a[@title='Options']" />
 

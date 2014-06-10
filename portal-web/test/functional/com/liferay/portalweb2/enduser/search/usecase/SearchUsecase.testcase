@@ -422,4 +422,41 @@
 			<var name="searchAssetSummary"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
 		</execute>
 	</command>
+
+	<command name="ViewUserSearchResult" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${searchPortletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Test" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetTitle" value="Test Test" />
+		</execute>
+
+		<execute macro="Search#gotoUserSearchResultPG">
+			<var name="searchAssetTitle" value="Test Test" />
+		</execute>
+
+		<execute macro="Search#viewUserSearchResultPG">
+			<var name="breadcrumb1" value="Test Test" />
+			<var name="breadcrumb2" value="Welcome" />
+			<var name="pageName" value="Welcome" />
+			<var name="siteName" value="Test Test" />
+		</execute>
+	</command>
 </definition>

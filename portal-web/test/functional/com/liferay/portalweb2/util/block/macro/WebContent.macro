@@ -252,8 +252,16 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<if>
+			<equals arg1="${assetTypeConfigured}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisher#click" locator-key1="ADD_BASIC_WEB_CONTENT_BUTTON" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+			</else>
+		</if>
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
@@ -851,7 +859,9 @@
 	</command>
 
 	<command name="editPGViaAP">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="DISPLAY_ICON_EDIT" value1="Edit" />
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#click" locator-key1="ASSET_ABSTRACT_EDIT" />
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitleEdit}" />

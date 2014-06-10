@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Template {
 
+	public void doProcessTemplate(Writer writer) throws Exception;
+
 	public Object get(String key);
 
 	public String[] getKeys();

@@ -69,6 +69,55 @@ public class XSLTemplate implements Template {
 	}
 
 	@Override
+	public void doProcessTemplate(Writer writer) throws Exception {
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		String languageId = null;
+
+		XSLURIResolver xslURIResolver =
+			_xslTemplateResource.getXSLURIResolver();
+
+		if (xslURIResolver != null) {
+			languageId = xslURIResolver.getLanguageId();
+		}
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		_xslErrorListener = new XSLErrorListener(locale);
+
+		transformerFactory.setErrorListener(_xslErrorListener);
+
+		transformerFactory.setURIResolver(xslURIResolver);
+
+		StreamSource xmlSource = new StreamSource(
+			_xslTemplateResource.getXMLReader());
+
+		Transformer transformer = null;
+
+		if (_errorTemplateResource == null) {
+			transformer = _getTransformer(
+				transformerFactory, _xslTemplateResource);
+
+			transformer.transform(xmlSource, new StreamResult(writer));
+
+			return;
+		}
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		transformer = _getTransformer(transformerFactory, _xslTemplateResource);
+
+		transformer.setParameter(TemplateConstants.WRITER, unsyncStringWriter);
+
+		transformer.transform(xmlSource, new StreamResult(unsyncStringWriter));
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		sb.writeTo(writer);
+	}
+
+	@Override
 	public Object get(String key) {
 		return _context.get(key);
 	}
@@ -87,71 +136,24 @@ public class XSLTemplate implements Template {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
-		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
-
-		String languageId = null;
-
-		XSLURIResolver xslURIResolver =
-			_xslTemplateResource.getXSLURIResolver();
-
-		if (xslURIResolver != null) {
-			languageId = xslURIResolver.getLanguageId();
-		}
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-		XSLErrorListener xslErrorListener = new XSLErrorListener(locale);
-
-		transformerFactory.setErrorListener(xslErrorListener);
-
-		transformerFactory.setURIResolver(xslURIResolver);
-
-		StreamSource xmlSource = new StreamSource(
-			_xslTemplateResource.getXMLReader());
-
-		Transformer transformer = null;
-
-		if (_errorTemplateResource == null) {
-			try {
-				transformer = _getTransformer(
-					transformerFactory, _xslTemplateResource);
-
-				transformer.transform(xmlSource, new StreamResult(writer));
-
-				return;
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process XSL template " +
-						_xslTemplateResource.getTemplateId(),
-					e);
-			}
-		}
-
 		try {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			transformer = _getTransformer(
-				transformerFactory, _xslTemplateResource);
-
-			transformer.setParameter(
-				TemplateConstants.WRITER, unsyncStringWriter);
-
-			transformer.transform(
-				xmlSource, new StreamResult(unsyncStringWriter));
-
-			StringBundler sb = unsyncStringWriter.getStringBundler();
-
-			sb.writeTo(writer);
+			doProcessTemplate(writer);
 		}
 		catch (Exception e1) {
+			TransformerFactory transformerFactory =
+				TransformerFactory.newInstance();
+
+			transformerFactory.setErrorListener(_xslErrorListener);
+
+			transformerFactory.setURIResolver(
+				_xslTemplateResource.getXSLURIResolver());
+
 			Transformer errorTransformer = _getTransformer(
 				transformerFactory, _errorTemplateResource);
 
 			errorTransformer.setParameter(TemplateConstants.WRITER, writer);
 			errorTransformer.setParameter(
-				"exception", xslErrorListener.getMessageAndLocation());
+				"exception", _xslErrorListener.getMessageAndLocation());
 
 			if (_errorTemplateResource instanceof StringTemplateResource) {
 				StringTemplateResource stringTemplateResource =
@@ -161,14 +163,17 @@ public class XSLTemplate implements Template {
 					"script", stringTemplateResource.getContent());
 			}
 
-			if (xslErrorListener.getLocation() != null) {
+			if (_xslErrorListener.getLocation() != null) {
 				errorTransformer.setParameter(
-					"column", new Integer(xslErrorListener.getColumnNumber()));
+					"column", new Integer(_xslErrorListener.getColumnNumber()));
 				errorTransformer.setParameter(
-					"line", new Integer(xslErrorListener.getLineNumber()));
+					"line", new Integer(_xslErrorListener.getLineNumber()));
 			}
 
 			try {
+				StreamSource xmlSource = new StreamSource(
+					_xslTemplateResource.getXMLReader());
+
 				errorTransformer.transform(xmlSource, new StreamResult(writer));
 			}
 			catch (Exception e2) {
@@ -225,6 +230,7 @@ public class XSLTemplate implements Template {
 	private Map<String, Object> _context;
 	private TemplateResource _errorTemplateResource;
 	private TemplateContextHelper _templateContextHelper;
+	private XSLErrorListener _xslErrorListener;
 	private XSLTemplateResource _xslTemplateResource;
 
 	private class TransformerPrivilegedExceptionAction

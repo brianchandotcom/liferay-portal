@@ -40,6 +40,13 @@ public class PrivilegedTemplateWrapper implements Template {
 	}
 
 	@Override
+	public void doProcessTemplate(Writer writer) throws Exception {
+		AccessController.doPrivileged(
+			new ProcessTemplatePrivilegedExceptionAction(_template, writer),
+			_accessControlContext);
+	}
+
+	@Override
 	public Object get(String key) {
 		return _template.get(key);
 	}
@@ -57,12 +64,13 @@ public class PrivilegedTemplateWrapper implements Template {
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
 		try {
-			AccessController.doPrivileged(
-				new ProcessTemplatePrivilegedExceptionAction(_template, writer),
-				_accessControlContext);
+			doProcessTemplate(writer);
 		}
 		catch (PrivilegedActionException pae) {
 			throw (TemplateException)pae.getException();
+		}
+		catch (Exception e) {
+			throw new TemplateException();
 		}
 	}
 

@@ -169,6 +169,19 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		jsonFactoryUtil.setJSONFactory(jsonFactory);
 	}
 
+	protected void setUpIndexerRegistryUtil() throws Exception {
+		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
+	
+		List<Indexer> indexers = Arrays.<Indexer>asList(
+			new DLFileEntryIndexer(), new MBMessageIndexer());
+	
+		PowerMockito.when(
+			IndexerRegistryUtil.class, "getIndexers"
+		).thenReturn(
+			indexers
+		);
+	}
+
 	protected void setUpPropsUtil() {
 		Props props = mock(Props.class);
 
@@ -203,16 +216,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		RegistryUtil.setRegistry(registry);
 
-		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		List<Indexer> indexers = Arrays.<Indexer>asList(
-			new DLFileEntryIndexer(), new MBMessageIndexer());
-
-		PowerMockito.when(
-			IndexerRegistryUtil.class, "getIndexers"
-		).thenReturn(
-			indexers
-		);
+		setUpIndexerRegistryUtil();
 	}
 
 	protected void setUpSearchEngineUtil() {

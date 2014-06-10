@@ -153,14 +153,8 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 
 						<%
 						double version = extraDataJSONObject.getDouble("version");
-						
-						WikiPage socialActivityWikiPage = null;
 
-						try {
-							socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle(), version);
-						} catch (NoSuchPageException nspe) {
-							
-						}
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(node.getNodeId(), wikiPage.getTitle(), version);
 						%>
 
 						<portlet:renderURL var="viewPageURL">
@@ -224,18 +218,18 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 										</c:otherwise>
 									</c:choose>
 								</liferay-util:buffer>
-								
+
 								<liferay-ui:icon
 									iconCssClass="icon-edit"
 									label="<%= true %>"
 									message='<%= LanguageUtil.format(pageContext, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
 
-								<c:if test="<%= socialActivityWikiPage != null && socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+								<c:if test="<%= (socialActivityWikiPage != null) && socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
 									<span class="activity-status"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(socialActivityWikiPage.getStatus()) %>" /></span>
 								</c:if>
 
-								<c:if test="<%= socialActivityWikiPage != null && Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
+								<c:if test="<%= (socialActivityWikiPage != null) && Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
 									<em class="activity-summary"><%= StringPool.QUOTE + HtmlUtil.escape(socialActivityWikiPage.getSummary()) + StringPool.QUOTE %></em>
 								</c:if>
 							</c:when>

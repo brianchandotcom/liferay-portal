@@ -27,14 +27,9 @@ double version = extraDataJSONObject.getDouble("version");
 
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-WikiPage socialActivityWikiPage = null;
-
-try {
-	socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
-} catch (NoSuchPageException nspe) {
-	
-}
+WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
 %>
+
 <c:if test="<%= socialActivityWikiPage != null %>">
 	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 		<c:if test="<%= (version != wikiPage.getVersion()) && (socialActivityWikiPage.isApproved()) && (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) %>">
@@ -46,14 +41,14 @@ try {
 				<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
 				<portlet:param name="version" value="<%= String.valueOf(version) %>" />
 			</portlet:actionURL>
-	
+
 			<liferay-ui:icon
 				iconCssClass="icon-undo"
 				message='<%= LanguageUtil.get(pageContext, "restore-version") + " " + String.valueOf(version) %>'
 				url="<%= revertURL %>"
 			/>
 		</c:if>
-	
+
 		<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/wiki/select_version" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -61,13 +56,13 @@ try {
 			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
 			<portlet:param name="sourceVersion" value="<%= String.valueOf(version) %>" />
 		</portlet:renderURL>
-	
+
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();
-	
+
 		data.put("uri", compareVersionsURL);
 		%>
-	
+
 		<liferay-ui:icon
 			cssClass="compare-to-link"
 			data="<%= data %>"

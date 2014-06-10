@@ -110,7 +110,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void contributeToFullQuery(SearchContext searchContext) {
+	public void updateFullQuery(SearchContext searchContext) {
 	}
 
 	@Override
@@ -208,25 +208,25 @@ public abstract class BaseIndexer implements Indexer {
 		throws SearchException {
 
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
+			searchContext.clearFullQueryEntryClassNames();
 
-			searchContext.clearEntryClassNamesForFullQuery();
+			String[] fullQueryEntryClassNames =
+				searchContext.getFullQueryEntryClassNames();
 
-			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
-				indexer.contributeToFullQuery(searchContext);
+			if (ArrayUtil.isNotEmpty(fullQueryEntryClassNames)) {
+				searchContext.setAttribute(
+					"relatedEntryClassNames", getClassNames());
 			}
 
-			String[] entryClassNamesForFullQuery =
-				searchContext.getEntryClassNamesForFullQuery();
-
 			String[] entryClassNames = ArrayUtil.append(
-				getClassNames(), entryClassNamesForFullQuery);
+				getClassNames(), fullQueryEntryClassNames);
 
 			searchContext.setEntryClassNames(entryClassNames);
 
-			if (ArrayUtil.isNotEmpty(entryClassNamesForFullQuery)) {
-				searchContext.setAttribute(
-					"relatedEntryClassNames", getClassNames());
+			searchContext.setSearchEngineId(getSearchEngineId());
+
+			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+				indexer.updateFullQuery(searchContext);
 			}
 
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(

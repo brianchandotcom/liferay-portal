@@ -35,7 +35,7 @@ public interface Indexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception;
 
-	public void contributeToFullQuery(SearchContext searchContext);
+	public void updateFullQuery(SearchContext searchContext);
 
 	public void delete(long companyId, String uid) throws SearchException;
 

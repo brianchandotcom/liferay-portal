@@ -40,8 +40,8 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public void contributeToFullQuery(SearchContext searchContext) {
-		_indexer.contributeToFullQuery(searchContext);
+	public void updateFullQuery(SearchContext searchContext) {
+		_indexer.updateFullQuery(searchContext);
 	}
 
 	@Override

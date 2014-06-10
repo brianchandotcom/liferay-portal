@@ -107,7 +107,7 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void contributeToFullQuery(SearchContext searchContext) {
+	public void updateFullQuery(SearchContext searchContext) {
 		if (searchContext.isIncludeDiscussions()) {
 			searchContext.addEntryClassNameForFullQuery(
 				MBMessage.class.getName());

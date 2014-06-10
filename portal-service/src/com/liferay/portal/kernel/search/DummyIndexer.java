@@ -34,7 +34,7 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public void contributeToFullQuery(SearchContext searchContext) {
+	public void updateFullQuery(SearchContext searchContext) {
 	}
 
 	@Override

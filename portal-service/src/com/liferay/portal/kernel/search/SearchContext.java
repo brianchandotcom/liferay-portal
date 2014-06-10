@@ -54,7 +54,7 @@ public class SearchContext implements Serializable {
 		_facets.put(facet.getFieldName(), facet);
 	}
 
-	public void clearEntryClassNamesForFullQuery() {
+	public void clearFullQueryEntryClassNames() {
 		_entryClassNamesForFullQuery = null;
 	}
 
@@ -110,7 +110,7 @@ public class SearchContext implements Serializable {
 		return _entryClassNames;
 	}
 
-	public String[] getEntryClassNamesForFullQuery() {
+	public String[] getFullQueryEntryClassNames() {
 		if (_entryClassNamesForFullQuery == null) {
 			return new String[0];
 		}

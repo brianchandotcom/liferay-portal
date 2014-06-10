@@ -23,7 +23,7 @@
 	<tear-down>
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="BlogsPortlet#tearDownConfigurationDisplaySettingsCP" />
+		<execute macro="BlogsPortlet#tearDownConfigurationDisplaySettingsPG" />
 
 		<execute macro="BlogsPortlet#tearDownConfigurationScopePG" />
 
@@ -1524,7 +1524,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 
@@ -1599,7 +1599,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 
@@ -1679,7 +1679,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 

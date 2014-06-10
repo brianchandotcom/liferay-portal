@@ -1358,7 +1358,7 @@
 			<isset var="${author}" />
 			<then>
 				<var name="key_author" value="${author}" />
-				
+
 				<execute action="PGAssetpublisher#assertTextEquals" locator-key1="METADATA_AUTHOR" value1="${author}" />
 			</then>
 		</if>

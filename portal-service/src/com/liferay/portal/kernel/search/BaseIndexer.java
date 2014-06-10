@@ -204,7 +204,13 @@ public abstract class BaseIndexer implements Indexer {
 		throws SearchException {
 
 		try {
+			searchContext.setSearchEngineId(getSearchEngineId());
+
 			searchContext.clearFullQueryEntryClassNames();
+
+			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+				indexer.updateFullQuery(searchContext);
+			}
 
 			String[] fullQueryEntryClassNames =
 				searchContext.getFullQueryEntryClassNames();
@@ -218,12 +224,6 @@ public abstract class BaseIndexer implements Indexer {
 				getClassNames(), fullQueryEntryClassNames);
 
 			searchContext.setEntryClassNames(entryClassNames);
-
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
-				indexer.updateFullQuery(searchContext);
-			}
 
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
 				searchContext);

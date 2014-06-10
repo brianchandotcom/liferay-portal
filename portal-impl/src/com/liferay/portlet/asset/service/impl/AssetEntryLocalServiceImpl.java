@@ -842,20 +842,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return updateVisible(entry, visible);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
-	 */
-	@Deprecated
-	@Override
-	public void validate(
-			long groupId, String className, long[] categoryIds,
-			String[] tagNames)
-		throws PortalException {
-
-		validate(groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
-			categoryIds, tagNames);
-	}
-
 	@Override
 	public void validate(
 			long groupId, String className, long classTypeId,
@@ -871,6 +857,21 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		validator.validate(
 			groupId, className, classTypeId, categoryIds, tagNames);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long, long[], String[])}
+	 */
+	@Deprecated
+	@Override
+	public void validate(
+			long groupId, String className, long[] categoryIds,
+			String[] tagNames)
+		throws PortalException {
+
+		validate(
+			groupId, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS,
+			categoryIds, tagNames);
 	}
 
 	protected long[] getClassNameIds(long companyId, String className) {

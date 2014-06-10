@@ -77,7 +77,7 @@ public class UpgradeAssetVocabularyTest {
 	private void _testUpgrade(String oldSettings, String expectedSettings) {
 		UpgradeAsset upgradeAsset = new UpgradeAsset();
 
-		String upgradedSettings = upgradeAsset.doUpgradeVocabularySettings(
+		String upgradedSettings = upgradeAsset.upgradeVocabularySettings(
 			oldSettings);
 
 		Assert.assertEquals(expectedSettings, upgradedSettings);

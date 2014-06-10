@@ -238,10 +238,10 @@ public class AssetVocabularySettingsHelper {
 			return ArrayUtil.exists(classNameAndTypeIds, prefixPredicateFilter);
 		}
 		else {
-			String classNameAndType = getClassNameAndTypeId(
+			String classNameAndTypeId = getClassNameAndTypeId(
 				classNameId, classTypeId);
 
-			if (ArrayUtil.contains(classNameAndTypeIds, classNameAndType)) {
+			if (ArrayUtil.contains(classNameAndTypeIds, classNameAndTypeId)) {
 				return true;
 			}
 

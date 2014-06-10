@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
@@ -30,10 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Gergely Mathe
@@ -42,11 +38,24 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		doUpgradeAssetEntry();
-		doUpgradeAllAssetVocabularies();
+		upgradeAssetEntryTable();
+		upgradeAssetVocabularies();
 	}
 
-	protected void doUpgradeAllAssetVocabularies() throws Exception {
+	protected void upgradeAssetEntryTable() throws Exception {
+		try {
+			runSQL("alter_column_type AssetEntry description TEXT null");
+			runSQL("alter_column_type AssetEntry summary TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
+				AssetEntryTable.TABLE_SQL_CREATE,
+				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
+		}
+	}
+
+	protected void upgradeAssetVocabularies() throws Exception {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet result = null;
@@ -63,7 +72,7 @@ public class UpgradeAsset extends UpgradeProcess {
 				Long key = result.getLong("vocabularyId");
 				String settings = result.getString("settings_");
 
-				String newSettings = doUpgradeVocabularySettings(settings);
+				String newSettings = upgradeVocabularySettings(settings);
 
 				runSQL(
 					"UPDATE AssetVocabulary SET settings_ = '" + newSettings +
@@ -75,20 +84,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		}
 	}
 
-	protected void doUpgradeAssetEntry() throws Exception {
-		try {
-			runSQL("alter_column_type AssetEntry description TEXT null");
-			runSQL("alter_column_type AssetEntry summary TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				AssetEntryTable.TABLE_NAME, AssetEntryTable.TABLE_COLUMNS,
-				AssetEntryTable.TABLE_SQL_CREATE,
-				AssetEntryTable.TABLE_SQL_ADD_INDEXES);
-		}
-	}
-
-	protected String doUpgradeVocabularySettings(String settings) {
+	protected String upgradeVocabularySettings(String settings) {
 		UnicodeProperties oldProperties = new UnicodeProperties(true);
 		oldProperties.fastLoad(settings);
 

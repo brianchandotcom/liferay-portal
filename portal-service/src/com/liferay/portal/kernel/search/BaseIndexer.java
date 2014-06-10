@@ -206,14 +206,16 @@ public abstract class BaseIndexer implements Indexer {
 		try {
 			searchContext.setSearchEngineId(getSearchEngineId());
 
-			searchContext.clearFullQueryEntryClassNames();
+			Set<String> fullQueryEntryClassNamesSet = new HashSet<String>();
 
 			for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
-				indexer.updateFullQuery(searchContext);
+				indexer.updateFullQuery(
+					searchContext, fullQueryEntryClassNamesSet);
 			}
 
 			String[] fullQueryEntryClassNames =
-				searchContext.getFullQueryEntryClassNames();
+				fullQueryEntryClassNamesSet.toArray(
+					new String[fullQueryEntryClassNamesSet.size()]);
 
 			if (ArrayUtil.isNotEmpty(fullQueryEntryClassNames)) {
 				searchContext.setAttribute(
@@ -577,7 +579,8 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames) {
 	}
 
 	protected void addAssetFields(

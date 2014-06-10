@@ -58,6 +58,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -208,9 +209,11 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames) {
+
 		if (searchContext.isIncludeDiscussions()) {
-			searchContext.addFullQueryEntryClassName(MBMessage.class.getName());
+			fullQueryEntryClassNames.add(MBMessage.class.getName());
 
 			searchContext.setAttribute("discussion", Boolean.TRUE);
 		}

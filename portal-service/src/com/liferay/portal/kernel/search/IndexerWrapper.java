@@ -18,6 +18,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -231,8 +232,10 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public void updateFullQuery(SearchContext searchContext) {
-		_indexer.updateFullQuery(searchContext);
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames) {
+
+		_indexer.updateFullQuery(searchContext, fullQueryEntryClassNames);
 	}
 
 	private Indexer _indexer;

@@ -18,6 +18,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -122,6 +123,7 @@ public interface Indexer {
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
 
-	public void updateFullQuery(SearchContext searchContext);
+	public void updateFullQuery(
+		SearchContext searchContext, Set<String> fullQueryEntryClassNames);
 
 }

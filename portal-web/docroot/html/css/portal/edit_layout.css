@@ -1,9 +1,17 @@
+@import "mixins";
+
 .lfr-edit-layout-panel {
 	width: 440px;
 
 	.navbar {
 		margin-bottom: 0;
 		margin-top: 20px;
+
+		.container-fluid {
+			@include respond-to(desktop) {
+				padding: 0;
+			}
+		}
 	}
 
 	.site-admin-link {

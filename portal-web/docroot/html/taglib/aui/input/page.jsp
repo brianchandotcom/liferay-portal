@@ -56,6 +56,7 @@
 		<liferay-ui:asset-categories-selector
 			className="<%= model.getName() %>"
 			classPK="<%= _getClassPK(bean, classPK) %>"
+			classTypePK="<%= classTypePK %>"
 			contentCallback='<%= portletResponse.getNamespace() + "getSuggestionsContent" %>'
 		/>
 	</c:when>

@@ -28,6 +28,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
@@ -183,6 +184,15 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			long[] groupIds, String className)
 		throws SystemException {
 
+		return getGroupsVocabularies(
+			groupIds, className, AssetCategoryConstants.ALL_CLASS_TYPE_IDS);
+	}
+
+	@Override
+	public List<AssetVocabulary> getGroupsVocabularies(
+			long[] groupIds, String className, long classTypeId)
+		throws SystemException {
+
 		List<AssetVocabulary> vocabularies =
 			assetVocabularyPersistence.filterFindByGroupId(groupIds);
 
@@ -190,7 +200,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
-		return AssetUtil.filterVocabularies(vocabularies, className);
+		return AssetUtil.filterVocabularies(
+			vocabularies, className, classTypeId);
 	}
 
 	@Override

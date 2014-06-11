@@ -810,6 +810,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.getSelectedClassNameIds();
 	}
 
+	@Override
+	public long[] getSelectedClassTypeIds() {
+		return _assetVocabulary.getSelectedClassTypeIds();
+	}
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -836,16 +841,23 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public boolean isAssociatedToClassNameAndTypeId(long classNameId,
+		long classTypeId) {
+		return _assetVocabulary.isAssociatedToClassNameAndTypeId(classNameId,
+			classTypeId);
+	}
+
+	@Override
 	public boolean isAssociatedToClassNameId(long classNameId) {
 		return _assetVocabulary.isAssociatedToClassNameId(classNameId);
 	}
 
 	@Override
 	public boolean isMissingRequiredCategory(long classNameId,
-		long[] categoryIds)
+		long classTypeId, long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabulary.isMissingRequiredCategory(classNameId,
-			categoryIds);
+			classTypeId, categoryIds);
 	}
 
 	@Override
@@ -853,9 +865,18 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.isMultiValued();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	*/
+	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
 		return _assetVocabulary.isRequired(classNameId);
+	}
+
+	@Override
+	public boolean isRequired(long classNameId, long classTypeId) {
+		return _assetVocabulary.isRequired(classNameId, classTypeId);
 	}
 
 	/**

@@ -20,6 +20,8 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -53,7 +55,19 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 		_serviceTracker.open();
 	}
 
+	private ConcurrentHashMap<K, Bucket<S, R>> _indexedServices =
+		new ConcurrentHashMap<K, Bucket<S, R>>();
 	private final ServiceTracker<S, ServiceReference<S>> _serviceTracker;
+
+	interface Bucket<S, R> {
+		public R getContent();
+
+		public boolean isDisposable();
+
+		public void store(ServiceReference<S> serviceReference);
+
+		public void remove(ServiceReference<S> serviceReference);
+	}
 
 	private class MapServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<S, ServiceReference<S>> {

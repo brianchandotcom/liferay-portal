@@ -372,6 +372,8 @@
 
 	var STR_TAG_END_OPEN = '</';
 
+	var STR_TAG_IMAGE_TPL = '<img src="{imageSrc}" {imageSize} />';
+
 	var STR_TAG_LIST_ITEM_SHORT = '*';
 
 	var STR_TAG_OPEN = '<';
@@ -563,7 +565,31 @@
 				imageSrc = CKEDITOR.tools.htmlEncodeAttr(imageSrcInput);
 			}
 
-			instance._result.push('<img src="', imageSrc, STR_TAG_ATTR_CLOSE);
+			var imageSize = '';
+
+			if (token.attribute) {
+				var dimensions = token.attribute.split('x');
+
+				imageSize = 'style="';
+
+				var width = dimensions[0];
+
+				if (width && width !== 'auto') {
+					imageSize += 'width: ' + dimensions[0] + 'px;';
+				}
+
+				var height = dimensions[1];
+
+				if (height && height !== 'auto') {
+					imageSize += 'height: ' + dimensions[1] + 'px;';
+				}
+
+				imageSize += '"';
+			}
+
+			var result = STR_TAG_IMAGE_TPL.replace('{imageSrc}', imageSrc).replace('{imageSize}', imageSize);
+
+			instance._result.push(result);
 		},
 
 		_handleList: function(token) {

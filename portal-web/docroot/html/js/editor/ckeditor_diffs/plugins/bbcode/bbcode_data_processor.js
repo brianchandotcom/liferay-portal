@@ -95,6 +95,8 @@
 
 	var TEMPLATE_IMAGE = '<img src="{image}">';
 
+	var TEMPLATE_IMAGE_OPEN_TAG = '[img={width}x{height}]';
+
 	var emoticonImages;
 	var emoticonPath;
 	var emoticonSymbols;
@@ -497,7 +499,19 @@
 			else {
 				var attrSrc = element.getAttribute('src');
 
-				listTagsIn.push('[img]');
+				var domElement = new CKEDITOR.dom.element(element);
+
+				var width = domElement.getStyle('width').replace('px', '') || 'auto';
+
+				var height = domElement.getStyle('height').replace('px', '') || 'auto';
+
+				var openTag = '[img]';
+
+				if (width !== 'auto' || height !== 'auto') {
+					openTag = TEMPLATE_IMAGE_OPEN_TAG.replace('{width}', width).replace('{height}', height);
+				}
+
+				listTagsIn.push(openTag);
 
 				listTagsIn.push(attrSrc);
 

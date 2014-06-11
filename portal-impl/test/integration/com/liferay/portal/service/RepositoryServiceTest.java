@@ -22,6 +22,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.AdvancedPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -254,6 +255,7 @@ public class RepositoryServiceTest {
 			}
 		};
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

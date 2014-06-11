@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -204,6 +205,7 @@ public class RepositoryLocalServiceTest {
 		RepositoryLocalServiceUtil.getRepositoryImpl(repositoryId);
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 }
